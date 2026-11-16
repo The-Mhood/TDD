@@ -9,7 +9,7 @@ This is an initial in-repository log pending confirmation of the team's preferre
 - **Assessment:** [Technical Quality and Integration Assessment](../TECHNICAL_QUALITY_AND_INTEGRATION_ASSESSMENT.md), accepted as the initial QA baseline by the Creative Director on 2026-11-16.
 - **Initial inspected commit:** `5e3d1da4eee42ad8255760530291ff91cdfb39b2` on `arena/c64fc525-tdd`.
 - **Documentation baseline commit:** `7f24859f716bdc36d15f5ef8b54370e4b6be80da` on `arena/c64fc525-tdd`; README, Master Engineering Architecture, Technical Quality and Integration Assessment, and this ledger committed together.
-- **Follow-up:** project-bootstrap decision and Agent 1/2 dependency matrix are recorded in `docs/PROJECT_BOOTSTRAP_DECISION.md` as a separate documentation change after the baseline commit; pending review, not implementation.
+- **Follow-up:** project-bootstrap decision, Agent 1/2 dependency matrix, and exact M0 evidence checklist are documented in `docs/PROJECT_BOOTSTRAP_DECISION.md` and `docs/M0_UNREAL_FOUNDATION_CHECKLIST.md`; proposals pending review, not implementation.
 - **Game source changes:** none.
 - **Build:** BLOCKED / NOT RUN — no `.uproject` or Unreal build tools available in the inspected workspace.
 - **Gameplay tests:** NOT RUN — no UE project or test harness present.
@@ -23,6 +23,7 @@ This is an initial in-repository log pending confirmation of the team's preferre
 |---|---|---|---|---|
 | 2026-11-16 | Technical Quality baseline and initial documentation set | Accepted as initial QA baseline; documentation committed as `7f24859f716bdc36d15f5ef8b54370e4b6be80da` | Exact files: README, Master Engineering Architecture, Technical Quality and Integration Assessment, Quality Ledger | No gameplay systems accepted; project foundation still blocked |
 | 2026-11-16 | Project-bootstrap decision and Agent 1/2 dependency matrix | Draft recommendation, committed as `2ff211638d57d0c753bc2051ab670db884fa23e0`; pending TD and system-owner review | No project creation; no detailed Agent 1/2 contracts found in checked repo/targeted Drive filename search | Request agent proposals and platform/engine decisions |
+| 2026-11-16 | M0 Unreal Foundation Evidence Checklist | Prepared as an evidence specification; no Unreal operations performed | Requires project open/build and a meaningful project-owned Unreal Automation Test before M0 can pass | Agent 3 to execute only after project/toolchain authorization and availability |
 | 2026-11-16 | Unreal/game system changes | None submitted | No UE source or assets in checkout | Await canonical project |
 | 2026-11-16 | Rejected changes | None | No implementation change was evaluated/rejected | — |
 | 2026-11-16 | Integration failures / regression fixes | None attempted or verified | No project build/integration available | — |

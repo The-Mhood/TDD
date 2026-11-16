@@ -164,6 +164,8 @@ Keep shared interfaces limited to values and operations actually used by both ow
 - **Exit criteria:** project opens in pinned UE; clean Development/editor target builds on selected runner; documented test command executes at least one real Unreal automation smoke test; a package or explicitly deferred package gate for unsupported SDK has a recorded result; build/test logs tied to commit; no undocumented plugin/module dependency; Agent 1/2 contracts reviewed and dependency graph has no cycle.
 - **Status now:** **BLOCKED** by absent project, unavailable UE toolchain, undecided platform/engine version, and missing Agent 1/2 proposals. No work on M0 has started.
 
+Detailed future evidence requirements are in the [M0 Unreal Foundation Evidence Checklist](M0_UNREAL_FOUNDATION_CHECKLIST.md). The checklist authorizes no project creation or gameplay implementation.
+
 **First feature integration after M0 — Movement/world-interaction lab (candidate):** a clearly labelled non-campaign test map, with Agent 1's approved minimal controllable-character movement/camera contract and one Agent 2-owned test interactable (and only a test target/encounter if their reviewed contracts require it). Test input-to-movement and player-query-to-world-response independently; avoid imported concept art and unapproved visual canon. This is a validation fixture, not a Chapter 1 production level or a claim of complete gameplay. Agent 1/2 and TD must agree the exact scope before implementation. Combat integration follows the project's required stage ordering and approved weapon/animation dependencies.
 
 ## 7. Decisions required before project bootstrap
