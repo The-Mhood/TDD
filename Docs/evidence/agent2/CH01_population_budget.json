@@ -5,7 +5,18 @@
     "status": "PROVISIONAL - derived from authored data, NOT measured",
     "register_source": "SCENE_AND_MICROLOCATION_MASTER_REGISTER v1.9 (Chapter 1 fixture)",
     "policy_source": "Tools/world/data/population_policy.json",
-    "caveat": "No simulation has run. Every figure is a projection. Replace with capture data when an engine exists."
+    "caveat": "No simulation has run. Every figure is a projection. Replace with capture data when an engine exists.",
+    "capture_status": {
+      "scenes": "COMPLETE - all Chapter 1 scenes captured",
+      "locations": "PARTIAL - location entries are NOT fully captured",
+      "note": "This tool consumes the scene fixture only. A complete scene capture does not imply a complete location capture."
+    },
+    "provenance_legend": {
+      "REGISTER_DATA": "NPC count read from the register's detail block",
+      "POLICY_DEFAULT": "NPC count is a policy assumption; NEEDS SOURCE CAPTURE",
+      "UNPARSED": "register prose found but not machine-parseable; counted as 0 and UNDERSTATES cost",
+      "NO_NPCS": "scene has no NPC field and none is expected"
+    }
   },
   "budget": {
     "chapter": "CH01",
@@ -30,12 +41,16 @@
       "PENDING APPROVAL": 1,
       "PROPOSED": 45
     },
-    "simulated_npcs_lower": 29,
-    "simulated_npcs_upper": 48,
-    "crowd_peak_estimate": 28,
+    "simulated_npcs_lower": 30,
+    "simulated_npcs_upper": 49,
+    "crowd_peak_estimate": 29,
     "background_estimate": 0,
-    "total_cost_units": 35.58,
+    "total_cost_units": 36.58,
     "unparsed_npc_scenes": [],
+    "npcs_provenance_summary": {
+      "POLICY_DEFAULT": 41,
+      "REGISTER_DATA": 5
+    },
     "scenes": [
       {
         "scene_id": "CH01-SCN-001",
@@ -48,6 +63,8 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
         "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
         "has_child": true,
         "simulated_cost": 2.0,
         "notes": [
@@ -65,6 +82,8 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 2.0,
         "notes": [
@@ -82,6 +101,8 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 2.0,
         "notes": [
@@ -99,6 +120,8 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 2.0,
         "notes": [
@@ -116,6 +139,8 @@
         "tier_source": "policy:ENTERABLE INTERIOR",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -134,6 +159,8 @@
         "tier_source": "policy:ENTERABLE INTERIOR",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.18,
         "notes": [
@@ -152,6 +179,8 @@
         "tier_source": "policy:ENTERABLE INTERIOR",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -170,6 +199,8 @@
         "tier_source": "policy:WORLD ACTIVITY SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -188,6 +219,8 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 1.2,
         "notes": [
@@ -205,6 +238,8 @@
         "tier_source": "policy:WORLD ACTIVITY SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -223,6 +258,8 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 2.0,
         "notes": [
@@ -240,6 +277,8 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 2.0,
         "notes": [
@@ -257,6 +296,8 @@
         "tier_source": "policy:EXTERIOR MICRO-LOCATION",
         "npcs_from_register": 0,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -274,6 +315,8 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 2.0,
         "notes": [
@@ -291,6 +334,8 @@
         "tier_source": "policy:WORLD ACTIVITY SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -309,6 +354,8 @@
         "tier_source": "policy:WORLD ACTIVITY SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -327,8 +374,10 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 3,
         "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
         "has_child": false,
-        "simulated_cost": 2.0,
+        "simulated_cost": 3.0,
         "notes": []
       },
       {
@@ -342,6 +391,8 @@
         "tier_source": "policy:WORLD ACTIVITY SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -360,6 +411,8 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 1.2,
         "notes": [
@@ -377,6 +430,8 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 2.0,
         "notes": [
@@ -394,6 +449,8 @@
         "tier_source": "policy:EXTERIOR MICRO-LOCATION",
         "npcs_from_register": 0,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -411,6 +468,8 @@
         "tier_source": "policy:EXTERIOR MICRO-LOCATION",
         "npcs_from_register": 0,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -428,6 +487,8 @@
         "tier_source": "policy:EXTERIOR MICRO-LOCATION",
         "npcs_from_register": 0,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -445,6 +506,8 @@
         "tier_source": "policy:ENVIRONMENTAL STORYTELLING",
         "npcs_from_register": 0,
         "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": []
@@ -460,6 +523,8 @@
         "tier_source": "policy:ATMOSPHERIC SCENE",
         "npcs_from_register": 1,
         "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
         "has_child": true,
         "simulated_cost": 0.3,
         "notes": [
@@ -478,6 +543,8 @@
         "tier_source": "policy:EXTERIOR MICRO-LOCATION",
         "npcs_from_register": 0,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -495,6 +562,8 @@
         "tier_source": "policy:WORLD ACTIVITY SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -513,6 +582,8 @@
         "tier_source": "policy:WORLD ACTIVITY SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -531,6 +602,8 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 2.0,
         "notes": [
@@ -548,6 +621,8 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 2.0,
         "notes": [
@@ -565,6 +640,8 @@
         "tier_source": "policy:WORLD ACTIVITY SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -583,6 +660,8 @@
         "tier_source": "policy:ATMOSPHERIC SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -601,6 +680,8 @@
         "tier_source": "policy:ATMOSPHERIC SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -619,6 +700,8 @@
         "tier_source": "policy:EXTERIOR MICRO-LOCATION",
         "npcs_from_register": 0,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -636,6 +719,8 @@
         "tier_source": "policy:ATMOSPHERIC SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -654,6 +739,8 @@
         "tier_source": "policy:ENVIRONMENTAL STORYTELLING",
         "npcs_from_register": 0,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -671,6 +758,8 @@
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 2.0,
         "notes": [
@@ -688,6 +777,8 @@
         "tier_source": "policy:ENTERABLE INTERIOR",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.18,
         "notes": [
@@ -706,6 +797,8 @@
         "tier_source": "policy:ATMOSPHERIC SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -724,6 +817,8 @@
         "tier_source": "policy:EXPLORATION SCENE",
         "npcs_from_register": 0,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -741,6 +836,8 @@
         "tier_source": "policy:ENVIRONMENTAL STORYTELLING",
         "npcs_from_register": 0,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -758,6 +855,8 @@
         "tier_source": "policy:ATMOSPHERIC SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.01,
         "notes": [
@@ -776,6 +875,8 @@
         "tier_source": "policy:EXPLORATION SCENE",
         "npcs_from_register": 0,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -793,6 +894,8 @@
         "tier_source": "policy:ENVIRONMENTAL STORYTELLING",
         "npcs_from_register": 0,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -810,6 +913,8 @@
         "tier_source": "policy:ATMOSPHERIC SCENE",
         "npcs_from_register": 1,
         "npcs_source": "policy_default",
+        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_is_measured": false,
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -828,6 +933,8 @@
         "tier_source": "policy:SECONDARY STORY SCENE",
         "npcs_from_register": 0,
         "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
         "has_child": false,
         "simulated_cost": 4.0,
         "notes": []

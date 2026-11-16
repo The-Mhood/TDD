@@ -1,0 +1,391 @@
+{
+  "meta": {
+    "tool": "Tools/world/sensitivity.py",
+    "chapter": "CH01",
+    "status": "PROVISIONAL - sensitivity of a derived estimate, not a measurement",
+    "register_source": "SCENE_AND_MICROLOCATION_MASTER_REGISTER v1.9",
+    "policy_source": "Tools/world/data/population_policy.json",
+    "caveat": "Variation ranges are engineering hypotheses about plausible policy error. They are NOT observed values. No simulation has run. This report covers Chapter 1 only and does NOT extrapolate to Chapters 2-8, whose categories are not ingested.",
+    "reading_guide": {
+      "facts": "Values read from the register. Traceable to a scene id.",
+      "assumptions": "Values invented by the policy. No register basis.",
+      "elasticity": "Percent change in total cost per percent change in the parameter. 0 means the total does not depend on it."
+    }
+  },
+  "capture_status": {
+    "scenes": "COMPLETE - 46 of 46 Chapter 1 scenes captured",
+    "locations": "PARTIAL - 13 of 57 Chapter 1 location entries captured",
+    "warning": "This report covers scenes only. It says nothing about the 41 uncaptured location entries, and it must not be read as covering the full chapter's world content."
+  },
+  "facts": {
+    "scenes_with_register_npc_data": 5,
+    "scenes_total": 46,
+    "coverage_ratio": 0.109,
+    "detail": [
+      {
+        "scene_id": "CH01-SCN-001",
+        "name": "Woman Cooking Outside Her Door",
+        "category": "AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "tier": "CROWD"
+      },
+      {
+        "scene_id": "CH01-SCN-017",
+        "name": "People Talking Under the Tree",
+        "category": "AMBIENT NPC SCENE",
+        "npcs_from_register": 3,
+        "tier": "CROWD"
+      },
+      {
+        "scene_id": "CH01-SCN-024",
+        "name": "The House No One Lives In",
+        "category": "ENVIRONMENTAL STORYTELLING",
+        "npcs_from_register": 0,
+        "tier": "NONE"
+      },
+      {
+        "scene_id": "CH01-SCN-025",
+        "name": "Goats at Dusk",
+        "category": "ATMOSPHERIC SCENE",
+        "npcs_from_register": 1,
+        "tier": "SCRIPTED"
+      },
+      {
+        "scene_id": "CH01-SCN-046",
+        "name": "Nneka Memory 1: They Were Saying the Child's Name",
+        "category": "SECONDARY STORY SCENE",
+        "npcs_from_register": 0,
+        "tier": "NAMED"
+      }
+    ]
+  },
+  "assumptions": {
+    "cost_units": {
+      "NAMED": 4.0,
+      "CROWD": 1.0,
+      "SCRIPTED": 0.3,
+      "BACKGROUND": 0.05,
+      "NONE": 0.0
+    },
+    "crowd_concurrency_ratio": {
+      "AMBIENT NPC SCENE": 0.75,
+      "ATMOSPHERIC SCENE": 1.0,
+      "WORLD ACTIVITY SCENE": 1.0
+    },
+    "expected_npcs_defaults": {
+      "AMBIENT NPC SCENE": 2,
+      "WORLD ACTIVITY SCENE": 1,
+      "ATMOSPHERIC SCENE": 1,
+      "ENVIRONMENTAL STORYTELLING": 0,
+      "ENTERABLE INTERIOR": 1,
+      "EXTERIOR MICRO-LOCATION": 0,
+      "EXPLORATION SCENE": 0,
+      "SECONDARY STORY SCENE": 0,
+      "MAIN STORY SCENE": 0,
+      "INCIDENTAL SCENE": 1
+    },
+    "access_multipliers": {
+      "_note": "Independent cost multiplier applied after tier cost. Derived from the access level's streaming/collision/tick policy in Docs/WORLD_ARCHITECTURE.md section 4.",
+      "FULLY ENTERABLE": 1.0,
+      "PARTIALLY ENTERABLE": 0.6,
+      "VISUALLY ACCESSIBLE": 0.2,
+      "BACKGROUND ENVIRONMENT": 0.05,
+      "OPEN EXTERIOR": 1.0,
+      "_default": 1.0
+    },
+    "_note": "Every value here is an engineering assumption with no register basis. None of it is measured."
+  },
+  "assumption_dependence": {
+    "cost_from_register_scenes": 9.3,
+    "cost_from_policy_default_scenes": 27.27,
+    "share_of_cost_from_policy_defaults": 0.746,
+    "scenes_on_policy_default": 41,
+    "scenes_with_register_data": 5
+  },
+  "baseline": {
+    "total_cost_units": 36.58,
+    "simulated_npcs": 49,
+    "crowd_peak": 29
+  },
+  "sensitivity": {
+    "crowd_concurrency_ratio": {
+      "baseline": 0.75,
+      "points": [
+        {
+          "parameter": "crowd_concurrency_ratio",
+          "value": 0.25,
+          "total_cost_units": 22.38,
+          "simulated_npcs": 34,
+          "crowd_peak": 14,
+          "delta_vs_baseline": -14.2,
+          "pct_vs_baseline": -38.82
+        },
+        {
+          "parameter": "crowd_concurrency_ratio",
+          "value": 0.5,
+          "total_cost_units": 23.38,
+          "simulated_npcs": 35,
+          "crowd_peak": 15,
+          "delta_vs_baseline": -13.2,
+          "pct_vs_baseline": -36.09
+        },
+        {
+          "parameter": "crowd_concurrency_ratio",
+          "value": 0.75,
+          "total_cost_units": 36.58,
+          "simulated_npcs": 49,
+          "crowd_peak": 29,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "crowd_concurrency_ratio",
+          "value": 1.0,
+          "total_cost_units": 36.58,
+          "simulated_npcs": 49,
+          "crowd_peak": 29,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        }
+      ],
+      "elasticity": 0.847,
+      "quantization": {
+        "is_quantized": true,
+        "flat_intervals": [
+          [
+            0.75,
+            1.0
+          ]
+        ],
+        "cause": "crowd actors are rounded to whole numbers per scene, so small changes in the depicted count can leave the simulated count unchanged",
+        "consequence": "the reported elasticity is a local slope and does not describe the whole sweep"
+      },
+      "interpretation": "How many of the depicted crowd must be simulated at the same time."
+    },
+    "expected_npcs_for_policy_defaults": {
+      "baseline": 2,
+      "points": [
+        {
+          "parameter": "expected_npcs_crowd",
+          "value": 1,
+          "total_cost_units": 25.38,
+          "simulated_npcs": 37,
+          "crowd_peak": 17,
+          "delta_vs_baseline": -11.2,
+          "pct_vs_baseline": -30.62
+        },
+        {
+          "parameter": "expected_npcs_crowd",
+          "value": 2,
+          "total_cost_units": 36.58,
+          "simulated_npcs": 49,
+          "crowd_peak": 29,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "expected_npcs_crowd",
+          "value": 3,
+          "total_cost_units": 47.77,
+          "simulated_npcs": 61,
+          "crowd_peak": 41,
+          "delta_vs_baseline": 11.19,
+          "pct_vs_baseline": 30.59
+        },
+        {
+          "parameter": "expected_npcs_crowd",
+          "value": 4,
+          "total_cost_units": 47.77,
+          "simulated_npcs": 61,
+          "crowd_peak": 41,
+          "delta_vs_baseline": 11.19,
+          "pct_vs_baseline": 30.59
+        },
+        {
+          "parameter": "expected_npcs_crowd",
+          "value": 5,
+          "total_cost_units": 58.97,
+          "simulated_npcs": 73,
+          "crowd_peak": 53,
+          "delta_vs_baseline": 22.39,
+          "pct_vs_baseline": 61.21
+        }
+      ],
+      "elasticity": 0.882,
+      "quantization": {
+        "is_quantized": true,
+        "flat_intervals": [
+          [
+            3,
+            4
+          ]
+        ],
+        "cause": "crowd actors are rounded to whole numbers per scene, so small changes in the depicted count can leave the simulated count unchanged",
+        "consequence": "the reported elasticity is a local slope and does not describe the whole sweep"
+      },
+      "interpretation": "How many people an ambient scene depicts, for the 12 crowd scenes with no captured detail block."
+    },
+    "expected_npcs_for_scripted": {
+      "baseline": 1,
+      "points": [
+        {
+          "parameter": "expected_npcs_scripted",
+          "value": 0,
+          "total_cost_units": 36.58,
+          "simulated_npcs": 49,
+          "crowd_peak": 29,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "expected_npcs_scripted",
+          "value": 1,
+          "total_cost_units": 36.58,
+          "simulated_npcs": 49,
+          "crowd_peak": 29,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "expected_npcs_scripted",
+          "value": 2,
+          "total_cost_units": 36.58,
+          "simulated_npcs": 49,
+          "crowd_peak": 29,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "expected_npcs_scripted",
+          "value": 4,
+          "total_cost_units": 36.58,
+          "simulated_npcs": 49,
+          "crowd_peak": 29,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        }
+      ],
+      "elasticity": 0.0,
+      "interpretation": "EXPECTED TO BE INERT. Scripted scenes are billed as a flat per-scene cost, so their NPC count cannot move the total. Included to demonstrate the model's structure, not to vary the result."
+    },
+    "crowd_cost_unit": {
+      "baseline": 1.0,
+      "points": [
+        {
+          "parameter": "cost_unit_crowd",
+          "value": 0.5,
+          "total_cost_units": 22.88,
+          "simulated_npcs": 49,
+          "crowd_peak": 29,
+          "delta_vs_baseline": -13.7,
+          "pct_vs_baseline": -37.45
+        },
+        {
+          "parameter": "cost_unit_crowd",
+          "value": 1.0,
+          "total_cost_units": 36.58,
+          "simulated_npcs": 49,
+          "crowd_peak": 29,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "cost_unit_crowd",
+          "value": 1.5,
+          "total_cost_units": 50.27,
+          "simulated_npcs": 49,
+          "crowd_peak": 29,
+          "delta_vs_baseline": 13.69,
+          "pct_vs_baseline": 37.42
+        },
+        {
+          "parameter": "cost_unit_crowd",
+          "value": 2.0,
+          "total_cost_units": 63.97,
+          "simulated_npcs": 49,
+          "crowd_peak": 29,
+          "delta_vs_baseline": 27.39,
+          "pct_vs_baseline": 74.88
+        }
+      ],
+      "elasticity": 1.197,
+      "interpretation": "The cost assigned to one simulated crowd actor. Pure assumption: no capture exists."
+    }
+  },
+  "scenarios": [
+    {
+      "scenario": "LOW-DENSITY",
+      "expected_npcs_default": 1,
+      "crowd_concurrency_ratio": 0.5,
+      "total_cost_units": 23.38,
+      "simulated_npcs": 35,
+      "crowd_peak": 15,
+      "delta_vs_baseline": -13.2,
+      "pct_vs_baseline": -36.09,
+      "still_within_chapter_ceiling": true,
+      "note": "Every ambient scene depicts one person; half are simulated at once."
+    },
+    {
+      "scenario": "LOW-COUNT",
+      "expected_npcs_default": 1,
+      "crowd_concurrency_ratio": 0.75,
+      "total_cost_units": 25.38,
+      "simulated_npcs": 37,
+      "crowd_peak": 17,
+      "delta_vs_baseline": -11.2,
+      "pct_vs_baseline": -30.62,
+      "still_within_chapter_ceiling": true,
+      "note": "One person per ambient scene, baseline concurrency."
+    },
+    {
+      "scenario": "BASELINE",
+      "expected_npcs_default": 2,
+      "crowd_concurrency_ratio": 0.75,
+      "total_cost_units": 36.58,
+      "simulated_npcs": 49,
+      "crowd_peak": 29,
+      "delta_vs_baseline": 0.0,
+      "pct_vs_baseline": 0.0,
+      "still_within_chapter_ceiling": true,
+      "note": "Current policy defaults."
+    },
+    {
+      "scenario": "HIGH-COUNT",
+      "expected_npcs_default": 3,
+      "crowd_concurrency_ratio": 0.75,
+      "total_cost_units": 47.77,
+      "simulated_npcs": 61,
+      "crowd_peak": 41,
+      "delta_vs_baseline": 11.19,
+      "pct_vs_baseline": 30.59,
+      "still_within_chapter_ceiling": true,
+      "note": "Ambient scenes depict three people."
+    },
+    {
+      "scenario": "HIGH-DENSITY",
+      "expected_npcs_default": 4,
+      "crowd_concurrency_ratio": 1.0,
+      "total_cost_units": 58.97,
+      "simulated_npcs": 73,
+      "crowd_peak": 53,
+      "delta_vs_baseline": 22.39,
+      "pct_vs_baseline": 61.21,
+      "still_within_chapter_ceiling": true,
+      "note": "Four people per ambient scene, all simulated simultaneously."
+    }
+  ],
+  "ceiling": {
+    "chapter_ceiling": 60.0,
+    "lowest_scenario_cost": 23.38,
+    "highest_scenario_cost": 58.97,
+    "highest_scenario_name": "HIGH-DENSITY",
+    "headroom_at_worst_case": 1.03,
+    "all_scenarios_within_ceiling": true
+  },
+  "conclusion": {
+    "estimate_is_mostly_assumption": true,
+    "register_coverage_of_scenes": 0.109,
+    "only_crowd_scenes_are_sensitive": true,
+    "summary": "The estimate is driven almost entirely by two policy parameters applied to 12 uncaptured ambient scenes. Capturing those 12 detail blocks would convert most of the estimate from assumption to fact, and is worth more than any refinement of the policy numbers."
+  }
+}

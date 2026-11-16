@@ -1068,6 +1068,7 @@ Ordered, with owners and evidence:
 | `REGISTER_TRACEABILITY.md` | Register→world mapping; the two status axes; per-row verification results; the six counts discriminated |
 | `WORLD_ASSESSMENT.md` | Repo state, register findings, missing systems, staged plan |
 | `WORLD_ARCHITECTURE.md` | Runtime world components (all SPEC), streaming, five-tier population, interfaces |
+| `POPULATION_SENSITIVITY_REPORT.md` | How the Ch1 population estimate moves when policy assumptions vary; facts vs assumptions; the rounding correction |
 | `ENEMY_ARCHETYPE_REVIEW.md` | Six PROPOSED archetypes for CD-3; risk ranked by cultural exposure |
 | `DEPENDENCY_AND_BLOCKER_REGISTER.md` | CD-5/CD-3/CD-2 outcomes, 12 blockers, cross-agent needs, honest capability table |
 | `AGENT1_TRAVERSAL_CONTRACT_REQUEST.md` | Request only — provisional ids, no frozen enum |

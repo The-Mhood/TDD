@@ -14,12 +14,12 @@
       "command": "/usr/bin/python3 -m unittest discover -s Tools/canon/tests",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 72,
+      "duration_ms": 122,
       "stdout_tail": [],
       "stderr_tail": [
         "..................................................................................................................",
         "----------------------------------------------------------------------",
-        "Ran 114 tests in 0.024s",
+        "Ran 114 tests in 0.040s",
         "",
         "OK"
       ]
@@ -28,12 +28,12 @@
       "command": "/usr/bin/python3 -m unittest discover -s Tools/world/tests",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 69,
+      "duration_ms": 118,
       "stdout_tail": [],
       "stderr_tail": [
-        "........................................................................................................................",
+        "...........................................................................................................................................................................",
         "----------------------------------------------------------------------",
-        "Ran 120 tests in 0.017s",
+        "Ran 171 tests in 0.040s",
         "",
         "OK"
       ]
@@ -42,9 +42,9 @@
       "command": "/usr/bin/python3 Tools/ci/l0_checks.py",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 134,
+      "duration_ms": 239,
       "stdout_tail": [
-        "L0 checks: 12/12 passed"
+        "L0 checks: 14/14 passed"
       ],
       "stderr_tail": []
     },
@@ -52,7 +52,7 @@
       "command": "/usr/bin/python3 Tools/world/count_reconciliation.py",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 41,
+      "duration_ms": 49,
       "stdout_tail": [
         "  major_environments                 parsed    1  published 1",
         "  scenes_with_missing_parent         parsed   40  published -  <-- differs (partial capture, expected)",
@@ -67,13 +67,13 @@
       "command": "/usr/bin/python3 Tools/world/population_budget.py --chapter CH01",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 41,
+      "duration_ms": 56,
       "stdout_tail": [
-        "  by status:   {'PENDING APPROVAL': 1, 'PROPOSED': 45}",
-        "  simulated NPCs (lower/upper): 29/48",
-        "  crowd peak estimate: 28",
+        "  simulated NPCs (lower/upper): 30/49",
+        "  crowd peak estimate: 29",
         "  background: 0",
-        "  total cost units: 35.58",
+        "  total cost units: 36.58",
+        "  NPC count provenance: {'POLICY_DEFAULT': 41, 'REGISTER_DATA': 5}",
         "  validation: PASS"
       ],
       "stderr_tail": []
@@ -82,7 +82,7 @@
       "command": "/usr/bin/python3 Tools/world/greybox_rules.py Tools/world/data/greybox_ch01.json",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 32,
+      "duration_ms": 50,
       "stdout_tail": [
         "greybox assets: 3",
         "  CH01-ENV-001     SPATIAL, STREAMING, SIGHTLINE",
@@ -92,11 +92,26 @@
       ],
       "stderr_tail": []
     },
+    "sensitivity": {
+      "command": "/usr/bin/python3 Tools/world/sensitivity.py --out Docs/evidence/agent2/CH01_population_sensitivity.json",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 66,
+      "stdout_tail": [
+        "  BASELINE       npcs=2 ratio=0.75  cost= 36.58  sim= 49  (+0%)",
+        "  HIGH-COUNT     npcs=3 ratio=0.75  cost= 47.77  sim= 61  (+31%)",
+        "  HIGH-DENSITY   npcs=4 ratio=1.00  cost= 58.97  sim= 73  (+61%)",
+        "",
+        "headroom at worst case: 1.03 of 60.0 (HIGH-DENSITY)",
+        "written: Docs/evidence/agent2/CH01_population_sensitivity.json"
+      ],
+      "stderr_tail": []
+    },
     "world_manifest": {
       "command": "/usr/bin/python3 Tools/world/world_manifest.py Tools/world/data/CH01_manifest.json",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 23,
+      "duration_ms": 34,
       "stdout_tail": [
         "manifest: Tools/world/data/CH01_manifest.json",
         "chapter:  CH01",
@@ -110,12 +125,12 @@
       "command": "/usr/bin/python3 -m unittest Tools.canon.tests.test_canon.TestIndexIsValid",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 43,
+      "duration_ms": 66,
       "stdout_tail": [],
       "stderr_tail": [
         "....",
         "----------------------------------------------------------------------",
-        "Ran 4 tests in 0.002s",
+        "Ran 4 tests in 0.003s",
         "",
         "OK"
       ]
@@ -171,6 +186,11 @@
       "claim": "NPC prose parsing is correct",
       "method": "15-case suite; 2 bugs found and fixed this milestone",
       "result": "verified with known undercount risk"
+    },
+    {
+      "claim": "population estimate sensitivity to policy assumptions",
+      "method": "Tools/world/sensitivity.py, 4 sweeps + 5 scenarios",
+      "result": "75% of cost rests on policy defaults; 2.5x spread"
     },
     {
       "claim": "population budget reflects real engine cost",

@@ -265,7 +265,9 @@ class TestDocsAgreeWithPolicyData(unittest.TestCase):
             ("scenes_total", str(budget["scenes_total"])),
             ("crowd_peak_estimate", str(budget["crowd_peak_estimate"])),
         ]:
-            self.assertIn(doc_fragment, self.doc, f"{key} value not reflected in doc")
+            self.assertIn(doc_fragment, self.doc,
+                          f"{key}={doc_fragment} from evidence is not reflected in "
+                          f"Docs/WORLD_ARCHITECTURE.md")
 
     def test_doc_states_no_simulation_majority(self):
         """The headline finding: most scenes need no simulated agent."""

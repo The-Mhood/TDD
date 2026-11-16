@@ -153,10 +153,15 @@ validated by `Tools/world/population_budget.py`.
 | `BACKGROUND` | Mass, instanced, no tick | vertex animation only | none | 0.05 | 0 |
 | `NONE` | nothing | nothing | none | 0 | 12 |
 
-Per-scene cost is multiplied by an access multiplier (`FULLY ENTERABLE` 1.0,
-`PARTIALLY ENTERABLE` 0.8, `VISUALLY ACCESSIBLE` 0.5, `BACKGROUND ENVIRONMENT`
-0.25), because a scene the player can only see is cheaper than one they can walk
-into. Chapter ceilings: 16 crowd scenes, 60 total cost units, 4 named nearby.
+Per-scene cost is multiplied by an access multiplier (`OPEN EXTERIOR` 1.0,
+`FULLY ENTERABLE` 1.0, `PARTIALLY ENTERABLE` 0.6, `VISUALLY ACCESSIBLE` 0.2,
+`BACKGROUND ENVIRONMENT` 0.05), because a scene the player can only see is far
+cheaper than one they can walk into. Chapter ceilings: 16 crowd scenes, 60 total
+cost units, 4 named nearby.
+
+Values above are read from `population_policy.json`; an earlier revision of this
+table stated 0.8 / 0.5 / 0.25, which contradicted the data. A test now compares
+this document against the policy file.
 
 Cost units are **relative budget arithmetic, not milliseconds** — a distinction
 the policy file states explicitly and a test enforces.
@@ -181,14 +186,30 @@ Measured, not estimated — `Docs/evidence/agent2/CH01_population_budget.json`:
 | requiring no simulation at all (NONE + SCRIPTED) | 31 of 46 |
 | CROWD scenes | 14 |
 | NAMED scenes | 1 |
-| simulated NPCs, lower/upper bound | 29 / 48 |
-| crowd peak estimate | 28 |
-| total cost units | 35.58 |
+| simulated NPCs, lower/upper bound | 30 / 49 |
+| crowd peak estimate | 29 |
+| total cost units | 36.58 |
 | validation | PASS |
 
 **31 of 46 scenes need no simulated agent.** That is the TD's point answered with
 numbers rather than assurance: the majority of ambient activity is a performer on
 a loop, not an agent.
+
+### 5.1.4 How much of this is fact
+
+Only **5 of 46 scenes (11%)** have register NPC data. The remaining **41 scenes
+(75% of the cost)** rest on policy defaults. Two parameters — the ambient
+`expected_npcs` and the `crowd_concurrency_ratio` — control almost the entire
+estimate, because only CROWD scenes are priced per NPC.
+
+The estimate ranges from **23.38 to 58.97 cost units** across plausible policy
+assumptions, a 2.5x spread. Worst case leaves 1.03 units below the chapter
+ceiling. Full analysis: `Docs/POPULATION_SENSITIVITY_REPORT.md`.
+
+Rounding is **upward** (`math.ceil`) by design: overestimating a budget costs
+margin, underestimating costs the project. Every scene row carries
+`npcs_provenance` (`REGISTER_DATA` / `POLICY_DEFAULT` / `UNPARSED` / `NO_NPCS`)
+so a reader never has to infer whether a number is data or assumption.
 
 Every scene records where its tier came from (`tier_source`) and where its NPC
 count came from (`npcs_source`: `register` or `policy_default`). 41 of 46 scenes

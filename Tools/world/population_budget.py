@@ -33,6 +33,7 @@ Dependency policy: stdlib only.
 from __future__ import annotations
 
 import json
+import math
 import sys
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field, asdict
@@ -84,7 +85,13 @@ class SceneBudget:
     tier: str                      # NAMED | CROWD | SCRIPTED | BACKGROUND | NONE
     tier_source: str               # "policy:<category>" or "fallback"
     npcs_from_register: Optional[int]
-    npcs_source: str               # "register" | "policy_default" | "unparsed"
+    npcs_source: str               # "register" | "policy_default" | "unparsed" | "none"
+    # Explicit, machine-readable provenance so no reader has to infer whether a
+    # number is data or assumption. These are derived from npcs_source and are
+    # duplicated deliberately: a field a human can read at a glance is worth more
+    # than a rule they must remember.
+    npcs_provenance: str           # REGISTER_DATA | POLICY_DEFAULT | UNPARSED | NO_NPCS
+    npcs_is_measured: bool         # True only when read from the register
     has_child: bool
     simulated_cost: float          # cost units; 0.0 for NONE/BACKGROUND
     notes: List[str] = field(default_factory=list)
@@ -103,6 +110,7 @@ class ChapterBudget:
     background_estimate: int
     total_cost_units: float
     unparsed_npc_scenes: List[str]
+    npcs_provenance_summary: Dict[str, int]
     scenes: List[SceneBudget]
 
 
@@ -112,10 +120,26 @@ def _estimate_crowd(count: int, policy: Dict[str, Any], category: str) -> int:
     Register NPC totals are the number of people the scene *depicts*, not the
     number that must be simulated simultaneously. The policy supplies a
     concurrency ratio per category, with a stated basis.
+
+    ROUNDING IS DELIBERATELY UPWARD (ceiling).
+
+    An earlier version used round(), which applies banker's rounding: round(1.5)
+    and round(2.5) both return 2. That made a scene depicting two people and a
+    scene depicting three people cost exactly the same, so the model silently
+    flattened under variation. Worse, rounding to nearest can round a cost
+    DOWNWARD, and a population budget that understates cost is worse than
+    useless - it is the direction that produces a frame-rate failure nobody
+    planned for.
+
+    Ceiling is asymmetric on purpose: overestimating a budget costs margin,
+    underestimating costs the project. Scenes are still individually small, so
+    the aggregate bias is bounded and visible in the sensitivity report.
     """
     ratio = policy["crowd_concurrency_ratio"].get(category,
                                                  policy["crowd_concurrency_ratio"]["_default"])
-    return max(1, int(round(count * ratio))) if count else 0
+    if not count:
+        return 0
+    return max(1, math.ceil(count * ratio))
 
 
 def build_chapter_budget(scenes: Sequence[reg.SceneRecord],
@@ -199,12 +223,21 @@ def build_chapter_budget(scenes: Sequence[reg.SceneRecord],
         total_cost += cost * access_mult
 
         by_tier[tier] += 1
+        provenance = {
+            "register": "REGISTER_DATA",
+            "policy_default": "POLICY_DEFAULT",
+            "unparsed": "UNPARSED",
+            "none": "NO_NPCS",
+        }[npcs_source]
         budgets.append(SceneBudget(
             scene_id=scene.id, name=scene.name, category=category, access=access,
             canon_status=canon, parent_id=scene.parent_id,
             tier=tier, tier_source=f"policy:{category}" if category in
             policy["scene_category_tiers"] else "fallback",
-            npcs_from_register=npcs, npcs_source=npcs_source, has_child=has_child,
+            npcs_from_register=npcs, npcs_source=npcs_source,
+            npcs_provenance=provenance,
+            npcs_is_measured=(npcs_source == "register"),
+            has_child=has_child,
             simulated_cost=round(cost * access_mult, 2), notes=notes,
         ))
 
@@ -220,6 +253,8 @@ def build_chapter_budget(scenes: Sequence[reg.SceneRecord],
         background_estimate=background,
         total_cost_units=round(total_cost, 2),
         unparsed_npc_scenes=sorted(set(unparsed)),
+        npcs_provenance_summary=dict(sorted(
+            Counter(b.npcs_provenance for b in budgets).items())),
         scenes=budgets,
     )
 
@@ -290,6 +325,19 @@ def main(argv: Sequence[str]) -> int:
             "policy_source": "Tools/world/data/population_policy.json",
             "caveat": "No simulation has run. Every figure is a projection. "
                       "Replace with capture data when an engine exists.",
+            "capture_status": {
+                "scenes": "COMPLETE - all Chapter 1 scenes captured",
+                "locations": "PARTIAL - location entries are NOT fully captured",
+                "note": "This tool consumes the scene fixture only. A complete "
+                        "scene capture does not imply a complete location capture.",
+            },
+            "provenance_legend": {
+                "REGISTER_DATA": "NPC count read from the register's detail block",
+                "POLICY_DEFAULT": "NPC count is a policy assumption; NEEDS SOURCE CAPTURE",
+                "UNPARSED": "register prose found but not machine-parseable; "
+                            "counted as 0 and UNDERSTATES cost",
+                "NO_NPCS": "scene has no NPC field and none is expected",
+            },
         },
         "budget": asdict(budget),
         "validation": {"problems": problems, "result": "PASS" if not problems else "FAIL"},
@@ -303,6 +351,7 @@ def main(argv: Sequence[str]) -> int:
     print(f"  crowd peak estimate: {budget.crowd_peak_estimate}")
     print(f"  background: {budget.background_estimate}")
     print(f"  total cost units: {budget.total_cost_units}")
+    print(f"  NPC count provenance: {budget.npcs_provenance_summary}")
     print(f"  validation: {'PASS' if not problems else 'FAIL'}")
     for problem in problems:
         print("   -", problem)

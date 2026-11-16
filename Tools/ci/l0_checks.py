@@ -280,6 +280,124 @@ def check_register_counts_reconcile() -> List[str]:
     return []
 
 
+def check_population_provenance() -> List[str]:
+    """Every scene must state whether its NPC count is register data or an
+    assumption, and the budget must admit most of it is assumption.
+
+    The TD required the two to be distinguishable. Making it a gate means a
+    future change cannot quietly relabel a policy default as register data.
+    """
+    problems: List[str] = []
+    artifact = REPO / "Docs" / "evidence" / "agent2" / "CH01_population_budget.json"
+    if not artifact.is_file():
+        return [f"missing evidence artifact: {artifact.name}"]
+    try:
+        data = json.loads(artifact.read_text(encoding="utf-8"))
+    except Exception as exc:
+        return [f"{artifact.name}: unreadable ({exc})"]
+
+    scenes = data.get("budget", {}).get("scenes", [])
+    if not scenes:
+        return [f"{artifact.name}: no scene rows"]
+
+    allowed = {"REGISTER_DATA", "POLICY_DEFAULT", "UNPARSED", "NO_NPCS"}
+    for scene in scenes:
+        prov = scene.get("npcs_provenance")
+        if prov not in allowed:
+            problems.append(
+                f"{scene.get('scene_id')}: npcs_provenance {prov!r} not one of {sorted(allowed)}")
+        if prov == "REGISTER_DATA" and scene.get("npcs_is_measured") is not True:
+            problems.append(
+                f"{scene.get('scene_id')}: claims REGISTER_DATA but npcs_is_measured is false")
+        if prov in {"POLICY_DEFAULT", "UNPARSED"} and scene.get("npcs_is_measured"):
+            problems.append(
+                f"{scene.get('scene_id')}: provenance {prov} but npcs_is_measured is true - "
+                f"an assumption must never be marked as measured")
+
+    summary = data.get("budget", {}).get("npcs_provenance_summary", {})
+    if not summary:
+        problems.append("budget has no npcs_provenance_summary")
+    if summary.get("POLICY_DEFAULT", 0) == 0:
+        problems.append("no scene is marked POLICY_DEFAULT; this contradicts the "
+                        "documented partial capture and suggests mislabelling")
+
+    # CROSS-CHECK AGAINST THE SOURCE. Trusting the artifact's own self-reported
+    # flags is not enough: relabelling a scene and flipping npcs_is_measured with
+    # it passes every internal consistency test. Provenance must be re-derived
+    # from the register fixture and compared.
+    try:
+        import population_budget as pb
+        import registers as reg
+        fixture = (REPO / "Tools" / "canon" / "tests" / "fixtures"
+                   / "scene_register_ch01_full.md")
+        text = fixture.read_text(encoding="utf-8")
+        live = pb.build_chapter_budget(reg.parse_scene_summary(text),
+                                       reg.parse_scene_details(text),
+                                       pb.load_policy(), "CH01")
+        live_by_id = {s.scene_id: s for s in live.scenes}
+    except Exception as exc:
+        return problems + [f"cannot re-derive provenance: {exc}"]
+
+    for scene in scenes:
+        sid = scene.get("scene_id")
+        expected = live_by_id.get(sid)
+        if expected is None:
+            problems.append(f"{sid}: not present in the live derivation")
+            continue
+        if scene.get("npcs_provenance") != expected.npcs_provenance:
+            problems.append(
+                f"{sid}: artifact says {scene.get('npcs_provenance')} but the register "
+                f"fixture derives {expected.npcs_provenance}")
+        if scene.get("npcs_from_register") != expected.npcs_from_register:
+            problems.append(
+                f"{sid}: artifact NPC count {scene.get('npcs_from_register')} does not "
+                f"match register-derived {expected.npcs_from_register}")
+
+    cap = data.get("meta", {}).get("capture_status", {})
+    if "PARTIAL" not in str(cap.get("locations", "")):
+        problems.append("capture_status must state that locations are PARTIAL")
+    return problems
+
+
+def check_sensitivity_artifact_current() -> List[str]:
+    """The sensitivity artifact must match what the code produces now."""
+    import subprocess
+    artifact = REPO / "Docs" / "evidence" / "agent2" / "CH01_population_sensitivity.json"
+    if not artifact.is_file():
+        return ["missing Docs/evidence/agent2/CH01_population_sensitivity.json"]
+    try:
+        committed = json.loads(artifact.read_text(encoding="utf-8"))
+    except Exception as exc:
+        return [f"sensitivity artifact unreadable ({exc})"]
+
+    result = subprocess.run(
+        [sys.executable, str(REPO / "Tools" / "world" / "sensitivity.py")],
+        capture_output=True, text=True, cwd=REPO)
+    if result.returncode != 0:
+        return [f"sensitivity tool failed: {result.stderr.strip()[:300]}"]
+
+    sys.path.insert(0, str(REPO / "Tools" / "canon"))
+    sys.path.insert(0, str(REPO / "Tools" / "world"))
+    import population_budget as pb
+    import registers as reg
+    import sensitivity as sens
+    fixtures = REPO / "Tools" / "canon" / "tests" / "fixtures" / "scene_register_ch01_full.md"
+    text = fixtures.read_text(encoding="utf-8")
+    live = sens.build_report(reg.parse_scene_summary(text),
+                             reg.parse_scene_details(text),
+                             pb.load_policy())
+
+    problems: List[str] = []
+    if committed["baseline"] != live["baseline"]:
+        problems.append(
+            f"sensitivity baseline is stale: artifact {committed['baseline']} "
+            f"vs live {live['baseline']}. Re-run Tools/world/sensitivity.py --out ...")
+    if (committed["facts"]["scenes_with_register_npc_data"]
+            != live["facts"]["scenes_with_register_npc_data"]):
+        problems.append("sensitivity facts are stale")
+    return problems
+
+
 def run(verbose: bool = False) -> Tuple[bool, Dict[str, List[str]]]:
     files = tracked_files()
     results: Dict[str, List[str]] = {
@@ -295,6 +413,8 @@ def run(verbose: bool = False) -> Tuple[bool, Dict[str, List[str]]]:
         "canon_mirror_drift": check_canon_mirror_drift(),
         "greybox_restrictions": check_greybox_restrictions(),
         "register_counts_reconcile": check_register_counts_reconcile(),
+        "population_provenance": check_population_provenance(),
+        "sensitivity_artifact_current": check_sensitivity_artifact_current(),
     }
     ok = all(not v for v in results.values())
     if verbose:
