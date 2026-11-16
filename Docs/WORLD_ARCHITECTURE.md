@@ -206,8 +206,8 @@ OPEN because one scene, `CH01-SCN-014` "Fetching Water", states a collective
 
 ### 5.1.4 How much of this is fact
 
-After the W-M2.2 capture, **28 of 46 scenes (61%)** carry a resolved register
-head-count, and a further **7** carry register prose that states a range,
+After the W-M2.3 correction, **29 of 46 scenes (63%)** carry a resolved register
+head-count, and a further **6** carry register prose that states a range,
 alternative or condition. **11 scenes remain uncaptured**, but every one of them
 is SCRIPTED or NONE tier, whose cost is a flat per-scene or zero figure and does
 **not** depend on the NPC count. They carry provenance debt, not numeric
@@ -457,7 +457,7 @@ No branching quest network. No fetch quests. No collectibles. This is a canon-dr
 |---|---|---|
 | **W-M0** | Register parser + corrected canon model | 101 L0 tests, `Docs/evidence/agent2/W-M0_*.json` |
 | **W-M1** | World manifest schema + generator + validators | L0 test run |
-| **W-M2** | Interfaces frozen (`ITDDInteractable`, streaming types, memory types) + TD sign-off | review record |
+| **W-M2** | Interface *proposals* (`ITDDInteractable`, streaming types, memory types); **nothing frozen** — see C-01/C-06 in `Docs/CONTRACT_SUBMISSION_A2_V1.md` | review record |
 | **W-M3** | Runtime location registry + chapter director (needs engine) | L1 tests |
 | **W-M4** | Interaction router + environment states (needs engine) | L1/L2 |
 | **W-M5** | NPC tiers + routines (needs engine) | L2 + perf |

@@ -3,6 +3,7 @@
 **From:** Agent 2 (world structure / level architecture)
 **To:** Agent 1 (player controller / movement / traversal)
 **Date:** 2026-11-16
+**Version:** 0.2.0
 **Status:** REQUEST — nothing here is a decision. No identifier in this document may be frozen, promoted to canon, or implemented until Agent 1 replies and the TD approves.
 
 ---
@@ -69,13 +70,29 @@ These are the fields world data would have to carry to *express* traversal requi
 | `failure_mode` | enum | What happens when unmet | yes |
 | `carry_compatible` | bool | Whether it works while carrying | yes |
 
-Provisional anchor/route identifiers for Chapter 1's traversal content, marked so they cannot be mistaken for canon:
+Provisional anchor/route identifiers for Chapter 1's traversal content, marked so they cannot be mistaken for canon.
+
+> **CORRECTION (v0.2.0, 2026-11-16).** An earlier draft of this section labelled the
+> names below `PROVISIONAL`. Reading `LOCATION_MASTER_REGISTER.md` v2.9 in full on
+> 2026-11-16 showed **the names are register values, not provisional**. Only the
+> `-ROUTE-A` suffix and the `PROVISIONAL-` prefix are mine. The register also defines
+> `CH01-TRV-005 Roads` (ESTABLISHED), which this document omitted entirely.
+>
+> More importantly, **`TRV-` is the wrong selector.** The register's `Category` field is
+> multi-valued: `CH01-SUB-009 Streets` (ESTABLISHED), `CH01-SUB-020 The Back Lanes` and
+> `CH01-EXP-003 The Forgotten Path` all carry "Traversal Area" without a `TRV-` prefix.
+> A contract keyed on the prefix would have silently dropped three legitimate locations.
+> See `Docs/CONTRACT_SUBMISSION_A2_V1.md` §3.2.
 
 ```
-PROVISIONAL-CH01-TRV-001-ROUTE-A   The Threshold Path    (from register CH01-TRV-001)
-PROVISIONAL-CH01-TRV-002-ROUTE-A   The Root Way          (from register CH01-TRV-002)
-PROVISIONAL-CH01-TRV-003-ROUTE-A   The Stream Crossing   (from register CH01-TRV-003)
-PROVISIONAL-CH01-TRV-004-ROUTE-A   The Ravine and Liana Bridge (from register CH01-TRV-004)
+PROVISIONAL-CH01-TRV-001-ROUTE-A   The Threshold Path           (register CH01-TRV-001, PROPOSED)
+PROVISIONAL-CH01-TRV-002-ROUTE-A   The Root Way                 (register CH01-TRV-002, PROPOSED)
+PROVISIONAL-CH01-TRV-003-ROUTE-A   The Stream Crossing          (register CH01-TRV-003, PROPOSED)
+PROVISIONAL-CH01-TRV-004-ROUTE-A   The Ravine and Liana Bridge  (register CH01-TRV-004, PROPOSED)
+PROVISIONAL-CH01-TRV-005-ROUTE-A   Roads                        (register CH01-TRV-005, ESTABLISHED)
+PROVISIONAL-CH01-SUB-009-ROUTE-A   Streets                      (register CH01-SUB-009, ESTABLISHED)
+PROVISIONAL-CH01-SUB-020-ROUTE-A   The Back Lanes               (register CH01-SUB-020, PROPOSED)
+PROVISIONAL-CH01-EXP-003-ROUTE-A   The Forgotten Path           (register CH01-EXP-003, PROPOSED)
 ```
 
 The `PROVISIONAL-` prefix is deliberate. It sorts away from real IDs, it is obvious in a diff, and it cannot be mistaken for a register value. `CH01-TRV-001..005` are real register location ids; the `-ROUTE-A` suffix and the prefix are **mine, not the register's**.
@@ -122,3 +139,4 @@ Until 1–5 are answered and the TD approves, I will use only `PROVISIONAL-` ide
 | Version | Date | Change |
 |---|---|---|
 | 0.1.0 | 2026-11-16 | First issue. Request only; no contract asserted, no identifier frozen. |
+| 0.2.0 | 2026-11-16 | Corrected §3: `TRV-002..005` are register values, not provisional; added `TRV-005 Roads`; recorded that "Traversal Area" is a multi-valued category tag spanning `SUB` and `EXP`, so a `TRV-`-prefix selector is wrong. No contract asserted; nothing frozen. |

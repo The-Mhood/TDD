@@ -103,12 +103,14 @@ def main() -> int:
                                        "Tools.canon.tests.test_canon"
                                        ".TestIndexIsValid"]),
         "measurement_claims": check_measurement_claims(),
+        "contract_data_checks": run([py, "Tools/world/contract_data_checks.py"]),
     }
 
     payload = {
         "meta": {
-            "milestone": "W-M2.3 — TD correction: exact dozen (CH01-SCN-018 = 12), "
-                         "measured-provenance semantics, endpoint-aware range budgeting",
+            "milestone": "W-M2.4 — Agent 2 contract submission C-01…C-07 "
+                         "(proposals only; zero contracts agreed) + complete "
+                         "Chapter 1 location capture (57 of 57)",
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -157,6 +159,21 @@ def main() -> int:
              "method": "band rows carry low/high, verbatim register wording, "
                        "endpoint_use and midpoint_used=false",
              "result": "verified"},
+            {"claim": "Traversal capability is a register CATEGORY TAG, not an ID prefix",
+             "method": "parse_location_summary over the 57-row v2.9 capture",
+             "result": "verified: 8 traversal-capable locations; a TRV-prefix filter "
+                       "would lose SUB-009 (ESTABLISHED), SUB-020 and EXP-003"},
+            {"claim": "Chapter 1 location capture is complete",
+             "method": "contract_data_checks family counts vs the register's published "
+                       "1 + 40 + 16 = 57",
+             "result": "verified: 57 rows, 0 duplicates, excerpt remains a subset"},
+            {"claim": "the register's canon and design vocabularies are separate",
+             "method": "OAD-48 check: three canon statuses, seven design statuses",
+             "result": "verified: no value crosses between the two sets"},
+            {"claim": "interactable IDs have a register source",
+             "method": "inventory search of all six source documents",
+             "result": "UNRESOLVED — no source exists; three options recorded, "
+                       "TD decision requested (TD-3)"},
             {"claim": "NPC prose parsing is correct",
              "method": "38-case parser suite; 2 new silent-corruption bugs found "
                        "and fixed this milestone (range summed as 16, abstract "
