@@ -22,7 +22,7 @@ This is an initial in-repository log pending confirmation of the team's preferre
 | Date | Change / system | Decision | Evidence / reason | Owner / follow-up |
 |---|---|---|---|---|
 | 2026-11-16 | Technical Quality baseline and initial documentation set | Accepted as initial QA baseline; documentation committed as `7f24859f716bdc36d15f5ef8b54370e4b6be80da` | Exact files: README, Master Engineering Architecture, Technical Quality and Integration Assessment, Quality Ledger | No gameplay systems accepted; project foundation still blocked |
-| 2026-11-16 | Project-bootstrap decision and Agent 1/2 dependency matrix | Draft recommendation; pending TD and system-owner review | No project creation; no detailed Agent 1/2 contracts found in checked repo/targeted Drive filename search | Request agent proposals and platform/engine decisions |
+| 2026-11-16 | Project-bootstrap decision and Agent 1/2 dependency matrix | Draft recommendation, committed as `2ff211638d57d0c753bc2051ab670db884fa23e0`; pending TD and system-owner review | No project creation; no detailed Agent 1/2 contracts found in checked repo/targeted Drive filename search | Request agent proposals and platform/engine decisions |
 | 2026-11-16 | Unreal/game system changes | None submitted | No UE source or assets in checkout | Await canonical project |
 | 2026-11-16 | Rejected changes | None | No implementation change was evaluated/rejected | — |
 | 2026-11-16 | Integration failures / regression fixes | None attempted or verified | No project build/integration available | — |
