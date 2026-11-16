@@ -276,8 +276,8 @@ Tolerances are declared up front so a result can be judged rather than negotiate
 | `TDD-Unit.Movement.TurnRateMonotonic` | No world | Yaw approaches target without overshoot for 1000 random rate/target pairs |
 | `TDD-Functional.Movement.AcceleratesToMaxSpeed` | Flat zone, spawn (0,0,0), facing +X, `t.MaxFPS 60` | Inject `Move(1,0)` at frame 0; record speed per frame; assert speed ≥ 0.95·MaxJog at t ≤ 0.35 s; assert no overshoot > 1% of max; export CSV |
 | `TDD-Functional.Movement.StopsWithinDistance` | From max jog | Release input; assert speed == 0 within 0.20 s; assert displacement ≤ 50 cm |
-| `TDD-Functional.Movement.Turn180Degrees` | From max jog | Inject `Move(-1,0)`; assert |yaw − target| ≤ 2° within 0.50 s; assert state never leaves `Locomotion`; assert speed ≥ 60% max throughout (no full stop) |
-| `TDD-Functional.Movement.StepUp45cm` | Step rig, 45 cm | Walk forward at 220 cm/s; assert capsule Z increases by 45 ± 2 cm; assert settles (|ΔZ| < 0.1 cm/frame) within 0.25 s; assert ≤ 1 CMC correction logged |
+| `TDD-Functional.Movement.Turn180Degrees` | From max jog | Inject `Move(-1,0)`; assert abs(yaw − target) ≤ 2° within 0.50 s; assert state never leaves `Locomotion`; assert speed ≥ 60% max throughout (no full stop) |
+| `TDD-Functional.Movement.StepUp45cm` | Step rig, 45 cm | Walk forward at 220 cm/s; assert capsule Z increases by 45 ± 2 cm; assert settles (abs(ΔZ) < 0.1 cm/frame) within 0.25 s; assert ≤ 1 CMC correction logged |
 | `TDD-Functional.Movement.SlopeLimits` | Slope rig 40° and 50° | 40°: displacement along slope ≥ 4.5 m in 5 m of travel; 50°: ≤ 0.5 m progress in 3 s; assert no per-frame Z jitter > 0.5 cm |
 | `TDD-Functional.Movement.CameraNoWallPenetration` | 1.2 m corridor, cameras swept | Scripted 60 s sweep of yaw 360°, pitch −20…+30; assert camera-to-wall ≥ 10 cm every sample; assert no angular delta > 720°/s without acquisition flag |
 | `TDD-Functional.Movement.DodgeDistanceRepeatable` | Flat zone, 100 dodges | Assert mean within 5 cm of authored distance; σ ≤ 5 cm; assert final `YawRate` ≈ 0 |
