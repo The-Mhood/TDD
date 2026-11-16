@@ -3,10 +3,10 @@
 **Project:** THE DISOBEDIENT DAUGHTER (*Nwanyi Na-anụghị Ihe*)
 **Agent:** 1 — Gameplay, Character and Combat Engineering
 **Document:** TDD-A1-ASSESS-001
-**Version:** 1.3 — fallback placement and hold semantics per Technical Director final v1.2 clarifications (2026-11-16)
+**Version:** 1.4 — fallback attempt budget separated from terminal hold resolution per Technical Director final v1.3 correction (2026-11-16)
 **Date:** 2026-11-16
-**Supersedes:** v1.2 (`archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_V1.2.md`), v1.1, v1.0 — all preserved unchanged
-**Change log:** §11 (v1.0 → v1.1), §12 (v1.1 → v1.2), §13 (v1.2 → v1.3)
+**Supersedes:** v1.3 (`archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_V1.3.md`), v1.2, v1.1, v1.0 — all preserved unchanged
+**Change log:** §11 (v1.0 → v1.1), §12 (v1.1 → v1.2), §13 (v1.2 → v1.3), §14 (v1.3 → v1.4)
 **Governing architecture:** `docs/01_ARCHITECTURE/MASTER_ENGINEERING_ARCHITECTURE.md` (TDD-MEAD-001)
 **Next document:** `docs/02_PRODUCTION/AGENT1/M1_MOVEMENT_SPECIFICATION.md`
 
@@ -349,6 +349,8 @@ Trace-based candidate detection (forward + down from a height band), `FTDDTraver
 
 **v1.3 additions (C-14):** two properties complete the picture. (1) **Placement is validated twice** — a candidate validated at selection is validated again at the instant of application, because a transform can go stale while a montage plays; a failure discards the transform and tries the next candidate rather than entering the hold path, and the write function is the only code allowed to move the capsule. (2) **Hold never blocks a forced transition**: with no valid placement the capsule keeps its position, the CMC enters `MOVE_Falling` and gravity takes over, while `Stagger`/`Dead` proceeds immediately (hit reaction during the fall, ragdoll immediately, montage death deferred to landing) — which is what makes "never unsupported in an ordinary grounded state" structurally true rather than a convention.
 
+**v1.4 addition (C-15):** a single counter over the whole candidate list bounds the **wrong thing**, because the list mixes two different questions — *where may the capsule be moved* (candidates 1–3, legitimately bounded) and *is what is beneath it safe* (4a/4b, not legitimately boundable). Resolution is therefore two phases: a bounded relocation loop and an unbudgeted terminal hold phase. This is the same class of defect as the two v1.3 clarifications — a rule whose scope was implicit rather than stated — and the fix is structural: no configuration value can reach a state where the hold phase is skipped.
+
 ### 4.9 Combat architecture (summary; detailed in M3/M4 specs)
 
 Per MEAD §5, unchanged: custom attack flow, animation-notify hit windows, one damage pipeline via `FTDDDamageRequest` → GAS effects, posture/stagger, per-actor hitstop, reaction tables, `FTDDDamageAppliedEvent` on the bus. What I add here is the *boundary*: enemies issue `RequestAttack()` intents and receive damage through `ITDDDamageable`; they never play my montages, and I never read their AI state. Enemy attack *timing* is expressed in the same units as mine (gameplay seconds, telegraph duration, active window, recovery) so Agent 2 can build fairness rules without knowing my internals.
@@ -634,6 +636,24 @@ v1.2 is preserved unchanged at `archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_
 ### Unchanged
 
 The M1 gate (AC-01…AC-31) and every threshold accepted in rounds 1 and 2 stand untouched, as do the milestones, risks, interfaces and the proposal status of the `TDDCore` types. No new acceptance criterion was introduced.
+
+### Status
+
+`DESIGN_ONLY`. No implementation, compilation, test execution or measurement. Prerequisites B-1…B-6 and content C-1…C-5 remain `BLOCKED`.
+
+---
+
+## 14. Change log — v1.3 → v1.4 (Technical Director final v1.3 correction, 2026-11-16)
+
+v1.3 is preserved unchanged at `archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_V1.3.md`.
+
+| ID | Item | Correction | Where |
+|---|---|---|---|
+| **C-15** | Fallback attempt budget scope | Recorded that relocation attempts and terminal hold resolution are separate phases: only the relocating candidates (complete, reverse, drop-to-floor) consume budget, while hold-grounded, hold-unsupported and out-of-world are unconditional — so no data value can starve the safety path or bypass the guaranteed zero-write fallback. Out-of-world is a distinct flow-system result. Detail remains authoritative in M1 spec §3.2.2a.1 and ADR-0013 v1.4 §6 | §4.8 |
+
+### Unchanged
+
+The M1 gate (AC-01…AC-31) and every threshold accepted in rounds 1–3 stand untouched, as do the milestones, risks, interfaces and the proposal status of the `TDDCore` types. No new acceptance criterion was introduced.
 
 ### Status
 

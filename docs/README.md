@@ -9,9 +9,9 @@ Start here. The primary deliverable is the Master Engineering Architecture Docum
 | 3 | `00_GOVERNANCE/STATUS_AND_CLAIMS.md` | Status vocabulary + current claim ledger | Active |
 | 4 | `00_GOVERNANCE/OPEN_QUESTIONS.md` | 22 decisions needed, their blockers, and default assumptions | Active |
 | 5 | `01_ARCHITECTURE/CODING_STANDARDS.md` | Mandatory engineering rules for all agents | Active |
-| 6 | `03_DECISIONS/ADR-0001…0013` | Architecture decision records (ADR-0013 at v1.3; v1.2/v1.1/v1.0 in `03_DECISIONS/archive/`) | Proposed (0001–0011, 0013), Accepted (0012) |
-| 7 | `02_PRODUCTION/AGENT1/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT.md` | Agent 1: gameplay/character assessment, interfaces, staged plan M0–M7, thresholds — **v1.3** (v1.2/v1.1/v1.0 in `AGENT1/archive/`) | `DESIGN_ONLY` — awaiting re-review |
-| 8 | `02_PRODUCTION/AGENT1/M1_MOVEMENT_SPECIFICATION.md` | Agent 1: Milestone 1 specification — **v1.3**, accepted single gate of 31 acceptance criteria, 36 test specs, 6 manual procedures, L1–L3 latency model, five camera criteria, traversal damage taxonomy E1–E7, two-phase placement validation and hold semantics | `DESIGN_ONLY` — blocked on Phase 0 prerequisites |
+| 6 | `03_DECISIONS/ADR-0001…0013` | Architecture decision records (ADR-0013 at v1.4; v1.3/v1.2/v1.1/v1.0 in `03_DECISIONS/archive/`) | Proposed (0001–0011, 0013), Accepted (0012) |
+| 7 | `02_PRODUCTION/AGENT1/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT.md` | Agent 1: gameplay/character assessment, interfaces, staged plan M0–M7, thresholds — **v1.4** (v1.3/v1.2/v1.1/v1.0 in `AGENT1/archive/`) | `DESIGN_ONLY` — awaiting re-review |
+| 8 | `02_PRODUCTION/AGENT1/M1_MOVEMENT_SPECIFICATION.md` | Agent 1: Milestone 1 specification — **v1.4**, accepted single gate of 31 acceptance criteria, 36 test specs, 6 manual procedures, L1–L3 latency model, five camera criteria, traversal damage taxonomy E1–E7, two-phase placement validation, hold semantics and a two-phase (relocation / terminal hold) fallback budget | `DESIGN_ONLY` — blocked on Phase 0 prerequisites |
 
 ## Reading order for a new agent
 

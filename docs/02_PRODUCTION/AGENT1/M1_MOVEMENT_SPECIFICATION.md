@@ -4,13 +4,13 @@
 **Project:** THE DISOBEDIENT DAUGHTER
 **Agent:** 1 — Gameplay, Character and Combat Engineering
 **Document:** TDD-A1-M1-SPEC-001
-**Version:** 1.3 — fallback-hold semantics and pre-placement revalidation per Technical Director final v1.2 clarifications (2026-11-16)
+**Version:** 1.4 — fallback attempt budget separated from terminal hold resolution, per Technical Director final v1.3 correction (2026-11-16)
 **Date:** 2026-11-16
-**Supersedes:** v1.2 (`archive/M1_MOVEMENT_SPECIFICATION_V1.2.md`), v1.1 (`archive/M1_MOVEMENT_SPECIFICATION_V1.1.md`), v1.0 (`archive/M1_MOVEMENT_SPECIFICATION_V1.0.md`) — all preserved unchanged
+**Supersedes:** v1.3 (`archive/M1_MOVEMENT_SPECIFICATION_V1.3.md`), v1.2 (`archive/M1_MOVEMENT_SPECIFICATION_V1.2.md`), v1.1 (`archive/M1_MOVEMENT_SPECIFICATION_V1.1.md`), v1.0 (`archive/M1_MOVEMENT_SPECIFICATION_V1.0.md`) — all preserved unchanged
 **Status:** `DESIGN_ONLY` — nothing in this document is implemented or verified
-**Parent:** `GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT.md` v1.3 (TDD-A1-ASSESS-001)
+**Parent:** `GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT.md` v1.4 (TDD-A1-ASSESS-001)
 **Governing:** TDD-MEAD-001 §4, §8, §13, §14, §15; ADR-0002, ADR-0005, ADR-0012, ADR-0013 v1.1
-**Change log:** §13 (v1.0 → v1.1), §14 (v1.1 → v1.2), §15 (v1.2 → v1.3)
+**Change log:** §13 (v1.0 → v1.1), §14 (v1.1 → v1.2), §15 (v1.2 → v1.3), §16 (v1.3 → v1.4)
 
 ---
 
@@ -54,6 +54,23 @@ The Technical Director accepted the v1.2 damage taxonomy, arbitration ordering a
 **`FTDDDamageRequest::bCausesStagger` remains a proposal** pending Agent 3's Core interface review (§Appendix A). No Core type is created or frozen here.
 
 **No implementation has begun.** No code, no compilation, no tests, no measurements. All statuses remain `DESIGN_ONLY` or `BLOCKED`.
+
+### 0.3 v1.4 — fallback attempt budget separated from terminal hold resolution
+
+The Technical Director accepted v1.3 in principle and identified one remaining inconsistency: `MaxFallbackAttempts` (default **2**) bounded a loop that also contained candidates 1, 2, 3 and 4a, so with a value of 2 the loop could **exhaust its budget before Hold-Grounded (4a) was ever evaluated**, and a value of 0 would have skipped fallback entirely. A budget intended to bound *movement* was silently bounding *safety*.
+
+| # | Requirement | Resolution |
+|---|---|---|
+| 1 | Separate bounded relocation from terminal hold | Two explicit phases: a bounded **relocation loop** (candidates 1, 2, 3) and an unbudgeted **terminal hold phase** (`ResolveHold()`, 4a → 4b). The loop's only exit conditions are success, exhaustion or no candidates left — after which the hold phase **always** runs (§3.2.2, §3.2.2a) |
+| 2 | Hold-Grounded always evaluated after relocation fails or is exhausted | `ResolveHold()` is unreachable-proof: it is called on every non-success exit and is bounded by no configuration value. `MaxRelocationAttempts` = 0 is legal and yields hold-only resolution |
+| 3 | Hold-Unsupported remains the guaranteed no-transform-write fallback | 4b is the terminal else-branch of `ResolveHold()` and performs **zero** transform writes. It is also 4a's failure successor, so the hold phase terminates in 4b no matter what |
+| 4 | Out-of-world remains a separate flow-system outcome | `FellOutOfWorld` is added to `ETDDFallbackResult` and is evaluated **first** in the hold phase (H0), before 4a. It is not a placement: ownership transfers to the flow system (checkpoint respawn, `Traversal.FellOutOfWorld`) |
+| 5 | Which candidates consume budget, total vs additional | Only relocation candidates **1, 2, 3**, one attempt each whether they fail at selection or at placement validation. `MaxRelocationAttempts` is a **total per call** (not additional), clamped to **[0, 3]**, default **3**. 4a/4b/`FellOutOfWorld` never consume budget (§3.2.2a) |
+| 6 | Consistency across pseudocode, table, tests, ADR | Pseudocode split into `ResolveAbortFallback` + `ResolveHold`; candidate table gains a budget column; `TDD-Unit.Movement.FallbackResolution` gains five budget assertions; ADR-0013 §6 items 8–10 restated |
+
+The field is **renamed** `MaxFallbackAttempts` → `MaxRelocationAttempts`: the old name asserted a scope it did not have, and that ambiguity is the defect being corrected. No content has shipped, so there is nothing to migrate.
+
+**Gate unchanged again.** No acceptance criterion was added, removed, renumbered or re-thresholded; AC-01…AC-31 remain the accepted M1 gate. `FTDDDamageRequest::bCausesStagger` remains a proposal pending Agent 3. No code, no Core type, no test execution.
 
 ---
 
@@ -226,7 +243,7 @@ Two facts that hold in both cases and are easy to get wrong:
 
 The flag lives on the damage request, so it is data, not a hard-coded rule. Heavy attacks and unblockable attacks default to staggering; chip damage and environmental hazards default to non-staggering (defaults to be tuned with combat design in M3, not fixed here).
 
-#### 3.2.2 Traversal abort arbitration, ordering and fallback resolution (v1.2; extended in v1.3 by 3.2.2a–3.2.2d)
+#### 3.2.2 Traversal abort arbitration, ordering and fallback resolution (v1.2; extended in v1.3 by 3.2.2a–3.2.2d; budget corrected in v1.4)
 
 The global policy (§3.2 rules) is that forced transitions preempt unconditionally. Traversal is priority 40 and therefore **cannot resist a stagger**. v1.1's Traversal row implied it could, by listing damage as an interruption the state handles. Corrected arbitration, in this exact order:
 
@@ -249,15 +266,23 @@ Traversal receives an interrupting event:
 
 **Ordering rule (why it is written as a sequence, not a set):** fallback resolution comes **before** restoration, and restoration comes **before** the target state is entered. Entering `Stagger` first would start a hit-reaction montage while traversal root motion was still driving the capsule (ADR-0013 §2), producing a stagger that travels — the exact class of bug the ADR exists to prevent.
 
-**`ResolveAbortFallback()`** returns one of `ETDDFallbackResult { Completed, Reversed, DroppedToFloor, HoldGrounded, HoldUnsupported }`, and is the *only* function that may reposition the capsule during an abort. Ordered candidates, each validated twice (selection **and** placement — §3.2.2a):
+**`ResolveAbortFallback()`** returns one of `ETDDFallbackResult { Completed, Reversed, DroppedToFloor, HoldGrounded, HoldUnsupported, FellOutOfWorld }`, and is the *only* function that may reposition the capsule during an abort.
 
-| # | Candidate | Condition | Placement | Result |
-|---|---|---|---|---|
-| 1 | **Complete the traversal** — revalidate the recorded exit transform and snap to it | montage past `TraversalCommitFraction` (default **0.6**, data) and the exit transform is valid *now* | Validated snap only | `Completed` |
-| 2 | **Reverse to entry side** — restore the recorded entry transform | before the commit fraction, and the entry is valid *now* | Validated snap only | `Reversed` |
-| 3 | **Drop to the floor beneath** — downward trace for a walkable surface | a walkable floor exists below the capsule | Capsule placed on that floor | `DroppedToFloor` |
-| 4a | **Hold-Grounded** — keep X/Y, snap down onto nearby support | support exists directly beneath within `HoldGroundSnapTolerance` (default **5 cm**) | Validated downward snap ≤ tolerance | `HoldGrounded` |
-| 4b | **Hold-Unsupported** — no fabricated support | no candidate 1–4a is valid | No transform write at all; X/Y/Z retained; CMC → `MOVE_Falling` | `HoldUnsupported` |
+Resolution has **two phases**, and only the first is bounded by the attempt budget:
+
+1. **Relocation loop** — candidates 1, 2, 3. Bounded by `MaxRelocationAttempts` (total relocation attempts per call, clamped [0, 3], default **3**).
+2. **Terminal hold phase** — `ResolveHold()`: H0 out-of-world → H1 Hold-Grounded (4a) → H2 Hold-Unsupported (4b). **Never budgeted, always runs**, exactly one outcome.
+
+Ordered candidates, each validated twice (selection **and** placement — §3.2.2a):
+
+| Phase | # | Candidate | Condition | Placement | Result | Budget |
+|---|---|---|---|---|---|---|
+| Relocation | 1 | **Complete the traversal** — revalidate the recorded exit transform and snap to it | montage past `TraversalCommitFraction` (default **0.6**, data) and the exit transform is valid *now* | Validated snap only | `Completed` | Consumes **1** relocation attempt |
+| Relocation | 2 | **Reverse to entry side** — restore the recorded entry transform | before the commit fraction, and the entry is valid *now* | Validated snap only | `Reversed` | Consumes **1** relocation attempt |
+| Relocation | 3 | **Drop to the floor beneath** — downward trace for a walkable surface | a walkable floor exists below the capsule | Capsule placed on that floor | `DroppedToFloor` | Consumes **1** relocation attempt |
+| Hold | H1 (4a) | **Hold-Grounded** — keep X/Y, snap down onto nearby support | support exists directly beneath within `HoldGroundSnapTolerance` (default **5 cm**) | Validated downward snap ≤ tolerance | `HoldGrounded` | **Never** budgeted |
+| Hold | H2 (4b) | **Hold-Unsupported** — no fabricated support | no candidate 1–4a is valid | No transform write at all; X/Y/Z retained; CMC → `MOVE_Falling` | `HoldUnsupported` | **Never** budgeted |
+| Hold | H0 (4c) | **Out-of-world** — flow-system handoff | capsule below `KillPlaneZ` or outside level bounds | No transform write; the flow system owns placement | `FellOutOfWorld` | **Never** budgeted |
 
 Prohibited on every path: teleporting into geometry; applying a transform that has not been validated **at the instant of application**; leaving the capsule unsupported in an ordinary grounded state; silently completing a traversal whose exit no longer exists; any resolution that takes more than one frame.
 
@@ -265,16 +290,30 @@ The resolution loop is synchronous and single-frame — it performs no async loa
 
 ```
 ResolveAbortFallback(Ctx) -> ETDDFallbackResult:
-  StopRootMotion()                          // checklist steps 1-2; idempotent (see 3.2.2b)
+  StopRootMotion()                                  // checklist steps 1-2; idempotent (see 3.2.2b)
   Failed = {}
-  for attempt in 0 .. Spec.MaxFallbackAttempts (default 2):
-      c = NextCandidate(Failed)              // ordered 1, 2, 3, 4a, 4b; each considered once
-      if c == none: break
+  Budget = clamp(Spec.MaxRelocationAttempts, 0, 3)   // TOTAL relocation attempts, never additional
+  for attempt in 1 .. Budget:                        // RELOCATION candidates 1, 2, 3 only
+      c = NextRelocationCandidate(Failed)            // ordered 1, 2, 3; each considered at most once
+      if c == none: break                            // nothing left to relocate to
       if not ValidateCandidateNow(c):  Failed += c; LogRevalidation(c, "selection");  continue
       if not ApplyCandidateNow(c):     Failed += c; LogRevalidation(c, "placement"); continue
-      return ResultOf(c)                    // ApplyCandidateNow wrote the transform itself
-  return ResolveHold(Ctx)                   // 4a or 4b, never a fabricated grounded state
+      return ResultOf(c)                             // ApplyCandidateNow wrote the transform itself
+  // Reached on success? no - on budget exhaustion, on all-candidates-failed, or on Budget == 0.
+  // The hold phase is NOT budgeted and ALWAYS runs.
+  return ResolveHold(Ctx)
+
+ResolveHold(Ctx) -> ETDDFallbackResult:              // terminal; exactly one outcome, never budgeted
+  if IsOutOfWorld(Ctx):  return FellOutOfWorld       // H0: flow-system handoff, no transform write
+  if not HasSupportWithin(Spec.HoldGroundSnapTolerance):   // H1 precondition fails
+      return HoldUnsupported                         // H2: guaranteed, zero writes
+  if not ApplyCandidateNow(HoldGrounded):            // H1 still validated at the instant of placement
+      LogRevalidation(HoldGrounded, "placement")
+      return HoldUnsupported                         // H2: never loop back into relocation
+  return HoldGrounded                                // H1: validated downward snap <= tolerance
 ```
+
+**Why the split matters:** with a single budgeted loop, the value 2 allowed attempts for candidates 1 and 2 only — candidate 3 and, crucially, **4a Hold-Grounded were never reached**, so a character that could have been placed on a validated ledge instead fell. The budget now bounds only the candidates that *move* the capsule to a different location; the candidates that decide *what is safe* are unconditional. No data value can skip 4a or bypass 4b.
 
 #### 3.2.2a Two-phase validation: a stale transform must never be applied (v1.3, clarification 2)
 
@@ -290,12 +329,30 @@ The rule is therefore **validate twice, place once**:
 | Single write path | `ApplyCandidateNow()` performs the final validation and the transform write together. No other code path may write the capsule transform during an abort, so there is no route by which an unvalidated transform reaches the capsule |
 | On placement failure | The stored transform is **discarded**. No partial application, no "best effort" placement. The candidate is added to `Failed` and the loop continues with the next candidate |
 | Next candidate, not immediate hold | A failed candidate does **not** force the hold path. Candidates 2, 3 and 4a are re-evaluated **fresh from the capsule's current position**, because a failure of candidate 1 says nothing about whether a floor exists below. The hold path is reached only when no candidate succeeds, or when the attempt budget is exhausted |
-| Bounded attempts | `MaxFallbackAttempts` (default **2** extra attempts) bounds the loop. Each candidate is considered at most once per call, so resolution cannot cycle or stall the frame |
+| Bounded attempts | `MaxRelocationAttempts` bounds the **relocation loop only** (candidates 1, 2, 3); the hold phase is unbudgeted and always runs (§3.2.2a.1). Each candidate is considered at most once per call, so resolution cannot cycle or stall the frame |
 | Validators used | Capsule penetration/clearance at the target using the CMC capsule, `ECC_Pawn`, owner ignored; walkable floor and slope limits for grounded results; same-traversal-chain check for candidate 1; dynamic actors included; no overlap with another pawn's capsule |
 | Logging | Every failure logs `Traversal.RevalidationFailed` with candidate id, attempt index, phase (selection/placement), **milliseconds between first validation and placement**, and the blocking component when resolvable. A stale-placement failure must be diagnosable from a capture without reproducing it |
 | Forced transitions during resolution | A forced `Dead`/`Cinematic`/`Stagger` arriving mid-resolution is **queued**, not interleaved: the resolution never yields between candidates, so resolution cannot be abandoned half-done. At the end, the highest-priority pending forced target is applied after restoration (§3.2.2d) |
 
 This is the structural answer to "a stale transform must never be applied": the transform is not merely checked twice, it cannot be written by anything that has not just passed the check.
+
+#### 3.2.2a.1 Attempt-budget semantics: what is bounded and what never is (v1.4)
+
+The budget exists to bound **how far the character may be relocated in search of a placement**, not to bound whether it is placed safely. It is therefore defined by scope, not by count:
+
+| Question | Answer |
+|---|---|
+| **Total or additional?** | **Total.** `MaxRelocationAttempts` is the maximum number of relocation attempts **per `ResolveAbortFallback()` call**, not a number of retries on top of a first try. Default **3** means all three relocation candidates may be attempted |
+| **Which candidates consume it** | Only **1 Complete**, **2 Reverse**, **3 DropToFloor**. Each consumes exactly one attempt, whether it fails at selection validation or at placement validation |
+| **Which never consume it** | **4a Hold-Grounded**, **4b Hold-Unsupported**, **H0 out-of-world**. The hold phase begins after the loop exits, so hold cannot be starved |
+| **Range and clamping** | Clamped to **[0, 3]**. `0` is legal and means hold-only resolution (no relocation attempted); values > 3 are inert because each candidate is considered at most once |
+| **Can the budget skip 4a?** | **No.** The hold phase runs on budget exhaustion, on all-candidates-failed, and on `Budget == 0`. There is no exit from the relocation loop that bypasses `ResolveHold()` |
+| **Can 4a failure reach 4b?** | **Yes, always.** `HoldGrounded` failing its placement validation returns `HoldUnsupported` directly; the hold phase never re-enters relocation, so it terminates in at most two writes-free-or-validated steps |
+| **What if out-of-world and support coexist?** | H0 is evaluated first. Out-of-world is a **flow-system outcome**, not a placement: it returns `FellOutOfWorld` and the respawn path supersedes both 4a and the forced target's placement |
+| **Guaranteed termination** | Every call returns exactly one of the six `ETDDFallbackResult` values. There is no configuration and no world state in which resolution returns "nothing" |
+| **Field rename** | v1.3's `MaxFallbackAttempts` (default 2) is renamed **`MaxRelocationAttempts`** (default 3) because the old name claimed a scope it did not have. `FTDDTraversalSpec` is M2 content that has not shipped — no migration, no serialised assets |
+
+The unit test that pins this (`TDD-Unit.Movement.FallbackResolution`) asserts the budget values 0, 1, 2 and 3 against a mock validator that always rejects relocation candidates, and asserts that **4a is evaluated in all four cases** and that 4b performs exactly zero writes.
 
 #### 3.2.2b Candidate 4 (Hold) when a forced transition must proceed (v1.3, clarification 1)
 
@@ -305,7 +362,9 @@ Hold is a **placement outcome, never a state**, and never a mechanism for refusi
 |---|---|---|---|---|
 | **4a Hold-Grounded** | walkable support directly beneath within `HoldGroundSnapTolerance` (5 cm) | Validated downward snap ≤ tolerance; X/Y unchanged | `MOVE_Walking` (support verified) | Yes — `Stagger`/`Dead` as normal, grounded |
 | **4b Hold-Unsupported** | no support within tolerance | **No transform write.** Capsule keeps its X/Y/Z exactly as root motion left it | `MOVE_Falling`; gravity and CMC collision are authoritative | Yes — immediately; never delayed, never refused |
-| **4c Out-of-world** | capsule falls below `KillPlaneZ` or leaves level bounds after 4b | None (the flow system takes over) | `MOVE_Falling` until respawn | Yes — `Dead` presentation runs; `Stagger` is superseded by the respawn path |
+| **4c Out-of-world** | capsule below `KillPlaneZ` or outside level bounds when the hold phase begins (H0, evaluated **before** 4a) | None — the flow system takes over; result `FellOutOfWorld` | `MOVE_Falling` until respawn | Yes — `Dead` presentation runs; `Stagger` is superseded by the respawn path. Out-of-world is a **flow-system outcome**, never a placement (§3.2.2a.1) |
+
+The hold phase is ordered **H0 → H1 → H2** and is entered whenever the relocation loop fails or exhausts its budget. It is not budgeted, so no configuration can leave the capsule in an undefined placement (§3.2.2a.1).
 
 **Why 4b exists at all:** v1.2's "`Airborne` if ungrounded, else `Idle`" allowed a state called `Idle` for a capsule with no floor under it. That is the "unsupported in an ordinary grounded state" the Technical Director prohibited. 4b removes the possibility: the capsule is never placed anywhere it was not validated to stand, and physics — not the state machine — carries it until it lands.
 
@@ -371,6 +430,9 @@ Additional invariants asserted by test:
 - **v1.3:** `HoldUnsupported` may never result in a state that requires support (§3.2.2c); the capsule keeps its position and is carried by gravity, never placed on support that was not validated.
 - **v1.3:** a candidate whose **placement** validation fails must not write any transform, and the next candidate must be attempted from the capsule's current position before the hold path is considered (§3.2.2a).
 - **v1.3:** a forced transition is never refused, delayed or dropped by fallback resolution; it is queued and applied after restoration, highest priority only (§3.2.2d).
+- **v1.4:** the attempt budget bounds **relocation only**; the terminal hold phase always runs, so no `MaxRelocationAttempts` value can skip 4a Hold-Grounded or bypass 4b Hold-Unsupported (§3.2.2a.1).
+- **v1.4:** `MaxRelocationAttempts` is a **total** per-call count of relocation attempts (candidates 1–3), clamped to [0, 3]; 4a, 4b and out-of-world never consume budget.
+- **v1.4:** out-of-world is a flow-system outcome (`FellOutOfWorld`), evaluated before 4a, and is never reported as, or substituted for, a placement (§3.2.2a.1, §3.2.2b).
 - **v1.3:** resolution completes within the frame that interrupted the traversal — asserted by counting resolution entries against state changes per frame.
 
 Data fields this introduces, all in `FTDDTraversalSpec` on `DA_MovementConfig` (M2 content — data, not code):
@@ -380,7 +442,7 @@ FFloatRange AbortWindow;                    // accepted window for non-staggerin
 float       TraversalCommitFraction;        // default 0.6
 float       CommitSnapTolerance;            // candidate 1 placement tolerance
 float       HoldGroundSnapTolerance;        // default 0.05 m  (v1.3, 4a)
-int32       MaxFallbackAttempts;            // default 2      (v1.3, 3.2.2a)
+int32       MaxRelocationAttempts;          // default 3, clamp [0,3]; relocation only, never hold  (v1.4; was MaxFallbackAttempts in v1.3)
 float       KillPlaneZ;                     // 4c out-of-world (v1.3)
 bool        bDelayDeathPresentationUntilGrounded;  // default true  (v1.3)
 bool        bExtendStaggerOnLanding;        // default false  (v1.3)
@@ -622,7 +684,7 @@ Tolerances are declared in advance so results are judged, not negotiated.
 | `TDD-Unit.Movement.DodgeSpecMath` | No world | `ResolvedDistance` for 1000 random specs: never negative, never exceeds authored, never exceeds sweep availability; **asserts radius is counted exactly once** (a ray-based variant would subtract it, capsule-based must not); invulnerability range monotonic and inside the montage; behaviour at 0.25× and 2× time dilation |
 | `TDD-Unit.Movement.TurnRateMonotonic` | No world | Yaw approaches target without overshoot, 1000 random pairs |
 | `TDD-Unit.Movement.RootMotionRestoresMovementMode` | Mock action table | 100 random root-motion actions: mode before == mode after, including abort, death and cinematic-interrupt paths |
-| `TDD-Unit.Movement.FallbackResolution` | Pure logic + mock validator, no world | **v1.3:** candidate order 1→2→3→4a→4b honoured; a candidate that validates at selection but **fails at placement writes no transform** and the next candidate is attempted; attempt budget bounds the loop (`MaxFallbackAttempts`); each candidate considered at most once; `HoldUnsupported` returns a `MOVE_Falling` request and never a grounded one; a queued forced target is applied only after resolution completes, highest priority wins; resolution returns within one call/frame |
+| `TDD-Unit.Movement.FallbackResolution` | Pure logic + mock validator, no world | **v1.3:** candidate order 1→2→3→4a→4b honoured; a candidate that validates at selection but **fails at placement writes no transform** and the next candidate is attempted; each candidate considered at most once; `HoldUnsupported` returns a `MOVE_Falling` request and never a grounded one; a queued forced target is applied only after resolution completes, highest priority wins; resolution returns within one call/frame. **v1.4 budget assertions:** with the validator rejecting every relocation candidate, `MaxRelocationAttempts` = 0 / 1 / 2 / 3 yields 0 / 1 / 2 / 3 relocation attempts **and in all four cases 4a is still evaluated**; a successful 4a returns `HoldGrounded` even when the budget was exhausted by earlier failures; 4a failing at placement returns `HoldUnsupported` with a **zero write count** and never re-enters relocation; out-of-world returns `FellOutOfWorld` and is evaluated before 4a; values −1, 4 and 99 clamp to 0, 3 and 3; every call returns exactly one enumerated result |
 | `TDD-Unit.Movement.RootMotionAppliesToCapsule` | Minimal world, one montage with authored root motion | On the first build: capsule displacement > 0 and matches the authored root-motion distance within 5%. **This test exists because v1.0 assumed the mechanism worked** |
 | `TDD-Functional.Movement.LatencyL1` | Flat zone, injector at frame boundary, 60 and 120 FPS | Assert `FrameIntentRecorded - FrameInjected == 0`; repeat with mid-frame injection and assert `== 1` |
 | `TDD-Functional.Movement.LatencyL2` | Same | Assert `FrameVelocityChanged - FrameIntentRecorded == 0` at both frame rates; `Velocity` delta > 1 cm/s |
@@ -649,7 +711,7 @@ Tolerances are declared in advance so results are judged, not negotiated.
 | `TDD-Functional.Movement.NoPermanentInputLock` | All zones | Each state exits within 2 s via declared inputs; `Dead` and `Cinematic` exits forced by test and verified |
 | `TDD-Functional.Movement.LockOnStubStateIsConsistent` | Flat, no targets | No crash, coherent state, camera returns to `Explore`, no acquisition events fired |
 | `TDD-Functional.Movement.TraversalExitRevalidation` | M2 | **E1/E2:** blocker inserted after detection → fallback path taken, no teleport into geometry, exit checklist ran, `Traversal.ExitInvalid` logged; floor removed → no floating capsule |
-| `TDD-Functional.Movement.TraversalAbortPaths` | M2 | **E3–E7:** non-staggering damage inside the window aborts to a resolved position and health still decreases; non-staggering damage outside the window does not abort (state unchanged, logged); staggering damage resolves placement *then* enters `Stagger` (no travelling hit reaction); lethal+staggering enters `Dead` only; cinematic capture freezes the capsule without a fallback drop; `EndPlay` leaves the CMC in its default mode. Each path asserts the restoration checklist ran exactly once. **v1.3 additions:** 4a snaps ≤ 5 cm and is grounded; 4b writes no transform, enters `MOVE_Falling`, and **never** reaches `Idle`/`Locomotion`; a stagger under 4b plays while falling and completes recovery on landing; a montage death under 4b defers presentation to first grounding while a ragdoll death does not; 4c triggers `Traversal.FellOutOfWorld` and the checkpoint respawn path; a candidate failing placement validation mid-abort falls through to the next candidate and succeeds without applying the stale transform; a forced transition arriving mid-resolution is applied after restoration and is never lost |
+| `TDD-Functional.Movement.TraversalAbortPaths` | M2 | **E3–E7:** non-staggering damage inside the window aborts to a resolved position and health still decreases; non-staggering damage outside the window does not abort (state unchanged, logged); staggering damage resolves placement *then* enters `Stagger` (no travelling hit reaction); lethal+staggering enters `Dead` only; cinematic capture freezes the capsule without a fallback drop; `EndPlay` leaves the CMC in its default mode. Each path asserts the restoration checklist ran exactly once. **v1.3 additions:** 4a snaps ≤ 5 cm and is grounded; 4b writes no transform, enters `MOVE_Falling`, and **never** reaches `Idle`/`Locomotion`; a stagger under 4b plays while falling and completes recovery on landing; a montage death under 4b defers presentation to first grounding while a ragdoll death does not; 4c triggers `Traversal.FellOutOfWorld` and the checkpoint respawn path; a candidate failing placement validation mid-abort falls through to the next candidate and succeeds without applying the stale transform; a forced transition arriving mid-resolution is applied after restoration and is never lost; **v1.4:** with relocation permanently blocked the character still ends grounded on validated support via 4a when support exists, and with `MaxRelocationAttempts` = 0 the run reaches 4a directly; a kill-plane scenario returns `FellOutOfWorld` and respawns at the checkpoint instead of asserting a placement |
 
 Result line format (unchanged): `TDD_RESULT <test> <PASS|FAIL> <metric>=<value> ...`, greppable and quotable without interpretation.
 
@@ -776,6 +838,7 @@ Contract stability: names and signatures frozen for M1–M3. Additions allowed; 
 | Metrics harness distorts what it measures | On/off delta ≤ 0.05 ms (AC-30) |
 | Mannequin mistaken for character progress | `PLACEHOLDER-A1-01`, stated in every report; no Adanna-specific tuning |
 | Thresholds are wrong for this game | All **[A1]** thresholds are data and explicitly provisional pending first captures |
+| Attempt budget starves the hold candidates (the v1.3 defect) | Budget scoped to relocation candidates 1–3 only (§3.2.2a.1); hold phase unconditional; unit test asserts 4a is evaluated at budget 0, 1, 2 and 3 |
 | Stale-transform placement reintroduced by a future "optimisation" | Single-write-path rule (§3.2.2a) plus a unit test that flips validity between selection and placement; review rejects any second transform writer |
 | Damage taxonomy drifts into "all damage staggers" or "all damage aborts" during M3 | Taxonomy is data (`bCausesStagger`) with defaults per damage class; `StateSemantics` asserts the full matrix; combat design tuning is an M3 activity with the matrix as the guard rail |
 
@@ -945,13 +1008,34 @@ v1.2 is preserved unchanged at `archive/M1_MOVEMENT_SPECIFICATION_V1.2.md`. The 
 | ID | Item | Ambiguity in v1.2 | Correction in v1.3 | Section |
 |---|---|---|---|---|
 | **C-18** | Candidate 4 (Hold) while a forced `Stagger`/`Dead` must proceed and no valid placement exists | "Hold … `Airborne` if ungrounded, else `Idle`" left two holes: `Idle` is invalid for an unsupported capsule (the prohibited "unsupported grounded state"), and nothing said how a following forced transition interacts with holding | Hold split into **4a Hold-Grounded** (validated downward snap ≤ `HoldGroundSnapTolerance`, default 5 cm) and **4b Hold-Unsupported** (no transform write; `MOVE_Falling`; gravity authoritative) with **4c out-of-world** routed to the flow system. Forced targets always proceed; per-target behaviour defined (stagger plays while falling with `bPendingGroundingRecovery`; ragdoll death immediate; montage death deferred per `bDelayDeathPresentationUntilGrounded`). Restoration step 3 exception recorded and logged as `Restoration.ModeOverrideFalling` | §3.2.2b, §3.2.3 (E3–E5), §5 |
-| **C-19** | Behaviour when immediate pre-placement revalidation fails after a candidate was selected and validated | "validated at the moment of resolution" allowed a transform validated earlier to be applied without a second test — a stale transform | **Two-phase validation**: selection validation plus a mandatory placement validation executed inside the write function, which is the only transform writer. On placement failure the stored transform is discarded and the **next candidate is attempted** from the current position; the hold path is reached only when no candidate succeeds or the attempt budget (`MaxFallbackAttempts`, default 2) is exhausted. Every failure logs phase, attempt, elapsed ms and blocker | §3.2.2a, §5 |
+| **C-19** | Behaviour when immediate pre-placement revalidation fails after a candidate was selected and validated | "validated at the moment of resolution" allowed a transform validated earlier to be applied without a second test — a stale transform | **Two-phase validation**: selection validation plus a mandatory placement validation executed inside the write function, which is the only transform writer. On placement failure the stored transform is discarded and the **next candidate is attempted** from the current position; the hold path is reached only when no candidate succeeds or the attempt budget (`MaxFallbackAttempts`, default 2) is exhausted. **C-19's budget clause is superseded by C-22/C-23/C-25:** the field is now `MaxRelocationAttempts`, and no budget value can prevent the hold phase from running. Every failure logs phase, attempt, elapsed ms and blocker | §3.2.2a, §5 |
 | **C-20** | Structural prevention of the class of bug behind both clarifications | Control state and movement mode were used interchangeably, which is what made an "unsupported grounded state" describable | New **control state vs movement mode** matrix with a testable invariant: states requiring support may not be entered while unsupported; `HoldUnsupported` legally permits only `Airborne`, a forced target in `MOVE_Falling`, the cinematic freeze, or the 4c respawn. Forced transitions arriving **during** resolution are queued (highest priority only) so resolution is never abandoned half-done | §3.2.2c, §3.2.2d |
 | **C-21** | Gate and provisional status preserved | — | **No AC added, removed, renumbered or re-thresholded; AC-01…AC-31 remain the accepted gate.** New rules are asserted inside AC-23/AC-26 and the M2 traversal tests; one unit test name added (`TDD-Unit.Movement.FallbackResolution`). `FTDDDamageRequest::bCausesStagger` remains a proposal pending Agent 3's Core interface review; no Core type created or frozen | §4 (unchanged), §5, Appendix A |
 
 ### Deliberately unchanged
 
 Everything accepted in rounds 1 and 2 stands: AC-01…AC-31 and their thresholds; the L1–L3 latency model and the prohibition on tick-group changes without measured benefit; the five camera criteria and their provisional thresholds; the 50 cm blocked-step baseline; dodge refusal without cooldown consumption; ADR-0013's provisional execution model with `RootMotionAppliesToCapsule` as its gate; configurable warp limits; the damage taxonomy and E1–E7 enumeration from v1.2; and the proposal status of all Core types.
+
+### Status after revision
+
+**No implementation, no compilation, no test execution, no measurement.** `DESIGN_ONLY`; M1 implementation remains `BLOCKED` on B-1…B-6, with C-1…C-5 outstanding for M2+.
+
+---
+
+## 16. Change log — v1.3 → v1.4 (Technical Director final v1.3 correction, 2026-11-16)
+
+v1.3 is preserved unchanged at `archive/M1_MOVEMENT_SPECIFICATION_V1.3.md`.
+
+| ID | Item | Defect | Correction | Where |
+|---|---|---|---|---|
+| **C-22** | Attempt budget could exhaust before Hold-Grounded | `MaxFallbackAttempts` (default 2) bounded a single loop containing candidates 1, 2, 3 **and 4a**. With the default, attempts 1 and 2 were spent on candidates 1 and 2 and the loop ended — 4a was never evaluated, so a character that had valid support beneath it fell instead of standing. A budget meant to bound relocation was silently bounding safety | Resolution split into a **bounded relocation loop** (1, 2, 3) and an **unbudgeted terminal hold phase** `ResolveHold()` (H0 → H1/4a → H2/4b) that runs on every non-success exit. Pseudocode, candidate table (new Budget column) and the ordering rule updated | §3.2.2, §3.2.2a.1 |
+| **C-23** | Budget scope undefined: which candidates, total or additional | "attempt budget bounds the loop" did not say whether the value meant total attempts or retries, nor which candidates consumed it | Defined explicitly: **total** relocation attempts per call, consumed only by candidates 1–3, one each, whether the failure is at selection or placement; clamped **[0, 3]**; default **3**. 4a, 4b and out-of-world never consume budget. `MaxRelocationAttempts` = 0 is legal and yields hold-only resolution | §3.2.2a.1, §4.2 data |
+| **C-24** | Out-of-world made an explicit, separate outcome | 4c was described in prose and sent to the flow system, but had no value in `ETDDFallbackResult`, so a caller could not distinguish "respawned" from "placed" | `FellOutOfWorld` added to `ETDDFallbackResult`; H0 is evaluated **first** in the hold phase, before 4a; it performs no transform write and is never reported as or substituted for a placement | §3.2.2, §3.2.2a.1, §3.2.2b |
+| **C-25** | Field rename and consistency | `MaxFallbackAttempts` claimed a scope it did not have | Renamed **`MaxRelocationAttempts`** (default 3, clamp [0,3]). Applied to the data block, unit-test assertions (budget 0/1/2/3 with 4a always evaluated; 4b zero writes; 4a placement failure → 4b, never back to relocation; clamp behaviour; single-result guarantee), the functional test, the risk table and ADR-0013 §6. No shipped content, so no migration | §4.2, §5 (×2), §12, ADR-0013 |
+
+### Deliberately unchanged
+
+Everything accepted in rounds 1–3 stands, with no exception: AC-01…AC-31 and their thresholds; the L1–L3 latency model and the prohibition on tick-group changes without measured benefit; the five camera criteria and their provisional thresholds; the 50 cm blocked-step baseline; dodge refusal without cooldown consumption; ADR-0013's provisional execution model gated by `RootMotionAppliesToCapsule`; configurable warp limits; the v1.2 damage taxonomy and E1–E7 enumeration; the v1.3 two-phase validation, hold semantics, control-state/movement-mode matrix and queued forced transitions; and the proposal status of all Core types (`bCausesStagger` included).
 
 ### Status after revision
 
