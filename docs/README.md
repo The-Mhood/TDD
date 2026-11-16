@@ -9,7 +9,9 @@ Start here. The primary deliverable is the Master Engineering Architecture Docum
 | 3 | `00_GOVERNANCE/STATUS_AND_CLAIMS.md` | Status vocabulary + current claim ledger | Active |
 | 4 | `00_GOVERNANCE/OPEN_QUESTIONS.md` | 22 decisions needed, their blockers, and default assumptions | Active |
 | 5 | `01_ARCHITECTURE/CODING_STANDARDS.md` | Mandatory engineering rules for all agents | Active |
-| 6 | `03_DECISIONS/ADR-0001…0012` | Architecture decision records | Proposed (0001–0011), Accepted (0012) |
+| 6 | `03_DECISIONS/ADR-0001…0013` | Architecture decision records | Proposed (0001–0011, 0013), Accepted (0012) |
+| 7 | `02_PRODUCTION/AGENT1/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT.md` | Agent 1: gameplay/character assessment, interfaces, staged plan M0–M7, measurement thresholds | `DESIGN_ONLY` — awaiting Technical Director review |
+| 8 | `02_PRODUCTION/AGENT1/M1_MOVEMENT_SPECIFICATION.md` | Agent 1: Milestone 1 specification — responsive, testable character controller with 20 acceptance criteria, 17 test specs, 5 manual procedures, test map design | `DESIGN_ONLY` — blocked on Phase 0 prerequisites |
 
 ## Reading order for a new agent
 
