@@ -36,6 +36,7 @@ Every agent report, commit message and document must classify each item with exa
 | Agent 1 gameplay/character assessment | `DESIGN_ONLY` — **v1.4**, final clarifications and budget correction applied; v1.3/v1.2/v1.1/v1.0 archived | `docs/02_PRODUCTION/AGENT1/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT.md` |
 | Agent 1 Milestone 1 specification | `DESIGN_ONLY` — **v1.4**, gate AC-01…AC-31 accepted and unchanged; implementation `BLOCKED` on Agent 3 prerequisites B-1…B-6 | `docs/02_PRODUCTION/AGENT1/M1_MOVEMENT_SPECIFICATION.md` §2.3, §4 |
 | Agent 1 root-motion policy | `DESIGN_ONLY` — ADR-0013 **v1.4**; execution mechanism provisional pending `RootMotionAppliesToCapsule` | `docs/03_DECISIONS/ADR-0013-root-motion-policy.md` |
+| Agent 1 shared-contract response C-01…C-07 | `DESIGN_ONLY` — **v1.0 (`A1-R1`)**, proposals labelled `PROPOSED — NOT FROZEN`; every test `PROPOSED / NOT RUN`; 0 contracts agreed, 0 consumers signed | `docs/AGENT1_CONTRACT_SUBMISSION_RESPONSE_V1.md` |
 | Player controller / camera / combat / weapon code | **Does not exist** | — |
 | Any gameplay measurement (M-01a…M-14) | **Not measured** | No engine in agent workspace (ADR-0012) |
 | Any art, animation, audio, cinematic asset | **Does not exist** | Drive Art Bible: 7 approved concept boards, no production assets; `09_ANIMATION_AND_COMBAT` folder is empty |
