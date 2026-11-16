@@ -499,6 +499,39 @@ _ABSENCE_PHRASES = ("none", "no one", "nobody", "not present", "empty",
 _CHILD_WORDS = ("child", "children", "boy", "boys", "girl", "girls")
 
 
+#: ("six to ten"), an alternative ("four or five") and a vagueness marker
+#: ("several", "occasional", "a dozen") all describe a population the register
+#: has NOT pinned down. Reducing any of them to one integer would invent
+#: precision the source does not have.
+_VAGUE_WORDS = (
+    "several", "some", "few", "many", "various", "occasional", "occasionally",
+    "sometimes", "usually", "often", "rare", "rarely", "dozen", "dozens",
+    "handful", "couple", "line", "bunch", "crowd",
+)
+#: Range connectors: "six to ten", "four or five", "between three and five".
+_RANGE_CONNECTORS = (" to ", " or ", "through", "between")
+
+#: Nouns that count PEOPLE and therefore carry a head-count when numbered.
+_PERSON_EXTRA = (
+    "apprentice", "apprentices", "patient", "patients", "servant", "servants",
+    "visitor", "visitors", "traveller", "travellers", "adult", "adults",
+    "inhabitant", "inhabitants", "occupant", "occupants", "attendant",
+    "attendants", "messenger", "messengers", "student", "students",
+    "worker", "workers", "seller", "sellers", "buyer", "buyers",
+    "storyteller", "storytellers", "elder", "elders",
+    "passer-by", "passers-by", "passerby", "passer",
+)
+
+#: The register's documented naming convention for a single named NPC is
+#: "Name (role)" - "Mgbafo (village elder)", "Okorie (royal guard)". One such
+#: entry is one person. This is a documented convention, not an inference.
+_NAMED_PERSON = re.compile(r"\b[A-Z][a-z\u00c0-\u024f]+\s*\(([a-z][a-z \-/]*)\)")
+
+
+def _person_nouns() -> tuple:
+    return tuple(set(_PERSON_NOUNS) | set(_PERSON_EXTRA))
+
+
 def parse_npc_count(npcs_present: str) -> "tuple[int, bool, bool]":
     """Parse the register's 'NPCs present' prose into a person count.
 
@@ -507,74 +540,248 @@ def parse_npc_count(npcs_present: str) -> "tuple[int, bool, bool]":
     The register writes prose, not fields: "One woman, one child." /
     "None." / "Two traders." / "Goats at dusk, and one boy."
 
-    `parsed=False` means DO NOT TRUST THE COUNT. It happens when the text
-    contains no quantity this parser recognises ("a gathering of unspecified
-    size", "several"). Callers must treat it as needs-manual-review, never as
-    zero, because zero understates the population budget.
+    `parsed=False` means DO NOT TRUST THE COUNT. The caller must treat it as
+    needs-manual-review and must NOT substitute zero, because zero understates
+    the population budget.
 
-    Stated absence ("None.", "No one.") returns (0, False, True): that is a
-    successful parse of a real answer, not a failure.
+    WHY THIS IS NOT A NUMBER-SCRAPER
+    --------------------------------
+    An earlier version summed every numeral it could find. Two real Chapter 1
+    strings broke it:
+
+        "Six to ten adults; Unoka (storyteller) some days."  -> 16   (6 + 10)
+        "Family of eight across three generations."          -> 11   (8 + 3)
+
+    Both are confidently wrong. 16 invents a crowd twice the register's own
+    upper bound; 11 counts a generation as a person. A plausible wrong number
+    is far more dangerous than an admitted gap, because downstream budget
+    arithmetic cannot tell it apart from a real one.
+
+    The corrected rule is that every number must be classified by the noun it
+    counts. A number attached to a person noun or a collective of people is a
+    head-count. A number attached to anything else - animals, generations,
+    pots, stools - describes something that is not a performer and contributes
+    nothing. When no quantity can be classified with confidence, the function
+    refuses and reports UNPARSED upstream.
 
     Counting rules:
-      * numeral + noun sums normally: "Three men and two women" -> 5
-      * article + individual person noun adds one: "a girl" -> 1
-      * article + collective noun adds nothing, because the following numeral
-        already counted the people: "A family of six" -> 6, not 7
-      * non-human animals are excluded: "Two old men, a girl, and a dog" -> 3
-        (the dog is ambience, not a scheduled performer)
+      * numeral + person noun sums: "Three men and two women" -> 5
+      * numeral + non-person noun contributes nobody: "Two goats" -> 0
+        (animals are ambience, not scheduled performers)
+      * numeral + collective of people is a head-count: "A family of six" -> 6
+      * a number counting an abstract noun is not a head-count:
+        "across three generations" contributes 0
+      * a named NPC in the register's "Name (role)" convention is 1 person:
+        "Okorie (royal guard)." -> 1
+      * article + person noun adds one: "a girl" -> 1
+      * ranges, alternatives and vague quantities are REFUSED, not summed:
+        "Six to ten adults" -> UNPARSED, "Four or five men" -> UNPARSED
+      * a bare numeral with no noun is trusted when it is the only number:
+        "Two." -> 2
 
-    KNOWN LIMITATION: word-list arithmetic, not language understanding. It
-    cannot resolve "several", "a crowd", "many". See Docs/REGISTER_INGESTION.md.
+    KNOWN LIMITATION: word-list arithmetic, not language understanding. See
+    Docs/REGISTER_INGESTION.md for the documented ingestion rules.
     """
     text = (npcs_present or "").strip()
     if not text:
         return 0, False, False
 
     lowered = text.lower()
-    has_child = any(w in lowered for w in _CHILD_WORDS)
+    has_child = any(re.search(rf"\b{w}\b", lowered) for w in _CHILD_WORDS)
 
     if any(lowered == p or lowered.startswith(p) for p in _ABSENCE_PHRASES):
         return 0, has_child, True
 
-    total = 0
-    parsed = False
+    # --- Refusal gate 1: an explicit range or alternative. ----------------
+    padded = f" {' '.join(lowered.split())} "
+    if any(conn in padded for conn in _RANGE_CONNECTORS):
+        return 0, has_child, False
 
-    # 1. Numeral + noun pairs. Classify by the noun that the numeral counts, so
-    #    "two goats" contributes nobody while "two women" contributes two.
-    pair = re.compile(
-        rf"\b(?P<num>{_NUMBER_WORDS_PATTERN}|\d+)\s+"
-        rf"(?P<mid>(?:\w+\s+){{0,2}}?)"
-        rf"(?P<noun>{_NON_HUMAN_PATTERN}|{_PERSON_PATTERN}|\w+)"
-    )
-    for m in pair.finditer(lowered):
+    # --- Refusal gate 2: a vague quantity word. ---------------------------
+    for word in _VAGUE_WORDS:
+        if re.search(rf"\b{re.escape(word)}\b", lowered):
+            return 0, has_child, False
+
+    person_nouns = _person_nouns()
+    non_person = set(_NON_HUMAN)
+    # A numeral binds to a HEAD-COUNT noun. Collectives of people ("a family of
+    # eight") belong here, but they must stay out of the article rule below,
+    # which would otherwise add a spurious +1 to "a family of six".
+    headcount_nouns = person_nouns + tuple(_COLLECTIVE)
+    total = 0
+    recognized_any = False
+
+    # --- Named NPCs: "Name (role)" is one person. -------------------------
+    named = list(_NAMED_PERSON.finditer(text))
+    total += len(named)
+    if named:
+        recognized_any = True
+
+    # Strip the named entries so their role parenthetical cannot be re-counted.
+    stripped = _NAMED_PERSON.sub(" ", text)
+    stripped_l = stripped.lower()
+
+    # --- Every remaining number, classified by the noun it counts. --------
+    # A number can bind FORWARD ("four farmers") or BACKWARD through 'of'
+    # ("a family of eight").
+    number_re = re.compile(rf"\b(?P<num>{_NUMBER_WORDS_PATTERN}|\d+)\b")
+    for m in number_re.finditer(stripped_l):
         raw = m.group("num")
         value = int(raw) if raw.isdigit() else _NUMBER_WORDS[raw]
-        noun = m.group("noun")
-        parsed = True
-        if noun in _NON_HUMAN or any(w in m.group("mid") for w in _NON_HUMAN):
-            continue  # animals are ambience, not performers
-        total += value
 
-    # 2. Numerals with no noun at all ("Seven", "five"). The register only omits
-    #    the noun when the meaning is obvious, so trust a bare numeral.
-    if not parsed:
-        for token in re.findall(r"\d+", lowered):
-            total += int(token)
-            parsed = True
-        if not parsed:
-            for token in re.findall(r"[a-z]+", lowered):
-                if token in _NUMBER_WORDS:
-                    total += _NUMBER_WORDS[token]
-                    parsed = True
-                    break
+        after = stripped_l[m.end():m.end() + 48]
+        before = stripped_l[max(0, m.start() - 40):m.start()]
 
-    # 3. Article-introduced individuals carrying no numeral ("a girl").
-    for m in re.finditer(
-            rf"\b(?:a|an)\s+(?:\w+\s+){{0,2}}?({_PERSON_PATTERN})\b", lowered):
-        total += 1
-        parsed = True
+        noun_after = re.match(r"\s+(?:[a-z][a-z\-]*\s+){0,2}?([a-z][a-z\-]*)", after)
+        forward = noun_after.group(1) if noun_after else ""
 
-    return max(total, 0), has_child, parsed
+        backward = ""
+        of_match = re.search(r"\b([a-z][a-z\-]*)\s+of\s*$", before)
+        if of_match:
+            backward = of_match.group(1)
+
+        candidate_forward = forward in headcount_nouns or forward in non_person
+        candidate_backward = backward in headcount_nouns or backward in non_person
+
+        if candidate_forward:
+            noun, is_person = forward, (forward in headcount_nouns)
+        elif candidate_backward:
+            noun, is_person = backward, (backward in headcount_nouns)
+        else:
+            # The noun is unknown (abstract, or omitted). It MAY still be a
+            # head-count, but we cannot prove it, so it is not counted here and
+            # the bare-numeral fallback below decides.
+            continue
+
+        recognized_any = True
+        if is_person:
+            total += value
+        # non-person nouns contribute nobody, by design
+
+    # --- Bare numerals: trusted only when the string holds exactly one. ---
+    if total == 0 and not recognized_any:
+        numeric_tokens = re.findall(
+            rf"\b(?:\d+|{_NUMBER_WORDS_PATTERN})\b", stripped_l)
+        if len(numeric_tokens) == 1:
+            token = numeric_tokens[0]
+            total = int(token) if token.isdigit() else _NUMBER_WORDS[token]
+            recognized_any = True
+        elif len(numeric_tokens) > 1:
+            # Several numbers and no noun to bind them to: refuse.
+            return 0, has_child, False
+
+    # --- Article-introduced individuals with no numeral ("a girl"). -------
+    if not named:
+        for _ in re.finditer(
+                rf"\b(?:a|an)\s+(?:[a-z]+\s+){{0,2}}?({'|'.join(person_nouns)})\b",
+                stripped_l):
+            total += 1
+            recognized_any = True
+
+    return max(total, 0), has_child, (recognized_any and total >= 0)
+
+
+#: A quantity the register states as a CONDITION rather than a constant:
+#: "Sometimes one cook.", "Occasional passer-by.", "Unoka ... some days."
+_CONDITION_MARKERS = (
+    "sometimes", "occasional", "occasionally", "some days", "at times",
+    "now and then", "when ", "if ",
+)
+
+
+def parse_npc_band(npcs_present: str) -> "tuple[Optional[int], Optional[int], str]":
+    """Derive the register's OWN numeric BOUNDS for an 'NPCs present' string.
+
+    Returns (low, high, basis). `basis` explains where the bounds came from so
+    the provenance table can quote it. (None, None, ...) means the register
+    states no bound at all and the field must stay unresolved.
+
+    WHY THIS EXISTS
+    ---------------
+    When parse_npc_count refuses a string, the scene must not silently become
+    zero. But it also must not be given an invented point value. What the
+    register DOES often provide is a bound:
+
+        "Six to ten adults; ..."   -> (6, 10, "stated range")
+        "Four or five men."        -> (4, 5,  "stated alternative")
+        "Sometimes one cook."      -> (0, 1,  "conditional presence")
+        "A line of women ..."      -> (None, None, "collective without a number")
+
+    A bound is register data: the range is written in the source. Reporting it
+    as a band is therefore faithful, while reporting it as a single integer
+    (or as 0) would not be.
+
+    These bounds feed an explicitly LABELLED banded estimate. They are never
+    merged into the point estimate silently.
+    """
+    text = (npcs_present or "").strip()
+    if not text:
+        return None, None, "no text"
+    lowered = " ".join(text.lower().split())
+
+    if any(lowered == p or lowered.startswith(p) for p in _ABSENCE_PHRASES):
+        return 0, 0, "stated absence"
+
+    def num(token: str) -> Optional[int]:
+        if token.isdigit():
+            return int(token)
+        return _NUMBER_WORDS.get(token)
+
+    word = rf"(?:{_NUMBER_WORDS_PATTERN}|\d+)"
+
+    # "between three and five"
+    m = re.search(rf"between\s+({word})\s+and\s+({word})", lowered)
+    if m:
+        lo, hi = num(m.group(1)), num(m.group(2))
+        if lo is not None and hi is not None:
+            return min(lo, hi), max(lo, hi), "stated range (between X and Y)"
+
+    # "six to ten", "eight through twelve"
+    m = re.search(rf"({word})\s+(?:to|through)\s+({word})", lowered)
+    if m:
+        lo, hi = num(m.group(1)), num(m.group(2))
+        if lo is not None and hi is not None:
+            return min(lo, hi), max(lo, hi), "stated range (X to Y)"
+
+    # "four or five"
+    m = re.search(rf"({word})\s+or\s+({word})", lowered)
+    if m:
+        lo, hi = num(m.group(1)), num(m.group(2))
+        if lo is not None and hi is not None:
+            return min(lo, hi), max(lo, hi), "stated alternative (X or Y)"
+
+    # "a dozen people" is exactly twelve. "dozens" is not, and is caught below.
+    if re.search(r"\b(?:a|one)\s+dozen\b", lowered):
+        return 12, 12, "stated collective equal to twelve (a dozen)"
+
+    # Exact count wins when the parser can read one.
+    exact, _has_child, parsed = parse_npc_count(text)
+    if parsed:
+        if any(marker in lowered for marker in _CONDITION_MARKERS):
+            return 0, exact, "conditional presence (0 when absent)"
+        return exact, exact, "stated count"
+
+    # Conditional phrasing with a single readable numeral inside it.
+    if any(marker in lowered for marker in _CONDITION_MARKERS):
+        numerals = re.findall(rf"\b{word}\b", lowered)
+        if len(numerals) == 1:
+            value = num(numerals[0])
+            if value is not None:
+                return 0, value, "conditional presence (0 when absent)"
+
+        # Conditional phrasing that names a SINGULAR person ("Sometimes a
+        # traveller.", "Occasional passer-by."). The register's own wording is
+        # singular, so at most one person is depicted at a time. This is a bound
+        # read from the grammar of the source, not an assumption about density.
+        plural_hits = [n for n in _person_nouns() + tuple(_COLLECTIVE)
+                       if n.endswith("s") and re.search(rf"\b{re.escape(n)}\b", lowered)]
+        singular_hits = [n for n in _person_nouns()
+                         if not n.endswith("s") and re.search(rf"\b{re.escape(n)}\b", lowered)]
+        if singular_hits and not plural_hits:
+            return 0, 1, "conditional presence, singular person named (0 to 1)"
+
+    # No numeral at all, and the prose is a collective ("a line of women").
+    return None, None, "collective without a number; no bound stated"
 
 
 # --------------------------------------------------------------------------- #

@@ -29,7 +29,11 @@ EVIDENCE = REPO_ROOT / "Docs" / "evidence" / "agent2" / "CH01_population_sensiti
 
 def setUpModule() -> None:  # noqa: N802
     global SCENES, DETAILS, POLICY, REPORT
-    text = (FIXTURES / "scene_register_ch01_full.md").read_text(encoding="utf-8")
+    # Must use the SAME source the artifact is generated from, or the test
+    # compares a live computation against a stale fixture and fails for the
+    # wrong reason. The abridged fixture is preserved and still exercised by
+    # Tools/world/tests/test_scene_capture.py.
+    text = (FIXTURES / sens.FIXTURE_VERBATIM.name).read_text(encoding="utf-8")
     SCENES = reg.parse_scene_summary(text)
     DETAILS = reg.parse_scene_details(text)
     POLICY = pb.load_policy()
@@ -44,14 +48,50 @@ class TestFactsAreSeparatedFromAssumptions(unittest.TestCase):
 
     def test_facts_record_register_coverage(self):
         facts = REPORT["facts"]
-        self.assertEqual(facts["scenes_with_register_npc_data"], 5)
+        # Post-capture: 28 scenes resolve to an exact head-count and 7 more
+        # carry register prose that states only a bound. Both are register data;
+        # only the first is a point value, and the report keeps them apart.
+        self.assertEqual(facts["scenes_with_register_npc_data"], 28)
+        self.assertEqual(facts["scenes_with_register_prose_unresolved"], 7)
         self.assertEqual(facts["scenes_total"], 46)
 
-    def test_coverage_is_low_and_reported_as_low(self):
-        """The headline honesty check: most of the estimate is not register data."""
-        self.assertLess(REPORT["facts"]["coverage_ratio"], 0.2)
-        self.assertGreater(
-            REPORT["assumption_dependence"]["share_of_cost_from_policy_defaults"], 0.5)
+    def test_coverage_is_reported_honestly(self):
+        """Coverage rose, so the old 'under 20%' assertion must change.
+
+        The honesty requirement is that the report STATES its coverage and its
+        remaining assumption dependence, not that the number stays low. Asserting
+        a specific low number would make the test fire when the data improves,
+        which is the opposite of what it is for.
+        """
+        facts = REPORT["facts"]
+        dependence = REPORT["assumption_dependence"]
+
+        # Prose coverage is now a majority of the chapter...
+        self.assertGreater(facts["prose_capture_ratio"], 0.5)
+        self.assertGreater(facts["coverage_ratio"], 0.5)
+
+        # ...and the cost attributable to UNCAPPED scenes collapsed, because all
+        # of them are flat-cost tiers. What survives as assumption is the policy
+        # parameter values themselves (cost unit, concurrency ratio), not the
+        # per-scene NPC defaults. Both facts must be reported, and neither may be
+        # allowed to masquerade as the other.
+        self.assertLess(dependence["share_of_cost_from_policy_defaults"], 0.1,
+                        "flat-tier scenes should carry almost no cost")
+        self.assertGreater(dependence["share_of_cost_from_unresolved_register"], 0.0,
+                           "the unresolved register bounds must still be visible")
+        self.assertIn("not a measurement", REPORT["meta"]["status"].lower())
+        # The model is still assumption-driven - just through different parameters.
+        self.assertFalse(REPORT["conclusion"]["estimate_is_mostly_assumption"])
+
+    def test_uncaptured_scenes_are_count_independent(self):
+        """Undercutting the coverage figure honestly: the 11 remaining scenes
+        cannot move the total, because their tiers are flat or zero cost."""
+        uncaptured = REPORT["facts"]["uncaptured_detail"]
+        self.assertEqual(len(uncaptured), 11)
+        for row in uncaptured:
+            self.assertTrue(row["count_independent"],
+                            f"{row['scene_id']} is {row['tier']} and must be "
+                            f"count-independent, or the coverage gap matters")
 
     def test_every_fact_row_names_a_scene(self):
         for row in REPORT["facts"]["detail"]:
@@ -73,19 +113,30 @@ class TestStructuralFinding(unittest.TestCase):
         costs = {p["total_cost_units"] for p in block["points"]}
         self.assertEqual(len(costs), 1, costs)
 
-    def test_only_crowd_scenes_are_sensitive(self):
+    def test_crowd_default_sweep_is_now_inert(self):
+        """The capture's whole point: the ambient NPC default no longer matters.
+
+        Before capture this elasticity was +0.88, because 12 of 14 crowd scenes
+        were billed at the default. Every crowd scene now has register prose, so
+        the sweep must be flat. If this ever becomes non-zero again, a scene has
+        silently regressed to a policy default.
+        """
         crowd = REPORT["sensitivity"]["expected_npcs_for_policy_defaults"]
-        self.assertGreater(abs(crowd["elasticity"]), 0.1)
+        self.assertEqual(crowd["elasticity"], 0.0)
+        costs = {p["total_cost_units"] for p in crowd["points"]}
+        self.assertEqual(len(costs), 1, costs)
 
     def test_crowd_scene_count_is_14(self):
         baseline = sens._rebuild(POLICY, SCENES, DETAILS)
         self.assertEqual(baseline.by_tier["CROWD"], 14)
 
-    def test_twelve_of_fourteen_crowd_scenes_are_policy_defaults(self):
+    def test_no_crowd_scene_is_on_a_policy_default(self):
+        """Was 12 of 14 before the capture; must now be zero."""
         baseline = sens._rebuild(POLICY, SCENES, DETAILS)
         crowd_default = [s for s in baseline.scenes
                          if s.tier == "CROWD" and s.npcs_source == "policy_default"]
-        self.assertEqual(len(crowd_default), 12)
+        self.assertEqual(crowd_default, [],
+                         "every CROWD scene must rest on register prose")
 
 
 class TestElasticity(unittest.TestCase):
@@ -176,9 +227,14 @@ class TestScenarios(unittest.TestCase):
         costs = [s["total_cost_units"] for s in ordered]
         self.assertEqual(costs, sorted(costs), costs)
 
-    def test_spread_is_reported(self):
+    def test_spread_is_reported_and_narrowed(self):
+        """Spread fell from 2.5x to ~1.4x because the capture removed the
+        dominant assumption. A spread still exists, so the model is still
+        assumption-sensitive - it is just much less so."""
         costs = [s["total_cost_units"] for s in REPORT["scenarios"]]
-        self.assertGreater(max(costs) / min(costs), 2.0)
+        spread = max(costs) / min(costs)
+        self.assertGreater(spread, 1.2, "assumptions must still visibly matter")
+        self.assertLess(spread, 2.0, "the capture was supposed to narrow this")
 
     def test_ceiling_headroom_computed(self):
         c = REPORT["ceiling"]
@@ -221,6 +277,62 @@ class TestEvidenceArtifactMatchesCode(unittest.TestCase):
         data = json.loads(EVIDENCE.read_text())
         self.assertEqual(data["facts"]["scenes_with_register_npc_data"],
                          REPORT["facts"]["scenes_with_register_npc_data"])
+
+
+class TestReportDocMatchesArtifact(unittest.TestCase):
+    """Doc/code drift has been caught twice in this project. The report is prose,
+    so nothing stops it describing a world that no longer exists. These checks
+    tie every headline number in the report to the generated artifact.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        raw = (REPO_ROOT / "Docs" / "POPULATION_SENSITIVITY_REPORT.md"
+               ).read_text(encoding="utf-8")
+        # Strip emphasis so wording checks test the prose, not the markup. A
+        # test that breaks when an editor adds italics is testing markdown.
+        cls.doc = raw.replace("**", "").replace("*", "").replace("`", "")
+        cls.data = json.loads(EVIDENCE.read_text())
+
+    def test_baseline_figures_appear(self):
+        baseline = self.data["baseline"]
+        for key in ("total_cost_units", "simulated_npcs", "crowd_peak"):
+            self.assertIn(str(baseline[key]), self.doc,
+                          f"baseline {key}={baseline[key]} missing from the report")
+
+    def test_band_figures_appear(self):
+        dep = self.data["assumption_dependence"]
+        self.assertIn(f"{dep['band_cost_units_low']}", self.doc)
+        self.assertIn(f"{dep['band_cost_units_high']}", self.doc)
+
+    def test_scenario_costs_appear(self):
+        for row in self.data["scenarios"]:
+            self.assertIn(str(row["total_cost_units"]), self.doc,
+                          f"{row['scenario']} cost missing from the report")
+
+    def test_coverage_figures_appear(self):
+        facts = self.data["facts"]
+        self.assertIn(str(facts["prose_capture_ratio"] * 100)[:2], self.doc)
+        self.assertIn(str(facts["scenes_with_register_prose_unresolved"]), self.doc)
+        self.assertIn(str(facts["scenes_without_any_capture"]), self.doc)
+
+    def test_report_does_not_claim_measurement(self):
+        self.assertIn("PROVISIONAL", self.doc)
+        self.assertIn("not a measurement", self.doc)
+        self.assertNotIn("measured budget", self.doc.lower())
+
+    def test_report_keeps_the_open_band_warning(self):
+        """A reader of the report must learn the band is open BEFORE they read
+        the ceiling headroom, not after."""
+        self.assertIn("OPEN", self.doc)
+        self.assertIn("CH01-SCN-014", self.doc)
+        self.assertIn("lower bound on the true cost", self.doc)
+
+    def test_report_states_the_dead_parameter(self):
+        """The single most important change, and the one most likely to be
+        quietly dropped by an editor who finds it confusing."""
+        self.assertIn("0.000", self.doc)
+        self.assertIn("inert", self.doc)
 
 
 if __name__ == "__main__":

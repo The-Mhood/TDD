@@ -41,7 +41,7 @@ Supersedes the dependency section of `Docs/WORLD_ASSESSMENT.md`. Kept here becau
 | # | Blocker | Blocks | Owner | Notes |
 |---|---|---|---|---|
 | **B-05** | Chapters 2–8 not ingested | Any per-chapter claim beyond Ch1 | Agent 2 | Only Ch1 locations (partial) and scenes (complete) are captured. Fabricating Ch2–8 numbers is prohibited. |
-| **B-06** | 41 of 46 Ch1 scenes lack detail blocks | Accurate NPC counts | Agent 2 | NPC counts for those scenes are **policy defaults**, labelled per scene. |
+| **B-06** | 11 of 46 Ch1 scenes lack detail blocks | Accurate NPC counts | Agent 2 | **Reduced from 41 to 11 by W-M2.2.** The 11 remaining are all SCRIPTED or NONE tier, whose cost does not depend on the count, so this now blocks *provenance*, not accuracy. A further 7 scenes have prose the register does not reduce to an integer (ranges/alternatives/conditions); they are bounded, not resolved. `CH01-SCN-014` states no number at all and leaves the cost band OPEN. |
 | **B-07** | Memories 2–7 unverified | Full memory director | Agent 2 + narrative | Only memory 1 has a verified scene/location binding. |
 | **B-08** | No retired-ID tracking | Canon hygiene | Agent 2 + register owner | A retired ID would parse as active. |
 
@@ -120,7 +120,7 @@ Note the shape: **B-01 blocks almost everything**, and CD decisions block conten
 |---|---|---|---|---|---|
 | Canon mirror + drift detection | **yes** | | | | |
 | Register parsers (locations, scenes, details) | **yes** | | | | chapters 2–8 |
-| Population budget derivation | **yes** | | | | per-scene accuracy (41 policy defaults) |
+| Population budget derivation | **yes** | | | | per-scene accuracy (11 policy defaults, all count-independent; band OPEN at `CH01-SCN-014`) |
 | Count reconciliation | **yes** | | | | chapters 2–8 |
 | Greybox restriction validator | **yes** | | | | nothing to validate (no geometry exists) |
 | Enemy archetype review | | **yes** (doc only) | | | any implementation |

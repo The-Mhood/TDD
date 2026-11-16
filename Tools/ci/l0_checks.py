@@ -313,6 +313,19 @@ def check_population_provenance() -> List[str]:
             problems.append(
                 f"{scene.get('scene_id')}: provenance {prov} but npcs_is_measured is true - "
                 f"an assumption must never be marked as measured")
+        # An UNPARSED scene must carry a stated reason. "We could not read it"
+        # without a why is indistinguishable from "we did not try".
+        if prov == "UNPARSED":
+            basis = scene.get("npcs_band_basis") or ""
+            if not basis:
+                problems.append(
+                    f"{scene.get('scene_id')}: UNPARSED with no npcs_band_basis - "
+                    f"an unresolved field must document why it is unresolved")
+            if scene.get("npcs_from_register"):
+                problems.append(
+                    f"{scene.get('scene_id')}: UNPARSED but carries a point count "
+                    f"{scene.get('npcs_from_register')} - an unresolved field must "
+                    f"not present a fabricated integer")
 
     summary = data.get("budget", {}).get("npcs_provenance_summary", {})
     if not summary:
@@ -329,7 +342,7 @@ def check_population_provenance() -> List[str]:
         import population_budget as pb
         import registers as reg
         fixture = (REPO / "Tools" / "canon" / "tests" / "fixtures"
-                   / "scene_register_ch01_full.md")
+                   / "scene_register_ch01_v19_verbatim.md")
         text = fixture.read_text(encoding="utf-8")
         live = pb.build_chapter_budget(reg.parse_scene_summary(text),
                                        reg.parse_scene_details(text),
@@ -381,7 +394,8 @@ def check_sensitivity_artifact_current() -> List[str]:
     import population_budget as pb
     import registers as reg
     import sensitivity as sens
-    fixtures = REPO / "Tools" / "canon" / "tests" / "fixtures" / "scene_register_ch01_full.md"
+    fixtures = (REPO / "Tools" / "canon" / "tests" / "fixtures"
+                / "scene_register_ch01_v19_verbatim.md")
     text = fixtures.read_text(encoding="utf-8")
     live = sens.build_report(reg.parse_scene_summary(text),
                              reg.parse_scene_details(text),

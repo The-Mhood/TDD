@@ -3,7 +3,8 @@
     "tool": "Tools/world/population_budget.py",
     "derivation": "register scene categories -> policy tier -> cost units",
     "status": "PROVISIONAL - derived from authored data, NOT measured",
-    "register_source": "SCENE_AND_MICROLOCATION_MASTER_REGISTER v1.9 (Chapter 1 fixture)",
+    "register_source": "SCENE_AND_MICROLOCATION_MASTER_REGISTER v1.9 (fixture: scene_register_ch01_v19_verbatim.md)",
+    "fixture_path": "Tools/canon/tests/fixtures/scene_register_ch01_v19_verbatim.md",
     "policy_source": "Tools/world/data/population_policy.json",
     "caveat": "No simulation has run. Every figure is a projection. Replace with capture data when an engine exists.",
     "capture_status": {
@@ -41,16 +42,108 @@
       "PENDING APPROVAL": 1,
       "PROPOSED": 45
     },
-    "simulated_npcs_lower": 30,
-    "simulated_npcs_upper": 49,
-    "crowd_peak_estimate": 29,
+    "simulated_npcs_lower": 23,
+    "simulated_npcs_upper": 42,
+    "crowd_peak_estimate": 22,
     "background_estimate": 0,
-    "total_cost_units": 36.58,
-    "unparsed_npc_scenes": [],
+    "total_cost_units": 30.38,
+    "unparsed_npc_scenes": [
+      "CH01-SCN-005",
+      "CH01-SCN-014",
+      "CH01-SCN-017",
+      "CH01-SCN-018",
+      "CH01-SCN-020",
+      "CH01-SCN-021",
+      "CH01-SCN-034"
+    ],
     "npcs_provenance_summary": {
-      "POLICY_DEFAULT": 41,
-      "REGISTER_DATA": 5
+      "POLICY_DEFAULT": 11,
+      "REGISTER_DATA": 28,
+      "UNPARSED": 7
     },
+    "npcs_band_summary": {
+      "scenes_with_stated_bounds": 5,
+      "scenes_without_any_bound": [
+        "CH01-SCN-014"
+      ],
+      "band_is_complete": false,
+      "detail": [
+        {
+          "scene_id": "CH01-SCN-005",
+          "tier": "SCRIPTED",
+          "access": "FULLY ENTERABLE",
+          "npcs_band": [
+            0,
+            1
+          ],
+          "basis": "conditional presence (0 when absent)",
+          "cost_band": [
+            0.3,
+            0.3
+          ]
+        },
+        {
+          "scene_id": "CH01-SCN-017",
+          "tier": "CROWD",
+          "access": "OPEN EXTERIOR",
+          "npcs_band": [
+            6,
+            10
+          ],
+          "basis": "stated range (X to Y)",
+          "cost_band": [
+            5.0,
+            8.0
+          ]
+        },
+        {
+          "scene_id": "CH01-SCN-020",
+          "tier": "CROWD",
+          "access": "FULLY ENTERABLE",
+          "npcs_band": [
+            4,
+            5
+          ],
+          "basis": "stated alternative (X or Y)",
+          "cost_band": [
+            3.0,
+            4.0
+          ]
+        },
+        {
+          "scene_id": "CH01-SCN-021",
+          "tier": "NONE",
+          "access": "OPEN EXTERIOR",
+          "npcs_band": [
+            0,
+            1
+          ],
+          "basis": "conditional presence, singular person named (0 to 1)",
+          "cost_band": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "scene_id": "CH01-SCN-034",
+          "tier": "NONE",
+          "access": "OPEN EXTERIOR",
+          "npcs_band": [
+            0,
+            1
+          ],
+          "basis": "conditional presence, singular person named (0 to 1)",
+          "cost_band": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "_note": "Bounds are the register's own wording (for example 'six to ten', 'four or five', 'sometimes one'). Where a field states no bound the band is open in that direction and the upper figure is a LOWER bound on the true cost."
+    },
+    "band_cost_units_low": 38.38,
+    "band_cost_units_high": 42.37,
+    "band_is_complete": false,
     "scenes": [
       {
         "scene_id": "CH01-SCN-001",
@@ -65,6 +158,9 @@
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
         "npcs_is_measured": true,
+        "npcs_band_low": 2,
+        "npcs_band_high": 2,
+        "npcs_band_basis": "stated count",
         "has_child": true,
         "simulated_cost": 2.0,
         "notes": [
@@ -80,15 +176,16 @@
         "parent_id": "CH01-SUB-019",
         "tier": "CROWD",
         "tier_source": "policy:AMBIENT NPC SCENE",
-        "npcs_from_register": 2,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 8,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 8,
+        "npcs_band_high": 8,
+        "npcs_band_basis": "stated count",
         "has_child": false,
-        "simulated_cost": 2.0,
-        "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
-        ]
+        "simulated_cost": 6.0,
+        "notes": []
       },
       {
         "scene_id": "CH01-SCN-003",
@@ -99,14 +196,17 @@
         "parent_id": "CH01-SUB-019",
         "tier": "CROWD",
         "tier_source": "policy:AMBIENT NPC SCENE",
-        "npcs_from_register": 2,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
-        "has_child": false,
-        "simulated_cost": 2.0,
+        "npcs_from_register": 4,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 4,
+        "npcs_band_high": 4,
+        "npcs_band_basis": "stated count",
+        "has_child": true,
+        "simulated_cost": 3.0,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
+          "Child present: RULE-NPC-CHILDREN-NO-COMBAT applies; never a combat target."
         ]
       },
       {
@@ -118,15 +218,16 @@
         "parent_id": "CH01-SUB-019",
         "tier": "CROWD",
         "tier_source": "policy:AMBIENT NPC SCENE",
-        "npcs_from_register": 2,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 1,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 1,
+        "npcs_band_high": 1,
+        "npcs_band_basis": "stated count",
         "has_child": false,
-        "simulated_cost": 2.0,
-        "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
-        ]
+        "simulated_cost": 1.0,
+        "notes": []
       },
       {
         "scene_id": "CH01-SCN-005",
@@ -137,14 +238,17 @@
         "parent_id": "CH01-SUB-019",
         "tier": "SCRIPTED",
         "tier_source": "policy:ENTERABLE INTERIOR",
-        "npcs_from_register": 1,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_from_register": 0,
+        "npcs_source": "unparsed",
+        "npcs_provenance": "UNPARSED",
         "npcs_is_measured": false,
+        "npcs_band_low": 0,
+        "npcs_band_high": 1,
+        "npcs_band_basis": "conditional presence (0 when absent)",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data.",
+          "NPC description not machine-parseable: 'Sometimes one cook.'; counted as 0 which UNDERSTATES cost. Manual review required.",
           "Scripted activity: animates on a loop, has no AI or perception."
         ]
       },
@@ -157,14 +261,16 @@
         "parent_id": "CH01-SUB-019",
         "tier": "SCRIPTED",
         "tier_source": "policy:ENTERABLE INTERIOR",
-        "npcs_from_register": 1,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 0,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 0,
+        "npcs_band_high": 0,
+        "npcs_band_basis": "stated absence",
         "has_child": false,
         "simulated_cost": 0.18,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data.",
           "Scripted activity: animates on a loop, has no AI or perception."
         ]
       },
@@ -177,14 +283,16 @@
         "parent_id": "CH01-INT-007",
         "tier": "SCRIPTED",
         "tier_source": "policy:ENTERABLE INTERIOR",
-        "npcs_from_register": 1,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 0,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 0,
+        "npcs_band_high": 0,
+        "npcs_band_basis": "stated absence",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data.",
           "Scripted activity: animates on a loop, has no AI or perception."
         ]
       },
@@ -197,14 +305,16 @@
         "parent_id": "CH01-INT-007",
         "tier": "SCRIPTED",
         "tier_source": "policy:WORLD ACTIVITY SCENE",
-        "npcs_from_register": 1,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 2,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 2,
+        "npcs_band_high": 2,
+        "npcs_band_basis": "stated count",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data.",
           "Scripted activity: animates on a loop, has no AI or perception."
         ]
       },
@@ -217,15 +327,16 @@
         "parent_id": "CH01-INT-009",
         "tier": "CROWD",
         "tier_source": "policy:AMBIENT NPC SCENE",
-        "npcs_from_register": 2,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 1,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 1,
+        "npcs_band_high": 1,
+        "npcs_band_basis": "stated count",
         "has_child": false,
-        "simulated_cost": 1.2,
-        "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
-        ]
+        "simulated_cost": 0.6,
+        "notes": []
       },
       {
         "scene_id": "CH01-SCN-010",
@@ -236,14 +347,16 @@
         "parent_id": "CH01-INT-005",
         "tier": "SCRIPTED",
         "tier_source": "policy:WORLD ACTIVITY SCENE",
-        "npcs_from_register": 1,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 2,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 2,
+        "npcs_band_high": 2,
+        "npcs_band_basis": "stated count",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data.",
           "Scripted activity: animates on a loop, has no AI or perception."
         ]
       },
@@ -256,15 +369,16 @@
         "parent_id": "CH01-SUB-008",
         "tier": "CROWD",
         "tier_source": "policy:AMBIENT NPC SCENE",
-        "npcs_from_register": 2,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 1,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 1,
+        "npcs_band_high": 1,
+        "npcs_band_basis": "stated count",
         "has_child": false,
-        "simulated_cost": 2.0,
-        "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
-        ]
+        "simulated_cost": 1.0,
+        "notes": []
       },
       {
         "scene_id": "CH01-SCN-012",
@@ -275,15 +389,16 @@
         "parent_id": "CH01-SUB-008",
         "tier": "CROWD",
         "tier_source": "policy:AMBIENT NPC SCENE",
-        "npcs_from_register": 2,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 1,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 1,
+        "npcs_band_high": 1,
+        "npcs_band_basis": "stated count",
         "has_child": false,
-        "simulated_cost": 2.0,
-        "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
-        ]
+        "simulated_cost": 1.0,
+        "notes": []
       },
       {
         "scene_id": "CH01-SCN-013",
@@ -294,14 +409,17 @@
         "parent_id": "CH01-INT-014",
         "tier": "NONE",
         "tier_source": "policy:EXTERIOR MICRO-LOCATION",
-        "npcs_from_register": 0,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
-        "has_child": false,
+        "npcs_from_register": 1,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 1,
+        "npcs_band_high": 1,
+        "npcs_band_basis": "stated count",
+        "has_child": true,
         "simulated_cost": 0.0,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
+          "Child present: RULE-NPC-CHILDREN-NO-COMBAT applies; never a combat target."
         ]
       },
       {
@@ -313,14 +431,18 @@
         "parent_id": "CH01-SUB-015",
         "tier": "CROWD",
         "tier_source": "policy:AMBIENT NPC SCENE",
-        "npcs_from_register": 2,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_from_register": 0,
+        "npcs_source": "unparsed",
+        "npcs_provenance": "UNPARSED",
         "npcs_is_measured": false,
-        "has_child": false,
-        "simulated_cost": 2.0,
+        "npcs_band_low": null,
+        "npcs_band_high": null,
+        "npcs_band_basis": "collective without a number; no bound stated",
+        "has_child": true,
+        "simulated_cost": 0.0,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
+          "NPC description not machine-parseable: 'A line of women and girls filling pots and lifting them onto head-pads, talking.'; counted as 0 which UNDERSTATES cost. Manual review required.",
+          "Child present: RULE-NPC-CHILDREN-NO-COMBAT applies; never a combat target."
         ]
       },
       {
@@ -336,6 +458,9 @@
         "npcs_source": "policy_default",
         "npcs_provenance": "POLICY_DEFAULT",
         "npcs_is_measured": false,
+        "npcs_band_low": null,
+        "npcs_band_high": null,
+        "npcs_band_basis": "",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -352,14 +477,16 @@
         "parent_id": "CH01-SUB-012",
         "tier": "SCRIPTED",
         "tier_source": "policy:WORLD ACTIVITY SCENE",
-        "npcs_from_register": 1,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 4,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 4,
+        "npcs_band_high": 4,
+        "npcs_band_basis": "stated count",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data.",
           "Scripted activity: animates on a loop, has no AI or perception."
         ]
       },
@@ -372,13 +499,18 @@
         "parent_id": "CH01-SUB-006",
         "tier": "CROWD",
         "tier_source": "policy:AMBIENT NPC SCENE",
-        "npcs_from_register": 3,
-        "npcs_source": "register",
-        "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_from_register": 0,
+        "npcs_source": "unparsed",
+        "npcs_provenance": "UNPARSED",
+        "npcs_is_measured": false,
+        "npcs_band_low": 6,
+        "npcs_band_high": 10,
+        "npcs_band_basis": "stated range (X to Y)",
         "has_child": false,
-        "simulated_cost": 3.0,
-        "notes": []
+        "simulated_cost": 0.0,
+        "notes": [
+          "NPC description not machine-parseable: 'Six to ten adults; Unoka (storyteller) some days.'; counted as 0 which UNDERSTATES cost. Manual review required."
+        ]
       },
       {
         "scene_id": "CH01-SCN-018",
@@ -389,14 +521,17 @@
         "parent_id": "CH01-SUB-011",
         "tier": "SCRIPTED",
         "tier_source": "policy:WORLD ACTIVITY SCENE",
-        "npcs_from_register": 1,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_from_register": 0,
+        "npcs_source": "unparsed",
+        "npcs_provenance": "UNPARSED",
         "npcs_is_measured": false,
+        "npcs_band_low": 12,
+        "npcs_band_high": 12,
+        "npcs_band_basis": "stated collective equal to twelve (a dozen)",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data.",
+          "NPC description not machine-parseable: 'A dozen people.'; counted as 0 which UNDERSTATES cost. Manual review required.",
           "Scripted activity: animates on a loop, has no AI or perception."
         ]
       },
@@ -409,15 +544,16 @@
         "parent_id": "CH01-INT-013",
         "tier": "CROWD",
         "tier_source": "policy:AMBIENT NPC SCENE",
-        "npcs_from_register": 2,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 1,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 1,
+        "npcs_band_high": 1,
+        "npcs_band_basis": "stated count",
         "has_child": false,
-        "simulated_cost": 1.2,
-        "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
-        ]
+        "simulated_cost": 0.6,
+        "notes": []
       },
       {
         "scene_id": "CH01-SCN-020",
@@ -428,14 +564,17 @@
         "parent_id": "CH01-INT-012",
         "tier": "CROWD",
         "tier_source": "policy:AMBIENT NPC SCENE",
-        "npcs_from_register": 2,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_from_register": 0,
+        "npcs_source": "unparsed",
+        "npcs_provenance": "UNPARSED",
         "npcs_is_measured": false,
+        "npcs_band_low": 4,
+        "npcs_band_high": 5,
+        "npcs_band_basis": "stated alternative (X or Y)",
         "has_child": false,
-        "simulated_cost": 2.0,
+        "simulated_cost": 0.0,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
+          "NPC description not machine-parseable: 'Four or five men.'; counted as 0 which UNDERSTATES cost. Manual review required."
         ]
       },
       {
@@ -448,13 +587,16 @@
         "tier": "NONE",
         "tier_source": "policy:EXTERIOR MICRO-LOCATION",
         "npcs_from_register": 0,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_source": "unparsed",
+        "npcs_provenance": "UNPARSED",
         "npcs_is_measured": false,
+        "npcs_band_low": 0,
+        "npcs_band_high": 1,
+        "npcs_band_basis": "conditional presence, singular person named (0 to 1)",
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
+          "NPC description not machine-parseable: 'Occasional passer-by.'; counted as 0 which UNDERSTATES cost. Manual review required."
         ]
       },
       {
@@ -467,14 +609,15 @@
         "tier": "NONE",
         "tier_source": "policy:EXTERIOR MICRO-LOCATION",
         "npcs_from_register": 0,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 0,
+        "npcs_band_high": 0,
+        "npcs_band_basis": "stated absence",
         "has_child": false,
         "simulated_cost": 0.0,
-        "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
-        ]
+        "notes": []
       },
       {
         "scene_id": "CH01-SCN-023",
@@ -489,6 +632,9 @@
         "npcs_source": "policy_default",
         "npcs_provenance": "POLICY_DEFAULT",
         "npcs_is_measured": false,
+        "npcs_band_low": null,
+        "npcs_band_high": null,
+        "npcs_band_basis": "",
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -508,6 +654,9 @@
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
         "npcs_is_measured": true,
+        "npcs_band_low": 0,
+        "npcs_band_high": 0,
+        "npcs_band_basis": "stated absence",
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": []
@@ -525,6 +674,9 @@
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
         "npcs_is_measured": true,
+        "npcs_band_low": 1,
+        "npcs_band_high": 1,
+        "npcs_band_basis": "stated count",
         "has_child": true,
         "simulated_cost": 0.3,
         "notes": [
@@ -545,6 +697,9 @@
         "npcs_source": "policy_default",
         "npcs_provenance": "POLICY_DEFAULT",
         "npcs_is_measured": false,
+        "npcs_band_low": null,
+        "npcs_band_high": null,
+        "npcs_band_basis": "",
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -564,6 +719,9 @@
         "npcs_source": "policy_default",
         "npcs_provenance": "POLICY_DEFAULT",
         "npcs_is_measured": false,
+        "npcs_band_low": null,
+        "npcs_band_high": null,
+        "npcs_band_basis": "",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -580,14 +738,16 @@
         "parent_id": "CH01-INT-010",
         "tier": "SCRIPTED",
         "tier_source": "policy:WORLD ACTIVITY SCENE",
-        "npcs_from_register": 1,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 2,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 2,
+        "npcs_band_high": 2,
+        "npcs_band_basis": "stated count",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data.",
           "Scripted activity: animates on a loop, has no AI or perception."
         ]
       },
@@ -601,14 +761,15 @@
         "tier": "CROWD",
         "tier_source": "policy:AMBIENT NPC SCENE",
         "npcs_from_register": 2,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 2,
+        "npcs_band_high": 2,
+        "npcs_band_basis": "stated count",
         "has_child": false,
         "simulated_cost": 2.0,
-        "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
-        ]
+        "notes": []
       },
       {
         "scene_id": "CH01-SCN-030",
@@ -619,15 +780,16 @@
         "parent_id": "CH01-SUB-010",
         "tier": "CROWD",
         "tier_source": "policy:AMBIENT NPC SCENE",
-        "npcs_from_register": 2,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 3,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 3,
+        "npcs_band_high": 3,
+        "npcs_band_basis": "stated count",
         "has_child": false,
-        "simulated_cost": 2.0,
-        "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
-        ]
+        "simulated_cost": 3.0,
+        "notes": []
       },
       {
         "scene_id": "CH01-SCN-031",
@@ -638,14 +800,16 @@
         "parent_id": "CH01-INT-002",
         "tier": "SCRIPTED",
         "tier_source": "policy:WORLD ACTIVITY SCENE",
-        "npcs_from_register": 1,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 3,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 3,
+        "npcs_band_high": 3,
+        "npcs_band_basis": "stated count",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data.",
           "Scripted activity: animates on a loop, has no AI or perception."
         ]
       },
@@ -658,14 +822,16 @@
         "parent_id": "CH01-SUB-014",
         "tier": "SCRIPTED",
         "tier_source": "policy:ATMOSPHERIC SCENE",
-        "npcs_from_register": 1,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 0,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 0,
+        "npcs_band_high": 0,
+        "npcs_band_basis": "stated absence",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data.",
           "Scripted activity: animates on a loop, has no AI or perception."
         ]
       },
@@ -679,13 +845,15 @@
         "tier": "SCRIPTED",
         "tier_source": "policy:ATMOSPHERIC SCENE",
         "npcs_from_register": 1,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 1,
+        "npcs_band_high": 1,
+        "npcs_band_basis": "stated count",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data.",
           "Scripted activity: animates on a loop, has no AI or perception."
         ]
       },
@@ -699,13 +867,16 @@
         "tier": "NONE",
         "tier_source": "policy:EXTERIOR MICRO-LOCATION",
         "npcs_from_register": 0,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
+        "npcs_source": "unparsed",
+        "npcs_provenance": "UNPARSED",
         "npcs_is_measured": false,
+        "npcs_band_low": 0,
+        "npcs_band_high": 1,
+        "npcs_band_basis": "conditional presence, singular person named (0 to 1)",
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
+          "NPC description not machine-parseable: 'Sometimes a traveller.'; counted as 0 which UNDERSTATES cost. Manual review required."
         ]
       },
       {
@@ -721,6 +892,9 @@
         "npcs_source": "policy_default",
         "npcs_provenance": "POLICY_DEFAULT",
         "npcs_is_measured": false,
+        "npcs_band_low": null,
+        "npcs_band_high": null,
+        "npcs_band_basis": "",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -738,14 +912,15 @@
         "tier": "NONE",
         "tier_source": "policy:ENVIRONMENTAL STORYTELLING",
         "npcs_from_register": 0,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 0,
+        "npcs_band_high": 0,
+        "npcs_band_basis": "stated absence",
         "has_child": false,
         "simulated_cost": 0.0,
-        "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
-        ]
+        "notes": []
       },
       {
         "scene_id": "CH01-SCN-037",
@@ -756,15 +931,16 @@
         "parent_id": "CH01-SUB-004",
         "tier": "CROWD",
         "tier_source": "policy:AMBIENT NPC SCENE",
-        "npcs_from_register": 2,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 1,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 1,
+        "npcs_band_high": 1,
+        "npcs_band_basis": "stated count",
         "has_child": false,
-        "simulated_cost": 2.0,
-        "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
-        ]
+        "simulated_cost": 1.0,
+        "notes": []
       },
       {
         "scene_id": "CH01-SCN-038",
@@ -779,6 +955,9 @@
         "npcs_source": "policy_default",
         "npcs_provenance": "POLICY_DEFAULT",
         "npcs_is_measured": false,
+        "npcs_band_low": null,
+        "npcs_band_high": null,
+        "npcs_band_basis": "",
         "has_child": false,
         "simulated_cost": 0.18,
         "notes": [
@@ -799,6 +978,9 @@
         "npcs_source": "policy_default",
         "npcs_provenance": "POLICY_DEFAULT",
         "npcs_is_measured": false,
+        "npcs_band_low": null,
+        "npcs_band_high": null,
+        "npcs_band_basis": "",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
@@ -819,6 +1001,9 @@
         "npcs_source": "policy_default",
         "npcs_provenance": "POLICY_DEFAULT",
         "npcs_is_measured": false,
+        "npcs_band_low": null,
+        "npcs_band_high": null,
+        "npcs_band_basis": "",
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -838,6 +1023,9 @@
         "npcs_source": "policy_default",
         "npcs_provenance": "POLICY_DEFAULT",
         "npcs_is_measured": false,
+        "npcs_band_low": null,
+        "npcs_band_high": null,
+        "npcs_band_basis": "",
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -857,6 +1045,9 @@
         "npcs_source": "policy_default",
         "npcs_provenance": "POLICY_DEFAULT",
         "npcs_is_measured": false,
+        "npcs_band_low": null,
+        "npcs_band_high": null,
+        "npcs_band_basis": "",
         "has_child": false,
         "simulated_cost": 0.01,
         "notes": [
@@ -877,6 +1068,9 @@
         "npcs_source": "policy_default",
         "npcs_provenance": "POLICY_DEFAULT",
         "npcs_is_measured": false,
+        "npcs_band_low": null,
+        "npcs_band_high": null,
+        "npcs_band_basis": "",
         "has_child": false,
         "simulated_cost": 0.0,
         "notes": [
@@ -893,14 +1087,15 @@
         "tier": "NONE",
         "tier_source": "policy:ENVIRONMENTAL STORYTELLING",
         "npcs_from_register": 0,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 0,
+        "npcs_band_high": 0,
+        "npcs_band_basis": "stated absence",
         "has_child": false,
         "simulated_cost": 0.0,
-        "notes": [
-          "No detail block captured; NPC count is a policy default, not register data."
-        ]
+        "notes": []
       },
       {
         "scene_id": "CH01-SCN-045",
@@ -911,14 +1106,16 @@
         "parent_id": "CH01-SUB-002",
         "tier": "SCRIPTED",
         "tier_source": "policy:ATMOSPHERIC SCENE",
-        "npcs_from_register": 1,
-        "npcs_source": "policy_default",
-        "npcs_provenance": "POLICY_DEFAULT",
-        "npcs_is_measured": false,
+        "npcs_from_register": 0,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
+        "npcs_is_measured": true,
+        "npcs_band_low": 0,
+        "npcs_band_high": 0,
+        "npcs_band_basis": "stated absence",
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
-          "No detail block captured; NPC count is a policy default, not register data.",
           "Scripted activity: animates on a loop, has no AI or perception."
         ]
       },
@@ -935,6 +1132,9 @@
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
         "npcs_is_measured": true,
+        "npcs_band_low": 0,
+        "npcs_band_high": 0,
+        "npcs_band_basis": "stated absence",
         "has_child": false,
         "simulated_cost": 4.0,
         "notes": []
@@ -943,6 +1143,12 @@
   },
   "validation": {
     "problems": [],
-    "result": "PASS"
+    "warnings": [
+      "CH01: 6 scene(s) state a range, alternative or condition rather than a head-count. The point estimate bills them at 0 and therefore UNDERSTATES; the band 38.38-42.37 carries the register's own limits. Resolving them needs a ruling on how a range is budgeted, not more parsing: ['CH01-SCN-005', 'CH01-SCN-017', 'CH01-SCN-018', 'CH01-SCN-020', 'CH01-SCN-021', 'CH01-SCN-034']",
+      "CH01: the cost band is OPEN because ['CH01-SCN-014'] states no NPC number. The band's upper figure is a LOWER bound on the true cost.",
+      "CH01: 11 scene(s) remain uncaptured and rest on a policy default. All are SCRIPTED or NONE tier, whose cost does not depend on the count, so they carry provenance debt rather than numeric exposure."
+    ],
+    "result": "PASS",
+    "result_note": "PASS means the derivation is internally sound and its open fields are documented. It does NOT mean the figures are measured; they are projections."
   }
 }

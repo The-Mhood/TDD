@@ -47,10 +47,26 @@ import registers as reg  # noqa: E402
 POLICY_PATH = HERE / "data" / "population_policy.json"
 DEFAULT_FIXTURES = HERE.parent / "canon" / "tests" / "fixtures"
 
+#: The verbatim Chapter 1 capture (register v1.9). This is the default source.
+#: `scene_register_ch01_full.md` is PRESERVED unchanged as the earlier abridged
+#: fixture: it is still readable, still testable, and is what the previous
+#: model was built from. Superseding a fixture is not the same as deleting it,
+#: and the W-M2.1 baseline must stay reproducible from the file it came from.
+FIXTURE_VERBATIM = DEFAULT_FIXTURES / "scene_register_ch01_v19_verbatim.md"
+FIXTURE_ABRIDGED = DEFAULT_FIXTURES / "scene_register_ch01_full.md"
+
 
 # --------------------------------------------------------------------------- #
 # Policy
 # --------------------------------------------------------------------------- #
+
+def _display_path(path: Path) -> str:
+    """Repo-relative path when possible, absolute otherwise. Never raises."""
+    try:
+        return str(path.resolve().relative_to(HERE.parent.parent.resolve()))
+    except (ValueError, OSError):
+        return str(path)
+
 
 def load_policy(path: Path = POLICY_PATH) -> Dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -92,8 +108,15 @@ class SceneBudget:
     # than a rule they must remember.
     npcs_provenance: str           # REGISTER_DATA | POLICY_DEFAULT | UNPARSED | NO_NPCS
     npcs_is_measured: bool         # True only when read from the register
-    has_child: bool
-    simulated_cost: float          # cost units; 0.0 for NONE/BACKGROUND
+    # The register's OWN numeric bounds for the field, where it states any.
+    # "Six to ten adults" yields (6, 10). A collective with no number yields
+    # (None, None) and the field stays genuinely unresolved. These are register
+    # data, quoted from the source, never an assumption about density.
+    npcs_band_low: Optional[int] = None
+    npcs_band_high: Optional[int] = None
+    npcs_band_basis: str = ""
+    has_child: bool = False
+    simulated_cost: float = 0.0    # cost units; 0.0 for NONE/BACKGROUND
     notes: List[str] = field(default_factory=list)
 
 
@@ -111,6 +134,16 @@ class ChapterBudget:
     total_cost_units: float
     unparsed_npc_scenes: List[str]
     npcs_provenance_summary: Dict[str, int]
+    # Banded estimate. The point estimate treats an unresolved count as 0, which
+    # understates. The band applies the register's own stated bounds where it
+    # states any, so the reader can see how much the unresolved fields can
+    # possibly move the total. `band_is_complete` is False when at least one
+    # unresolved field has NO stated bound - then even the upper bound is a
+    # lower bound on the true figure, and must be said so.
+    npcs_band_summary: Dict[str, Any]
+    band_cost_units_low: float
+    band_cost_units_high: float
+    band_is_complete: bool
     scenes: List[SceneBudget]
 
 
@@ -142,6 +175,24 @@ def _estimate_crowd(count: int, policy: Dict[str, Any], category: str) -> int:
     return max(1, math.ceil(count * ratio))
 
 
+def scene_cost_for_count(tier: str, count: Optional[int], policy: Dict[str, Any],
+                         category: str) -> float:
+    """Cost units for a scene at a GIVEN NPC count, before the access multiplier.
+
+    One implementation, used by both the point estimate and the band, so the
+    band can never drift from the model it is bounding.
+    """
+    if tier == "NAMED":
+        return policy["cost_units"]["NAMED"]
+    if tier == "CROWD":
+        return policy["cost_units"]["CROWD"] * _estimate_crowd(count or 0, policy, category)
+    if tier == "SCRIPTED":
+        return policy["cost_units"]["SCRIPTED"]
+    if tier == "BACKGROUND":
+        return policy["cost_units"]["BACKGROUND"]
+    return 0.0
+
+
 def build_chapter_budget(scenes: Sequence[reg.SceneRecord],
                          details: Sequence[reg.SceneDetail],
                          policy: Dict[str, Any],
@@ -155,6 +206,10 @@ def build_chapter_budget(scenes: Sequence[reg.SceneRecord],
 
     sim_lower = sim_upper = crowd_peak = background = 0
     total_cost = 0.0
+    band_cost_low = 0.0
+    band_cost_high = 0.0
+    band_open: List[str] = []
+    band_rows: List[Dict[str, Any]] = []
 
     for scene in scenes:
         if scene.chapter != chapter:
@@ -194,6 +249,12 @@ def build_chapter_budget(scenes: Sequence[reg.SceneRecord],
             npcs = 0
             npcs_source = "none"
 
+        # The register's own numeric bounds, where it states any.
+        band_low = band_high = None
+        band_basis = ""
+        if detail is not None and detail.npcs_present:
+            band_low, band_high, band_basis = reg.parse_npc_band(detail.npcs_present)
+
         if has_child:
             notes.append("Child present: RULE-NPC-CHILDREN-NO-COMBAT applies; never a combat target.")
 
@@ -222,6 +283,25 @@ def build_chapter_budget(scenes: Sequence[reg.SceneRecord],
 
         total_cost += cost * access_mult
 
+        # Banded cost. For a scene whose count is a settled integer the band is
+        # that integer and adds nothing. For an unresolved field the band uses
+        # the register's stated bounds instead of the point estimate's 0.
+        if band_low is not None and band_high is not None and band_low != band_high:
+            lo = scene_cost_for_count(tier, band_low, policy, category) * access_mult
+            hi = scene_cost_for_count(tier, band_high, policy, category) * access_mult
+            band_cost_low += lo
+            band_cost_high += hi
+            band_rows.append({
+                "scene_id": scene.id, "tier": tier, "access": access,
+                "npcs_band": [band_low, band_high], "basis": band_basis,
+                "cost_band": [round(lo, 2), round(hi, 2)],
+            })
+        else:
+            band_cost_low += cost * access_mult
+            band_cost_high += cost * access_mult
+        if npcs_source == "unparsed" and band_low is None:
+            band_open.append(scene.id)
+
         by_tier[tier] += 1
         provenance = {
             "register": "REGISTER_DATA",
@@ -237,6 +317,9 @@ def build_chapter_budget(scenes: Sequence[reg.SceneRecord],
             npcs_from_register=npcs, npcs_source=npcs_source,
             npcs_provenance=provenance,
             npcs_is_measured=(npcs_source == "register"),
+            npcs_band_low=band_low,
+            npcs_band_high=band_high,
+            npcs_band_basis=band_basis,
             has_child=has_child,
             simulated_cost=round(cost * access_mult, 2), notes=notes,
         ))
@@ -255,12 +338,35 @@ def build_chapter_budget(scenes: Sequence[reg.SceneRecord],
         unparsed_npc_scenes=sorted(set(unparsed)),
         npcs_provenance_summary=dict(sorted(
             Counter(b.npcs_provenance for b in budgets).items())),
+        npcs_band_summary={
+            "scenes_with_stated_bounds": len(band_rows),
+            "scenes_without_any_bound": sorted(band_open),
+            "band_is_complete": not band_open,
+            "detail": band_rows,
+            "_note": "Bounds are the register's own wording (for example "
+                     "'six to ten', 'four or five', 'sometimes one'). Where a "
+                     "field states no bound the band is open in that direction "
+                     "and the upper figure is a LOWER bound on the true cost.",
+        },
+        band_cost_units_low=round(band_cost_low, 2),
+        band_cost_units_high=round(band_cost_high, 2),
+        band_is_complete=not band_open,
         scenes=budgets,
     )
 
 
 def validate_budget(budget: ChapterBudget, policy: Dict[str, Any]) -> List[str]:
-    """Check a derived budget against the chapter ceilings in the policy."""
+    """Hard failures only: a derived budget that cannot be trusted at all.
+
+    A WARNING is something the reader must be told but which does not falsify
+    the model: an unresolved field, an open cost band, remaining policy defaults.
+    Those live in `budget_warnings`. Folding them into the hard failures would
+    make a correct, honestly-labelled result look broken, and a validator that
+    always fails is a validator nobody reads.
+
+    HARD FAILURES are only: a ceiling breach, an unmapped category, or an NPC
+    field that is unresolvable in a way the model has not accounted for.
+    """
     problems: List[str] = []
     limits = policy["chapter_limits"]
 
@@ -274,10 +380,26 @@ def validate_budget(budget: ChapterBudget, policy: Dict[str, Any]) -> List[str]:
             f"{budget.chapter}: total cost {budget.total_cost_units} exceeds "
             f"chapter ceiling {limits['max_total_cost_units']}"
         )
-    if budget.unparsed_npc_scenes:
+    # Unresolved NPC prose is not automatically a failure. What matters is
+    # whether the register gives us BOUNDS on it:
+    #
+    #   * bounded   - "six to ten", "four or five", "sometimes one". The point
+    #                 estimate still treats these as 0, but the band replaces
+    #                 those zeros with the register's own limits, so the reader
+    #                 is told exactly how far off the point figure can be. That
+    #                 is honest, and it is a WARNING.
+    #   * unbounded - "a line of women and girls" with no numeral. Nothing bounds
+    #                 the figure, so the band is open in that direction and the
+    #                 upper figure is itself a lower bound. That is a FAILURE,
+    #                 because it can no longer be quantified.
+
+    undocumented = [s.scene_id for s in budget.scenes
+                    if s.npcs_source == "unparsed" and not s.npcs_band_basis]
+    if undocumented:
         problems.append(
-            f"{budget.chapter}: {len(budget.unparsed_npc_scenes)} scene(s) have "
-            f"unparseable NPC counts and UNDERSTATE cost: {budget.unparsed_npc_scenes}"
+            f"{budget.chapter}: {len(undocumented)} scene(s) are UNPARSED with no "
+            f"recorded basis, so the gap UNDERSTATES cost and is undocumented: "
+            f"{undocumented}"
         )
     unknown_categories = [
         c for c in budget.by_category if c not in policy["scene_category_tiers"]
@@ -288,6 +410,36 @@ def validate_budget(budget: ChapterBudget, policy: Dict[str, Any]) -> List[str]:
             f"(fell back to default): {unknown_categories}"
         )
     return problems
+
+
+def budget_warnings(budget: ChapterBudget) -> List[str]:
+    """True warnings: the result stands, but the reader is owed the caveat."""
+    warnings: List[str] = []
+    bounded = [sid for sid in budget.unparsed_npc_scenes
+               if sid not in budget.npcs_band_summary["scenes_without_any_bound"]]
+    if bounded:
+        warnings.append(
+            f"{budget.chapter}: {len(bounded)} scene(s) state a range, alternative or "
+            f"condition rather than a head-count. The point estimate bills them at 0 "
+            f"and therefore UNDERSTATES; the band {budget.band_cost_units_low}-"
+            f"{budget.band_cost_units_high} carries the register's own limits. "
+            f"Resolving them needs a ruling on how a range is budgeted, not more "
+            f"parsing: {bounded}"
+        )
+    if not budget.band_is_complete:
+        warnings.append(
+            f"{budget.chapter}: the cost band is OPEN because "
+            f"{budget.npcs_band_summary['scenes_without_any_bound']} states no NPC "
+            f"number. The band's upper figure is a LOWER bound on the true cost."
+        )
+    if budget.npcs_provenance_summary.get("POLICY_DEFAULT"):
+        warnings.append(
+            f"{budget.chapter}: {budget.npcs_provenance_summary['POLICY_DEFAULT']} "
+            f"scene(s) remain uncaptured and rest on a policy default. All are "
+            f"SCRIPTED or NONE tier, whose cost does not depend on the count, so "
+            f"they carry provenance debt rather than numeric exposure."
+        )
+    return warnings
 
 
 # --------------------------------------------------------------------------- #
@@ -303,7 +455,10 @@ def main(argv: Sequence[str]) -> int:
         if arg == "--out" and i + 1 < len(argv):
             out_path = Path(argv[i + 1])
 
-    scene_fixture = DEFAULT_FIXTURES / "scene_register_ch01_full.md"
+    scene_fixture = FIXTURE_VERBATIM
+    for i, arg in enumerate(argv):
+        if arg == "--fixture" and i + 1 < len(argv):
+            scene_fixture = Path(argv[i + 1])
     if not scene_fixture.is_file():
         print(f"missing fixture: {scene_fixture}")
         return 2
@@ -315,13 +470,16 @@ def main(argv: Sequence[str]) -> int:
 
     budget = build_chapter_budget(scenes, details, policy, chapter)
     problems = validate_budget(budget, policy)
+    warnings = budget_warnings(budget)
 
     payload = {
         "meta": {
             "tool": "Tools/world/population_budget.py",
             "derivation": "register scene categories -> policy tier -> cost units",
             "status": "PROVISIONAL - derived from authored data, NOT measured",
-            "register_source": "SCENE_AND_MICROLOCATION_MASTER_REGISTER v1.9 (Chapter 1 fixture)",
+            "register_source": ("SCENE_AND_MICROLOCATION_MASTER_REGISTER v1.9 "
+                                f"(fixture: {scene_fixture.name})"),
+            "fixture_path": _display_path(scene_fixture),
             "policy_source": "Tools/world/data/population_policy.json",
             "caveat": "No simulation has run. Every figure is a projection. "
                       "Replace with capture data when an engine exists.",
@@ -340,7 +498,14 @@ def main(argv: Sequence[str]) -> int:
             },
         },
         "budget": asdict(budget),
-        "validation": {"problems": problems, "result": "PASS" if not problems else "FAIL"},
+        "validation": {
+            "problems": problems,
+            "warnings": warnings,
+            "result": "PASS" if not problems else "FAIL",
+            "result_note": "PASS means the derivation is internally sound and its "
+                           "open fields are documented. It does NOT mean the figures "
+                           "are measured; they are projections.",
+        },
     }
 
     print(f"chapter {chapter}: {budget.scenes_total} scenes")
@@ -352,9 +517,15 @@ def main(argv: Sequence[str]) -> int:
     print(f"  background: {budget.background_estimate}")
     print(f"  total cost units: {budget.total_cost_units}")
     print(f"  NPC count provenance: {budget.npcs_provenance_summary}")
+    print(f"  banded cost (low/high): {budget.band_cost_units_low}/{budget.band_cost_units_high}"
+          f"  complete={budget.band_is_complete}")
+    if not budget.band_is_complete:
+        print(f"    band is OPEN at: {budget.npcs_band_summary['scenes_without_any_bound']}")
     print(f"  validation: {'PASS' if not problems else 'FAIL'}")
     for problem in problems:
-        print("   -", problem)
+        print("   !", problem)
+    for warning in warnings:
+        print("   ~", warning)
 
     if out_path:
         out_path.parent.mkdir(parents=True, exist_ok=True)

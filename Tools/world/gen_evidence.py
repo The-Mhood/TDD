@@ -66,8 +66,8 @@ def main() -> int:
 
     payload = {
         "meta": {
-            "milestone": "W-M2 — traceable population, count reconciliation, "
-                         "ingestion doc, CD-5 enforcement",
+            "milestone": "W-M2.2 — ambient scene NPC data capture (12 policy-default "
+                         "Chapter 1 scenes replaced with register data)",
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -105,11 +105,32 @@ def main() -> int:
              "method": "measured: 5 silent-failure modes documented, not fixed",
              "result": "documented limitation"},
             {"claim": "NPC prose parsing is correct",
-             "method": "15-case suite; 2 bugs found and fixed this milestone",
-             "result": "verified with known undercount risk"},
+             "method": "38-case parser suite; 2 new silent-corruption bugs found "
+                       "and fixed this milestone (range summed as 16, abstract "
+                       "number counted as a person)",
+             "result": "verified; unresolved prose now REFUSED, never invented"},
+            {"claim": "every Chapter 1 scene whose cost depends on an NPC count "
+                      "now has register prose",
+             "method": "population_budget over the verbatim v1.9 capture",
+             "result": "verified: 0 of 14 CROWD scenes on a policy default"},
+            {"claim": "the ambient-scene NPC default no longer moves the estimate",
+             "method": "sensitivity sweep across expected_npcs 1..5",
+             "result": "verified: elasticity 0.000 (was +0.88)"},
+            {"claim": "the remaining uncertainty is bounded by the register",
+             "method": "parse_npc_band over the register's own wording",
+             "result": "PARTIAL: band 38.38-42.37 cost units and still OPEN at "
+                       "CH01-SCN-014, which states no number"},
             {"claim": "population estimate sensitivity to policy assumptions",
-             "method": "Tools/world/sensitivity.py, 4 sweeps + 5 scenarios",
-             "result": "75% of cost rests on policy defaults; 2.5x spread"},
+             "method": "Tools/world/sensitivity.py, 4 sweeps + 5 scenarios, "
+                       "before/after recomputed from both fixtures",
+             "result": "only 4.6% of point cost still rests on policy defaults, "
+                       "down from 75%; spread narrowed from 2.5x to 1.4x. The "
+                       "remaining sensitivity is the crowd concurrency ratio and "
+                       "cost unit, which no register can resolve"},
+            {"claim": "the previous W-M2.1 model is preserved and reproducible",
+             "method": "abridged fixture retained; sensitivity --previous recomputes "
+                       "23.38/25.38/36.58/47.77/58.97 exactly",
+             "result": "verified"},
             {"claim": "population budget reflects real engine cost",
              "method": "none — cost units are relative and unmeasured",
              "result": "UNVERIFIED — engineering assumption"},

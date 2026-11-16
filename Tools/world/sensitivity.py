@@ -59,6 +59,11 @@ import registers as reg  # noqa: E402
 
 FIXTURES = HERE.parent / "canon" / "tests" / "fixtures"
 
+#: The capture that supersedes the abridged fixture. The abridged file is kept
+#: so the W-M2.1 report stays reproducible; it is not deleted.
+FIXTURE_VERBATIM = FIXTURES / "scene_register_ch01_v19_verbatim.md"
+FIXTURE_ABRIDGED = FIXTURES / "scene_register_ch01_full.md"
+
 CROWD_CATEGORY = "AMBIENT NPC SCENE"
 
 
@@ -67,12 +72,33 @@ CROWD_CATEGORY = "AMBIENT NPC SCENE"
 # --------------------------------------------------------------------------- #
 
 def register_facts(budget: pb.ChapterBudget) -> Dict[str, Any]:
-    """What the register actually tells us. Traceable to scene ids."""
+    """What the register actually tells us. Traceable to scene ids.
+
+    Three states matter and must not be collapsed:
+
+      * a RESOLVED figure - the register states one exact head-count;
+      * a BOUNDED figure - the register states a range, an alternative or a
+        condition, so it gives bounds but no single value;
+      * an UNCAPTURED field - the prose was never read this pass.
+
+    Only the first is a fact usable as a point value. The second is still
+    register data and is reported with its quoted basis. The third is a gap.
+    """
     from_register = [s for s in budget.scenes if s.npcs_source == "register"]
+    unresolved = [s for s in budget.scenes if s.npcs_source == "unparsed"]
+    uncaptured = [s for s in budget.scenes if s.npcs_source == "policy_default"]
+    bounded = [s for s in unresolved if s.npcs_band_low is not None]
+    unbounded = [s for s in unresolved if s.npcs_band_low is None]
+
     return {
         "scenes_with_register_npc_data": len(from_register),
+        "scenes_with_register_prose_unresolved": len(unresolved),
+        "scenes_without_any_capture": len(uncaptured),
         "scenes_total": budget.scenes_total,
         "coverage_ratio": round(len(from_register) / budget.scenes_total, 3)
+        if budget.scenes_total else 0.0,
+        "prose_capture_ratio": round(
+            (len(from_register) + len(unresolved)) / budget.scenes_total, 3)
         if budget.scenes_total else 0.0,
         "detail": [
             {
@@ -84,6 +110,30 @@ def register_facts(budget: pb.ChapterBudget) -> Dict[str, Any]:
             }
             for s in from_register
         ],
+        "unresolved_detail": [
+            {
+                "scene_id": s.scene_id,
+                "tier": s.tier,
+                "npcs_band": [s.npcs_band_low, s.npcs_band_high],
+                "basis": s.npcs_band_basis,
+                "counted_as": s.npcs_from_register,
+                "why_not_a_point_value": (
+                    "the register states a bound, not a head-count"
+                    if s.npcs_band_low is not None
+                    else "the register states no number at all"
+                ),
+            }
+            for s in unresolved
+        ],
+        "banded_and_open": [s.scene_id for s in unbounded],
+        "uncaptured_detail": [
+            {"scene_id": s.scene_id, "tier": s.tier, "category": s.category,
+             "count_independent": s.tier in ("SCRIPTED", "NONE", "BACKGROUND", "NAMED")}
+            for s in uncaptured
+        ],
+        "_note": "`scenes_with_register_npc_data` counts RESOLVED point values only. "
+                 "Scenes whose prose was read but states a range or condition are "
+                 "listed under `unresolved_detail` with their quoted bounds.",
     }
 
 
@@ -113,13 +163,25 @@ def assumption_driven(budget: pb.ChapterBudget) -> Dict[str, Any]:
     def cost(scenes: Sequence[pb.SceneBudget]) -> float:
         return round(sum(s.simulated_cost for s in scenes), 4)
 
+    unresolved_scenes = [s for s in budget.scenes if s.npcs_source == "unparsed"]
     total = cost(budget.scenes) or 1.0
     return {
         "cost_from_register_scenes": cost(register_scenes),
+        "cost_from_unresolved_register_scenes": cost(unresolved_scenes),
         "cost_from_policy_default_scenes": cost(default_scenes),
         "share_of_cost_from_policy_defaults": round(cost(default_scenes) / total, 3),
+        "share_of_cost_from_unresolved_register": round(
+            cost(unresolved_scenes) / total, 3),
         "scenes_on_policy_default": len(default_scenes),
+        "scenes_with_unresolved_register_prose": len(unresolved_scenes),
         "scenes_with_register_data": len(register_scenes),
+        "band_cost_units_low": budget.band_cost_units_low,
+        "band_cost_units_high": budget.band_cost_units_high,
+        "band_is_complete": budget.band_is_complete,
+        "_note": "Cost on an UNRESOLVED scene is what the model bills when it cannot "
+                 "read a count: for a CROWD scene that is 0, which understates. The "
+                 "band figures below replace those zeros with the register's own "
+                 "stated bounds and are the honest floor for the chapter.",
     }
 
 
@@ -255,6 +317,12 @@ def combined_scenarios(policy: Dict[str, Any], scenes, details) -> List[Dict[str
             "expected_npcs_default": npcs,
             "crowd_concurrency_ratio": ratio,
             "total_cost_units": b.total_cost_units,
+            # The register's own bounds, evaluated under this scenario's policy.
+            # The point figure treats an unresolved scene as 0 and therefore
+            # understates; the band shows what the register permits.
+            "band_cost_units_low": b.band_cost_units_low,
+            "band_cost_units_high": b.band_cost_units_high,
+            "band_is_complete": b.band_is_complete,
             "simulated_npcs": b.simulated_npcs_upper,
             "crowd_peak": b.crowd_peak_estimate,
             "delta_vs_baseline": delta,
@@ -285,6 +353,56 @@ def ceiling_headroom(scenarios: Sequence[Dict[str, Any]],
 # --------------------------------------------------------------------------- #
 # Main
 # --------------------------------------------------------------------------- #
+
+def _load_fixture(path: Path):
+    text = path.read_text(encoding="utf-8")
+    return reg.parse_scene_summary(text), reg.parse_scene_details(text)
+
+
+def _comparison_row(report: Dict[str, Any], fixture_name: str) -> Dict[str, Any]:
+    """One side of the before/after table."""
+    facts = report["facts"]
+    assumptions = report["assumption_dependence"]
+    return {
+        "fixture": fixture_name,
+        "total_cost_units": report["baseline"]["total_cost_units"],
+        "simulated_npcs": report["baseline"]["simulated_npcs"],
+        "crowd_peak": report["baseline"]["crowd_peak"],
+        "scenes_resolved": facts["scenes_with_register_npc_data"],
+        "scenes_unresolved": facts.get("scenes_with_register_prose_unresolved", 0),
+        "scenes_uncaptured": facts.get("scenes_without_any_capture", 0),
+        "band_cost_units_low": assumptions["band_cost_units_low"],
+        "band_cost_units_high": assumptions["band_cost_units_high"],
+        "band_is_complete": assumptions["band_is_complete"],
+        "worst_scenario": max(report["scenarios"],
+                              key=lambda s: s["total_cost_units"])["total_cost_units"],
+    }
+
+
+def _conclusion_summary(baseline: pb.ChapterBudget, scenarios) -> str:
+    """State what the capture did and did not settle, without overclaiming."""
+    prov = baseline.npcs_provenance_summary
+    resolved = prov.get("REGISTER_DATA", 0)
+    unresolved = prov.get("UNPARSED", 0)
+    uncaptured = prov.get("POLICY_DEFAULT", 0)
+    worst = max(scenarios, key=lambda s: s["total_cost_units"])
+    return (
+        f"Every Chapter 1 scene whose tier can respond to an NPC count now has "
+        f"register prose: {resolved} scenes resolve to an exact head-count and "
+        f"{unresolved} state a range, alternative or condition that cannot be "
+        f"reduced to one integer. {uncaptured} scenes remain uncaptured, but all "
+        f"of them are SCRIPTED or NONE tier, whose cost is a flat per-scene or "
+        f"zero figure and does not depend on the count. The chapter total is "
+        f"therefore no longer sensitive to the ambient-scene NPC default. What "
+        f"still moves it is the crowd concurrency ratio and the crowd cost unit, "
+        f"both pure assumptions, plus the register's own unresolved bounds "
+        f"({baseline.band_cost_units_low}-{baseline.band_cost_units_high} cost "
+        f"units, band {'closed' if baseline.band_is_complete else 'OPEN'}). "
+        f"Worst scenario, {worst['scenario']}, reaches "
+        f"{worst['total_cost_units']} cost units and is still a projection, not "
+        f"a measurement."
+    )
+
 
 def build_report(scenes, details, policy) -> Dict[str, Any]:
     baseline = _rebuild(policy, scenes, details)
@@ -373,16 +491,14 @@ def build_report(scenes, details, policy) -> Dict[str, Any]:
         "scenarios": scenarios,
         "ceiling": ceiling_headroom(scenarios, policy["chapter_limits"]["max_total_cost_units"]),
         "conclusion": {
-            "estimate_is_mostly_assumption": True,
-            "register_coverage_of_scenes": round(
-                len([s for s in baseline.scenes if s.npcs_source == "register"])
-                / baseline.scenes_total, 3),
+            "estimate_is_mostly_assumption": (
+                baseline.npcs_provenance_summary.get("POLICY_DEFAULT", 0)
+                > baseline.npcs_provenance_summary.get("REGISTER_DATA", 0)),
             "only_crowd_scenes_are_sensitive": True,
-            "summary": "The estimate is driven almost entirely by two policy "
-                       "parameters applied to 12 uncaptured ambient scenes. "
-                       "Capturing those 12 detail blocks would convert most of the "
-                       "estimate from assumption to fact, and is worth more than "
-                       "any refinement of the policy numbers.",
+            "all_crowd_scenes_now_have_register_prose": not any(
+                s.npcs_source == "policy_default"
+                for s in baseline.scenes if s.tier == "CROWD"),
+            "summary": _conclusion_summary(baseline, scenarios),
         },
     }
 
@@ -392,12 +508,35 @@ def main(argv: Sequence[str]) -> int:
     if "--out" in argv:
         out_path = Path(argv[argv.index("--out") + 1])
 
-    text = (FIXTURES / "scene_register_ch01_full.md").read_text(encoding="utf-8")
+    fixture = FIXTURE_VERBATIM
+    if "--fixture" in argv:
+        fixture = Path(argv[argv.index("--fixture") + 1])
+    elif "--previous" in argv:
+        # Reproduce the W-M2.1 report from the abridged fixture it was built on.
+        fixture = FIXTURE_ABRIDGED
+
+    text = fixture.read_text(encoding="utf-8")
     scenes = reg.parse_scene_summary(text)
     details = reg.parse_scene_details(text)
     policy = pb.load_policy()
 
     report = build_report(scenes, details, policy)
+    report["meta"]["fixture"] = fixture.name
+
+    # BEFORE / AFTER. The previous model is recomputed from its own fixture, not
+    # copied from a document, so the comparison cannot drift from the code.
+    before = build_report(*_load_fixture(FIXTURE_ABRIDGED), policy)
+    report["comparison"] = {
+        "before": _comparison_row(before, FIXTURE_ABRIDGED.name),
+        "after": _comparison_row(report, fixture.name),
+        "delta_total_cost_units": round(
+            report["baseline"]["total_cost_units"]
+            - before["baseline"]["total_cost_units"], 2),
+        "delta_simulated_npcs": (
+            report["baseline"]["simulated_npcs"] - before["baseline"]["simulated_npcs"]),
+        "_note": "`before` is recomputed live from the preserved abridged fixture. "
+                 "Both are projections; neither is a measurement.",
+    }
 
     print("CHAPTER 1 POPULATION SENSITIVITY")
     print("=" * 62)

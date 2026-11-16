@@ -178,7 +178,7 @@ simulated agent. Counting it as one overstates cost by more than 3x.
 
 ### 5.1.2 Derived budget, Chapter 1
 
-Measured, not estimated — `Docs/evidence/agent2/CH01_population_budget.json`:
+Derived, not measured — `Docs/evidence/agent2/CH01_population_budget.json`:
 
 | Metric | Value |
 |---|---|
@@ -186,25 +186,41 @@ Measured, not estimated — `Docs/evidence/agent2/CH01_population_budget.json`:
 | requiring no simulation at all (NONE + SCRIPTED) | 31 of 46 |
 | CROWD scenes | 14 |
 | NAMED scenes | 1 |
-| simulated NPCs, lower/upper bound | 30 / 49 |
-| crowd peak estimate | 29 |
-| total cost units | 36.58 |
-| validation | PASS |
+| simulated NPCs, lower/upper bound | 23 / 42 |
+| crowd peak estimate | 22 |
+| total cost units (point) | 30.38 |
+| total cost units (register-bounded band) | 38.38 – 42.37, band OPEN |
+| validation | PASS with 3 warnings |
 
 **31 of 46 scenes need no simulated agent.** That is the TD's point answered with
 numbers rather than assurance: the majority of ambient activity is a performer on
 a loop, not an agent.
 
+The **point** figure and the **band** are different claims and must not be
+conflated. The point figure bills every scene whose NPC count could not be
+reduced to one integer as zero, so it *understates*. The band replaces those
+zeros with the bounds the register itself states ("six to ten", "four or five",
+"sometimes one") and is the honest floor for the chapter. The band is still
+OPEN because one scene, `CH01-SCN-014` "Fetching Water", states a collective
+("a line of women and girls") with no number at all.
+
 ### 5.1.4 How much of this is fact
 
-Only **5 of 46 scenes (11%)** have register NPC data. The remaining **41 scenes
-(75% of the cost)** rest on policy defaults. Two parameters — the ambient
-`expected_npcs` and the `crowd_concurrency_ratio` — control almost the entire
-estimate, because only CROWD scenes are priced per NPC.
+After the W-M2.2 capture, **28 of 46 scenes (61%)** carry a resolved register
+head-count, and a further **7** carry register prose that states a range,
+alternative or condition. **11 scenes remain uncaptured**, but every one of them
+is SCRIPTED or NONE tier, whose cost is a flat per-scene or zero figure and does
+**not** depend on the NPC count. They carry provenance debt, not numeric
+exposure.
 
-The estimate ranges from **23.38 to 58.97 cost units** across plausible policy
-assumptions, a 2.5x spread. Worst case leaves 1.03 units below the chapter
-ceiling. Full analysis: `Docs/POPULATION_SENSITIVITY_REPORT.md`.
+Because of that, the ambient `expected_npcs` default — which previously drove
+most of the estimate — is now **completely inert** (elasticity 0.000, previously
++0.88). What still moves the total is the `crowd_concurrency_ratio` and the
+`crowd_cost_unit`, both pure assumptions with no register basis.
+
+The five scenarios span **24.38 to 33.38 cost units**, a 1.4x spread, down from
+2.5x. Worst case leaves 26.62 units below the chapter ceiling, up from 1.03.
+Full analysis: `Docs/POPULATION_SENSITIVITY_REPORT.md`.
 
 Rounding is **upward** (`math.ceil`) by design: overestimating a budget costs
 margin, underestimating costs the project. Every scene row carries

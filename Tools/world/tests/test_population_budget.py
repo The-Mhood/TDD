@@ -26,7 +26,10 @@ FIXTURES = REPO_ROOT / "Tools" / "canon" / "tests" / "fixtures"
 
 def setUpModule() -> None:  # noqa: N802
     global SCENES, DETAILS, POLICY, BUDGET
-    text = (FIXTURES / "scene_register_ch01_full.md").read_text(encoding="utf-8")
+    # The default source must match the one the evidence artifact is built from,
+    # or the doc-consistency tests compare against a different world. The abridged
+    # fixture is preserved and pinned separately by test_scene_capture.py.
+    text = pb.FIXTURE_VERBATIM.read_text(encoding="utf-8")
     SCENES = reg.parse_scene_summary(text)
     DETAILS = reg.parse_scene_details(text)
     POLICY = pb.load_policy()
@@ -146,11 +149,27 @@ class TestRegisterTraceability(unittest.TestCase):
         self.assertTrue(scene.has_child)
 
     def test_scene_without_detail_block_is_marked_policy_default(self):
-        """CH01-SCN-002 has no captured detail block, so its count is a policy
-        default and must say so rather than looking like register data."""
-        scene = next(s for s in BUDGET.scenes if s.scene_id == "CH01-SCN-002")
-        self.assertEqual(scene.npcs_source, "policy_default")
-        self.assertTrue(any("policy default" in n for n in scene.notes))
+        """A scene with no captured prose must fall back to the category default
+        and SAY SO, rather than quietly looking like register data.
+
+        Named a specific scene until the W-M2.2 capture, which resolved it. The
+        test now discovers any scene that genuinely has no prose, so it keeps
+        testing the fallback path instead of a fixed ID that may later be
+        captured.
+        """
+        captured = {d.id for d in DETAILS if d.npcs_present}
+        uncaptured = [s for s in BUDGET.scenes if s.scene_id not in captured]
+        self.assertTrue(uncaptured,
+                        "expected some Chapter 1 scene to remain uncaptured")
+        for scene in uncaptured:
+            self.assertEqual(scene.npcs_source, "policy_default", scene.scene_id)
+            self.assertTrue(any("policy default" in n for n in scene.notes),
+                            f"{scene.scene_id} must state that its count is a default")
+        # And the converse: a captured scene must NOT be on a default.
+        for scene in BUDGET.scenes:
+            if scene.scene_id in captured:
+                self.assertIn(scene.npcs_source, {"register", "unparsed"},
+                              f"{scene.scene_id} has prose but is on a default")
 
     def test_unparseable_npc_prose_is_flagged_not_zeroed(self):
         policy = fresh_policy()
@@ -163,8 +182,17 @@ class TestRegisterTraceability(unittest.TestCase):
             npcs_present="A gathering of unspecified size.")
         budget = pb.build_chapter_budget([scene], [detail], policy, "CH01")
         self.assertIn("CH01-SCN-999", budget.unparsed_npc_scenes)
-        problems = pb.validate_budget(budget, policy)
-        self.assertTrue(any("UNDERSTATE" in p for p in problems), problems)
+
+        # Never silently zero, and never silently pass. The scene must be named,
+        # and the reason it could not be resolved must be recorded on the row.
+        self.assertTrue(pb.validate_budget(budget, policy)
+                        + pb.budget_warnings(budget),
+                        "an unparseable NPC field must never pass silently")
+        row = {s.scene_id: s for s in budget.scenes}["CH01-SCN-999"]
+        self.assertEqual(row.npcs_source, "unparsed")
+        self.assertTrue(row.npcs_band_basis,
+                        "the resolution basis must be recorded, even when it resolves "
+                        "to 'no bound stated'")
 
 
 class TestPolicyGapsSurface(unittest.TestCase):

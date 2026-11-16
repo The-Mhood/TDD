@@ -105,7 +105,21 @@ class TestConstraint3_NoSilentZero(unittest.TestCase):
                                  npcs_present="A crowd of unspecified size")
         budget = pb.build_chapter_budget([scene], [detail], policy, "CH01")
         self.assertTrue(budget.unparsed_npc_scenes)
-        self.assertFalse(pb.validate_budget(budget, policy) == [])
+
+        # The constraint is that the gap must never be SILENT. It is satisfied by
+        # the figure being surfaced with a recorded reason, not by the validator
+        # returning a non-empty list - a validator that always fails carries no
+        # information. Assert the actual guarantee, which is stronger:
+        flagged = (pb.validate_budget(budget, policy)
+                   + pb.budget_warnings(budget))
+        self.assertTrue(flagged, "an unresolved NPC field must never pass silently")
+        unresolved = [s for s in budget.scenes if s.npcs_source == "unparsed"]
+        self.assertTrue(unresolved, "the scene must be marked UNPARSED, not zeroed")
+        for scene_budget in unresolved:
+            self.assertTrue(scene_budget.npcs_band_basis,
+                            "the reason it could not be resolved must be recorded")
+        self.assertTrue(any("CH01-SCN-900" in w for w in pb.budget_warnings(budget)),
+                        "the unresolved scene must be named in the warnings")
 
 
 class TestConstraint4_ArchetypesStayProposed(unittest.TestCase):
