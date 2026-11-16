@@ -4,12 +4,13 @@
 
 This is an initial in-repository log pending confirmation of the team's preferred tracker. Do not delete old entries; append a dated, commit-linked entry or link an immutable milestone report.
 
-## Current baseline
+## Initial QA baseline and current follow-up
 
-- **Report:** [Technical Quality and Integration Assessment](../TECHNICAL_QUALITY_AND_INTEGRATION_ASSESSMENT.md)
-- **Date:** 2026-11-16 UTC
-- **Branch / inspected HEAD:** `arena/c64fc525-tdd` / `5e3d1da4eee42ad8255760530291ff91cdfb39b2`
-- **Worktree:** dirty; `README.md` modified; `docs/MASTER_ENGINEERING_ARCHITECTURE.md`, this assessment, and this ledger are untracked. No game source changes.
+- **Assessment:** [Technical Quality and Integration Assessment](../TECHNICAL_QUALITY_AND_INTEGRATION_ASSESSMENT.md), accepted as the initial QA baseline by the Creative Director on 2026-11-16.
+- **Initial inspected commit:** `5e3d1da4eee42ad8255760530291ff91cdfb39b2` on `arena/c64fc525-tdd`.
+- **Documentation baseline commit:** `7f24859f716bdc36d15f5ef8b54370e4b6be80da` on `arena/c64fc525-tdd`; README, Master Engineering Architecture, Technical Quality and Integration Assessment, and this ledger committed together.
+- **Follow-up:** project-bootstrap decision and Agent 1/2 dependency matrix are recorded in `docs/PROJECT_BOOTSTRAP_DECISION.md` as a separate documentation change after the baseline commit; pending review, not implementation.
+- **Game source changes:** none.
 - **Build:** BLOCKED / NOT RUN — no `.uproject` or Unreal build tools available in the inspected workspace.
 - **Gameplay tests:** NOT RUN — no UE project or test harness present.
 - **Packaging:** NOT RUN — project and target platform/toolchain are unavailable.
@@ -20,7 +21,8 @@ This is an initial in-repository log pending confirmation of the team's preferre
 
 | Date | Change / system | Decision | Evidence / reason | Owner / follow-up |
 |---|---|---|---|---|
-| 2026-11-16 | Master Engineering Architecture document | Pending technical-owner review; no game implementation accepted | Documentation-only proposal; project interfaces and engine baseline unavailable | Agent 3 to review with Agents 1–2 after project is identified |
+| 2026-11-16 | Technical Quality baseline and initial documentation set | Accepted as initial QA baseline; documentation committed as `7f24859f716bdc36d15f5ef8b54370e4b6be80da` | Exact files: README, Master Engineering Architecture, Technical Quality and Integration Assessment, Quality Ledger | No gameplay systems accepted; project foundation still blocked |
+| 2026-11-16 | Project-bootstrap decision and Agent 1/2 dependency matrix | Draft recommendation; pending TD and system-owner review | No project creation; no detailed Agent 1/2 contracts found in checked repo/targeted Drive filename search | Request agent proposals and platform/engine decisions |
 | 2026-11-16 | Unreal/game system changes | None submitted | No UE source or assets in checkout | Await canonical project |
 | 2026-11-16 | Rejected changes | None | No implementation change was evaluated/rejected | — |
 | 2026-11-16 | Integration failures / regression fixes | None attempted or verified | No project build/integration available | — |
@@ -47,7 +49,8 @@ These QI entries are **readiness/validation gaps**, not reproduced gameplay bugs
 | Date | Commit / environment | Scope | Result | Evidence |
 |---|---|---|---|---|
 | 2026-11-16 | `5e3d1da4eee42ad8255760530291ff91cdfb39b2`; repository workspace | `git diff --check` | PASS — no whitespace errors reported; documentation/repository check only | Command output in assessment session; not a game test |
-| 2026-11-16 | Same inspected checkout | Markdown QA on README and three docs: trailing-whitespace scan, local-link resolution, required assessment/ledger section checks | PASS — all 4 Markdown files passed | Inline Python check; documentation validation only, not a game test |
+| 2026-11-16 | `7f24859f716bdc36d15f5ef8b54370e4b6be80da`; repository workspace | Markdown QA on README and three initial docs: trailing-whitespace scan, local-link resolution, required assessment/ledger section checks | PASS — all 4 Markdown files passed | Inline Python check; documentation validation only, not a game test |
+| 2026-11-16 | Same branch; bootstrap report follow-up | Markdown QA on README and four docs, including project-bootstrap decision: trailing-whitespace scan, local-link resolution, report/ledger required sections | PASS — all 5 Markdown files passed | Inline Python check; documentation validation only, not CI or a game test |
 | 2026-11-16 | Same inspected checkout | Unreal build, Unreal automation, packaging, performance capture | BLOCKED / NOT RUN / NOT MEASURED as listed above | No `.uproject`, UnrealEditor, UnrealBuildTool, or RunUAT available on `PATH` |
 
 ## Milestone report template
