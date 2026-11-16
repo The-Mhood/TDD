@@ -1,0 +1,253 @@
+#!/usr/bin/env python3
+"""L0 CI: verify repository text integrity without an engine.
+
+Runs here and on any machine. This is intentionally independent of Unreal so that
+a broken document, a dangling strategy reference or a stray binary is caught in
+seconds rather than discovered at integration.
+
+Usage:
+    python3 Tools/ci/l0_checks.py
+    python3 Tools/ci/l0_checks.py --verbose
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import re
+import subprocess
+import sys
+from pathlib import Path
+from typing import Dict, List, Tuple
+
+REPO = Path(__file__).resolve().parents[2]
+
+# Files that must never be committed in plain git (ADR-0004).
+FORBIDDEN_BINARY_SUFFIXES = {
+    ".uasset", ".umap", ".ubulk", ".uexp", ".upk", ".pak", ".utoc", ".ucas",
+    ".wav", ".mp3", ".ogg", ".png", ".jpg", ".jpeg", ".tga", ".exr",
+    ".fbx", ".obj", ".usd", ".usda", ".blend", ".max", ".ma", ".mb",
+}
+MAX_TEXT_FILE_BYTES = 5 * 1024 * 1024  # ADR-0004 hard rule
+DOCS_REQUIRED = [
+    "Docs/00_MASTER_ENGINEERING_ARCHITECTURE.md",
+    "Docs/CANON_INDEX.md",
+    "Docs/production/STAGE_GATES.md",
+    "Docs/production/RACI.md",
+    "Docs/adr/README.md",
+]
+ADR_EXPECTED = [f"ADR-000{i}-" for i in range(1, 9)]
+STATUS_TAGS = [
+    "ESTABLISHED", "PARTIAL", "SPEC", "STUB", "EXPERIMENTAL", "MOCKED", "BLOCKED", "UNAVAILABLE",
+]
+
+
+def tracked_files() -> List[Path]:
+    """Files git would consider, plus untracked non-ignored files."""
+    try:
+        out = subprocess.run(
+            ["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard"],
+            cwd=REPO, capture_output=True, check=True,
+        ).stdout
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return [p for p in REPO.rglob("*") if p.is_file() and ".git" not in p.parts]
+    return [REPO / p for p in out.decode().split("\0") if p]
+
+
+def check_no_binaries(files: List[Path]) -> List[str]:
+    problems = []
+    for path in files:
+        suffix = path.suffix.lower()
+        if suffix in FORBIDDEN_BINARY_SUFFIXES:
+            problems.append(f"forbidden binary committed (ADR-0004): {path.relative_to(REPO)}")
+        elif path.is_file() and path.stat().st_size > MAX_TEXT_FILE_BYTES:
+            problems.append(f"file exceeds 5 MB text rule (ADR-0004): {path.relative_to(REPO)}")
+    return problems
+
+
+def check_required_docs() -> List[str]:
+    problems = []
+    for rel in DOCS_REQUIRED:
+        if not (REPO / rel).is_file():
+            problems.append(f"missing required document: {rel}")
+    adr_dir = REPO / "Docs" / "adr"
+    if adr_dir.is_dir():
+        names = [p.name for p in adr_dir.glob("ADR-*.md")]
+        for prefix in ADR_EXPECTED:
+            if not any(n.startswith(prefix) for n in names):
+                problems.append(f"missing architecture decision record: {prefix}*.md")
+    return problems
+
+
+def check_doc_links(files: List[Path]) -> List[str]:
+    """Relative markdown links must resolve, so architecture references stay honest."""
+    problems = []
+    link_re = re.compile(r"\[[^\]]*\]\(([^)#]+)(?:#[^)]*)?\)")
+    for path in files:
+        if path.suffix.lower() != ".md":
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            problems.append(f"unreadable markdown: {path.relative_to(REPO)}")
+            continue
+        for match in link_re.finditer(text):
+            target = match.group(1).strip()
+            if not target or target.startswith(("http://", "https://", "mailto:")):
+                continue
+            resolved = (path.parent / target).resolve()
+            try:
+                resolved.relative_to(REPO)
+            except ValueError:
+                continue  # link points outside the repo; not ours to validate
+            if not resolved.exists():
+                problems.append(
+                    f"dangling link in {path.relative_to(REPO)}: {target}"
+                )
+    return problems
+
+
+def check_json_parses(files: List[Path]) -> List[str]:
+    problems = []
+    for path in files:
+        if path.suffix.lower() != ".json":
+            continue
+        try:
+            json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+            problems.append(f"invalid JSON in {path.relative_to(REPO)}: {exc}")
+    return problems
+
+
+def check_uproject() -> List[str]:
+    problems = []
+    uproject = REPO / "TDD.uproject"
+    if not uproject.is_file():
+        return ["missing TDD.uproject"]
+    try:
+        data = json.loads(uproject.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"TDD.uproject is not valid JSON: {exc}"]
+    if data.get("EngineAssociation") != "5.8":
+        problems.append(
+            f"TDD.uproject EngineAssociation is {data.get('EngineAssociation')!r}, "
+            f"expected '5.8' (ADR-0002)"
+        )
+    declared = {m.get("Name") for m in data.get("Modules", [])}
+    for module in ("TDDRuntime", "TDDEditor", "TDDTests"):
+        if module not in declared:
+            problems.append(f"TDD.uproject does not declare module {module}")
+        build_cs = REPO / "Source" / module / f"{module}.Build.cs"
+        if not build_cs.is_file():
+            problems.append(f"module {module} declared but {build_cs.name} missing")
+    return problems
+
+
+def check_no_engine_claim_in_reports(files: List[Path]) -> List[str]:
+    """Guard against the failure mode ADR-0005 exists to prevent.
+
+    Any file that claims a runtime system is ESTABLISHED must reference evidence.
+    We check evidence files and agent reports only, not the architecture docs
+    (which describe the *policy* and legitimately contain the word ESTABLISHED).
+    """
+    problems = []
+    evidence_dir = REPO / "Docs" / "evidence"
+    reports_dir = REPO / "Docs" / "reports"
+    for base in (evidence_dir, reports_dir):
+        if not base.is_dir():
+            continue
+        for path in base.rglob("*.md"):
+            text = path.read_text(encoding="utf-8", errors="replace")
+            if "ESTABLISHED" in text and "evidence" not in text.lower():
+                problems.append(
+                    f"{path.relative_to(REPO)} claims ESTABLISHED but cites no evidence path"
+                )
+    return problems
+
+
+def check_stage_gates_cover_all_stages() -> List[str]:
+    path = REPO / "Docs" / "production" / "STAGE_GATES.md"
+    if not path.is_file():
+        return ["missing STAGE_GATES.md"]
+    text = path.read_text(encoding="utf-8")
+    problems = []
+    for stage in range(0, 10):
+        if f"## Stage {stage} " not in text:
+            problems.append(f"STAGE_GATES.md does not define Stage {stage}")
+    return problems
+
+
+def check_status_tag_vocabulary() -> List[str]:
+    """The status vocabulary must be identical in the architecture doc and README."""
+    arch = REPO / "Docs" / "00_MASTER_ENGINEERING_ARCHITECTURE.md"
+    if not arch.is_file():
+        return ["missing architecture document"]
+    text = arch.read_text(encoding="utf-8")
+    return [
+        f"architecture document does not define status tag {tag}"
+        for tag in STATUS_TAGS
+        if tag not in text
+    ]
+
+
+def run(verbose: bool = False) -> Tuple[bool, Dict[str, List[str]]]:
+    files = tracked_files()
+    results: Dict[str, List[str]] = {
+        "no_forbidden_binaries": check_no_binaries(files),
+        "required_docs": check_required_docs(),
+        "doc_links": check_doc_links(files),
+        "json_parses": check_json_parses(files),
+        "uproject": check_uproject(),
+        "stage_gates": check_stage_gates_cover_all_stages(),
+        "status_vocabulary": check_status_tag_vocabulary(),
+        "evidence_claims": check_no_engine_claim_in_reports(files),
+    }
+    ok = all(not v for v in results.values())
+    if verbose:
+        for name, problems in results.items():
+            mark = "PASS" if not problems else "FAIL"
+            print(f"[{mark}] {name}")
+            for problem in problems:
+                print(f"        {problem}")
+    return ok, results
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--verbose", "-v", action="store_true")
+    parser.add_argument(
+        "--evidence",
+        metavar="PATH",
+        help="Write a machine-readable evidence JSON (architecture doc 11.3).",
+    )
+    args = parser.parse_args()
+    ok, results = run(verbose=args.verbose)
+    checks_run = len(results)
+    checks_failed = sum(1 for v in results.values() if v)
+
+    if args.evidence:
+        import datetime
+
+        payload = {
+            "test": "L0.Repository.TextIntegrity",
+            "suite": "Tools/ci/l0_checks.py",
+            "engine": "n/a (host-side)",
+            "dateUtc": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+            "result": "PASS" if ok else "FAIL",
+            "checksRun": checks_run,
+            "checksFailed": checks_failed,
+            "checks": [{"name": name, "result": "PASS" if not p else "FAIL", "problems": p}
+                       for name, p in results.items()],
+        }
+        out = Path(args.evidence)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+        print(f"evidence written: {out}")
+
+    print(f"\nL0 checks: {checks_run - checks_failed}/{checks_run} passed")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

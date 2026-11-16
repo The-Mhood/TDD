@@ -1,0 +1,358 @@
+{
+  "$schema": "./canon_index.schema.json",
+  "meta": {
+    "document": "TDD Canon Index (engineering mirror)",
+    "version": "1.0.0",
+    "generated": "2026-11-16",
+    "authority": "Google Drive Production Art Bible registers",
+    "authority_note": "This file is a MIRROR. The Drive registers are authoritative. Never edit canon status here without a corresponding register change; the validator reports drift, it does not decide canon.",
+    "id_scheme": {
+      "chapter": "^CH0[1-8]$",
+      "scene": "^CH0[1-8]-SCN-\\d{3}$",
+      "sublocation": "^CH0[1-8]-SUB-\\d{3}$",
+      "interior": "^CH0[1-8]-INT-\\d{3}$",
+      "boss": "^CH0[1-8]-BOSS-[A-Z][A-Za-z0-9]*$"
+    }
+  },
+  "approval_states": ["Proposed", "DesignApproved", "CanonApproved", "Shippable"],
+  "chapters": [
+    { "id": "CH01", "index": 1, "name": "Forbidden Forest", "boss": "Great Root Mother", "canon_status": "CanonApproved" },
+    { "id": "CH02", "index": 2, "name": "Kingdom Beneath the Earth", "boss": "Iron Elephant", "canon_status": "CanonApproved" },
+    { "id": "CH03", "index": 3, "name": "City of the Living Dead", "boss": "King Without a Face", "canon_status": "CanonApproved" },
+    { "id": "CH04", "index": 4, "name": "River of Idemili", "boss": "Daughter of the Deep", "canon_status": "CanonApproved" },
+    { "id": "CH05", "index": 5, "name": "Mountain of Thunder", "boss": "Amadioha's Champion", "canon_status": "CanonApproved" },
+    { "id": "CH06", "index": 6, "name": "Kingdom of Masks", "boss": "Mother of Masks", "canon_status": "CanonApproved" },
+    { "id": "CH07", "index": 7, "name": "Gates of the Dead", "boss": "Hollow King", "canon_status": "CanonApproved" },
+    { "id": "CH08", "index": 8, "name": "The Last Daughter / Ancestral Realm", "boss": "Ezeani", "canon_status": "CanonApproved" }
+  ],
+  "source_documents": [
+    {
+      "id": "CHARACTER_DESIGN_REGISTER",
+      "name": "CHARACTER_DESIGN_REGISTER.md",
+      "drive_id": "1naNn0D7jAXOVc01Xvnl4YYEvS_zwcTjH",
+      "version": "2026-11-15",
+      "authority": "visual + identity canon"
+    },
+    {
+      "id": "ENVIRONMENT_DESIGN_REGISTER",
+      "name": "ENVIRONMENT_DESIGN_REGISTER.md",
+      "drive_id": "1WxQeJ7Hnac4gUnOR9EF156ClSTZebpsx",
+      "version": "V002",
+      "authority": "environment design + per-chapter rules"
+    },
+    {
+      "id": "OPEN_ART_DECISIONS",
+      "name": "OPEN_ART_DECISIONS.md",
+      "drive_id": "1c6SaYn1U2JLX0wu6sg-fpvPX5T1LAb0Q",
+      "version": "V001+ (through OAD-59)",
+      "authority": "art + canon decisions register"
+    },
+    {
+      "id": "NNEKA_MEMORIES_AND_TIMELINE",
+      "name": "NNEKA_MEMORIES_AND_TIMELINE.md",
+      "drive_id": "1CzvUvsYgFOX5FAbha0lGs4Fj0NKnexgq",
+      "version": "1.2",
+      "authority": "memory sequence, timeline, concealment mechanics"
+    }
+  ],
+  "locations": [
+    { "id": "CH01-SUB-018", "chapter": "CH01", "name": "The Wayside Offering Place", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#1" },
+    { "id": "CH02-SUB-003", "chapter": "CH02", "name": "The Clear Water", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#2" },
+    { "id": "CH03-INT-001", "chapter": "CH03", "name": "A House, Meal Uneaten", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#3" },
+    { "id": "CH04-SUB-002", "chapter": "CH04", "name": "The Shrine Landing", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#4" },
+    { "id": "CH05-SUB-002", "chapter": "CH05", "name": "The Oath Ground", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#5" },
+    { "id": "CH06-INT-003", "chapter": "CH06", "name": "A Memory Room", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#6" },
+    { "id": "CH07-INT-005", "chapter": "CH07", "name": "The Shrine No One Remembers", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#7" },
+    { "id": "CH08-SUB-005", "chapter": "CH08", "name": "Mothers' Courtyard", "canon_status": "Proposed", "approval": { "design": true, "canon": false, "shippable": false }, "source": "OPEN_ART_DECISIONS#OAD-45", "notes": "CONDITIONAL design approval; two visual faults to correct; on hold for compositions" },
+    { "id": "CH08-SUB-006", "chapter": "CH08", "name": "Nneka's House, exterior", "canon_status": "Proposed", "approval": { "design": true, "canon": false, "shippable": false }, "source": "OPEN_ART_DECISIONS#OAD-45" },
+    { "id": "CH08-SUB-007", "chapter": "CH08", "name": "Sealed Quarter", "canon_status": "Proposed", "approval": { "design": true, "canon": false, "shippable": false }, "source": "OPEN_ART_DECISIONS#OAD-45" },
+    { "id": "CH08-INT-001", "chapter": "CH08", "name": "Nneka's House, interior", "canon_status": "Proposed", "approval": { "design": true, "canon": false, "shippable": false }, "source": "OPEN_ART_DECISIONS#OAD-45" },
+    { "id": "CH08-INT-003", "chapter": "CH08", "name": "Hall of Posts", "canon_status": "Proposed", "approval": { "design": true, "canon": false, "shippable": false }, "source": "OPEN_ART_DECISIONS#OAD-45" }
+  ],
+  "memories": [
+    {
+      "index": 1,
+      "chapter": "CH01",
+      "scene_id": "CH01-SCN-046",
+      "location_id": "CH01-SUB-018",
+      "title": "They Were Saying the Child's Name",
+      "content_status": "Proposed",
+      "establishes": "Something wanted Adanna",
+      "fragments": {
+        "place": "flat stone with bowls, one newer than the rest",
+        "object": "strip of indigo and earth striped cloth tied among the white ones",
+        "sound": "voices under the insects saying one name, Adanna's",
+        "interaction": "Adanna reties the cloth where it has slipped"
+      },
+      "visual_identity": "Green dawn mist, cool forest light.",
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#1"
+    },
+    {
+      "index": 2,
+      "chapter": "CH02",
+      "scene_id": "CH02-SCN-011",
+      "location_id": "CH02-SUB-003",
+      "title": "What Was Asked For",
+      "content_status": "Proposed",
+      "establishes": "Nneka discovered the danger",
+      "fragments": {
+        "place": "the one clean lake in a rust-stained kingdom",
+        "object": "two drinking gourds side by side on the bank, and a third, very small",
+        "sound": "a man and a woman talking low across water",
+        "interaction": "Adanna drinks"
+      },
+      "visual_identity": "Blue light off clear water on two faces; no flame.",
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#2"
+    },
+    {
+      "index": 3,
+      "chapter": "CH03",
+      "scene_id": "CH03-SCN-012",
+      "location_id": "CH03-INT-001",
+      "title": "The Meal They Could Not Finish",
+      "content_status": "Proposed",
+      "establishes": "Nneka and Ezeani faced an impossible decision",
+      "fragments": {
+        "place": "the house with five bowls",
+        "object": "a small sixth bowl, a child's, clean on the shelf",
+        "sound": "a child chattering through a silence",
+        "interaction": "Adanna sets the small bowl with the others"
+      },
+      "visual_identity": "Colour returning through grey ash for the length of the memory, then draining.",
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#3"
+    },
+    {
+      "index": 4,
+      "chapter": "CH04",
+      "scene_id": "CH04-SCN-012",
+      "location_id": "CH04-SUB-002",
+      "title": "Do Not Answer",
+      "content_status": "Proposed",
+      "establishes": "The truth was deliberately concealed",
+      "fragments": {
+        "place": "the landing steps",
+        "object": "a child's bead bracelet tied to a pole under years of white strips",
+        "sound": "a girl's laughter, and under it a name called from the water",
+        "interaction": "Adanna works the bracelet free"
+      },
+      "visual_identity": "Silver rain on the river, white cloth, everything wet.",
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#4"
+    },
+    {
+      "index": 5,
+      "chapter": "CH05",
+      "scene_id": "CH05-SCN-011",
+      "location_id": "CH05-SUB-002",
+      "title": "What He Swore Afterwards",
+      "content_status": "Proposed",
+      "establishes": "Adanna's childhood memories were incomplete for a reason",
+      "fragments": {
+        "place": "the ring of iron rods",
+        "object": "one rod set apart, with an ivory bracelet fused to it by lightning",
+        "sound": "a man's voice, steady, under thunder; the words are not made out",
+        "interaction": "Adanna lays her hand on the rod during a strike"
+      },
+      "visual_identity": "Seen only in lightning flashes, each a frozen image.",
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#5"
+    },
+    {
+      "index": 6,
+      "chapter": "CH06",
+      "scene_id": "CH06-SCN-010",
+      "location_id": "CH06-INT-003",
+      "title": "The Day, at Six Years Old",
+      "content_status": "Proposed",
+      "establishes": "Ezeani's actions were more complicated than Adanna understood",
+      "fragments": {
+        "place": "the room that repeats",
+        "object": "one thing in the room that is on the wrong side each time",
+        "sound": "Nneka saying Adanna's name, the voice that called her into the forest",
+        "interaction": "Adanna puts the object where it truly was"
+      },
+      "visual_identity": "Camera at a child's eye height throughout; sourceless dusk indigo.",
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#6"
+    },
+    {
+      "index": 7,
+      "chapter": "CH07",
+      "scene_id": "CH07-SCN-015",
+      "location_id": "CH07-INT-005",
+      "title": "The Last Night",
+      "content_status": "Proposed",
+      "establishes": "Nneka offered herself; Ezeani carried out the killing; both hid the truth, in different ways",
+      "fragments": {
+        "place": "the bare platform",
+        "object": "Nneka's striped wrapper, folded, the one thing in the land of the dead that has kept its colour",
+        "sound": "the low talk of the second memory, the same two voices, older",
+        "interaction": "Adanna unfolds the cloth"
+      },
+      "visual_identity": "Plain lamplight in an ordinary room, the only warm light in Chapter 7.",
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#7"
+    }
+  ],
+  "bosses": [
+    { "id": "CH01-BOSS-GreatRootMother", "chapter": "CH01", "name": "Great Root Mother", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
+    { "id": "CH02-BOSS-IronElephant", "chapter": "CH02", "name": "Iron Elephant", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
+    { "id": "CH03-BOSS-KingWithoutAFace", "chapter": "CH03", "name": "King Without a Face", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
+    { "id": "CH04-BOSS-DaughterOfTheDeep", "chapter": "CH04", "name": "Daughter of the Deep", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
+    { "id": "CH05-BOSS-AmadiohasChampion", "chapter": "CH05", "name": "Amadioha's Champion", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
+    { "id": "CH06-BOSS-MotherOfMasks", "chapter": "CH06", "name": "Mother of Masks", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
+    { "id": "CH07-BOSS-HollowKing", "chapter": "CH07", "name": "Hollow King", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
+    { "id": "CH08-BOSS-Ezeani", "chapter": "CH08", "name": "Ezeani", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" }
+  ],
+  "chapter_rules": [
+    {
+      "id": "RULE-CH01-GREAT-TREE",
+      "chapter": "CH01",
+      "statement": "The lone giant tree on the horizon is the Great Root Mother's territory and must be visible from every major clearing.",
+      "kind": "vista_visibility",
+      "source": "ENVIRONMENT_DESIGN_REGISTER; OPEN_ART_DECISIONS#OAD-11",
+      "enforced_by": "L2 per-scene visibility automation test"
+    },
+    {
+      "id": "RULE-CH01-SILK-COTTON",
+      "chapter": "CH01",
+      "statement": "The great tree is a living silk-cotton (kapok) with full crown and plank buttresses; the approach V003 board governs the model.",
+      "kind": "asset_identity",
+      "source": "ENVIRONMENT_DESIGN_REGISTER",
+      "enforced_by": "art review"
+    },
+    {
+      "id": "RULE-CH02-NO-FLAME",
+      "chapter": "CH02",
+      "statement": "No living flame anywhere in the kingdom until the boss; the kingdom is cold. Light only from roof cracks.",
+      "kind": "asset_exclusion",
+      "excludes": ["fire_vfx", "torch_lit", "brazier_lit"],
+      "source": "ENVIRONMENT_DESIGN_REGISTER",
+      "enforced_by": "L0 chapter manifest validation + art review"
+    },
+    {
+      "id": "RULE-CH03-NO-REMAINS",
+      "chapter": "CH03",
+      "statement": "No remains are ever shown. Objects are put down, not thrown. Faces in the palace are scraped away.",
+      "kind": "asset_exclusion",
+      "excludes": ["skeletal_remains", "corpse", "bones_human"],
+      "source": "ENVIRONMENT_DESIGN_REGISTER",
+      "enforced_by": "L0 chapter manifest validation + art review"
+    },
+    {
+      "id": "RULE-CH03-ASH-NOT-SNOW",
+      "chapter": "CH03",
+      "statement": "Ash must not read as snow.",
+      "kind": "material_response",
+      "source": "ENVIRONMENT_DESIGN_REGISTER",
+      "enforced_by": "art review under 3 lighting setups"
+    },
+    {
+      "id": "RULE-CH04-PYTHONS",
+      "chapter": "CH04",
+      "statement": "Pythons are never enemies and never loot in Idemili's domain. They may appear as ambient wildlife and signs of her presence. Royal python markings only.",
+      "kind": "spawn_exclusion",
+      "excludes": ["enemy:snake", "loot:snake", "enemy:python"],
+      "source": "OPEN_ART_DECISIONS#OAD-14; ENVIRONMENT_DESIGN_REGISTER",
+      "enforced_by": "L0 spawn table validation + L2 runtime spawn assertion"
+    },
+    {
+      "id": "RULE-CH04-NO-LIGHTNING",
+      "chapter": "CH04",
+      "statement": "No lightning in Chapter 4; it is kept for Amadioha.",
+      "kind": "asset_exclusion",
+      "excludes": ["lightning_vfx"],
+      "source": "ENVIRONMENT_DESIGN_REGISTER",
+      "enforced_by": "L0 chapter manifest validation"
+    },
+    {
+      "id": "RULE-CH04-NO-STILTS",
+      "chapter": "CH04",
+      "statement": "Houses stand on the ground in the same building tradition as elsewhere, never on stilts.",
+      "kind": "asset_exclusion",
+      "excludes": ["stilt_house"],
+      "source": "ENVIRONMENT_DESIGN_REGISTER",
+      "enforced_by": "L0 chapter manifest validation + art review"
+    },
+    {
+      "id": "RULE-CH04-SHRINE-NO-COMBAT",
+      "chapter": "CH04",
+      "statement": "No combat at the shrine. Idemili's presence is shown by water, chalk, white cloth and the python, never by an image or a face.",
+      "kind": "encounter_exclusion",
+      "excludes": ["combat:CH04-SUB-002"],
+      "source": "ENVIRONMENT_DESIGN_REGISTER",
+      "enforced_by": "L0 encounter validation + L2 runtime assertion"
+    },
+    {
+      "id": "RULE-CH05-WHITE-LIGHTNING",
+      "chapter": "CH05",
+      "statement": "Lightning is white only, never coloured. Nothing is built on the mountain; people only cut rock or drive iron into it.",
+      "kind": "asset_identity",
+      "source": "ENVIRONMENT_DESIGN_REGISTER",
+      "enforced_by": "art review"
+    },
+    {
+      "id": "RULE-CH05-NO-ALPINE",
+      "chapter": "CH05",
+      "statement": "A West African granite dome, never an alpine peak: no snow, no conifers. The storm never leaves the summit and the summit is visible in every board.",
+      "kind": "asset_exclusion",
+      "excludes": ["snow", "conifer", "alpine_peak"],
+      "source": "ENVIRONMENT_DESIGN_REGISTER",
+      "enforced_by": "L0 chapter manifest validation"
+    },
+    {
+      "id": "RULE-CH06-MASK-INVENTED",
+      "chapter": "CH06",
+      "statement": "All face coverings are invented and featureless: a smooth oval with two eye slits at most. No horns, paint, raffia, crests or any feature of a real masquerade. Needs consultant review before further development.",
+      "kind": "asset_identity",
+      "requires_review": "cultural",
+      "source": "ENVIRONMENT_DESIGN_REGISTER",
+      "enforced_by": "asset validation + cultural review gate"
+    },
+    {
+      "id": "RULE-CH06-BLANK-VARIANTS",
+      "chapter": "CH06",
+      "statement": "Face coverings must not drift to round discs or forms with a nose ridge. Nothing is monstrous; the place is wrong only in small ways.",
+      "kind": "asset_identity",
+      "source": "ENVIRONMENT_DESIGN_REGISTER",
+      "enforced_by": "asset validation"
+    },
+    {
+      "id": "RULE-CH07-EARTH-NOT-STONE",
+      "chapter": "CH07",
+      "statement": "The stronghold of the dead is earth, timber and cloth burnt hard like fired clay, never a stone castle. Ember red only deep in cracks, never flame. Grey burial cloth, no ferryman, no figures, no remains. Sky starless.",
+      "kind": "asset_exclusion",
+      "excludes": ["fire_vfx", "stone_castle_kit", "human_remains", "ferryman"],
+      "source": "ENVIRONMENT_DESIGN_REGISTER",
+      "enforced_by": "L0 chapter manifest validation + art review"
+    },
+    {
+      "id": "RULE-OKWU-HOOD",
+      "chapter": null,
+      "statement": "Okwu's hood shows darkness only, in every light, always. No face, no stone.",
+      "kind": "material_rule",
+      "source": "OPEN_ART_DECISIONS#OAD-12",
+      "enforced_by": "3-rig lighting validation test"
+    },
+    {
+      "id": "RULE-ADANNA-NO-MIRROR",
+      "chapter": null,
+      "statement": "Adanna's features are never mirrored or moved. Left: cheekbone scar, three bronze braid cuffs + two coral beads at temple, single shoulder guard, coiled armlet, blade at hip. Right side plain.",
+      "kind": "character_identity",
+      "source": "CHARACTER_DESIGN_REGISTER; OPEN_ART_DECISIONS#OAD-51",
+      "enforced_by": "character validation test (sockets, no mirrored mesh)"
+    },
+    {
+      "id": "RULE-ADANNA-ONE-WEAPON",
+      "chapter": null,
+      "statement": "Adanna carries exactly one weapon: a short leaf-bladed iron sword about 60 cm, worn on the left hip. No spear, no second weapon, no wrist bracelets.",
+      "kind": "character_identity",
+      "source": "CHARACTER_DESIGN_REGISTER; OPEN_ART_DECISIONS#OAD-09, OAD-37",
+      "enforced_by": "inventory data validation + character validation test"
+    },
+    {
+      "id": "RULE-CULTURAL-FICTIONALITY",
+      "chapter": null,
+      "statement": "Invented mythology must never be presented as authentic Igbo tradition. Depictions of Amadioha, Idemili and the land of the dead are fiction and must be labelled as such in codex and credits.",
+      "kind": "cultural",
+      "source": "Directive#1; OPEN_ART_DECISIONS#OAD-05, OAD-04",
+      "enforced_by": "codex data validation (bFictionalMythology flag) + credits review"
+    }
+  ]
+}

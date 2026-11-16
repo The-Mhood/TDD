@@ -1,0 +1,61 @@
+# ============================================================================
+# THE DISOBEDIENT DAUGHTER — Unreal Engine 5.8
+# Policy: Git holds TEXT ONLY. See Docs/adr/ADR-0004-binary-asset-storage.md
+# ============================================================================
+
+# --- Unreal build output ---
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+Build/Receipts/
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+.vs/
+.vscode/
+.idea/
+*.xcodeproj/
+*.xcworkspace/
+
+# --- Unreal generated ---
+*.generated.h
+*.gen.cpp
+*.modules
+*.target
+*.target.xml
+*.uprojectdirs
+
+# --- Platform / IDE junk ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- C++ artefacts ---
+*.o
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.dll
+*.so
+*.dylib
+
+# --- Python (tooling only; stdlib, no venv committed) ---
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# --- Test / evidence scratch (evidence itself IS committed) ---
+Tools/ci/_tmp/
+*.log
+!Docs/evidence/**/*.log
+
+# --- LOCAL ONLY: never commit machine-specific engine paths ---
+.engine_path
