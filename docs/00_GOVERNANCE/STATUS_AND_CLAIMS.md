@@ -33,10 +33,11 @@ Every agent report, commit message and document must classify each item with exa
 | Coding standards | `DESIGN_ONLY` | `docs/01_ARCHITECTURE/CODING_STANDARDS.md` |
 | Engine/project skeleton | `DESIGN_ONLY` (nothing created) | — |
 | Any gameplay system (movement, combat, AI, world, narrative, save, UI) | `DESIGN_ONLY` | Sections 4–12 of TDD-MEAD-001 |
-| Agent 1 gameplay/character assessment | `DESIGN_ONLY` (document complete, unapproved) | `docs/02_PRODUCTION/AGENT1/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT.md` |
-| Agent 1 Milestone 1 specification | `DESIGN_ONLY`; implementation `BLOCKED` on Agent 3 prerequisites B-1…B-6 | `docs/02_PRODUCTION/AGENT1/M1_MOVEMENT_SPECIFICATION.md` §2.3, §3.1 |
+| Agent 1 gameplay/character assessment | `DESIGN_ONLY` — **v1.1**, revised per TD review, awaiting re-review (v1.0 archived) | `docs/02_PRODUCTION/AGENT1/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT.md` |
+| Agent 1 Milestone 1 specification | `DESIGN_ONLY` — **v1.1**, single gate AC-01…AC-31; implementation `BLOCKED` on Agent 3 prerequisites B-1…B-6 | `docs/02_PRODUCTION/AGENT1/M1_MOVEMENT_SPECIFICATION.md` §2.3, §4 |
+| Agent 1 root-motion policy | `DESIGN_ONLY` — ADR-0013 **v1.1**; execution mechanism provisional pending `RootMotionAppliesToCapsule` | `docs/03_DECISIONS/ADR-0013-root-motion-policy.md` |
 | Player controller / camera / combat / weapon code | **Does not exist** | — |
-| Any gameplay measurement (M-01…M-13) | **Not measured** | No engine in agent workspace (ADR-0012) |
+| Any gameplay measurement (M-01a…M-14) | **Not measured** | No engine in agent workspace (ADR-0012) |
 | Any art, animation, audio, cinematic asset | **Does not exist** | Drive Art Bible: 7 approved concept boards, no production assets; `09_ANIMATION_AND_COMBAT` folder is empty |
 
 **Statement to the Creative Director:** at this timestamp the project has an architecture and an honest audit. It does not yet have a game. The next deliverable that changes that is Phase 0 (project skeleton), which requires an Unreal Engine 5.8 machine to build.

@@ -3,8 +3,10 @@
 **Project:** THE DISOBEDIENT DAUGHTER (*Nwanyi Na-anụghị Ihe*)
 **Agent:** 1 — Gameplay, Character and Combat Engineering
 **Document:** TDD-A1-ASSESS-001
-**Version:** 1.0
+**Version:** 1.1 — revised after Technical Director review (2026-11-16)
 **Date:** 2026-11-16
+**Supersedes:** v1.0 (`archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_V1.0.md`, preserved unchanged)
+**Change log:** §11 of this document records every correction made in v1.1
 **Governing architecture:** `docs/01_ARCHITECTURE/MASTER_ENGINEERING_ARCHITECTURE.md` (TDD-MEAD-001)
 **Next document:** `docs/02_PRODUCTION/AGENT1/M1_MOVEMENT_SPECIFICATION.md`
 
@@ -195,9 +197,13 @@ States (M1 implements the bold ones; the rest are declared now so transition rul
 
 Transition authority: a single `FTDDStateRules` data table row per state declares `AllowedTransitions`, `AcceptedInputs`, `bLocksMovement`, `bLocksRotation`, `bLocksCameraRig`, and `bInvulnerable`. Code reads the table; designers can re-tune without a programmer, and a unit test enumerates every state pair to assert there are no undeclared transitions.
 
+**Revised in v1.1 (C-06): an allowed-transition matrix is necessary but not sufficient.** A matrix says *whether* a transition is permitted; it does not say *when* it must be refused, what may interrupt it, what must happen on exit, or how it ends. The authoritative transition semantics are therefore specified in **M1 spec §3.2** and cover, per state: entry preconditions; forced-entry sources; forced-exit sources; interruption windows and who may interrupt; exit actions (montage stop, tag clearing, mode restoration, lock release, event publication); recovery conditions; minimum dwell; locks; and the buffer policy for requests received while locked. Priority ordering for forced transitions is defined there (Dead > Cinematic > Stagger > Attack/Block > Dodge > Traversal > Land > Locomotion) so two systems can never both believe they control the character.
+
 ### 4.3 Input mapping (full, to be realised in B-4)
 
-Mapping contexts: `IMC_Exploration`, `IMC_Combat`, `IMC_LockOn`, `IMC_Cinematic`, `IMC_Menu`, `IMC_Traversal`. Only one gameplay context + `IMC_Menu` overlap is legal; the state machine requests context switches.
+**Ownership (corrected in v1.1 — see C-03):** in Unreal the gameplay input component belongs to the **pawn**, not the controller. `APawn::PawnClientRestart()` calls `SetupPlayerInputComponent()` with the component produced by `APawn::CreatePlayerInputComponent()`; the class is controlled by `APawn::InputComponentClass` (or by overriding `CreatePlayerInputComponent()`). `UTDDPlayerInputComponent` is therefore created and owned by `ATDDPlayerCharacter`, exists only while the pawn is possessed by a player controller, and is destroyed/recreated on re-possession. `ATDDPlayerController` keeps only a separate, minimal input component for pause/menu actions that must work while the pawn is dead, unpossessed or in a cinematic. The controller routes device input and owns the camera manager; it does **not** own gameplay action bindings. v1.0 was ambiguous about this and is corrected here.
+
+Mapping contexts: `IMC_Exploration`, `IMC_Combat`, `IMC_LockOn`, `IMC_Cinematic`, `IMC_Menu`, `IMC_Traversal`. Only one gameplay context + `IMC_Menu` overlap is legal; the state machine requests context switches via the subsystem, and contexts are pushed against the pawn's input component (not recreated per switch).
 
 | Action | Keyboard/Mouse | Gamepad | Type | Buffering policy |
 |---|---|---|---|---|
@@ -232,24 +238,42 @@ Mouse and keyboard are first-class (a GoW-class PC action game must not feel lik
 
 All values above are authorable; no tuning literal lives in C++ beyond sentinel defaults. That is a hard rule because tuning is the single largest iteration cost in action-game combat.
 
-### 4.5 Tick ordering and the responsiveness budget
+### 4.5 Tick ordering, latency definitions and the responsiveness budget
 
-This is where responsiveness is won or lost, so it is specified rather than discovered:
+**Corrected in v1.1 (C-02).** v1.0 asserted that animation evaluates after movement and therefore the visible pose lags input by one frame. That was an assumption about engine tick groups presented as a fact, and it contradicted v1.0's own same-frame latency criterion (AC-01 in the M1 spec). It is withdrawn. What replaces it is an explicit three-stage latency model, each stage separately measured, with the engine's actual behaviour recorded as a measurement result rather than a claim.
+
+Observed tick ordering within one engine frame (to be **confirmed by instrumented measurement** in M0, not assumed):
 
 ```
-Frame N:
-  TG_PrePhysics    : PlayerController input sampling (Enhanced Input)
-                     → intent produced → state machine decision
-  TG_PrePhysics    : CharacterMovementComponent tick (applies accel, moves capsule)
-  TG_PostPhysics   : SkeletalMesh animation update (pose for the moved capsule)
-  TG_PostPhysics   : camera update (follows the moved capsule)
+Frame F:
+  TG_PrePhysics    : PlayerController input processing (Enhanced Input)
+                     → intent produced → buffered → state machine decision
+  TG_PrePhysics    : CharacterMovementComponent tick (accel applied, capsule moved)
+  TG_PostPhysics   : SkeletalMesh pose evaluation; camera update
+  (render)         : frame presented
 ```
 
-Consequence: the pose the player sees at frame N reflects movement computed at frame N — good — but the *animation* responding to a new intent appears at N+1 because animation evaluates after movement. Floor latency: **one frame** (16.7 ms at 60 fps).
+Three latency stages, defined so tests cannot conflate them:
 
-Two measured options, decided by data, not opinion:
-- **Default:** mesh ticked in `TG_PostPhysics` (UE default). Correctness first: no foot slide introduced by ordering.
-- **Option B (tunable):** `SkeletalMeshComponent` tick group set to `TG_PrePhysics` so the pose uses the *previous* frame's velocity, reducing perceived input latency at the cost of slightly increased foot slide. Only adopted if measurement shows a real perceptual gain and the slide budget (M2) still holds.
+| ID | Stage | Definition | Frame-index reference points |
+|---|---|---|---|
+| **L1** | Sample → intent | From the frame on which the input event is *delivered to the engine* to the frame on which the intent is recorded (buffered or accepted) | `FrameInjected` → `FrameIntentRecorded` |
+| **L2** | Intent → first velocity change | From `FrameIntentRecorded` to the first frame in which `CMC->Velocity` differs from the pre-intent baseline by more than ε (1 cm/s) | `FrameIntentRecorded` → `FrameVelocityChanged` |
+| **L3** | Intent → pose reflects it | From `FrameIntentRecorded` to the first frame in which the animation parameter set (speed/gait) reflects the new velocity | `FrameIntentRecorded` → `FramePoseUpdated` |
+
+Expected values and the reasoning behind them:
+
+- **L2 = 0 frames** is the design requirement: input processing, state decision and CMC movement occur in the same `TG_PrePhysics` pass, so velocity must change in the frame the intent is recorded. Any L2 > 0 is a **tick-order defect**, not a tuning issue, and fails AC-02.
+- **L1 ≤ 1 frame.** It is 0 when the input event is delivered before that frame's input processing (which is how the automation harness injects, making tests deterministic) and 1 when delivered after it. The 1-frame case is the real-world worst case for a device polled mid-frame.
+- **L3 ≤ 1 frame**, and its *actual* value is reported, not predicted. If the engine evaluates the pose in `TG_PostPhysics` after movement, L3 is 0; if the pose for frame F is built before movement, L3 is 1. v1.0 claimed 1 without evidence; v1.1 requires the number to be measured at 60 and 120 FPS and recorded in the phase report.
+- **Device-to-photon latency is out of scope for automation** (OS polling, display scanout, vsync). It is measured manually with a high-speed camera or a latency tester if the Creative Director requires it, and is reported separately so it is never confused with L1–L3.
+
+Measurement rules (both frame rates):
+
+1. Tests run with `t.MaxFPS` fixed at 60, then repeated at 120; vsync disabled; physics substepping disabled unless explicitly under test (recorded either way).
+2. Results are reported in **frames and milliseconds** (at 60 FPS one frame = 16.667 ms; at 120 FPS, 8.333 ms) so a frame-rate-dependent threshold cannot hide.
+3. The harness logs frame counters from a single monotonic source (the metrics component), never from wall-clock deltas, so a hitch cannot masquerade as latency.
+4. If L3 measures 1 and the Creative Director judges it perceptible, the *only* sanctioned remedy is the measured `TG_PrePhysics` mesh-tick experiment below; it is adopted only if it reduces perceived latency and the M2 foot-slide budget still holds.
 
 Budget table for the player, measured not assumed:
 
@@ -269,14 +293,18 @@ Root motion is the single most common source of "the character controller feels 
 | Motion | Root motion? | Reason |
 |---|---|---|
 | Ground locomotion | **No** | Capsule driven by CMC; animation follows velocity. Root motion locomotion fights collision, breaks acceleration curves, and makes input latency visible |
-| Dodge | **Yes**, authored distance, capped by trajectory sweep | Precise, repeatable distances; validated against collision before playing, with fallback distance if blocked |
-| Attacks with a lunge | **Yes**, with Motion Warping to the target (≤ 300 cm, ≤ 60°) | Alignment quality; root motion supplies the travel, warping supplies the aim |
+| Dodge | **Yes**, authored distance, pre-validated by a capsule sweep, clamped with a fallback clip if blocked | Precise, repeatable distances. Collision authority stays with CMC; the sweep only chooses distance and clip (v1.1, C-05/C-07) |
+| Attacks with a lunge | **Yes**, with Motion Warping to the target | Alignment quality; root motion supplies travel, warping supplies aim. The 300 cm / 60° values are **provisional and configurable** (per-attack override), not constants (v1.1, C-05) |
 | Stationary attacks | **No** (in-place clip) | Avoids drift; damage comes from windows, not translation |
 | Traversal (vault/mantle) | **Yes** + Motion Warping entry/exit alignment | Quality of alignment; capsule is locked to CMC during the clip and snapped to the validated end transform |
 | Cinematics | **Yes**, with the capsule frozen and restored on exit | Standard cinematic practice |
 | Hit reactions | **No** for small reactions; **Yes** for knockdowns | Predictability; knockdowns need authored displacement |
 
-Engine configuration implied: `AnimInstance->SetRootMotionMode(ERootMotionMode::RootMotionFromMontagesOnly)`; `bAllowPhysicsRotationDuringAnimRootMotion=false`; movement mode set per action (CMC `MOVE_None` or custom during root-motion montages) with explicit restoration; every root-motion action validated by `TDD-Unit.Movement.RootMotionRestoresMovementMode`.
+**Engine configuration (corrected in v1.1, C-05).** `AnimInstance->SetRootMotionMode(ERootMotionMode::RootMotionFromMontagesOnly)`; `bAllowPhysicsRotationDuringAnimRootMotion=false`.
+
+v1.0 proposed setting the CMC to `MOVE_None` during root-motion montages. That is **withdrawn as an assumption**: CMC processes animation root motion inside its movement update, so a mode in which that update does not run risks the capsule never receiving the authored translation, and the failure would appear as "the attack has no lunge" rather than as an error. The revised policy is specified in ADR-0013 v1.1: root-motion actions keep a CMC mode in which the movement update *does* run, with input influence suppressed and rotation mode controlled per action, so that CMC performs the translation **and** its own collision sweeps. This is to be **verified on the first build** by an instrumented test (`TDD-Unit.Movement.RootMotionAppliesToCapsule`) that asserts capsule displacement actually occurred, at which point the mechanism is either confirmed or replaced — it is not treated as true because it was written down.
+
+Traversal exit transforms are revalidated against collision at the exit notify before the capsule is snapped (v1.1, C-05); see M1 spec §3.9 and ADR-0013 §5.
 
 ### 4.7 Camera architecture
 
@@ -290,9 +318,28 @@ Engine configuration implied: `AnimInstance->SetRootMotionMode(ERootMotionMode::
 | `Traversal` | pulled back/down, wider | 90° | Mantle/vault |
 | `Cinematic` | Sequencer owns it | per shot | Blended in/out over 0.4 s |
 
-Rules: collision probe with a sphere sweep (radius 12 cm) on the boom; no camera snap faster than 720°/s except on explicit lock-on acquisition (which is a deliberate, authored snap with a short blend); pitch clamped [-60°, +45°] in exploration and [-50°, +35°] in combat; camera shake from data assets only. Lock-on scoring and hysteresis per MEAD §4.3.
+**Ownership (corrected in v1.1, C-04).** UE requires camera *modifiers* (shakes, post-process blends) to be applied through the player camera manager, which the player controller owns and creates. Rig *state* (desired arm length, offsets, FOV per gameplay state) belongs with the pawn's gameplay state. Therefore:
 
-Camera feel is a manual (T5) gate; camera *correctness* (no wall penetration, no jitter, blend durations, FOV limits) is automated.
+| Element | Owner | Responsibility |
+|---|---|---|
+| `ATDDPlayerCameraManager` | created by `ATDDPlayerController` | Camera shakes, post-process blending, FOV blending; the only place `UCameraModifier`/`CameraShake` are applied |
+| `UTDDCameraRigComponent` | on `ATDDPlayerCharacter` | Computes the desired rig (arm length, socket offset, FOV, lock-on framing) and writes it to the pawn's spring arm; never applies shakes itself |
+| `USpringArmComponent` + `UCameraComponent` | on `ATDDPlayerCharacter` | Physical rig; reads desired values from the rig component |
+| Sequencer / `CineCameraActor` | cinematic subsystem (Agent 2) | Takes the view target; the rig component detects the takeover and suspends its writes, then restores over 0.4 s on exit |
+
+v1.0 described `ATDDPlayerCameraManager + UTDDCameraRigComponent` as if they were one unit on the pawn; v1.1 separates them because they have different lifetimes and different engine-mandated homes.
+
+**Stability criteria (corrected in v1.1, C-04).** v1.0 used "no camera snap faster than 720°/s except lock-on" as a universal jitter rule. That number is an acquisition bound, not a jitter threshold, and it conflated five distinct failure modes. They are now separate criteria with separate thresholds (all **[A1]** proposals, full set in M1 spec §3.6):
+
+| Failure mode | v1.1 criterion |
+|---|---|
+| Penetration | Camera never within 10 cm of blocking geometry, sampled every frame over a scripted sweep in 1.2 m and 2.0 m corridors |
+| Angular jitter | Per-frame angular delta ≤ 6°/frame and jerk ≤ 3°/frame² during steady following; no more than 3 sign changes of the delta in any 10-frame window |
+| Sudden displacement | ≤ 10 cm/frame in normal follow; ≤ 25 cm/frame while an obstruction is actively forcing the boom in; never > 15 cm/frame without an obstruction event flag |
+| Obstruction recovery | Re-extension ≤ 150 cm/s, monotonic (no overshoot), complete within 0.6 s for obstructions under 90 cm |
+| Intentional acquisition (lock-on) | Whitelisted event: 0.20 s blend, total slew ≤ 120°, peak ≤ 600°/s, completion within 0.35 s; excluded from jitter metrics via an event flag |
+
+Camera *feel* remains a manual (T5) gate; camera *correctness* (the five rows above) is automated.
 
 ### 4.8 Traversal architecture (M2)
 
@@ -370,43 +417,73 @@ struct FTDDPawnKinematics
 
 ### 6.1 Metrics, thresholds, methods
 
-Everything subjective in this domain becomes a number here. Thresholds marked **[MEAD]** come from the governing document; **[A1]** are my proposals and need Technical Director sign-off.
+Revised in v1.1 (C-02, C-07, C-08): latency split into three stages, camera split into five criteria, step coverage extended, dodge clearance restated. Metric IDs are stable across documents; the **authoritative acceptance criteria live in M1 spec §4**, and this table is the assessment-level summary that maps to them.
 
 | ID | Metric | Threshold | Method |
 |---|---|---|---|
-| M-01 | Time from input to movement intent accepted | 1 frame | Automation: press move, assert velocity delta on the same frame's CMC tick |
-| M-02 | Time to reach 95% max jog speed from idle | ≤ 0.35 s **[MEAD]** | Automation samples speed per frame; CSV curve exported |
-| M-03 | Time to stop from max jog | ≤ 0.20 s and ≤ 50 cm **[A1]** | Automation |
-| M-04 | 180° turn at max jog speed | ≤ 0.50 s, foot slide ≤ 5 cm **[MEAD]** | Automation (capsule) + M2 animation sockets (slide) |
-| M-05 | Foot slide per metre travelled | ≤ 5 cm at 60 fps **[MEAD]** | M2 only: foot socket vs capsule delta, per-frame log |
-| M-06 | Step-up height | 45 cm at walk speed, no capsule pop > 2 cm/frame **[A1]** | Automation on a step test map |
-| M-07 | Walkable slope | 40° traversable, 50° blocked, no jitter **[A1]** | Automation + manual sweep |
-| M-08 | Camera wall penetration | Zero penetrations within 30 cm of geometry over a 60 s scripted sweep **[A1]** | Automation (sweep trace) in a corridor test map |
-| M-09 | Dodge distance repeatability | Authored distance ± 5 cm over 100 runs on flat ground **[A1]** | Automation loop |
-| M-10 | i-frame window accuracy | Boundary at 0.10 s / 0.45 s ± 1 frame **[A1]** | Automation reads invulnerability tag per frame |
-| M-11 | Player frame cost | ≤ 0.30 ms **[MEAD]** | Insights capture, Development build, reference hardware |
-| M-12 | Input device parity | Same action timings within 1 frame on keyboard vs gamepad **[A1]** | Automation with synthesised device input |
-| M-13 | Root-motion movement-mode restoration | 100% of root-motion actions restore the prior movement mode **[A1]** | `TDD-Unit.Movement.RootMotionRestoresMovementMode` |
+| M-01a | L1 sample→intent | ≤ 1 frame (0 in deterministic harness) at 60 and 120 FPS | `TDD-Functional.Movement.LatencyL1` |
+| M-01b | L2 intent→first velocity change | **0 frames** (same `TG_PrePhysics` pass) at 60 and 120 FPS | `TDD-Functional.Movement.LatencyL2` |
+| M-01c | L3 intent→pose reflection | ≤ 1 frame; **actual value reported** | `TDD-Functional.Movement.LatencyL3` |
+| M-02 | Acceleration to 95% max jog | ≤ 0.35 s **[MEAD]** | `TDD-Functional.Movement.AcceleratesToMaxSpeed` |
+| M-03 | Stop from max jog | ≤ 0.20 s, ≤ 50 cm **[A1]** | `TDD-Functional.Movement.StopsWithinDistance` |
+| M-04 | 180° turn at max jog | ≤ 0.50 s **[MEAD]**, yaw settles ±2° **[A1]** | `TDD-Functional.Movement.Turn180Degrees` |
+| M-05 | Foot slide per metre | ≤ 5 cm at 60 FPS **[MEAD]** — M2 only (needs clips) | M2 harness |
+| M-06a | Step-up 15/30/45 cm | Climbs, settles ≤ 0.25 s, ≤ 1 CMC correction **[A1]** | `TDD-Functional.Movement.StepUpSupported` |
+| M-06b | Step-up 50 cm | **Blocked**: net Z gain ≤ 1 cm over 5 attempts, speed ≤ 5 cm/s after contact, no Airborne, no penetration **[A1]** | `TDD-Functional.Movement.StepUpOverMaxBlocked` |
+| M-06c | Step-down 15/30/45/50 cm | ≤ 45 cm: no Airborne, smooth descent, settle ≤ 0.25 s. 50 cm: Airborne permitted, lands and recovers ≤ 0.25 s **[A1]** | `TDD-Functional.Movement.StepDownBehaviour` |
+| M-06d | Angled / sprint / corner approaches | Angled 30/45/60° climbs 45 cm; sprint retains ≥ 60% speed; corner: no stick, ≤ 2 yaw sign flips per 10 frames **[A1]** | `TDD-Functional.Movement.StepAngledApproach`, `.SprintOverStep`, `.CornerStability` |
+| M-07 | Walkable slope | 40° traversable, 50° blocked, no jitter **[A1]** | `TDD-Functional.Movement.SlopeLimits` |
+| M-08a | Camera penetration | Zero samples < 10 cm from blocking geometry, 60 s sweep, two corridor widths **[A1]** | `TDD-Functional.Movement.CameraPenetration` |
+| M-08b | Camera angular jitter | Δ ≤ 6°/frame, jerk ≤ 3°/frame², ≤ 3 sign changes / 10 frames **[A1]** | `TDD-Functional.Movement.CameraAngularStability` |
+| M-08c | Camera displacement pop | ≤ 10 cm/frame normal, ≤ 25 cm/frame under active obstruction, never > 15 cm/frame unflagged **[A1]** | `TDD-Functional.Movement.CameraDisplacement` |
+| M-08d | Obstruction recovery | ≤ 150 cm/s re-extension, monotonic, complete ≤ 0.6 s **[A1]** | `TDD-Functional.Movement.CameraRecovery` |
+| M-08e | Lock-on acquisition | Whitelisted: 0.20 s, ≤ 120° total, ≤ 600°/s peak, ≤ 0.35 s **[A1]** | `TDD-Functional.Movement.CameraAcquisitionSlew` |
+| M-09a | Dodge distance & clearance | Mean within 5 cm of resolved distance, σ ≤ 5 cm over 100 runs; capsule sweep includes radius; no penetration **[A1]** | `TDD-Functional.Movement.DodgeDistanceRepeatable` |
+| M-09b | Dodge i-frame window | Boundaries at 0.10 s / 0.45 s ± 1 frame **[A1]** | `TDD-Functional.Movement.DodgeIFrames` |
+| M-10 | (retired) | Merged into M-09b; ID kept reserved to avoid renumbering | — |
+| M-11 | Player frame cost | ≤ 0.30 ms **[MEAD]** | Insights capture |
+| M-12 | Device parity | ≤ 1 frame difference keyboard vs gamepad **[A1]** | `TDD-Functional.Movement.InputDeviceParity` |
+| M-13 | Root-motion restoration | 100% restore after natural end, interruption, death and cinematic takeover **[A1]** | `TDD-Unit.Movement.RootMotionRestoresMovementMode`, `.RootMotionAppliesToCapsule` |
+| M-14 | Traversal exit revalidation | 100% of exits validated against collision before snap; blocked exit → documented fallback, never teleport into geometry **[A1]** — M2 | `TDD-Functional.Movement.TraversalExitRevalidation` |
 
 ### 6.2 Automated tests (M1)
 
-```
-TDD-Unit.Movement.StateRulesComplete          every state pair either declared or asserted illegal
-TDD-Unit.Movement.InputBuffer                 buffer/coyote windows, expiry, consumption
-TDD-Unit.Movement.DodgeSpecMath               distance/duration/i-frame conversion per time dilation
-TDD-Unit.Movement.TurnRateMonotonic           turn never overshoots target yaw
-TDD-Functional.Movement.AcceleratesToMaxSpeed M-02
-TDD-Functional.Movement.StopsWithinDistance   M-03
-TDD-Functional.Movement.Turn180Degrees        M-04
-TDD-Functional.Movement.StepUp45cm            M-06
-TDD-Functional.Movement.SlopeLimits           M-07
-TDD-Functional.Movement.CameraNoWallPenetration M-08
-TDD-Functional.Movement.DodgeDistanceRepeatable M-09
-TDD-Functional.Movement.DodgeIFrames          M-10
-TDD-Functional.Movement.InputLatencyOneFrame  M-01
-```
+Aligned in v1.1 (C-09) with the authoritative specifications in M1 spec §5.
 
-Functional tests live in `L_TDD_Test_Movement` (owned by me), use `FAutomationSpec`/Functional Testing, and must pass with the platform-independent metric harness. Every test writes a machine-readable result line so the phase report can quote it.
+```
+TDD-Unit.Movement.StateRulesComplete
+TDD-Unit.Movement.StateSemantics            preconditions, forced transitions, exit actions, recovery
+TDD-Unit.Movement.InputBuffer
+TDD-Unit.Movement.CoyoteWindow
+TDD-Unit.Movement.DodgeSpecMath
+TDD-Unit.Movement.TurnRateMonotonic
+TDD-Unit.Movement.RootMotionRestoresMovementMode
+TDD-Unit.Movement.RootMotionAppliesToCapsule
+TDD-Functional.Movement.LatencyL1
+TDD-Functional.Movement.LatencyL2
+TDD-Functional.Movement.LatencyL3
+TDD-Functional.Movement.AcceleratesToMaxSpeed
+TDD-Functional.Movement.StopsWithinDistance
+TDD-Functional.Movement.Turn180Degrees
+TDD-Functional.Movement.StepUpSupported
+TDD-Functional.Movement.StepUpOverMaxBlocked
+TDD-Functional.Movement.StepDownBehaviour
+TDD-Functional.Movement.StepAngledApproach
+TDD-Functional.Movement.SprintOverStep
+TDD-Functional.Movement.CornerStability
+TDD-Functional.Movement.SlopeLimits
+TDD-Functional.Movement.CameraPenetration
+TDD-Functional.Movement.CameraAngularStability
+TDD-Functional.Movement.CameraDisplacement
+TDD-Functional.Movement.CameraRecovery
+TDD-Functional.Movement.CameraAcquisitionSlew
+TDD-Functional.Movement.DodgeDistanceRepeatable
+TDD-Functional.Movement.DodgeIFrames
+TDD-Functional.Movement.DodgeRespectsCollision
+TDD-Functional.Movement.InputDeviceParity
+TDD-Functional.Movement.NoPermanentInputLock
+TDD-Functional.Movement.LockOnStubStateIsConsistent
+```
 
 ### 6.3 Reproducible manual procedures (physics/animation)
 
@@ -424,10 +501,13 @@ Documented as numbered procedures in the M1 spec, each with: purpose, setup (map
 | G-4 | Weapon grip/length unapproved → sockets and IK built on a guess | Medium | Length-agnostic socket scheme (`weapon_root`/`blade_base`/`blade_tip`) scaled from the mesh bounds at runtime; no hard-coded trace length |
 | G-5 | Root motion vs CMC conflicts produce subtle bugs (movement mode leaks, capsule drift) | Medium | ADR-0013 policy + M-13 unit test + explicit restore in every root-motion path |
 | G-6 | Motion Matching corpus may never arrive | High | BlendSpace provider shipped and playable in M1/M2; MM behind a setting (ADR-0005) |
-| G-7 | Responsiveness claims drift into opinion | Medium | M-01…M-13 thresholds; reports quote numbers or state "not measured" |
+| G-7 | Responsiveness claims drift into opinion | Medium | M-01a…M-14 thresholds; reports quote numbers or state "not measured" |
 | G-8 | Scope creep into enemies/world (my boundary) | Medium | Interfaces published early so Agent 2 builds their own side; I never read AI state |
 | G-9 | Character scale/proportions assumed wrong (height, capsule) | Low | Capsule dimensions and scale live in `DA_MovementConfig`, derived from the approved reference once a mesh exists |
-| G-10 | Single-frame latency floor disappoints on a 30 fps machine | Low | Documented explicitly; frame-rate-dependent tuning avoided by using seconds, not frames, for gameplay windows |
+| G-10 | Latency measured in frames is misread when frame rate changes | Medium | L1–L3 reported in frames **and** milliseconds at 60 and 120 FPS (v1.1, C-02); gameplay windows expressed in seconds, never frames |
+| G-11 | Camera stability is judged by eye and regresses silently | Medium | Five separate automated criteria (penetration, angular jitter, displacement, recovery, acquisition) with per-mode thresholds instead of one blanket number (v1.1, C-04) |
+| G-12 | Root-motion behaviour is assumed rather than verified (v1.0 made exactly this error with `MOVE_None`) | High | ADR-0013 v1.1 requires `RootMotionAppliesToCapsule` to prove capsule displacement on the first build; the mechanism is provisional until that test passes |
+| G-13 | Step/edge geometry produces states the matrix does not describe | Medium | 50 cm blocked case, descent behaviour, angled/sprint/corner approaches added as first-class tests (v1.1, C-06) |
 
 ---
 
@@ -438,7 +518,7 @@ Milestones map to the seven areas I was assigned. M0 is the prerequisite gate; M
 | # | Milestone | Scope | Depends on | Exit criteria (evidence) |
 |---|---|---|---|---|
 | **M0** | **Prerequisite gate** | Consume B-1…B-6; verify build, test run, CI; create my empty test map and metrics component skeleton | Agent 3 Phase 0 | Build + automation report exists; `L_TDD_Test_Movement` loads |
-| **M1** | **Character controller, camera and movement** | CMC tuning, state machine, input pipeline and buffering, camera rigs, dodge, metrics harness, `TDD-Unit.Movement.*` + core `TDD-Functional.Movement.*` | M0, stock mannequin | M-01…M-04, M-08…M-13 measured and within threshold; manual procedure P1–P3 signed off; **responsive testable controller in a controlled environment** |
+| **M1** | **Character controller, camera and movement** | CMC tuning, state machine and transition semantics, input pipeline and buffering, camera rigs and the five stability criteria, dodge, metrics harness | M0, stock mannequin | **Single gate, defined once in M1 spec §4: all AC-01…AC-31 pass** with quoted results (covering M-01a–c, M-02–M-04, M-06a–d, M-07, M-08a–e, M-09a/b, M-11–M-13); manual procedures **P1–P6** executed and recorded; reproducibility AC met over three cold runs (v1.1, C-01) |
 | **M2** | **Movement and animation laboratory** | Animation provider integration (BlendSpace first), traversal (vault/mantle/ledge), foot-slide measurement (M-05), locomotion tuning against real/placeholder clips, turn-in-place, land/fall polish | M1 + C-1 clips | M-05 within threshold; traversal candidates validated and rejecting invalid ones; lab map with measurement overlays; MM provider evaluated and switched only if it meets thresholds |
 | **M3** | **Combat foundation** | Combat component, attack data assets, state machine combat states, GAS attributes, damage pipeline to a dummy target, block/parry/dodge-cancel rules, posture/stagger, hitstop subsystem | M2 + placeholder attack clips + C-2 direction | Full player-vs-dummy loop (4-hit chain, heavy, block, parry, dodge, stagger, death); one damage path; `TDD-Unit.Combat.*` passes |
 | **M4** | **Weapon and hit detection** | Weapon component, socket scheme, draw/holster, swept-capsule hit windows with substepping, dedup, classification (Hit/Blocked/Parried/Immune), warping targets | M3 + C-4 weapon confirmation | No double hits in any test; hit classification correct at window boundaries; M-10-style boundary accuracy for active windows |
@@ -478,13 +558,43 @@ Rules I hold myself to:
 
 | Item | Status | Evidence |
 |---|---|---|
-| Gameplay and Character Technical Assessment | `DESIGN_ONLY` (complete as a document; unapproved) | This file |
-| M1 implementation specification | `DESIGN_ONLY` | `M1_MOVEMENT_SPECIFICATION.md` |
-| Root motion policy | `DESIGN_ONLY` (proposed ADR-0013) | `docs/03_DECISIONS/ADR-0013-root-motion-policy.md` |
-| Player character, controller, camera, combat, weapon, traversal code | **Does not exist** | — |
+| Gameplay and Character Technical Assessment | `DESIGN_ONLY` — **v1.1 revised per TD review; awaiting re-review** | This file (v1.0 archived) |
+| M1 implementation specification | `DESIGN_ONLY` — v1.1 revised; awaiting re-review | `M1_MOVEMENT_SPECIFICATION.md` (v1.0 archived) |
+| Root motion policy | `DESIGN_ONLY` — ADR-0013 **v1.1**, mechanism provisional pending `RootMotionAppliesToCapsule` | `docs/03_DECISIONS/ADR-0013-root-motion-policy.md` |
+| `ETDDCombatState`, `FTDDPawnKinematics` | **Proposed contracts only** — pending Agent 3 Core review; **not created by Agent 1** (v1.1, C-12) | M1 spec Appendix A |
+| Player character, controller, camera, combat, weapon, traversal code | **Does not exist** — no implementation begun, per TD instruction | — |
 | Any gameplay test | **Cannot run** | No engine in workspace (ADR-0012) |
-| Any measurement (M-01…M-13) | **Not measured** | Requires UE 5.8 reference hardware |
+| Any measurement (M-01a…M-14) | **Not measured** | Requires UE 5.8 reference hardware |
 | Prerequisites B-1…B-6 | `BLOCKED` on Agent 3 | §3.1 |
 | Content prerequisites C-1…C-5 | `BLOCKED` externally | §3.2 |
 
 **Statement to the Technical Director:** I have delivered the assessment and the M1 specification, and I have published the interfaces Agent 2 needs before they build enemy behaviour. I have not written unverifiable C++ into an empty repository; doing so would create debugging debt with no way to discharge it. The moment B-1…B-6 exist on a UE 5.8 machine, M1 implementation begins with the pure-logic cores (state rules, input buffer, dodge maths) which are the parts most likely to be silently wrong and least likely to be caught by eye.
+
+---
+
+## 11. Change log — v1.0 → v1.1 (response to Technical Director review, 2026-11-16)
+
+The TD review accepted the architecture and milestone approach in principle and required the following corrections before implementation. Each correction is listed with what was wrong, what changed and where. v1.0 is preserved at `archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_V1.0.md`.
+
+| ID | Review item | What was wrong in v1.0 | Correction in v1.1 | Where |
+|---|---|---|---|---|
+| **C-01** | 1 — Reconcile M1 exit criteria | §8's M1 row listed a *subset* of metrics (M-01…M-04, M-08…M-13) and P1–P3, while the spec defined 20 ACs and P1–P5. Two different gates for one milestone | Removed the partial list. There is now **one gate**: "all AC-01…AC-31 in M1 spec §4 pass", with the metric table explicitly labelled as a summary that maps to the ACs. Manual procedures corrected to P1–P6 in both documents | §6.1, §8 |
+| **C-02** | 2 — Separate latency stages; resolve same-frame/next-frame | v1.0 asserted "animation evaluates after movement, so the pose lags one frame" as engine fact, while its own AC required a same-frame velocity delta. Two contradictory claims | Claim withdrawn. Latency split into **L1 sample→intent, L2 intent→first velocity change, L3 intent→pose**, each with a frame-index definition, expected value (**L2 = 0**, L1 ≤ 1, L3 ≤ 1 measured not predicted) and a measurement rule at **60 and 120 FPS** reported in frames *and* ms | §4.5 |
+| **C-03** | 7 — Input-component ownership | v1.0 implied the controller owned input routing while the input component subclass was on the pawn, without explaining the lifecycle | Documented the Unreal lifecycle: `PawnClientRestart → SetupPlayerInputComponent` with the component from `CreatePlayerInputComponent`, class controlled by `InputComponentClass`; pawn owns gameplay bindings, controller owns only pause/menu bindings | §4.3 |
+| **C-04** | 4 — Camera stability; 7 — camera ownership | One blanket rule ("no snap faster than 720°/s") conflated penetration, jitter, pop, recovery and intentional acquisition; camera manager and rig were described as one unit | Five separate criteria with per-mode thresholds (10 cm penetration; 6°/frame + 3°/frame² jerk; 10/25/15 cm-frame displacement; 150 cm/s recovery; whitelisted 0.20 s acquisition ≤ 600°/s). Ownership split documented: manager on PC, rig component on pawn, Sequencer takeover handled explicitly | §4.7, §6.1 |
+| **C-05** | 8 — Root motion, collision, interruption, restoration | v1.0 proposed `MOVE_None` for root-motion montages *assuming* CMC would still apply anim root motion, and snapped traversal to the exit transform without revalidation; 300 cm/60° presented as fixed | `MOVE_None` withdrawn as an assumption; ADR-0013 v1.1 specifies the execution model, requires `RootMotionAppliesToCapsule` to prove displacement, adds interruption/restoration checklist, traversal exit revalidation, and makes warp limits configurable per attack | §4.6, §4.8, ADR-0013 v1.1 |
+| **C-06** | 5 — State transition semantics | v1.0 specified a 14×14 "allowed" matrix plus column notes; v1.1 needs preconditions, forced transitions, interruption, exit actions and recovery as first-class rules | Spec §3.2 expanded (priority order, forced vs requested, interruption windows, exit checklist, recovery conditions, min dwell). Assessment §`4.2` refers to it as authoritative and adds the missing 50 cm/descent/angled/sprint/corner cases to the test plan | §4.2, §6.2, spec §3.2 |
+| **C-07** | 3 — Dodge clearance | Formula subtracted `CapsuleRadius` from a "clearance" whose shape was undefined, double-counting the radius and leaving units ambiguous | Restated precisely: **capsule-shaped sweep using the CMC capsule dimensions**, so the radius is already included and is *not* subtracted; margin only; explicit channel, ignored actors, `bStartPenetrating` refusal, planar Z handling, and CMC as final collision authority | spec §3.5, §4 (AC-19/21) |
+| **C-08** | 4/6 — Metric coverage | Metric IDs were too coarse (one camera metric, one step metric, one latency metric) | Split to M-01a/b/c, M-06a–d, M-08a–e, M-09a/b, added M-13 (restoration incl. interruption) and M-14 (traversal exit revalidation); M-10 retired with a note so IDs do not shift | §6.1 |
+| **C-09** | 1/6 — Test list consistency | Test names in the assessment did not match the spec, and the edge-case tests did not exist | Test list regenerated from the spec (33 tests), including the new step-descent, 50 cm-blocked, angled, sprint, corner, camera-recovery and latency-stage tests | §6.2 |
+| **C-10** | 6 — Step 50 cm expectation | The spec listed a 50 cm step in the test map with no expected outcome | Expected outcome now defined as **blocked and stable** (net Z gain ≤ 1 cm over 5 attempts, speed ≤ 5 cm/s after contact, no Airborne, no penetration), with descent and approach-angle behaviour specified | §6.1, spec §4/§5 |
+| **C-11** | 9 — Core types | Appendix A could read as an instruction to create `TDDCore` types | Restated as **proposals pending Agent 3's Core review**; Agent 1 will not create competing Core types, and will adapt rather than fork if the shape changes | spec Appendix A |
+| **C-12** | Review header | No version history; originals not preserved | Versioned to v1.1, v1.0 archived unchanged, this change log added to both revised documents and to ADR-0013 | Header, this section |
+
+### Unchanged by this revision
+
+Inspection findings (§1), gap analysis (§2), prerequisites B-1…B-6 and content prerequisites C-1…C-5 (§3), the class map (§4.1), input mappings (§4.3 table), data assets (§4.4), traversal architecture (§4.8), combat summary (§4.9), interfaces (§5), risks G-1…G-9, milestones M0 and M2–M7, and the reporting protocol (§9) stand as reviewed and accepted in principle.
+
+### Status after revision
+
+Still **no implementation, no compilation, no test execution, and no measurement**. This revision changes specification only. `DESIGN_ONLY` remains the correct status for every item in §10.
