@@ -1,0 +1,72 @@
+# Unreal Engine / game project ignore rules
+# Keep generated and machine-local artefacts out of source control.
+
+# Build output
+Binaries/
+Build/Receipts/
+Intermediate/
+Saved/
+DerivedDataCache/
+Build/*.xml
+*.VC.db
+*.VC.opendb
+
+# IDE / solution
+.vs/
+.vscode/
+.idea/
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.XCODEPROJ
+*.xcworkspace
+
+# Compilers / objects
+*.obj
+*.o
+*.pdb
+*.ilk
+*.lib
+*.dll
+*.exe
+*.exp
+*.map
+
+# Cached / generated
+*.generated.h
+*.gen.cpp
+*.patch_*.exe
+*.opensdf
+*.tmp
+*.log
+*.bak
+*.uts
+*.utrace
+*.csv.capture
+Logs/
+
+# Local configuration and secrets
+Config/*Local*.ini
+*.user
+*.userprefs
+.env
+
+# Agents / tooling local state
+.arena/
+.cache/
+node_modules/
+__pycache__/
+.pytest_cache/
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Test / profiling artefacts (never committed; archived separately)
+Tests/Reports/
+Profiling/*.utrace
+Profiling/*.csv
+Unselected files/

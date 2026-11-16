@@ -1,0 +1,38 @@
+# STATUS AND CLAIMS — vocabulary and rules
+
+Every agent report, commit message and document must classify each item with exactly one of these statuses. The vocabulary exists to prevent the most common failure in this project: a system being described as working because it was described.
+
+| Status | Meaning | Evidence required |
+|---|---|---|
+| `DESIGN_ONLY` | Specified in a document; no code or asset exists | Document reference |
+| `IMPLEMENTED_UNVERIFIED` | Code/assets written; **not** compiled, run or tested (typical in the agent workspace) | File paths |
+| `COMPILES` | Code builds; not behaviourally tested | Build log (timestamp, target, config) |
+| `PARTIAL` | Some acceptance criteria met, others not; list which | Test output for the parts that pass |
+| `IMPLEMENTED_AND_VERIFIED` | All acceptance criteria met, tests pass, integrated | Build log + automation output + integration note |
+| `MOCKED` | Present only to unblock something else; **not** a real implementation; must be visibly labelled in-game/debug | Stub location + list of what it replaces |
+| `BLOCKED` | Cannot proceed; dependency named | Blocker ID + owner |
+| `OUT_OF_SCOPE` | Explicitly excluded by Technical/Creative Director | Decision reference |
+| `PENDING_CONTENT` | Framework ready, content owned by Creative Director not supplied | Content request ID |
+
+## Rules
+
+1. **No status may be inferred.** If a test cannot run, the item is `IMPLEMENTED_UNVERIFIED` (or `DESIGN_ONLY`), never `IMPLEMENTED_AND_VERIFIED`.
+2. **`MOCKED` must be visible.** A mock that looks finished is a defect. Mocked placeholders must appear in the debug overlay and in the generated content audit report.
+3. **`PENDING_CONTENT` must name the request.** "We need memory content" is not a request; `CONTENT-REQ-007 Memory 3 (Chapter 3) fragment presentation` is.
+4. **No silent degradation.** Missing data, missing animation, missing audio must log a named warning and surface in the audit; the failure must not be swallowed by a `nullptr` check.
+5. **Evidence is a link or a log, not a sentence.** "Tested locally, works" is not evidence.
+6. **A regression is a status change,** even to `IMPLEMENTED_AND_VERIFIED`: if a later change breaks it, the status must be stepped down in the next report. Statuses are not permanent achievements.
+
+## Current claim ledger (2026-11-16)
+
+| Item | Status | Evidence |
+|---|---|---|
+| Master Engineering Architecture Document | `DESIGN_ONLY` (documentation complete, unapproved) | `docs/01_ARCHITECTURE/MASTER_ENGINEERING_ARCHITECTURE.md` v1.0 |
+| Project inspection / current-state audit | `IMPLEMENTED_AND_VERIFIED` (within workspace limits) | `docs/00_GOVERNANCE/PROJECT_STATE_2026-11-16.md` §1–3 |
+| Architectural decisions ADR-0001…0012 | `DESIGN_ONLY` (proposed, awaiting TD) | `docs/03_DECISIONS/` |
+| Coding standards | `DESIGN_ONLY` | `docs/01_ARCHITECTURE/CODING_STANDARDS.md` |
+| Engine/project skeleton | `DESIGN_ONLY` (nothing created) | — |
+| Any gameplay system (movement, combat, AI, world, narrative, save, UI) | `DESIGN_ONLY` | Sections 4–12 of TDD-MEAD-001 |
+| Any art, animation, audio, cinematic asset | **Does not exist** | Drive Art Bible: 7 approved concept boards, no production assets |
+
+**Statement to the Creative Director:** at this timestamp the project has an architecture and an honest audit. It does not yet have a game. The next deliverable that changes that is Phase 0 (project skeleton), which requires an Unreal Engine 5.8 machine to build.

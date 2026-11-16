@@ -1,0 +1,34 @@
+# Git LFS rules — REQUIRED before any binary asset is committed.
+# Git LFS is NOT installed in the agent workspace; do not commit binaries from there.
+# See docs/00_GOVERNANCE/PROJECT_STATE_2026-11-16.md §2 and MEAD §2.4.
+
+# Unreal content
+*.uasset filter=lfs diff=lfs merge=lfs -text
+*.umap   filter=lfs diff=lfs merge=lfs -text
+*.ubulk  filter=lfs diff=lfs merge=lfs -text
+*.uexp   filter=lfs diff=lfs merge=lfs -text
+*.upk    filter=lfs diff=lfs merge=lfs -text
+*.uprojectdirs filter=lfs diff=lfs merge=lfs -text
+
+# Source art / audio / video (engine-ready only; large source material stays in Drive)
+*.fbx    filter=lfs diff=lfs merge=lfs -text
+*.obj    filter=lfs diff=lfs merge=lfs -text
+*.abc    filter=lfs diff=lfs merge=lfs -text
+*.psd    filter=lfs diff=lfs merge=lfs -text
+*.tga    filter=lfs diff=lfs merge=lfs -text
+*.exr    filter=lfs diff=lfs merge=lfs -text
+*.hdr    filter=lfs diff=lfs merge=lfs -text
+*.png    filter=lfs diff=lfs merge=lfs -text
+*.jpg    filter=lfs diff=lfs merge=lfs -text
+*.wav    filter=lfs diff=lfs merge=lfs -text
+*.mp3    filter=lfs diff=lfs merge=lfs -text
+*.mp4    filter=lfs diff=lfs merge=lfs -text
+*.mov    filter=lfs diff=lfs merge=lfs -text
+
+# Source and documents: normal text handling
+*.cpp    text eol=lf
+*.h      text eol=lf
+*.cs     text eol=lf
+*.md     text eol=lf
+*.ini    text eol=lf
+*.json   text eol=lf
