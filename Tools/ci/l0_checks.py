@@ -191,6 +191,56 @@ def check_status_tag_vocabulary() -> List[str]:
     ]
 
 
+def check_world_manifest() -> List[str]:
+    """Every committed chapter manifest must pass the canon gate."""
+    problems: List[str] = []
+    manifests = sorted((REPO / "Tools" / "world" / "data").glob("*_manifest.json"))
+    if not manifests:
+        return ["no chapter manifests found under Tools/world/data"]
+    try:
+        sys.path.insert(0, str(REPO / "Tools" / "canon"))
+        sys.path.insert(0, str(REPO / "Tools" / "world"))
+        import canon_index  # noqa: F401
+        import world_manifest
+        index = canon_index.load_index()
+    except Exception as exc:  # pragma: no cover - defensive
+        return [f"cannot import world tooling: {exc}"]
+    for path in manifests:
+        try:
+            manifest = world_manifest.load_manifest(path)
+        except Exception as exc:
+            problems.append(f"{path.name}: unreadable ({exc})")
+            continue
+        for error in world_manifest.validate_manifest(manifest, index):
+            problems.append(f"{path.name}: {error}")
+    return problems
+
+
+def check_canon_mirror_drift() -> List[str]:
+    """Regenerating from the captured excerpt must be a no-op.
+
+    If it is not, the committed mirror no longer matches the registers it claims
+    to mirror - the exact canon-drift failure ADR-0006 exists to prevent.
+    """
+    import subprocess
+    try:
+        before = (REPO / "Tools" / "canon" / "data" / "canon_index.json").read_text()
+        result = subprocess.run(
+            [sys.executable, str(REPO / "Tools" / "canon" / "gen_world_data.py")],
+            capture_output=True, text=True, cwd=REPO,
+        )
+        if result.returncode != 0:
+            return [f"generator failed: {result.stderr.strip()[:400]}"]
+        after = (REPO / "Tools" / "canon" / "data" / "canon_index.json").read_text()
+        if before != after:
+            return ["canon_index.json is stale: regenerating from the register "
+                    "excerpt produced different output. Run "
+                    "python3 Tools/canon/gen_world_data.py and commit the result."]
+    except Exception as exc:  # pragma: no cover
+        return [f"drift check failed: {exc}"]
+    return []
+
+
 def run(verbose: bool = False) -> Tuple[bool, Dict[str, List[str]]]:
     files = tracked_files()
     results: Dict[str, List[str]] = {
@@ -202,6 +252,8 @@ def run(verbose: bool = False) -> Tuple[bool, Dict[str, List[str]]]:
         "stage_gates": check_stage_gates_cover_all_stages(),
         "status_vocabulary": check_status_tag_vocabulary(),
         "evidence_claims": check_no_engine_claim_in_reports(files),
+        "world_manifest": check_world_manifest(),
+        "canon_mirror_drift": check_canon_mirror_drift(),
     }
     ok = all(not v for v in results.values())
     if verbose:

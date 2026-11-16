@@ -1,0 +1,122 @@
+{
+  "chapter": "CH01",
+  "manifest_version": "1.0.0",
+  "notes": "Chapter 1 vertical-slice content declaration. Declares ONLY what engineering has legitimately begun: blockout geometry on ESTABLISHED and PROPOSED locations. Memory 1 is declared as blockout because its scene is PENDING APPROVAL (CH01-SCN-046) and its discovery location is PROPOSED (CH01-SUB-018). No final art is declared because no Chapter 1 design is APPROVED.",
+  "locations": [
+    {
+      "id": "CH01-ENV-001",
+      "built": true,
+      "art": "blockout",
+      "presented_as_canon": true,
+      "gameplay": []
+    },
+    {
+      "id": "CH01-SET-001",
+      "built": true,
+      "art": "blockout",
+      "presented_as_canon": true,
+      "gameplay": []
+    },
+    {
+      "id": "CH01-LMK-001",
+      "built": true,
+      "art": "blockout",
+      "presented_as_canon": true,
+      "notes": "The Great Tree. RULE-CH01-GREAT-TREE requires visibility from every major clearing.",
+      "gameplay": []
+    },
+    {
+      "id": "CH01-BOS-001",
+      "built": true,
+      "art": "blockout",
+      "presented_as_canon": true,
+      "notes": "Arena encounter ESTABLISHED; arena design IN REVIEW. Blockout only.",
+      "gameplay": []
+    },
+    {
+      "id": "CH01-SUB-018",
+      "built": true,
+      "art": "blockout",
+      "presented_as_canon": false,
+      "notes": "The Wayside Offering Place. PROPOSED, design NOT STARTED. Memory 1 discovery site.",
+      "gameplay": [
+        {
+          "kind": "memory",
+          "memory_index": 1,
+          "blockout": true
+        },
+        {
+          "kind": "interaction",
+          "blockout": true
+        }
+      ]
+    },
+    {
+      "id": "CH01-SUB-006",
+      "built": true,
+      "art": "blockout",
+      "presented_as_canon": true,
+      "gameplay": []
+    }
+  ],
+  "scenes": [
+    {
+      "id": "CH01-SCN-046",
+      "parent": "CH01-SUB-018",
+      "built": true,
+      "notes": "Nneka Memory 1. Scene status PENDING APPROVAL; playback sublevel is separate from discovery site (ADR-0008 M4).",
+      "npcs": [],
+      "enemies": []
+    },
+    {
+      "id": "CH01-SCN-017",
+      "parent": "CH01-SUB-006",
+      "built": true,
+      "notes": "People Talking Under the Tree. AMBIENT NPC SCENE. Gameplay relevance: none required.",
+      "npcs": [
+        {
+          "role": "adult",
+          "tier": 2,
+          "count": 3
+        }
+      ],
+      "enemies": []
+    }
+  ],
+  "environment_states": [
+    {
+      "id": "ES_CH01_Night",
+      "parent": "CH01-SET-001"
+    },
+    {
+      "id": "ES_CH01_Rain",
+      "parent": "CH01-ENV-001"
+    }
+  ],
+  "routines": [
+    {
+      "actor": "CH01-INT-007_household_woman",
+      "steps": [
+        {
+          "start_hour": 5.0,
+          "end_hour": 8.0,
+          "location": "CH01-INT-007",
+          "activity": "Activity.Cook"
+        },
+        {
+          "start_hour": 8.0,
+          "end_hour": 17.0,
+          "location": "CH01-SUB-012",
+          "activity": "Activity.Farm"
+        },
+        {
+          "start_hour": 17.0,
+          "end_hour": 21.0,
+          "location": "CH01-INT-007",
+          "activity": "Activity.Cook"
+        }
+      ]
+    }
+  ],
+  "_known_gap": "CH01-SUB-012 (Farms) is ESTABLISHED per the location register Chapter 1 table read on 2026-11-16, but it is not in the captured excerpt fixture, so the mirror holds it as UNVERIFIED. Adding it to the fixture is the correct fix, not editing the mirror by hand."
+}

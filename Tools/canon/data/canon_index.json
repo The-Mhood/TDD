@@ -2,72 +2,577 @@
   "$schema": "./canon_index.schema.json",
   "meta": {
     "document": "TDD Canon Index (engineering mirror)",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "generated": "2026-11-16",
     "authority": "Google Drive Production Art Bible registers",
     "authority_note": "This file is a MIRROR. The Drive registers are authoritative. Never edit canon status here without a corresponding register change; the validator reports drift, it does not decide canon.",
+    "revision_note": "v2.0.0 corrects the location model after reading LOCATION_MASTER_REGISTER.md v2.9 in full excerpt. v1.0.0 used an invented approval triplet and a BOSS id category; the registers use THREE canon statuses, a SEPARATE seven-value environment design status, and the BOS category. See Docs/WORLD_ASSESSMENT.md section 2.",
     "id_scheme": {
       "chapter": "^CH0[1-8]$",
+      "location": "^CH0[1-8]-(ENV|SUB|SET|INT|LMK|TRV|EXP|BOS)-\\d{3}$",
       "scene": "^CH0[1-8]-SCN-\\d{3}$",
-      "sublocation": "^CH0[1-8]-SUB-\\d{3}$",
-      "interior": "^CH0[1-8]-INT-\\d{3}$",
-      "boss": "^CH0[1-8]-BOSS-[A-Z][A-Za-z0-9]*$"
+      "rule": "^RULE-[A-Z0-9-]+$"
+    },
+    "id_categories": {
+      "ENV": "major environment",
+      "SUB": "sub-location",
+      "SET": "settlement",
+      "INT": "interior",
+      "LMK": "landmark",
+      "TRV": "traversal area",
+      "EXP": "exploration area",
+      "BOS": "boss arena",
+      "SCN": "scene or micro-location"
+    },
+    "generated_from": {
+      "from": [
+        "location_register_ch01_excerpt.md",
+        "scene_register_ch01_excerpt.md"
+      ],
+      "note": "Only Chapter 1 has been captured. Other chapters remain UNVERIFIED.",
+      "log": [
+        "refresh  CH01-SUB-014",
+        "refresh  CH01-SUB-018",
+        "refresh  CH01-INT-008"
+      ]
     }
   },
-  "approval_states": ["Proposed", "DesignApproved", "CanonApproved", "Shippable"],
-  "chapters": [
-    { "id": "CH01", "index": 1, "name": "Forbidden Forest", "boss": "Great Root Mother", "canon_status": "CanonApproved" },
-    { "id": "CH02", "index": 2, "name": "Kingdom Beneath the Earth", "boss": "Iron Elephant", "canon_status": "CanonApproved" },
-    { "id": "CH03", "index": 3, "name": "City of the Living Dead", "boss": "King Without a Face", "canon_status": "CanonApproved" },
-    { "id": "CH04", "index": 4, "name": "River of Idemili", "boss": "Daughter of the Deep", "canon_status": "CanonApproved" },
-    { "id": "CH05", "index": 5, "name": "Mountain of Thunder", "boss": "Amadioha's Champion", "canon_status": "CanonApproved" },
-    { "id": "CH06", "index": 6, "name": "Kingdom of Masks", "boss": "Mother of Masks", "canon_status": "CanonApproved" },
-    { "id": "CH07", "index": 7, "name": "Gates of the Dead", "boss": "Hollow King", "canon_status": "CanonApproved" },
-    { "id": "CH08", "index": 8, "name": "The Last Daughter / Ancestral Realm", "boss": "Ezeani", "canon_status": "CanonApproved" }
+  "canon_statuses": [
+    "ESTABLISHED",
+    "PROPOSED",
+    "PENDING APPROVAL"
   ],
+  "environment_design_statuses": [
+    "NOT STARTED",
+    "EXPLORATORY",
+    "IN REVIEW",
+    "REQUIRES REVISION",
+    "CONDITIONAL",
+    "APPROVED",
+    "REJECTED"
+  ],
+  "access_levels": [
+    "FULLY ENTERABLE",
+    "PARTIALLY ENTERABLE",
+    "VISUALLY ACCESSIBLE",
+    "BACKGROUND ENVIRONMENT",
+    "OPEN EXTERIOR"
+  ],
+  "chapters": [
+    {
+      "id": "CH01",
+      "index": 1,
+      "name": "Forbidden Forest",
+      "boss": "Great Root Mother",
+      "canon_status": "ESTABLISHED"
+    },
+    {
+      "id": "CH02",
+      "index": 2,
+      "name": "Kingdom Beneath the Earth",
+      "boss": "Iron Elephant",
+      "canon_status": "ESTABLISHED"
+    },
+    {
+      "id": "CH03",
+      "index": 3,
+      "name": "City of the Living Dead",
+      "boss": "King Without a Face",
+      "canon_status": "ESTABLISHED"
+    },
+    {
+      "id": "CH04",
+      "index": 4,
+      "name": "River of Idemili",
+      "boss": "Daughter of the Deep",
+      "canon_status": "ESTABLISHED"
+    },
+    {
+      "id": "CH05",
+      "index": 5,
+      "name": "Mountain of Thunder",
+      "boss": "Amadioha's Champion",
+      "canon_status": "ESTABLISHED"
+    },
+    {
+      "id": "CH06",
+      "index": 6,
+      "name": "Kingdom of Masks",
+      "boss": "Mother of Masks",
+      "canon_status": "ESTABLISHED"
+    },
+    {
+      "id": "CH07",
+      "index": 7,
+      "name": "Gates of the Dead",
+      "boss": "Hollow King",
+      "canon_status": "ESTABLISHED"
+    },
+    {
+      "id": "CH08",
+      "index": 8,
+      "name": "The Last Daughter / Ancestral Realm",
+      "boss": "Ezeani",
+      "canon_status": "ESTABLISHED"
+    }
+  ],
+  "world_counts_from_register": {
+    "_source": "LOCATION_MASTER_REGISTER v2.9 + SCENE_AND_MICROLOCATION_MASTER_REGISTER v1.9",
+    "_note": "Published by the registers. These are the real scope of the world.",
+    "major_environments": 8,
+    "other_locations": 142,
+    "interiors": 46,
+    "scenes_and_microlocations": 135,
+    "environment_state_references": 40,
+    "per_chapter_locations_total": 191,
+    "per_chapter_scenes": {
+      "CH01": 46,
+      "CH02": 11,
+      "CH03": 12,
+      "CH04": 12,
+      "CH05": 11,
+      "CH06": 10,
+      "CH07": 15,
+      "CH08": 18
+    }
+  },
   "source_documents": [
     {
       "id": "CHARACTER_DESIGN_REGISTER",
       "name": "CHARACTER_DESIGN_REGISTER.md",
       "drive_id": "1naNn0D7jAXOVc01Xvnl4YYEvS_zwcTjH",
       "version": "2026-11-15",
-      "authority": "visual + identity canon"
+      "authority": "visual + identity canon",
+      "parsed_by_engineering": false
     },
     {
       "id": "ENVIRONMENT_DESIGN_REGISTER",
       "name": "ENVIRONMENT_DESIGN_REGISTER.md",
       "drive_id": "1WxQeJ7Hnac4gUnOR9EF156ClSTZebpsx",
       "version": "V002",
-      "authority": "environment design + per-chapter rules"
+      "authority": "environment design + per-chapter rules",
+      "parsed_by_engineering": false
     },
     {
       "id": "OPEN_ART_DECISIONS",
       "name": "OPEN_ART_DECISIONS.md",
       "drive_id": "1c6SaYn1U2JLX0wu6sg-fpvPX5T1LAb0Q",
       "version": "V001+ (through OAD-59)",
-      "authority": "art + canon decisions register"
+      "authority": "art + canon decisions register",
+      "parsed_by_engineering": false
     },
     {
       "id": "NNEKA_MEMORIES_AND_TIMELINE",
       "name": "NNEKA_MEMORIES_AND_TIMELINE.md",
       "drive_id": "1CzvUvsYgFOX5FAbha0lGs4Fj0NKnexgq",
       "version": "1.2",
-      "authority": "memory sequence, timeline, concealment mechanics"
+      "authority": "memory sequence, timeline, concealment mechanics",
+      "parsed_by_engineering": false
+    },
+    {
+      "id": "LOCATION_MASTER_REGISTER",
+      "name": "LOCATION_MASTER_REGISTER.md",
+      "drive_id": "1E-PPUQh-Ck-4JhJNFFHTAY6CiBPbmxv5",
+      "version": "2.9",
+      "authority": "location identity, canon status, environment design status, access levels",
+      "parsed_by_engineering": "partial - Chapter 1 excerpt",
+      "size_bytes": 534140
+    },
+    {
+      "id": "SCENE_AND_MICROLOCATION_MASTER_REGISTER",
+      "name": "SCENE_AND_MICROLOCATION_MASTER_REGISTER.md",
+      "drive_id": "1EYQl5eMZx8PGElDSPHojKcEVWGvU2-UW",
+      "version": "1.9",
+      "authority": "scene identity, parent locations, scene categories, access",
+      "parsed_by_engineering": "partial - Chapter 1 excerpt",
+      "size_bytes": 278372
     }
   ],
   "locations": [
-    { "id": "CH01-SUB-018", "chapter": "CH01", "name": "The Wayside Offering Place", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#1" },
-    { "id": "CH02-SUB-003", "chapter": "CH02", "name": "The Clear Water", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#2" },
-    { "id": "CH03-INT-001", "chapter": "CH03", "name": "A House, Meal Uneaten", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#3" },
-    { "id": "CH04-SUB-002", "chapter": "CH04", "name": "The Shrine Landing", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#4" },
-    { "id": "CH05-SUB-002", "chapter": "CH05", "name": "The Oath Ground", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#5" },
-    { "id": "CH06-INT-003", "chapter": "CH06", "name": "A Memory Room", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#6" },
-    { "id": "CH07-INT-005", "chapter": "CH07", "name": "The Shrine No One Remembers", "canon_status": "Proposed", "approval": { "design": false, "canon": false, "shippable": false }, "source": "NNEKA_MEMORIES_AND_TIMELINE#7" },
-    { "id": "CH08-SUB-005", "chapter": "CH08", "name": "Mothers' Courtyard", "canon_status": "Proposed", "approval": { "design": true, "canon": false, "shippable": false }, "source": "OPEN_ART_DECISIONS#OAD-45", "notes": "CONDITIONAL design approval; two visual faults to correct; on hold for compositions" },
-    { "id": "CH08-SUB-006", "chapter": "CH08", "name": "Nneka's House, exterior", "canon_status": "Proposed", "approval": { "design": true, "canon": false, "shippable": false }, "source": "OPEN_ART_DECISIONS#OAD-45" },
-    { "id": "CH08-SUB-007", "chapter": "CH08", "name": "Sealed Quarter", "canon_status": "Proposed", "approval": { "design": true, "canon": false, "shippable": false }, "source": "OPEN_ART_DECISIONS#OAD-45" },
-    { "id": "CH08-INT-001", "chapter": "CH08", "name": "Nneka's House, interior", "canon_status": "Proposed", "approval": { "design": true, "canon": false, "shippable": false }, "source": "OPEN_ART_DECISIONS#OAD-45" },
-    { "id": "CH08-INT-003", "chapter": "CH08", "name": "Hall of Posts", "canon_status": "Proposed", "approval": { "design": true, "canon": false, "shippable": false }, "source": "OPEN_ART_DECISIONS#OAD-45" }
+    {
+      "id": "CH01-ENV-001",
+      "chapter": "CH01",
+      "name": "The Forbidden Forest",
+      "category": "ENV",
+      "kind": "Major Environment, Exterior",
+      "canon_status": "ESTABLISHED",
+      "env_design_status": "IN REVIEW",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01"
+    },
+    {
+      "id": "CH01-BOS-001",
+      "chapter": "CH01",
+      "name": "Great Root Mother Arena",
+      "category": "BOS",
+      "kind": "Boss Arena, Exterior",
+      "canon_status": "ESTABLISHED",
+      "env_design_status": "IN REVIEW",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01"
+    },
+    {
+      "id": "CH01-LMK-001",
+      "chapter": "CH01",
+      "name": "The Great Tree",
+      "category": "LMK",
+      "kind": "Landmark, Exterior",
+      "canon_status": "ESTABLISHED",
+      "env_design_status": "IN REVIEW",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01"
+    },
+    {
+      "id": "CH01-SET-001",
+      "chapter": "CH01",
+      "name": "Home Settlement",
+      "category": "SET",
+      "kind": "Settlement, Exterior",
+      "canon_status": "ESTABLISHED",
+      "env_design_status": "IN REVIEW",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01"
+    },
+    {
+      "id": "CH01-SUB-018",
+      "chapter": "CH01",
+      "name": "The Wayside Offering Place",
+      "category": "SUB",
+      "kind": "Sub-location, Exterior",
+      "canon_status": "PROPOSED",
+      "env_design_status": "NOT STARTED",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01",
+      "notes": "Memory 1 discovery location. PROPOSED, not canon."
+    },
+    {
+      "id": "CH01-SUB-001",
+      "chapter": "CH01",
+      "name": "The Abandoned Shrine",
+      "category": "SUB",
+      "kind": "Sub-location, Exterior, Story Location",
+      "canon_status": "PENDING APPROVAL",
+      "env_design_status": "IN REVIEW",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01"
+    },
+    {
+      "id": "CH01-EXP-002",
+      "chapter": "CH01",
+      "name": "The Whispering Hollow",
+      "category": "EXP",
+      "kind": "Exploration Area, Hidden Area, Exterior, Story Location",
+      "canon_status": "PENDING APPROVAL",
+      "env_design_status": "IN REVIEW",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01"
+    },
+    {
+      "id": "CH02-SUB-003",
+      "chapter": "CH02",
+      "name": "The Clear Water",
+      "category": "SUB",
+      "kind": "UNVERIFIED",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "UNVERIFIED",
+      "verified_against_register": false,
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#2",
+      "notes": "Memory 2 discovery location. Status must be read from the Chapter 2 register section before any production use."
+    },
+    {
+      "id": "CH03-INT-001",
+      "chapter": "CH03",
+      "name": "A House, Meal Uneaten",
+      "category": "INT",
+      "kind": "UNVERIFIED",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "UNVERIFIED",
+      "verified_against_register": false,
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#3",
+      "notes": "Memory 3 discovery location. Status unverified."
+    },
+    {
+      "id": "CH04-SUB-002",
+      "chapter": "CH04",
+      "name": "The Shrine Landing",
+      "category": "SUB",
+      "kind": "UNVERIFIED",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "UNVERIFIED",
+      "verified_against_register": false,
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#4",
+      "notes": "Memory 4 discovery location. Status unverified. Canon rule: no combat at the shrine."
+    },
+    {
+      "id": "CH05-SUB-002",
+      "chapter": "CH05",
+      "name": "The Oath Ground",
+      "category": "SUB",
+      "kind": "UNVERIFIED",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "UNVERIFIED",
+      "verified_against_register": false,
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#5",
+      "notes": "Memory 5 discovery location. Status unverified."
+    },
+    {
+      "id": "CH06-INT-003",
+      "chapter": "CH06",
+      "name": "A Memory Room",
+      "category": "INT",
+      "kind": "UNVERIFIED",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "UNVERIFIED",
+      "verified_against_register": false,
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#6",
+      "notes": "Memory 6 discovery location. Status unverified."
+    },
+    {
+      "id": "CH07-INT-005",
+      "chapter": "CH07",
+      "name": "The Shrine No One Remembers",
+      "category": "INT",
+      "kind": "UNVERIFIED",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "UNVERIFIED",
+      "verified_against_register": false,
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#7",
+      "notes": "Memory 7 discovery location. Status unverified."
+    },
+    {
+      "id": "CH08-SUB-005",
+      "chapter": "CH08",
+      "name": "Mothers' Courtyard",
+      "category": "SUB",
+      "kind": "UNVERIFIED",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "CONDITIONAL",
+      "verified_against_register": false,
+      "source": "OPEN_ART_DECISIONS#OAD-45",
+      "notes": "OAD-45 conditional design approval; two visual faults to correct; on hold for compositions. Canon status not established by design approval (OAD-47/48)."
+    },
+    {
+      "id": "CH08-SUB-006",
+      "chapter": "CH08",
+      "name": "Nneka's House, exterior",
+      "category": "SUB",
+      "kind": "UNVERIFIED",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "APPROVED",
+      "verified_against_register": false,
+      "source": "OPEN_ART_DECISIONS#OAD-45"
+    },
+    {
+      "id": "CH08-SUB-007",
+      "chapter": "CH08",
+      "name": "Sealed Quarter",
+      "category": "SUB",
+      "kind": "UNVERIFIED",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "APPROVED",
+      "verified_against_register": false,
+      "source": "OPEN_ART_DECISIONS#OAD-45"
+    },
+    {
+      "id": "CH08-INT-001",
+      "chapter": "CH08",
+      "name": "Nneka's House, interior",
+      "category": "INT",
+      "kind": "UNVERIFIED",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "APPROVED",
+      "verified_against_register": false,
+      "source": "OPEN_ART_DECISIONS#OAD-45"
+    },
+    {
+      "id": "CH08-INT-003",
+      "chapter": "CH08",
+      "name": "Hall of Posts",
+      "category": "INT",
+      "kind": "UNVERIFIED",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "APPROVED",
+      "verified_against_register": false,
+      "source": "OPEN_ART_DECISIONS#OAD-45"
+    },
+    {
+      "id": "CH02-BOS-001",
+      "chapter": "CH02",
+      "name": "Iron Elephant Arena",
+      "category": "BOS",
+      "kind": "Boss Arena",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "UNVERIFIED",
+      "verified_against_register": false,
+      "source": "Directive#2; OAD-21",
+      "notes": "Arena location id inferred from the register's BOS numbering and the CH01 precedent. Name and status must be read from the chapter's register section before production use."
+    },
+    {
+      "id": "CH03-BOS-001",
+      "chapter": "CH03",
+      "name": "King Without a Face Arena",
+      "category": "BOS",
+      "kind": "Boss Arena",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "UNVERIFIED",
+      "verified_against_register": false,
+      "source": "Directive#2; OAD-21",
+      "notes": "Arena location id inferred from the register's BOS numbering and the CH01 precedent. Name and status must be read from the chapter's register section before production use."
+    },
+    {
+      "id": "CH04-BOS-001",
+      "chapter": "CH04",
+      "name": "Daughter of the Deep Arena",
+      "category": "BOS",
+      "kind": "Boss Arena",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "UNVERIFIED",
+      "verified_against_register": false,
+      "source": "Directive#2; OAD-21",
+      "notes": "Arena location id inferred from the register's BOS numbering and the CH01 precedent. Name and status must be read from the chapter's register section before production use."
+    },
+    {
+      "id": "CH05-BOS-001",
+      "chapter": "CH05",
+      "name": "Amadioha's Champion Arena",
+      "category": "BOS",
+      "kind": "Boss Arena",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "UNVERIFIED",
+      "verified_against_register": false,
+      "source": "Directive#2; OAD-21",
+      "notes": "Arena location id inferred from the register's BOS numbering and the CH01 precedent. Name and status must be read from the chapter's register section before production use."
+    },
+    {
+      "id": "CH06-BOS-001",
+      "chapter": "CH06",
+      "name": "Mother of Masks Arena",
+      "category": "BOS",
+      "kind": "Boss Arena",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "UNVERIFIED",
+      "verified_against_register": false,
+      "source": "Directive#2; OAD-21",
+      "notes": "Arena location id inferred from the register's BOS numbering and the CH01 precedent. Name and status must be read from the chapter's register section before production use."
+    },
+    {
+      "id": "CH07-BOS-001",
+      "chapter": "CH07",
+      "name": "Hollow King Arena",
+      "category": "BOS",
+      "kind": "Boss Arena",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "UNVERIFIED",
+      "verified_against_register": false,
+      "source": "Directive#2; OAD-21",
+      "notes": "Arena location id inferred from the register's BOS numbering and the CH01 precedent. Name and status must be read from the chapter's register section before production use."
+    },
+    {
+      "id": "CH08-BOS-001",
+      "chapter": "CH08",
+      "name": "Ezeani Arena",
+      "category": "BOS",
+      "kind": "Boss Arena",
+      "canon_status": "UNVERIFIED",
+      "env_design_status": "UNVERIFIED",
+      "verified_against_register": false,
+      "source": "Directive#2; OAD-21",
+      "notes": "Arena location id inferred from the register's BOS numbering and the CH01 precedent. Name and status must be read from the chapter's register section before production use."
+    },
+    {
+      "id": "CH01-SUB-006",
+      "chapter": "CH01",
+      "name": "Village Square",
+      "category": "SUB",
+      "kind": "Sub-location, Exterior",
+      "canon_status": "ESTABLISHED",
+      "env_design_status": "IN REVIEW",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01"
+    },
+    {
+      "id": "CH01-SUB-014",
+      "chapter": "CH01",
+      "name": "Wells",
+      "category": "SUB",
+      "kind": "Sub-location, Exterior",
+      "canon_status": "ESTABLISHED",
+      "env_design_status": "IN REVIEW",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01",
+      "notes": "Register annotation: IN REVIEW (revised; V002 submitted)",
+      "register_annotation": "revised; V002 submitted"
+    },
+    {
+      "id": "CH01-INT-001",
+      "chapter": "CH01",
+      "name": "Throne Room",
+      "category": "INT",
+      "kind": "Interior, Story Location",
+      "canon_status": "ESTABLISHED",
+      "env_design_status": "IN REVIEW",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01"
+    },
+    {
+      "id": "CH01-INT-008",
+      "chapter": "CH01",
+      "name": "The Healer's House",
+      "category": "INT",
+      "kind": "Interior",
+      "canon_status": "PROPOSED",
+      "env_design_status": "REQUIRES REVISION",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01",
+      "notes": "Register annotation: REQUIRES REVISION (patient in modern clothing)",
+      "register_annotation": "patient in modern clothing"
+    },
+    {
+      "id": "CH01-INT-016",
+      "chapter": "CH01",
+      "name": "A Household Ancestral Corner",
+      "category": "INT",
+      "kind": "Interior",
+      "canon_status": "PENDING APPROVAL",
+      "env_design_status": "NOT STARTED",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01"
+    },
+    {
+      "id": "CH01-TRV-001",
+      "chapter": "CH01",
+      "name": "The Threshold Path",
+      "category": "TRV",
+      "kind": "Traversal Area, Exterior, Story Location",
+      "canon_status": "PROPOSED",
+      "env_design_status": "IN REVIEW",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01"
+    },
+    {
+      "id": "CH01-INT-007",
+      "chapter": "CH01",
+      "name": "A Small Family House",
+      "category": "INT",
+      "kind": "Interior",
+      "canon_status": "PROPOSED",
+      "env_design_status": "IN REVIEW",
+      "verified_against_register": true,
+      "source": "SCENE_AND_MICROLOCATION_MASTER_REGISTER (parent reference)",
+      "notes": "Referenced as a scene parent but its own register row was not in the captured excerpt. Status must be read before use."
+    },
+    {
+      "id": "CH01-SUB-012",
+      "chapter": "CH01",
+      "name": "Farms",
+      "category": "SUB",
+      "kind": "Sub-location, Exterior",
+      "canon_status": "ESTABLISHED",
+      "env_design_status": "IN REVIEW",
+      "verified_against_register": true,
+      "source": "LOCATION_MASTER_REGISTER#CH01 (read 2026-11-16; not yet in the fixture excerpt)",
+      "notes": "Status read directly from the register's Chapter 1 table. Add to the fixture on the next capture pass so generation reproduces it."
+    }
   ],
   "memories": [
     {
@@ -76,7 +581,9 @@
       "scene_id": "CH01-SCN-046",
       "location_id": "CH01-SUB-018",
       "title": "They Were Saying the Child's Name",
-      "content_status": "Proposed",
+      "scene_canon_status": "PENDING APPROVAL",
+      "location_canon_status": "PROPOSED",
+      "verified_against_register": true,
       "establishes": "Something wanted Adanna",
       "fragments": {
         "place": "flat stone with bowls, one newer than the rest",
@@ -85,7 +592,7 @@
         "interaction": "Adanna reties the cloth where it has slipped"
       },
       "visual_identity": "Green dawn mist, cool forest light.",
-      "source": "NNEKA_MEMORIES_AND_TIMELINE#1"
+      "source": "NNEKA_MEMORIES_AND_TIMELINE#1; SCENE_AND_MICROLOCATION_MASTER_REGISTER#CH01"
     },
     {
       "index": 2,
@@ -93,7 +600,9 @@
       "scene_id": "CH02-SCN-011",
       "location_id": "CH02-SUB-003",
       "title": "What Was Asked For",
-      "content_status": "Proposed",
+      "scene_canon_status": "UNVERIFIED",
+      "location_canon_status": "UNVERIFIED",
+      "verified_against_register": false,
       "establishes": "Nneka discovered the danger",
       "fragments": {
         "place": "the one clean lake in a rust-stained kingdom",
@@ -110,7 +619,9 @@
       "scene_id": "CH03-SCN-012",
       "location_id": "CH03-INT-001",
       "title": "The Meal They Could Not Finish",
-      "content_status": "Proposed",
+      "scene_canon_status": "UNVERIFIED",
+      "location_canon_status": "UNVERIFIED",
+      "verified_against_register": false,
       "establishes": "Nneka and Ezeani faced an impossible decision",
       "fragments": {
         "place": "the house with five bowls",
@@ -127,7 +638,9 @@
       "scene_id": "CH04-SCN-012",
       "location_id": "CH04-SUB-002",
       "title": "Do Not Answer",
-      "content_status": "Proposed",
+      "scene_canon_status": "UNVERIFIED",
+      "location_canon_status": "UNVERIFIED",
+      "verified_against_register": false,
       "establishes": "The truth was deliberately concealed",
       "fragments": {
         "place": "the landing steps",
@@ -144,7 +657,9 @@
       "scene_id": "CH05-SCN-011",
       "location_id": "CH05-SUB-002",
       "title": "What He Swore Afterwards",
-      "content_status": "Proposed",
+      "scene_canon_status": "UNVERIFIED",
+      "location_canon_status": "UNVERIFIED",
+      "verified_against_register": false,
       "establishes": "Adanna's childhood memories were incomplete for a reason",
       "fragments": {
         "place": "the ring of iron rods",
@@ -161,7 +676,9 @@
       "scene_id": "CH06-SCN-010",
       "location_id": "CH06-INT-003",
       "title": "The Day, at Six Years Old",
-      "content_status": "Proposed",
+      "scene_canon_status": "UNVERIFIED",
+      "location_canon_status": "UNVERIFIED",
+      "verified_against_register": false,
       "establishes": "Ezeani's actions were more complicated than Adanna understood",
       "fragments": {
         "place": "the room that repeats",
@@ -178,7 +695,9 @@
       "scene_id": "CH07-SCN-015",
       "location_id": "CH07-INT-005",
       "title": "The Last Night",
-      "content_status": "Proposed",
+      "scene_canon_status": "UNVERIFIED",
+      "location_canon_status": "UNVERIFIED",
+      "verified_against_register": false,
       "establishes": "Nneka offered herself; Ezeani carried out the killing; both hid the truth, in different ways",
       "fragments": {
         "place": "the bare platform",
@@ -191,14 +710,78 @@
     }
   ],
   "bosses": [
-    { "id": "CH01-BOSS-GreatRootMother", "chapter": "CH01", "name": "Great Root Mother", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
-    { "id": "CH02-BOSS-IronElephant", "chapter": "CH02", "name": "Iron Elephant", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
-    { "id": "CH03-BOSS-KingWithoutAFace", "chapter": "CH03", "name": "King Without a Face", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
-    { "id": "CH04-BOSS-DaughterOfTheDeep", "chapter": "CH04", "name": "Daughter of the Deep", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
-    { "id": "CH05-BOSS-AmadiohasChampion", "chapter": "CH05", "name": "Amadioha's Champion", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
-    { "id": "CH06-BOSS-MotherOfMasks", "chapter": "CH06", "name": "Mother of Masks", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
-    { "id": "CH07-BOSS-HollowKing", "chapter": "CH07", "name": "Hollow King", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" },
-    { "id": "CH08-BOSS-Ezeani", "chapter": "CH08", "name": "Ezeani", "canon_status": "CanonApproved", "arena_design_status": "Proposed", "source": "Directive#2; OPEN_ART_DECISIONS#OAD-21" }
+    {
+      "id": "CH01-BOS-001",
+      "chapter": "CH01",
+      "name": "Great Root Mother",
+      "arena_location_id": "CH01-BOS-001",
+      "encounter_canon_status": "ESTABLISHED",
+      "arena_design_status": "IN REVIEW",
+      "source": "Directive#2; OAD-21; LOCATION_MASTER_REGISTER#CH01"
+    },
+    {
+      "id": "CH02-BOS-001",
+      "chapter": "CH02",
+      "name": "Iron Elephant",
+      "arena_location_id": "CH02-BOS-001",
+      "encounter_canon_status": "ESTABLISHED",
+      "arena_design_status": "UNVERIFIED",
+      "source": "Directive#2; OAD-21"
+    },
+    {
+      "id": "CH03-BOS-001",
+      "chapter": "CH03",
+      "name": "King Without a Face",
+      "arena_location_id": "CH03-BOS-001",
+      "encounter_canon_status": "ESTABLISHED",
+      "arena_design_status": "UNVERIFIED",
+      "source": "Directive#2; OAD-21"
+    },
+    {
+      "id": "CH04-BOS-001",
+      "chapter": "CH04",
+      "name": "Daughter of the Deep",
+      "arena_location_id": "CH04-BOS-001",
+      "encounter_canon_status": "ESTABLISHED",
+      "arena_design_status": "UNVERIFIED",
+      "source": "Directive#2; OAD-21"
+    },
+    {
+      "id": "CH05-BOS-001",
+      "chapter": "CH05",
+      "name": "Amadioha's Champion",
+      "arena_location_id": "CH05-BOS-001",
+      "encounter_canon_status": "ESTABLISHED",
+      "arena_design_status": "UNVERIFIED",
+      "source": "Directive#2; OAD-21"
+    },
+    {
+      "id": "CH06-BOS-001",
+      "chapter": "CH06",
+      "name": "Mother of Masks",
+      "arena_location_id": "CH06-BOS-001",
+      "encounter_canon_status": "ESTABLISHED",
+      "arena_design_status": "UNVERIFIED",
+      "source": "Directive#2; OAD-21"
+    },
+    {
+      "id": "CH07-BOS-001",
+      "chapter": "CH07",
+      "name": "Hollow King",
+      "arena_location_id": "CH07-BOS-001",
+      "encounter_canon_status": "ESTABLISHED",
+      "arena_design_status": "UNVERIFIED",
+      "source": "Directive#2; OAD-21"
+    },
+    {
+      "id": "CH08-BOS-001",
+      "chapter": "CH08",
+      "name": "Ezeani",
+      "arena_location_id": "CH08-BOS-001",
+      "encounter_canon_status": "ESTABLISHED",
+      "arena_design_status": "UNVERIFIED",
+      "source": "Directive#2; OAD-21"
+    }
   ],
   "chapter_rules": [
     {
@@ -206,7 +789,7 @@
       "chapter": "CH01",
       "statement": "The lone giant tree on the horizon is the Great Root Mother's territory and must be visible from every major clearing.",
       "kind": "vista_visibility",
-      "source": "ENVIRONMENT_DESIGN_REGISTER; OPEN_ART_DECISIONS#OAD-11",
+      "source": "ENVIRONMENT_DESIGN_REGISTER; OAD-11",
       "enforced_by": "L2 per-scene visibility automation test"
     },
     {
@@ -222,7 +805,11 @@
       "chapter": "CH02",
       "statement": "No living flame anywhere in the kingdom until the boss; the kingdom is cold. Light only from roof cracks.",
       "kind": "asset_exclusion",
-      "excludes": ["fire_vfx", "torch_lit", "brazier_lit"],
+      "excludes": [
+        "fire_vfx",
+        "torch_lit",
+        "brazier_lit"
+      ],
       "source": "ENVIRONMENT_DESIGN_REGISTER",
       "enforced_by": "L0 chapter manifest validation + art review"
     },
@@ -231,7 +818,11 @@
       "chapter": "CH03",
       "statement": "No remains are ever shown. Objects are put down, not thrown. Faces in the palace are scraped away.",
       "kind": "asset_exclusion",
-      "excludes": ["skeletal_remains", "corpse", "bones_human"],
+      "excludes": [
+        "skeletal_remains",
+        "corpse",
+        "bones_human"
+      ],
       "source": "ENVIRONMENT_DESIGN_REGISTER",
       "enforced_by": "L0 chapter manifest validation + art review"
     },
@@ -248,8 +839,12 @@
       "chapter": "CH04",
       "statement": "Pythons are never enemies and never loot in Idemili's domain. They may appear as ambient wildlife and signs of her presence. Royal python markings only.",
       "kind": "spawn_exclusion",
-      "excludes": ["enemy:snake", "loot:snake", "enemy:python"],
-      "source": "OPEN_ART_DECISIONS#OAD-14; ENVIRONMENT_DESIGN_REGISTER",
+      "excludes": [
+        "enemy:snake",
+        "loot:snake",
+        "enemy:python"
+      ],
+      "source": "OAD-14; ENVIRONMENT_DESIGN_REGISTER",
       "enforced_by": "L0 spawn table validation + L2 runtime spawn assertion"
     },
     {
@@ -257,7 +852,9 @@
       "chapter": "CH04",
       "statement": "No lightning in Chapter 4; it is kept for Amadioha.",
       "kind": "asset_exclusion",
-      "excludes": ["lightning_vfx"],
+      "excludes": [
+        "lightning_vfx"
+      ],
       "source": "ENVIRONMENT_DESIGN_REGISTER",
       "enforced_by": "L0 chapter manifest validation"
     },
@@ -266,7 +863,9 @@
       "chapter": "CH04",
       "statement": "Houses stand on the ground in the same building tradition as elsewhere, never on stilts.",
       "kind": "asset_exclusion",
-      "excludes": ["stilt_house"],
+      "excludes": [
+        "stilt_house"
+      ],
       "source": "ENVIRONMENT_DESIGN_REGISTER",
       "enforced_by": "L0 chapter manifest validation + art review"
     },
@@ -275,7 +874,9 @@
       "chapter": "CH04",
       "statement": "No combat at the shrine. Idemili's presence is shown by water, chalk, white cloth and the python, never by an image or a face.",
       "kind": "encounter_exclusion",
-      "excludes": ["combat:CH04-SUB-002"],
+      "excludes": [
+        "combat:CH04-SUB-002"
+      ],
       "source": "ENVIRONMENT_DESIGN_REGISTER",
       "enforced_by": "L0 encounter validation + L2 runtime assertion"
     },
@@ -292,7 +893,11 @@
       "chapter": "CH05",
       "statement": "A West African granite dome, never an alpine peak: no snow, no conifers. The storm never leaves the summit and the summit is visible in every board.",
       "kind": "asset_exclusion",
-      "excludes": ["snow", "conifer", "alpine_peak"],
+      "excludes": [
+        "snow",
+        "conifer",
+        "alpine_peak"
+      ],
       "source": "ENVIRONMENT_DESIGN_REGISTER",
       "enforced_by": "L0 chapter manifest validation"
     },
@@ -318,16 +923,33 @@
       "chapter": "CH07",
       "statement": "The stronghold of the dead is earth, timber and cloth burnt hard like fired clay, never a stone castle. Ember red only deep in cracks, never flame. Grey burial cloth, no ferryman, no figures, no remains. Sky starless.",
       "kind": "asset_exclusion",
-      "excludes": ["fire_vfx", "stone_castle_kit", "human_remains", "ferryman"],
+      "excludes": [
+        "fire_vfx",
+        "stone_castle_kit",
+        "human_remains",
+        "ferryman"
+      ],
       "source": "ENVIRONMENT_DESIGN_REGISTER",
       "enforced_by": "L0 chapter manifest validation + art review"
+    },
+    {
+      "id": "RULE-NPC-CHILDREN-NO-COMBAT",
+      "chapter": null,
+      "statement": "Children appear only in the home settlement and are never combat targets.",
+      "kind": "spawn_exclusion",
+      "excludes": [
+        "combat_target:child",
+        "enemy:child"
+      ],
+      "source": "SCENE_AND_MICROLOCATION_MASTER_REGISTER#CH01-SCN-001 production notes",
+      "enforced_by": "targeting validation + L2 runtime assertion"
     },
     {
       "id": "RULE-OKWU-HOOD",
       "chapter": null,
       "statement": "Okwu's hood shows darkness only, in every light, always. No face, no stone.",
       "kind": "material_rule",
-      "source": "OPEN_ART_DECISIONS#OAD-12",
+      "source": "OAD-12",
       "enforced_by": "3-rig lighting validation test"
     },
     {
@@ -335,7 +957,7 @@
       "chapter": null,
       "statement": "Adanna's features are never mirrored or moved. Left: cheekbone scar, three bronze braid cuffs + two coral beads at temple, single shoulder guard, coiled armlet, blade at hip. Right side plain.",
       "kind": "character_identity",
-      "source": "CHARACTER_DESIGN_REGISTER; OPEN_ART_DECISIONS#OAD-51",
+      "source": "CHARACTER_DESIGN_REGISTER; OAD-51",
       "enforced_by": "character validation test (sockets, no mirrored mesh)"
     },
     {
@@ -343,7 +965,7 @@
       "chapter": null,
       "statement": "Adanna carries exactly one weapon: a short leaf-bladed iron sword about 60 cm, worn on the left hip. No spear, no second weapon, no wrist bracelets.",
       "kind": "character_identity",
-      "source": "CHARACTER_DESIGN_REGISTER; OPEN_ART_DECISIONS#OAD-09, OAD-37",
+      "source": "CHARACTER_DESIGN_REGISTER; OAD-09, OAD-37",
       "enforced_by": "inventory data validation + character validation test"
     },
     {
@@ -351,7 +973,7 @@
       "chapter": null,
       "statement": "Invented mythology must never be presented as authentic Igbo tradition. Depictions of Amadioha, Idemili and the land of the dead are fiction and must be labelled as such in codex and credits.",
       "kind": "cultural",
-      "source": "Directive#1; OPEN_ART_DECISIONS#OAD-05, OAD-04",
+      "source": "Directive#1; OAD-05, OAD-04",
       "enforced_by": "codex data validation (bFictionalMythology flag) + credits review"
     }
   ]

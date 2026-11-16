@@ -2,20 +2,22 @@
   "test": "L0.Canon.Index.Valid",
   "suite": "Tools/canon/tests",
   "engine": "n/a (L0 host-side)",
-  "canon_index_version": "1.0.0",
+  "canon_index_version": "2.0.0",
   "canon_documents": [
     "CHARACTER_DESIGN_REGISTER",
     "ENVIRONMENT_DESIGN_REGISTER",
     "OPEN_ART_DECISIONS",
-    "NNEKA_MEMORIES_AND_TIMELINE"
+    "NNEKA_MEMORIES_AND_TIMELINE",
+    "LOCATION_MASTER_REGISTER",
+    "SCENE_AND_MICROLOCATION_MASTER_REGISTER"
   ],
   "result": "PASS",
   "errors": [],
   "assertions": {
     "chapters": 8,
-    "locations": 12,
+    "locations": 33,
     "memories": 7,
     "bosses": 8,
-    "chapter_rules": 18
+    "chapter_rules": 19
   }
 }

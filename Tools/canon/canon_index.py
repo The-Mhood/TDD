@@ -27,19 +27,37 @@ SCHEMA_PATH = DATA_DIR / "canon_index.schema.json"
 CHAPTER_IDS = tuple(f"CH{i:02d}" for i in range(1, 9))
 MEMORY_CHAPTER_IDS = tuple(f"CH{i:02d}" for i in range(1, 8))  # memories live in Ch 1..7 only
 
-REQUIRED_KEYS = ("meta", "approval_states", "chapters", "source_documents",
-                 "locations", "memories", "bosses", "chapter_rules")
+REQUIRED_KEYS = ("meta", "canon_statuses", "environment_design_statuses",
+                 "access_levels", "chapters", "source_documents", "locations",
+                 "memories", "bosses", "chapter_rules")
+
+# Canon status has EXACTLY THREE values in the registers (v2.9), plus UNVERIFIED
+# which engineering uses for entries not yet read from the full register. Those
+# are *not* canon statuses and are rejected by validate_canon_statuses().
+CANON_STATUSES = ("ESTABLISHED", "PROPOSED", "PENDING APPROVAL")
+UNVERIFIED = "UNVERIFIED"
+ALL_STATUS_VALUES = CANON_STATUSES + (UNVERIFIED,)
+
+ENV_DESIGN_STATUSES = (
+    "NOT STARTED", "EXPLORATORY", "IN REVIEW", "REQUIRES REVISION",
+    "CONDITIONAL", "APPROVED", "REJECTED",
+)
+ALL_ENV_STATUS_VALUES = ENV_DESIGN_STATUSES + (UNVERIFIED,)
+
+ACCESS_LEVELS = (
+    "FULLY ENTERABLE", "PARTIALLY ENTERABLE", "VISUALLY ACCESSIBLE",
+    "BACKGROUND ENVIRONMENT", "OPEN EXTERIOR",
+)
+
+LOCATION_CATEGORIES = ("ENV", "SUB", "SET", "INT", "LMK", "TRV", "EXP", "BOS")
 
 ID_PATTERNS = {
     "chapter": re.compile(r"^CH0[1-8]$"),
     "scene": re.compile(r"^CH0[1-8]-SCN-\d{3}$"),
-    "sublocation": re.compile(r"^CH0[1-8]-SUB-\d{3}$"),
-    "interior": re.compile(r"^CH0[1-8]-INT-\d{3}$"),
-    "boss": re.compile(r"^CH0[1-8]-BOSS-[A-Z][A-Za-z0-9]*$"),
+    "location": re.compile(r"^CH0[1-8]-(ENV|SUB|SET|INT|LMK|TRV|EXP|BOS)-\d{3}$"),
+    "boss": re.compile(r"^CH0[1-8]-BOS-\d{3}$"),
     "rule": re.compile(r"^RULE-[A-Z0-9-]+$"),
 }
-
-APPROVAL_STATES = ("Proposed", "DesignApproved", "CanonApproved", "Shippable")
 
 
 class CanonError(Exception):
@@ -202,8 +220,16 @@ def validate_against_schema(index: Dict[str, Any], schema: Dict[str, Any]) -> Li
 # Semantic validation — the rules that actually protect the game
 # --------------------------------------------------------------------------- #
 
-def _chapter_of(location_id: str) -> str:
-    return location_id[:4]
+def chapter_of(location_id: str) -> str:
+    """The CHxx prefix of an id, or the input unchanged if too short.
+
+    Public: world manifests and engine mirrors use this.
+    """
+    return location_id[:4] if len(location_id) >= 4 else location_id
+
+
+# Backwards-compatible alias used by the internal validators.
+_chapter_of = chapter_of
 
 
 def validate_chapters(index: Dict[str, Any]) -> List[str]:
@@ -224,48 +250,57 @@ def validate_chapters(index: Dict[str, Any]) -> List[str]:
     return errors
 
 
-def validate_approval_triplets(index: Dict[str, Any]) -> List[str]:
-    """OAD-47/OAD-48: design approval, canon approval and shippability are separate.
+def validate_status_separation(index: Dict[str, Any]) -> List[str]:
+    """OAD-47/OAD-48: canon status and environment design status are SEPARATE axes.
 
-    Enforcement: a location may not be Shippable unless canon-approved; and a
-    location may not claim CanonApproved while its own approval.canon is false.
-    This is the single most commonly violated rule in art-driven projects.
+    Enforced invariants:
+      1. Every status value is from the register vocabulary (or UNVERIFIED).
+      2. A location whose canon status is UNVERIFIED must also be marked
+         verified_against_register = false. Engineering may not assert a canon
+         status it has not read from the register.
+      3. An APPROVED design status does not imply, and may not be recorded as,
+         canon approval. This is checked by requiring canon_status to be one of
+         the three register values independently.
     """
     errors: List[str] = []
     for loc in index.get("locations", []):
         loc_id = loc.get("id", "<unknown>")
-        approval = loc.get("approval", {})
-        design = bool(approval.get("design"))
-        canon = bool(approval.get("canon"))
-        shippable = bool(approval.get("shippable"))
-        status = loc.get("canon_status")
+        canon = loc.get("canon_status")
+        design = loc.get("env_design_status")
+        verified = bool(loc.get("verified_against_register"))
 
-        if status == "CanonApproved" and not canon:
-            errors.append(f"{loc_id}: canon_status=CanonApproved but approval.canon=false")
-        if status == "DesignApproved" and not design:
-            errors.append(f"{loc_id}: canon_status=DesignApproved but approval.design=false")
-        if status == "Shippable" and not (design and canon and shippable):
-            errors.append(f"{loc_id}: Shippable requires design+canon+shippable, got {approval}")
-        if shippable and not canon:
-            errors.append(f"{loc_id}: cannot be shippable before canon approval (OAD-47)")
-        if canon and not design:
-            # Legal but suspicious: recorded as a warning-only rule elsewhere.
-            pass
+        if canon not in ALL_STATUS_VALUES:
+            errors.append(f"{loc_id}: canon_status {canon!r} is not a register value")
+        if design not in ALL_ENV_STATUS_VALUES:
+            errors.append(f"{loc_id}: env_design_status {design!r} is not a register value")
+        if (canon == UNVERIFIED) != (not verified):
+            errors.append(
+                f"{loc_id}: verified_against_register={verified} is inconsistent with "
+                f"canon_status={canon!r}; an unread location must be UNVERIFIED and vice versa"
+            )
+        if design == "APPROVED" and canon == "ESTABLISHED" and not verified:
+            errors.append(f"{loc_id}: cannot claim APPROVED design and ESTABLISHED canon unverified")
     return errors
 
 
 def validate_location_ids(index: Dict[str, Any]) -> List[str]:
     errors: List[str] = []
-    seeen: Dict[str, int] = {}
+    seen: Dict[str, int] = {}
+    known_categories = set(LOCATION_CATEGORIES)
     for loc in index.get("locations", []):
         loc_id = str(loc.get("id", ""))
-        if not any(ID_PATTERNS[k].match(loc_id) for k in ("scene", "sublocation", "interior")):
+        if not ID_PATTERNS["location"].match(loc_id):
             errors.append(f"location id does not match any canon pattern: {loc_id!r}")
             continue
         if _chapter_of(loc_id) != loc.get("chapter"):
             errors.append(f"{loc_id}: chapter field {loc.get('chapter')!r} disagrees with id prefix")
-        seeen[loc_id] = seeen.get(loc_id, 0) + 1
-    for loc_id, count in seeen.items():
+        category = loc.get("category")
+        if category not in known_categories:
+            errors.append(f"{loc_id}: category {category!r} is not one of {sorted(known_categories)}")
+        elif loc_id.split("-")[1] != category:
+            errors.append(f"{loc_id}: id category prefix disagrees with category field {category!r}")
+        seen[loc_id] = seen.get(loc_id, 0) + 1
+    for loc_id, count in seen.items():
         if count > 1:
             errors.append(f"duplicate location id registered {count} times: {loc_id}")
     return errors
@@ -297,7 +332,7 @@ def validate_memories(index: Dict[str, Any]) -> List[str]:
             errors.append(f"memory {idx}: scene id malformed: {scene!r}")
         elif _chapter_of(str(scene)) != ch:
             errors.append(f"memory {idx}: scene {scene} is not in chapter {ch}")
-        if not any(ID_PATTERNS[k].match(str(loc or "")) for k in ("sublocation", "interior", "scene")):
+        if not ID_PATTERNS["location"].match(str(loc or "")):
             errors.append(f"memory {idx}: location id malformed: {loc!r}")
         elif _chapter_of(str(loc)) != ch:
             errors.append(f"memory {idx}: location {loc} is not in chapter {ch}")
@@ -306,6 +341,18 @@ def validate_memories(index: Dict[str, Any]) -> List[str]:
                 f"memory {idx}: discovery location {loc} is not registered as a location "
                 f"(add it, or the memory can never be found at runtime)"
             )
+        for field_name in ("scene_canon_status", "location_canon_status"):
+            if mem.get(field_name) not in ALL_STATUS_VALUES:
+                errors.append(
+                    f"memory {idx}: {field_name} {mem.get(field_name)!r} is not a register value"
+                )
+        if bool(mem.get("verified_against_register")) is False:
+            for field_name in ("scene_canon_status", "location_canon_status"):
+                if mem.get(field_name) != UNVERIFIED:
+                    errors.append(
+                        f"memory {idx}: {field_name} must be UNVERIFIED when the entry "
+                        f"has not been read from the register"
+                    )
         fragments = mem.get("fragments", {})
         for key in ("place", "object", "sound", "interaction"):
             if not str(fragments.get(key, "")).strip():
@@ -327,13 +374,14 @@ def validate_memories(index: Dict[str, Any]) -> List[str]:
 def validate_bosses(index: Dict[str, Any]) -> List[str]:
     errors: List[str] = []
     chapter_bosses = {c.get("id"): c.get("boss") for c in index.get("chapters", [])}
+    location_ids = {loc.get("id") for loc in index.get("locations", [])}
     bosses = index.get("bosses", [])
     seen = []
     for boss in bosses:
         boss_id = str(boss.get("id", ""))
         seen.append(boss_id)
         if not ID_PATTERNS["boss"].match(boss_id):
-            errors.append(f"boss id malformed: {boss_id!r}")
+            errors.append(f"boss id malformed (expected CHxx-BOS-nnn): {boss_id!r}")
             continue
         ch = boss.get("chapter")
         if _chapter_of(boss_id) != ch:
@@ -343,8 +391,14 @@ def validate_bosses(index: Dict[str, Any]) -> List[str]:
             errors.append(
                 f"{boss_id}: name {boss.get('name')!r} disagrees with chapter table {expected_boss!r}"
             )
-        if boss.get("arena_design_status") == "CanonApproved" and boss.get("canon_status") != "CanonApproved":
-            errors.append(f"{boss_id}: arena cannot be canon-approved while boss is not")
+        if boss.get("encounter_canon_status") not in ALL_STATUS_VALUES:
+            errors.append(f"{boss_id}: encounter_canon_status is not a register value")
+        if boss.get("arena_design_status") not in ALL_ENV_STATUS_VALUES:
+            errors.append(f"{boss_id}: arena_design_status is not a register value")
+        # OAD-21: the encounter may be ESTABLISHED while the arena design is not.
+        arena = boss.get("arena_location_id")
+        if arena and arena not in location_ids:
+            errors.append(f"{boss_id}: arena location {arena!r} is not registered")
     for ch, boss_name in chapter_bosses.items():
         if not any(b.get("chapter") == ch and b.get("name") == boss_name for b in bosses):
             errors.append(f"chapter {ch} has boss {boss_name!r} but no matching boss entry")
@@ -391,8 +445,16 @@ def validate_source_documents(index: Dict[str, Any]) -> List[str]:
 def validate_meta(index: Dict[str, Any]) -> List[str]:
     errors: List[str] = []
     meta = index.get("meta", {})
-    if tuple(index.get("approval_states", [])) != APPROVAL_STATES:
-        errors.append(f"approval_states must be exactly {APPROVAL_STATES}")
+    if tuple(index.get("canon_statuses", [])) != CANON_STATUSES:
+        errors.append(
+            f"canon_statuses must be exactly {CANON_STATUSES}, got {index.get('canon_statuses')}"
+        )
+    if tuple(index.get("environment_design_statuses", [])) != ENV_DESIGN_STATUSES:
+        errors.append(
+            f"environment_design_statuses must be exactly {ENV_DESIGN_STATUSES}"
+        )
+    if tuple(index.get("access_levels", [])) != ACCESS_LEVELS:
+        errors.append(f"access_levels must be exactly {ACCESS_LEVELS}")
     scheme = meta.get("id_scheme", {})
     for key, pattern in scheme.items():
         if key in ID_PATTERNS and pattern != ID_PATTERNS[key].pattern:
@@ -405,7 +467,7 @@ def validate_meta(index: Dict[str, Any]) -> List[str]:
 ALL_CHECKS = (
     validate_meta,
     validate_chapters,
-    validate_approval_triplets,
+    validate_status_separation,
     validate_location_ids,
     validate_memories,
     validate_bosses,

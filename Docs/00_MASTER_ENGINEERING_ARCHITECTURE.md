@@ -108,6 +108,12 @@ discovered later:
 | GPU / display | **None assumed**; headless sandbox | environment |
 | Toolchain available | Python 3.11.2 (no `pytest`), Node 22 / Yarn 1.22, `git`, `gh` | `python3 -V`, `which` |
 
+**World scale, established 2026-11-16 by reading the location and scene registers:** 8 major environments,
+142 other locations, 46 interiors, **135 scenes and micro-locations**, 40 environment-state references. Only
+4 main story scenes and 9 secondary story scenes exist in the whole game; the rest is ambient life, exploration
+and atmosphere. Chapter 1 alone has 46 scenes. This sizes the world systems directly — see
+`Docs/WORLD_ASSESSMENT.md`.
+
 **Conclusion:** the engineering baseline is *zero*. There is no existing functionality to preserve, no prior
 agent work to integrate, and no technical debt to pay down. That is an advantage — the project gets a clean
 architecture — but it also means **nothing can be declared working until a machine with the engine runs it.**
@@ -181,7 +187,7 @@ non-canon content, and review must reject it regardless of code quality.
 |---|---|---|
 | The seven memories are met as **fragments** (place, object, sound, interaction, then memory) and **not** as collectible cutscenes | OAD-32 | Memory delivery is *multi-stage world interaction*, not a pickup + playback. Requires a staged interaction state machine and audio-first delivery (§9.3). |
 | Each memory "is found where a place echoes it; it did not necessarily happen there" | Memories doc | Memory scenes are **separate sublevels/sequencer assets** from their discovery location. Trigger and content are decoupled. |
-| Environment design approval ≠ canon approval; the three statuses are separate | OAD-47, OAD-48 | Every location and character asset needs a **tri-state approval field** in the asset register: `DESIGN_APPROVED`, `CANON_APPROVED`, `SHIPPABLE`. Never collapse them. |
+| Environment design approval ≠ canon approval (OAD-47, OAD-48) | OAD-47, OAD-48; LOCATION_MASTER_REGISTER v2.9 | Two **independent** status fields, never collapsed: canon status (`ESTABLISHED` / `PROPOSED` / `PENDING APPROVAL`) and environment design status (`NOT STARTED` … `APPROVED`). See `Docs/CANON_INDEX.md` §2. |
 | Chapter 4: pythons are never enemies and never loot | OAD-14 | Fauna spawn tables must be data-driven with per-chapter exclusion lists. Hard-coding "hostile snake" is a canon bug. |
 | Chapter 2 has no living flame until the boss; Chapter 4 has no lightning (reserved for Amadioha); Chapter 5 lightning is white only | Environment register | Lighting/VFX capability flags per chapter level, enforced by a validation test (§13.3). |
 | The Great Root Mother tree must be visible from every major clearing in Chapter 1 and is the navigation landmark | Environment register, OAD-11 | World composition constraint + a visibility assertion test per Chapter 1 scene. |
@@ -201,19 +207,29 @@ non-canon content, and review must reject it regardless of code quality.
 The registers use a stable, human-readable ID scheme. **Adopt it verbatim; do not invent a parallel scheme.**
 
 ```
-CHxx                     chapter, zero-padded: CH01 … CH08
-CHxx-SCN-yyy             scene
-CHxx-SUB-yyy             sublocation / microlocation
-CHxx-INT-yyy             interior
-CHxx-BOSS-<slug>         boss encounter (engineering-proposed extension, see §6.2)
+CHxx                 chapter, zero-padded: CH01 … CH08
+CHxx-ENV-001         major environment (one per chapter)
+CHxx-SUB-nnn         sub-location
+CHxx-SET-nnn         settlement
+CHxx-INT-nnn         interior
+CHxx-LMK-nnn         landmark
+CHxx-TRV-nnn         traversal area
+CHxx-EXP-nnn         exploration area
+CHxx-BOS-nnn         boss arena
+CHxx-SCN-nnn         scene or micro-location
 ```
+
+> **Corrected 2026-11-16 (Agent 2, index v2.0.0).** §3.3 originally proposed `CHxx-BOSS-<slug>` for boss
+> arenas and recognised only three categories. Reading `LOCATION_MASTER_REGISTER.md` v2.9 showed arenas use
+> `BOS` with a numeric suffix and that six further categories exist. See `Docs/CANON_INDEX.md` §7.
 
 Known-good examples verified against the registers:
 
 | ID | Meaning | Source |
 |---|---|---|
-| `CH01-SCN-046` | Memory 1 discovery scene | Memories doc |
-| `CH01-SUB-018` | The Wayside Offering Place | Memories doc |
+| `CH01-SCN-046` | Memory 1 discovery scene (register status: PENDING APPROVAL) | Memories doc; scene register |
+| `CH01-SUB-018` | The Wayside Offering Place (register status: PROPOSED) | Memories doc; location register |
+| `CH01-BOS-001` | Great Root Mother Arena (ESTABLISHED encounter; design IN REVIEW) | Location register |
 | `CH02-SUB-003` | The Clear Water | Memories doc |
 | `CH03-INT-001` | A House, Meal Uneaten | Memories doc |
 | `CH04-SUB-002` | The Shrine Landing | Memories doc |

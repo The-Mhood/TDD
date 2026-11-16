@@ -85,3 +85,18 @@ they are recorded here rather than discovered silently later.
 three unverified build-configuration assumptions, and gate Stage 1 behind an engine-equipped run. The
 highest-value Creative Director decisions are **D-01** (binary storage — blocks all content) and **D-10**
 (cultural consultant — blocks every shippable depiction of a deity, mask or shrine).
+
+---
+
+## 6. Post-hoc correction (recorded 2026-11-16, Agent 2)
+
+Read in full on 2026-11-16, `LOCATION_MASTER_REGISTER.md` v2.9 showed that this stage's canon model was **wrong
+in two material ways**: it used an invented `{design, canon, shippable}` approval triplet, and it used
+`CHxx-BOSS-<Name>` for boss arenas. The registers use three canon statuses plus a separate seven-value design
+status, and `CHxx-BOS-nnn` for arenas.
+
+The correction is landed and tested (`canon_index.json` v2.0.0, 101 canon tests). Full account:
+`Docs/CANON_INDEX.md` §7 and `Docs/WORLD_ASSESSMENT.md` §2.
+
+The three unverified build-configuration risks listed in §4 above remain **open** — the correction concerned
+canon data, not engine code, and no engine has been available.

@@ -4,58 +4,197 @@
   "title": "TDD Canon Index",
   "description": "Engineering mirror of the authoritative Drive Art Bible registers. Validated by Tools/canon/tests.",
   "type": "object",
-  "required": ["meta", "approval_states", "chapters", "source_documents", "locations", "memories", "bosses", "chapter_rules"],
+  "required": [
+    "meta",
+    "canon_statuses",
+    "environment_design_statuses",
+    "access_levels",
+    "chapters",
+    "source_documents",
+    "locations",
+    "memories",
+    "bosses",
+    "chapter_rules"
+  ],
   "additionalProperties": false,
   "definitions": {
     "canon_status": {
       "type": "string",
-      "enum": ["Proposed", "DesignApproved", "CanonApproved", "Shippable"]
+      "description": "The register's three-value canon status. Separate from design status.",
+      "enum": [
+        "ESTABLISHED",
+        "PROPOSED",
+        "PENDING APPROVAL",
+        "UNVERIFIED"
+      ]
     },
-    "approval_triplet": {
-      "type": "object",
-      "description": "The three INDEPENDENT approval axes required by OAD-47/OAD-48. They must never be collapsed.",
-      "required": ["design", "canon", "shippable"],
-      "additionalProperties": false,
-      "properties": {
-        "design": { "type": "boolean" },
-        "canon": { "type": "boolean" },
-        "shippable": { "type": "boolean" }
-      }
+    "env_design_status": {
+      "type": "string",
+      "description": "Environment design status (OAD-48 axis). Approving a design establishes no story fact.",
+      "enum": [
+        "NOT STARTED",
+        "EXPLORATORY",
+        "IN REVIEW",
+        "REQUIRES REVISION",
+        "CONDITIONAL",
+        "APPROVED",
+        "REJECTED",
+        "UNVERIFIED"
+      ]
     }
   },
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
     "meta": {
       "type": "object",
-      "required": ["document", "version", "generated", "authority", "id_scheme"],
+      "required": [
+        "document",
+        "version",
+        "generated",
+        "authority",
+        "id_scheme"
+      ],
       "properties": {
-        "document": { "type": "string" },
-        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
-        "generated": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
-        "authority": { "type": "string" },
-        "authority_note": { "type": "string" },
+        "document": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "generated": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "authority": {
+          "type": "string"
+        },
+        "authority_note": {
+          "type": "string"
+        },
+        "revision_note": {
+          "type": "string"
+        },
         "id_scheme": {
           "type": "object",
-          "required": ["chapter", "scene", "sublocation", "interior", "boss"],
-          "additionalProperties": { "type": "string" }
+          "required": [
+            "chapter",
+            "location",
+            "scene",
+            "rule"
+          ],
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "id_categories": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       }
     },
-    "approval_states": { "type": "array", "items": { "$ref": "#/definitions/canon_status" }, "minItems": 4 },
+    "canon_statuses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 3
+    },
+    "environment_design_statuses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 7
+    },
+    "access_levels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 5
+    },
+    "world_counts_from_register": {
+      "type": "object",
+      "properties": {
+        "_source": {
+          "type": "string"
+        },
+        "_note": {
+          "type": "string"
+        },
+        "major_environments": {
+          "type": "integer",
+          "minimum": 8
+        },
+        "other_locations": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "interiors": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "scenes_and_microlocations": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "environment_state_references": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "per_chapter_locations_total": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "per_chapter_scenes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
     "chapters": {
       "type": "array",
       "minItems": 8,
       "maxItems": 8,
       "items": {
         "type": "object",
-        "required": ["id", "index", "name", "boss", "canon_status"],
+        "required": [
+          "id",
+          "index",
+          "name",
+          "boss",
+          "canon_status"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "pattern": "^CH0[1-8]$" },
-          "index": { "type": "integer", "minimum": 1, "maximum": 8 },
-          "name": { "type": "string", "minLength": 1 },
-          "boss": { "type": "string", "minLength": 1 },
-          "canon_status": { "$ref": "#/definitions/canon_status" }
+          "id": {
+            "type": "string",
+            "pattern": "^CH0[1-8]$"
+          },
+          "index": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "boss": {
+            "type": "string",
+            "minLength": 1
+          },
+          "canon_status": {
+            "$ref": "#/definitions/canon_status"
+          }
         }
       }
     },
@@ -64,13 +203,40 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["id", "name", "drive_id", "version", "authority"],
+        "required": [
+          "id",
+          "name",
+          "drive_id",
+          "version",
+          "authority"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "drive_id": { "type": "string", "minLength": 10 },
-          "version": { "type": "string" },
-          "authority": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "drive_id": {
+            "type": "string",
+            "minLength": 10
+          },
+          "version": {
+            "type": "string"
+          },
+          "authority": {
+            "type": "string"
+          },
+          "parsed_by_engineering": {
+            "type": [
+              "boolean",
+              "string"
+            ]
+          },
+          "size_bytes": {
+            "type": "integer",
+            "minimum": 0
+          }
         }
       }
     },
@@ -78,16 +244,65 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "chapter", "name", "canon_status", "approval", "source"],
+        "required": [
+          "id",
+          "chapter",
+          "name",
+          "category",
+          "canon_status",
+          "env_design_status",
+          "verified_against_register",
+          "source"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "pattern": "^CH0[1-8]-(SCN|SUB|INT)-\\d{3}$" },
-          "chapter": { "type": "string", "pattern": "^CH0[1-8]$" },
-          "name": { "type": "string", "minLength": 1 },
-          "canon_status": { "$ref": "#/definitions/canon_status" },
-          "approval": { "$ref": "#/definitions/approval_triplet" },
-          "source": { "type": "string", "minLength": 1 },
-          "notes": { "type": "string" }
+          "id": {
+            "type": "string",
+            "pattern": "^CH0[1-8]-(ENV|SUB|SET|INT|LMK|TRV|EXP|BOS)-\\d{3}$"
+          },
+          "chapter": {
+            "type": "string",
+            "pattern": "^CH0[1-8]$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "ENV",
+              "SUB",
+              "SET",
+              "INT",
+              "LMK",
+              "TRV",
+              "EXP",
+              "BOS"
+            ]
+          },
+          "kind": {
+            "type": "string"
+          },
+          "canon_status": {
+            "$ref": "#/definitions/canon_status"
+          },
+          "env_design_status": {
+            "$ref": "#/definitions/env_design_status"
+          },
+          "verified_against_register": {
+            "type": "boolean"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "notes": {
+            "type": "string"
+          },
+          "register_annotation": {
+            "type": "string"
+          }
         }
       }
     },
@@ -97,29 +312,88 @@
       "maxItems": 7,
       "items": {
         "type": "object",
-        "required": ["index", "chapter", "scene_id", "location_id", "title", "content_status", "establishes", "fragments"],
+        "required": [
+          "index",
+          "chapter",
+          "scene_id",
+          "location_id",
+          "title",
+          "scene_canon_status",
+          "location_canon_status",
+          "verified_against_register",
+          "establishes",
+          "fragments"
+        ],
         "additionalProperties": false,
         "properties": {
-          "index": { "type": "integer", "minimum": 1, "maximum": 7 },
-          "chapter": { "type": "string", "pattern": "^CH0[1-7]$" },
-          "scene_id": { "type": "string", "pattern": "^CH0[1-7]-SCN-\\d{3}$" },
-          "location_id": { "type": "string", "pattern": "^CH0[1-7]-(SCN|SUB|INT)-\\d{3}$" },
-          "title": { "type": "string", "minLength": 1 },
-          "content_status": { "$ref": "#/definitions/canon_status" },
-          "establishes": { "type": "string", "minLength": 1 },
+          "index": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          },
+          "chapter": {
+            "type": "string",
+            "pattern": "^CH0[1-7]$"
+          },
+          "scene_id": {
+            "type": "string",
+            "pattern": "^CH0[1-7]-SCN-\\d{3}$"
+          },
+          "location_id": {
+            "type": "string",
+            "pattern": "^CH0[1-7]-(SUB|INT|ENV|EXP|TRV|LMK|SET|BOS)-\\d{3}$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scene_canon_status": {
+            "$ref": "#/definitions/canon_status"
+          },
+          "location_canon_status": {
+            "$ref": "#/definitions/canon_status"
+          },
+          "verified_against_register": {
+            "type": "boolean"
+          },
+          "establishes": {
+            "type": "string",
+            "minLength": 1
+          },
           "fragments": {
             "type": "object",
-            "required": ["place", "object", "sound", "interaction"],
+            "required": [
+              "place",
+              "object",
+              "sound",
+              "interaction"
+            ],
             "additionalProperties": false,
             "properties": {
-              "place": { "type": "string", "minLength": 1 },
-              "object": { "type": "string", "minLength": 1 },
-              "sound": { "type": "string", "minLength": 1 },
-              "interaction": { "type": "string", "minLength": 1 }
+              "place": {
+                "type": "string",
+                "minLength": 1
+              },
+              "object": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sound": {
+                "type": "string",
+                "minLength": 1
+              },
+              "interaction": {
+                "type": "string",
+                "minLength": 1
+              }
             }
           },
-          "visual_identity": { "type": "string" },
-          "source": { "type": "string" }
+          "visual_identity": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
         }
       }
     },
@@ -128,15 +402,41 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["id", "chapter", "name", "canon_status", "arena_design_status"],
+        "required": [
+          "id",
+          "chapter",
+          "name",
+          "arena_location_id",
+          "encounter_canon_status",
+          "arena_design_status"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "pattern": "^CH0[1-8]-BOSS-[A-Z][A-Za-z0-9]*$" },
-          "chapter": { "type": "string", "pattern": "^CH0[1-8]$" },
-          "name": { "type": "string", "minLength": 1 },
-          "canon_status": { "$ref": "#/definitions/canon_status" },
-          "arena_design_status": { "type": "string", "enum": ["Proposed", "DesignApproved", "CanonApproved"] },
-          "source": { "type": "string" }
+          "id": {
+            "type": "string",
+            "pattern": "^CH0[1-8]-BOS-\\d{3}$"
+          },
+          "chapter": {
+            "type": "string",
+            "pattern": "^CH0[1-8]$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "arena_location_id": {
+            "type": "string",
+            "pattern": "^CH0[1-8]-BOS-\\d{3}$"
+          },
+          "encounter_canon_status": {
+            "$ref": "#/definitions/canon_status"
+          },
+          "arena_design_status": {
+            "$ref": "#/definitions/env_design_status"
+          },
+          "source": {
+            "type": "string"
+          }
         }
       }
     },
@@ -145,21 +445,66 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["id", "statement", "kind", "source", "enforced_by"],
+        "required": [
+          "id",
+          "statement",
+          "kind",
+          "source",
+          "enforced_by"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "pattern": "^RULE-[A-Z0-9-]+$" },
-          "chapter": { "type": ["string", "null"], "pattern": "^CH0[1-8]$" },
-          "statement": { "type": "string", "minLength": 10 },
+          "id": {
+            "type": "string",
+            "pattern": "^RULE-[A-Z0-9-]+$"
+          },
+          "chapter": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^CH0[1-8]$"
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 10
+          },
           "kind": {
             "type": "string",
-            "enum": ["spawn_exclusion", "asset_exclusion", "asset_identity", "vista_visibility",
-                     "material_rule", "material_response", "encounter_exclusion", "character_identity", "cultural"]
+            "enum": [
+              "spawn_exclusion",
+              "asset_exclusion",
+              "asset_identity",
+              "vista_visibility",
+              "material_rule",
+              "material_response",
+              "encounter_exclusion",
+              "character_identity",
+              "cultural"
+            ]
           },
-          "excludes": { "type": "array", "items": { "type": "string" } },
-          "requires_review": { "type": "string", "enum": ["cultural", "art", "technical"] },
-          "source": { "type": "string", "minLength": 1 },
-          "enforced_by": { "type": "string", "minLength": 1 }
+          "excludes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "requires_review": {
+            "type": "string",
+            "enum": [
+              "cultural",
+              "art",
+              "technical"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "enforced_by": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       }
     }

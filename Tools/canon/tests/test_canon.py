@@ -98,39 +98,75 @@ class TestChapters(unittest.TestCase):
         self.assertTrue(ci.validate_chapters(idx))
 
 
-class TestApprovalSeparation(unittest.TestCase):
-    """OAD-47 / OAD-48: design approval is not canon approval."""
+class TestStatusSeparation(unittest.TestCase):
+    """OAD-47 / OAD-48: design approval is not canon approval.
 
-    def test_shippable_requires_canon_approval(self):
-        idx = fresh()
-        loc = idx["locations"][0]  # a Proposed location
-        loc["approval"]["shippable"] = True
-        errors = ci.validate_approval_triplets(idx)
-        self.assertTrue(any("shippable before canon" in e for e in errors), errors)
+    v1.0.0 of this index modelled approval as a {design, canon, shippable}
+    triplet. Reading LOCATION_MASTER_REGISTER v2.9 showed the registers use
+    THREE canon statuses (ESTABLISHED / PROPOSED / PENDING APPROVAL) plus a
+    SEPARATE seven-value environment design status. v2.0.0 follows the register.
+    These tests pin that model so it cannot silently drift back.
+    """
 
-    def test_canon_approved_status_must_match_canon_flag(self):
+    def test_canon_status_vocabulary_matches_register(self):
+        self.assertEqual(
+            tuple(BASE_INDEX["canon_statuses"]),
+            ("ESTABLISHED", "PROPOSED", "PENDING APPROVAL"),
+        )
+
+    def test_design_and_canon_axes_are_disjoint(self):
+        for value in BASE_INDEX["environment_design_statuses"]:
+            self.assertNotIn(value, BASE_INDEX["canon_statuses"],
+                             f"{value!r} must not appear in both axes")
+
+    def test_environment_design_status_vocabulary_matches_register(self):
+        self.assertEqual(
+            tuple(BASE_INDEX["environment_design_statuses"]),
+            ("NOT STARTED", "EXPLORATORY", "IN REVIEW", "REQUIRES REVISION",
+             "CONDITIONAL", "APPROVED", "REJECTED"),
+        )
+
+    def test_invented_canon_status_is_rejected(self):
         idx = fresh()
         idx["locations"][0]["canon_status"] = "CanonApproved"
-        idx["locations"][0]["approval"]["canon"] = False
-        errors = ci.validate_approval_triplets(idx)
-        self.assertTrue(any("approval.canon=false" in e for e in errors), errors)
+        errors = ci.validate_status_separation(idx)
+        self.assertTrue(any("not a register value" in e for e in errors), errors)
 
-    def test_design_approved_status_must_match_design_flag(self):
+    def test_unverified_status_requires_unverified_flag(self):
         idx = fresh()
-        idx["locations"][0]["canon_status"] = "DesignApproved"
-        idx["locations"][0]["approval"]["design"] = False
-        errors = ci.validate_approval_triplets(idx)
-        self.assertTrue(errors)
+        unverified = next(l for l in idx["locations"] if l["canon_status"] == "UNVERIFIED")
+        unverified["verified_against_register"] = True
+        errors = ci.validate_status_separation(idx)
+        self.assertTrue(any("inconsistent" in e for e in errors), errors)
 
-    def test_chapter8_locations_have_design_but_not_canon_approval(self):
-        """Records the real state of the project after OAD-45: designs were
-        accepted for composition work, but the places themselves are not canon."""
+    def test_verified_status_cannot_be_unverified_marker(self):
+        idx = fresh()
+        verified = next(l for l in idx["locations"] if l["verified_against_register"])
+        verified["canon_status"] = "UNVERIFIED"
+        errors = ci.validate_status_separation(idx)
+        self.assertTrue(any("inconsistent" in e for e in errors), errors)
+
+    def test_memory_one_location_is_proposed_not_established_dup_head(self):
+        """The Wayside Offering Place must never be presented as canon."""
+        loc = next(l for l in BASE_INDEX["locations"] if l["id"] == "CH01-SUB-018")
+        self.assertEqual(loc["canon_status"], "PROPOSED")
+        self.assertEqual(loc["env_design_status"], "NOT STARTED")
+
+    def test_chapter1_boss_arena_is_established_canon_but_design_in_review(self):
+        """OAD-21: encounter established, arena design not approved."""
+        loc = next(l for l in BASE_INDEX["locations"] if l["id"] == "CH01-BOS-001")
+        self.assertEqual(loc["canon_status"], "ESTABLISHED")
+        self.assertEqual(loc["env_design_status"], "IN REVIEW")
+
+    def test_chapter8_approved_designs_are_still_not_canon(self):
+        """OAD-45 approved four Chapter 8 designs for composition work; OAD-47/48
+        confirmed that does not make the places canon."""
         ch8 = [l for l in BASE_INDEX["locations"] if l["chapter"] == "CH08"]
         self.assertTrue(ch8)
+        approved = [l for l in ch8 if l["env_design_status"] == "APPROVED"]
+        self.assertTrue(approved, "expected the OAD-45 approved designs to be recorded")
         for loc in ch8:
-            self.assertTrue(loc["approval"]["design"], loc["id"])
-            self.assertFalse(loc["approval"]["canon"], loc["id"])
-            self.assertFalse(loc["approval"]["shippable"], loc["id"])
+            self.assertNotEqual(loc["canon_status"], "ESTABLISHED", loc["id"])
 
 
 class TestMemories(unittest.TestCase):
@@ -211,10 +247,21 @@ class TestBosses(unittest.TestCase):
         self.assertEqual(len(bosses), 8)
         self.assertEqual({b["chapter"] for b in bosses}, set(ci.CHAPTER_IDS))
 
-    def test_arena_design_is_not_canon_approved(self):
-        """OAD-21: encounters are established; arena layouts are proposals."""
+    def test_no_arena_design_is_approved(self):
+        """OAD-21: encounters are established; arena designs are not approved."""
+        allowed = {"IN REVIEW", "NOT STARTED", "UNVERIFIED", "EXPLORATORY", "CONDITIONAL"}
         for boss in BASE_INDEX["bosses"]:
-            self.assertEqual(boss["arena_design_status"], "Proposed", boss["id"])
+            self.assertIn(boss["arena_design_status"], allowed, boss["id"])
+
+    def test_encounters_are_established(self):
+        for boss in BASE_INDEX["bosses"]:
+            self.assertEqual(boss["encounter_canon_status"], "ESTABLISHED", boss["id"])
+
+    def test_arena_location_must_be_registered(self):
+        idx = fresh()
+        idx["bosses"][0]["arena_location_id"] = "CH01-BOS-999"
+        errors = ci.validate_bosses(idx)
+        self.assertTrue(any("is not registered" in e for e in errors), errors)
 
     def test_boss_name_mismatch_with_chapter_table_is_rejected(self):
         idx = fresh()
@@ -224,7 +271,7 @@ class TestBosses(unittest.TestCase):
 
     def test_boss_in_wrong_chapter_prefix_is_rejected(self):
         idx = fresh()
-        idx["bosses"][0]["id"] = "CH02-BOSS-GreatRootMother"
+        idx["bosses"][0]["id"] = "CH02-BOS-001"
         self.assertTrue(ci.validate_bosses(idx))
 
     def test_chapter_without_boss_entry_is_rejected(self):
@@ -304,12 +351,23 @@ class TestIdsAndScheme(unittest.TestCase):
             "CH01-XXX-001",      # unknown type
             "ch01-sub-018",      # lowercase
             "CH01-SUB-018 ",     # trailing space
+            "CH01-BOSS-001",     # the register uses BOS, never BOSS
         ]
         for bad in bad_ids:
             self.assertFalse(
-                any(ci.ID_PATTERNS[k].match(bad) for k in ("scene", "sublocation", "interior")),
+                any(ci.ID_PATTERNS[k].match(bad) for k in ("scene", "location", "boss")),
                 f"{bad!r} should not match any canon id pattern",
             )
+
+    def test_all_register_location_categories_are_recognised(self):
+        for category in ci.LOCATION_CATEGORIES:
+            self.assertTrue(ci.ID_PATTERNS["location"].match(f"CH03-{category}-001"), category)
+
+    def test_location_category_must_match_prefix(self):
+        idx = fresh()
+        idx["locations"][0]["category"] = "INT"
+        errors = ci.validate_location_ids(idx)
+        self.assertTrue(any("disagrees with category field" in e for e in errors), errors)
 
     def test_duplicate_location_id_is_rejected(self):
         idx = fresh()
@@ -324,16 +382,18 @@ class TestIdsAndScheme(unittest.TestCase):
         self.assertTrue(any("disagrees with id prefix" in e for e in errors), errors)
 
     def test_boss_id_pattern(self):
-        self.assertTrue(ci.ID_PATTERNS["boss"].match("CH01-BOSS-GreatRootMother"))
-        self.assertFalse(ci.ID_PATTERNS["boss"].match("CH01-BOSS-greatrootmother"))
-        self.assertFalse(ci.ID_PATTERNS["boss"].match("CH01-BOSS-"))
+        self.assertTrue(ci.ID_PATTERNS["boss"].match("CH01-BOS-001"))
+        self.assertFalse(ci.ID_PATTERNS["boss"].match("CH01-BOSS-001"))
+        self.assertFalse(ci.ID_PATTERNS["boss"].match("CH01-BOS-1"))
 
 
 class TestSourceDocuments(unittest.TestCase):
-    def test_four_authority_documents_registered(self):
+    def test_six_authority_documents_registered(self):
         ids = {d["id"] for d in BASE_INDEX["source_documents"]}
         for expected in ("CHARACTER_DESIGN_REGISTER", "ENVIRONMENT_DESIGN_REGISTER",
-                         "OPEN_ART_DECISIONS", "NNEKA_MEMORIES_AND_TIMELINE"):
+                         "OPEN_ART_DECISIONS", "NNEKA_MEMORIES_AND_TIMELINE",
+                         "LOCATION_MASTER_REGISTER",
+                         "SCENE_AND_MICROLOCATION_MASTER_REGISTER"):
             self.assertIn(expected, ids)
 
     def test_each_document_declares_authority_and_drive_id(self):

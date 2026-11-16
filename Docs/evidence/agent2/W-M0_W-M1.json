@@ -1,0 +1,50 @@
+{
+  "milestone": "W-M0 / W-M1",
+  "agent": "Agent 2 - World, Systems and Gameplay Simulation",
+  "dateUtc": "2026-11-16T18:53:19+00:00",
+  "engine": "n/a (host-side L0 only; no Unreal Engine in this environment)",
+  "results": {
+    "canon_suite": {
+      "command": "python3 -m unittest discover -s Tools/canon/tests",
+      "tests": 101,
+      "result": "PASS"
+    },
+    "world_suite": {
+      "command": "python3 -m unittest discover -s Tools/world/tests",
+      "tests": 33,
+      "result": "PASS"
+    },
+    "repository_ci": {
+      "command": "python3 Tools/ci/l0_checks.py",
+      "checks": 10,
+      "result": "PASS"
+    }
+  },
+  "deliverables": {
+    "assessment": "Docs/WORLD_ASSESSMENT.md",
+    "architecture": "Docs/WORLD_ARCHITECTURE.md",
+    "register_parser": "Tools/canon/registers.py",
+    "world_manifest_validator": "Tools/world/world_manifest.py",
+    "chapter1_manifest": "Tools/world/data/CH01_manifest.json",
+    "canon_model_correction": "Tools/canon/data/canon_index.json v2.0.0"
+  },
+  "verified_behaviour": [
+    "Register table parsing against verbatim Chapter 1 excerpts",
+    "Closed canon/design status vocabularies enforced",
+    "UNVERIFIED status cannot be claimed as canonical",
+    "World manifest rejects unregistered locations",
+    "World manifest rejects final art on unapproved designs",
+    "World manifest rejects PROPOSED location presented as canon",
+    "World manifest rejects gameplay on non-canon location without blockout flag",
+    "World manifest rejects child combat targets (RULE-NPC-CHILDREN-NO-COMBAT)",
+    "World manifest rejects snake enemies in Chapter 4 (RULE-CH04-PYTHONS)",
+    "Routine validation: registered locations, valid windows, no overlap",
+    "Canon mirror drift detection (verified by injecting deliberate drift)"
+  ],
+  "not_verified": [
+    "Any C++ compiles (no engine)",
+    "Streaming, crowds, AI, boss execution",
+    "Full-register ingestion (only Chapter 1 captured)",
+    "Six of seven memory discovery locations (UNVERIFIED against their registers)"
+  ]
+}
