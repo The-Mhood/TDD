@@ -3,10 +3,10 @@
 **Project:** THE DISOBEDIENT DAUGHTER (*Nwanyi Na-anụghị Ihe*)
 **Agent:** 1 — Gameplay, Character and Combat Engineering
 **Document:** TDD-A1-ASSESS-001
-**Version:** 1.1 — revised after Technical Director review (2026-11-16)
+**Version:** 1.2 — traversal/damage reconciliation per Technical Director review round 2 (2026-11-16)
 **Date:** 2026-11-16
-**Supersedes:** v1.0 (`archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_V1.0.md`, preserved unchanged)
-**Change log:** §11 of this document records every correction made in v1.1
+**Supersedes:** v1.1 (`archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_V1.1.md`) and v1.0 (`archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_V1.0.md`) — both preserved unchanged
+**Change log:** §11 records the v1.0 → v1.1 corrections; §12 records the v1.1 → v1.2 correction
 **Governing architecture:** `docs/01_ARCHITECTURE/MASTER_ENGINEERING_ARCHITECTURE.md` (TDD-MEAD-001)
 **Next document:** `docs/02_PRODUCTION/AGENT1/M1_MOVEMENT_SPECIFICATION.md`
 
@@ -190,7 +190,7 @@ States (M1 implements the bold ones; the rest are declared now so transition rul
 | `Attack` | attack intent accepted | `Locomotion`, `Idle`, `Dodge` (per cancel rules), `Stagger` | M3+ |
 | `Block` / `Parry` | block intent | `Locomotion`, `Stagger` | M3+ |
 | `Stagger` | `ApplyStagger` from damage or parry | `Locomotion`, `Idle`, `Dead` | M3+ |
-| `Traversal` | traversal candidate confirmed | `Locomotion`, `Idle` | M2+ |
+| `Traversal` | traversal candidate confirmed | `Locomotion`, `Idle`, `Airborne`/`Land` (after abort fallback), `Stagger` (forced, staggering damage), `Dead`, `Cinematic` | M2+. **v1.2:** forced transitions preempt; only non-staggering damage is a refusable abort (spec §3.2.1–§3.2.3, E1–E7) |
 | `Interaction` | interactable accepted | `Idle`, `Locomotion` | M2+ |
 | `Cinematic` | cinematic subsystem takes control | previous state | Owned by narrative/cinematic system; I only obey and restore |
 | `Dead` | lethal damage | `Idle` on respawn | Post-M3; respawn driven by flow system |
@@ -344,6 +344,8 @@ Camera *feel* remains a manual (T5) gate; camera *correctness* (the five rows ab
 ### 4.8 Traversal architecture (M2)
 
 Trace-based candidate detection (forward + down from a height band), `FTDDTraversalCandidate { Type, EntryTransform, ExitTransform, Height, Depth, bValid }`, validated against capsule clearance and slope; montage selection per type from `DA_TraversalConfig`; Motion Warping aligns entry/exit; capsule is snapped to the validated exit only after the clip's exit notify. **No prompt is shown for an invalid candidate** — refusing to show a broken prompt is better than fixing it later.
+
+**v1.2 reconciliation (C-13):** the exit notify and its validation are only *one* of seven ways a traversal can end. Damage divides into **staggering** (a forced `Stagger` the state cannot refuse) and **non-staggering** (an abort request honoured only inside a declared window); lethality and cinematic capture are forced and outrank traversal entirely. Every path resolves a legal resting position before restoring the character and before entering the resulting state. The authoritative rules are M1 spec §3.2.1–§3.2.3 (damage taxonomy, abort arbitration, E1–E7), with ADR-0013 §5 (restoration checklist) and §6 (exit validation) as the root-motion side.
 
 ### 4.9 Combat architecture (summary; detailed in M3/M4 specs)
 
@@ -598,3 +600,21 @@ Inspection findings (§1), gap analysis (§2), prerequisites B-1…B-6 and conte
 ### Status after revision
 
 Still **no implementation, no compilation, no test execution, and no measurement**. This revision changes specification only. `DESIGN_ONLY` remains the correct status for every item in §10.
+
+---
+
+## 12. Change log — v1.1 → v1.2 (Technical Director review round 2, 2026-11-16)
+
+v1.1 is preserved unchanged at `archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_V1.1.md`. v1.1 was accepted as the design baseline; this revision applies the one required state-machine correction and changes nothing else.
+
+| ID | Item | Defect | Correction | Where |
+|---|---|---|---|---|
+| **C-13** | Traversal forced-entry/interruption reconciliation | §4.2 listed `Traversal` exiting only to `Locomotion`/`Idle`, and the M1 spec's traversal row treated all damage as an abort — inconsistent with the forced-transition policy in which `Stagger` preempts unconditionally, and with ADR-0013, which distinguishes abort from stagger | State table now lists the complete exit set including forced `Stagger`, `Dead`, `Cinematic` and the post-abort `Airborne`/`Land`; §4.8 states the taxonomy (staggering vs non-staggering damage), the arbitration, and the requirement that every path resolves a legal position before restoration and before target entry; detail delegated to M1 spec §3.2.1–§3.2.3 | §4.2, §4.8 |
+
+### Unchanged
+
+Everything accepted in round 1 stands: the single M1 gate (AC-01…AC-31), the L1–L3 latency model with no tick-group change without measurement, the five camera criteria and their provisional thresholds, the 50 cm blocked-step baseline, dodge refusal without cooldown consumption, ADR-0013's provisional execution model, configurable warp limits, and `TDDCore` types remaining proposals. No threshold, risk rating or milestone exit criterion was altered.
+
+### Status
+
+`DESIGN_ONLY`. No implementation, no compilation, no tests, no measurements. Prerequisites B-1…B-6 and content C-1…C-5 remain `BLOCKED`.

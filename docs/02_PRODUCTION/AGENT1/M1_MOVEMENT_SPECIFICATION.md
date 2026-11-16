@@ -4,13 +4,13 @@
 **Project:** THE DISOBEDIENT DAUGHTER
 **Agent:** 1 — Gameplay, Character and Combat Engineering
 **Document:** TDD-A1-M1-SPEC-001
-**Version:** 1.1 — revised after Technical Director review (2026-11-16)
+**Version:** 1.2 — traversal/damage reconciliation per Technical Director review round 2 (2026-11-16)
 **Date:** 2026-11-16
-**Supersedes:** v1.0 (`archive/M1_MOVEMENT_SPECIFICATION_V1.0.md`, preserved unchanged)
+**Supersedes:** v1.1 (`archive/M1_MOVEMENT_SPECIFICATION_V1.1.md`); v1.0 (`archive/M1_MOVEMENT_SPECIFICATION_V1.0.md`) — both preserved unchanged
 **Status:** `DESIGN_ONLY` — nothing in this document is implemented or verified
-**Parent:** `GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT.md` v1.1 (TDD-A1-ASSESS-001)
+**Parent:** `GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT.md` v1.2 (TDD-A1-ASSESS-001)
 **Governing:** TDD-MEAD-001 §4, §8, §13, §14, §15; ADR-0002, ADR-0005, ADR-0012, ADR-0013 v1.1
-**Change log:** §13 of this document explains every correction from v1.0
+**Change log:** §13 explains every correction from v1.0 → v1.1 and v1.1 → v1.2
 
 ---
 
@@ -29,6 +29,16 @@ The Technical Director accepted the architecture and milestone approach in princ
 | 7 Ownership | §3.1 and §3.6 resolve input-component and camera-rig ownership using Unreal's lifecycle, not convention |
 | 8 Root motion | ADR-0013 v1.1, §3.5/§3.7 here: no `MOVE_None` assumption, exit-transform revalidation, warp limits configurable |
 | 9 Core types | Appendix A restated as **proposals pending Agent 3 review**; Agent 1 creates no Core types |
+
+### 0.1 v1.2 — the one correction required by review round 2
+
+The Technical Director accepted v1.1 as the design baseline and required one state-machine correction: **reconcile the Traversal forced-entry and interruption rules with the global forced-transition policy and ADR-0013, explicitly distinguish damage that causes `Stagger` from damage that merely aborts traversal, and define a fallback and restoration sequence for every exit path.**
+
+The defect was real. v1.1 §3.2 Table B described Traversal as "interruptible by damage" and "damage abort → safe fallback then `Locomotion`", while the same section's global rules state that `Stagger` is a **forced** transition (priority 80) that preempts Traversal (priority 40) unconditionally and cannot be refused. One row therefore described all damage as an abort, and simultaneously listed a forced transition as an interruption a lower-priority state could accept. Those cannot both be true.
+
+v1.2 corrects it with: a damage taxonomy (staggering vs non-staggering), a defined abort-vs-stagger arbitration with explicit ordering, a four-candidate `ResolveAbortFallback()` resolution, and an enumerated table of all seven Traversal exit paths (E1–E7) each with its fallback and restoration sequence (§3.2.1–§3.2.3).
+
+**No acceptance criterion was added, removed, renumbered or re-thresholded. AC-01…AC-31 remain the accepted M1 gate.** The corrected rules are asserted within existing AC-23 (state semantics) and AC-26 (root-motion restoration) plus the M2 traversal test; the assertions were extended, the gate was not changed. All other accepted architecture, thresholds and decisions from round 1 stand unchanged.
 
 **No implementation has begun.** No code, no compilation, no tests, no measurements. All statuses remain `DESIGN_ONLY` or `BLOCKED`.
 
@@ -163,7 +173,7 @@ RequestState(Target, Reason):
 | `Block` (M3) | grounded; guard allowed | clear blocking tag; restore speed | guard released beyond grace (0.08 s) | 0.08 s |
 | `Parry` (M3) | inside parry window from block input | clear parry tag | window expiry or success resolution | window |
 | `Stagger` | forced by damage, posture break or parry | clear stagger tag; restore movement/rotation | stagger duration **and** hit-reaction montage end (whichever is later) | stagger duration |
-| `Traversal` (M2) | valid candidate; grounded; capsule clear | revalidate exit transform; snap; restore; stop montage | exit notify reached **and** exit transform valid | montage |
+| `Traversal` (M2) | valid candidate; grounded; capsule clear | resolve abort fallback if aborted (§3.2.2); run restoration checklist (§3.2.3); revalidate exit transform; snap only if valid; stop montage | exit notify reached **and** exit transform valid, **or** an abort fallback has resolved to a legal resting position (E2–E5) | montage, or `AbortWindow` on interruption |
 | `Interaction` (M2) | interactable in range and allowed | cancel interaction; restore | hold complete, or cancel-on-move (data) | 0 |
 | `Cinematic` | forced by cinematic subsystem | restore prior state; restore input/mapping context | subsystem reports end or skip | per sequence |
 | `Dead` | forced by lethal damage | disable input; start death presentation | respawn forced by flow system | n/a |
@@ -182,10 +192,83 @@ RequestState(Target, Reason):
 | `Block` | Dead, Stagger, Cinematic | guard break → `Stagger` | parry success; guard break | drop `Dodge` while guard-raising (0.08 s) |
 | `Parry` | Dead, Stagger, Cinematic | success → attacker stagger, self returns to `Block` | damage | drop all except forced |
 | `Stagger` | (is forced) | — | `Dead` only | drop all |
-| `Traversal` | Dead, Cinematic | damage abort → safe fallback then `Locomotion` | damage, death, cinematic | drop all except forced |
+| `Traversal` | **Stagger** (staggering damage only), Dead, Cinematic — all forced, none refusable | none (Traversal never forces another state) | **`Damaged` (non-staggering) only**, inside `AbortWindow` — a *requested* abort, not a forced transition. Staggering/lethal damage and cinematics are forced transitions handled by E4–E6, not by this mask | drop all except forced |
 | `Interaction` | Dead, Cinematic, Stagger | movement input if cancel-on-move | damage | drop all |
 | `Cinematic` | (is forced) | subsystem end/skip | nothing | drop all; pause/skip handled by PC input component |
 | `Dead` | (is forced) | respawn | nothing | drop all |
+
+#### 3.2.1 Damage taxonomy: staggering vs non-staggering (v1.2)
+
+v1.1 conflated two different events under the single word "damage". They are now separate, because one is a forced transition the state machine must obey and the other is a request a state may accept:
+
+| Outcome | Trigger | Transition type | Who decides | Result |
+|---|---|---|---|---|
+| **Staggering damage** | `FTDDDamageRequest.bCausesStagger == true` (set by attack data/damage type), **or** posture break, **or** a successful parry against the victim | **Forced** — priority 80 | The damage pipeline. Not the current state. Cannot be refused, ignored or delayed by the state being left | `Stagger`, always, after the abort resolution and restoration below |
+| **Non-staggering damage** | `bCausesStagger == false`, no posture break | **Abort request** (`ETDDCancelReason::Damaged`) — *not* a forced transition | The current state, via its interruption mask and `AbortWindow` | Traversal aborts to a resolved legal position (E3); any state that does not declare `Damaged` in its mask ignores it and logs |
+
+Two facts that hold in both cases and are easy to get wrong:
+
+1. **Health reduction is independent of state.** Damage is applied by the damage pipeline (M3+) regardless of whether the action aborts or staggers. A traversal that continues through non-staggering damage still loses health, and a traversal that aborts still loses health. The state machine decides *control*, never *damage*.
+2. **Posture accumulation can promote.** A non-staggering hit that breaks posture **becomes** staggering damage in the same frame; the pipeline is evaluated once and the promotion happens before state resolution, so a hit can never be both "abort" and "stagger" depending on evaluation order.
+
+The flag lives on the damage request, so it is data, not a hard-coded rule. Heavy attacks and unblockable attacks default to staggering; chip damage and environmental hazards default to non-staggering (defaults to be tuned with combat design in M3, not fixed here).
+
+#### 3.2.2 Traversal abort arbitration, ordering and fallback resolution (v1.2)
+
+The global policy (§3.2 rules) is that forced transitions preempt unconditionally. Traversal is priority 40 and therefore **cannot resist a stagger**. v1.1's Traversal row implied it could, by listing damage as an interruption the state handles. Corrected arbitration, in this exact order:
+
+```
+Traversal receives an interrupting event:
+  1. Apply damage/posture through the damage pipeline (independent of control)
+  2. Classify:  staggering | non-staggering | lethal | cinematic
+  3. if lethal:
+         ResolveAbortFallback()  ->  RunRestorationChecklist()  ->  ForceState(Dead)        [E5]
+     elif cinematic:
+         (no fallback; capsule frozen in place)  ->  RunRestorationChecklist(freeze mode)  ->  ForceState(Cinematic)   [E6]
+     elif staggering:
+         ResolveAbortFallback()  ->  RunRestorationChecklist()  ->  ForceState(Stagger)     [E4]
+     else:  // non-staggering
+         if montage position inside AbortWindow:
+             ResolveAbortFallback()  ->  RunRestorationChecklist()  ->  RequestState(Locomotion|Land)   [E3]
+         else:
+             traversal continues; damage applied; log Verbose (no abort)
+```
+
+**Ordering rule (why it is written as a sequence, not a set):** fallback resolution comes **before** restoration, and restoration comes **before** the target state is entered. Entering `Stagger` first would start a hit-reaction montage while traversal root motion was still driving the capsule (ADR-0013 §2), producing a stagger that travels — the exact class of bug the ADR exists to prevent.
+
+**`ResolveAbortFallback()` — ordered candidates, each validated at the moment of resolution** against *current* collision, including dynamic actors that moved since the traversal began:
+
+| # | Candidate | Condition | Placement and resulting state |
+|---|---|---|---|
+| 1 | **Complete the traversal** — revalidate the exit transform now and snap to it | montage past `TraversalCommitFraction` (default **0.6**, data) **and** exit transform currently valid | Snap (validated only) → `Locomotion`/`Idle` |
+| 2 | **Reverse to entry side** — restore the recorded entry transform if still valid | before the commit fraction | Snap (validated only) → `Locomotion`/`Idle` |
+| 3 | **Drop to the floor beneath** — downward trace for a walkable surface, place the capsule on it | any position; a walkable floor exists below | → `Airborne` → `Land` |
+| 4 | **Hold** — clear root motion, keep the capsule exactly where it is, mark unsupported | no candidate is valid | `Airborne` if the capsule is ungrounded, else `Idle`; log `Traversal.FallbackFailed`, publish a diagnostic event |
+
+Prohibited on every path: teleporting into geometry; snapping to an unvalidated transform; leaving the capsule unsupported without entering `Airborne`; silently completing a traversal whose exit no longer exists.
+
+#### 3.2.3 Every Traversal exit path, its fallback and its restoration (v1.2)
+
+The requirement was that **every** exit path has a defined fallback *and* a defined restoration. All seven are enumerated; there are no others (self-cancellation is prohibited inside min dwell, and no other system can leave this state):
+
+| # | Exit path | Fallback resolution | Restoration sequence | Resulting state |
+|---|---|---|---|---|
+| **E1** | Natural completion — exit notify reached, exit transform revalidated as valid (§3.7) | None required | Full nine-step checklist (ADR-0013 §5), then snap | `Locomotion` / `Idle` |
+| **E2** | Natural completion — exit notify reached, **exit transform invalid** | `ResolveAbortFallback()` (candidate 1 rejected by definition here, so 2→3→4) | Full checklist, then placement by the resolved candidate | `Locomotion` / `Idle` / `Land` |
+| **E3** | **Non-staggering** damage inside `AbortWindow` (requested abort) | `ResolveAbortFallback()` | Full checklist | `Locomotion` or `Land` |
+| **E4** | **Staggering** damage (including posture break) — forced | `ResolveAbortFallback()` | Full checklist **before** staggered entry, so the hit reaction owns the character and no root motion is applying | `Stagger` |
+| **E5** | Lethal damage — forced, higher priority than stagger | `ResolveAbortFallback()` — a corpse must not be left mid-clip or mid-air | Full checklist, then death presentation | `Dead` |
+| **E6** | Cinematic takeover — forced | None; capsule is frozen at its current pose and position, and the cinematic system owns placement | Full checklist **except** movement-mode restoration (mode is frozen and recorded by the cinematic subsystem) | `Cinematic` |
+| **E7** | Unpossess / `EndPlay` / level transition | None (the world is leaving) | Full checklist; movement mode forced to the default so the CMC is never left in a non-default mode | — (state torn down) |
+
+Additional invariants asserted by test:
+
+- E4 and E5 must never both be considered: if damage is lethal **and** staggering, `Dead` wins and no stagger entry occurs (priority 100 > 80).
+- E6 must never run `ResolveAbortFallback()` — a cinematic owns the camera and the placement; a fallback drop mid-shot would read as a teleport.
+- In every path the eight restoration steps plus event publication run exactly once; a second restoration logs `Restoration.DoubleRun` (indicates two owners).
+- A prevented abort (damage outside `AbortWindow`) is logged at Verbose with the montage position, so "why didn't it stop?" is answerable from a capture.
+
+Data fields this introduces: `FTDDTraversalSpec { FFloatRange AbortWindow; float TraversalCommitFraction; float CommitSnapTolerance; }` in `DA_MovementConfig` (M2 content), and `FTDDDamageRequest::bCausesStagger` (Appendix A proposal, pending Agent 3 — not created here).
 
 Data model: one `FTDDStateRuleRow` per state containing the preconditions (as declarative flags + a small enum of checks, not script), exit-action flags, recovery condition type and values, min dwell, locks, interruption mask and buffer policy. The row is authored in `DT_StateRules`; the state machine interprets it. Tests enumerate all 14×14 pairs and assert that unlisted pairs are refused **and** that listed pairs satisfy their preconditions (AC-22, AC-23).
 
@@ -330,7 +413,9 @@ Traversal executes in M2, but the rule is fixed now because it affects the movem
 4. If valid → snap and hand control back to CMC in the restored mode. If invalid → take the fallback path (drop to ground beneath, or reverse to the entry side), log `Traversal.ExitInvalid`, publish a diagnostic event, and never teleport into geometry.
 5. All exits run the state-machine exit checklist (§3.2), and the traversal montage is stoppable on damage/death.
 
-Test: `TDD-Functional.Movement.TraversalExitRevalidation` (M2) uses a blocker inserted between detection and exit and asserts the fallback path, plus a second variant that removes the floor to assert no floating.
+**Exit paths, fallbacks and restoration:** this section defines the *validation* used by exit path E1 and E2; the arbitration for damage and cinematic interruptions (E3–E7) and the fallback resolution shared by all of them are defined in §3.2.2–§3.2.3. The validation routine here is the same one reused by `ResolveAbortFallback()` candidate 1, so an abort can never bypass validation.
+
+Tests (M2): `TDD-Functional.Movement.TraversalExitRevalidation` covers E1/E2 with a blocker inserted after detection and a variant that removes the floor (no floating); `TDD-Functional.Movement.TraversalAbortPaths` covers E3–E7, including the lethal-and-staggering precedence case and the "cinematic must not drop the capsule" case.
 
 ### 3.8 Metrics harness (extended for latency stages and camera criteria)
 
@@ -413,7 +498,7 @@ Tolerances are declared in advance so results are judged, not negotiated.
 | Test | Setup | Assertions |
 |---|---|---|
 | `TDD-Unit.Movement.StateRulesComplete` | Synthetic rules table | All 196 pairs: legal → transition occurs; illegal → refused **and** state unchanged; no pair silently permitted |
-| `TDD-Unit.Movement.StateSemantics` | Synthetic rules table | Per state: preconditions reject when unsatisfied; forced transitions preempt regardless of dwell/priority; exit checklist items all executed (verified via recording stubs) on natural **and** forced exit; recovery condition ends the state at the declared time; min dwell blocks flap re-entry |
+| `TDD-Unit.Movement.StateSemantics` | Synthetic rules table | Per state: preconditions reject when unsatisfied; forced transitions preempt regardless of dwell/priority; exit checklist items all executed (verified via recording stubs) on natural **and** forced exit; recovery condition ends the state at the declared time; min dwell blocks flap re-entry. **v1.2 additions:** the full damage taxonomy matrix (staggering / non-staggering / lethal / lethal-and-staggering / posture promotion) is resolved to the specified outcome; `Traversal` exits E1–E7 each run fallback resolution then restoration then target entry, in that order; `Dead` outranks `Stagger` when both apply; a non-staggering hit outside `AbortWindow` changes health but not state |
 | `TDD-Unit.Movement.InputBuffer` | No world | Push/pop per intent; expiry at window ±1 ms; single consumption; replace-not-queue; clear-on-lock matrix |
 | `TDD-Unit.Movement.CoyoteWindow` | No world | Accept 0.11 s, reject 0.13 s |
 | `TDD-Unit.Movement.DodgeSpecMath` | No world | `ResolvedDistance` for 1000 random specs: never negative, never exceeds authored, never exceeds sweep availability; **asserts radius is counted exactly once** (a ray-based variant would subtract it, capsule-based must not); invulnerability range monotonic and inside the montage; behaviour at 0.25× and 2× time dilation |
@@ -444,7 +529,8 @@ Tolerances are declared in advance so results are judged, not negotiated.
 | `TDD-Functional.Movement.InputDeviceParity` | Flat, synthesised keyboard then gamepad | AC-04 timings differ ≤ 1 frame; no device-specific dead zone divergence |
 | `TDD-Functional.Movement.NoPermanentInputLock` | All zones | Each state exits within 2 s via declared inputs; `Dead` and `Cinematic` exits forced by test and verified |
 | `TDD-Functional.Movement.LockOnStubStateIsConsistent` | Flat, no targets | No crash, coherent state, camera returns to `Explore`, no acquisition events fired |
-| `TDD-Functional.Movement.TraversalExitRevalidation` | M2 | Blocker inserted after detection → fallback path taken, no teleport into geometry, exit checklist ran, `Traversal.ExitInvalid` logged |
+| `TDD-Functional.Movement.TraversalExitRevalidation` | M2 | **E1/E2:** blocker inserted after detection → fallback path taken, no teleport into geometry, exit checklist ran, `Traversal.ExitInvalid` logged; floor removed → no floating capsule |
+| `TDD-Functional.Movement.TraversalAbortPaths` | M2 | **E3–E7:** non-staggering damage inside the window aborts to a resolved position and health still decreases; non-staggering damage outside the window does not abort (state unchanged, logged); staggering damage resolves placement *then* enters `Stagger` (no travelling hit reaction); lethal+staggering enters `Dead` only; cinematic capture freezes the capsule without a fallback drop; `EndPlay` leaves the CMC in its default mode. Each path asserts the restoration checklist ran exactly once |
 
 Result line format (unchanged): `TDD_RESULT <test> <PASS|FAIL> <metric>=<value> ...`, greppable and quotable without interpretation.
 
@@ -571,6 +657,7 @@ Contract stability: names and signatures frozen for M1–M3. Additions allowed; 
 | Metrics harness distorts what it measures | On/off delta ≤ 0.05 ms (AC-30) |
 | Mannequin mistaken for character progress | `PLACEHOLDER-A1-01`, stated in every report; no Adanna-specific tuning |
 | Thresholds are wrong for this game | All **[A1]** thresholds are data and explicitly provisional pending first captures |
+| Damage taxonomy drifts into "all damage staggers" or "all damage aborts" during M3 | Taxonomy is data (`bCausesStagger`) with defaults per damage class; `StateSemantics` asserts the full matrix; combat design tuning is an M3 activity with the matrix as the guard rail |
 
 ---
 
@@ -615,7 +702,16 @@ struct FTDDPawnKinematics
 
 Rationale: both are consumed across module boundaries, so they belong in the leaf module to preserve ADR-0003's dependency direction. `FTDDPawnKinematics` intentionally contains no actor pointers, so a consumer cannot hold stale state.
 
-**Change request log:** none yet. If Agent 3 requests changes, they will be recorded here with the date and the adapting commit.
+**Additional field requested in v1.2** (same status: proposed, pending Agent 3, not created by Agent 1) — the damage taxonomy in §3.2.1 requires one flag on the existing Core damage contract:
+
+```cpp
+// PROPOSAL — field added to the existing FTDDDamageRequest (Core, Agent 3 owns the struct)
+UPROPERTY() bool bCausesStagger = false;   // set by attack data / damage class, not by the state machine
+```
+
+`FTDDDamageRequest` itself is already specified in MEAD §13.2 as a Core contract. I am requesting one additional field, not redefining the struct. If Agent 3 prefers to carry the flag on the damage type or an effect tag instead, the state machine logic in §3.2.1 is unchanged — it reads the classification, not the storage.
+
+**Change request log:** v1.2 — `bCausesStagger` requested on `FTDDDamageRequest` (pending).
 
 ---
 
@@ -648,7 +744,7 @@ Rationale: both are consumed across module boundaries, so they belong in the lea
 
 ---
 
-## 13. Change log — v1.0 → v1.1 (response to Technical Director review, 2026-11-16)
+## 13. Change log — v1.0 → v1.1 (Technical Director review round 1, 2026-11-16)
 
 v1.0 is preserved unchanged at `archive/M1_MOVEMENT_SPECIFICATION_V1.0.md`. Acceptance criteria were renumbered as part of this revision; the mapping is given below so an earlier review comment can still be traced.
 
@@ -697,3 +793,25 @@ v1.0 is preserved unchanged at `archive/M1_MOVEMENT_SPECIFICATION_V1.0.md`. Acce
 ### Status after revision
 
 **No implementation has begun; nothing is compiled, executed or measured.** This document remains `DESIGN_ONLY`, and M1 implementation remains `BLOCKED` on Agent 3 prerequisites B-1…B-6. The revision is specification work only.
+
+---
+
+## 14. Change log — v1.1 → v1.2 (Technical Director review round 2, 2026-11-16)
+
+v1.1 is preserved unchanged at `archive/M1_MOVEMENT_SPECIFICATION_V1.1.md`. One correction was required; nothing else was touched.
+
+| ID | Item | Defect in v1.1 | Correction in v1.2 | Section |
+|---|---|---|---|---|
+| **C-13** | Reconcile Traversal forced-entry and interruption rules with the global forced-transition policy and ADR-0013 | The Traversal row in Table B said "interruptible by damage, death, cinematic" and "damage abort → safe fallback then `Locomotion`", while the same section's global rules make `Stagger` (80) a **forced** transition that preempts Traversal (40) unconditionally. The row therefore treated a forced transition as something a lower-priority state could accept, and treated *all* damage as an abort | Traversal's interruption mask now admits **only non-staggering `Damaged` inside `AbortWindow`** (a requested abort). Staggering/lethal damage and cinematics are recorded as forced transitions (E4–E6) that Traversal cannot refuse. Table A's recovery and exit actions reference the new fallback/restoration sequence | §3.2 Table A, Table B |
+| **C-14** | Distinguish staggering from non-staggering damage | One undifferentiated "damage" concept | New damage taxonomy (§3.2.1): `bCausesStagger` (or posture break, or parry) → forced `Stagger`; otherwise → abort request the state may honour. Health reduction is explicitly independent of control; posture break **promotes** in the same frame, removing the evaluation-order ambiguity | §3.2.1 |
+| **C-15** | Ensure every exit path has a fallback and a restoration sequence | Only "exit notify + valid transform" was defined; aborts had no resolution, and the restoration order relative to the target state was unstated | `ResolveAbortFallback()` with four ordered, validation-checked candidates; the ordering rule (*fallback → restoration → target entry*, because a travelling hit reaction is the bug ADR-0013 exists to prevent); the full E1–E7 exit-path table with fallback and restoration per path; explicit prohibitions; invariants (Dead outranks Stagger, cinematic never runs a fallback drop, restoration runs exactly once) | §3.2.2, §3.2.3 |
+| **C-16** | Keep the accepted gate intact | — | **No AC added, removed, renumbered or re-thresholded; AC-01…AC-31 remain the accepted gate.** The new rules are asserted inside existing AC-23 (state semantics) and AC-26 (root-motion restoration), whose assertion lists were extended, plus the M2 traversal tests. One new M2 test name (`TraversalAbortPaths`) records the coverage | §4 (unchanged), §5 |
+| **C-17** | Data and contract consequences | — | `FTDDTraversalSpec` fields named for M2 content (`AbortWindow`, `TraversalCommitFraction`, `CommitSnapTolerance`); one additional field (`FTDDDamageRequest::bCausesStagger`) requested from Agent 3 as a **proposal** — no Core type created or frozen | §3.2.3, Appendix A |
+
+### Deliberately unchanged
+
+Everything the Technical Director accepted in round 1 stands: AC-01…AC-31 and its thresholds, L1–L3 latency definitions and the prohibition on tick-group changes without measurement, the five camera criteria and their first-pass thresholds, the 50 cm blocked-step baseline, dodge refusal without cooldown consumption, ADR-0013 v1.1's provisional execution model, configurable warp limits, and the status of the Core types as proposals. No other section of this document was edited in this revision.
+
+### Status after revision
+
+**No implementation, no compilation, no test execution, no measurement.** `DESIGN_ONLY`; M1 implementation remains `BLOCKED` on B-1…B-6.

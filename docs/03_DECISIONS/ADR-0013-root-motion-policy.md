@@ -1,10 +1,10 @@
 # ADR-0013 — Root motion: execution, collision, interruption and restoration
 
-- **Status:** Proposed — **v1.1**, revised after Technical Director review (review item 8)
+- **Status:** Proposed — **v1.2** (v1.1 accepted provisionally by the Technical Director; v1.2 aligns the damage/interruption taxonomy with M1 spec §3.2.1–§3.2.3)
 - **Date:** 2026-11-16
 - **Deciders:** Technical Director; Agent 1 (owner); Agent 2 (consumes enemy attack timing and traversal transitions)
 - **Owning agent:** 1
-- **Supersedes:** v1.0 (`archive/ADR-0013-root-motion-policy_V1.0.md`, preserved unchanged)
+- **Supersedes:** v1.1 (`archive/ADR-0013-root-motion-policy_V1.1.md`) and v1.0 (`archive/ADR-0013-root-motion-policy_V1.0.md`) — both preserved unchanged
 - **Related:** ADR-0005 (animation provider), ADR-0012 (verification boundary), M1 spec v1.1 §3.5/§3.7/AC-26
 
 ## 1. Context
@@ -68,9 +68,10 @@ No option is adopted until the test says which is needed. Writing the fallbacks 
 |---|---|
 | Natural end | Montage ends → restoration checklist |
 | Declared cancel window | Allowed cancel (e.g. dodge from attack recovery) → restoration checklist, then the new action |
-| Damage that staggers | Forced `Stagger` → root motion stops immediately → restoration checklist → hit reaction |
-| Death | Forced `Dead` → root motion stops → restoration checklist → death presentation |
-| Cinematic takeover | Forced `Cinematic` → action aborted → restoration checklist → mode frozen and recorded |
+| **Staggering damage** (`bCausesStagger`, posture break, or parry) | Forced `Stagger`, never refusable → if the action had displaced the capsule, resolve a legal resting position first → root motion stops → restoration checklist → hit reaction starts **after** restoration |
+| **Non-staggering damage** | Not a state transition. It is an abort request (a) honoured only by states that declare it, inside their declared window, or (b) ignored. If honoured: resolve resting position → restoration checklist → return to that state. Health is affected either way; only control changes |
+| Death (lethal damage) | Forced `Dead`, outranks stagger → resolve resting position (a corpse must not be left mid-clip or mid-air) → root motion stops → restoration checklist → death presentation |
+| Cinematic takeover | Forced `Cinematic` → action aborted **without** any positional fallback (the cinematic owns placement) → restoration checklist except mode restore → mode frozen and recorded |
 | Unpossess / EndPlay / level transition | Restoration checklist must not leave the CMC in a non-default mode; EndPlay asserts restoration in Development |
 | Self-cancel | Prohibited inside the state's min dwell (no dodge-cancelling a dodge) |
 
@@ -88,6 +89,8 @@ No option is adopted until the test says which is needed. Writing the fallbacks 
 
 A test asserts all nine steps ran on natural exit **and** on each forced path; a double-restore (step already in the restored state) logs a warning, because it indicates two systems believe they own the action.
 
+**Ordering rule (v1.2):** *positional fallback → restoration → target state entry.* Applying the target state first would start a hit-reaction montage while root motion was still driving the capsule, producing a stagger that travels — the specific failure this ADR exists to prevent. The consequence for staggering damage is deliberate: the character resolves where it legally stands **before** it is staggered, so a stagger on a ledge grip does not end mid-air.
+
 ## 6. Decision — traversal exit revalidation
 
 At the exit notify, before any snap:
@@ -95,8 +98,10 @@ At the exit notify, before any snap:
 1. Re-sweep the exit capsule (location **and** rotation) against current collision, including dynamic actors that moved since detection.
 2. Verify a walkable floor exists at the exit (downward trace; slope within limits).
 3. **Valid** → snap to the exit transform, hand control back to CMC in the restored mode, run the restoration checklist.
-4. **Invalid** → take the documented fallback (drop to the ground beneath; if that is also invalid, reverse to the entry side), log `Traversal.ExitInvalid`, publish a diagnostic event, and remain playable. **Never** teleport into geometry.
-5. The traversal montage is interruptible by damage/death, which runs the fallback and the checklist.
+4. **Invalid** → take the documented fallback, log `Traversal.ExitInvalid`, publish a diagnostic event, and remain playable. **Never** teleport into geometry.
+5. The fallback is not a single option but the ordered resolution defined in M1 spec §3.2.2 (`ResolveAbortFallback`): complete the traversal if past the commit fraction and the exit is *currently* valid; otherwise reverse to the entry side if valid; otherwise drop to a walkable floor beneath and enter `Airborne`/`Land`; otherwise hold position, mark unsupported, and log `Traversal.FallbackFailed`.
+6. **Every** exit path of a root-motion action — natural completion, invalid exit, non-staggering damage abort, staggering damage, death, cinematic capture, EndPlay — runs fallback resolution (except cinematic capture, which must not move the capsule) followed by the restoration checklist, in that order. The authoritative enumeration is M1 spec §3.2.3 (E1–E7).
+7. A cinematic takeover must **not** trigger a positional fallback; the cinematic system owns placement, and a silent drop mid-shot would read as a teleport.
 
 ## 7. Decision — warping limits are configurable, not fixed
 
@@ -150,3 +155,4 @@ The attack warp limits of 300 cm and 60° are **provisional defaults**, not rule
 |---|---|---|
 | 1.0 | 2026-11-16 | Initial policy: per-motion table, `MOVE_None` proposal, fixed 300 cm/60° limits |
 | **1.1** | **2026-11-16** | Per TD review item 8: `MOVE_None` withdrawn as an unverified assumption and prohibited for root-motion actions; execution model restated with modes in which CMC's movement update runs; verification-before-trust requirement added with three documented fallbacks; collision authority explicitly assigned to CMC with pre-sweeps demoted to predictions; interruption and a nine-step restoration checklist specified; traversal exit transforms revalidated with a defined fallback; warp limits made configurable with provisional defaults; alternatives and reversal conditions expanded |
+| **1.2** | **2026-11-16** | Review round 2 alignment: interruption table now separates staggering damage, non-staggering damage (abort request, not a transition), lethal damage and cinematic capture; the ordering rule *fallback → restoration → target entry* is stated and justified; traversal §6 references the ordered `ResolveAbortFallback` resolution and enumerates all exit paths (E1–E7) instead of a single "damage/death" clause; prohibition on positional fallback during cinematic capture added. No collision, execution-model, or restoration-step changes. |
