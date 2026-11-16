@@ -14,12 +14,12 @@
       "command": "/usr/bin/python3 -m unittest discover -s Tools/canon/tests",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 79,
+      "duration_ms": 82,
       "stdout_tail": [],
       "stderr_tail": [
         "..................................................................................................................",
         "----------------------------------------------------------------------",
-        "Ran 114 tests in 0.027s",
+        "Ran 114 tests in 0.029s",
         "",
         "OK"
       ]
@@ -28,12 +28,12 @@
       "command": "/usr/bin/python3 -m unittest discover -s Tools/world/tests",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 496,
+      "duration_ms": 448,
       "stdout_tail": [],
       "stderr_tail": [
         ".........................................................................................................................................................................................................................................",
         "----------------------------------------------------------------------",
-        "Ran 233 tests in 0.435s",
+        "Ran 233 tests in 0.386s",
         "",
         "OK"
       ]
@@ -42,7 +42,7 @@
       "command": "/usr/bin/python3 Tools/ci/l0_checks.py",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 304,
+      "duration_ms": 275,
       "stdout_tail": [
         "L0 checks: 14/14 passed"
       ],
@@ -52,7 +52,7 @@
       "command": "/usr/bin/python3 Tools/world/count_reconciliation.py",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 31,
+      "duration_ms": 33,
       "stdout_tail": [
         "  major_environments                 parsed    1  published 1",
         "  scenes_with_missing_parent         parsed   40  published -  <-- differs (partial capture, expected)",
@@ -67,7 +67,7 @@
       "command": "/usr/bin/python3 Tools/world/population_budget.py --chapter CH01",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 36,
+      "duration_ms": 38,
       "stdout_tail": [
         "  banded cost (low/high): 38.38/42.37  complete=False",
         "    band is OPEN at: ['CH01-SCN-014']",
@@ -82,7 +82,7 @@
       "command": "/usr/bin/python3 Tools/world/greybox_rules.py Tools/world/data/greybox_ch01.json",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 26,
+      "duration_ms": 28,
       "stdout_tail": [
         "greybox assets: 3",
         "  CH01-ENV-001     SPATIAL, STREAMING, SIGHTLINE",
@@ -111,7 +111,7 @@
       "command": "/usr/bin/python3 Tools/world/world_manifest.py Tools/world/data/CH01_manifest.json",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 29,
+      "duration_ms": 23,
       "stdout_tail": [
         "manifest: Tools/world/data/CH01_manifest.json",
         "chapter:  CH01",
@@ -125,7 +125,7 @@
       "command": "/usr/bin/python3 -m unittest Tools.canon.tests.test_canon.TestIndexIsValid",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 52,
+      "duration_ms": 42,
       "stdout_tail": [],
       "stderr_tail": [
         "....",
