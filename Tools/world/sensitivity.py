@@ -338,15 +338,37 @@ def combined_scenarios(policy: Dict[str, Any], scenes, details) -> List[Dict[str
 
 def ceiling_headroom(scenarios: Sequence[Dict[str, Any]],
                      ceiling: float) -> Dict[str, Any]:
-    worst = max(scenarios, key=lambda s: s["total_cost_units"])
-    best = min(scenarios, key=lambda s: s["total_cost_units"])
+    """Headroom, reported against BOTH endpoints.
+
+    The TD's range-budgeting rule assigns the endpoints distinct roles: the
+    lower one describes a lower scenario, the upper one is what population
+    capacity must be planned around. A single headroom figure conflates them,
+    and a point figure is worst of all because it is neither endpoint - it bills
+    unresolved scenes at zero and therefore overstates the headroom.
+
+    `headroom_at_worst_case` is the UPPER-endpoint figure, because that is the
+    only one a capacity decision may rely on. The point figure is retained for
+    continuity with W-M2.1 and is labelled as understating.
+    """
+    worst_hi = max(scenarios, key=lambda s: s["band_cost_units_high"])
+    best_lo = min(scenarios, key=lambda s: s["band_cost_units_low"])
+    worst_point = max(scenarios, key=lambda s: s["total_cost_units"])
     return {
         "chapter_ceiling": ceiling,
-        "lowest_scenario_cost": best["total_cost_units"],
-        "highest_scenario_cost": worst["total_cost_units"],
-        "highest_scenario_name": worst["scenario"],
-        "headroom_at_worst_case": round(ceiling - worst["total_cost_units"], 4),
-        "all_scenarios_within_ceiling": worst["total_cost_units"] <= ceiling,
+        "lowest_scenario_cost": best_lo["band_cost_units_low"],
+        "highest_scenario_cost": worst_hi["band_cost_units_high"],
+        "highest_scenario_name": worst_hi["scenario"],
+        "headroom_at_worst_case": round(ceiling - worst_hi["band_cost_units_high"], 4),
+        "headroom_basis": "upper endpoint of the worst scenario (conservative "
+                          "population-capacity planning)",
+        "point_headroom_at_worst_scenario": round(
+            ceiling - worst_point["total_cost_units"], 4),
+        "point_headroom_basis": "point estimate of the worst scenario; UNDERSTATES "
+                                "because unresolved scenes are billed at zero",
+        "all_scenarios_within_ceiling":
+            worst_hi["band_cost_units_high"] <= ceiling,
+        # The upper band is OPEN at CH01-SCN-014, so even this figure is a floor.
+        "is_a_floor_not_a_ceiling": not worst_hi["band_is_complete"],
     }
 
 
@@ -560,12 +582,19 @@ def main(argv: Sequence[str]) -> int:
         flag = "" if s["still_within_chapter_ceiling"] else "  CEILING EXCEEDED"
         print(f"  {s['scenario']:14s} npcs={s['expected_npcs_default']} "
               f"ratio={s['crowd_concurrency_ratio']:.2f}  "
-              f"cost={s['total_cost_units']:6.2f}  sim={s['simulated_npcs']:3d}  "
+              f"point={s['total_cost_units']:6.2f}  "
+              f"band={s['band_cost_units_low']:6.2f}-{s['band_cost_units_high']:6.2f}  "
+              f"sim={s['simulated_npcs']:3d}  "
               f"({s['pct_vs_baseline']:+.0f}%){flag}")
     c = report["ceiling"]
     print()
-    print(f"headroom at worst case: {c['headroom_at_worst_case']} of "
-          f"{c['chapter_ceiling']} ({c['highest_scenario_name']})")
+    print(f"HEADROOM (upper endpoint, capacity planning): {c['headroom_at_worst_case']} "
+          f"of {c['chapter_ceiling']} ({c['highest_scenario_name']})")
+    print(f"  point-estimate headroom (understates): "
+          f"{c['point_headroom_at_worst_scenario']}")
+    if c.get("is_a_floor_not_a_ceiling"):
+        print("  WARNING: band is OPEN (CH01-SCN-014 states no number), so even the "
+              "upper endpoint is a FLOOR on the true cost.")
 
     if out_path:
         out_path.parent.mkdir(parents=True, exist_ok=True)

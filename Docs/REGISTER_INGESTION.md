@@ -63,7 +63,9 @@ Fixtures:
 
 The scene register is fully captured because the population budget depends on the NPC prose, which only appears in the detail blocks.
 
-**Capture status, Chapter 1 scenes: 35 of 46 have verbatim `NPCs present` prose.** Of those 35, 28 reduce to an exact head-count, and 7 state a range, an alternative or a condition ("six to ten adults", "four or five men", "sometimes a traveller"). The 7 are **not** parsed into a single number, because doing so invents a value the register does not state; they are marked `npcs_source: "unparsed"`, carry the reason, and are bounded by `parse_npc_band()` using the register's own words. The remaining **11 scenes have no captured prose** and are budgeted from **policy defaults**, each labelled `npcs_source: "policy_default"`; all 11 are SCRIPTED or NONE tier, whose cost does not depend on the count.
+**Capture status, Chapter 1 scenes: 35 of 46 have verbatim `NPCs present` prose.** Of those 35, **29** reduce to an exact head-count, and **6** state a range, an alternative or a condition ("six to ten adults", "four or five men", "sometimes a traveller"). The 6 are **not** parsed into a single number, because doing so invents a value the register does not state; they are marked `npcs_source: "unparsed"`, carry the reason, and are bounded by `parse_npc_band()` using the register's own words.
+
+An **exact dozen is twelve.** "A dozen people." (`CH01-SCN-018`) is a definite quantity and is counted as 12; `dozens`, `several dozen` and `a dozen or so` remain indefinite and are refused. W-M2.2 wrongly refused the exact case by listing `dozen` among the vague words; corrected in W-M2.3. The remaining **11 scenes have no captured prose** and are budgeted from **policy defaults**, each labelled `npcs_source: "policy_default"`; all 11 are SCRIPTED or NONE tier, whose cost does not depend on the count.
 
 The earlier abridged fixture is retained rather than edited in place. Editing it would have made the previous milestone's published figures unreproducible; instead the superseding capture lives in a new file and `sensitivity.py --previous` recomputes the old numbers exactly.
 

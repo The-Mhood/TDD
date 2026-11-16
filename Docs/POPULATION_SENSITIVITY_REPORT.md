@@ -33,12 +33,12 @@ Values read from the register. Every row traces to a scene id.
 |---|---|
 | Chapter 1 scenes | 46 |
 | Scenes with verbatim NPC prose | **35** (76% of the chapter) |
-| — reducing to an exact head-count | 28 |
-| — stating a range, alternative or condition | 7 |
+| — reducing to an exact head-count | 29 |
+| — stating a range, alternative or condition | 6 |
 | Scenes with no captured prose | 11 |
 | Location entries captured | 13 of 57 (**partial**) |
 
-**Point coverage is 61% (28 of 46). Prose coverage is 76% (35 of 46).** The difference
+**Point coverage is 63% (29 of 46). Prose coverage is 76% (35 of 46).** The difference
 is deliberate and is explained in §3.
 
 The 7 unresolved scenes are not parser failures. The register genuinely does not state a
@@ -144,11 +144,18 @@ reading the old model.
 | Crowd peak | 29 | **22** |
 | Scenario spread | 2.5× | **1.4×** |
 | Worst case | 58.97 | **33.38** |
-| Headroom below the 60-unit ceiling | 1.03 | **26.62** |
+| Headroom below the 60-unit ceiling (upper endpoint) | 1.03 | **11.63** |
+| — point-estimate headroom (understates) | — | 26.62 |
 | Share of cost on policy-default scenes | 75% | **4.6%** |
 
-The ceiling is no longer at risk under any plausible assumption in this sweep. In v1.0
-the worst case sat 1.03 units below it, which was the finding that justified the capture.
+Under the TD's range-budgeting rule, capacity is planned around the **upper** endpoint,
+not the point figure. On that basis the worst scenario leaves **11.63** units of headroom,
+not 26.62. The 26.62 figure is the point estimate, which bills unresolved scenes at zero
+and therefore overstates headroom; it is retained only for continuity with v1.0.
+
+The v1.0 worst case sat 1.03 units below the ceiling, which was the finding that
+justified the capture. The margin is now larger, but it is still a floor: the band is
+open at `CH01-SCN-014`.
 
 ---
 

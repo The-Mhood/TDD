@@ -107,7 +107,14 @@ class SceneBudget:
     # duplicated deliberately: a field a human can read at a glance is worth more
     # than a rule they must remember.
     npcs_provenance: str           # REGISTER_DATA | POLICY_DEFAULT | UNPARSED | NO_NPCS
-    npcs_is_measured: bool         # True only when read from the register
+    # MEASUREMENT IS NOT PROVENANCE. A count authored in the register is
+    # transcribed DATA: it tells us what the designer wrote, not what actually
+    # happens in a running build. Nothing in this project has been observed.
+    # This field is therefore False for every row, and exists so that a consumer
+    # can assert that rather than infer it from a comment. If any row ever
+    # becomes True, it means someone ran a measurement - which requires an
+    # engine that does not exist yet.
+    npcs_is_measured: bool = False
     # The register's OWN numeric bounds for the field, where it states any.
     # "Six to ten adults" yields (6, 10). A collective with no number yields
     # (None, None) and the field stays genuinely unresolved. These are register
@@ -294,7 +301,18 @@ def build_chapter_budget(scenes: Sequence[reg.SceneRecord],
             band_rows.append({
                 "scene_id": scene.id, "tier": tier, "access": access,
                 "npcs_band": [band_low, band_high], "basis": band_basis,
+                # The register's OWN words, preserved verbatim. A reader must be
+                # able to check the endpoints against the source without opening
+                # the fixture, and no summarising step may sit between them.
+                "register_wording": (detail.npcs_present if detail else ""),
                 "cost_band": [round(lo, 2), round(hi, 2)],
+                # The TD's range-budgeting rule, stated per row so the meaning of
+                # the two endpoints cannot drift from what they are used for.
+                "endpoint_use": {
+                    "low": "lower scenario bound",
+                    "high": "conservative population-capacity planning",
+                },
+                "midpoint_used": False,
             })
         else:
             band_cost_low += cost * access_mult
@@ -316,7 +334,9 @@ def build_chapter_budget(scenes: Sequence[reg.SceneRecord],
             policy["scene_category_tiers"] else "fallback",
             npcs_from_register=npcs, npcs_source=npcs_source,
             npcs_provenance=provenance,
-            npcs_is_measured=(npcs_source == "register"),
+            # Authored register data is not empirical measurement. See the field
+            # comment on SceneBudget; this is deliberately always False.
+            npcs_is_measured=False,
             npcs_band_low=band_low,
             npcs_band_high=band_high,
             npcs_band_basis=band_basis,

@@ -51,15 +51,14 @@
       "CH01-SCN-005",
       "CH01-SCN-014",
       "CH01-SCN-017",
-      "CH01-SCN-018",
       "CH01-SCN-020",
       "CH01-SCN-021",
       "CH01-SCN-034"
     ],
     "npcs_provenance_summary": {
       "POLICY_DEFAULT": 11,
-      "REGISTER_DATA": 28,
-      "UNPARSED": 7
+      "REGISTER_DATA": 29,
+      "UNPARSED": 6
     },
     "npcs_band_summary": {
       "scenes_with_stated_bounds": 5,
@@ -77,10 +76,16 @@
             1
           ],
           "basis": "conditional presence (0 when absent)",
+          "register_wording": "Sometimes one cook.",
           "cost_band": [
             0.3,
             0.3
-          ]
+          ],
+          "endpoint_use": {
+            "low": "lower scenario bound",
+            "high": "conservative population-capacity planning"
+          },
+          "midpoint_used": false
         },
         {
           "scene_id": "CH01-SCN-017",
@@ -91,10 +96,16 @@
             10
           ],
           "basis": "stated range (X to Y)",
+          "register_wording": "Six to ten adults; Unoka (storyteller) some days.",
           "cost_band": [
             5.0,
             8.0
-          ]
+          ],
+          "endpoint_use": {
+            "low": "lower scenario bound",
+            "high": "conservative population-capacity planning"
+          },
+          "midpoint_used": false
         },
         {
           "scene_id": "CH01-SCN-020",
@@ -105,10 +116,16 @@
             5
           ],
           "basis": "stated alternative (X or Y)",
+          "register_wording": "Four or five men.",
           "cost_band": [
             3.0,
             4.0
-          ]
+          ],
+          "endpoint_use": {
+            "low": "lower scenario bound",
+            "high": "conservative population-capacity planning"
+          },
+          "midpoint_used": false
         },
         {
           "scene_id": "CH01-SCN-021",
@@ -119,10 +136,16 @@
             1
           ],
           "basis": "conditional presence, singular person named (0 to 1)",
+          "register_wording": "Occasional passer-by.",
           "cost_band": [
             0.0,
             0.0
-          ]
+          ],
+          "endpoint_use": {
+            "low": "lower scenario bound",
+            "high": "conservative population-capacity planning"
+          },
+          "midpoint_used": false
         },
         {
           "scene_id": "CH01-SCN-034",
@@ -133,10 +156,16 @@
             1
           ],
           "basis": "conditional presence, singular person named (0 to 1)",
+          "register_wording": "Sometimes a traveller.",
           "cost_band": [
             0.0,
             0.0
-          ]
+          ],
+          "endpoint_use": {
+            "low": "lower scenario bound",
+            "high": "conservative population-capacity planning"
+          },
+          "midpoint_used": false
         }
       ],
       "_note": "Bounds are the register's own wording (for example 'six to ten', 'four or five', 'sometimes one'). Where a field states no bound the band is open in that direction and the upper figure is a LOWER bound on the true cost."
@@ -157,7 +186,7 @@
         "npcs_from_register": 2,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 2,
         "npcs_band_high": 2,
         "npcs_band_basis": "stated count",
@@ -179,7 +208,7 @@
         "npcs_from_register": 8,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 8,
         "npcs_band_high": 8,
         "npcs_band_basis": "stated count",
@@ -199,7 +228,7 @@
         "npcs_from_register": 4,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 4,
         "npcs_band_high": 4,
         "npcs_band_basis": "stated count",
@@ -221,7 +250,7 @@
         "npcs_from_register": 1,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 1,
         "npcs_band_high": 1,
         "npcs_band_basis": "stated count",
@@ -264,7 +293,7 @@
         "npcs_from_register": 0,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 0,
         "npcs_band_high": 0,
         "npcs_band_basis": "stated absence",
@@ -286,7 +315,7 @@
         "npcs_from_register": 0,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 0,
         "npcs_band_high": 0,
         "npcs_band_basis": "stated absence",
@@ -308,7 +337,7 @@
         "npcs_from_register": 2,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 2,
         "npcs_band_high": 2,
         "npcs_band_basis": "stated count",
@@ -330,7 +359,7 @@
         "npcs_from_register": 1,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 1,
         "npcs_band_high": 1,
         "npcs_band_basis": "stated count",
@@ -350,7 +379,7 @@
         "npcs_from_register": 2,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 2,
         "npcs_band_high": 2,
         "npcs_band_basis": "stated count",
@@ -372,7 +401,7 @@
         "npcs_from_register": 1,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 1,
         "npcs_band_high": 1,
         "npcs_band_basis": "stated count",
@@ -392,7 +421,7 @@
         "npcs_from_register": 1,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 1,
         "npcs_band_high": 1,
         "npcs_band_basis": "stated count",
@@ -412,7 +441,7 @@
         "npcs_from_register": 1,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 1,
         "npcs_band_high": 1,
         "npcs_band_basis": "stated count",
@@ -480,7 +509,7 @@
         "npcs_from_register": 4,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 4,
         "npcs_band_high": 4,
         "npcs_band_basis": "stated count",
@@ -521,9 +550,9 @@
         "parent_id": "CH01-SUB-011",
         "tier": "SCRIPTED",
         "tier_source": "policy:WORLD ACTIVITY SCENE",
-        "npcs_from_register": 0,
-        "npcs_source": "unparsed",
-        "npcs_provenance": "UNPARSED",
+        "npcs_from_register": 12,
+        "npcs_source": "register",
+        "npcs_provenance": "REGISTER_DATA",
         "npcs_is_measured": false,
         "npcs_band_low": 12,
         "npcs_band_high": 12,
@@ -531,7 +560,6 @@
         "has_child": false,
         "simulated_cost": 0.3,
         "notes": [
-          "NPC description not machine-parseable: 'A dozen people.'; counted as 0 which UNDERSTATES cost. Manual review required.",
           "Scripted activity: animates on a loop, has no AI or perception."
         ]
       },
@@ -547,7 +575,7 @@
         "npcs_from_register": 1,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 1,
         "npcs_band_high": 1,
         "npcs_band_basis": "stated count",
@@ -611,7 +639,7 @@
         "npcs_from_register": 0,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 0,
         "npcs_band_high": 0,
         "npcs_band_basis": "stated absence",
@@ -653,7 +681,7 @@
         "npcs_from_register": 0,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 0,
         "npcs_band_high": 0,
         "npcs_band_basis": "stated absence",
@@ -673,7 +701,7 @@
         "npcs_from_register": 1,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 1,
         "npcs_band_high": 1,
         "npcs_band_basis": "stated count",
@@ -741,7 +769,7 @@
         "npcs_from_register": 2,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 2,
         "npcs_band_high": 2,
         "npcs_band_basis": "stated count",
@@ -763,7 +791,7 @@
         "npcs_from_register": 2,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 2,
         "npcs_band_high": 2,
         "npcs_band_basis": "stated count",
@@ -783,7 +811,7 @@
         "npcs_from_register": 3,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 3,
         "npcs_band_high": 3,
         "npcs_band_basis": "stated count",
@@ -803,7 +831,7 @@
         "npcs_from_register": 3,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 3,
         "npcs_band_high": 3,
         "npcs_band_basis": "stated count",
@@ -825,7 +853,7 @@
         "npcs_from_register": 0,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 0,
         "npcs_band_high": 0,
         "npcs_band_basis": "stated absence",
@@ -847,7 +875,7 @@
         "npcs_from_register": 1,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 1,
         "npcs_band_high": 1,
         "npcs_band_basis": "stated count",
@@ -914,7 +942,7 @@
         "npcs_from_register": 0,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 0,
         "npcs_band_high": 0,
         "npcs_band_basis": "stated absence",
@@ -934,7 +962,7 @@
         "npcs_from_register": 1,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 1,
         "npcs_band_high": 1,
         "npcs_band_basis": "stated count",
@@ -1089,7 +1117,7 @@
         "npcs_from_register": 0,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 0,
         "npcs_band_high": 0,
         "npcs_band_basis": "stated absence",
@@ -1109,7 +1137,7 @@
         "npcs_from_register": 0,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 0,
         "npcs_band_high": 0,
         "npcs_band_basis": "stated absence",
@@ -1131,7 +1159,7 @@
         "npcs_from_register": 0,
         "npcs_source": "register",
         "npcs_provenance": "REGISTER_DATA",
-        "npcs_is_measured": true,
+        "npcs_is_measured": false,
         "npcs_band_low": 0,
         "npcs_band_high": 0,
         "npcs_band_basis": "stated absence",
@@ -1144,7 +1172,7 @@
   "validation": {
     "problems": [],
     "warnings": [
-      "CH01: 6 scene(s) state a range, alternative or condition rather than a head-count. The point estimate bills them at 0 and therefore UNDERSTATES; the band 38.38-42.37 carries the register's own limits. Resolving them needs a ruling on how a range is budgeted, not more parsing: ['CH01-SCN-005', 'CH01-SCN-017', 'CH01-SCN-018', 'CH01-SCN-020', 'CH01-SCN-021', 'CH01-SCN-034']",
+      "CH01: 5 scene(s) state a range, alternative or condition rather than a head-count. The point estimate bills them at 0 and therefore UNDERSTATES; the band 38.38-42.37 carries the register's own limits. Resolving them needs a ruling on how a range is budgeted, not more parsing: ['CH01-SCN-005', 'CH01-SCN-017', 'CH01-SCN-020', 'CH01-SCN-021', 'CH01-SCN-034']",
       "CH01: the cost band is OPEN because ['CH01-SCN-014'] states no NPC number. The band's upper figure is a LOWER bound on the true cost.",
       "CH01: 11 scene(s) remain uncaptured and rest on a policy default. All are SCRIPTED or NONE tier, whose cost does not depend on the count, so they carry provenance debt rather than numeric exposure."
     ],

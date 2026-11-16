@@ -51,8 +51,8 @@ class TestFactsAreSeparatedFromAssumptions(unittest.TestCase):
         # Post-capture: 28 scenes resolve to an exact head-count and 7 more
         # carry register prose that states only a bound. Both are register data;
         # only the first is a point value, and the report keeps them apart.
-        self.assertEqual(facts["scenes_with_register_npc_data"], 28)
-        self.assertEqual(facts["scenes_with_register_prose_unresolved"], 7)
+        self.assertEqual(facts["scenes_with_register_npc_data"], 29)
+        self.assertEqual(facts["scenes_with_register_prose_unresolved"], 6)
         self.assertEqual(facts["scenes_total"], 46)
 
     def test_coverage_is_reported_honestly(self):
@@ -327,6 +327,26 @@ class TestReportDocMatchesArtifact(unittest.TestCase):
         self.assertIn("OPEN", self.doc)
         self.assertIn("CH01-SCN-014", self.doc)
         self.assertIn("lower bound on the true cost", self.doc)
+
+    def test_headroom_is_reported_against_the_upper_endpoint(self):
+        """TD range-budgeting rule: capacity planning uses the upper endpoint.
+
+        A report that quotes only the point headroom is quoting the one figure
+        that is neither endpoint, and the most flattering.
+        """
+        ceiling = self.data["ceiling"]
+        self.assertEqual(ceiling["headroom_at_worst_case"],
+                         round(ceiling["chapter_ceiling"]
+                               - ceiling["highest_scenario_cost"], 4))
+        self.assertIn("upper endpoint", ceiling["headroom_basis"].lower())
+        self.assertIn("understates", ceiling["point_headroom_basis"].lower())
+        self.assertIn("11.63", self.doc)
+        self.assertIn("upper", self.doc.lower())
+
+    def test_report_never_presents_point_cost_as_measured_runtime(self):
+        for banned in ("measured runtime", "measured performance",
+                       "observed frame time", "measured cost"):
+            self.assertNotIn(banned, self.doc.lower())
 
     def test_report_states_the_dead_parameter(self):
         """The single most important change, and the one most likely to be

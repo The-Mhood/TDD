@@ -500,12 +500,16 @@ _CHILD_WORDS = ("child", "children", "boy", "boys", "girl", "girls")
 
 
 #: ("six to ten"), an alternative ("four or five") and a vagueness marker
-#: ("several", "occasional", "a dozen") all describe a population the register
-#: has NOT pinned down. Reducing any of them to one integer would invent
-#: precision the source does not have.
+#: ("several", "occasional") all describe a population the register has NOT
+#: pinned down. Reducing any of them to one integer would invent precision the
+#: source does not have.
+#:
+#: "a dozen" is NOT in this list. It is a definite quantity: exactly twelve.
+#: "dozens" is indefinite and remains listed. The two differ by one letter and
+#: by an order of magnitude of precision, so they are matched separately.
 _VAGUE_WORDS = (
     "several", "some", "few", "many", "various", "occasional", "occasionally",
-    "sometimes", "usually", "often", "rare", "rarely", "dozen", "dozens",
+    "sometimes", "usually", "often", "rare", "rarely", "dozens",
     "handful", "couple", "line", "bunch", "crowd",
 )
 #: Range connectors: "six to ten", "four or five", "between three and five".
@@ -591,6 +595,32 @@ def parse_npc_count(npcs_present: str) -> "tuple[int, bool, bool]":
 
     if any(lowered == p or lowered.startswith(p) for p in _ABSENCE_PHRASES):
         return 0, has_child, True
+
+    # --- Exact dozen. ------------------------------------------------------
+    # "A dozen people." is twelve people. This is a definite quantity, not a
+    # vague one, and refusing it would be a false negative of the same kind as
+    # the old "six to ten -> 16" error, only in the opposite direction: it
+    # understates a scene the register actually pins down.
+    #
+    # The variants below are NOT all twelve, and each is handled explicitly
+    # rather than by a loose regex:
+    #   "two dozen"      -> 24
+    #   "half a dozen"   -> 6
+    #   "a dozen or so"  -> NOT exact; an approximation, refused
+    #   "dozens"         -> indefinite, refused by the vague-word gate
+    m = re.search(r"\b([a-z]+|\d+)?\s*dozen\b", lowered)
+    if m:
+        if re.search(r"\bdozen\s+(?:or|and)\s+so\b", lowered):
+            return 0, has_child, False      # approximation, not a count
+        prefix = (m.group(1) or "").strip()
+        if prefix == "half" or "half a dozen" in lowered:
+            return 6, has_child, True
+        if prefix in ("a", "one", ""):
+            return 12, has_child, True
+        multiplier = int(prefix) if prefix.isdigit() else _NUMBER_WORDS.get(prefix)
+        if multiplier:
+            return 12 * multiplier, has_child, True
+        # "several dozen", "many dozen" - the vague-word gate will refuse these.
 
     # --- Refusal gate 1: an explicit range or alternative. ----------------
     padded = f" {' '.join(lowered.split())} "
@@ -750,9 +780,25 @@ def parse_npc_band(npcs_present: str) -> "tuple[Optional[int], Optional[int], st
         if lo is not None and hi is not None:
             return min(lo, hi), max(lo, hi), "stated alternative (X or Y)"
 
-    # "a dozen people" is exactly twelve. "dozens" is not, and is caught below.
-    if re.search(r"\b(?:a|one)\s+dozen\b", lowered):
-        return 12, 12, "stated collective equal to twelve (a dozen)"
+    # "a dozen people" is exactly twelve. The same variants the point parser
+    # distinguishes must be distinguished here, or the band and the point
+    # estimate disagree about the same sentence:
+    #   "half a dozen" -> 6, "two dozen" -> 24
+    #   "a dozen or so" -> an approximation, so NO exact bound is claimed
+    #   "dozens"        -> indefinite, falls through to "no bound stated"
+    m_doz = re.search(r"\b([a-z]+|\d+)?\s*dozen\b", lowered)
+    if m_doz and "dozens" not in lowered:
+        if re.search(r"\bdozen\s+(?:or|and)\s+so\b", lowered):
+            return None, None, "approximate collective (a dozen or so); no exact bound"
+        prefix = (m_doz.group(1) or "").strip()
+        if prefix == "half" or "half a dozen" in lowered:
+            return 6, 6, "stated collective equal to six (half a dozen)"
+        if prefix in ("a", "one", ""):
+            return 12, 12, "stated collective equal to twelve (a dozen)"
+        multiplier = int(prefix) if prefix.isdigit() else _NUMBER_WORDS.get(prefix)
+        if multiplier:
+            return (12 * multiplier, 12 * multiplier,
+                    f"stated collective equal to {12 * multiplier} ({multiplier} dozen)")
 
     # Exact count wins when the parser can read one.
     exact, _has_child, parsed = parse_npc_count(text)

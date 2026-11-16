@@ -41,7 +41,7 @@ Supersedes the dependency section of `Docs/WORLD_ASSESSMENT.md`. Kept here becau
 | # | Blocker | Blocks | Owner | Notes |
 |---|---|---|---|---|
 | **B-05** | Chapters 2–8 not ingested | Any per-chapter claim beyond Ch1 | Agent 2 | Only Ch1 locations (partial) and scenes (complete) are captured. Fabricating Ch2–8 numbers is prohibited. |
-| **B-06** | 11 of 46 Ch1 scenes lack detail blocks | Accurate NPC counts | Agent 2 | **Reduced from 41 to 11 by W-M2.2.** The 11 remaining are all SCRIPTED or NONE tier, whose cost does not depend on the count, so this now blocks *provenance*, not accuracy. A further 7 scenes have prose the register does not reduce to an integer (ranges/alternatives/conditions); they are bounded, not resolved. `CH01-SCN-014` states no number at all and leaves the cost band OPEN. |
+| **B-06** | 11 of 46 Ch1 scenes lack detail blocks | Accurate NPC counts | Agent 2 | **Reduced from 41 to 11 by W-M2.2.** The 11 remaining are all SCRIPTED or NONE tier, whose cost does not depend on the count, so this now blocks *provenance*, not accuracy. Of the 35 captured scenes, **29** reduce to an exact head-count. A further 6 have prose the register does not reduce to an integer (ranges/alternatives/conditions); they are bounded, not resolved. (Was 7: `CH01-SCN-018` "A dozen people." resolves to exactly 12 from W-M2.3.) `CH01-SCN-014` states no number at all and leaves the cost band OPEN. |
 | **B-07** | Memories 2–7 unverified | Full memory director | Agent 2 + narrative | Only memory 1 has a verified scene/location binding. |
 | **B-08** | No retired-ID tracking | Canon hygiene | Agent 2 + register owner | A retired ID would parse as active. |
 

@@ -186,8 +186,11 @@ class TestParserRefusesRatherThanInvents(unittest.TestCase):
         self.assertEqual(count, 8)
 
     def test_vague_quantities_are_refused(self):
+        # "A dozen people." was moved OUT of this list by TD correction 1: it is
+        # a definite quantity (12), not a vague one. It is asserted as an exact
+        # count in TestDozenIsExact below. "Dozens" remains indefinite and stays.
         for text in ("Sometimes one cook.", "Occasional passer-by.",
-                     "A dozen people.",
+                     "Dozens of people.", "A dozen or so.",
                      "A line of women and girls filling pots and lifting "
                      "them onto head-pads, talking."):
             with self.subTest(text=text):
@@ -266,12 +269,14 @@ class TestCaptureOutcomes(unittest.TestCase):
         before = OLD_BUDGET.npcs_provenance_summary
         after = NEW_BUDGET.npcs_provenance_summary
         self.assertEqual(before["REGISTER_DATA"], 5)
-        self.assertEqual(after["REGISTER_DATA"], 28)
+        self.assertEqual(after["REGISTER_DATA"], 29)
         self.assertEqual(before["POLICY_DEFAULT"], 41)
         self.assertEqual(after["POLICY_DEFAULT"], 11)
 
     def test_unresolved_scenes_are_named_not_zeroed(self):
-        expected = {"CH01-SCN-005", "CH01-SCN-014", "CH01-SCN-017", "CH01-SCN-018",
+        # CH01-SCN-018 "A dozen people." left this set in W-M2.3: it resolves to
+        # exactly 12 (TD correction 1), so it is no longer unresolved.
+        expected = {"CH01-SCN-005", "CH01-SCN-014", "CH01-SCN-017",
                     "CH01-SCN-020", "CH01-SCN-021", "CH01-SCN-034"}
         self.assertEqual(set(NEW_BUDGET.unparsed_npc_scenes), expected)
 
@@ -324,6 +329,218 @@ class TestTdConstraintsHold(unittest.TestCase):
         # Nothing in this module may claim to be measured.
         for scene in NEW_BUDGET.scenes:
             self.assertFalse(getattr(scene, "is_measured", False))
+
+
+class TestDozenIsExact(unittest.TestCase):
+    """TD correction 1: "A dozen people." is twelve, not an unresolved range.
+
+    The W-M2.2 parser refused it because "dozen" sat in the vague-word list,
+    which conflated "a dozen" (definite) with "dozens" (indefinite). The two
+    differ by one letter and by whether the register has pinned the number down.
+    """
+
+    def test_dozen_is_twelve(self):
+        for text in ("A dozen people.", "A dozen.", "a dozen", "One dozen people."):
+            with self.subTest(text=text):
+                count, _has_child, parsed = reg.parse_npc_count(text)
+                self.assertTrue(parsed, f"{text!r} must parse")
+                self.assertEqual(count, 12)
+
+    def test_scn018_is_an_exact_register_count(self):
+        row = {s.scene_id: s for s in NEW_BUDGET.scenes}["CH01-SCN-018"]
+        self.assertEqual(row.npcs_source, "register")
+        self.assertEqual(row.npcs_provenance, "REGISTER_DATA")
+        self.assertEqual(row.npcs_from_register, 12)
+        self.assertNotIn("CH01-SCN-018", NEW_BUDGET.unparsed_npc_scenes)
+
+    def test_dozen_variants_are_not_all_twelve(self):
+        """A loose regex here would silently misprice two of these."""
+        cases = {
+            "Half a dozen women.": 6,
+            "Two dozen men.": 24,
+        }
+        for text, expected in cases.items():
+            with self.subTest(text=text):
+                self.assertEqual(reg.parse_npc_count(text)[0], expected)
+                self.assertEqual(reg.parse_npc_band(text)[:2], (expected, expected))
+
+    def test_indefinite_quantities_are_still_refused(self):
+        """The correction must not become a licence to guess."""
+        for text in ("Dozens of people.", "A dozen or so.", "Several dozen farmers."):
+            with self.subTest(text=text):
+                self.assertFalse(reg.parse_npc_count(text)[2],
+                                 f"{text!r} is indefinite and must not parse")
+
+    def test_point_count_and_band_never_disagree(self):
+        """If these two disagree, one screen says 12 and another says 6."""
+        texts = ("A dozen people.", "Half a dozen women.", "Two dozen men.",
+                 "A dozen or so.", "Dozens of people.",
+                 "Six to ten adults.", "Four or five men.",
+                 "Sometimes one cook.", "Family of eight across three generations.",
+                 "One woman, one child.", "None.")
+        for text in texts:
+            with self.subTest(text=text):
+                count, _h, parsed = reg.parse_npc_count(text)
+                low, high, _b = reg.parse_npc_band(text)
+                if parsed:
+                    # An exact count must agree with its own band exactly.
+                    self.assertEqual((low, high), (count, count),
+                                     f"{text!r}: point={count} band=({low},{high})")
+                elif low is not None:
+                    # A refused field MAY carry a bound - that is what the band
+                    # is for. But the bound must be a real interval, and the
+                    # exact count must not sit outside it.
+                    self.assertLessEqual(low, high,
+                                         f"{text!r}: inverted band ({low},{high})")
+                    self.assertNotEqual(low, high,
+                                        f"{text!r}: refused an exact count it could "
+                                        f"have read as {low}")
+                else:
+                    # No bound at all is also valid: the register stated a
+                    # collective with no number ("a line of women and girls").
+                    self.assertIsNone(high, f"{text!r}: half-open bound")
+
+
+class TestRangeBudgetingRule(unittest.TestCase):
+    """The TD's modelling decision, encoded where it can be checked.
+
+    Endpoints have distinct jobs. If a midpoint ever appears, or if a derived
+    cost is ever described as runtime performance, the rule has been broken.
+    """
+
+    @staticmethod
+    def _band_rows():
+        import json
+        data = json.loads(
+            (REPO_ROOT / "Docs" / "evidence" / "agent2"
+             / "CH01_population_budget.json").read_text(encoding="utf-8"))
+        return data["budget"]["npcs_band_summary"]["detail"]
+
+    def test_both_endpoints_are_preserved(self):
+        for row in self._band_rows():
+            low, high = row["npcs_band"]
+            self.assertIsNotNone(low, row["scene_id"])
+            self.assertIsNotNone(high, row["scene_id"])
+            self.assertLessEqual(low, high, row["scene_id"])
+
+    def test_original_register_wording_is_preserved(self):
+        """A reader must be able to check an endpoint against the source."""
+        import json
+        harvest = json.loads(
+            (REPO_ROOT / "Tools" / "world" / "data" / "_harvest_progress.json")
+            .read_text(encoding="utf-8"))["verbatim_npcs_present"]
+        for row in self._band_rows():
+            self.assertEqual(row["register_wording"],
+                             harvest[row["scene_id"]],
+                             f"{row['scene_id']}: band row must quote the register "
+                             f"verbatim, not a paraphrase")
+
+    def test_no_midpoint_is_used(self):
+        for row in self._band_rows():
+            self.assertIs(row["midpoint_used"], False, row["scene_id"])
+
+    def test_endpoint_roles_are_stated(self):
+        for row in self._band_rows():
+            self.assertIn("lower", row["endpoint_use"]["low"].lower())
+            self.assertIn("capacity", row["endpoint_use"]["high"].lower())
+
+    def test_no_source_file_computes_a_midpoint(self):
+        """A guard against a future 'helpful' simplification."""
+        import re
+        for path in (REPO_ROOT / "Tools").rglob("*.py"):
+            if "test" in path.name:
+                continue
+            text = path.read_text(encoding="utf-8")
+            for pattern in (r"midpoint\s*=", r"\(\s*lo\w*\s*\+\s*hi",
+                            r"\(\s*low\s*\+\s*high"):
+                self.assertIsNone(re.search(pattern, text),
+                                  f"{path.name} appears to compute a midpoint of the "
+                                  f"band, which the TD's rule forbids")
+
+
+class TestMeasurementIsNotProvenance(unittest.TestCase):
+    """TD correction 2.
+
+    A count authored in the register is DATA transcribed from a design
+    document. A measurement is an observation of a running build. Nothing in
+    this repository has been observed, so no row may claim to be measured -
+    including a row that is faithfully REGISTER_DATA.
+    """
+
+    def test_no_scene_claims_to_be_measured(self):
+        offenders = [s.scene_id for s in NEW_BUDGET.scenes if s.npcs_is_measured]
+        self.assertEqual(offenders, [],
+                         "no engine has run; nothing may be marked measured")
+
+    def test_register_rows_are_still_marked_as_register_provenance(self):
+        """is_measured=False must NOT be implemented by weakening provenance."""
+        rows = [s for s in NEW_BUDGET.scenes if s.npcs_source == "register"]
+        self.assertEqual(len(rows), 29)
+        for row in rows:
+            self.assertEqual(row.npcs_provenance, "REGISTER_DATA", row.scene_id)
+            self.assertFalse(row.npcs_is_measured, row.scene_id)
+
+    def test_generated_json_carries_false_not_null(self):
+        """A missing key reads as 'unknown', which is also wrong. It must be a
+        literal false so a consumer can assert on it directly."""
+        import json
+        data = json.loads(
+            (REPO_ROOT / "Docs" / "evidence" / "agent2"
+             / "CH01_population_budget.json").read_text(encoding="utf-8"))
+        for scene in data["budget"]["scenes"]:
+            self.assertIn("npcs_is_measured", scene, scene.get("scene_id"))
+            self.assertIs(scene["npcs_is_measured"], False, scene.get("scene_id"))
+
+    def test_gate_rejects_a_row_claiming_to_be_measured(self):
+        """The gate must FAIL on an injected true, not merely omit it.
+
+        Without this the field could rot to True and every test would still
+        pass, because none of them reads the field the gate checks.
+        """
+        import json
+        import subprocess
+        import sys
+        artifact = (REPO_ROOT / "Docs" / "evidence" / "agent2"
+                    / "CH01_population_budget.json")
+        original = artifact.read_text(encoding="utf-8")
+        self.addCleanup(artifact.write_text, original, encoding="utf-8")
+
+        data = json.loads(original)
+        target = next(s for s in data["budget"]["scenes"]
+                      if s["npcs_provenance"] == "REGISTER_DATA")
+        target["npcs_is_measured"] = True
+        artifact.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+
+        proc = subprocess.run(
+            [sys.executable, str(REPO_ROOT / "Tools" / "ci" / "l0_checks.py"),
+             "--verbose"],
+            capture_output=True, text=True, cwd=str(REPO_ROOT))
+        self.assertNotEqual(proc.returncode, 0,
+                            "the provenance gate accepted a measured=True row")
+        self.assertIn(target["scene_id"], proc.stdout + proc.stderr)
+
+
+class TestDocsAgreeWithCorrection(unittest.TestCase):
+    """Doc/code drift has been caught three times in this project. The capture
+    classification is quoted in prose in several documents, so it is pinned."""
+
+    DOCS = ("REGISTER_INGESTION.md", "DEPENDENCY_AND_BLOCKER_REGISTER.md")
+
+    def test_docs_quote_the_corrected_classification(self):
+        summary = NEW_BUDGET.npcs_provenance_summary
+        self.assertEqual(summary["REGISTER_DATA"], 29)
+        self.assertEqual(summary["UNPARSED"], 6)
+        for name in self.DOCS:
+            text = (REPO_ROOT / "Docs" / name).read_text(encoding="utf-8")
+            self.assertIn("29", text, f"{name} must state 29 exact")
+            self.assertNotIn("28 reduce to an exact head-count", text,
+                             f"{name} still quotes the superseded W-M2.2 figure")
+
+    def test_no_doc_says_seven_unresolved(self):
+        for name in self.DOCS:
+            text = (REPO_ROOT / "Docs" / name).read_text(encoding="utf-8")
+            self.assertNotIn("7 state a range", text, name)
+            self.assertNotIn("A further 7 scenes", text, name)
 
 
 if __name__ == "__main__":

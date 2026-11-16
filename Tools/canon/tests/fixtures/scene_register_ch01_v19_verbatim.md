@@ -263,7 +263,7 @@ WHAT IS VERBATIM AND WHAT IS NOT
 | Parent location ID | CH01-SUB-011 |
 
 - **NPCs present.** A dozen people.
-- **NPC count resolution.** UNRESOLVED — The register states a COLLECTIVE quantity ("A dozen people"). Twelve is implied but the phrasing is a collective, so it is not treated as a measured head-count.
+- **NPC count resolution.** **RESOLVED = 12** — corrected in W-M2.3 (TD correction 1). "A dozen" is a DEFINITE quantity, not an indefinite one: it is exactly twelve. W-M2.2 classified it as unresolved because `dozen` sat in the vague-word list, which conflated "a dozen" (precise) with "dozens" (indefinite). The verbatim NPCs string above is unchanged; only this resolution note changed. Twelve is authoritative register wording, not an inference, and it is still authored data rather than a measurement.
 
 ### CH01-SCN-019 · A Guard on a Quiet Shift
 

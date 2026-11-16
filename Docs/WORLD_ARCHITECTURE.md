@@ -219,7 +219,9 @@ most of the estimate — is now **completely inert** (elasticity 0.000, previous
 `crowd_cost_unit`, both pure assumptions with no register basis.
 
 The five scenarios span **24.38 to 33.38 cost units**, a 1.4x spread, down from
-2.5x. Worst case leaves 26.62 units below the chapter ceiling, up from 1.03.
+2.5x. Worst case leaves 11.63 units below the chapter ceiling when measured against
+the **upper** endpoint, which is what capacity planning must use; the point estimate
+would show 26.62 and overstate the margin, because it bills unresolved scenes at zero.
 Full analysis: `Docs/POPULATION_SENSITIVITY_REPORT.md`.
 
 Rounding is **upward** (`math.ceil`) by design: overestimating a budget costs

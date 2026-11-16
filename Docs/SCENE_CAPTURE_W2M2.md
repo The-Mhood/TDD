@@ -210,7 +210,7 @@ vacuous.
 | Item | Needs | Owner |
 |---|---|---|
 | `CH01-SCN-014` "Fetching Water" states a collective with no numeral | Directorate ruling: amend the register, or accept an unbounded term and say so wherever the figure is quoted | Creative Director |
-| 7 scenes state bounds, not counts | A ruling on **how a range is budgeted** — a modelling decision, not a parsing one | Agent 2 + TD |
+| 6 scenes state bounds, not counts (was 7; `SCN-018` resolves to 12) | A ruling on **how a range is budgeted** — **RESOLVED by the TD in W-M2.3**: lower endpoint for lower scenarios, upper endpoint for capacity, no midpoint | Closed |
 | 11 scenes remain uncaptured | Register prose does not exist for them; their tier makes it moot for cost | — |
 | Locations still 13 of 57 | A separate capture pass | Agent 2 |
 | Chapters 2–8 not ingested | A separate capture pass | Agent 2 |

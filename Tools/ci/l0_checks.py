@@ -306,13 +306,23 @@ def check_population_provenance() -> List[str]:
         if prov not in allowed:
             problems.append(
                 f"{scene.get('scene_id')}: npcs_provenance {prov!r} not one of {sorted(allowed)}")
-        if prov == "REGISTER_DATA" and scene.get("npcs_is_measured") is not True:
+        # MEASUREMENT IS NOT PROVENANCE. Nothing in this repository has been
+        # observed in a running build, so no row may claim to be measured -
+        # including a row faithfully transcribed from the register. An authored
+        # number is data, not evidence. This check is deliberately BLIND to
+        # provenance: REGISTER_DATA does not earn an exemption, because that
+        # exemption is exactly the mistake it exists to prevent.
+        if scene.get("npcs_is_measured") is not False:
             problems.append(
-                f"{scene.get('scene_id')}: claims REGISTER_DATA but npcs_is_measured is false")
-        if prov in {"POLICY_DEFAULT", "UNPARSED"} and scene.get("npcs_is_measured"):
+                f"{scene.get('scene_id')}: npcs_is_measured={scene.get('npcs_is_measured')!r} "
+                f"with provenance {prov!r} - authored register data is not empirical "
+                f"measurement and no engine has run")
+        # A register count of 0 is legitimate ("None."), so test for ABSENCE,
+        # never falsiness.
+        if prov == "REGISTER_DATA" and scene.get("npcs_from_register") is None:
             problems.append(
-                f"{scene.get('scene_id')}: provenance {prov} but npcs_is_measured is true - "
-                f"an assumption must never be marked as measured")
+                f"{scene.get('scene_id')}: claims REGISTER_DATA but carries no "
+                f"npcs_from_register value")
         # An UNPARSED scene must carry a stated reason. "We could not read it"
         # without a why is indistinguishable from "we did not try".
         if prov == "UNPARSED":
