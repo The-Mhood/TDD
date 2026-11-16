@@ -1247,7 +1247,7 @@ All namespaces below are **requests to the registry**, except the `Status.*` and
 | Field | Value |
 |---|---|
 | Branch | `arena/3bc206a0-tdd` (Agent 1's existing branch; no new branch, no merge) |
-| Source basis commit | `bb2685c605efd4958b1c67944721c77e1b393931` — M1 spec v1.4, assessment v1.4, ADR-0013 v1.4 |
+| Source basis commits | `bb2685c605efd4958b1c67944721c77e1b393931` — M1 spec v1.4, assessment v1.4, ADR-0013 v1.4. This document's own publishing commit: `09769de05975882df8ec1581317bc3fd54ddcae7` on `origin/arena/3bc206a0-tdd` |
 | Packet source commit | `50b14318c8089dedcc688fb2c78ad3cb361c15f5` |
 | Governing addendum read | `TDD-TD-INT-001` **v1.1** (v1.2 absent — TD-01) |
 | Document status | `DESIGN_ONLY`; contract proposals `PROPOSED — NOT FROZEN`; tests `PROPOSED / NOT RUN` |
