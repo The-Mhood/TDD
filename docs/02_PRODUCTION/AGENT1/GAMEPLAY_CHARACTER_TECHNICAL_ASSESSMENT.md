@@ -3,10 +3,10 @@
 **Project:** THE DISOBEDIENT DAUGHTER (*Nwanyi Na-anụghị Ihe*)
 **Agent:** 1 — Gameplay, Character and Combat Engineering
 **Document:** TDD-A1-ASSESS-001
-**Version:** 1.2 — traversal/damage reconciliation per Technical Director review round 2 (2026-11-16)
+**Version:** 1.3 — fallback placement and hold semantics per Technical Director final v1.2 clarifications (2026-11-16)
 **Date:** 2026-11-16
-**Supersedes:** v1.1 (`archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_V1.1.md`) and v1.0 (`archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_V1.0.md`) — both preserved unchanged
-**Change log:** §11 records the v1.0 → v1.1 corrections; §12 records the v1.1 → v1.2 correction
+**Supersedes:** v1.2 (`archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_V1.2.md`), v1.1, v1.0 — all preserved unchanged
+**Change log:** §11 (v1.0 → v1.1), §12 (v1.1 → v1.2), §13 (v1.2 → v1.3)
 **Governing architecture:** `docs/01_ARCHITECTURE/MASTER_ENGINEERING_ARCHITECTURE.md` (TDD-MEAD-001)
 **Next document:** `docs/02_PRODUCTION/AGENT1/M1_MOVEMENT_SPECIFICATION.md`
 
@@ -347,6 +347,8 @@ Trace-based candidate detection (forward + down from a height band), `FTDDTraver
 
 **v1.2 reconciliation (C-13):** the exit notify and its validation are only *one* of seven ways a traversal can end. Damage divides into **staggering** (a forced `Stagger` the state cannot refuse) and **non-staggering** (an abort request honoured only inside a declared window); lethality and cinematic capture are forced and outrank traversal entirely. Every path resolves a legal resting position before restoring the character and before entering the resulting state. The authoritative rules are M1 spec §3.2.1–§3.2.3 (damage taxonomy, abort arbitration, E1–E7), with ADR-0013 §5 (restoration checklist) and §6 (exit validation) as the root-motion side.
 
+**v1.3 additions (C-14):** two properties complete the picture. (1) **Placement is validated twice** — a candidate validated at selection is validated again at the instant of application, because a transform can go stale while a montage plays; a failure discards the transform and tries the next candidate rather than entering the hold path, and the write function is the only code allowed to move the capsule. (2) **Hold never blocks a forced transition**: with no valid placement the capsule keeps its position, the CMC enters `MOVE_Falling` and gravity takes over, while `Stagger`/`Dead` proceeds immediately (hit reaction during the fall, ragdoll immediately, montage death deferred to landing) — which is what makes "never unsupported in an ordinary grounded state" structurally true rather than a convention.
+
 ### 4.9 Combat architecture (summary; detailed in M3/M4 specs)
 
 Per MEAD §5, unchanged: custom attack flow, animation-notify hit windows, one damage pipeline via `FTDDDamageRequest` → GAS effects, posture/stagger, per-actor hitstop, reaction tables, `FTDDDamageAppliedEvent` on the bus. What I add here is the *boundary*: enemies issue `RequestAttack()` intents and receive damage through `ITDDDamageable`; they never play my montages, and I never read their AI state. Enemy attack *timing* is expressed in the same units as mine (gameplay seconds, telegraph duration, active window, recovery) so Agent 2 can build fairness rules without knowing my internals.
@@ -618,3 +620,21 @@ Everything accepted in round 1 stands: the single M1 gate (AC-01…AC-31), the L
 ### Status
 
 `DESIGN_ONLY`. No implementation, no compilation, no tests, no measurements. Prerequisites B-1…B-6 and content C-1…C-5 remain `BLOCKED`.
+
+---
+
+## 13. Change log — v1.2 → v1.3 (Technical Director final v1.2 clarifications, 2026-11-16)
+
+v1.2 is preserved unchanged at `archive/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT_V1.2.md`.
+
+| ID | Item | Correction | Where |
+|---|---|---|---|
+| **C-14** | Fallback placement and hold semantics | §4.8 now records the two clarifications: mandatory second validation at the instant of placement (a candidate failing it is abandoned and the next is attempted, never a stale transform), and hold-under-forced-transition (no fabricated support, `MOVE_Falling`, forced target proceeds immediately, out-of-world routed to the flow system). Detail remains authoritative in M1 spec §3.2.2a–§3.2.2d and ADR-0013 v1.3 §5/§6 | §4.8 |
+
+### Unchanged
+
+The M1 gate (AC-01…AC-31) and every threshold accepted in rounds 1 and 2 stand untouched, as do the milestones, risks, interfaces and the proposal status of the `TDDCore` types. No new acceptance criterion was introduced.
+
+### Status
+
+`DESIGN_ONLY`. No implementation, compilation, test execution or measurement. Prerequisites B-1…B-6 and content C-1…C-5 remain `BLOCKED`.

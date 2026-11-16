@@ -4,13 +4,13 @@
 **Project:** THE DISOBEDIENT DAUGHTER
 **Agent:** 1 — Gameplay, Character and Combat Engineering
 **Document:** TDD-A1-M1-SPEC-001
-**Version:** 1.2 — traversal/damage reconciliation per Technical Director review round 2 (2026-11-16)
+**Version:** 1.3 — fallback-hold semantics and pre-placement revalidation per Technical Director final v1.2 clarifications (2026-11-16)
 **Date:** 2026-11-16
-**Supersedes:** v1.1 (`archive/M1_MOVEMENT_SPECIFICATION_V1.1.md`); v1.0 (`archive/M1_MOVEMENT_SPECIFICATION_V1.0.md`) — both preserved unchanged
+**Supersedes:** v1.2 (`archive/M1_MOVEMENT_SPECIFICATION_V1.2.md`), v1.1 (`archive/M1_MOVEMENT_SPECIFICATION_V1.1.md`), v1.0 (`archive/M1_MOVEMENT_SPECIFICATION_V1.0.md`) — all preserved unchanged
 **Status:** `DESIGN_ONLY` — nothing in this document is implemented or verified
-**Parent:** `GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT.md` v1.2 (TDD-A1-ASSESS-001)
+**Parent:** `GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT.md` v1.3 (TDD-A1-ASSESS-001)
 **Governing:** TDD-MEAD-001 §4, §8, §13, §14, §15; ADR-0002, ADR-0005, ADR-0012, ADR-0013 v1.1
-**Change log:** §13 explains every correction from v1.0 → v1.1 and v1.1 → v1.2
+**Change log:** §13 (v1.0 → v1.1), §14 (v1.1 → v1.2), §15 (v1.2 → v1.3)
 
 ---
 
@@ -39,6 +39,19 @@ The defect was real. v1.1 §3.2 Table B described Traversal as "interruptible by
 v1.2 corrects it with: a damage taxonomy (staggering vs non-staggering), a defined abort-vs-stagger arbitration with explicit ordering, a four-candidate `ResolveAbortFallback()` resolution, and an enumerated table of all seven Traversal exit paths (E1–E7) each with its fallback and restoration sequence (§3.2.1–§3.2.3).
 
 **No acceptance criterion was added, removed, renumbered or re-thresholded. AC-01…AC-31 remain the accepted M1 gate.** The corrected rules are asserted within existing AC-23 (state semantics) and AC-26 (root-motion restoration) plus the M2 traversal test; the assertions were extended, the gate was not changed. All other accepted architecture, thresholds and decisions from round 1 stand unchanged.
+
+### 0.2 v1.3 — the two clarifications required on the accepted v1.2 rules
+
+The Technical Director accepted the v1.2 damage taxonomy, arbitration ordering and seven exit paths in principle, and required two further clarifications. Both concerned places where v1.2 stated *what* should happen without making the outcome unique.
+
+| Clarification | What v1.2 left undefined | What v1.3 fixes |
+|---|---|---|
+| **1. Candidate 4 (Hold) while a forced `Stagger`/`Dead` must proceed and no valid placement exists** | "Hold … `Airborne` if the capsule is ungrounded, else `Idle`" said nothing about the forced transition that follows, and `Idle` is itself an invalid state for an unsupported capsule. A character could have been left hovering in an ordinary grounded state | Hold is split into **4a Hold-Grounded** (validated downward snap ≤ `HoldGroundSnapTolerance`) and **4b Hold-Unsupported** (no fabricated support; `MOVE_Falling`, gravity authoritative), with **4c out-of-world** routed to the flow system. The forced transition always proceeds — it is never refused or delayed by physics — and the presentation plays while falling where necessary (§3.2.2b). A new **control-state vs movement-mode** matrix makes "unsupported in a grounded state" structurally impossible (§3.2.2c) |
+| **2. Immediate pre-placement revalidation failure** | v1.2 validated candidates "at the moment of resolution", which permitted a transform validated at selection to be applied later without a second test — a stale transform | Placement now requires a **second, mandatory validation at the instant of application** (§3.2.2a). A failure abandons the candidate, never applies the stored transform, and continues to the next candidate within a bounded attempt budget; if none succeeds, the §3.2.2b hold path applies. The transform can only be written by the same function that revalidates it, so there is no other write path |
+
+**Gate unchanged.** No acceptance criterion was added, removed, renumbered or re-thresholded; AC-01…AC-31 remain the accepted M1 gate, and all round-1 and round-2 decisions stand. The new rules are asserted inside existing AC-23/AC-26 plus the M2 traversal tests.
+
+**`FTDDDamageRequest::bCausesStagger` remains a proposal** pending Agent 3's Core interface review (§Appendix A). No Core type is created or frozen here.
 
 **No implementation has begun.** No code, no compilation, no tests, no measurements. All statuses remain `DESIGN_ONLY` or `BLOCKED`.
 
@@ -213,7 +226,7 @@ Two facts that hold in both cases and are easy to get wrong:
 
 The flag lives on the damage request, so it is data, not a hard-coded rule. Heavy attacks and unblockable attacks default to staggering; chip damage and environmental hazards default to non-staggering (defaults to be tuned with combat design in M3, not fixed here).
 
-#### 3.2.2 Traversal abort arbitration, ordering and fallback resolution (v1.2)
+#### 3.2.2 Traversal abort arbitration, ordering and fallback resolution (v1.2; extended in v1.3 by 3.2.2a–3.2.2d)
 
 The global policy (§3.2 rules) is that forced transitions preempt unconditionally. Traversal is priority 40 and therefore **cannot resist a stagger**. v1.1's Traversal row implied it could, by listing damage as an interruption the state handles. Corrected arbitration, in this exact order:
 
@@ -236,16 +249,104 @@ Traversal receives an interrupting event:
 
 **Ordering rule (why it is written as a sequence, not a set):** fallback resolution comes **before** restoration, and restoration comes **before** the target state is entered. Entering `Stagger` first would start a hit-reaction montage while traversal root motion was still driving the capsule (ADR-0013 §2), producing a stagger that travels — the exact class of bug the ADR exists to prevent.
 
-**`ResolveAbortFallback()` — ordered candidates, each validated at the moment of resolution** against *current* collision, including dynamic actors that moved since the traversal began:
+**`ResolveAbortFallback()`** returns one of `ETDDFallbackResult { Completed, Reversed, DroppedToFloor, HoldGrounded, HoldUnsupported }`, and is the *only* function that may reposition the capsule during an abort. Ordered candidates, each validated twice (selection **and** placement — §3.2.2a):
 
-| # | Candidate | Condition | Placement and resulting state |
-|---|---|---|---|
-| 1 | **Complete the traversal** — revalidate the exit transform now and snap to it | montage past `TraversalCommitFraction` (default **0.6**, data) **and** exit transform currently valid | Snap (validated only) → `Locomotion`/`Idle` |
-| 2 | **Reverse to entry side** — restore the recorded entry transform if still valid | before the commit fraction | Snap (validated only) → `Locomotion`/`Idle` |
-| 3 | **Drop to the floor beneath** — downward trace for a walkable surface, place the capsule on it | any position; a walkable floor exists below | → `Airborne` → `Land` |
-| 4 | **Hold** — clear root motion, keep the capsule exactly where it is, mark unsupported | no candidate is valid | `Airborne` if the capsule is ungrounded, else `Idle`; log `Traversal.FallbackFailed`, publish a diagnostic event |
+| # | Candidate | Condition | Placement | Result |
+|---|---|---|---|---|
+| 1 | **Complete the traversal** — revalidate the recorded exit transform and snap to it | montage past `TraversalCommitFraction` (default **0.6**, data) and the exit transform is valid *now* | Validated snap only | `Completed` |
+| 2 | **Reverse to entry side** — restore the recorded entry transform | before the commit fraction, and the entry is valid *now* | Validated snap only | `Reversed` |
+| 3 | **Drop to the floor beneath** — downward trace for a walkable surface | a walkable floor exists below the capsule | Capsule placed on that floor | `DroppedToFloor` |
+| 4a | **Hold-Grounded** — keep X/Y, snap down onto nearby support | support exists directly beneath within `HoldGroundSnapTolerance` (default **5 cm**) | Validated downward snap ≤ tolerance | `HoldGrounded` |
+| 4b | **Hold-Unsupported** — no fabricated support | no candidate 1–4a is valid | No transform write at all; X/Y/Z retained; CMC → `MOVE_Falling` | `HoldUnsupported` |
 
-Prohibited on every path: teleporting into geometry; snapping to an unvalidated transform; leaving the capsule unsupported without entering `Airborne`; silently completing a traversal whose exit no longer exists.
+Prohibited on every path: teleporting into geometry; applying a transform that has not been validated **at the instant of application**; leaving the capsule unsupported in an ordinary grounded state; silently completing a traversal whose exit no longer exists; any resolution that takes more than one frame.
+
+The resolution loop is synchronous and single-frame — it performs no async loads and no waits, so there is no interval in which the capsule exists in an undefined placement:
+
+```
+ResolveAbortFallback(Ctx) -> ETDDFallbackResult:
+  StopRootMotion()                          // checklist steps 1-2; idempotent (see 3.2.2b)
+  Failed = {}
+  for attempt in 0 .. Spec.MaxFallbackAttempts (default 2):
+      c = NextCandidate(Failed)              // ordered 1, 2, 3, 4a, 4b; each considered once
+      if c == none: break
+      if not ValidateCandidateNow(c):  Failed += c; LogRevalidation(c, "selection");  continue
+      if not ApplyCandidateNow(c):     Failed += c; LogRevalidation(c, "placement"); continue
+      return ResultOf(c)                    // ApplyCandidateNow wrote the transform itself
+  return ResolveHold(Ctx)                   // 4a or 4b, never a fabricated grounded state
+```
+
+#### 3.2.2a Two-phase validation: a stale transform must never be applied (v1.3, clarification 2)
+
+v1.2 validated candidates once, "at the moment of resolution". For candidate 1 that moment can precede placement by several frames (the snap happens at the exit notify), and even for candidates 2–3 the world can change between validation and the write: a door closes, an NPC walks into the space, a destructible spawns, a moving platform leaves.
+
+The rule is therefore **validate twice, place once**:
+
+1. **Selection validation** — decides whether a candidate is worth attempting.
+2. **Placement validation** — a mandatory second test executed *inside* the write function, against the world state at that instant. Only if it passes is the transform applied.
+
+| Rule | Statement |
+|---|---|
+| Single write path | `ApplyCandidateNow()` performs the final validation and the transform write together. No other code path may write the capsule transform during an abort, so there is no route by which an unvalidated transform reaches the capsule |
+| On placement failure | The stored transform is **discarded**. No partial application, no "best effort" placement. The candidate is added to `Failed` and the loop continues with the next candidate |
+| Next candidate, not immediate hold | A failed candidate does **not** force the hold path. Candidates 2, 3 and 4a are re-evaluated **fresh from the capsule's current position**, because a failure of candidate 1 says nothing about whether a floor exists below. The hold path is reached only when no candidate succeeds, or when the attempt budget is exhausted |
+| Bounded attempts | `MaxFallbackAttempts` (default **2** extra attempts) bounds the loop. Each candidate is considered at most once per call, so resolution cannot cycle or stall the frame |
+| Validators used | Capsule penetration/clearance at the target using the CMC capsule, `ECC_Pawn`, owner ignored; walkable floor and slope limits for grounded results; same-traversal-chain check for candidate 1; dynamic actors included; no overlap with another pawn's capsule |
+| Logging | Every failure logs `Traversal.RevalidationFailed` with candidate id, attempt index, phase (selection/placement), **milliseconds between first validation and placement**, and the blocking component when resolvable. A stale-placement failure must be diagnosable from a capture without reproducing it |
+| Forced transitions during resolution | A forced `Dead`/`Cinematic`/`Stagger` arriving mid-resolution is **queued**, not interleaved: the resolution never yields between candidates, so resolution cannot be abandoned half-done. At the end, the highest-priority pending forced target is applied after restoration (§3.2.2d) |
+
+This is the structural answer to "a stale transform must never be applied": the transform is not merely checked twice, it cannot be written by anything that has not just passed the check.
+
+#### 3.2.2b Candidate 4 (Hold) when a forced transition must proceed (v1.3, clarification 1)
+
+Hold is a **placement outcome, never a state**, and never a mechanism for refusing a forced transition. `Stagger`, `Dead` and `Cinematic` are forced: they are entered regardless of what the placement resolution returns. What Hold decides is only *where the capsule physically is* and *which movement mode is correct there*.
+
+| Sub-case | Condition | Placement | Movement mode | Forced target proceeds |
+|---|---|---|---|---|
+| **4a Hold-Grounded** | walkable support directly beneath within `HoldGroundSnapTolerance` (5 cm) | Validated downward snap ≤ tolerance; X/Y unchanged | `MOVE_Walking` (support verified) | Yes — `Stagger`/`Dead` as normal, grounded |
+| **4b Hold-Unsupported** | no support within tolerance | **No transform write.** Capsule keeps its X/Y/Z exactly as root motion left it | `MOVE_Falling`; gravity and CMC collision are authoritative | Yes — immediately; never delayed, never refused |
+| **4c Out-of-world** | capsule falls below `KillPlaneZ` or leaves level bounds after 4b | None (the flow system takes over) | `MOVE_Falling` until respawn | Yes — `Dead` presentation runs; `Stagger` is superseded by the respawn path |
+
+**Why 4b exists at all:** v1.2's "`Airborne` if ungrounded, else `Idle`" allowed a state called `Idle` for a capsule with no floor under it. That is the "unsupported in an ordinary grounded state" the Technical Director prohibited. 4b removes the possibility: the capsule is never placed anywhere it was not validated to stand, and physics — not the state machine — carries it until it lands.
+
+**Behaviour of each forced target under 4b:**
+
+| Forced target | Under 4b | On landing (pending-grounding recovery) |
+|---|---|---|
+| `Stagger` (staggering damage / posture break) | Hit reaction plays **while falling**; duration is unaffected by the fall unless `bExtendStaggerOnLanding` is set (default **false**) | Landing is resolved inside `Stagger`: landing recovery tail plays, then the normal exit checklist continues to `Locomotion`/`Idle`. A `bPendingGroundingRecovery` flag is set on entry and cleared on resolution |
+| `Dead` — ragdoll presentation | Ragdoll takes over immediately; Chaos physics owns the body; the capsule stops being authoritative | None needed |
+| `Dead` — montage presentation | Presentation is **deferred** until first grounding when `bDelayDeathPresentationUntilGrounded` is true (default **true**), so a death animation never plays in mid-air; the capsule falls under gravity meanwhile | Presentation plays on landing; the corpse settles normally |
+| `Dead`/`Stagger` never grounds | 4c: falls below `KillPlaneZ` → flow system respawns at the last checkpoint, logged as `Traversal.FellOutOfWorld` | — |
+
+**Restoration checklist exception (explicit, logged, not silent):** under 4b, step 3 of the nine-step checklist ("restore the movement mode recorded at action start") is **not** performed. Restoring `MOVE_Walking` for a capsule with no support would put the state machine back in exactly the state the Technical Director prohibited. Instead the CMC is set to `MOVE_Falling` and `Restoration.ModeOverrideFalling` is logged with the resolution result. Every other step runs unchanged, and the double-run guard still applies. This exception is mirrored in ADR-0013 §5.
+
+#### 3.2.2c Control state vs movement mode (v1.3)
+
+The reason v1.2 could describe an unsupported grounded state is that control state and movement mode were used interchangeably. They are orthogonal, and this table is the invariant that prevents a repeat:
+
+| Control state | Permitted movement modes | Support requirement |
+|---|---|---|
+| `Idle`, `Locomotion`, `Sprint`, `Interaction`, `Block`, `Parry` | `MOVE_Walking` | Validated support **required**; unreachable by any fallback result other than `Completed`/`Reversed`/`DroppedToFloor`/`HoldGrounded` |
+| `Airborne` | `MOVE_Falling` | None |
+| `Land` | `MOVE_Walking` | Support required (it is the resolution of a landing) — entered only after grounding is confirmed |
+| `Dodge` | `MOVE_Walking` (grounded), `MOVE_Falling` if air-dodge is enabled | Grounded form requires support |
+| `Attack` | `MOVE_Walking` normally | Support required unless an air attack is approved |
+| `Stagger` | `MOVE_Walking` **or** `MOVE_Falling` | None — may stagger while falling (§3.2.2b) |
+| `Dead` | `MOVE_Walking`, `MOVE_Falling`, or ragdoll simulation | None |
+| `Traversal` | `MOVE_Walking` or `MOVE_Flying` (ADR-0013 §2) | Governed by the traversal candidate's own validation |
+| `Cinematic` | Frozen; mode recorded by the cinematic subsystem | None |
+
+Invariant, now testable: **a state that requires support may not be entered while the capsule is unsupported.** `ResolveAbortFallback() == HoldUnsupported` therefore forbids entering `Idle`, `Locomotion`, `Sprint`, `Block`, `Parry`, `Interaction` or grounded `Attack`; the only legal outcomes are `Airborne`, a forced target running in `MOVE_Falling`, the cinematic freeze, or the 4c respawn.
+
+#### 3.2.2d Forced transitions arriving during resolution (v1.3)
+
+| Situation | Rule |
+|---|---|
+| Forced transition arrives while resolution is running | Queued as `PendingForcedTarget`; resolution is not interrupted, because abandoning it mid-way could leave the capsule unplaced. The queue holds the **highest priority** only (`Dead` 100 > `Cinematic` 90 > `Stagger` 80) |
+| Resolution completes with a pending target | Restoration runs, then the pending target is entered. If the result was `HoldUnsupported`, §3.2.2b governs the entry |
+| Resolution *was itself* triggered by a forced transition (E4/E5) | The triggering transition is the pending target; it is never overwritten by a lower-priority one, only by a higher-priority one (`Dead` over `Stagger`) |
+| Cinematic arrives after `Dead` | Refused for the pawn (priority), logged; the cinematic may still play as a non-gameplay sequence with the corpse |
+| Multiple forced events in one frame | Exactly one state change occurs. The highest priority wins; the others are logged as superseded |
 
 #### 3.2.3 Every Traversal exit path, its fallback and its restoration (v1.2)
 
@@ -255,9 +356,9 @@ The requirement was that **every** exit path has a defined fallback *and* a defi
 |---|---|---|---|---|
 | **E1** | Natural completion — exit notify reached, exit transform revalidated as valid (§3.7) | None required | Full nine-step checklist (ADR-0013 §5), then snap | `Locomotion` / `Idle` |
 | **E2** | Natural completion — exit notify reached, **exit transform invalid** | `ResolveAbortFallback()` (candidate 1 rejected by definition here, so 2→3→4) | Full checklist, then placement by the resolved candidate | `Locomotion` / `Idle` / `Land` |
-| **E3** | **Non-staggering** damage inside `AbortWindow` (requested abort) | `ResolveAbortFallback()` | Full checklist | `Locomotion` or `Land` |
-| **E4** | **Staggering** damage (including posture break) — forced | `ResolveAbortFallback()` | Full checklist **before** staggered entry, so the hit reaction owns the character and no root motion is applying | `Stagger` |
-| **E5** | Lethal damage — forced, higher priority than stagger | `ResolveAbortFallback()` — a corpse must not be left mid-clip or mid-air | Full checklist, then death presentation | `Dead` |
+| **E3** | **Non-staggering** damage inside `AbortWindow` (requested abort) | `ResolveAbortFallback()`; if it returns `HoldUnsupported`, the requested return to `Locomotion` is **refused** by the support invariant (§3.2.2c) | Full checklist, with the mode-override exception when 4b (§3.2.2b) | `Locomotion` / `Land` (grounded results) or `Airborne` (4b → falls, then `Land`) |
+| **E4** | **Staggering** damage (including posture break) — forced, cannot be refused | `ResolveAbortFallback()`; under 4b the forced entry proceeds immediately with `MOVE_Falling` and sets `bPendingGroundingRecovery` | Full checklist **before** staggered entry, so the hit reaction owns the character and no root motion is applying; mode-override exception under 4b | `Stagger` — grounded, or falling and recovery-completed on landing (§3.2.2b) |
+| **E5** | Lethal damage — forced, outranks stagger | `ResolveAbortFallback()`; under 4b the capsule falls and the death presentation is deferred to first grounding per `bDelayDeathPresentationUntilGrounded` (ragdoll takes over immediately instead); under 4c the flow system respawns at the last checkpoint | Full checklist; mode-override exception under 4b | `Dead` (grounded or falling), or respawn on 4c |
 | **E6** | Cinematic takeover — forced | None; capsule is frozen at its current pose and position, and the cinematic system owns placement | Full checklist **except** movement-mode restoration (mode is frozen and recorded by the cinematic subsystem) | `Cinematic` |
 | **E7** | Unpossess / `EndPlay` / level transition | None (the world is leaving) | Full checklist; movement mode forced to the default so the CMC is never left in a non-default mode | — (state torn down) |
 
@@ -267,8 +368,25 @@ Additional invariants asserted by test:
 - E6 must never run `ResolveAbortFallback()` — a cinematic owns the camera and the placement; a fallback drop mid-shot would read as a teleport.
 - In every path the eight restoration steps plus event publication run exactly once; a second restoration logs `Restoration.DoubleRun` (indicates two owners).
 - A prevented abort (damage outside `AbortWindow`) is logged at Verbose with the montage position, so "why didn't it stop?" is answerable from a capture.
+- **v1.3:** `HoldUnsupported` may never result in a state that requires support (§3.2.2c); the capsule keeps its position and is carried by gravity, never placed on support that was not validated.
+- **v1.3:** a candidate whose **placement** validation fails must not write any transform, and the next candidate must be attempted from the capsule's current position before the hold path is considered (§3.2.2a).
+- **v1.3:** a forced transition is never refused, delayed or dropped by fallback resolution; it is queued and applied after restoration, highest priority only (§3.2.2d).
+- **v1.3:** resolution completes within the frame that interrupted the traversal — asserted by counting resolution entries against state changes per frame.
 
-Data fields this introduces: `FTDDTraversalSpec { FFloatRange AbortWindow; float TraversalCommitFraction; float CommitSnapTolerance; }` in `DA_MovementConfig` (M2 content), and `FTDDDamageRequest::bCausesStagger` (Appendix A proposal, pending Agent 3 — not created here).
+Data fields this introduces, all in `FTDDTraversalSpec` on `DA_MovementConfig` (M2 content — data, not code):
+
+```
+FFloatRange AbortWindow;                    // accepted window for non-staggering aborts
+float       TraversalCommitFraction;        // default 0.6
+float       CommitSnapTolerance;            // candidate 1 placement tolerance
+float       HoldGroundSnapTolerance;        // default 0.05 m  (v1.3, 4a)
+int32       MaxFallbackAttempts;            // default 2      (v1.3, 3.2.2a)
+float       KillPlaneZ;                     // 4c out-of-world (v1.3)
+bool        bDelayDeathPresentationUntilGrounded;  // default true  (v1.3)
+bool        bExtendStaggerOnLanding;        // default false  (v1.3)
+```
+
+`FTDDDamageRequest::bCausesStagger` remains a **proposal** pending Agent 3's Core interface review (Appendix A); it is referenced by these rules and is not created, frozen or assumed here.
 
 Data model: one `FTDDStateRuleRow` per state containing the preconditions (as declarative flags + a small enum of checks, not script), exit-action flags, recovery condition type and values, min dwell, locks, interruption mask and buffer policy. The row is authored in `DT_StateRules`; the state machine interprets it. Tests enumerate all 14×14 pairs and assert that unlisted pairs are refused **and** that listed pairs satisfy their preconditions (AC-22, AC-23).
 
@@ -504,6 +622,7 @@ Tolerances are declared in advance so results are judged, not negotiated.
 | `TDD-Unit.Movement.DodgeSpecMath` | No world | `ResolvedDistance` for 1000 random specs: never negative, never exceeds authored, never exceeds sweep availability; **asserts radius is counted exactly once** (a ray-based variant would subtract it, capsule-based must not); invulnerability range monotonic and inside the montage; behaviour at 0.25× and 2× time dilation |
 | `TDD-Unit.Movement.TurnRateMonotonic` | No world | Yaw approaches target without overshoot, 1000 random pairs |
 | `TDD-Unit.Movement.RootMotionRestoresMovementMode` | Mock action table | 100 random root-motion actions: mode before == mode after, including abort, death and cinematic-interrupt paths |
+| `TDD-Unit.Movement.FallbackResolution` | Pure logic + mock validator, no world | **v1.3:** candidate order 1→2→3→4a→4b honoured; a candidate that validates at selection but **fails at placement writes no transform** and the next candidate is attempted; attempt budget bounds the loop (`MaxFallbackAttempts`); each candidate considered at most once; `HoldUnsupported` returns a `MOVE_Falling` request and never a grounded one; a queued forced target is applied only after resolution completes, highest priority wins; resolution returns within one call/frame |
 | `TDD-Unit.Movement.RootMotionAppliesToCapsule` | Minimal world, one montage with authored root motion | On the first build: capsule displacement > 0 and matches the authored root-motion distance within 5%. **This test exists because v1.0 assumed the mechanism worked** |
 | `TDD-Functional.Movement.LatencyL1` | Flat zone, injector at frame boundary, 60 and 120 FPS | Assert `FrameIntentRecorded - FrameInjected == 0`; repeat with mid-frame injection and assert `== 1` |
 | `TDD-Functional.Movement.LatencyL2` | Same | Assert `FrameVelocityChanged - FrameIntentRecorded == 0` at both frame rates; `Velocity` delta > 1 cm/s |
@@ -530,7 +649,7 @@ Tolerances are declared in advance so results are judged, not negotiated.
 | `TDD-Functional.Movement.NoPermanentInputLock` | All zones | Each state exits within 2 s via declared inputs; `Dead` and `Cinematic` exits forced by test and verified |
 | `TDD-Functional.Movement.LockOnStubStateIsConsistent` | Flat, no targets | No crash, coherent state, camera returns to `Explore`, no acquisition events fired |
 | `TDD-Functional.Movement.TraversalExitRevalidation` | M2 | **E1/E2:** blocker inserted after detection → fallback path taken, no teleport into geometry, exit checklist ran, `Traversal.ExitInvalid` logged; floor removed → no floating capsule |
-| `TDD-Functional.Movement.TraversalAbortPaths` | M2 | **E3–E7:** non-staggering damage inside the window aborts to a resolved position and health still decreases; non-staggering damage outside the window does not abort (state unchanged, logged); staggering damage resolves placement *then* enters `Stagger` (no travelling hit reaction); lethal+staggering enters `Dead` only; cinematic capture freezes the capsule without a fallback drop; `EndPlay` leaves the CMC in its default mode. Each path asserts the restoration checklist ran exactly once |
+| `TDD-Functional.Movement.TraversalAbortPaths` | M2 | **E3–E7:** non-staggering damage inside the window aborts to a resolved position and health still decreases; non-staggering damage outside the window does not abort (state unchanged, logged); staggering damage resolves placement *then* enters `Stagger` (no travelling hit reaction); lethal+staggering enters `Dead` only; cinematic capture freezes the capsule without a fallback drop; `EndPlay` leaves the CMC in its default mode. Each path asserts the restoration checklist ran exactly once. **v1.3 additions:** 4a snaps ≤ 5 cm and is grounded; 4b writes no transform, enters `MOVE_Falling`, and **never** reaches `Idle`/`Locomotion`; a stagger under 4b plays while falling and completes recovery on landing; a montage death under 4b defers presentation to first grounding while a ragdoll death does not; 4c triggers `Traversal.FellOutOfWorld` and the checkpoint respawn path; a candidate failing placement validation mid-abort falls through to the next candidate and succeeds without applying the stale transform; a forced transition arriving mid-resolution is applied after restoration and is never lost |
 
 Result line format (unchanged): `TDD_RESULT <test> <PASS|FAIL> <metric>=<value> ...`, greppable and quotable without interpretation.
 
@@ -657,6 +776,7 @@ Contract stability: names and signatures frozen for M1–M3. Additions allowed; 
 | Metrics harness distorts what it measures | On/off delta ≤ 0.05 ms (AC-30) |
 | Mannequin mistaken for character progress | `PLACEHOLDER-A1-01`, stated in every report; no Adanna-specific tuning |
 | Thresholds are wrong for this game | All **[A1]** thresholds are data and explicitly provisional pending first captures |
+| Stale-transform placement reintroduced by a future "optimisation" | Single-write-path rule (§3.2.2a) plus a unit test that flips validity between selection and placement; review rejects any second transform writer |
 | Damage taxonomy drifts into "all damage staggers" or "all damage aborts" during M3 | Taxonomy is data (`bCausesStagger`) with defaults per damage class; `StateSemantics` asserts the full matrix; combat design tuning is an M3 activity with the matrix as the guard rail |
 
 ---
@@ -815,3 +935,24 @@ Everything the Technical Director accepted in round 1 stands: AC-01…AC-31 and 
 ### Status after revision
 
 **No implementation, no compilation, no test execution, no measurement.** `DESIGN_ONLY`; M1 implementation remains `BLOCKED` on B-1…B-6.
+
+---
+
+## 15. Change log — v1.2 → v1.3 (Technical Director final v1.2 clarifications, 2026-11-16)
+
+v1.2 is preserved unchanged at `archive/M1_MOVEMENT_SPECIFICATION_V1.2.md`. The v1.2 damage taxonomy, arbitration ordering and seven exit paths were accepted in principle; this revision supplies the two required clarifications and changes nothing else.
+
+| ID | Item | Ambiguity in v1.2 | Correction in v1.3 | Section |
+|---|---|---|---|---|
+| **C-18** | Candidate 4 (Hold) while a forced `Stagger`/`Dead` must proceed and no valid placement exists | "Hold … `Airborne` if ungrounded, else `Idle`" left two holes: `Idle` is invalid for an unsupported capsule (the prohibited "unsupported grounded state"), and nothing said how a following forced transition interacts with holding | Hold split into **4a Hold-Grounded** (validated downward snap ≤ `HoldGroundSnapTolerance`, default 5 cm) and **4b Hold-Unsupported** (no transform write; `MOVE_Falling`; gravity authoritative) with **4c out-of-world** routed to the flow system. Forced targets always proceed; per-target behaviour defined (stagger plays while falling with `bPendingGroundingRecovery`; ragdoll death immediate; montage death deferred per `bDelayDeathPresentationUntilGrounded`). Restoration step 3 exception recorded and logged as `Restoration.ModeOverrideFalling` | §3.2.2b, §3.2.3 (E3–E5), §5 |
+| **C-19** | Behaviour when immediate pre-placement revalidation fails after a candidate was selected and validated | "validated at the moment of resolution" allowed a transform validated earlier to be applied without a second test — a stale transform | **Two-phase validation**: selection validation plus a mandatory placement validation executed inside the write function, which is the only transform writer. On placement failure the stored transform is discarded and the **next candidate is attempted** from the current position; the hold path is reached only when no candidate succeeds or the attempt budget (`MaxFallbackAttempts`, default 2) is exhausted. Every failure logs phase, attempt, elapsed ms and blocker | §3.2.2a, §5 |
+| **C-20** | Structural prevention of the class of bug behind both clarifications | Control state and movement mode were used interchangeably, which is what made an "unsupported grounded state" describable | New **control state vs movement mode** matrix with a testable invariant: states requiring support may not be entered while unsupported; `HoldUnsupported` legally permits only `Airborne`, a forced target in `MOVE_Falling`, the cinematic freeze, or the 4c respawn. Forced transitions arriving **during** resolution are queued (highest priority only) so resolution is never abandoned half-done | §3.2.2c, §3.2.2d |
+| **C-21** | Gate and provisional status preserved | — | **No AC added, removed, renumbered or re-thresholded; AC-01…AC-31 remain the accepted gate.** New rules are asserted inside AC-23/AC-26 and the M2 traversal tests; one unit test name added (`TDD-Unit.Movement.FallbackResolution`). `FTDDDamageRequest::bCausesStagger` remains a proposal pending Agent 3's Core interface review; no Core type created or frozen | §4 (unchanged), §5, Appendix A |
+
+### Deliberately unchanged
+
+Everything accepted in rounds 1 and 2 stands: AC-01…AC-31 and their thresholds; the L1–L3 latency model and the prohibition on tick-group changes without measured benefit; the five camera criteria and their provisional thresholds; the 50 cm blocked-step baseline; dodge refusal without cooldown consumption; ADR-0013's provisional execution model with `RootMotionAppliesToCapsule` as its gate; configurable warp limits; the damage taxonomy and E1–E7 enumeration from v1.2; and the proposal status of all Core types.
+
+### Status after revision
+
+**No implementation, no compilation, no test execution, no measurement.** `DESIGN_ONLY`; M1 implementation remains `BLOCKED` on B-1…B-6, with C-1…C-5 outstanding for M2+.

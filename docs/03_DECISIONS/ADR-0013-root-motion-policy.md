@@ -1,10 +1,11 @@
 # ADR-0013 — Root motion: execution, collision, interruption and restoration
 
-- **Status:** Proposed — **v1.2** (v1.1 accepted provisionally by the Technical Director; v1.2 aligns the damage/interruption taxonomy with M1 spec §3.2.1–§3.2.3)
+- **Status:** Proposed — **v1.3** (v1.1 accepted provisionally; v1.2 aligned the damage taxonomy; v1.3 adds the placement-validation and hold-while-forced rules required by the Technical Director's final v1.2 clarifications)
 - **Date:** 2026-11-16
 - **Deciders:** Technical Director; Agent 1 (owner); Agent 2 (consumes enemy attack timing and traversal transitions)
 - **Owning agent:** 1
-- **Supersedes:** v1.1 (`archive/ADR-0013-root-motion-policy_V1.1.md`) and v1.0 (`archive/ADR-0013-root-motion-policy_V1.0.md`) — both preserved unchanged
+- **Supersedes:** v1.2 (`archive/ADR-0013-root-motion-policy_V1.2.md`), v1.1 (`archive/ADR-0013-root-motion-policy_V1.1.md`), v1.0 (`archive/ADR-0013-root-motion-policy_V1.0.md`) — all preserved unchanged
+- **Companion rules:** M1 spec v1.3 §3.2.2a (two-phase validation), §3.2.2b (hold under forced transition), §3.2.2c (control state vs movement mode), §3.2.2d (forced transitions during resolution)
 - **Related:** ADR-0005 (animation provider), ADR-0012 (verification boundary), M1 spec v1.1 §3.5/§3.7/AC-26
 
 ## 1. Context
@@ -79,7 +80,7 @@ No option is adopted until the test says which is needed. Writing the fallbacks 
 
 1. Stop the owned montage (and any linked montages).
 2. Clear root-motion sources added by the action.
-3. Restore the movement mode recorded at action start.
+3. Restore the movement mode recorded at action start — **with one documented exception**: if fallback resolution returned `HoldUnsupported` (no validated support for the capsule), the mode is set to `MOVE_Falling` instead, and `Restoration.ModeOverrideFalling` is logged. Restoring a walking mode for an unsupported capsule would produce the prohibited "unsupported grounded state" (M1 spec §3.2.2b/§3.2.2c).
 4. Restore CMC tuning values from `UTDDLocomotionComponent` (speed, accel, braking, friction, rotation rate).
 5. Restore rotation flags (`bOrientRotationToMovement` / `bUseControllerRotationYaw`).
 6. Clear motion-warping targets.
@@ -102,6 +103,8 @@ At the exit notify, before any snap:
 5. The fallback is not a single option but the ordered resolution defined in M1 spec §3.2.2 (`ResolveAbortFallback`): complete the traversal if past the commit fraction and the exit is *currently* valid; otherwise reverse to the entry side if valid; otherwise drop to a walkable floor beneath and enter `Airborne`/`Land`; otherwise hold position, mark unsupported, and log `Traversal.FallbackFailed`.
 6. **Every** exit path of a root-motion action — natural completion, invalid exit, non-staggering damage abort, staggering damage, death, cinematic capture, EndPlay — runs fallback resolution (except cinematic capture, which must not move the capsule) followed by the restoration checklist, in that order. The authoritative enumeration is M1 spec §3.2.3 (E1–E7).
 7. A cinematic takeover must **not** trigger a positional fallback; the cinematic system owns placement, and a silent drop mid-shot would read as a teleport.
+8. **Placement validation is mandatory and is repeated at the instant of application.** A transform validated at candidate selection may be stale by the time it is applied (a door closed, a pawn stepped in, a platform moved). The write function performs the validation itself and is the only code permitted to write the capsule transform; on failure the stored transform is discarded, the next candidate is attempted from the capsule's current position, and only when no candidate succeeds does the hold path apply. A stale transform is never applied.
+9. **Hold never refuses or delays a forced transition.** If no valid placement exists, the capsule keeps its position, the CMC enters `MOVE_Falling`, and the forced `Stagger`/`Dead` proceeds immediately — with the hit reaction playing while falling, ragdoll death simulating immediately, and montage deaths deferred to first grounding per data. Only when the capsule falls out of the world does the flow system take over (checkpoint respawn, logged as `Traversal.FellOutOfWorld`).
 
 ## 7. Decision — warping limits are configurable, not fixed
 
@@ -155,4 +158,5 @@ The attack warp limits of 300 cm and 60° are **provisional defaults**, not rule
 |---|---|---|
 | 1.0 | 2026-11-16 | Initial policy: per-motion table, `MOVE_None` proposal, fixed 300 cm/60° limits |
 | **1.1** | **2026-11-16** | Per TD review item 8: `MOVE_None` withdrawn as an unverified assumption and prohibited for root-motion actions; execution model restated with modes in which CMC's movement update runs; verification-before-trust requirement added with three documented fallbacks; collision authority explicitly assigned to CMC with pre-sweeps demoted to predictions; interruption and a nine-step restoration checklist specified; traversal exit transforms revalidated with a defined fallback; warp limits made configurable with provisional defaults; alternatives and reversal conditions expanded |
+| **1.3** | **2026-11-16** | Final v1.2 clarifications: restoration step 3 gains its single documented exception (`MOVE_Falling` when placement is unsupported, logged); §6 gains the mandatory double validation at the instant of application with the next-candidate-then-hold rule and the explicit prohibition on applying a stale transform; hold semantics restated so a forced transition is never refused or delayed and a montage death does not play in mid-air. No changes to the execution model, collision authority, checklist steps 1–2 and 4–9, or warp limits. |
 | **1.2** | **2026-11-16** | Review round 2 alignment: interruption table now separates staggering damage, non-staggering damage (abort request, not a transition), lethal damage and cinematic capture; the ordering rule *fallback → restoration → target entry* is stated and justified; traversal §6 references the ordered `ResolveAbortFallback` resolution and enumerates all exit paths (E1–E7) instead of a single "damage/death" clause; prohibition on positional fallback during cinematic capture added. No collision, execution-model, or restoration-step changes. |
