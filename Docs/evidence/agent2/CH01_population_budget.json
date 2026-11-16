@@ -1,0 +1,841 @@
+{
+  "meta": {
+    "tool": "Tools/world/population_budget.py",
+    "derivation": "register scene categories -> policy tier -> cost units",
+    "status": "PROVISIONAL - derived from authored data, NOT measured",
+    "register_source": "SCENE_AND_MICROLOCATION_MASTER_REGISTER v1.9 (Chapter 1 fixture)",
+    "policy_source": "Tools/world/data/population_policy.json",
+    "caveat": "No simulation has run. Every figure is a projection. Replace with capture data when an engine exists."
+  },
+  "budget": {
+    "chapter": "CH01",
+    "scenes_total": 46,
+    "by_category": {
+      "AMBIENT NPC SCENE": 14,
+      "ATMOSPHERIC SCENE": 7,
+      "ENTERABLE INTERIOR": 4,
+      "ENVIRONMENTAL STORYTELLING": 4,
+      "EXPLORATION SCENE": 2,
+      "EXTERIOR MICRO-LOCATION": 6,
+      "SECONDARY STORY SCENE": 1,
+      "WORLD ACTIVITY SCENE": 8
+    },
+    "by_tier": {
+      "CROWD": 14,
+      "NAMED": 1,
+      "NONE": 12,
+      "SCRIPTED": 19
+    },
+    "by_status": {
+      "PENDING APPROVAL": 1,
+      "PROPOSED": 45
+    },
+    "simulated_npcs_lower": 29,
+    "simulated_npcs_upper": 48,
+    "crowd_peak_estimate": 28,
+    "background_estimate": 0,
+    "total_cost_units": 35.58,
+    "unparsed_npc_scenes": [],
+    "scenes": [
+      {
+        "scene_id": "CH01-SCN-001",
+        "name": "Woman Cooking Outside Her Door",
+        "category": "AMBIENT NPC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-007",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "npcs_source": "register",
+        "has_child": true,
+        "simulated_cost": 2.0,
+        "notes": [
+          "Child present: RULE-NPC-CHILDREN-NO-COMBAT applies; never a combat target."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-002",
+        "name": "The Evening Meal",
+        "category": "AMBIENT NPC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-019",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 2.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-003",
+        "name": "Children's Corner",
+        "category": "AMBIENT NPC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-019",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 2.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-004",
+        "name": "Sweeping the Compound",
+        "category": "AMBIENT NPC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-019",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 2.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-005",
+        "name": "The Kitchen Shelter",
+        "category": "ENTERABLE INTERIOR",
+        "access": "FULLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-019",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:ENTERABLE INTERIOR",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-006",
+        "name": "The Compound Store",
+        "category": "ENTERABLE INTERIOR",
+        "access": "PARTIALLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-019",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:ENTERABLE INTERIOR",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.18,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-007",
+        "name": "Sleeping Corner",
+        "category": "ENTERABLE INTERIOR",
+        "access": "FULLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-007",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:ENTERABLE INTERIOR",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-008",
+        "name": "Repairing the Roof",
+        "category": "WORLD ACTIVITY SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-007",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:WORLD ACTIVITY SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-009",
+        "name": "Elder Resting on the Veranda",
+        "category": "AMBIENT NPC SCENE",
+        "access": "PARTIALLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-009",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 1.2,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-010",
+        "name": "The Blacksmith at Work",
+        "category": "WORLD ACTIVITY SCENE",
+        "access": "FULLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-005",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:WORLD ACTIVITY SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-011",
+        "name": "A Trader Arranging Goods",
+        "category": "AMBIENT NPC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-008",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 2.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-012",
+        "name": "Closing the Stall at Night",
+        "category": "AMBIENT NPC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-008",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 2.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-013",
+        "name": "Behind the Stalls",
+        "category": "EXTERIOR MICRO-LOCATION",
+        "access": "PARTIALLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-014",
+        "tier": "NONE",
+        "tier_source": "policy:EXTERIOR MICRO-LOCATION",
+        "npcs_from_register": 0,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-014",
+        "name": "Fetching Water",
+        "category": "AMBIENT NPC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-015",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 2.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-015",
+        "name": "Fishermen Preparing Gear",
+        "category": "WORLD ACTIVITY SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-013",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:WORLD ACTIVITY SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-016",
+        "name": "Sorting the Harvest",
+        "category": "WORLD ACTIVITY SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-012",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:WORLD ACTIVITY SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-017",
+        "name": "People Talking Under the Tree",
+        "category": "AMBIENT NPC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-006",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 3,
+        "npcs_source": "register",
+        "has_child": false,
+        "simulated_cost": 2.0,
+        "notes": []
+      },
+      {
+        "scene_id": "CH01-SCN-018",
+        "name": "Preparing for a Gathering",
+        "category": "WORLD ACTIVITY SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-011",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:WORLD ACTIVITY SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-019",
+        "name": "A Guard on a Quiet Shift",
+        "category": "AMBIENT NPC SCENE",
+        "access": "PARTIALLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-013",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 1.2,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-020",
+        "name": "Evening Talk",
+        "category": "AMBIENT NPC SCENE",
+        "access": "FULLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-012",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 2.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-021",
+        "name": "The Path Behind the Houses",
+        "category": "EXTERIOR MICRO-LOCATION",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-020",
+        "tier": "NONE",
+        "tier_source": "policy:EXTERIOR MICRO-LOCATION",
+        "npcs_from_register": 0,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-022",
+        "name": "The Gap Between Two Houses",
+        "category": "EXTERIOR MICRO-LOCATION",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-009",
+        "tier": "NONE",
+        "tier_source": "policy:EXTERIOR MICRO-LOCATION",
+        "npcs_from_register": 0,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-023",
+        "name": "A Small Garden",
+        "category": "EXTERIOR MICRO-LOCATION",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-021",
+        "tier": "NONE",
+        "tier_source": "policy:EXTERIOR MICRO-LOCATION",
+        "npcs_from_register": 0,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-024",
+        "name": "The House No One Lives In",
+        "category": "ENVIRONMENTAL STORYTELLING",
+        "access": "FULLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-015",
+        "tier": "NONE",
+        "tier_source": "policy:ENVIRONMENTAL STORYTELLING",
+        "npcs_from_register": 0,
+        "npcs_source": "register",
+        "has_child": false,
+        "simulated_cost": 0.0,
+        "notes": []
+      },
+      {
+        "scene_id": "CH01-SCN-025",
+        "name": "Goats at Dusk",
+        "category": "ATMOSPHERIC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-022",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:ATMOSPHERIC SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "register",
+        "has_child": true,
+        "simulated_cost": 0.3,
+        "notes": [
+          "Child present: RULE-NPC-CHILDREN-NO-COMBAT applies; never a combat target.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-026",
+        "name": "The Washing Corner",
+        "category": "EXTERIOR MICRO-LOCATION",
+        "access": "VISUALLY ACCESSIBLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-023",
+        "tier": "NONE",
+        "tier_source": "policy:EXTERIOR MICRO-LOCATION",
+        "npcs_from_register": 0,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-027",
+        "name": "Pots Drying",
+        "category": "WORLD ACTIVITY SCENE",
+        "access": "FULLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-011",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:WORLD ACTIVITY SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-028",
+        "name": "At the Loom",
+        "category": "WORLD ACTIVITY SCENE",
+        "access": "FULLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-010",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:WORLD ACTIVITY SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-029",
+        "name": "A Patient Waiting",
+        "category": "AMBIENT NPC SCENE",
+        "access": "FULLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-008",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 2.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-030",
+        "name": "Servants Crossing the Court",
+        "category": "AMBIENT NPC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-010",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 2.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-031",
+        "name": "The Palace Kitchen at Work",
+        "category": "WORLD ACTIVITY SCENE",
+        "access": "FULLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-002",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:WORLD ACTIVITY SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-032",
+        "name": "The Well at Noon",
+        "category": "ATMOSPHERIC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-014",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:ATMOSPHERIC SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-033",
+        "name": "The Gate at Night",
+        "category": "ATMOSPHERIC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-LMK-003",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:ATMOSPHERIC SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-034",
+        "name": "A Quiet Resting Place by the Road",
+        "category": "EXTERIOR MICRO-LOCATION",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-TRV-005",
+        "tier": "NONE",
+        "tier_source": "policy:EXTERIOR MICRO-LOCATION",
+        "npcs_from_register": 0,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-035",
+        "name": "A Fallen Giant",
+        "category": "ATMOSPHERIC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-ENV-001",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:ATMOSPHERIC SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-036",
+        "name": "The Cold Hearth",
+        "category": "ENVIRONMENTAL STORYTELLING",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-016",
+        "tier": "NONE",
+        "tier_source": "policy:ENVIRONMENTAL STORYTELLING",
+        "npcs_from_register": 0,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-037",
+        "name": "The Hunter at His Fire",
+        "category": "AMBIENT NPC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-004",
+        "tier": "CROWD",
+        "tier_source": "policy:AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 2.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-038",
+        "name": "One Person's Shelter",
+        "category": "ENTERABLE INTERIOR",
+        "access": "PARTIALLY ENTERABLE",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-INT-006",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:ENTERABLE INTERIOR",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.18,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-039",
+        "name": "The Pool at Midday",
+        "category": "ATMOSPHERIC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-EXP-005",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:ATMOSPHERIC SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-040",
+        "name": "The Light Gap",
+        "category": "EXPLORATION SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-EXP-004",
+        "tier": "NONE",
+        "tier_source": "policy:EXPLORATION SCENE",
+        "npcs_from_register": 0,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-041",
+        "name": "A Doorway Without a House",
+        "category": "ENVIRONMENTAL STORYTELLING",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-017",
+        "tier": "NONE",
+        "tier_source": "policy:ENVIRONMENTAL STORYTELLING",
+        "npcs_from_register": 0,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-042",
+        "name": "Hornbills at the Nest",
+        "category": "ATMOSPHERIC SCENE",
+        "access": "BACKGROUND ENVIRONMENT",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-EXP-006",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:ATMOSPHERIC SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.01,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-043",
+        "name": "A Path That Gives Up",
+        "category": "EXPLORATION SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-EXP-003",
+        "tier": "NONE",
+        "tier_source": "policy:EXPLORATION SCENE",
+        "npcs_from_register": 0,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-044",
+        "name": "Bowls at the Foot of a Tree",
+        "category": "ENVIRONMENTAL STORYTELLING",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-018",
+        "tier": "NONE",
+        "tier_source": "policy:ENVIRONMENTAL STORYTELLING",
+        "npcs_from_register": 0,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.0,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-045",
+        "name": "Rain in the Empty Courtyard",
+        "category": "ATMOSPHERIC SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PROPOSED",
+        "parent_id": "CH01-SUB-002",
+        "tier": "SCRIPTED",
+        "tier_source": "policy:ATMOSPHERIC SCENE",
+        "npcs_from_register": 1,
+        "npcs_source": "policy_default",
+        "has_child": false,
+        "simulated_cost": 0.3,
+        "notes": [
+          "No detail block captured; NPC count is a policy default, not register data.",
+          "Scripted activity: animates on a loop, has no AI or perception."
+        ]
+      },
+      {
+        "scene_id": "CH01-SCN-046",
+        "name": "Nneka Memory 1: They Were Saying the Child's Name",
+        "category": "SECONDARY STORY SCENE",
+        "access": "OPEN EXTERIOR",
+        "canon_status": "PENDING APPROVAL",
+        "parent_id": "CH01-SUB-018",
+        "tier": "NAMED",
+        "tier_source": "policy:SECONDARY STORY SCENE",
+        "npcs_from_register": 0,
+        "npcs_source": "register",
+        "has_child": false,
+        "simulated_cost": 4.0,
+        "notes": []
+      }
+    ]
+  },
+  "validation": {
+    "problems": [],
+    "result": "PASS"
+  }
+}

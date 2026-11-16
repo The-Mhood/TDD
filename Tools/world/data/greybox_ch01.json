@@ -1,0 +1,51 @@
+{
+  "_schema": "tdd.greybox/1",
+  "_cd5_notice": "Every asset below is PENDING APPROVAL content represented for technical evaluation only under TD decision CD-5 (approved with restrictions). Greybox is not art, not canon, and not an approval. It may serve spatial, navigation, streaming and sightline tests. It may not carry final art, shrine/mask/ritual decoration, or any story dependency, and removing it must never break progression. Producing this file does not advance any approval status.",
+  "_status_note": "No greybox asset in this file has been built. There is no Unreal project. This is the declaration format and its validation, which is what can be verified today.",
+  "chapter": "CH01",
+  "register_source": {
+    "document": "SCENE_AND_MICROLOCATION_MASTER_REGISTER.md",
+    "version": "1.9",
+    "drive_file_id": "1EYQl5eMZx8PGElDSPHojKcEVWGvU2-UW"
+  },
+  "greybox_assets": [
+    {
+      "id": "CH01-ENV-001",
+      "name": "The Forbidden Forest",
+      "register_canon_status": "ESTABLISHED",
+      "_note": "ESTABLISHED canon, so greybox here is a staging choice, not a CD-5 case. Included to prove the validator does not require the pending label where canon is established.",
+      "label": null,
+      "test_purposes": ["SPATIAL", "STREAMING", "SIGHTLINE"],
+      "establishes_story_facts": false,
+      "progression_dependency": false,
+      "environment_design_status": "IN REVIEW",
+      "content": ["terrain volumes", "canopy blocker shells", "root path spline"]
+    },
+    {
+      "id": "CH01-SUB-018",
+      "name": "The Wayside Offering Place",
+      "register_canon_status": "PROPOSED",
+      "label": "PENDING APPROVAL — BLOCKOUT ONLY",
+      "test_purposes": ["SPATIAL", "NAVIGATION"],
+      "establishes_story_facts": false,
+      "progression_dependency": false,
+      "environment_design_status": "NOT STARTED",
+      "content": ["boundary post volumes", "path junction blockout"],
+      "_note": "Volume blockers and a path junction only. No offering objects, no shrine furniture, no decoration - those are reserved under CD-2. The scene CH01-SCN-046 is PENDING APPROVAL and must not be staged in greybox."
+    },
+    {
+      "id": "CH01-INT-016",
+      "name": "A Household Ancestral Corner",
+      "register_canon_status": "PENDING APPROVAL",
+      "label": "PENDING APPROVAL — BLOCKOUT ONLY",
+      "test_purposes": ["SPATIAL"],
+      "establishes_story_facts": false,
+      "progression_dependency": false,
+      "environment_design_status": "NOT STARTED",
+      "content": ["interior room box", "doorway volume"],
+      "_note": "Room dimensions and a doorway. Nothing else. Any content here is reserved under CD-2 consultant gate."
+    }
+  ],
+  "progression_dependencies": [],
+  "_removal_test": "Removing any greybox asset above must leave every chapter's progression intact. This file declares no progression dependency on any asset, and the validator fails if one is added."
+}

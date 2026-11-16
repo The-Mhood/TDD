@@ -20,7 +20,7 @@ in §7, it must be requested through the interface-change protocol (architecture
 | World structure | Chapter director, location registry, streaming policy, environment states |
 | Interaction | `ITDDInteractable`, interaction routing, prompt data, discovery |
 | Traversal (data/gating) | Traversal action requirements, `TRV` location gating — **coordination only**, Agent 1 owns the movement |
-| NPCs | Three-tier population, routines, activities, bark interaction, dialogue integration points |
+| NPCs | Five-tier population, routines, activities, bark interaction, dialogue integration points |
 | Enemies | AI base, perception, StateTree behaviours, archetype data |
 | Bosses | Phase-graph schema, validator, executor — **data, not bespoke code** |
 | Progression | Scene state, quest graph, memory director, ending eligibility |
@@ -133,15 +133,77 @@ struct FTDDStreamingBudget
 
 ---
 
-## 5. The three-tier NPC model
+## 5. The five-tier NPC model
 
 ### 5.1 Tiers
 
-| Tier | Actor | Simulation | Interaction | Budget |
-|---|---|---|---|---|
-| 1 Named | `ATDDNamedNPC` (ACharacter + StateTree) | full tick, full anim | dialogue, quests | ≤ 4 near player |
-| 2 Crowd | Mass entity + `UTDDCrowdStateProcessor` | LOD tick at 0.5–4 Hz by distance | bark only | ≤ 60 visible |
-| 3 Background | Mass, anim via vertex animation / ISK | no logic tick | none | ≤ 120 |
+This was described as three tiers. TR-1 forced it to five, because the register
+distinguishes kinds of population that a three-tier model collapses and thereby
+over-bills. A scene with a single scripted blacksmith does not need an AI agent,
+and the register has more of those than it has crowds.
+
+The authoritative mapping is data, not prose: `Tools/world/data/population_policy.json`,
+validated by `Tools/world/population_budget.py`.
+
+| Tier | Actor | Simulation | Interaction | Cost unit | Chapter 1 scenes |
+|---|---|---|---|---|---|
+| `NAMED` | `ATDDNamedNPC` (ACharacter + StateTree) | full tick, full anim, perception | dialogue, quests, memory | 4.0 | 1 |
+| `CROWD` | Mass entity + `UTDDCrowdStateProcessor` | LOD tick 0.5–4 Hz by distance | bark only | 1.0 per actor | 14 |
+| `SCRIPTED` | one `ATDDPerformer` | fixed animation loop, **no AI, no perception, no nav** | none | 0.3 per scene | 19 |
+| `BACKGROUND` | Mass, instanced, no tick | vertex animation only | none | 0.05 | 0 |
+| `NONE` | nothing | nothing | none | 0 | 12 |
+
+Per-scene cost is multiplied by an access multiplier (`FULLY ENTERABLE` 1.0,
+`PARTIALLY ENTERABLE` 0.8, `VISUALLY ACCESSIBLE` 0.5, `BACKGROUND ENVIRONMENT`
+0.25), because a scene the player can only see is cheaper than one they can walk
+into. Chapter ceilings: 16 crowd scenes, 60 total cost units, 4 named nearby.
+
+Cost units are **relative budget arithmetic, not milliseconds** — a distinction
+the policy file states explicitly and a test enforces.
+
+### 5.1.1 Why `SCRIPTED` had to exist
+
+Collapsing `SCRIPTED` into `CROWD` or `NAMED` mis-bills the majority of the
+chapter. Chapter 1 has 19 scripted scenes and 14 crowd scenes; treating every
+world-activity scene as a simulated NPC would have inflated the chapter by
+roughly a third for no behavioural gain.
+
+Why `BACKGROUND` exists separately: an instanced actor with no tick is not a
+simulated agent. Counting it as one overstates cost by more than 3x.
+
+### 5.1.2 Derived budget, Chapter 1
+
+Measured, not estimated — `Docs/evidence/agent2/CH01_population_budget.json`:
+
+| Metric | Value |
+|---|---|
+| scenes | 46 |
+| requiring no simulation at all (NONE + SCRIPTED) | 31 of 46 |
+| CROWD scenes | 14 |
+| NAMED scenes | 1 |
+| simulated NPCs, lower/upper bound | 29 / 48 |
+| crowd peak estimate | 28 |
+| total cost units | 35.58 |
+| validation | PASS |
+
+**31 of 46 scenes need no simulated agent.** That is the TD's point answered with
+numbers rather than assurance: the majority of ambient activity is a performer on
+a loop, not an agent.
+
+Every scene records where its tier came from (`tier_source`) and where its NPC
+count came from (`npcs_source`: `register` or `policy_default`). 41 of 46 scenes
+have no captured detail block, so their counts are policy defaults and are
+labelled as such per-scene rather than presented as register data.
+
+### 5.1.3 Safety properties the budget enforces
+
+- An unrecognised scene category does not default to zero. It falls back to
+  `SCRIPTED` and **fails validation**.
+- An unparseable NPC description does not become zero. It is reported and
+  **fails validation**, because zero understates cost.
+- A scene whose register prose names a child carries
+  `RULE-NPC-CHILDREN-NO-COMBAT` automatically.
+- Animal presence is excluded from performer counts but retained as ambience.
 
 ### 5.2 Routine data (from the register's per-scene routine lines)
 

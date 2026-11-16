@@ -3,7 +3,7 @@
 
 WHY
 ---
-Hand-copying 191 location entries and 135 scenes from 812 KB of Googled Docs
+Hand-copying 196 location entries and 135 scenes from 812 KB of Googled Docs
 into JSON is exactly how canon drift starts. Where a register excerpt has been
 captured, the derived data is generated from it and the output is committed, so
 reviewers can see the diff.

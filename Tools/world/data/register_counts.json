@@ -1,0 +1,55 @@
+{
+  "_schema": "tdd.register_counts/1",
+  "_note": "Transcribed verbatim from the 'Counts (kept separate, never mixed)' table in LOCATION_MASTER_REGISTER.md v2.9 (2026-11-15). Do not edit these numbers to make an assertion pass; if a register revision changes them, update register_version and re-run the reconciliation.",
+  "register_source": {
+    "document": "LOCATION_MASTER_REGISTER.md",
+    "version": "2.9",
+    "drive_file_id": "1E-PPUQh-Ck-4JhJNFFHTAY6CiBPbmxv5",
+    "dated": "2026-11-15",
+    "section": "Counts (kept separate, never mixed)",
+    "read_on": "2026-11-16"
+  },
+  "companion_source": {
+    "document": "SCENE_AND_MICROLOCATION_MASTER_REGISTER.md",
+    "version": "1.9",
+    "drive_file_id": "1EYQl5eMZx8PGElDSPHojKcEVWGvU2-UW"
+  },
+  "column_semantics": {
+    "major_environments": "One per chapter (the ENV entry). Counted as a location entry.",
+    "other_locations_not_interiors": "SUB + SET + LMK + TRV + EXP + BOS. Excludes interiors by definition.",
+    "interiors_location_entries": "INT entries. 'Interiors that appear only as scenes are counted as scenes, not as locations.'",
+    "scenes_and_microlocations": "SCN entries. A scene is not a location.",
+    "not_main_or_secondary_story": "Subset of the scenes column: scenes whose category is neither MAIN STORY nor SECONDARY STORY.",
+    "environment_state_references": "ES_* references. Explicitly 'not locations'."
+  },
+  "per_chapter": {
+    "CH01": {"major_environments": 1, "other_locations_not_interiors": 40, "interiors_location_entries": 16, "scenes_and_microlocations": 46, "not_main_or_secondary_story": 45, "environment_state_references": 14},
+    "CH02": {"major_environments": 1, "other_locations_not_interiors": 14, "interiors_location_entries": 5, "scenes_and_microlocations": 11, "not_main_or_secondary_story": 10, "environment_state_references": 4},
+    "CH03": {"major_environments": 1, "other_locations_not_interiors": 14, "interiors_location_entries": 5, "scenes_and_microlocations": 12, "not_main_or_secondary_story": 11, "environment_state_references": 3},
+    "CH04": {"major_environments": 1, "other_locations_not_interiors": 15, "interiors_location_entries": 3, "scenes_and_microlocations": 12, "not_main_or_secondary_story": 11, "environment_state_references": 5},
+    "CH05": {"major_environments": 1, "other_locations_not_interiors": 16, "interiors_location_entries": 2, "scenes_and_microlocations": 11, "not_main_or_secondary_story": 10, "environment_state_references": 5},
+    "CH06": {"major_environments": 1, "other_locations_not_interiors": 9, "interiors_location_entries": 6, "scenes_and_microlocations": 10, "not_main_or_secondary_story": 9, "environment_state_references": 3},
+    "CH07": {"major_environments": 1, "other_locations_not_interiors": 16, "interiors_location_entries": 6, "scenes_and_microlocations": 15, "not_main_or_secondary_story": 14, "environment_state_references": 3},
+    "CH08": {"major_environments": 1, "other_locations_not_interiors": 18, "interiors_location_entries": 3, "scenes_and_microlocations": 18, "not_main_or_secondary_story": 12, "environment_state_references": 3}
+  },
+  "published_totals": {
+    "major_environments": 8,
+    "other_locations_not_interiors": 142,
+    "interiors_location_entries": 46,
+    "scenes_and_microlocations": 135,
+    "not_main_or_secondary_story": 122,
+    "environment_state_references": 40
+  },
+  "derived_totals": {
+    "location_entries": {
+      "value": 196,
+      "derivation": "major_environments 8 + other_locations_not_interiors 142 + interiors_location_entries 46",
+      "note": "Corrects the earlier figure of 191 in canon_index.json v2.0.0, which was arithmetically wrong. 8+142+46 = 196."
+    },
+    "main_or_secondary_story_scenes": {
+      "value": 13,
+      "derivation": "scenes_and_microlocations 135 - not_main_or_secondary_story 122",
+      "note": "Independently corroborated by the scene register v1.9 category counts: MAIN STORY 4 + SECONDARY STORY 9 = 13."
+    }
+  }
+}

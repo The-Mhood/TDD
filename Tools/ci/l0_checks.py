@@ -241,6 +241,45 @@ def check_canon_mirror_drift() -> List[str]:
     return []
 
 
+def check_greybox_restrictions() -> List[str]:
+    """CD-5: greybox is for technical evaluation only, and the rules must bite."""
+    try:
+        sys.path.insert(0, str(REPO / "Tools" / "world"))
+        import greybox_rules
+    except Exception as exc:  # pragma: no cover - defensive
+        return [f"cannot import greybox_rules: {exc}"]
+    problems: List[str] = []
+    manifests = sorted((REPO / "Tools" / "world" / "data").glob("greybox_*.json"))
+    for path in manifests:
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception as exc:
+            problems.append(f"{path.name}: unreadable ({exc})")
+            continue
+        for problem in greybox_rules.validate_greybox_manifest(data):
+            problems.append(f"{path.name}: {problem}")
+        if not data.get("greybox_assets") and not data.get("_empty_reason"):
+            problems.append(f"{path.name}: declares no assets and gives no reason")
+    return problems
+
+
+def check_register_counts_reconcile() -> List[str]:
+    """The register's published counts must sum, and Chapter 1 must reconcile.
+
+    This is the guard for the arithmetic error that already shipped once
+    (location entries recorded as 191 when 8+142+46 = 196).
+    """
+    import subprocess
+    result = subprocess.run(
+        [sys.executable, str(REPO / "Tools" / "world" / "count_reconciliation.py")],
+        capture_output=True, text=True, cwd=REPO,
+    )
+    if result.returncode != 0:
+        tail = (result.stdout or "").strip().splitlines()[-12:]
+        return ["register counts do not reconcile:", *[f"  {line}" for line in tail]]
+    return []
+
+
 def run(verbose: bool = False) -> Tuple[bool, Dict[str, List[str]]]:
     files = tracked_files()
     results: Dict[str, List[str]] = {
@@ -254,6 +293,8 @@ def run(verbose: bool = False) -> Tuple[bool, Dict[str, List[str]]]:
         "evidence_claims": check_no_engine_claim_in_reports(files),
         "world_manifest": check_world_manifest(),
         "canon_mirror_drift": check_canon_mirror_drift(),
+        "greybox_restrictions": check_greybox_restrictions(),
+        "register_counts_reconcile": check_register_counts_reconcile(),
     }
     ok = all(not v for v in results.values())
     if verbose:

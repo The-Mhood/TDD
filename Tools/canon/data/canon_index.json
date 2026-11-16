@@ -124,7 +124,7 @@
     "interiors": 46,
     "scenes_and_microlocations": 135,
     "environment_state_references": 40,
-    "per_chapter_locations_total": 191,
+    "per_chapter_locations_total": 196,
     "per_chapter_scenes": {
       "CH01": 46,
       "CH02": 11,
@@ -134,7 +134,9 @@
       "CH06": 10,
       "CH07": 15,
       "CH08": 18
-    }
+    },
+    "_location_entries_derivation": "8 major environments + 142 other locations + 46 interiors = 196 location entries. Corrects 191 recorded in v2.0.0, which was arithmetically wrong. Scenes (135) and environment states (40) are NOT location entries.",
+    "scenes_not_main_or_secondary_story": 122
   },
   "source_documents": [
     {

@@ -1064,6 +1064,13 @@ Ordered, with owners and evidence:
 | `00_MASTER_ENGINEERING_ARCHITECTURE.md` | This document — binding architecture |
 | `adr/ADR-0001…0008_*.md` | Decision records |
 | `CANON_INDEX.md` | Engineering mirror of canon IDs + status, and how it is validated |
+| `REGISTER_INGESTION.md` | Source versions, parsing assumptions, unsupported table formats, validation failures, regeneration procedure |
+| `REGISTER_TRACEABILITY.md` | Register→world mapping; the two status axes; per-row verification results; the six counts discriminated |
+| `WORLD_ASSESSMENT.md` | Repo state, register findings, missing systems, staged plan |
+| `WORLD_ARCHITECTURE.md` | Runtime world components (all SPEC), streaming, five-tier population, interfaces |
+| `ENEMY_ARCHETYPE_REVIEW.md` | Six PROPOSED archetypes for CD-3; risk ranked by cultural exposure |
+| `DEPENDENCY_AND_BLOCKER_REGISTER.md` | CD-5/CD-3/CD-2 outcomes, 12 blockers, cross-agent needs, honest capability table |
+| `AGENT1_TRAVERSAL_CONTRACT_REQUEST.md` | Request only — provisional ids, no frozen enum |
 | `interfaces/` | Frozen cross-agent interfaces (tagged by version) |
 | `production/STAGE_GATES.md` | Gate checklist and evidence requirements |
 | `production/RACI.md` | Who owns/approves what, including review gates |

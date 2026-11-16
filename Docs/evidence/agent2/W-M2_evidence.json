@@ -1,0 +1,186 @@
+{
+  "meta": {
+    "milestone": "W-M2 \u2014 traceable population, count reconciliation, ingestion doc, CD-5 enforcement",
+    "date": "2026-11-16",
+    "agent": "Agent 2 (world structure / level architecture)",
+    "python": "3.11.2",
+    "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+    "engine": "NONE \u2014 no Unreal Engine, no GPU, no compiled code",
+    "scope_statement": "Every result below is Python validation over register-derived data. Nothing here demonstrates engine behaviour. Streaming, Mass Entity, AI, navigation and boss execution are UNTESTED and UNIMPLEMENTED. All runtime systems remain SPEC under ADR-0005.",
+    "all_passed": true
+  },
+  "results": {
+    "canon_tests": {
+      "command": "/usr/bin/python3 -m unittest discover -s Tools/canon/tests",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 72,
+      "stdout_tail": [],
+      "stderr_tail": [
+        "..................................................................................................................",
+        "----------------------------------------------------------------------",
+        "Ran 114 tests in 0.024s",
+        "",
+        "OK"
+      ]
+    },
+    "world_tests": {
+      "command": "/usr/bin/python3 -m unittest discover -s Tools/world/tests",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 69,
+      "stdout_tail": [],
+      "stderr_tail": [
+        "........................................................................................................................",
+        "----------------------------------------------------------------------",
+        "Ran 120 tests in 0.017s",
+        "",
+        "OK"
+      ]
+    },
+    "l0_gate": {
+      "command": "/usr/bin/python3 Tools/ci/l0_checks.py",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 134,
+      "stdout_tail": [
+        "L0 checks: 12/12 passed"
+      ],
+      "stderr_tail": []
+    },
+    "count_reconciliation": {
+      "command": "/usr/bin/python3 Tools/world/count_reconciliation.py",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 41,
+      "stdout_tail": [
+        "  major_environments                 parsed    1  published 1",
+        "  scenes_with_missing_parent         parsed   40  published -  <-- differs (partial capture, expected)",
+        "",
+        "self-consistency: PASS",
+        "derived consistency: PASS",
+        "RESULT: PASS"
+      ],
+      "stderr_tail": []
+    },
+    "population_budget": {
+      "command": "/usr/bin/python3 Tools/world/population_budget.py --chapter CH01",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 41,
+      "stdout_tail": [
+        "  by status:   {'PENDING APPROVAL': 1, 'PROPOSED': 45}",
+        "  simulated NPCs (lower/upper): 29/48",
+        "  crowd peak estimate: 28",
+        "  background: 0",
+        "  total cost units: 35.58",
+        "  validation: PASS"
+      ],
+      "stderr_tail": []
+    },
+    "greybox_rules": {
+      "command": "/usr/bin/python3 Tools/world/greybox_rules.py Tools/world/data/greybox_ch01.json",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 32,
+      "stdout_tail": [
+        "greybox assets: 3",
+        "  CH01-ENV-001     SPATIAL, STREAMING, SIGHTLINE",
+        "  CH01-SUB-018     SPATIAL, NAVIGATION",
+        "  CH01-INT-016     SPATIAL",
+        "violations: 0"
+      ],
+      "stderr_tail": []
+    },
+    "world_manifest": {
+      "command": "/usr/bin/python3 Tools/world/world_manifest.py Tools/world/data/CH01_manifest.json",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 23,
+      "stdout_tail": [
+        "manifest: Tools/world/data/CH01_manifest.json",
+        "chapter:  CH01",
+        "locations declared: 6  {'ENV': 1, 'SET': 1, 'LMK': 1, 'BOS': 1, 'SUB': 2}",
+        "scenes declared:    2",
+        "violations: 0"
+      ],
+      "stderr_tail": []
+    },
+    "canon_index_validation": {
+      "command": "/usr/bin/python3 -m unittest Tools.canon.tests.test_canon.TestIndexIsValid",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 43,
+      "stdout_tail": [],
+      "stderr_tail": [
+        "....",
+        "----------------------------------------------------------------------",
+        "Ran 4 tests in 0.002s",
+        "",
+        "OK"
+      ]
+    }
+  },
+  "claims": [
+    {
+      "claim": "canon mirror regenerates bit-identically from fixtures",
+      "method": "L0 canon_mirror_drift check",
+      "result": "verified"
+    },
+    {
+      "claim": "register published counts sum to their per-chapter rows",
+      "method": "count_reconciliation.check_published_consistency",
+      "result": "verified"
+    },
+    {
+      "claim": "location entries are 196, not 191",
+      "method": "arithmetic + regression test guarding the stale value",
+      "result": "verified"
+    },
+    {
+      "claim": "Chapter 1 parses 46 of 46 scenes",
+      "method": "count_reconciliation",
+      "result": "verified"
+    },
+    {
+      "claim": "45 of 46 Chapter 1 scenes are not main/secondary story",
+      "method": "two independent registers agree",
+      "result": "verified"
+    },
+    {
+      "claim": "31 of 46 Chapter 1 scenes need no simulated NPC",
+      "method": "population_budget derivation",
+      "result": "derived estimate"
+    },
+    {
+      "claim": "CD-5 greybox restrictions are machine-enforced",
+      "method": "greybox_rules + injected-tamper test",
+      "result": "verified"
+    },
+    {
+      "claim": "parsers handle the register's actual table format",
+      "method": "114 canon tests",
+      "result": "verified for Chapter 1"
+    },
+    {
+      "claim": "parsers handle format variations gracefully",
+      "method": "measured: 5 silent-failure modes documented, not fixed",
+      "result": "documented limitation"
+    },
+    {
+      "claim": "NPC prose parsing is correct",
+      "method": "15-case suite; 2 bugs found and fixed this milestone",
+      "result": "verified with known undercount risk"
+    },
+    {
+      "claim": "population budget reflects real engine cost",
+      "method": "none \u2014 cost units are relative and unmeasured",
+      "result": "UNVERIFIED \u2014 engineering assumption"
+    },
+    {
+      "claim": "streaming / Mass / AI / navigation work",
+      "method": "none",
+      "result": "NOT TESTED \u2014 no engine"
+    }
+  ]
+}

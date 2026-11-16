@@ -114,6 +114,31 @@ class LocationRecord:
 
 
 @dataclass
+class SceneDetail:
+    """Per-scene detail block from the scene register's "Entries" section.
+
+    The register writes each scene as an '### <ID> · <Name>' heading followed by
+    a two-column '| Field | Value |' table. The fields that matter to world
+    simulation are extracted here; everything else is left in the document.
+    """
+    id: str
+    name: str = ""
+    parent_id: str = ""
+    scene_kind: str = ""
+    canon_status: str = ""
+    physical_description: str = ""
+    what_player_sees: str = ""
+    interaction: str = ""
+    access_text: str = ""
+    npcs_present: str = ""
+    routines: str = ""
+    time_variations: str = ""
+    weather_variations: str = ""
+    gameplay_relevance: str = ""
+    production_notes: str = ""
+
+
+@dataclass
 class SceneRecord:
     id: str
     name: str
@@ -340,8 +365,238 @@ def parse_scene_summary(text: str) -> List[SceneRecord]:
 
 
 # --------------------------------------------------------------------------- #
+# Scene detail blocks
+# --------------------------------------------------------------------------- #
+
+_SCENE_HEADING = re.compile(r"^###\s+(CH0[1-8]-SCN-\d{3})\s*(?:[\u00b7\-]\s*(.*))?$")
+
+#: Register field labels -> SceneDetail attribute. Exact strings as published.
+_FIELD_MAP = {
+    "Scene ID": None,                      # the id; already captured from heading
+    "Scene name": "name",
+    "Parent location ID": "parent_id",
+    "Scene category": "scene_kind",
+    "Canon status": "canon_status",
+    "Physical description.": "physical_description",
+    "What the player sees.": "what_player_sees",
+    "What the player can interact with.": "interaction",
+    "Can the player enter the space?": "access_text",
+    "NPCs present.": "npcs_present",
+    "NPC activities and routines.": "routines",
+    "Time-of-day variations.": "time_variations",
+    "Weather variations.": "weather_variations",
+    "Gameplay relevance.": "gameplay_relevance",
+    "Production notes.": "production_notes",
+}
+
+
+def parse_scene_details(text: str) -> List[SceneDetail]:
+    """Parse the register's per-scene detail blocks ('### ID · Name' + table)."""
+    details: List[SceneDetail] = []
+    current: Optional[SceneDetail] = None
+    in_table = False
+
+    for line in text.splitlines():
+        heading = _SCENE_HEADING.match(line.strip())
+        if heading:
+            if current is not None:
+                details.append(current)
+            current = SceneDetail(id=heading.group(1), name=(heading.group(2) or "").strip())
+            in_table = False
+            continue
+
+        if current is None:
+            continue
+
+        stripped = line.strip()
+        if stripped.startswith("| Field | Value |") or stripped.startswith("|---|---|"):
+            in_table = True
+            continue
+        if in_table:
+            if not stripped:
+                # A blank line terminates the field table. This is the boundary
+                # between the '| Field | Value |' block and the bulleted fields
+                # that follow it. Getting this wrong silently drops every
+                # bulleted field, which is exactly what happened on first run.
+                in_table = False
+                continue
+            row = _TABLE_ROW.match(stripped)
+            if not row:
+                in_table = False
+                # fall through so a bullet on this line is still parsed
+            else:
+                cells = [c.strip() for c in row.group(1).split("|")]
+                if len(cells) >= 2:
+                    label, value = cells[0], cells[1]
+                    target = _FIELD_MAP.get(label)
+                    if target:
+                        setattr(current, target, _strip_emphasis(value))
+                continue
+            cells = [c.strip() for c in row.group(1).split("|")]
+            if len(cells) < 2:
+                continue
+            label, value = cells[0], cells[1]
+            target = _FIELD_MAP.get(label)
+            if target:
+                setattr(current, target, _strip_emphasis(value))
+            continue
+
+        # Bulleted fields outside a table, e.g. "- **Physical description.** ..."
+        bullet = re.match(r"^-\s+\*\*(.+?)\*\*\s*(.*)$", stripped)
+        if bullet:
+            label = bullet.group(1).strip()
+            value = bullet.group(2).strip()
+            target = _FIELD_MAP.get(label)
+            if target:
+                setattr(current, target, _strip_emphasis(value))
+
+    if current is not None:
+        details.append(current)
+    return details
+
+
+def _strip_emphasis(value: str) -> str:
+    """Remove markdown emphasis and backticks from a register cell."""
+    return value.replace("**", "").replace("`", "").strip()
+
+
+_NUMBER_WORDS = {
+    "no": 0, "zero": 0, "none": 0,
+    "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+    "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
+    "eleven": 11, "twelve": 12,
+}
+_NUMBER_WORDS_PATTERN = "|".join(sorted(_NUMBER_WORDS, key=len, reverse=True))
+
+#: Creatures present in a scene that are NOT people needing a performer.
+#: Reported as ambience by the population budget, never billed as an NPC.
+_NON_HUMAN = ("dog", "dogs", "goat", "goats", "chicken", "chickens", "fowl",
+              "bird", "birds", "hornbill", "hornbills", "duiker", "duikers",
+              "cat", "cats", "sheep", "cow", "cows", "monkey", "monkeys")
+_NON_HUMAN_PATTERN = "|".join(sorted(_NON_HUMAN, key=len, reverse=True))
+
+#: Individual people nouns. Used to count article-introduced people ("a girl")
+#: that carry no numeral.
+_PERSON_NOUNS = (
+    "woman", "women", "man", "men", "child", "children", "boy", "boys",
+    "girl", "girls", "elder", "elders", "trader", "traders", "smith",
+    "smiths", "farmer", "farmers", "hunter", "hunters", "guard", "guards",
+    "weaver", "weavers", "potter", "potters", "drummer", "drummers",
+    "dancer", "dancers", "singer", "singers", "mother", "father",
+    "grandmother", "grandfather", "baby", "person", "people", "youth",
+    "youths", "widow", "widows", "bride", "priest", "priestess",
+)
+_PERSON_PATTERN = "|".join(sorted(_PERSON_NOUNS, key=len, reverse=True))
+
+#: Collective nouns. "A family of six" is six people, already counted by the
+#: numeral, so the article must not add one more.
+_COLLECTIVE = ("family", "families", "group", "groups", "gathering", "crowd",
+               "party", "household", "procession")
+
+_ABSENCE_PHRASES = ("none", "no one", "nobody", "not present", "empty",
+                    "unpopulated", "deserted")
+
+_CHILD_WORDS = ("child", "children", "boy", "boys", "girl", "girls")
+
+
+def parse_npc_count(npcs_present: str) -> "tuple[int, bool, bool]":
+    """Parse the register's 'NPCs present' prose into a person count.
+
+    Returns (people, has_child, parsed).
+
+    The register writes prose, not fields: "One woman, one child." /
+    "None." / "Two traders." / "Goats at dusk, and one boy."
+
+    `parsed=False` means DO NOT TRUST THE COUNT. It happens when the text
+    contains no quantity this parser recognises ("a gathering of unspecified
+    size", "several"). Callers must treat it as needs-manual-review, never as
+    zero, because zero understates the population budget.
+
+    Stated absence ("None.", "No one.") returns (0, False, True): that is a
+    successful parse of a real answer, not a failure.
+
+    Counting rules:
+      * numeral + noun sums normally: "Three men and two women" -> 5
+      * article + individual person noun adds one: "a girl" -> 1
+      * article + collective noun adds nothing, because the following numeral
+        already counted the people: "A family of six" -> 6, not 7
+      * non-human animals are excluded: "Two old men, a girl, and a dog" -> 3
+        (the dog is ambience, not a scheduled performer)
+
+    KNOWN LIMITATION: word-list arithmetic, not language understanding. It
+    cannot resolve "several", "a crowd", "many". See Docs/REGISTER_INGESTION.md.
+    """
+    text = (npcs_present or "").strip()
+    if not text:
+        return 0, False, False
+
+    lowered = text.lower()
+    has_child = any(w in lowered for w in _CHILD_WORDS)
+
+    if any(lowered == p or lowered.startswith(p) for p in _ABSENCE_PHRASES):
+        return 0, has_child, True
+
+    total = 0
+    parsed = False
+
+    # 1. Numeral + noun pairs. Classify by the noun that the numeral counts, so
+    #    "two goats" contributes nobody while "two women" contributes two.
+    pair = re.compile(
+        rf"\b(?P<num>{_NUMBER_WORDS_PATTERN}|\d+)\s+"
+        rf"(?P<mid>(?:\w+\s+){{0,2}}?)"
+        rf"(?P<noun>{_NON_HUMAN_PATTERN}|{_PERSON_PATTERN}|\w+)"
+    )
+    for m in pair.finditer(lowered):
+        raw = m.group("num")
+        value = int(raw) if raw.isdigit() else _NUMBER_WORDS[raw]
+        noun = m.group("noun")
+        parsed = True
+        if noun in _NON_HUMAN or any(w in m.group("mid") for w in _NON_HUMAN):
+            continue  # animals are ambience, not performers
+        total += value
+
+    # 2. Numerals with no noun at all ("Seven", "five"). The register only omits
+    #    the noun when the meaning is obvious, so trust a bare numeral.
+    if not parsed:
+        for token in re.findall(r"\d+", lowered):
+            total += int(token)
+            parsed = True
+        if not parsed:
+            for token in re.findall(r"[a-z]+", lowered):
+                if token in _NUMBER_WORDS:
+                    total += _NUMBER_WORDS[token]
+                    parsed = True
+                    break
+
+    # 3. Article-introduced individuals carrying no numeral ("a girl").
+    for m in re.finditer(
+            rf"\b(?:a|an)\s+(?:\w+\s+){{0,2}}?({_PERSON_PATTERN})\b", lowered):
+        total += 1
+        parsed = True
+
+    return max(total, 0), has_child, parsed
+
+
+# --------------------------------------------------------------------------- #
 # Validation
 # --------------------------------------------------------------------------- #
+
+def validate_scene_details(details: Sequence[SceneDetail]) -> List[str]:
+    problems: List[str] = []
+    seen: Dict[str, int] = {}
+    for detail in details:
+        seen[detail.id] = seen.get(detail.id, 0) + 1
+        if detail.canon_status and detail.canon_status not in CANON_STATUSES:
+            problems.append(f"{detail.id}: canon status {detail.canon_status!r} not recognised")
+        if detail.scene_kind and detail.scene_kind not in SCENE_KINDS:
+            problems.append(f"{detail.id}: scene kind {detail.scene_kind!r} not recognised")
+        if not detail.npcs_present:
+            problems.append(f"{detail.id}: no 'NPCs present' field parsed")
+    for scene_id, count in seen.items():
+        if count > 1:
+            problems.append(f"{scene_id}: detail block appears {count} times")
+    return problems
+
 
 def validate_locations(records: Sequence[LocationRecord]) -> List[str]:
     """Return problems. An empty list means the records are self-consistent."""

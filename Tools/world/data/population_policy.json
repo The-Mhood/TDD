@@ -1,0 +1,157 @@
+{
+  "meta": {
+    "document": "TDD Population Policy",
+    "version": "1.0.0",
+    "date": "2026-11-16",
+    "author": "Agent 2 - World, Systems and Gameplay Simulation",
+    "status": "PROVISIONAL - engineering assumptions, NOT canon, NOT measured",
+    "purpose": "Map the register's authored scene categories to simulation tiers so the population cost of the world is arithmetic over authored data rather than an engineering guess.",
+    "separation_rule": "Register data lives in the Drive registers and Tools/canon fixtures. This file holds ONLY engineering assumptions. No number in this file may be presented as coming from the register. Every entry states its rationale and confidence."
+  },
+
+  "tier_definitions": {
+    "NAMED": "Tier 1. Full ACharacter with StateTree, full animation, dialogue, quest hooks. Reserved for the 13 approved supporting-cast names (OAD-15) plus Adanna. Never used for population filler.",
+    "CROWD": "Tier 2. Mass entity with LOD-ticked StateTree processor. Reacts to player, can be greeted. No dialogue tree, no quests.",
+    "SCRIPTED": "Lightweight scripted activity. One performer animating on a fixed loop at a marked spot. No AI, no perception, no navigation, no state beyond the loop. This is the tier the Technical Director specifically required: an ambient activity does NOT need an individually simulated NPC with an AI controller.",
+    "BACKGROUND": "Tier 3. Instanced, vertex-animated, no logic tick at all. Silhouette and motion only from a distance.",
+    "NONE": "Nothing simulated. Geometry and dressing only. Used where the register says 'Gameplay relevance: None required' AND there is no depicted person."
+  },
+
+  "scene_category_tiers": {
+    "AMBIENT NPC SCENE": {
+      "tier": "CROWD",
+      "expected_npcs": 2,
+      "rationale": "The register names people and interaction ('greet her') in these scenes, so they need reaction, but they are background life, not story actors. 20 such scenes game-wide, 14 in Chapter 1.",
+      "confidence": "medium-high",
+      "register_basis": "Category definition + 'What the player can interact with' lines, e.g. CH01-SCN-001 'Greet her; she answers without stopping.'"
+    },
+    "WORLD ACTIVITY SCENE": {
+      "tier": "SCRIPTED",
+      "expected_npcs": 1,
+      "rationale": "These depict one person performing one craft or task at a fixed station (blacksmith, loom, pots, kitchen, harvest). The register gives no interaction and no routine variation within the scene. A looping scripted performer reproduces the authored intent at a fraction of crowd cost.",
+      "confidence": "high",
+      "register_basis": "e.g. CH01-SCN-010 'The Blacksmith at Work' - FULLY ENTERABLE, no interaction required, no routine beyond the task."
+    },
+    "ATMOSPHERIC SCENE": {
+      "tier": "SCRIPTED",
+      "expected_npcs": 1,
+      "rationale": "The register usually asks for the space itself ('Goats at Dusk' has one boy driving goats; 'The Well at Noon' has no NPC). One scripted performer at most. Where the register states an NPC, the register count wins over this default.",
+      "confidence": "medium",
+      "register_basis": "CH01-SCN-025 lists 'One boy'; CH01-SCN-032 The Well at Noon lists no NPC. Verified divergence within one category, hence the lower confidence.",
+      "caution": "Do not assume zero. The register explicitly populates some atmospheric scenes."
+    },
+    "ENVIRONMENTAL STORYTELLING": {
+      "tier": "NONE",
+      "expected_npcs": 0,
+      "rationale": "These scenes are explicitly about the object and what is absent. CH01-SCN-024 'NPCs present. None.' Adding a simulated person would contradict the authored intent.",
+      "confidence": "high",
+      "register_basis": "CH01-SCN-024 'The House No One Lives In' - 'NPCs present. None.'; 'Gameplay relevance. None required. Rewards attention only.'"
+    },
+    "ENTERABLE INTERIOR": {
+      "tier": "SCRIPTED",
+      "expected_npcs": 1,
+      "rationale": "Interiors are entered briefly and depict a household activity (kitchen shelter, sleeping corner, compound store). One scripted occupant unless the register says otherwise.",
+      "confidence": "medium-high",
+      "register_basis": "CH01-SCN-007 Sleeping Corner, CH01-SCN-005 The Kitchen Shelter - reachable interiors with implied household presence."
+    },
+    "EXTERIOR MICRO-LOCATION": {
+      "tier": "NONE",
+      "expected_npcs": 0,
+      "rationale": "Traversal spaces: a gap between houses, a path behind houses, a doorway without a house. The register gives them no NPCs and no interaction. They exist to be walked through.",
+      "confidence": "high",
+      "register_basis": "Category definition; CH01-SCN-021, 022, 023, 034 all have no NPC lines."
+    },
+    "EXPLORATION SCENE": {
+      "tier": "NONE",
+      "expected_npcs": 0,
+      "rationale": "Exploration rewards attention to place, not people. No NPCs in the register for these.",
+      "confidence": "high",
+      "register_basis": "CH01-SCN-040 The Light Gap, CH01-SCN-043 A Path That Gives Up."
+    },
+    "SECONDARY STORY SCENE": {
+      "tier": "NAMED",
+      "expected_npcs": 0,
+      "rationale": "Story scenes are authored beats with specific content. They get full-fidelity treatment. In Chapter 1 the single secondary story scene is Memory 1, which depicts no living NPC in its discovery location.",
+      "confidence": "high",
+      "register_basis": "CH01-SCN-046 'NPCs present. None.' - the memory is delivered through place, object, sound and interaction, not a person (OAD-32)."
+    },
+    "MAIN STORY SCENE": {
+      "tier": "NAMED",
+      "expected_npcs": 0,
+      "rationale": "Four exist game-wide, all in Chapter 8. Full fidelity by definition.",
+      "confidence": "high",
+      "register_basis": "Register count table: 4 main story scenes, all Chapter 8."
+    },
+    "INCIDENTAL SCENE": {
+      "tier": "SCRIPTED",
+      "expected_npcs": 1,
+      "rationale": "Two exist game-wide, both Chapter 8. Treated as a single scripted beat until their detail blocks are read.",
+      "confidence": "low",
+      "register_basis": "Register count table only; no detail blocks read yet."
+    }
+  },
+
+  "unmapped_category_fallback": {
+    "tier": "SCRIPTED",
+    "expected_npcs": 1,
+    "rationale": "SAFE DEFAULT. If a new scene category appears in a future register version, it must not be silently treated as free. Scripted is the cheapest tier that still depicts a person; the validator reports every fallback use so the category can be mapped deliberately.",
+    "confidence": "policy"
+  },
+
+  "crowd_concurrency_ratio": {
+    "_note": "The register's NPC count is how many people a scene DEPICTS, not how many must be simulated simultaneously. Ratio converts depicted to concurrent.",
+    "AMBIENT NPC SCENE": 0.75,
+    "ATMOSPHERIC SCENE": 1.0,
+    "WORLD ACTIVITY SCENE": 1.0,
+    "_default": 0.75
+  },
+
+  "cost_units": {
+    "_note": "Relative cost units for budget arithmetic only. NOT milliseconds, NOT a frame-time claim. Calibrated against the chapter ceiling below so that Chapter 1's authored content fits the stated frame budget. Must be replaced by measured cost once a capture exists.",
+    "NAMED": 4.0,
+    "CROWD": 1.0,
+    "SCRIPTED": 0.3,
+    "BACKGROUND": 0.05,
+    "NONE": 0.0
+  },
+
+  "access_multipliers": {
+    "_note": "Independent cost multiplier applied after tier cost. Derived from the access level's streaming/collision/tick policy in Docs/WORLD_ARCHITECTURE.md section 4.",
+    "FULLY ENTERABLE": 1.0,
+    "PARTIALLY ENTERABLE": 0.6,
+    "VISUALLY ACCESSIBLE": 0.2,
+    "BACKGROUND ENVIRONMENT": 0.05,
+    "OPEN EXTERIOR": 1.0,
+    "_default": 1.0
+  },
+
+  "chapter_limits": {
+    "_note": "Chapter ceilings. A derived budget exceeding these fails validation. Set so that Chapter 1, which has 14 ambient NPC scenes and 8 world activity scenes, fits.",
+    "max_crowd_scenes": 16,
+    "max_total_cost_units": 60.0,
+    "max_named_nearby": 4,
+    "max_simultaneous_crowd_agents": 60,
+    "max_background_agents": 120
+  },
+
+  "open_questions_for_directorate": [
+    {
+      "id": "POP-Q1",
+      "question": "Are 'World Activity Scene' depictions intended to be observable in detail up close (the player can stand in the smithy), or can they be screen-space-distant loops?",
+      "impact": "Determines whether SCRIPTED tier needs full-rate animation when the player is within 3 m.",
+      "owner": "Creative Director"
+    },
+    {
+      "id": "POP-Q2",
+      "question": "Does every 'Ambient NPC Scene' need to react to Adanna, or may some be unaware of her by design?",
+      "impact": "Reaction requires CROWD tier perception; unaware scenes could drop to SCRIPTED and halve their cost.",
+      "owner": "Creative Director"
+    },
+    {
+      "id": "POP-Q3",
+      "question": "Are depicted child NPCs to be animated at the same fidelity as adults?",
+      "impact": "Child-specific animation sets and the non-combat targeting rule both constrain the crowd processor.",
+      "owner": "Creative Director / Animation"
+    }
+  ]
+}

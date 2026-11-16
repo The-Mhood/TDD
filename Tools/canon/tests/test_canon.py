@@ -22,6 +22,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO_ROOT / "Tools" / "canon"))
 
 import canon_index as ci  # noqa: E402
+import registers as reg  # noqa: E402
 
 
 def setUpModule() -> None:  # noqa: N802 - unittest naming
@@ -498,6 +499,62 @@ class TestEvidenceArtifact(unittest.TestCase):
         out_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
         self.assertTrue(out_path.is_file())
         self.assertEqual(result["result"], "PASS", result["errors"])
+
+
+
+class TestNpcCountParsing(unittest.TestCase):
+    """The budget depends on this, and it has already been wrong twice: 'no one'
+    parsed as 1, and an article-introduced person was dropped entirely."""
+
+    def test_stated_absence_is_zero_and_parsed(self):
+        for text in ("None.", "No one.", "Nobody", "Empty"):
+            self.assertEqual(reg.parse_npc_count(text)[:2], (0, False), text)
+            self.assertTrue(reg.parse_npc_count(text)[2], f"{text!r} must count as parsed")
+
+    def test_absence_is_not_confused_with_unparseable(self):
+        self.assertTrue(reg.parse_npc_count("None.")[2])
+        self.assertFalse(reg.parse_npc_count("A gathering of unspecified size.")[2])
+
+    def test_single_child(self):
+        self.assertEqual(reg.parse_npc_count("One boy")[:2], (1, True))
+
+    def test_numeral_plus_noun(self):
+        self.assertEqual(reg.parse_npc_count("Three men and two women")[:2], (5, False))
+
+    def test_collective_does_not_double_count(self):
+        """"A family of six" is six people, not seven."""
+        self.assertEqual(reg.parse_npc_count("A family of six")[:2], (6, False))
+
+    def test_article_introduced_person_is_counted(self):
+        """The bug: 'a girl' carried no numeral, so she vanished from the count."""
+        self.assertEqual(reg.parse_npc_count("Two old men, a girl, and a dog")[:2],
+                         (3, True))
+
+    def test_animals_are_not_performers(self):
+        self.assertEqual(reg.parse_npc_count("Two goats")[:2], (0, False))
+        self.assertEqual(reg.parse_npc_count("six chickens")[:2], (0, False))
+
+    def test_mixed_people_and_animals(self):
+        self.assertEqual(reg.parse_npc_count("One woman, two goats and a child")[:2],
+                         (2, True))
+
+    def test_animal_does_not_hide_the_person(self):
+        self.assertEqual(reg.parse_npc_count("Goats at dusk, and one boy.")[:2],
+                         (1, True))
+
+    def test_bare_numeral_is_trusted(self):
+        self.assertEqual(reg.parse_npc_count("Seven")[:2], (7, False))
+
+    def test_unknown_quantity_is_flagged_not_silently_zero(self):
+        count, _, parsed = reg.parse_npc_count("A crowd")
+        self.assertEqual(count, 0)
+        self.assertFalse(parsed, "unparseable prose must never look like a valid zero")
+
+    def test_empty_is_unparsed(self):
+        self.assertFalse(reg.parse_npc_count("")[2])
+
+    def test_numbers_above_ten(self):
+        self.assertEqual(reg.parse_npc_count("twelve dancers")[:2], (12, False))
 
 
 if __name__ == "__main__":

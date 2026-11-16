@@ -148,7 +148,7 @@ Ordered by dependency. "Blocks" names what cannot proceed without it.
 
 | # | System | Why it is needed | Blocks | Complexity |
 |---|---|---|---|---|
-| W-01 | Chapter/world partition scheme + streaming budget model | 135 scenes, 191 location entries; no single level can hold a chapter | everything | High |
+| W-01 | Chapter/world partition scheme + streaming budget model | 135 scenes, 196 location entries; no single level can hold a chapter | everything | High |
 | W-02 | Location registry (runtime) + canon metadata access | Every system needs `CHxx-…` identity and status | interaction, quests, save | Low |
 | W-03 | Environment state system (time, weather, supernatural) | 40 state references; scenes require day/night/rain | NPC routines, art, audio | High |
 | W-04 | Interaction framework (`ITDDInteractable` + prompt plumbing) | Every exploration and memory beat is an interaction | memory director, quests, NPC dialogue | Medium |
@@ -385,7 +385,7 @@ graph *schema and validator*, so boss data can be authored and checked before an
 
 | ID | Risk | L | I | Mitigation |
 |---|---|---|---|---|
-| W-R1 | **Scope:** 135 scenes / 191 locations is far larger than a three-agent team can author | High | High | Vertical slice = Chapter 1's *story* spine + a representative subset of ambient scenes; ambient scenes are data-driven kits, not bespoke work |
+| W-R1 | **Scope:** 135 scenes / 196 location entries is far larger than a three-agent team can author | High | High | Vertical slice = Chapter 1's *story* spine + a representative subset of ambient scenes; ambient scenes are data-driven kits, not bespoke work |
 | W-R2 | **No engine here:** none of this compiles or runs in my environment | Certain | High | Author schemas + validators (runnable), keep runtime C++ to frozen interfaces until Stage 1 evidence exists |
 | W-R3 | **Canon drift:** my Stage 0 model was already wrong in two ways | Medium | High | Register parser + `verified_against_register` flag + closed vocabularies; §2 documents the correction |
 | W-R4 | **6 of 7 memory locations unverified** against their chapter registers | High | High | Marked `UNVERIFIED`; cannot be presented as canon; must be read before Stage 7 memory work |
