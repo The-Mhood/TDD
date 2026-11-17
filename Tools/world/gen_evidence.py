@@ -195,15 +195,17 @@ def main() -> int:
              "method": "enumeration of data availability per L0 test",
              "result": "corrected: 2 of 10 pass, 1 partial, 7 blocked; the 'four' "
                        "sentence was unsupported and is recorded as wrong"},
-            {"claim": "three divergent documents identify as TDD-MEAD-001 v1.0",
+            {"claim": "three divergent MEAD files exist; TWO declare TDD-MEAD-001 v1.0",
              "method": "identity search across all reachable refs for 'Document ID'",
-             "result": "verified: MEAD-A 1078 lines (no 5.4), MEAD-B 247 lines, "
-                       "MEAD-C 1231 lines (5.4 present, 7 Status.* tags). "
-                       "Section 5.4 exists only in MEAD-C"},
+             "result": "verified: MEAD-A 1078 lines declares v1.0 (no 5.4, State.Combat.* tags); "
+                       "MEAD-B 247 lines declares NO document ID or version; MEAD-C 1231 lines "
+                       "declares v1.0 (5.4 present, 7 Status.* tags). v1.0 of this review wrongly "
+                       "said all three declare the ID; corrected in v1.1 after Agent 3 recon V3 5.1"},
             {"claim": "Status.Dead has no tag in the canonical-adjacent MEAD",
              "method": "extract the Status.* set from MEAD-C section 5.1",
-             "result": "verified: 7 tags, none for Dead. C-04's precedence top "
-                       "value is unrepresentable as a tag"},
+             "result": "verified: 7 tags, none for Dead. C-04's precedence top value is "
+                       "unrepresentable as a TAG. Note Dead DOES exist as a value of "
+                       "UTDDCharacterStateMachine and in the DT_StateRules state list"},
             {"claim": "no Chapter 1 source supports a carry state",
              "method": "keyword scan of the 57-row location capture and 46 scene rows",
              "result": "verified: no carry/portage/burden vocabulary; CarryState "
@@ -212,6 +214,11 @@ def main() -> int:
              "method": "all-refs identity search before publication",
              "result": "withdrawn before publication: MEAD-C exists on Agent 1's "
                        "branch and carries every cited section"},
+            {"claim": "MEAD-C section 5.4 spells the damage-request struct two ways",
+             "method": "extract every DamageRequest token from the section",
+             "result": "verified: line 476 'FTDamageRequest', line 478 'FTDDDamageRequest'. "
+                       "A third spelling 'FTDDamageRequest' appears only in reconciliation V3's "
+                       "transcription of my proposal"},
             {"claim": "NPC prose parsing is correct",
              "method": "38-case parser suite; 2 new silent-corruption bugs found "
                        "and fixed this milestone (range summed as 16, abstract "

@@ -22,7 +22,9 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO_ROOT / "Tools" / "canon"))
+sys.path.insert(0, str(REPO_ROOT / "Tools" / "world"))
 
+import mead_refs  # noqa: E402
 import registers as reg  # noqa: E402
 
 FIXTURES = REPO_ROOT / "Tools" / "canon" / "tests" / "fixtures"
@@ -32,9 +34,9 @@ SUBMISSION = REPO_ROOT / "Docs" / "CONTRACT_SUBMISSION_A2_V1.md"
 REVIEW_A1R1 = REPO_ROOT / "Docs" / "AGENT2_REVIEW_A1R1_V1.md"
 REVIEW_A1R2 = REPO_ROOT / "Docs" / "AGENT2_REVIEW_A1R2_V1.md"
 
-#: The MEAD that Agent 1 cites. Absent from this worktree (it lives on Agent 1's
-#: branch), so the MEAD-dependent tests skip rather than fail when it is missing.
-MEAD_C = Path("/tmp/mead_a1.md")
+#: MEAD comparison reads each candidate from its own branch via `mead_refs`.
+#: Tests skip when a branch is not fetched rather than fail spuriously.
+MEAD_C = mead_refs.read("C")
 
 
 def _locations():
@@ -51,6 +53,15 @@ class TestReviewArithmetic(unittest.TestCase):
     def _verdict_rows(self):
         rows = [l for l in self.raw.splitlines() if re.match(r"^\|\s*§\d", l.strip())]
         return [r for r in rows if "**ACCEPT" in r or "**REJECT" in r]
+
+    def test_is_version_1_1_and_preserves_1_0(self):
+        self.assertIn("**Version:** 1.1", self.raw)
+        self.assertIn("Supersedes:** v1.0 at commit `4220b82`", self.raw)
+        self.assertIn("preserved unchanged", self.raw)
+
+    def test_change_log_has_both_versions(self):
+        rows = [l for l in self.raw.splitlines() if re.match(r"^\| 1\.[01] \|", l)]
+        self.assertEqual(len(rows), 2)
 
     def test_sixty_one_clause_verdicts(self):
         self.assertEqual(len(self._verdict_rows()), 61)
@@ -244,50 +255,84 @@ class TestCorrectionsRecorded(unittest.TestCase):
 
 
 class TestMeadDivergence(unittest.TestCase):
-    """Section 0.1: three divergent documents identify as TDD-MEAD-001.
+    """Section 0.1: three materially different MEADs, but only two carry v1.0.
 
-    MEAD-C lives on Agent 1's branch and is not in this worktree; those
-    assertions skip when it is absent rather than failing spuriously.
+    This class originally asserted that all three identify as `TDD-MEAD-001` v1.0.
+    That was wrong and the review was corrected after Agent 3's reconciliation V3
+    pointed at the identity headers. The tests now pin the narrower, verified
+    finding.
     """
 
     @classmethod
     def setUpClass(cls):
         cls.review = REVIEW_A1R2.read_text(encoding="utf-8")
+        cls.flat = cls.review.replace("**", "").replace("`", "")
 
     def test_review_names_three_meads(self):
         for tag in ("MEAD-A", "MEAD-B", "MEAD-C"):
             self.assertIn(tag, self.review)
 
-    def test_review_records_the_1130_4_line_counts(self):
-        self.assertIn("1,078", self.review)
-        self.assertIn("247", self.review)
-        self.assertIn("1,231", self.review)
+    def test_review_records_the_line_counts(self):
+        for n in ("1,078", "247", "1,231"):
+            self.assertIn(n, self.review)
+
+    def test_review_no_longer_claims_all_three_are_v1_0(self):
+        """The corrected claim: two declare v1.0, B is an unversioned baseline."""
+        self.assertIn("only two carry a formal identity", self.flat)
+        self.assertIn("no document ID", self.flat)
+        self.assertIn("declares neither", self.flat)
 
     def test_review_records_that_dead_has_no_tag(self):
-        flat = self.review.replace("**", "").replace("`", "")
-        self.assertIn("Status.Dead", flat)
-        self.assertIn("does not exist", flat)
+        self.assertIn("Status.Dead", self.flat)
+        self.assertIn("does not exist", self.flat)
 
-    @unittest.skipUnless(MEAD_C.exists(), "MEAD-C is on Agent 1's branch, not in this worktree")
+    def test_review_records_dead_as_a_state_machine_value(self):
+        """The sharpening found while correcting: MEAD-C models Dead, not as a tag."""
+        self.assertIn("CharacterStateMachine", self.flat)
+        self.assertIn("Dead", self.flat)
+
+    def test_review_records_the_damage_request_spelling_inconsistency(self):
+        self.assertIn("FTDamageRequest", self.flat)
+        self.assertIn("FTDDDamageRequest", self.flat)
+
+    def test_review_records_that_i_authored_mead_a(self):
+        """Integrity point: I am not a disinterested discoverer of the divergence."""
+        self.assertIn("I authored MEAD-A", self.flat)
+
+    @unittest.skipUnless(MEAD_C, "MEAD-C branch not fetched")
     def test_mead_c_has_section_5_4(self):
-        text = MEAD_C.read_text(encoding="utf-8")
-        self.assertRegex(text, r"(?m)^#+\s*5\.4\s")
+        self.assertTrue(mead_refs.has_section_5_4(MEAD_C))
 
-    @unittest.skipUnless(MEAD_C.exists(), "MEAD-C is on Agent 1's branch, not in this worktree")
+    @unittest.skipUnless(MEAD_C, "MEAD-C branch not fetched")
     def test_mead_c_has_seven_status_tags_and_no_dead(self):
-        text = MEAD_C.read_text(encoding="utf-8")
-        tags = set(re.findall(r"Status\.[A-Za-z]+", text))
+        tags = mead_refs.status_tags(MEAD_C)
         self.assertEqual(tags, {
             "Status.Attacking", "Status.Blocking", "Status.Cinematic",
             "Status.Grabbed", "Status.Invulnerable", "Status.Parrying",
             "Status.Staggered"})
         self.assertNotIn("Status.Dead", tags)
 
-    @unittest.skipUnless(MEAD_C.exists(), "MEAD-C is on Agent 1's branch, not in this worktree")
+    @unittest.skipUnless(MEAD_C, "MEAD-C branch not fetched")
     def test_mead_c_pair_hitstop_wording_supports_scaled_window(self):
         """Section 7.1's concession rests on this sentence."""
-        text = MEAD_C.read_text(encoding="utf-8")
-        self.assertIn("scaled time dilation to the *pair*", text)
+        self.assertIn("scaled time dilation to the *pair*", MEAD_C)
+
+    def test_only_two_candidates_declare_the_document_id(self):
+        ids = mead_refs.all_identities()
+        declared = {k: v for k, v in ids.items()
+                    if v and v.get("document_id") == "TDD-MEAD-001"}
+        missing = [k for k, v in ids.items() if v is None]
+        if missing:
+            self.skipTest(f"branches not fetched: {missing}")
+        self.assertEqual(sorted(declared), ["A", "C"])
+        self.assertIsNone(ids["B"]["document_id"])
+
+    def test_all_three_are_distinct_lengths(self):
+        ids = mead_refs.all_identities()
+        if any(v is None for v in ids.values()):
+            self.skipTest("branches not fetched")
+        lengths = sorted(v["lines"] for v in ids.values())
+        self.assertEqual(len(set(lengths)), 3, f"expected 3 distinct lengths, got {lengths}")
 
 
 class TestReviewInternalConsistency(unittest.TestCase):
@@ -315,6 +360,108 @@ class TestReviewInternalConsistency(unittest.TestCase):
         """The A1-R1 review must still exist and be unchanged in intent."""
         self.assertTrue(REVIEW_A1R1.exists())
         self.assertIn("FIVE CORRECTIONS", REVIEW_A1R1.read_text(encoding="utf-8").upper())
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
+
+
+class TestAgent3LedgerFidelity(unittest.TestCase):
+    """Agent 3's response ledger V3 must describe this review accurately.
+
+    It is the record other agents will read instead of the review itself, so a
+    mischaracterisation there propagates. These assertions cover the claims it
+    makes *about my document* only — not its own judgments.
+    """
+
+    LEDGER_REF = "origin/a3branch"
+    LEDGER_PATH = "docs/AGENT2_CONTRACT_RESPONSES_V3.md"
+    RECON_PATH = "docs/CROSS_AGENT_CONTRACT_RECONCILIATION_V3.md"
+
+    @classmethod
+    def setUpClass(cls):
+        import subprocess
+        out = subprocess.run(
+            ["git", "show", f"{cls.LEDGER_REF}:{cls.LEDGER_PATH}"],
+            cwd=REPO_ROOT, capture_output=True, text=True, timeout=60)
+        if out.returncode != 0:
+            raise unittest.SkipTest("Agent 3 branch not fetched")
+        cls.ledger = out.stdout
+        cls.flat = cls.ledger.replace("**", "").replace("`", "").replace("*", "")
+        rec = subprocess.run(
+            ["git", "show", f"{cls.LEDGER_REF}:{cls.RECON_PATH}"],
+            cwd=REPO_ROOT, capture_output=True, text=True, timeout=60)
+        cls.recon = rec.stdout if rec.returncode == 0 else ""
+        cls.review = REVIEW_A1R2.read_text(encoding="utf-8")
+        cls.review_flat = cls.review.replace("**", "").replace("`", "").replace("*", "")
+
+    def test_ledger_pins_this_review_commit(self):
+        self.assertIn("4220b82ffdebf291793ce508dd25080528a3dac8", self.ledger)
+
+    def test_ledger_records_zero_of_seven_agreed(self):
+        self.assertIn("0/7", self.flat)
+
+    def test_ledger_denies_any_signature(self):
+        """The ledger names `AGREED BY BOTH` only to deny it; assert the denial."""
+        self.assertIn("No contract has status", self.flat)
+        self.assertIn("AGREED BY BOTH", self.flat)
+        self.assertIn("must not be rewritten as bilateral acceptance", self.flat)
+
+    def test_ledger_records_the_clause_counts_i_published(self):
+        for n in ("61", "56", "5", "0 rejected"):
+            self.assertIn(n, self.flat)
+
+    def test_ledger_records_five_withdrawals(self):
+        self.assertIn("five", self.flat.lower())
+        self.assertIn("withdraw", self.flat.lower())
+
+    def test_ledger_correctly_says_mead_b_has_no_formal_identity(self):
+        """The correction I made because of this ledger."""
+        self.assertIn("without formal ID/version", self.flat)
+
+    def test_ledger_clause_counts_match_my_document(self):
+        """Independent recount of my document against the numbers the ledger repeats."""
+        rows = [l for l in self.review.splitlines() if re.match(r"^\|\s*§\d", l.strip())]
+        verdicts = [r for r in rows if "**ACCEPT" in r or "**REJECT" in r]
+        self.assertEqual(len(verdicts), 61)
+
+    @staticmethod
+    @staticmethod
+    def _norm(t):
+        """Whitespace-normalise and drop the markdown emphasis around the block."""
+        t = t.replace("`", "").replace("**", "").replace(">", " ")
+        return re.sub(r"\s+", " ", t).strip().replace(" ,", ",")
+
+    def _erratum(self, txt, pattern):
+        m = re.search(pattern + r"(.*?)not an attacker-controlled entry point", txt, re.S)
+        return None if m is None else m.group(1)
+
+    def test_erratum_quotation_matches_my_source_apart_from_type_name(self):
+        """Reconciliation V3 §7 reproduces my §10.3 erratum for TD consideration.
+
+        Compared with the damage-request type name canonicalised, because that
+        name is itself in dispute (see the next test).
+        """
+        mine = self._erratum(self.review, r"§5\.4 erratum:\*\*")
+        rec = self._erratum(self.recon, r"Proposed §5\.4 erratum:\*\*")
+        self.assertIsNotNone(rec, "reconciliation V3 erratum block not found")
+        mine, rec = self._norm(mine), self._norm(rec)
+        for name in ("FTDDDamageRequest", "FTDDamageRequest", "FTDamageRequest"):
+            mine = mine.replace(name, "TYPENAME")
+            rec = rec.replace(name, "TYPENAME")
+        self.assertEqual(mine, rec)
+
+    def test_reconciliation_quotes_a_third_spelling_of_the_request_struct(self):
+        """MEAD-C spells the struct two ways; my *proposal* uses `FTDDDamageRequest`;
+        V3's transcription of my proposal renders a third variant, `FTDDamageRequest`.
+
+        Recorded because the TD-09 erratum is the instrument meant to settle this
+        name, and the transcription of the proposal is already inconsistent.
+        """
+        proposal = self._erratum(self.review, r"§5\.4 erratum:\*\*")
+        self.assertIn("FTDDDamageRequest", proposal)
+        self.assertNotIn("FTDDamageRequest", proposal)
+        self.assertIn("FTDDamageRequest", self.recon)
 
 
 if __name__ == "__main__":

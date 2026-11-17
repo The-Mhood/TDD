@@ -1,8 +1,9 @@
 # AGENT 2 — FORMAL REVIEW OF AGENT 1 REVISION `A1-R2` v1.1
 
 **Document ID:** `TDD-A2-REVIEW-A1R2-001`
-**Version:** 1.0
-**Date:** 2026-11-16 UTC
+**Version:** 1.1
+**Date:** 2026-11-16 UTC (v1.1 issued 2026-11-17 UTC)
+**Supersedes:** v1.0 at commit `4220b82` — **preserved unchanged**, not overwritten
 **Author:** Agent 2 — World Structure and Level Architecture
 
 **Reviewing:** `TDD-A1-CONTRACT-RESPONSE-002` **v1.1 (`A1-R2`)**, exact commit `f578fe612ad173b74f99fcb187f825eb3de6f59a`
@@ -21,7 +22,7 @@
 
 ## 0. Reading notes and one finding that has to come first
 
-### 0.1 There are three documents called `TDD-MEAD-001` v1.0, and it decides C-05 and C-07
+### 0.1 There are three divergent MEAD documents — only two carry a formal identity — and it decides C-05 and C-07
 
 Before reviewing any clause I had to resolve which MEAD `A1-R2` cites, because eight of its
 citations are to `MEAD §3.5`, `§4.4`, `§4.5`, `§5.4` and `§5.5`. I initially checked the two MEAD
@@ -32,11 +33,21 @@ were fabricated.
 **That would have been wrong, and it would have been my third wrong-version error in two
 reviews.** There are three divergent documents:
 
-| ID | Path | Lines | §5.4? | `Status.*` tags | Where it exists |
-|---|---|---|---|---|---|
-| **MEAD-A** | `Docs/00_MASTER_ENGINEERING_ARCHITECTURE.md` | 1,078 | **no** | **none** | my working tree |
-| **MEAD-B** | `docs/MASTER_ENGINEERING_ARCHITECTURE.md` | 247 | **no** | **none** | packet `50b1431`, recon commit `d32660f` |
-| **MEAD-C** | `docs/01_ARCHITECTURE/MASTER_ENGINEERING_ARCHITECTURE.md` | 1,231 | **yes** | **7 tags** | Agent 1's branch `b9ab305` |
+| ID | Path | Lines | Formal identity | §5.4? | `Status.*` tags | Where it exists |
+|---|---|---|---|---|---|---|
+| **MEAD-A** | `Docs/00_MASTER_ENGINEERING_ARCHITECTURE.md` | 1,078 | **`TDD-MEAD-001` v1.0** | **no** | **none** (`State.Combat.*` instead) | my working tree |
+| **MEAD-B** | `docs/MASTER_ENGINEERING_ARCHITECTURE.md` | 247 | **none** — "initial baseline", no document ID, no version | **no** | **none** | Agent 3's branch |
+| **MEAD-C** | `docs/01_ARCHITECTURE/MASTER_ENGINEERING_ARCHITECTURE.md` | 1,231 | **`TDD-MEAD-001` v1.0** | **yes** | **7 tags** | Agent 1's branch `b9ab305` |
+
+**Correction to the first published version of this section.** I wrote that all three documents
+identify as `TDD-MEAD-001` v1.0. That is wrong, and Agent 3's reconciliation V3 §5.1 caught it
+against the identity headers: **A and C declare `Document ID: TDD-MEAD-001` and `Version: 1.0`;
+B declares neither.** B is headed "Master Engineering Architecture (initial baseline)" and has no
+document ID or version field anywhere in its first forty lines. I had been comparing three *files*
+and overstated the identity claim. The finding survives in narrower and stronger form: there are
+**three materially different architecture documents, two of which claim the same ID and version**,
+and the one A1-R2 cites for §5.4 is neither the newest by commit chronology nor the one in my
+working tree.
 
 **`A1-R2`'s citations are correct — against MEAD-C.** I verified every one (§7.5, §9.6). MEAD-C
 §5.4 is a real "Damage pipeline" section containing exactly the diagram `A1-R1`/`A1-R2` quote, and
@@ -744,7 +755,7 @@ MEAD-C has no tag for `Dead`.** I checked:
 |---|---|---|---|
 | `Status.Staggered` | **yes** | yes | `Combat.State.Staggered` |
 | `Status.Cinematic` | **yes** | **no** — dropped | `Combat.State.Cinematic` |
-| `Status.Dead` / `Status.Died` | **no — does not exist** | **no** | `Combat.State.Dead` |
+| `Status.Dead` / `Status.Died` | **no tag** — but `Dead` **is** a value of `UTDDCharacterStateMachine` and of the `DT_StateRules` state list | **no** | `Combat.State.Dead` |
 | `Status.Attacking`, `Status.Blocking`, `Status.Parrying`, `Status.Invulnerable`, `Status.Grabbed` | **yes** | **none of the five** | — |
 
 **Two findings here, both of which need the registry owner rather than me:**
@@ -1162,7 +1173,20 @@ Every namespace decision in C-07 depends on which one is canonical, and so does 
 exists only in C).
 
 **Raised as TD-12** (§11). It is a documentation-identity question, not a design question, and it
-is the cheapest unblock in this review: **declare one file canonical, archive the other two.**
+is the cheapest unblock in this review: **declare one exact file and commit canonical.** I do not
+ask that the other two be deleted — §0.1 records that each carries material the others do not,
+including MEAD-A's UE 5.8 commitment and its seven-memory sequence. Deletion would destroy
+evidence; a declaration of which one governs citations costs nothing.
+
+**Disclosure of my own interest, which the correction above obliges me to state.** **I authored
+MEAD-A.** It is my own milestone-0 architecture document, and it is one of the two candidates
+claiming `TDD-MEAD-001` v1.0. I had been treating it as "the document in my working tree" rather
+than as a competing claim to the same identifier. That is why I overstated the three-way identity:
+it was easier to see the divergence as everyone's problem than partly as mine. Agent 3's
+reconciliation V3 §5.4 recommends MEAD-C as a narrow reference for the §5.4/TD-09 work and
+explicitly does not call it canonical; I **support that recommendation as a candidate only**, and
+I would support it even though it selects against my own file, because it is the only candidate
+that contains the clause three agents are currently arguing about.
 
 ### 9.7 Interactable identity — still unresolved, still not invented
 
@@ -1258,6 +1282,22 @@ Attacker CombatComponent
 > The diagram's arrow into `ITDDDamageable::ApplyDamage` denotes an authorised application call,
 > not an attacker-controlled entry point.
 
+**A third ambiguity, found while correcting this section: the struct is spelled two ways three
+lines apart.** MEAD-C §5.4 line 476 types the request `FTDamageRequest`; line 478 calls
+`ITDDDamageable::ApplyDamage(FTDDamageRequest)`. One of the two is a typo (`FT` vs `FTDD`), and a
+reader cannot tell which. Since TD-09 requires issuing an erratum against this clause anyway, the
+erratum should **also fix the type name to a single spelling** — the contract cannot cite a struct
+that the canonical MEAD names inconsistently. This does not affect A1-R2, which uses
+`FTDDDamageRequest` throughout.
+
+There are now **three** spellings in circulation, which is why this needs a ruling rather than a
+copy-edit: MEAD-C §5.4 writes `FTDamageRequest` and `FTDDDamageRequest` on consecutive lines, I use
+`FTDDDamageRequest` in my proposal, and **reconciliation V3 §7's transcription of my proposal
+renders `FTDDamageRequest`** — a variant present in neither source. The transcription drift is
+minor, but it demonstrates the problem it describes: the name has no canonical form, so every
+downstream restatement of it diverges. `test_reconciliation_quotes_a_third_spelling_of_the_request_struct`
+pins all three.
+
 **This is the single most important documentation change in this review**, because a reader
 implementing from MEAD-C §5.4 alone would build the `OutcomeType`-as-input shape and would produce
 two arbiters. I agree with A1-R2 §10.9 that the diagram should be **annotated, not deleted** — the
@@ -1317,7 +1357,7 @@ favour on the original question), 1 agreed with an addition (TD-08).**
 
 | ID | Issue | Why it blocks | Needed from |
 |---|---|---|---|
-| **TD-12** | **Three divergent documents all identify as `TDD-MEAD-001` v1.0** (§0.1): MEAD-A `Docs/00_…` (1,078 lines, no §5.4), MEAD-B `docs/MASTER_ENGINEERING_ARCHITECTURE.md` (247 lines), MEAD-C `docs/01_ARCHITECTURE/…` (1,231 lines, §5.4 present, 7 `Status.*` tags). §5.4 exists only in C; the tag vocabularies exist only in C | C-07 says "yield to MEAD" — unexecutable when MEAD is three documents. TD-09's §5.4 erratum cannot be applied to a specific file. Every namespace decision depends on which is canonical | **TD**: declare one canonical file, archive the others, and state which commit the canonical version is at |
+| **TD-12** | **Three divergent architecture documents; two claim `TDD-MEAD-001` v1.0** (§0.1): MEAD-A `Docs/00_…` 1,078 lines, declares the ID, **no §5.4**, `State.Combat.*` tags; MEAD-B `docs/MASTER_…` 247 lines, **declares no ID or version**, no §5.4; MEAD-C `docs/01_ARCHITECTURE/…` 1,231 lines, declares the ID, **the only one with §5.4 and the seven `Status.*` tags**. TD must declare one canonical file **and commit**. Until then "yield to MEAD" has no referent. **I authored MEAD-A**, so I am not a disinterested discoverer. |
 | **TD-13** | **Interactable identity and persistence** (§9.7): does the vertical slice persist interactable state across level transition and save? | No interactable id policy can be chosen without it, and neither agent may invent one. A1-R2 §11 U-11 agrees | **TD**: state yes/no, or "deferred"; a deferred answer also unblocks |
 
 ### 11.4 What I am not asking the TD to decide
@@ -1385,9 +1425,9 @@ and it is narrower than the one this review was commissioned to resolve.
 | `python3 -m unittest discover -s Tools/world/tests -p "test_contract_submission.py"` | **23 OK** | **0** |
 | `python3 -m unittest discover -s Tools/world/tests -p "test_contract_review.py"` | **43 OK** | **0** |
 | `python3 -m unittest discover -s Tools/canon/tests` | **114 OK** | **0** |
-| `python3 -m unittest discover -s Tools/world/tests` | **337 OK** | **0** |
+| `python3 -m unittest discover -s Tools/world/tests` | **354 OK** | **0** |
 | `python3 Tools/ci/l0_checks.py` | **14/14** | **0** |
-| `python3 -m unittest discover -s Tools/world/tests -p "test_contract_review_r2.py"` | **38 OK** | **0** |
+| `python3 -m unittest discover -s Tools/world/tests -p "test_contract_review_r2.py"` | **55 OK** | **0** |
 | `python3 Tools/world/gen_evidence.py` | **13/13** | **0** |
 
 **These test my submission and my prior review. None tests A1-R2 and none is a contract acceptance
@@ -1401,9 +1441,9 @@ test.**
 | **(b)** Document tests, submission (`test_contract_submission.py`) | **23** | **Yes**, §13.1 |
 | **(c)** Document tests, prior review (`test_contract_review.py`) | **43** | **Yes**, §13.1 |
 | **(d)** Proposed contract acceptance tests (both agents) | **A1-R2: 7 suites + 4 new cases/cases; mine: 42** | **No — 0 run** |
-| **(e)** Repository suite | canon 114, world 337, L0 14/14 | **Yes**, §13.1 |
+| **(e)** Repository suite | canon 114, world 354, L0 14/14 | **Yes**, §13.1 |
 | **(f)** Analysis queries for *this* review | **11** | **Yes**, but **not tests** — §13.4 |
-| **(g)** New review tests locking this document's claims | **38** (`test_contract_review_r2.py`) | **Yes**, §13.1 |
+| **(g)** New review tests locking this document's claims | **55** (`test_contract_review_r2.py`) | **Yes**, §13.1 |
 
 ### 13.3 What A1-R2 claims and what it actually ran
 
@@ -1422,7 +1462,7 @@ None of these is a test. §13.5 states what each would need to become one.
 
 | # | Query | Finding |
 |---|---|---|
-| 1 | Locate all files identifying as `TDD-MEAD-001` across all reachable refs | **three divergent MEADs** (§0.1) |
+| 1 | Locate all files identifying as `TDD-MEAD-001` across all reachable refs | **two** files declare the ID (A, C); a third divergent file (B) declares none — §0.1 |
 | 2 | Test each MEAD for `§5.4`, `Status.*`, `Damage.*`, `ITDDDamageable`, `FTDDDamageRequest` | only MEAD-C has them |
 | 3 | Trace each A1-R2 MEAD citation to a section in MEAD-C | all 5 verified (§7.5) |
 | 4 | Extract MEAD-C's 7 `Status.*` tags | `Status.Dead` **absent** (§6.5) |
@@ -1438,8 +1478,8 @@ None of these is a test. §13.5 states what each would need to become one.
 
 | Finding | Would become a test by | Exists? |
 |---|---|---|
-| Three divergent MEADs (§0.1) | A repo check asserting exactly one file carries `Document ID: TDD-MEAD-001` | **No** |
-| `Status.Dead` absent (§6.5) | A registry-completeness check over the precedence set | **No** |
+| Three divergent MEADs, two claiming one ID (§0.1) | A repo check asserting at most one file carries `Document ID: TDD-MEAD-001` — now a test (`test_only_two_candidates_declare_the_document_id`) | **Yes**, 55 tests |
+| `Status.Dead` absent as a tag, but `Dead` exists as a state-machine value (§6.5) | A registry-completeness check over the precedence set | **No** — analysis only |
 | Asymmetric-dilation error (§7.3) | A unit test with two clocks at different dilations | **No** — no clock exists |
 | `CarryState`/`Root`/`Thunder` unsourced (§4.5, §9.3) | A claim-to-source checker over my tag inventory | **No** |
 | 4 scene-less traversal locations (§3.4) | Already tested — `TestSceneGapForTraversalLocations` | **Yes**, 43 tests |
@@ -1530,7 +1570,7 @@ only by luck of doing step 1 before writing.**
 | Prior review | `TDD-A2-REVIEW-A1R1-001` v1.0, commit `93b2f07` — **unchanged** |
 | Governing TD version | v1.2, commit `e121bbbf09562e3cba0efe81aad971809685db23` |
 | Reconciliation | v2.0, commit `d32660fee1b0234871b39b9fa56677c7cf62f28f` |
-| MEADs located | A `Docs/00_…` 1,078 lines; B `docs/MASTER_…` 247 lines; C `docs/01_ARCHITECTURE/…` 1,231 lines (A1 branch `b9ab305`) |
+| MEADs located | A `Docs/00_…` 1,078 lines, declares `TDD-MEAD-001` v1.0, **authored by me**; B `docs/MASTER_…` 247 lines, **declares no ID or version**; C `docs/01_ARCHITECTURE/…` 1,231 lines, declares `TDD-MEAD-001` v1.0 (A1 branch `b9ab305`) |
 | Code, Core types, project | **none created** |
 | Merge / API freeze / M0 claim | **none** |
 | Contracts marked `AGREED` | **0** |
@@ -1540,6 +1580,7 @@ only by luck of doing step 1 before writing.**
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | 2026-11-16 | Formal review of `A1-R2` v1.1 against `A2-C01…C07-1.0` and TD v1.2. Seven verdicts (3 agree, 2 agree-with-condition, 1 partially, 1 clarification); 61 clause verdicts (56 accepted, 5 accepted with a named condition, 0 rejected), 2 namespaces deferred; **five positions of my own withdrawn**, including the C-05 undilated-window rule; 15 of A1-R2's 16 dependency answers accepted; two new TD items (TD-12 three-MEAD divergence, TD-13 interactable persistence); five new requirements on A1 (A2R-17…21); six corrections recorded with attribution; evidence split into six categories with 9 checks, 23 + 43 tests and 0 contract tests executed. |
+| 1.1 | 2026-11-17 | **Correction to §0.1 and TD-12.** v1.0 stated that all three MEAD documents identify as `TDD-MEAD-001` v1.0. Only **two** do (A and C); **MEAD-B declares no document ID and no version**. Found by Agent 3's reconciliation V3 §5.1 against the identity headers. The finding is narrowed, not withdrawn: three materially different documents exist, two claim the same ID and version. Also added: disclosure that **I authored MEAD-A**, and so am not a disinterested discoverer of the divergence; the observation that MEAD-C models `Dead` as a **state-machine value** (`UTDDCharacterStateMachine`, `DT_StateRules`) and in the `UTDDCharacterStateMachine` flow, even though it has no `Status.Dead` tag; and a third §5.4 ambiguity — the request struct is spelled **`FTDamageRequest` on one line and `FTDDDamageRequest` on the next**, which the TD-09 erratum must also settle — and reconciliation V3's transcription of my proposal adds a **third** spelling, `FTDDamageRequest`. Verdicts, clause counts and signature status are **unchanged**: 0 of 7 agreed, 61 verdicts (56/5/0). Test count 38 → 55. |
 
 **This document is a review, not a contract.** It agrees nothing, freezes nothing, and authorises no
 implementation.

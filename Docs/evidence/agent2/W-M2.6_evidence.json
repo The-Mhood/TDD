@@ -14,12 +14,12 @@
       "command": "/usr/bin/python3 -m unittest discover -s Tools/canon/tests",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 60,
+      "duration_ms": 87,
       "stdout_tail": [],
       "stderr_tail": [
         "..................................................................................................................",
         "----------------------------------------------------------------------",
-        "Ran 114 tests in 0.022s",
+        "Ran 114 tests in 0.033s",
         "",
         "OK"
       ]
@@ -28,12 +28,12 @@
       "command": "/usr/bin/python3 -m unittest discover -s Tools/world/tests",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 442,
+      "duration_ms": 751,
       "stdout_tail": [],
       "stderr_tail": [
-        ".................................................................................................................................................................................................................................................................................................................................................",
+        "..................................................................................................................................................................................................................................................................................................................................................................",
         "----------------------------------------------------------------------",
-        "Ran 337 tests in 0.389s",
+        "Ran 354 tests in 0.673s",
         "",
         "OK"
       ]
@@ -42,7 +42,7 @@
       "command": "/usr/bin/python3 Tools/ci/l0_checks.py",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 315,
+      "duration_ms": 402,
       "stdout_tail": [
         "L0 checks: 14/14 passed"
       ],
@@ -52,7 +52,7 @@
       "command": "/usr/bin/python3 Tools/world/count_reconciliation.py",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 33,
+      "duration_ms": 49,
       "stdout_tail": [
         "  major_environments                 parsed    1  published 1",
         "  scenes_with_missing_parent         parsed   40  published -  <-- differs (partial capture, expected)",
@@ -67,7 +67,7 @@
       "command": "/usr/bin/python3 Tools/world/population_budget.py --chapter CH01",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 38,
+      "duration_ms": 58,
       "stdout_tail": [
         "  banded cost (low/high): 38.38/42.37  complete=False",
         "    band is OPEN at: ['CH01-SCN-014']",
@@ -82,7 +82,7 @@
       "command": "/usr/bin/python3 Tools/world/greybox_rules.py Tools/world/data/greybox_ch01.json",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 26,
+      "duration_ms": 49,
       "stdout_tail": [
         "greybox assets: 3",
         "  CH01-ENV-001     SPATIAL, STREAMING, SIGHTLINE",
@@ -96,7 +96,7 @@
       "command": "/usr/bin/python3 Tools/world/sensitivity.py --out Docs/evidence/agent2/CH01_population_sensitivity.json",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 99,
+      "duration_ms": 148,
       "stdout_tail": [
         "  HIGH-DENSITY   npcs=4 ratio=1.00  point= 33.38  band= 43.37- 48.37  sim= 45  (+10%)",
         "",
@@ -111,7 +111,7 @@
       "command": "/usr/bin/python3 Tools/world/world_manifest.py Tools/world/data/CH01_manifest.json",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 22,
+      "duration_ms": 27,
       "stdout_tail": [
         "manifest: Tools/world/data/CH01_manifest.json",
         "chapter:  CH01",
@@ -125,12 +125,12 @@
       "command": "/usr/bin/python3 -m unittest Tools.canon.tests.test_canon.TestIndexIsValid",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 40,
+      "duration_ms": 52,
       "stdout_tail": [],
       "stderr_tail": [
         "....",
         "----------------------------------------------------------------------",
-        "Ran 4 tests in 0.001s",
+        "Ran 4 tests in 0.002s",
         "",
         "OK"
       ]
@@ -149,7 +149,7 @@
       "command": "/usr/bin/python3 Tools/world/contract_data_checks.py",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 35,
+      "duration_ms": 44,
       "stdout_tail": [
         "[PASS] location_ids_match_published_scheme",
         "[PASS] excerpt_is_subset_of_full_capture",
@@ -164,12 +164,12 @@
       "command": "/usr/bin/python3 -m unittest discover -s Tools/world/tests -p test_contract_review.py",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 49,
+      "duration_ms": 69,
       "stdout_tail": [],
       "stderr_tail": [
         "...........................................",
         "----------------------------------------------------------------------",
-        "Ran 43 tests in 0.012s",
+        "Ran 43 tests in 0.017s",
         "",
         "OK"
       ]
@@ -178,12 +178,12 @@
       "command": "/usr/bin/python3 -m unittest discover -s Tools/world/tests -p test_contract_review_r2.py",
       "exit_code": 0,
       "passed": true,
-      "duration_ms": 54,
+      "duration_ms": 120,
       "stdout_tail": [],
       "stderr_tail": [
-        "......................................",
+        ".......................................................",
         "----------------------------------------------------------------------",
-        "Ran 38 tests in 0.012s",
+        "Ran 55 tests in 0.054s",
         "",
         "OK"
       ]
@@ -291,14 +291,14 @@
       "result": "corrected: 2 of 10 pass, 1 partial, 7 blocked; the 'four' sentence was unsupported and is recorded as wrong"
     },
     {
-      "claim": "three divergent documents identify as TDD-MEAD-001 v1.0",
+      "claim": "three divergent MEAD files exist; TWO declare TDD-MEAD-001 v1.0",
       "method": "identity search across all reachable refs for 'Document ID'",
-      "result": "verified: MEAD-A 1078 lines (no 5.4), MEAD-B 247 lines, MEAD-C 1231 lines (5.4 present, 7 Status.* tags). Section 5.4 exists only in MEAD-C"
+      "result": "verified: MEAD-A 1078 lines declares v1.0 (no 5.4, State.Combat.* tags); MEAD-B 247 lines declares NO document ID or version; MEAD-C 1231 lines declares v1.0 (5.4 present, 7 Status.* tags). v1.0 of this review wrongly said all three declare the ID; corrected in v1.1 after Agent 3 recon V3 5.1"
     },
     {
       "claim": "Status.Dead has no tag in the canonical-adjacent MEAD",
       "method": "extract the Status.* set from MEAD-C section 5.1",
-      "result": "verified: 7 tags, none for Dead. C-04's precedence top value is unrepresentable as a tag"
+      "result": "verified: 7 tags, none for Dead. C-04's precedence top value is unrepresentable as a TAG. Note Dead DOES exist as a value of UTDDCharacterStateMachine and in the DT_StateRules state list"
     },
     {
       "claim": "no Chapter 1 source supports a carry state",
@@ -309,6 +309,11 @@
       "claim": "A1-R2's MEAD citations were nearly called fabricated",
       "method": "all-refs identity search before publication",
       "result": "withdrawn before publication: MEAD-C exists on Agent 1's branch and carries every cited section"
+    },
+    {
+      "claim": "MEAD-C section 5.4 spells the damage-request struct two ways",
+      "method": "extract every DamageRequest token from the section",
+      "result": "verified: line 476 'FTDamageRequest', line 478 'FTDDDamageRequest'. A third spelling 'FTDDamageRequest' appears only in reconciliation V3's transcription of my proposal"
     },
     {
       "claim": "NPC prose parsing is correct",
