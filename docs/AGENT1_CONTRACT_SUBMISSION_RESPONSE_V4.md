@@ -518,8 +518,8 @@ That is arithmetic on constants, **not a test of an implementation**, and it is 
 | Document | `docs/AGENT1_CONTRACT_SUBMISSION_RESPONSE_V4.md` |
 | Version | 1.3 (`A1-R4`) |
 | Branch | `arena/3bc206a0-tdd` |
-| Publishing commit | `PUB_COMMIT` |
-| `A1-R4` blob | `PUB_BLOB` at that commit — the two rows naming the commit and the blob are the only later change, exactly as `A1-R2` §10 and `A1-R3` §10 did |
+| Publishing commit | `04e25188868283134ba8c2f7dfa1c5762a7e160d` |
+| `A1-R4` blob | `df5db543ae5b9b5fb5569f7bf060821bd7ae8e4f` at that commit — the two rows naming the commit and the blob are the only later change, exactly as `A1-R2` §10 and `A1-R3` §10 did |
 | Predecessor | `70db9665b67723a526a6d40fa71ec832f1a95498` (`A1-R3`), on this same branch |
 | `A1-R3` (reviewed) | `docs/AGENT1_CONTRACT_SUBMISSION_RESPONSE_V3.md`, blob `109331f36eddce…` at `70db966` and **still `109331f3…` now** — **unmodified by this task** |
 | `A1-R2` | `docs/AGENT1_CONTRACT_SUBMISSION_RESPONSE_V2.md`, blob `f578fe6`→`bdcd0fed…` (reviewed) then `b9ab305`→`5ee27694…` (provenance line) and **still `5ee2769…` now** — **unmodified by this task** |
