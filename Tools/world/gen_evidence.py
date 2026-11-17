@@ -128,16 +128,23 @@ def main() -> int:
         "review_c05_s4_document_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_review_a1c05_s4.py"]),
+        "review_c05_s4_1_document_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_review_a1c05_s4_1.py"]),
     }
 
     payload = {
         "meta": {
-            "milestone": "W-M2.12 — independent review of A1-C05-S4 v4.0 (requested path "
-                         "V4_1.md does not exist on any remote head; reviewed the S4 "
-                         "document scoped to D-1..D-7). 8 AGREE, 4 AGREE WITH CONDITIONS, "
-                         "2 DISAGREE. Outcome: TARGETED REVISION. Five of seven defects "
-                         "fully closed; D-4 audio survives in the section 8 preamble; "
-                         "DV-11 is now genuinely row-level with a tamper proof",
+            "milestone": "W-M2.13 — independent reassessment of A1-C05-S4.1 v4.1, blob "
+                         "d54e194a, path docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md. "
+                         "10 AGREE, 3 AGREE WITH CONDITIONS, 1 DISAGREE over 7 defects and "
+                         "7 conditions. Outcome: TARGETED REVISION. D-6a (DV-11 count) is "
+                         "RESOLVED and verified twice; D-4 audio ownership is still present "
+                         "in the section 8 preamble and DV-22 still reports PASS on it; "
+                         "C4c-N1 (PO-3 reason b falsified by PO-5) confirmed unchanged. "
+                         "CORRECTION: the W-M2.12 evidence entry claiming no V4_1 exists on "
+                         "any remote head was FALSE WHEN PUBLISHED - S4.1 was pushed 4m35s "
+                         "before that commit. Withdrawn in the review section 1",
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -525,6 +532,94 @@ def main() -> int:
                        "PROPOSED / NOT RUN, no MEAD selected, U-07 open, B-11/B-12/B-13/B-15 "
                        "all recorded as open. Section 13.3 correctly states that 23 document "
                        "checks prove nothing about contract behaviour"},
+
+            # ---- W-M2.13: A1-C05-S4.1 v4.1 independent reassessment ----
+            {"claim": "my W-M2.12 evidence entry 'no V4_1 exists on any remote head' was "
+                      "true when inspected and false when published",
+             "method": "git rev-parse the named commit and path; git log --format=%ci on "
+                       "9591826, 04a9e2f, 3784949 and d60981b; git merge-base --is-ancestor "
+                       "a3453548 95918268",
+             "result": "CORRECTED. The blob resolves: 95918268:docs/"
+                       "AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md = d54e194a, exactly the "
+                       "requested blob. S4.1 commits are 14:09:47, 14:09:50, 14:10:35; my "
+                       "review commit d60981b is 14:15:02 - 4m35s LATER. S4.1 descends from "
+                       "the S4.0 tip a345354 that I reviewed. My ls-remote observation was "
+                       "accurate when made; the negative was stale when committed. "
+                       "Withdrawn in the reassessment section 1."},
+            {"claim": "S4.1 is genuinely a targeted single-cell correction, as section 0.5 "
+                      "asserts",
+             "method": "compare sections 7, 8, 9, 4.9 (PO-5), 5.4 (token table) and 9.2 "
+                       "(C05-6.4) of blob d54e194a against S4.0 blob 424d2c69 as byte "
+                       "strings, rather than reading section 0.5's own description",
+             "result": "verified: every one of the six section bodies is byte-identical to "
+                       "S4.0, as are TN-P-18, TN-P-19, TN-C-11, TN-C-14, TN-C-15, TN-A-02 "
+                       "and TN-A-03. The only content change is one cell in section 1 row 6. "
+                       "Section 0.5's claim is accurate."},
+            {"claim": "the reviewed blob is S4.1 and not the branch tip, and the difference "
+                      "is immaterial",
+             "method": "git diff d54e194a (reviewed) against cc056a48 (tip at 3784949)",
+             "result": "verified: 5 insertions, 5 deletions - the section 0.5 verification "
+                       "row reworded plus S41_COMMIT/S41_BLOB and the section 18 handoff blob "
+                       "references filled by 04a9e2f. No normative clause, obligation row, "
+                       "test or count differs. The reviewed blob is 1185 lines."},
+            {"claim": "D-6a is resolved: the DV-11 count now reads 5 observed",
+             "method": "re-derive the count by parsing the 7th cell of all 43 obligation "
+                       "rows, then classify every 'N declared / M observed' statement in the "
+                       "document by whether its context is S3-scoped, a quoted correction, or "
+                       "an S4/S4.1 assertion",
+             "result": "RESOLVED and verified twice. 7 declared in 5.4, 5 distinct tokens "
+                       "across 43 cells, 2 declared-but-unused by design - matching DV-11's "
+                       "output. Zero non-S3, non-historical statements report an observed "
+                       "count other than 5. '6 observed' survives twice, both inside section "
+                       "0.5's description of the defect it fixes, which is correct quotation."},
+            {"claim": "DV-11's row-level rule is genuinely implemented and discriminating",
+             "method": "re-implement the stated rule independently (prefix allowed-row set "
+                       "TN-P->{2}, TN-C->{5,6}, TN-R->{2,4}, TN-A->{8}; token's mapped row "
+                       "intersected against it) and run it over all 43 cells",
+             "result": "verified: declared=7 observed=5 cells=43 failures=0. Confirmed that "
+                       "the row-7 token 'Agent 2, in its own systems' has no intersection "
+                       "with the TN-C allowed set {5,6}, so a TN-C obligation carrying it "
+                       "fails - the behaviour S3's agent-level check could not produce."},
+            {"claim": "D-4 audio ownership is resolved in S4.1",
+             "method": "whole-document grep for every clause assigning audio to an agent; "
+                       "read DV-22's method cell to determine its scan scope",
+             "result": "NOT RESOLVED, unchanged from S4.0. Section 8's preamble (line 566) "
+                       "still reads 'Agent 1 for defence, dodge, camera and audio'. Section "
+                       "5.2 row 5 (line 459), section 6.1 and TN-C-15 (line 584) are all "
+                       "correct. DV-22's method names only row 5, row 6 and TN-C-15, so it "
+                       "reports PASS on a document containing the defect. S4 itself named "
+                       "this failure mode: its D-4 risk column says 'if another assignment "
+                       "survives, DV-22 was scoped too narrowly'."},
+            {"claim": "PO-5 leaves section 3.6's stated reason for PO-3 intact",
+             "method": "compare reason (b) 'the internal application order is not observable "
+                       "at frame granularity' against PO-5's mid-frame pull guarantee and "
+                       "T-C05-65's pull-after-each-application case",
+             "result": "CONTRADICTION CONFIRMED unchanged in S4.1. PO-5 guarantees a pull "
+                       "between two publications returns the earlier revision exactly, which "
+                       "makes the application order observable and therefore falsifies reason "
+                       "(b). Reasons (a) and (c) both survive, and PO-3 remains necessary: a "
+                       "producer could satisfy PO-5 fully and still apply the dilation first. "
+                       "Only the justification is stale, not the rule."},
+            {"claim": "S4.1 introduced no new defect",
+             "method": "four-category sweep: normative clauses vs S4.0; the 43/67/18/23 "
+                       "structural totals; the DV-11 re-implementation and DV-22's scope; "
+                       "the section 17/18 provenance and placeholder state",
+             "result": "verified: no new defect. The normative bodies are byte-identical, "
+                       "all structural totals reconcile, DV-11 is clean, and the placeholder "
+                       "state matches the S3 and S4.0 pattern with disclosure. The surviving "
+                       "findings and conditions are all pre-existing in S4.0."},
+            {"claim": "section 5.4's 'Used by' tallies are accurate",
+             "method": "per-token breakdown of the 43 implementer cells in S4.1",
+             "result": "IMPRECISE, unchanged: 'producer owner' is stated as '19 TN-P rows' "
+                       "but occupies 23 cells (19 TN-P + 4 TN-R); 'each consumer' is stated "
+                       "as '11 TN-C rows' but occupies 12. Third hand-restated count that "
+                       "diverges from its own instrument - same class as D-6a."},
+            {"claim": "C-05, U-07 or any acceptance case is closed by this reassessment",
+             "method": "none - this is a design review, not a run",
+             "result": "NOT CLAIMED. C-05 and U-07 remain open; 0 of 67 cases executed, all "
+                       "PROPOSED / NOT RUN; DESIGN_ONLY; no MEAD selected; B-11, B-12, B-13 "
+                       "and B-15 all still open. The 47 document and arithmetic checks in "
+                       "this milestone prove nothing about contract behaviour."},
         ],
     }
 
