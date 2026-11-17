@@ -401,11 +401,22 @@ NEG_BEFORE = (
     # 'owns none of the audio'
     re.compile(r'\bowns?\s+none\s+of\s+the\s+audio\b', re.I),
 )
-# The reversed form: the mention comes first and the denial follows it.
+# The reversed form: the mention comes first and the denial follows it. Two scope rules
+# (S4.3.3), because a later denial was cancelling an earlier positive assertion:
+#   * the denial must sit in the *same clause and the same phrase* as the mention — the gap
+#     may not cross a comma, a statement separator, or a conjunction / relative pronoun, so
+#     'owns audio cues, but those cues are not assigned to Agent 1' cannot be read as a
+#     denial of the first mention;
+#   * if the denial names an agent at all, it must name the *first* agent: 'is not a
+#     responsibility assigned to Agent 2' denies something about Agent 2 and says nothing
+#     about Agent 1's ownership.
+_NOT_CROSS = (r'(?:(?!\b(?:and|but|yet|while|although|whereas|which|who|whose)\b)'
+              r'[^.;|,\u2014\u2013])')  # an em dash introduces an apposition, not a denial
 NEG_AFTER = (
-    re.compile(r'\baudio\b[^.;|]{0,40}?\b(?:is|are|was|were)\s+not\s+'
+    re.compile(r'\baudio\b' + _NOT_CROSS + r'{0,40}?\b(?:is|are|was|were)\s+not\s+'
                r'(?:owned|claimed|carried|held|assigned|a\s+responsibility)\b', re.I),
-    re.compile(r'\baudio\b[^.;|]{0,30}?\b(?:is|are)\s+(?:no|not\s+a)\s+' + _DENIAL_NOUN + r'\b', re.I),
+    re.compile(r'\baudio\b' + _NOT_CROSS + r'{0,30}?\b(?:is|are)\s+(?:no|not\s+a)\s+'
+               + _DENIAL_NOUN + r'\b', re.I),
 )
 SEGMENT = re.compile(r'[.;|]')
 
@@ -420,9 +431,20 @@ def negated_mention(ln, pos):
     'Covers' is positional: the construction's own text must span the mention, so a denial
     of one thing can never be borrowed by another mention on the same line.
     """
-    for pattern in NEG_BEFORE + NEG_AFTER:
+    for pattern in NEG_BEFORE:
         if any(m.start() <= pos <= m.end() for m in pattern.finditer(ln)):
             return True
+    for pattern in NEG_AFTER:
+        for m in pattern.finditer(ln):
+            if not (m.start() <= pos <= m.end()):
+                continue
+            # The agent a denial names usually follows the participle ('not owned by Agent 2'),
+            # so read the rest of the clause as well: a denial that names another agent says
+            # nothing about Agent 1's ownership and must not excuse the mention.
+            tail = re.split(r'[.;|,]', ln[m.end():])[0][:30]
+            named = [r.group(1) for r in AGENT_REF.finditer(m.group(0) + tail)]
+            if not named or named[0] == '1':
+                return True
     return False
 
 
@@ -575,7 +597,7 @@ check('DV-26', (not stale) and observ and both,
       f"PO-3 and PO-5 both retained {both}")
 
 # ---------------------------------------------------------------- DV-27 provenance, no placeholders
-REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_2_PROVENANCE.md'
+REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_3_PROVENANCE.md'
 DECISION = 'docs/DECISION_C05_SUCCESSOR_IDENTITY_004_2_V1.md'
 # fenced code blocks are evidence transcripts, not prose claims: strip them first
 prose = re.sub(r'```.*?```', '', s, flags=re.S)

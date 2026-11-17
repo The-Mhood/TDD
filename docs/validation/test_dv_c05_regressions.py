@@ -178,6 +178,35 @@ case('TD-17 "has no ownership of audio cue selection" passes', 'DV-22', 'PASS',
 case('TD-18 the same phrase inside an authorised historical block passes', 'DV-22', 'PASS',
      inject_marked('Reviewer wrote: Agent 1 has no objection to owning audio cues.'))
 
+# ------------------- 3c. S4.3.3: a later denial cannot cancel an earlier positive assertion
+print('\n== S4.3.3 — NEG_AFTER scope: a trailing denial answers only its own clause (TD cases) ==')
+case('TD-19 "owns audio cues, but those cues are not assigned to Agent 1"', 'DV-22', 'FAIL',
+     inject('Agent 1 owns audio cues, but those cues are not assigned to Agent 1.'),
+     'S4.3.2 read any post-mention denial as covering the mention')
+case('TD-20 "owns audio, which is not a responsibility assigned to Agent 2"', 'DV-22', 'FAIL',
+     inject('Agent 1 owns audio, which is not a responsibility assigned to Agent 2.'))
+case('TD-21 "owns audio cues and those cues are not owned by Agent 2"', 'DV-22', 'FAIL',
+     inject('Agent 1 owns audio cues and those cues are not owned by Agent 2.'))
+case('TD-22 "owns audio cues which are not owned by anyone"', 'DV-22', 'FAIL',
+     inject('Agent 1 owns audio cues which are not owned by anyone.'))
+case('TD-23 denial in the next sentence', 'DV-22', 'FAIL',
+     inject('Agent 1 owns audio cues. Audio is not owned by Agent 2.'))
+case('TD-24 denial first, positive assertion second', 'DV-22', 'FAIL',
+     inject('Audio is not owned by Agent 1. Agent 1 owns audio cues.'))
+case('TD-25 semicolon-joined denial naming Agent 2', 'DV-22', 'FAIL',
+     inject('Agent 1 owns audio cues; audio is not owned by Agent 2.'))
+case('TD-26 em-dash apposition, denial naming Agent 1', 'DV-22', 'FAIL',
+     inject('Agent 1 owns audio cues \u2014 a role that is not assigned to Agent 1.'))
+case('TD-27 parenthesised denial naming Agent 2', 'DV-22', 'FAIL',
+     inject('Agent 1 owns audio cues (these are not owned by Agent 2).'))
+case('TD-28 "Audio is not owned by Agent 1." still passes', 'DV-22', 'PASS',
+     inject('Audio is not owned by Agent 1.'),
+     'reversed clause order, genuine denial')
+case('TD-29 "Audio is not a responsibility of Agent 1." still passes', 'DV-22', 'PASS',
+     inject('Audio is not a responsibility of Agent 1.'))
+case('TD-30 a genuine audio denial in a later clause still passes', 'DV-22', 'PASS',
+     inject('Agent 1 owns the camera; audio cues are not owned by Agent 1.'))
+
 # ------------------------------------------------------- 4. N-1: the escape hatch is closed
 print('\n== N-1 — DV-22, Agent 2\'s demonstrated injection ==')
 INJ = 'Agent 1 owns the camera and audio cues for the player.'
