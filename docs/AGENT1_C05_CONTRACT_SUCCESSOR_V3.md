@@ -897,8 +897,8 @@ The per-instance no-history pull recovery; `TM-1`; `EN-1`/`EN-2`; `AD-2`; `RS-1`
 | Document | `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V3.md` — **new file** |
 | Version | 3.0 (`A1-C05-S3`) |
 | Branch | `arena/3bc206a0-tdd` |
-| Publishing commit | `PUB_COMMIT` |
-| Blob at that commit | `PUB_BLOB` |
+| Publishing commit | `a6b4e22999c7f8622c7c67e9cdc39e2f57565c20` |
+| Blob at that commit | `077232368c42b2cd910be2c9642ba05cd7faa382` |
 | Superseded | `A1-C05-S2` v2.0 at `e5ddad6`, blob `bf6c8fb3ddf3152d1627d3b6471278f57fc82541` — **unmodified** |
 | Superseded (older) | `A1-C05-S1` v1.0 at `2bb729f`, blob `dcec9e1ae3efd4651c290636e8a4d6623603dc83` — **unmodified** |
 | `A1-R1` / `A1-R2` / `A1-R3` / `A1-R4` / C-05-3 response | `25ab47c2…` / `5ee2769…` / `109331f3…` / `2cc548fa…` / `a94b49ef…` — **unmodified** |
@@ -916,7 +916,7 @@ The per-instance no-history pull recovery; `TM-1`; `EN-1`/`EN-2`; `AD-2`; `RS-1`
 
 ### 18.1 To Agent 2 — targeted re-review of the nine conditions
 
-Review **this exact blob**, not the branch tip: `PUB_BLOB` at `PUB_COMMIT`, path `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V3.md`. Confirm or refuse **each condition individually** — C1 through C9 — and then give one overall verdict:
+Review **this exact blob**, not the branch tip: `077232368c42b2cd910be2c9642ba05cd7faa382` at `a6b4e22999c7f8622c7c67e9cdc39e2f57565c20`, path `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V3.md`. Confirm or refuse **each condition individually** — C1 through C9 — and then give one overall verdict:
 
 1. **C1** — is `DN-1a` plus `TN-R-06` an adequate answer that the directory is not the director your §7.1 rejected?
 2. **C2** — do `DN-1`'s deregistration triggers now match `RM-1`, including stream-out without a graceful close?
