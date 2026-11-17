@@ -122,13 +122,17 @@ def main() -> int:
         "review_c05_s2_document_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_review_a1c05_s2.py"]),
+        "review_c05_s3_document_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_review_a1c05_s3.py"]),
     }
 
     payload = {
         "meta": {
-            "milestone": "W-M2.10 — review of A1-C05-S2 v2.0 (2 DISAGREE: INV-1 includes "
-                         "an aging field; 3 of 4 named consumers need absent identity "
-                         "fields. 3 AGREE WITH CONDITIONS. 9 narrow corrections)",
+            "milestone": "W-M2.11 — targeted review of A1-C05-S3 v3.0 (7 AGREE, 3 AGREE "
+                         "WITH CONDITIONS, 1 DISAGREE. Outcome: TARGETED REVISION. C9 "
+                         "unresolved - DV-11 is agent-level and cannot fail on the "
+                         "TN-C-12/13 mis-mapping; 7 named defects D-1..D-7)",
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -335,6 +339,85 @@ def main() -> int:
              "result": "UNVERIFIED — engineering assumption"},
             {"claim": "streaming / Mass / AI / navigation work",
              "method": "none", "result": "NOT TESTED — no engine"},
+
+            # ---- W-M2.11: A1-C05-S3 v3.0 targeted review ----
+            {"claim": "S3's 38 obligations split 17 P / 13 C / 6 R / 2 A",
+             "method": "parse every '| **TN-x-nn' row from sections 7-9 of blob 07723236",
+             "result": "verified: 38 rows, exact split, matches DV-1 and DV-3"},
+            {"claim": "S3's 62 cases over 15 suites",
+             "method": "parse suite table 12.1, sum Cases column, regex all T-C05-nn",
+             "result": "verified: 15 suites, sum 62, ids 01-62 complete, none extra, "
+                       "no case in two suites, no case in no suite"},
+            {"claim": "S3's section 11.2 obligation-to-test map is bidirectional",
+             "method": "parse 11.2 inverting both directions incl. the prefixed range "
+                       "form 'T-C05-35 ... T-C05-39'",
+             "result": "verified: 38 obligations each with >=1 case, 62 cases all covered, "
+                       "no orphans either way. NOTE: a parser handling only the "
+                       "second-endpoint range form reports 3 missing cases - the range is "
+                       "prefixed on both ends"},
+            {"claim": "INV-2's producer form and consumer form are the same function",
+             "method": "substitute R0=(PhaseEndAxis-AxisNow)*Rate; evaluate both forms at "
+                       "axis 0/0.2/2.0/4.0/8.0",
+             "result": "verified algebraically and numerically to 1e-12 at all five axes, "
+                       "including both clamps. EX-9's five rows reproduce exactly "
+                       "(0.2000/0.1900/0.1000/0.0000/0.0000)"},
+            {"claim": "S3's document instruments report their own counts correctly",
+             "method": "re-run DV-2, DV-4, DV-6, DV-8, DV-9, DV-15 independently",
+             "result": "verified for all six, INCLUDING DV-8 which claimed 10 and counted 16 "
+                       "in S2: S3 reports 8 and there are exactly 8 lines containing "
+                       "'execut'. ONE exception: DV-11 claims '6 role tokens' but only 5 "
+                       "appear in the 38 implementer cells"},
+            {"claim": "DV-11 cannot fail on the TN-C-12/TN-C-13 mis-mapping",
+             "method": "extract the 7th cell of all 38 obligation rows; compare the token "
+                       "mapping in 5.4 against the ownership of rows 6 and 7",
+             "result": "verified: TN-C-12 and TN-C-13 are C-05 consumer obligations of row 6 "
+                       "but carry the token mapped to row 7 (outside C-05). Both rows are "
+                       "owned by Agent 2, and DV-11 tests agent agreement, so it passes. "
+                       "The check is agent-level where C9 asked for row-level"},
+            {"claim": "EX-5 omits the only-n+1 loss case, the dangerous one",
+             "method": "read EX-5 cases (a)(b)(c)(c'); trace AD-1/AD-2/TN-C-09/TN-C-10 for a "
+                       "consumer receiving only PhaseChanged@n+1",
+             "result": "verified: n+1 == held+1 so no gap is recorded, no resynchronisation "
+                       "is raised, and the consumer ages the whole phase at the pre-retime "
+                       "ProducerRate with no detection. Section 3.6 rationale (c) asserts "
+                       "the consumer 'merely needs a resync' but AD-2's trigger is an "
+                       "incoming revision greater than held+1, which never arrives"},
+            {"claim": "PO-3 fixes same-frame message ORDER but not message CONTENT",
+             "method": "test both readings for a frame with one phase change and one "
+                       "dilation change against TN-P-11 and INV-1",
+             "result": "verified: reading B (n+1 carries the old rate) makes a mid-frame "
+                       "pull return live state at revision n+1 with the new rate while the "
+                       "published n+1 carries the old - same revision, two ProducerRate "
+                       "values, INV-1 violated by a conforming producer. T-C05-51 asserts "
+                       "the sequence only and cannot discriminate A from B"},
+            {"claim": "WindowKey/AttackTag constancy contradicts TN-P-07 and T-C05-62",
+             "method": "compare section 3.8 / 6.1 'constant for the lifetime' against "
+                       "TN-P-07's 'every change to WindowKey or AttackTag' and T-C05-62's "
+                       "identity-change setup rows",
+             "result": "verified contradiction: if constant, TN-P-07's clause is dead and "
+                       "T-C05-62's identity rows are unrepresentable; if mutable, the "
+                       "constancy premise of 6.1's justification is false"},
+            {"claim": "audio has two owners in C05-7.2 and no obligation covers it",
+             "method": "read rows 5/6 of the 5.2 table and the 6.1 consumer table",
+             "result": "verified: row 5 gives Agent 1 'camera and audio cues'; row 6 gives "
+                       "Agent 2 'audio cue selection'; 6.1's consumer table assigns audio to "
+                       "Agent 2; no TN row covers audio cue selection"},
+            {"claim": "S3 does not assume C-04, Status.Dead or any TD decision is closed",
+             "method": "search all of sections 14-18 for closure claims; check B-7/B-11/B-12/B-13",
+             "result": "verified: B-7 OPEN-registry, B-11 BLOCKED BY DEPENDENCY with the "
+                       "decision named as C-04's, B-12 open and not proposed, B-13 open and "
+                       "non-blocking. Section 14.1 states 'No status in 14.1 has changed "
+                       "since S1' and no closure is claimed anywhere"},
+            {"claim": "the S3 blob reviewed differs from the branch tip only in placeholders",
+             "method": "git diff of blob 07723236 against tip blob 80060de6",
+             "result": "verified: 3 insertions, 3 deletions, all PUB_COMMIT/PUB_BLOB "
+                       "placeholder fill in section 17 and section 18.1. Every normative "
+                       "clause byte-identical"},
+            {"claim": "C-05 / U-07 / acceptance tests are closed by this review",
+             "method": "none - this is a design review, not a run",
+             "result": "NOT CLAIMED. C-05 and U-07 remain open; 62 cases PROPOSED / NOT RUN; "
+                       "0 executed. 66 document checks pass and prove nothing about "
+                       "contract behaviour"},
         ],
     }
 
