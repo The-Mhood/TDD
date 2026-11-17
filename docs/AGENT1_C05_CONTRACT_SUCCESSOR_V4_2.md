@@ -135,7 +135,7 @@ Every row is expanded, with its closure evidence, in §2.
 
 ### 0.6 S4.2 in one paragraph, and where every change is recorded
 
-Two independent reviews were run against the **same** pinned blob (`d54e194a…`): Agent 2's reassessment `TDD-A2-REVIEW-A1C05-S4-1-001` (595 lines) and Agent 3's independent integration review (115 lines). Both returned **`TARGETED REVISION`**; neither found a defect in a normative clause. **S4.2 answers all fourteen findings and both reviews' conditions** — the mapping is §2.5 (Agent 2), §2.6 (Agent 3) and §2.7 (the TD's consolidated six corrections), each naming the exact section that resolves it and, where I did not adopt a reviewer's suggested mechanism, the technical reason. **No obligation is added or removed: 43 remains 43.** Six instruments are new or widened — four new (**DV-24**…**DV-27**) and two widened in place (**DV-20**, **DV-22**) — and **every one of them is shown failing on the reviewed blob** (§13.3) before being shown passing here: a check that has never failed proves nothing.
+Two independent reviews were run against the **same** pinned blob (`d54e194a…`): Agent 2's reassessment `TDD-A2-REVIEW-A1C05-S4-1-001` (594 lines) and Agent 3's independent integration review (115 lines). Both returned **`TARGETED REVISION`**; neither found a defect in a normative clause. **S4.2 answers all fourteen findings and both reviews' conditions** — the mapping is §2.5 (Agent 2), §2.6 (Agent 3) and §2.7 (the TD's consolidated six corrections), each naming the exact section that resolves it and, where I did not adopt a reviewer's suggested mechanism, the technical reason. **No obligation is added or removed: 43 remains 43.** Six instruments are new or widened — four new (**DV-24**…**DV-27**) and two widened in place (**DV-20**, **DV-22**) — and **every one of them is shown failing on a blob that contains the defect it was built for** (§13.3) — S4.1 for five of them, S4.0 for DV-24, S3 for DV-11 — before being shown passing here: a check that has never failed proves nothing.
 
 ---
 
@@ -1047,7 +1047,7 @@ python3 docs/validation/dv_c05.py docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_2.md
 
 ### 13.2 DV-11 is still shown failing, on the blob it was built for
 
-The S3 refusal standed, unchanged: `DV-11` must fail on the S3 blob or it proves nothing.
+The S3 demonstration stands, unchanged: `DV-11` must fail on the S3 blob or it proves nothing.
 
 ```
 $ git show a6b4e22:docs/AGENT1_C05_CONTRACT_SUCCESSOR_V3.md > /tmp/s3.md
@@ -1215,7 +1215,7 @@ The per-instance no-history pull recovery; `TM-1`; `EN-1`/`EN-2`/`EN-3`; `AD-1`/
 | Branch | `arena/3bc206a0-tdd` |
 | **This document's own publishing commit and blob** | **written to `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_2_PROVENANCE.md`** in the commit immediately after this text — see the note below |
 | **Reviewed predecessor (pinned by both reviews)** | `A1-C05-S4.1` v4.1 at **`95918268ed5b20b878fef3ee0a7855ad18e6eeb6`**, blob **`d54e194affeaee98b1030e2b83b4c34e234fa382`** — **unmodified** |
-| Reviews answered | Agent 2 `TDD-A2-REVIEW-A1C05-S4-1-001` v1.0 (commit `eee9401`, 595 lines, read in full); Agent 3 independent integration review v1 (commit `34b035b3eb135bbb4e8dfd47bbd54d3a46b8062a`, 115 lines, read in full) — **read only, not modified** |
+| Reviews answered | Agent 2 `TDD-A2-REVIEW-A1C05-S4-1-001` v1.0 (commit `eee9401`, 594 lines, read in full); Agent 3 independent integration review v1 (commit `34b035b3eb135bbb4e8dfd47bbd54d3a46b8062a`, 115 lines, read in full) — **read only, not modified** |
 | Earlier reviews answered | Agent 2's S3 review `47dbdffb…` (`Docs/AGENT2_REVIEW_A1C05_S3_V1.md`); Agent 2's S2 review `ac498ce` — read only, not modified |
 | Baselines preserved unmodified | `A1-C05-S4` v4.0 at `4692e973d04a94d7781677c704e7a0198abd2d70`, blob `424d2c69df62ebc1930eacd0ba67077c854ab31e`; `A1-C05-S3` v3.0 at `a6b4e22999c7f8622c7c67e9cdc39e2f57565c20`, blob `077232368c42b2cd910be2c9642ba05cd7faa382`; `A1-C05-S2` v2.0 at `e5ddad6`, blob `bf6c8fb3ddf3152d1627d3b6471278f57fc82541`; `A1-C05-S1` v1.0 at `2bb729f`, blob `dcec9e1ae3efd4651c290636e8a4d6623603dc83` |
 | `A1-R1` / `A1-R2` / `A1-R3` / `A1-R4` / C-05-3 response | `25ab47c2…` / `5ee2769…` / `109331f3…` / `2cc548fa…` / `a94b49ef…` — **unmodified** |
