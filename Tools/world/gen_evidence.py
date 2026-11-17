@@ -113,13 +113,16 @@ def main() -> int:
         "review_r3_document_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_contract_review_r3.py"]),
+        "review_r4_document_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_contract_review_r4.py"]),
     }
 
     payload = {
         "meta": {
-            "milestone": "W-M2.7 — formal review of Agent 1 revision A1-R3 "
-                         "(seven verdicts, 0 signed, one blocking arithmetic defect "
-                         "in the Option A+ conversion, ten asks)",
+            "milestone": "W-M2.8 — formal review of Agent 1 revision A1-R4 "
+                         "(3 of 7 contracts signed; C-05 arithmetic defect verified "
+                         "fixed; 4 broker gaps found)",
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -238,6 +241,22 @@ def main() -> int:
              "result": "verified: zero Status.* matches; line 517 reads 'no agent "
                        "introduces a tag namespace'; Dead exists only as an enemy AI "
                        "StateTree state (line 615)"},
+            {"claim": "A1-R3 3.3(a)'s inverted conversion is corrected in A1-R4",
+             "method": "re-derive d(local)/d(axis) from A1-R4 2.1, round-trip at 4 rates",
+             "result": "verified: local=axis*rate (multiply), axis=local/rate (divide), "
+                       "mutual inverses to 1e-12. 0.20s at 0.05 -> 4.00 axis -> 0.20 "
+                       "local; old divide form gives 80.00, 400x = 1/rate^2"},
+            {"claim": "A1-R4's telegraph broker leaves four concurrency gaps",
+             "method": "search A1-R4 for adoption-ordering, at-most-once, eviction and "
+                       "re-entrancy wording",
+             "result": "verified absent: 'strictly greater', 'at most once', 'evict', "
+                       "'re-entran'. Broker is placed in Core and declared authoritative, "
+                       "which is Agent 3/TD's to grant"},
+            {"claim": "MEAD-A line 506 (not 505) is the locomotion axis",
+             "method": "line-by-line read of MEAD-A",
+             "result": "verified: 506 = State.Locomotion.<...|Cinematic>, 507 = State.Combat, "
+                       "517 = no-new-namespace prohibition, 615 = enemy AI Dead. "
+                       "A1-R4 cites 505, which is Chapter.Ch01"},
             {"claim": "NPC prose parsing is correct",
              "method": "38-case parser suite; 2 new silent-corruption bugs found "
                        "and fixed this milestone (range summed as 16, abstract "
