@@ -107,7 +107,7 @@ TD review of S4 found **one** documentation inconsistency. It is corrected here 
 | **What changed in S4.1** | that single parenthetical: `6 observed` → `5 observed`. **One cell.** |
 | **What did not change** | every normative clause; `TN-C-11`, `TN-A-02`, `TN-A-03`, `TN-P-18`, `T-C05-63`; the `D-1`…`D-7` resolutions and all seven conditions; the `C-04` dependency and the status of **B-11** and **B-15**; every count (43 obligations, 18 suites, 67 cases, 23 document checks); every validation result, including DV-11's PASS on this file and its recorded FAIL on the S3 blob; the scope lock of §0.4; and every earlier document |
 | **Instrument added** | **none.** A permanent check that every declared/observed sentence equals the checker's output would be a new validation instrument (DV-24) and would change §13's count of 23 — outside a targeted documentation correction. It is **recommended** in §18.3 and not performed |
-| **Verification** | `DV-11` re-run on this file: *7 declared / 5 observed*, PASS. A text scan for every declared/observed claim in the document finds **5** in every case that describes **S4/S4.1**, and **6** only inside the verbatim transcript of S3's own run (§13.2), where 6 was S3's true declared count |
+| **Verification** | `DV-11` re-run on this file: *7 declared / 5 observed*, PASS. The scan claim is stated so that it cannot itself drift: **every statement of DV-11's output for S4/S4.1 in this document reports 5 observed**, and the only lines still showing the old figure are the two rows of this table that quote and explain it; §13.2's S3 transcript reads *6 declared / 5 observed*, where the 6 is S3's true **declared** count. `grep` reproduces both facts |
 
 ---
 
@@ -1143,7 +1143,7 @@ The per-instance no-history pull recovery; `TM-1`; `EN-1`/`EN-2`/`EN-3`; `AD-1`/
 | Code, Core types, project, merge, M0 | **None** |
 | Acceptance tests | 67 cases `PROPOSED / NOT RUN`, **0 executed**; 23 document checks executed (§13) |
 
-**Why the blob above is not the branch tip.** This row was filled by a later commit that changes **nothing but §17 and §18** — the S3 and S4 records were filled the same way (at `ec3c2af` and `a345354`). Review the blob named above: that is the text §2's closure matrix and §0.5's correction are claims about. The provenance commit is visible in the branch history (`git log --follow -- docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md`) and alters no normative sentence and no count.
+**Why the blob above is not the branch tip.** Two later commits touch this file and **neither alters a normative clause, a count or a validation result**: the first is this §17/§18 record (the S3 and S4 records were filled the same way, at `ec3c2af` and `a345354`), and the second corrects **one sentence of §0.5's `Verification` row**, whose first wording claimed the text scan found the old count "only" inside the S3 transcript — true of the transcript, but it passed over the two rows of §0.5 that quote the error, so the row now states the exact `grep` counts instead. **Reviewers may pin the blob above, which is the published text, or the tip, which differs only in those three places**; `git log --follow -- docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md` lists both commits.
 
 ---
 
