@@ -207,6 +207,35 @@ case('TD-29 "Audio is not a responsibility of Agent 1." still passes', 'DV-22', 
 case('TD-30 a genuine audio denial in a later clause still passes', 'DV-22', 'PASS',
      inject('Agent 1 owns the camera; audio cues are not owned by Agent 1.'))
 
+# ------------------- 3d. S4.3.4: an unnamed denial is not evidence of Agent 1's non-ownership
+print('\n== S4.3.4 — unnamed and relative-clause denials (TD cases) ==')
+case('TD-31 "owns audio cues that are not owned"', 'DV-22', 'FAIL',
+     inject('Agent 1 owns audio cues that are not owned.'),
+     'S4.3.3 accepted any unnamed post-mention denial')
+case('TD-32 positive assertion + unnamed denial in a relative clause', 'DV-22', 'FAIL',
+     inject('Agent 1 owns audio cues that are not claimed by the team.'))
+case('TD-33 universal denial inside a "that" relative clause', 'DV-22', 'FAIL',
+     inject('Agent 1 owns audio cues that are not owned by anyone.'),
+     'the relative clause is not the clause that carries the assertion')
+case('TD-34 explicit denial naming Agent 1 still passes', 'DV-22', 'PASS',
+     inject('Audio cues are not owned by Agent 1.'))
+case('TD-35 genuine universal exclusion still passes', 'DV-22', 'PASS',
+     inject('Agent 1 reported that audio cues are not owned by anyone.'),
+     'nobody owns them, so the first agent does not')
+case('TD-36 relative-clause denial naming another agent', 'DV-22', 'FAIL',
+     inject('Agent 1 owns audio cues that are not assigned to Agent 2.'))
+case('TD-37 a valid negative formulation still passes', 'DV-22', 'PASS',
+     inject('Agent 1 has no authority over audio cue selection.'))
+case('TD-38 a plain positive ownership violation still fails', 'DV-22', 'FAIL',
+     inject('Agent 1 owns audio cue selection.'))
+case('TD-39 the relative-clause form inside an authorised historical block passes', 'DV-22', 'PASS',
+     inject_marked('Reviewer wrote: Agent 1 owns audio cues that are not owned.'))
+case('TD-40 a universal denial that does not exclude Agent 1', 'DV-22', 'FAIL',
+     inject('Audio cues are not owned by anyone and are owned by Agent 1.'))
+case('TD-41 a universal denial beside a possessive ownership assertion', 'DV-22', 'FAIL',
+     inject("Agent 1's audio cues are not owned by anyone."),
+     'the possessive asserts the first agent owns them')
+
 # ------------------------------------------------------- 4. N-1: the escape hatch is closed
 print('\n== N-1 — DV-22, Agent 2\'s demonstrated injection ==')
 INJ = 'Agent 1 owns the camera and audio cues for the player.'

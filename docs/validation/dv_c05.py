@@ -410,7 +410,7 @@ NEG_BEFORE = (
 #   * if the denial names an agent at all, it must name the *first* agent: 'is not a
 #     responsibility assigned to Agent 2' denies something about Agent 2 and says nothing
 #     about Agent 1's ownership.
-_NOT_CROSS = (r'(?:(?!\b(?:and|but|yet|while|although|whereas|which|who|whose)\b)'
+_NOT_CROSS = (r'(?:(?!\b(?:and|but|yet|while|although|whereas|which|who|whose|that)\b)'
               r'[^.;|,\u2014\u2013])')  # an em dash introduces an apposition, not a denial
 NEG_AFTER = (
     re.compile(r'\baudio\b' + _NOT_CROSS + r'{0,40}?\b(?:is|are|was|were)\s+not\s+'
@@ -418,6 +418,18 @@ NEG_AFTER = (
     re.compile(r'\baudio\b' + _NOT_CROSS + r'{0,30}?\b(?:is|are)\s+(?:no|not\s+a)\s+'
                + _DENIAL_NOUN + r'\b', re.I),
 )
+# S4.3.4 adds the third scope rule. A trailing denial that names nobody used to excuse the
+# mention outright, so 'Agent 1 owns audio cues that are not owned' was accepted: the line
+# asserts ownership and the check called it a denial. An unnamed denial now counts only when
+# it is an explicit *universal* exclusion (nobody / no one / anyone), and only when the same
+# clause does not itself assert that the first agent owns the cues. 'Genuinely excludes
+# Agent 1' is the test, not the presence of a negative word.
+_UNIVERSAL = re.compile(r'\b(?:anyone|anybody|nobody|no[\s-]?one)\b', re.I)
+_POS_OWNER_1 = re.compile(
+    # a *positive* ownership phrase: 'not owned by Agent 1' is a denial, not an assertion
+    r'(?<!\bnot\s)\b(?:owned|claimed|carried|held|supplied|provided|selected)\s+by\s+agent[-\s]?1\b'
+    r'|\bagent[-\s]?1[\'\u2019]s\s+(?:audio|cues?|cue)\b'
+    r'|\baudio\b[^.;|]{0,14}:\s*agent[-\s]?1\b', re.I)
 SEGMENT = re.compile(r'[.;|]')
 
 
@@ -443,7 +455,15 @@ def negated_mention(ln, pos):
             # nothing about Agent 1's ownership and must not excuse the mention.
             tail = re.split(r'[.;|,]', ln[m.end():])[0][:30]
             named = [r.group(1) for r in AGENT_REF.finditer(m.group(0) + tail)]
-            if not named or named[0] == '1':
+            if named:
+                if named[0] == '1':
+                    return True
+                continue
+            # Unnamed (S4.3.4): only an explicit universal exclusion counts, and only when the
+            # clause does not also assert that the first agent owns the cues. An unnamed
+            # 'not owned' is not evidence that Agent 1 does not own them.
+            start, end = segment_bounds(ln, pos)
+            if _UNIVERSAL.search(m.group(0) + tail) and not _POS_OWNER_1.search(ln, start, end):
                 return True
     return False
 
@@ -597,7 +617,7 @@ check('DV-26', (not stale) and observ and both,
       f"PO-3 and PO-5 both retained {both}")
 
 # ---------------------------------------------------------------- DV-27 provenance, no placeholders
-REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_3_PROVENANCE.md'
+REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_4_PROVENANCE.md'
 DECISION = 'docs/DECISION_C05_SUCCESSOR_IDENTITY_004_2_V1.md'
 # fenced code blocks are evidence transcripts, not prose claims: strip them first
 prose = re.sub(r'```.*?```', '', s, flags=re.S)
