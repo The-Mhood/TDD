@@ -13,6 +13,7 @@ Start here. The primary deliverable is the Master Engineering Architecture Docum
 | 7 | `02_PRODUCTION/AGENT1/GAMEPLAY_CHARACTER_TECHNICAL_ASSESSMENT.md` | Agent 1: gameplay/character assessment, interfaces, staged plan M0–M7, thresholds — **v1.4** (v1.3/v1.2/v1.1/v1.0 in `AGENT1/archive/`) | `DESIGN_ONLY` — awaiting re-review |
 | 8 | `02_PRODUCTION/AGENT1/M1_MOVEMENT_SPECIFICATION.md` | Agent 1: Milestone 1 specification — **v1.4**, accepted single gate of 31 acceptance criteria, 36 test specs, 6 manual procedures, L1–L3 latency model, five camera criteria, traversal damage taxonomy E1–E7, two-phase placement validation, hold semantics and a two-phase (relocation / terminal hold) fallback budget | `DESIGN_ONLY` — blocked on Phase 0 prerequisites |
 | 9 | `AGENT1_CONTRACT_SUBMISSION_RESPONSE_V1.md` | Agent 1: response to the Agent 1 contract packet (C-01…C-07) — proposed shapes, ownership/mutation authority, failure semantics, named tests, Agent 2 dependencies, nine TD issues — **v1.0 (`A1-R1`)** | `DESIGN_ONLY` — `PROPOSED — NOT FROZEN`; awaiting Agent 2 and TD review |
+| 10 | `AGENT1_CONTRACT_SUBMISSION_RESPONSE_V2.md` | Agent 1: TD v1.2 acknowledgment and contract revision — per-contract `UNCHANGED`/`REVISED`/`CLARIFICATION REQUIRED` status, TD-01…TD-09 answers, 15 of Agent 2's 16 dependency items answered — **v1.1 (`A1-R2`)** | `DESIGN_ONLY` — `PROPOSED — NOT FROZEN`; `A1-R1` preserved unchanged |
 
 ## Reading order for a new agent
 
