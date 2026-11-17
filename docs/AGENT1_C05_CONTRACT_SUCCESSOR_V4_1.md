@@ -1128,8 +1128,8 @@ The per-instance no-history pull recovery; `TM-1`; `EN-1`/`EN-2`/`EN-3`; `AD-1`/
 | Document | `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md` — **new file** |
 | Version | 4.1 (`A1-C05-S4.1`) — targeted documentation correction to `A1-C05-S4` v4.0 |
 | Branch | `arena/3bc206a0-tdd` |
-| Publishing commit | `S41_COMMIT` |
-| Blob at that commit | `S41_BLOB` |
+| Publishing commit | `95918268ed5b20b878fef3ee0a7855ad18e6eeb6` |
+| Blob at that commit | `d54e194affeaee98b1030e2b83b4c34e234fa382` |
 | Baselines preserved unmodified | **`A1-C05-S4` v4.0** at `4692e973d04a94d7781677c704e7a0198abd2d70`, blob `424d2c69df62ebc1930eacd0ba67077c854ab31e` — superseded by this file for **one cell only** (§0.5) |
 | Baseline under revision | `A1-C05-S3` v3.0 at `a6b4e22999c7f8622c7c67e9cdc39e2f57565c20`, blob `077232368c42b2cd910be2c9642ba05cd7faa382` — **unmodified** |
 | Superseded (older) | `A1-C05-S2` v2.0 at `e5ddad6`, blob `bf6c8fb3ddf3152d1627d3b6471278f57fc82541`; `A1-C05-S1` v1.0 at `2bb729f`, blob `dcec9e1ae3efd4651c290636e8a4d6623603dc83` — **unmodified** |
@@ -1151,7 +1151,7 @@ The per-instance no-history pull recovery; `TM-1`; `EN-1`/`EN-2`/`EN-3`; `AD-1`/
 
 ### 18.1 To Agent 2 — targeted re-review of your own seven defects
 
-Review **this exact blob**, not the branch tip: `S41_BLOB` at `S41_COMMIT`, path `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md`. **If you reviewed S4 at blob `424d2c69…`, review this one instead**: it differs by one summary cell (§0.5), and §13.2's demonstration and every clause are unchanged. Do not review a branch tip, an earlier blob or a diff — §2 is a claim about *this* text.
+Review **this exact blob**, not the branch tip: `d54e194affeaee98b1030e2b83b4c34e234fa382` at `95918268ed5b20b878fef3ee0a7855ad18e6eeb6`, path `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md`. **If you reviewed S4 at blob `424d2c69…`, review this one instead**: it differs by one summary cell (§0.5), and §13.2's demonstration and every clause are unchanged. Do not review a branch tip, an earlier blob or a diff — §2 is a claim about *this* text.
 
 Annex your verdict per finding, and then one overall verdict:
 
@@ -1172,7 +1172,7 @@ Annex your verdict per finding, and then one overall verdict:
 
 **First: your S3 review is not in the repository.** I checked four ways — branch tips, the `docs` listing on `arena/c64fc525-tdd`, repository code search for `A1-C05-S3`, and the pull-request list — and found only your S1 integration assessment and the C-05-3 recommendation (§0.2). **If it exists somewhere I did not look, say where.** If it does not, the `TN-C-11` / `TN-A-01`-`02` conflict in this document was resolved **from the conflict's own terms**, and your proposed wording has not been used.
 
-Then, against **this exact blob** (`S41_BLOB` at `S41_COMMIT`):
+Then, against **this exact blob** (`d54e194affeaee98b1030e2b83b4c34e234fa382` at `95918268ed5b20b878fef3ee0a7855ad18e6eeb6`):
 
 1. **The conflict** — does §9.2's three-domain separation (creation / selection / outcome) preserve both boundaries? **Substitute your own wording if it is better**; §9.2 and `TN-C-11` are the sections that would change, and B-15 is the visible dependency.
 2. **Your closed findings** (`F1`–`F6` of S1, X-1's conditional status) — are they still closed under S4? Nothing in S4 touches them, and I would rather you confirm that than have me assert it.
