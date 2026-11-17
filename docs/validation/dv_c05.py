@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""C-05 document validator — 27 text checks over a C-05 successor document.
+"""C-05 document validator — 27 text checks over a C-05 successor document (v4.3).
 
     python3 docs/validation/dv_c05.py <path-to-document.md>
 
@@ -9,6 +9,12 @@ These are checks on *document text*. They are not acceptance tests, they say not
 about contract behaviour, and passing them is not evidence that any obligation holds.
 Several of them are deliberately able to FAIL: each is shown failing on an earlier
 blob in the document's §13.3 before it is shown passing on the current one.
+
+DV-22 and DV-24 are deny-by-default as of v4.3. They no longer decide whether a line is
+"about a finding" by looking for finding numbers: the only exemptions are *regions*
+(fenced blocks, tables whose header carries [QUOTED], and QUOTED-HISTORY blocks). If a
+line states an audio assignment, or a declared/observed pair, outside an exempt region, it
+is a defect. See docs/validation/test_dv_c05_regressions.py for the negative tests.
 """
 import hashlib
 import re
@@ -60,6 +66,64 @@ def obl_rows():
 
 
 ALL = obl_rows()
+
+
+QUOTED_TABLE_TOKEN = '[QUOTED]'
+QSTART, QEND = 'QUOTED-HISTORY-START', 'QUOTED-HISTORY-END'
+
+
+def exempt_mask(ls):
+    """Return (mask, counts). A line is exempt only by *location*:
+
+      1. inside a fenced code block;
+      2. inside a table whose header row carries the token [QUOTED];
+      3. inside a <!-- QUOTED-HISTORY-START --> ... <!-- QUOTED-HISTORY-END --> block.
+
+    Exemption is never a function of the words on the line. That is the N-1 correction:
+    an author who mentions a finding number on the same line as a defect can no longer
+    disable a check for that line.
+    """
+    mask = [False] * len(ls)
+    counts = {'fenced': 0, 'quoted_table': 0, 'marked_block': 0}
+    fence = False
+    for i, ln in enumerate(ls):
+        if ln.strip().startswith('```'):
+            mask[i] = True
+            counts['fenced'] += 1
+            fence = not fence
+            continue
+        if fence:
+            mask[i] = True
+            counts['fenced'] += 1
+    in_block = False
+    for i, ln in enumerate(ls):
+        # a marker only counts on a line of its own; a *mention* of the marker inside a
+        # sentence (this document mentions it in §0.7 and §13.1) must not open a region.
+        if ln.strip().startswith('<!--') and QSTART in ln:
+            in_block = True
+            mask[i] = True
+            counts['marked_block'] += 1
+            continue
+        if ln.strip().startswith('<!--') and QEND in ln:
+            mask[i] = True
+            counts['marked_block'] += 1
+            in_block = False
+            continue
+        if in_block:
+            mask[i] = True
+            counts['marked_block'] += 1
+    i = 0
+    while i < len(ls):
+        if ls[i].lstrip().startswith('|') and QUOTED_TABLE_TOKEN in ls[i]:
+            j = i
+            while j < len(ls) and ls[j].lstrip().startswith('|'):
+                mask[j] = True
+                counts['quoted_table'] += 1
+                j += 1
+            i = j
+        else:
+            i += 1
+    return mask, counts
 
 
 def cells(prefix):
@@ -285,6 +349,8 @@ check('DV-21', all(places.values()) and 'interleaved' in S36,
       f"content rule present in {sum(places.values())}/4 places {places}; interleaving stated")
 
 # ---------------------------------------------------------------- DV-22 audio single owner, whole document
+MASK, EXEMPT = exempt_mask(lines)
+EXEMPT_N = sum(MASK)
 row5l = [l for l in lines if 'Consumer integration (Agent 1)' in l][0]
 row6 = [l for l in lines if 'Consumer integration (Agent 2)' in l][0]
 preamble8 = [l for l in lines if 'Each obligation is implemented by each consuming agent' in l]
@@ -292,16 +358,46 @@ no_audio_5 = 'Agent 1 owns no audio' in row5l and 'audio cues' not in row5l.spli
 audio_6 = 'audio cue selection' in row6
 tnc15 = [r for r in cells('TN-C') if r[0].strip('*') == 'TN-C-15']
 pre_ok = bool(preamble8) and 'no C-05 audio responsibility' in preamble8[0] and 'camera and audio' not in preamble8[0]
-ALLOW22 = ('owns no audio', 'no C-05 audio responsibility', 'owns none', 'owns no C-05 audio',
-           'D-4', 'D-22-scope', 'C6-2', 'row 5 also claimed', 'also claimed',
-           "S3's row 5", '§8 preamble', 'preamble', 'row 5 loses audio', 'finding 1', 'finding 5')
-bad_audio = [ln.strip()[:110] for ln in lines
-             if 'audio' in ln and 'Agent 1' in ln and not any(a in ln for a in ALLOW22)]
+
+# Deny-by-default (N-1). The old implementation exempted a line if it contained one of
+# fifteen finding-number/heading substrings; Agent 2 defeated it with a one-word prefix.
+# Now: a line outside an exempt region that mentions both the audio token and the first
+# agent must *negate* the assignment, and the negation must be attached to the mention
+# (within 80 characters of it), so an unrelated negation elsewhere cannot launder it.
+NEG22 = ('owns no audio', 'no c-05 audio responsibility', 'owns none of the audio',
+         'not claimed by agent 1', 'no audio responsibility')
+
+
+def negated_in_clause(ln):
+    """True iff the clause that mentions audio also negates the assignment.
+
+    The clause is the text between statement boundaries ('.', ';', '|'). A negation in
+    a *different* clause cannot launder an assignment: 'Agent 1 owns audio. Agent 1 owns
+    no audio.' is still an offender, and a one-word prefix such as 'D-4 note:' changes
+    nothing at all.
+    """
+    low = ln.lower()
+    k = low.find('audio')
+    if k < 0:
+        return True
+    bounds = [m.start() for m in re.finditer(r'(?<!§)[.;|]', low)]
+    start = max([b for b in bounds if b < k], default=-1) + 1
+    end = min([b for b in bounds if b > k], default=len(low))
+    return any(n in low[start:end] for n in NEG22)
+
+
+bad_audio = [(i + 1, ln.strip()[:100]) for i, ln in enumerate(lines)
+             if not MASK[i] and 'audio' in ln and 'Agent 1' in ln and not negated_in_clause(ln)]
+# the live ownership text may never be exempted: no [QUOTED] table and no marked block
+LIVE22 = (section('### 5.2', '### 5.3') + section('### 6.1', '### 6.2')
+          + section('## 8. Consumer', '## 9.') + section('### 12.2', '### 12.3'))
+live_unexempted = QUOTED_TABLE_TOKEN not in LIVE22 and QSTART not in LIVE22
 check('DV-22', no_audio_5 and audio_6 and len(tnc15) == 1 and imp('TN-C-15') == 'Agent 2, C-05 consumer'
-      and pre_ok and not bad_audio,
+      and pre_ok and live_unexempted and not bad_audio,
       f"row 5 audio removed {no_audio_5}; row 6 owns audio {audio_6}; TN-C-15 present {len(tnc15) == 1}, "
-      f"implementer {imp('TN-C-15') or '-'}; §8 preamble clean {pre_ok}; "
-      f"whole-document scan offenders {len(bad_audio)} {bad_audio[:2]}")
+      f"implementer {imp('TN-C-15') or '-'}; §8 preamble clean {pre_ok}; exempt lines {EXEMPT_N} "
+      f"(fenced {EXEMPT['fenced']}, quoted table {EXEMPT['quoted_table']}, marked block {EXEMPT['marked_block']}); "
+      f"live sections unexempted {live_unexempted}; scan offenders {len(bad_audio)} {bad_audio[:2]}")
 
 # ---------------------------------------------------------------- DV-23 identity constancy
 norm = section('## 3.', '## 15.')
@@ -315,26 +411,58 @@ check('DV-23', len(constancy) >= 2 and not unquoted_old
       f"TN-P-04 names identity change; T-C05-66 present")
 
 # ---------------------------------------------------------------- DV-24 declared/observed consistency
-def nums(txt):
-    for pat in (r'(\d+)\s*declared[^0-9]{0,24}(\d+)\s*observed',
-                r'declared\s*\(?\s*(\d+)\s*\)?[^0-9]{0,16}observed\s*\(?\s*(\d+)'):
-        m = re.search(pat, txt)
-        if m:
-            return (int(m.group(1)), int(m.group(2)))
-    return None
+# Deny-by-default over the whole document. The S4.2 implementation read four hard-coded
+# sites and took the *first* regex match per site; three probes on the reviewed blob passed
+# a document containing a wrong count (P1 prose, P2 number words, P4 second pair on an
+# anchor line). Now every pair, in either order, in digits or number words, on every
+# non-exempt line, must equal the computed pair; all four anchors must still exist.
+NUMW = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7,
+        'eight': 8, 'nine': 9, 'ten': 10, 'eleven': 11, 'twelve': 12}
+NTOK = r'(\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)'
+# Separators are "any character that is not a digit", so a restatement may say
+# "declared (7) and observed (5)" (words between the numbers) but may never skip over
+# another number — a second pair on the same line cannot hide behind the first.
+# 'declared' must not be the first half of 'declared-but-unused'.
+DECL_OBS = re.compile(NTOK + r'[\s(]{0,3}declared(?!-)[^0-9;.]{0,24}?' + NTOK
+                      + r'[\s(]{0,3}observed', re.I)
+# Reverse order ('6 observed of 7 declared'). A comma in the separator means a list,
+# not a restatement, so the reverse form is read only across a comma-free window.
+OBS_DECL = re.compile(NTOK + r'[\s(]{0,3}observed[^0-9,;.]{0,24}?' + NTOK
+                      + r'[\s(]{0,3}declared(?!-)', re.I)
+# Parenthetical form: 'declared (7) ... observed (5)', number attached to the word.
+DECL_PAREN = re.compile(r'declared(?!-)\s*\(?\s*' + NTOK + r'\s*\)?[^0-9]{0,24}?observed\s*\(?\s*'
+                        + NTOK, re.I)
+
+def num_of(tok):
+    t = tok.strip().lower()
+    return int(t) if t.isdigit() else NUMW[t]
 
 
+def pairs(txt):
+    """All (declared, observed) pairs in txt, either statement order."""
+    out = [(m.start(), (num_of(m.group(1)), num_of(m.group(2)))) for m in DECL_OBS.finditer(txt)]
+    out += [(m.start(), (num_of(m.group(2)), num_of(m.group(1)))) for m in OBS_DECL.finditer(txt)]
+    out += [(m.start(), (num_of(m.group(1)), num_of(m.group(2)))) for m in DECL_PAREN.finditer(txt)]
+    return sorted(set(out))
+
+
+computed = (len(decl), len(observed))
 row6c = [l for l in lines if l.startswith('| **6** |')]
-sources = {
-    '§1 row 6': nums(row6c[0]) if row6c else None,
-    '§5.4': nums(section('**Declared versus observed', '\n\n')),
-    '§13.1 DV-11': nums(section('| **DV-11** |', '\n')),
-    '§18.1 C9': nums(section('9. **C9**', '\n')),
+# The three sites where the pair must be restated. S4.2 also named a fourth (§18.1's C9
+# line) that never resolved — the string does not occur in any revision — so it silently
+# read three sites and reported nothing missing. A missing anchor is now a failure.
+anchors = {
+    '§1 row 6': row6c[0] if row6c else '',
+    '§5.4': section('**Declared versus observed', '\n\n'),
+    '§13.1 DV-11': section('| **DV-11** |', '\n'),
 }
-found = {k: v for k, v in sources.items() if v}
-ok24 = len(found) >= 3 and all(v == (len(decl), len(observed)) for v in found.values())
-check('DV-24', ok24, f"computed {len(decl)} declared / {len(observed)} observed; stated at {len(found)} sites "
-                     f"{ {k: v for k, v in found.items()} }; consistent {ok24 and bool(found)}")
+anchors_present = {k: (computed in [v for _, v in pairs(t)] if t else False) for k, t in anchors.items()}
+scanned = [(i + 1, pr) for i, ln in enumerate(lines) if not MASK[i] for _, pr in pairs(ln)]
+bad_pairs = [(n, pr) for n, pr in scanned if pr != computed]
+check('DV-24', all(anchors_present.values()) and len(scanned) >= 3 and not bad_pairs,
+      f"computed {computed[0]} declared / {computed[1]} observed; anchor sites "
+      f"{sum(anchors_present.values())}/{len(anchors)} {[k for k, v in anchors_present.items() if not v]}; "
+      f"pairs read {len(scanned)}; disagreeing pairs {len(bad_pairs)} {bad_pairs[:2]}")
 
 # ---------------------------------------------------------------- DV-25 staleness bound
 t14 = req('TN-C-14')
@@ -364,18 +492,27 @@ check('DV-26', (not stale) and observ and both,
       f"PO-3 and PO-5 both retained {both}")
 
 # ---------------------------------------------------------------- DV-27 provenance, no placeholders
-REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_2_PROVENANCE.md'
+REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_PROVENANCE.md'
+DECISION = 'docs/DECISION_C05_SUCCESSOR_IDENTITY_004_2_V1.md'
 # fenced code blocks are evidence transcripts, not prose claims: strip them first
 prose = re.sub(r'```.*?```', '', s, flags=re.S)
 ph = [t for t in ('S41_COMMIT', 'S41_BLOB', 'PUB_COMMIT_PLACEHOLDER', 'PUB_BLOB_PLACEHOLDER',
                   '_PLACEHOLDER', 'TODO', 'TBD') if t in prose]
 S17 = section('## 17. Publication', '## 18. Handoff')
-s41 = ('95918268ed5b20b878fef3ee0a7855ad18e6eeb6' in S17
-       and 'd54e194affeaee98b1030e2b83b4c34e234fa382' in S17)
-reg = REG in S17 and REG in section('## 18. Handoff')
-check('DV-27', (not ph) and s41 and reg,
-      f"placeholders found {ph}; S4.1 commit+blob recorded in §17 {s41}; "
-      f"provenance register referenced in §17 and §18 {reg}")
+S18 = section('## 18. Handoff')
+pinned = ('95918268ed5b20b878fef3ee0a7855ad18e6eeb6' in S17
+          and 'd54e194affeaee98b1030e2b83b4c34e234fa382' in S17
+          and 'a788f953256d208f3eb1310f3897924d007179b1' in S17
+          and '7d03e1df837493305831962f43882a1cd3496143' in S17)
+reg = REG in S17 and REG in S18
+# N-2: the identity decision is recorded, and the withdrawn copy carries a distinct identity
+identity = DECISION in S17 and 'TDD-A1-C05-SUCCESSOR-004.2-D' in S17
+# N-3: Agent 2's addendum is cited
+addendum = 'e434dbe' in S17
+check('DV-27', (not ph) and pinned and reg and identity and addendum,
+      f"placeholders found {ph}; S4.1 and S4.2 commit+blob recorded in §17 {pinned}; "
+      f"provenance register referenced in §17 and §18 {reg}; identity decision recorded with the withdrawn "
+      f"identity in §17 {identity}; Agent 2's addendum cited in §17 {addendum}")
 
 print('\n'.join(shown))
 passed = sum(1 for _, ok, _ in results if ok)
