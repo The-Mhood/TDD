@@ -521,8 +521,8 @@ That is six checks against files. **None of it is evidence that any contract beh
 | Document | `docs/AGENT1_C05_3_TELEGRAPH_AUTHORITY_RESPONSE_V1.md` — **new file** |
 | Version | 1.0 |
 | Branch | `arena/3bc206a0-tdd` |
-| Publishing commit | `PUB_COMMIT` |
-| Blob at that commit | `PUB_BLOB` |
+| Publishing commit | `13a2f43d3a613d256e7c351685d658cf72714382` |
+| Blob at that commit | `de01831ef392bbcd4c3217d59f4ce9eda9bcdafe` |
 | Predecessor | `A1-R4` v1.3 at `142cabd`, blob `2cc548fa…` — **unmodified** |
 | `A1-R1` / `A1-R2` / `A1-R3` | blobs `25ab47c2…` / `5ee2769…` / `109331f3…` — **unmodified by this task** |
 | Agent 2 review | `Docs/AGENT2_REVIEW_A1R4_V1.md` at `7ea0a85` — read only, not modified |
