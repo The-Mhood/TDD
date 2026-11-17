@@ -359,35 +359,89 @@ audio_6 = 'audio cue selection' in row6
 tnc15 = [r for r in cells('TN-C') if r[0].strip('*') == 'TN-C-15']
 pre_ok = bool(preamble8) and 'no C-05 audio responsibility' in preamble8[0] and 'camera and audio' not in preamble8[0]
 
-# Deny-by-default (N-1). The old implementation exempted a line if it contained one of
-# fifteen finding-number/heading substrings; Agent 2 defeated it with a one-word prefix.
-# Now: a line outside an exempt region that mentions both the audio token and the first
-# agent must *negate* the assignment, and the negation must be attached to the mention
-# (within 80 characters of it), so an unrelated negation elsewhere cannot launder it.
-NEG22 = ('owns no audio', 'no c-05 audio responsibility', 'owns none of the audio',
-         'not claimed by agent 1', 'no audio responsibility')
+# Deny-by-default (N-1), evaluated per assertion (S4.3.1).
+#
+# S4.3 accepted a line if a negation appeared anywhere in the clause that contained
+# the *first* audio mention. That let a negation launder a later, positive assignment
+# in the same clause: 'Agent 1 owns no audio, but Agent 1 owns audio cues.' passed.
+# The predicate below evaluates *every* audio mention independently:
+#
+#   1. a mention is negated only if a negative construction covers that mention
+#      ('owns no audio', 'no C-05 audio responsibility', 'audio ... is not claimed by Agent 1');
+#   2. otherwise the mention is attributed to the nearest agent reference in its
+#      segment — before the mention if there is one, after it if not;
+#   3. if that agent is Agent 1, the mention is an offender.
+#
+# There is still no keyword allowlist: what exempts a line is where it is (a region),
+# never which finding numbers it happens to contain. What decides *ownership* here is
+# grammar and position, not a list of permitted phrases.
+AGENT_REF = re.compile(r'agent[-\s]?([12])\b', re.I)
+# A negation covers an audio mention only if nothing separates them: no comma, no
+# clause separator and no coordinating conjunction. 'owns no camera, but owns audio
+# cues' must not read as a negation of the audio cue.
+NEG_BEFORE = re.compile(r'\b(?:no|zero|none\s+of\s+the)\b'
+                        r'(?:(?!\b(?:and|but|yet|while|although|whereas)\b)[^.;|,]){0,28}?\baudio\b', re.I)
+NEG_AFTER = re.compile(r'\baudio\b[^.;|]{0,40}?\b(?:is|are|was|were)\s+not\s+'
+                       r'(?:owned|claimed|carried|held|assigned|a\s+responsibility)\b', re.I)
+SEGMENT = re.compile(r'[.;|]')
 
 
-def negated_in_clause(ln):
-    """True iff the clause that mentions audio also negates the assignment.
+def audio_mentions(ln):
+    return [m.start() for m in re.finditer(r'\baudio\b', ln, re.I)]
 
-    The clause is the text between statement boundaries ('.', ';', '|'). A negation in
-    a *different* clause cannot launder an assignment: 'Agent 1 owns audio. Agent 1 owns
-    no audio.' is still an offender, and a one-word prefix such as 'D-4 note:' changes
-    nothing at all.
-    """
-    low = ln.lower()
-    k = low.find('audio')
-    if k < 0:
+
+def negated_mention(ln, pos):
+    """True iff a negative construction covers *this* mention and no other one."""
+    if any(m.start() <= pos <= m.end() for m in NEG_BEFORE.finditer(ln)):
         return True
-    bounds = [m.start() for m in re.finditer(r'(?<!§)[.;|]', low)]
-    start = max([b for b in bounds if b < k], default=-1) + 1
-    end = min([b for b in bounds if b > k], default=len(low))
-    return any(n in low[start:end] for n in NEG22)
+    return any(m.start() <= pos <= m.end() for m in NEG_AFTER.finditer(ln))
 
 
-bad_audio = [(i + 1, ln.strip()[:100]) for i, ln in enumerate(lines)
-             if not MASK[i] and 'audio' in ln and 'Agent 1' in ln and not negated_in_clause(ln)]
+def segment_bounds(ln, pos):
+    before = [m.start() for m in SEGMENT.finditer(ln) if m.start() < pos]
+    after = [m.start() for m in SEGMENT.finditer(ln) if m.start() > pos]
+    return (max(before) + 1 if before else 0), (min(after) if after else len(ln))
+
+
+FORWARD_OWNER = (
+    re.compile(r'\baudio\b[^.;|]{0,40}?\b(?:is|are|was|were)\s+'
+               r'(?:owned|claimed|carried|held|supplied|provided|selected)\s+by\s+agent[-\s]?1\b', re.I),
+    re.compile(r'\baudio\b[^.;|]{0,30}?\b(?:is|are)\s+agent[-\s]?1[\'\u2019]s\b', re.I),
+    re.compile(r'\baudio\b[^.;|]{0,14}?:\s*agent[-\s]?1\b', re.I),
+)
+
+
+def attributed_to_agent_1(ln, pos):
+    """Is *this* mention owned by the first agent?
+
+    Word order is read, not assumed: an agent reference that governs the mention from
+    before it, or an explicit ownership construction that governs it from after it
+    ('audio cues are owned by Agent 1', 'audio cues are Agent 1's', 'audio cues: Agent 1').
+    A reference that merely appears later in the sentence does not attribute anything.
+    """
+    start, _end = segment_bounds(ln, pos)
+    before = [m for m in AGENT_REF.finditer(ln, start, pos)]
+    if before and before[-1].group(1) == '1':
+        return True
+    return any(pat.search(ln, max(0, pos - 40), pos + 60) and
+               any(m.start() <= pos <= m.end() for m in pat.finditer(ln)) for pat in FORWARD_OWNER)
+
+
+def audio_offences(ln):
+    """Every mention in the line that assigns the audio cue to the first agent."""
+    return [m for m in audio_mentions(ln)
+            if not negated_mention(ln, m) and attributed_to_agent_1(ln, m)]
+
+
+bad_audio = []
+mentions_evaluated = 0
+for i, ln in enumerate(lines):
+    if MASK[i] or 'audio' not in ln.lower():
+        continue
+    mentions_evaluated += len(audio_mentions(ln))
+    if audio_offences(ln):
+        bad_audio.append((i + 1, ln.strip()[:100]))
+
 # the live ownership text may never be exempted: no [QUOTED] table and no marked block
 LIVE22 = (section('### 5.2', '### 5.3') + section('### 6.1', '### 6.2')
           + section('## 8. Consumer', '## 9.') + section('### 12.2', '### 12.3'))
@@ -397,7 +451,7 @@ check('DV-22', no_audio_5 and audio_6 and len(tnc15) == 1 and imp('TN-C-15') == 
       f"row 5 audio removed {no_audio_5}; row 6 owns audio {audio_6}; TN-C-15 present {len(tnc15) == 1}, "
       f"implementer {imp('TN-C-15') or '-'}; §8 preamble clean {pre_ok}; exempt lines {EXEMPT_N} "
       f"(fenced {EXEMPT['fenced']}, quoted table {EXEMPT['quoted_table']}, marked block {EXEMPT['marked_block']}); "
-      f"live sections unexempted {live_unexempted}; scan offenders {len(bad_audio)} {bad_audio[:2]}")
+      f"live sections unexempted {live_unexempted}; audio mentions evaluated {mentions_evaluated}; scan offenders {len(bad_audio)} {bad_audio[:2]}")
 
 # ---------------------------------------------------------------- DV-23 identity constancy
 norm = section('## 3.', '## 15.')
@@ -492,7 +546,7 @@ check('DV-26', (not stale) and observ and both,
       f"PO-3 and PO-5 both retained {both}")
 
 # ---------------------------------------------------------------- DV-27 provenance, no placeholders
-REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_PROVENANCE.md'
+REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_1_PROVENANCE.md'
 DECISION = 'docs/DECISION_C05_SUCCESSOR_IDENTITY_004_2_V1.md'
 # fenced code blocks are evidence transcripts, not prose claims: strip them first
 prose = re.sub(r'```.*?```', '', s, flags=re.S)
