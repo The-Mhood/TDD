@@ -675,6 +675,7 @@ The M1 v1.4 suite (`TDD-Unit.Movement.FallbackResolution`, `TDD-Functional.Movem
 | Document | `docs/AGENT1_CONTRACT_SUBMISSION_RESPONSE_V2.md` |
 | Version | 1.1 (`A1-R2`) — supersedes `A1-R1` **for review purposes only**, not as evidence and not as a replacement of the historical record |
 | Branch | `arena/3bc206a0-tdd` |
+| Publishing commit | `f578fe612ad173b74f99fcb187f825eb3de6f59a` (this document); previous commit `97828db…` carries `A1-R1` |
 | Prior document | `docs/AGENT1_CONTRACT_SUBMISSION_RESPONSE_V1.md`, `A1-R1` v1.0, commit `97828db7d9786c0fa5415578e796a822aab497a8`, blob `25ab47c2…` — **preserved unchanged** |
 | Governing addendum | `TDD-TD-INT-001` v1.2, commit `e121bbbf09562e3cba0efe81aad971809685db23` |
 | Status | `DESIGN_ONLY`; proposals `PROPOSED — NOT FROZEN`; tests `PROPOSED / NOT RUN` |
