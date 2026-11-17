@@ -104,13 +104,15 @@ def main() -> int:
                                        ".TestIndexIsValid"]),
         "measurement_claims": check_measurement_claims(),
         "contract_data_checks": run([py, "Tools/world/contract_data_checks.py"]),
+        "review_document_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_contract_review.py"]),
     }
 
     payload = {
         "meta": {
-            "milestone": "W-M2.4 — Agent 2 contract submission C-01…C-07 "
-                         "(proposals only; zero contracts agreed) + complete "
-                         "Chapter 1 location capture (57 of 57)",
+            "milestone": "W-M2.5 — formal review of Agent 1 submission A1-R1 "
+                         "(seven verdicts, zero agreements, five self-corrections)",
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -174,6 +176,21 @@ def main() -> int:
              "method": "inventory search of all six source documents",
              "result": "UNRESOLVED — no source exists; three options recorded, "
                        "TD decision requested (TD-3)"},
+            {"claim": "A1-R1's RouteId format cannot address 4 of 8 traversal parents",
+             "method": "cross-reference the 8 traversal-capable locations against the "
+                       "46 scene rows' host-location column",
+             "result": "verified: CH01-TRV-001..004 host zero scenes; a SceneId-bearing "
+                       "format would require inventing canon"},
+            {"claim": "A1-R1's five capability names are adopted verbatim",
+             "method": "test_contract_review.TestCapabilityVocabulary",
+             "result": "verified: all five named, no sixth invented"},
+            {"claim": "the original submission's 42 acceptance tests are unique",
+             "method": "test_contract_review.TestAcceptanceInventory",
+             "result": "verified: 42 unique IDs, split 10 L0 / 11 L1 / 21 L2"},
+            {"claim": "the three-vs-four L0 defect is resolved",
+             "method": "enumeration of data availability per L0 test",
+             "result": "corrected: 2 of 10 pass, 1 partial, 7 blocked; the 'four' "
+                       "sentence was unsupported and is recorded as wrong"},
             {"claim": "NPC prose parsing is correct",
              "method": "38-case parser suite; 2 new silent-corruption bugs found "
                        "and fixed this milestone (range summed as 16, abstract "

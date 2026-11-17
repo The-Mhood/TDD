@@ -1,0 +1,320 @@
+{
+  "meta": {
+    "milestone": "W-M2.5 \u2014 formal review of Agent 1 submission A1-R1 (seven verdicts, zero agreements, five self-corrections)",
+    "date": "2026-11-17",
+    "agent": "Agent 2 (world structure / level architecture)",
+    "python": "3.11.2",
+    "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+    "engine": "NONE \u2014 no Unreal Engine, no GPU, no compiled code",
+    "scope_statement": "Every result below is Python validation over register-derived data. Nothing here demonstrates engine behaviour. Streaming, Mass Entity, AI, navigation and boss execution are UNTESTED and UNIMPLEMENTED. All runtime systems remain SPEC under ADR-0005.",
+    "all_passed": true
+  },
+  "results": {
+    "canon_tests": {
+      "command": "/usr/bin/python3 -m unittest discover -s Tools/canon/tests",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 86,
+      "stdout_tail": [],
+      "stderr_tail": [
+        "..................................................................................................................",
+        "----------------------------------------------------------------------",
+        "Ran 114 tests in 0.033s",
+        "",
+        "OK"
+      ]
+    },
+    "world_tests": {
+      "command": "/usr/bin/python3 -m unittest discover -s Tools/world/tests",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 648,
+      "stdout_tail": [],
+      "stderr_tail": [
+        "...........................................................................................................................................................................................................................................................................................................",
+        "----------------------------------------------------------------------",
+        "Ran 299 tests in 0.583s",
+        "",
+        "OK"
+      ]
+    },
+    "l0_gate": {
+      "command": "/usr/bin/python3 Tools/ci/l0_checks.py",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 362,
+      "stdout_tail": [
+        "L0 checks: 14/14 passed"
+      ],
+      "stderr_tail": []
+    },
+    "count_reconciliation": {
+      "command": "/usr/bin/python3 Tools/world/count_reconciliation.py",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 40,
+      "stdout_tail": [
+        "  major_environments                 parsed    1  published 1",
+        "  scenes_with_missing_parent         parsed   40  published -  <-- differs (partial capture, expected)",
+        "",
+        "self-consistency: PASS",
+        "derived consistency: PASS",
+        "RESULT: PASS"
+      ],
+      "stderr_tail": []
+    },
+    "population_budget": {
+      "command": "/usr/bin/python3 Tools/world/population_budget.py --chapter CH01",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 50,
+      "stdout_tail": [
+        "  banded cost (low/high): 38.38/42.37  complete=False",
+        "    band is OPEN at: ['CH01-SCN-014']",
+        "  validation: PASS",
+        "   ~ CH01: 5 scene(s) state a range, alternative or condition rather than a head-count. The point estimate bills them at 0 and therefore UNDERSTATES; the band 38.38-42.37 carries the register's own limits. Resolving them needs a ruling on how a range is budgeted, not more parsing: ['CH01-SCN-005', 'CH01-SCN-017', 'CH01-SCN-020', 'CH01-SCN-021', 'CH01-SCN-034']",
+        "   ~ CH01: the cost band is OPEN because ['CH01-SCN-014'] states no NPC number. The band's upper figure is a LOWER bound on the true cost.",
+        "   ~ CH01: 11 scene(s) remain uncaptured and rest on a policy default. All are SCRIPTED or NONE tier, whose cost does not depend on the count, so they carry provenance debt rather than numeric exposure."
+      ],
+      "stderr_tail": []
+    },
+    "greybox_rules": {
+      "command": "/usr/bin/python3 Tools/world/greybox_rules.py Tools/world/data/greybox_ch01.json",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 35,
+      "stdout_tail": [
+        "greybox assets: 3",
+        "  CH01-ENV-001     SPATIAL, STREAMING, SIGHTLINE",
+        "  CH01-SUB-018     SPATIAL, NAVIGATION",
+        "  CH01-INT-016     SPATIAL",
+        "violations: 0"
+      ],
+      "stderr_tail": []
+    },
+    "sensitivity": {
+      "command": "/usr/bin/python3 Tools/world/sensitivity.py --out Docs/evidence/agent2/CH01_population_sensitivity.json",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 143,
+      "stdout_tail": [
+        "  HIGH-DENSITY   npcs=4 ratio=1.00  point= 33.38  band= 43.37- 48.37  sim= 45  (+10%)",
+        "",
+        "HEADROOM (upper endpoint, capacity planning): 11.63 of 60.0 (HIGH-DENSITY)",
+        "  point-estimate headroom (understates): 26.62",
+        "  WARNING: band is OPEN (CH01-SCN-014 states no number), so even the upper endpoint is a FLOOR on the true cost.",
+        "written: Docs/evidence/agent2/CH01_population_sensitivity.json"
+      ],
+      "stderr_tail": []
+    },
+    "world_manifest": {
+      "command": "/usr/bin/python3 Tools/world/world_manifest.py Tools/world/data/CH01_manifest.json",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 28,
+      "stdout_tail": [
+        "manifest: Tools/world/data/CH01_manifest.json",
+        "chapter:  CH01",
+        "locations declared: 6  {'ENV': 1, 'SET': 1, 'LMK': 1, 'BOS': 1, 'SUB': 2}",
+        "scenes declared:    2",
+        "violations: 0"
+      ],
+      "stderr_tail": []
+    },
+    "canon_index_validation": {
+      "command": "/usr/bin/python3 -m unittest Tools.canon.tests.test_canon.TestIndexIsValid",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 51,
+      "stdout_tail": [],
+      "stderr_tail": [
+        "....",
+        "----------------------------------------------------------------------",
+        "Ran 4 tests in 0.002s",
+        "",
+        "OK"
+      ]
+    },
+    "measurement_claims": {
+      "command": "gen_evidence.check_measurement_claims",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 0,
+      "stdout_tail": [
+        "46 scene rows inspected, all npcs_is_measured=false"
+      ],
+      "stderr_tail": []
+    },
+    "contract_data_checks": {
+      "command": "/usr/bin/python3 Tools/world/contract_data_checks.py",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 44,
+      "stdout_tail": [
+        "[PASS] location_ids_match_published_scheme",
+        "[PASS] excerpt_is_subset_of_full_capture",
+        "[PASS] interactable_id_namespace_unresolved",
+        "",
+        "NOTE: L0-data validation only. No engine, no runtime evidence.",
+        "checks: 9/9 passed"
+      ],
+      "stderr_tail": []
+    },
+    "review_document_claims": {
+      "command": "/usr/bin/python3 -m unittest discover -s Tools/world/tests -p test_contract_review.py",
+      "exit_code": 0,
+      "passed": true,
+      "duration_ms": 65,
+      "stdout_tail": [],
+      "stderr_tail": [
+        "...........................................",
+        "----------------------------------------------------------------------",
+        "Ran 43 tests in 0.015s",
+        "",
+        "OK"
+      ]
+    }
+  },
+  "claims": [
+    {
+      "claim": "canon mirror regenerates bit-identically from fixtures",
+      "method": "L0 canon_mirror_drift check",
+      "result": "verified"
+    },
+    {
+      "claim": "register published counts sum to their per-chapter rows",
+      "method": "count_reconciliation.check_published_consistency",
+      "result": "verified"
+    },
+    {
+      "claim": "location entries are 196, not 191",
+      "method": "arithmetic + regression test guarding the stale value",
+      "result": "verified"
+    },
+    {
+      "claim": "Chapter 1 parses 46 of 46 scenes",
+      "method": "count_reconciliation",
+      "result": "verified"
+    },
+    {
+      "claim": "45 of 46 Chapter 1 scenes are not main/secondary story",
+      "method": "two independent registers agree",
+      "result": "verified"
+    },
+    {
+      "claim": "31 of 46 Chapter 1 scenes need no simulated NPC",
+      "method": "population_budget derivation",
+      "result": "derived estimate"
+    },
+    {
+      "claim": "CD-5 greybox restrictions are machine-enforced",
+      "method": "greybox_rules + injected-tamper test",
+      "result": "verified"
+    },
+    {
+      "claim": "parsers handle the register's actual table format",
+      "method": "114 canon tests",
+      "result": "verified for Chapter 1"
+    },
+    {
+      "claim": "parsers handle format variations gracefully",
+      "method": "measured: 5 silent-failure modes documented, not fixed",
+      "result": "documented limitation"
+    },
+    {
+      "claim": "no row claims to be empirically measured",
+      "method": "gen_evidence.check_measurement_claims inspects the artifact directly; L0 gate is blind to provenance so REGISTER_DATA earns no exemption",
+      "result": "verified: 46 of 46 rows npcs_is_measured=false"
+    },
+    {
+      "claim": "an exact dozen is twelve, not an unresolved range",
+      "method": "parse_npc_count on 'A dozen people.' plus variants",
+      "result": "verified: 12; 'dozens' and 'a dozen or so' still refused"
+    },
+    {
+      "claim": "range budgeting uses both endpoints without a midpoint",
+      "method": "band rows carry low/high, verbatim register wording, endpoint_use and midpoint_used=false",
+      "result": "verified"
+    },
+    {
+      "claim": "Traversal capability is a register CATEGORY TAG, not an ID prefix",
+      "method": "parse_location_summary over the 57-row v2.9 capture",
+      "result": "verified: 8 traversal-capable locations; a TRV-prefix filter would lose SUB-009 (ESTABLISHED), SUB-020 and EXP-003"
+    },
+    {
+      "claim": "Chapter 1 location capture is complete",
+      "method": "contract_data_checks family counts vs the register's published 1 + 40 + 16 = 57",
+      "result": "verified: 57 rows, 0 duplicates, excerpt remains a subset"
+    },
+    {
+      "claim": "the register's canon and design vocabularies are separate",
+      "method": "OAD-48 check: three canon statuses, seven design statuses",
+      "result": "verified: no value crosses between the two sets"
+    },
+    {
+      "claim": "interactable IDs have a register source",
+      "method": "inventory search of all six source documents",
+      "result": "UNRESOLVED \u2014 no source exists; three options recorded, TD decision requested (TD-3)"
+    },
+    {
+      "claim": "A1-R1's RouteId format cannot address 4 of 8 traversal parents",
+      "method": "cross-reference the 8 traversal-capable locations against the 46 scene rows' host-location column",
+      "result": "verified: CH01-TRV-001..004 host zero scenes; a SceneId-bearing format would require inventing canon"
+    },
+    {
+      "claim": "A1-R1's five capability names are adopted verbatim",
+      "method": "test_contract_review.TestCapabilityVocabulary",
+      "result": "verified: all five named, no sixth invented"
+    },
+    {
+      "claim": "the original submission's 42 acceptance tests are unique",
+      "method": "test_contract_review.TestAcceptanceInventory",
+      "result": "verified: 42 unique IDs, split 10 L0 / 11 L1 / 21 L2"
+    },
+    {
+      "claim": "the three-vs-four L0 defect is resolved",
+      "method": "enumeration of data availability per L0 test",
+      "result": "corrected: 2 of 10 pass, 1 partial, 7 blocked; the 'four' sentence was unsupported and is recorded as wrong"
+    },
+    {
+      "claim": "NPC prose parsing is correct",
+      "method": "38-case parser suite; 2 new silent-corruption bugs found and fixed this milestone (range summed as 16, abstract number counted as a person)",
+      "result": "verified; unresolved prose now REFUSED, never invented"
+    },
+    {
+      "claim": "every Chapter 1 scene whose cost depends on an NPC count now has register prose",
+      "method": "population_budget over the verbatim v1.9 capture",
+      "result": "verified: 0 of 14 CROWD scenes on a policy default"
+    },
+    {
+      "claim": "the ambient-scene NPC default no longer moves the estimate",
+      "method": "sensitivity sweep across expected_npcs 1..5",
+      "result": "verified: elasticity 0.000 (was +0.88)"
+    },
+    {
+      "claim": "the remaining uncertainty is bounded by the register",
+      "method": "parse_npc_band over the register's own wording",
+      "result": "PARTIAL: band 38.38-42.37 cost units and still OPEN at CH01-SCN-014, which states no number"
+    },
+    {
+      "claim": "population estimate sensitivity to policy assumptions",
+      "method": "Tools/world/sensitivity.py, 4 sweeps + 5 scenarios, before/after recomputed from both fixtures",
+      "result": "only 4.6% of point cost still rests on policy defaults, down from 75%; spread narrowed from 2.5x to 1.4x. The remaining sensitivity is the crowd concurrency ratio and cost unit, which no register can resolve"
+    },
+    {
+      "claim": "the previous W-M2.1 model is preserved and reproducible",
+      "method": "abridged fixture retained; sensitivity --previous recomputes 23.38/25.38/36.58/47.77/58.97 exactly",
+      "result": "verified"
+    },
+    {
+      "claim": "population budget reflects real engine cost",
+      "method": "none \u2014 cost units are relative and unmeasured",
+      "result": "UNVERIFIED \u2014 engineering assumption"
+    },
+    {
+      "claim": "streaming / Mass / AI / navigation work",
+      "method": "none",
+      "result": "NOT TESTED \u2014 no engine"
+    }
+  ]
+}
