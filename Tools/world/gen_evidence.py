@@ -134,24 +134,30 @@ def main() -> int:
         "review_c05_s4_1_addendum_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_review_a1c05_s4_1_addendum.py"]),
+        "review_c05_s4_2_document_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_review_a1c05_s4_2.py"]),
     }
 
     payload = {
         "meta": {
-            "milestone": "W-M2.14 — Addendum A1 to the A1-C05-S4.1 reassessment: closure "
-                         "taxonomy. W-M2.13 used three conflicting closure vocabularies; "
-                         "sections 6.1/6.3 and 7 called D-1a/D-1b/D-6b non-gating while "
-                         "section 9 listed all three as PASS conditions. Reconciled onto one "
-                         "four-class taxonomy: D-4 + DV-22-scope PASS-BLOCKING; D-1a + C4c-N1 "
-                         "PASS-CONDITION; D-1b + D-6b ADVISORY; D-6a RESOLVED. D-1b "
-                         "RECLASSIFIED down - TN-C-14 already defines the consumer inline, so "
-                         "both readings have identical compliance sets. D-1a UPGRADED - my "
-                         "own finding was understated: 'at least once per frame' constrains a "
-                         "count not an interval and permits a 1.98-frame gap, so the claimed "
-                         "one-frame bound does not follow and T-C05-64 cannot pass as "
-                         "written. D-4, C4c-N1 and D-6a findings unchanged. Agent 3's "
-                         "independent S4.1 review (34b035b) exists and targets the same blob; "
-                         "kept independent, not used as evidence",
+            "milestone": "W-M2.15 — independent reassessment of A1-C05-S4.2 v4.2, blob "
+                         "7d03e1df at a788f95, path "
+                         "docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_2.md. Outcome: PASS WITH "
+                         "CONDITIONS. All 17 prior findings and conditions reassessed: 15 "
+                         "closed and verified against the text, 2 closed with a recorded "
+                         "caveat, 0 still open. D-4 audio closed document-wide; D-1a bound "
+                         "now DERIVED and unbroken in 400,000 brute-forced schedules; "
+                         "C4c-N1 corrected as specified with PO-3 retained; D-6a-i satisfied "
+                         "by DV-24 failing on S4.0; D-6b tallies machine-derived and matching "
+                         "my independent parse. TWO NEW DEFECTS, both non-normative: N-1 "
+                         "DV-22's whole-document scan is a keyword allowlist with a "
+                         "demonstrated false negative; N-2 two incompatible documents both "
+                         "declare TDD-A1-C05-SUCCESSOR-004.2 on two branches. Neither "
+                         "requires a normative change, so PASS WITH CONDITIONS rather than "
+                         "TARGETED REVISION. Agent 1's shipped validator independently "
+                         "reproduces 27/27 on the reviewed blob and discriminates on "
+                         "S4.1/S4.0/S3",
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -702,6 +708,113 @@ def main() -> int:
                        "DESIGN_ONLY; no MEAD selected; no signature, freeze, merge or M0 "
                        "authorisation. The 47 addendum tests prove nothing about contract "
                        "behaviour."},
+
+            # ---- W-M2.15: independent reassessment of A1-C05-S4.2 v4.2 ----
+            {"claim": "the reviewed document is the exact published S4.2 blob",
+             "method": "git rev-parse a788f953256d208f3eb1310f3897924d007179b1:docs/"
+                       "AGENT1_C05_CONTRACT_SUCCESSOR_V4_2.md, before reading; compare against "
+                       "the instruction's blob and against the first draft 86f56af",
+             "result": "verified: resolves to 7d03e1df837493305831962f43882a1cd3496143, exactly "
+                       "the requested blob, 1265 lines. The first S4.2 commit 1647942 published "
+                       "blob 86f56af; a788f95 corrected three sentences (3 insertions, 3 "
+                       "deletions) - a typo, my review's line count 595->594, and a claim "
+                       "about which blob DV-24 fails on. No clause, count or test changed."},
+            {"claim": "D-4 audio ownership is resolved in S4.2",
+             "method": "classify every Agent 1 + audio co-occurrence in the whole document, "
+                       "then check the section 8 preamble reads correctly",
+             "result": "RESOLVED. The preamble now reads 'Agent 1 for defence selection, dodge, "
+                       "camera response and framing ... Agent 1 has no C-05 audio "
+                       "responsibility'. 15 co-occurrence windows classified; 0 are unmarked "
+                       "positive assignments - all are negations, marked corrections, or the "
+                       "corrected text itself. The owner is named positively in three registers, "
+                       "which is better than the two-word deletion requested."},
+            {"claim": "DV-22's widening actually closes D-22-scope",
+             "method": "run Agent 1's shipped docs/validation/dv_c05.py on S4.2, S4.1, S4.0 and "
+                       "S3; then read its predicate and inject mutations to test it",
+             "result": "PARTIALLY. DV-22 correctly FAILS on S4.1 ('section 8 preamble clean "
+                       "False') and on S3 (2 offenders including row 5's old 'camera and audio "
+                       "cues'), and PASSES on S4.2 - the discrimination S4.1's DV-22 could not "
+                       "produce. BUT the whole-document scan is a keyword allowlist: the S4.1 "
+                       "preamble is exempted because the line contains the string 'D-4', so the "
+                       "scan reports 0 offenders while the defect is present. Injecting 'D-4 "
+                       "note: Agent 1 owns the camera and audio cues' yields 0 detections; the "
+                       "same line without the prefix yields 1. New defect N-1."},
+            {"claim": "TN-C-14's one-frame staleness bound now follows from its rules (D-1a)",
+             "method": "read the five rules; then brute-force 400,000 legal pull schedules "
+                       "maximising the interval from a missed revision's publication to the "
+                       "next successful refresh consistent with rules (ii) and (iii); and check "
+                       "analytically whether rule (iii) eliminates S4.1's 1.98-frame schedule",
+             "result": "RESOLVED. Rule (ii) requires an observation whose AxisNow does not "
+                       "precede the frame of use; rule (iii) caps successive refreshes at one "
+                       "frame on the shared axis. Max gap found 0.999772 frames, always <1, "
+                       "approaching 1 - matching the text's 'approaches but never reaches one "
+                       "frame'. S4.1's 0.99->1.99 schedule is now illegal: the missed revision "
+                       "must be published after the observation, so the worst gap is <1. The "
+                       "bound is derived, not asserted."},
+            {"claim": "the D-1b consumer classification is resolved",
+             "method": "read TN-C-14(i) and check whether the definition is now positive and "
+                       "testable rather than an inline parenthetical",
+             "result": "RESOLVED, and better than my withdrawn ask. Rule (i) attaches to the "
+                       "CALL SITE and names the concrete read: 'every call site that reads "
+                       "RemainingLocalSeconds, or derives a remaining time from it'. This does "
+                       "not contradict my addendum's ADVISORY downgrade - ADVISORY means not "
+                       "required, not forbidden - and it improves testability at no cost. "
+                       "S4.2 answered W-M2.13 (eee9401) and did not see my addendum (e434dbe, "
+                       "18:33 vs 18:36), so it adopted an ask I had withdrawn. No harm; "
+                       "recorded as advisory N-3."},
+            {"claim": "C4c-N1 PO-3 rationale is corrected",
+             "method": "read section 3.6(b) and check the premise against PO-5's mid-frame pull "
+                       "guarantee; confirm PO-3 is retained; search for any surviving assertion "
+                       "of the falsified premise",
+             "result": "RESOLVED, near-verbatim to my specified fix. Section 3.6(b) now states "
+                       "the order IS observable through a mid-frame pull once PO-5 is in force, "
+                       "explicitly records that S4.1 said the opposite and that the premise was "
+                       "falsified, and retains PO-3 with the reason it is still needed. The two "
+                       "surviving 'not observable' strings are a quotation inside the C4c-N1 "
+                       "disposition and an unrelated RS-3 statement - neither asserts it."},
+            {"claim": "D-6a-i is satisfied by DV-24, and D-6b's tallies are corrected",
+             "method": "re-parse the 7th cell of all 43 obligation rows; re-implement DV-11's "
+                       "allowed-row rule; verify DV-24's failure claim against the S4.0 blob; "
+                       "compare section 5.4's declared tallies against the re-derivation",
+             "result": "BOTH RESOLVED. DV-24 exists, is the instrument I specified, and its "
+                       "FAIL-on-S4.0 claim is true: S4.0's section 1 row 6 says '7 declared, 6 "
+                       "observed' while section 5.4 and 13.1 say 5 - one inconsistent site among "
+                       "four. Section 5.4 now declares 23 cells (19 TN-P, 4 TN-R) and 12 cells, "
+                       "matching my independent parse exactly, with 7 declared / 5 observed / 43 "
+                       "cells / 0 failures."},
+            {"claim": "S4.2 preserves the findings it claims to preserve",
+             "method": "byte-compare TN-P-18/19, TN-C-10/11/15, TN-A-02/03 and PO-5 against "
+                       "S4.1 blob d54e194a; re-derive the structural totals",
+             "result": "verified identical: all seven obligation rows and PO-5 are byte-for-"
+                       "byte the S4.1 text. Totals reconcile: 43 obligations (19/15/6/3), 67 "
+                       "cases over 18 suites, ids 1-67 complete, DV-1..DV-27 contiguous with "
+                       "24-27 new. No carried finding reopened."},
+            {"claim": "S4.2 introduced no other defect",
+             "method": "four-category sweep: structure and counts; instrument behaviour on four "
+                       "blobs; clause preservation; live placeholder tokens",
+             "result": "no other defect. The reviewed blob contains no live placeholder - "
+                       "S41_COMMIT and S41_BLOB occur only inside DV-27's own quoted failure "
+                       "output at lines 1081 and 1085, as evidence rather than fields. S4.2 "
+                       "solves the S4.1 placeholder trap correctly by carrying its own hash in "
+                       "a separate provenance register instead of in itself."},
+            {"claim": "there is a single unambiguous artifact answering to A1-C05-S4.2",
+             "method": "git ls-remote all heads; git log --all on the V4_2.md path; compare the "
+                       "Response ID and the TN-C-14 measure on each copy",
+             "result": "DEFECT N-2. Two different documents both declare Response ID "
+                       "TDD-A1-C05-SUCCESSOR-004.2: the reviewed one (arena/3bc206a0-tdd, blob "
+                       "7d03e1df, 1265 lines) and another on arena/c64fc525-tdd at c800bf0 "
+                       "(blob 61ef03b4, 1237 lines, 360 changed lines). They encode different "
+                       "contracts - one bounds one frame on the shared axis, the other 1/60 s "
+                       "of monotonic elapsed time. Not reconcilable by merge. I do not "
+                       "adjudicate which is authoritative and have not reviewed the other."},
+            {"claim": "C-05, U-07 or any acceptance case is closed by this reassessment",
+             "method": "none - document and arithmetic checks only; ran the shipped validator "
+                       "on four blobs",
+             "result": "NOT CLAIMED. C-05 and U-07 remain open; 0 of 67 acceptance cases "
+                       "executed, all PROPOSED / NOT RUN; DESIGN_ONLY; no MEAD selected; no "
+                       "signature, freeze, merge or M0 authorisation. Agent 1's 27/27 and my "
+                       "70 document tests prove nothing about contract behaviour - S4.2 says "
+                       "this itself in section 13.4, and I verified that statement is accurate."},
         ],
     }
 
