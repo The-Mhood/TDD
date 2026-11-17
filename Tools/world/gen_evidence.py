@@ -116,13 +116,16 @@ def main() -> int:
         "review_r4_document_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_contract_review_r4.py"]),
+        "review_c05_3_document_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_review_a1_c05_3.py"]),
     }
 
     payload = {
         "meta": {
-            "milestone": "W-M2.8 — formal review of Agent 1 revision A1-R4 "
-                         "(3 of 7 contracts signed; C-05 arithmetic defect verified "
-                         "fixed; 4 broker gaps found)",
+            "milestone": "W-M2.9 — independent review of Agent 1's C-05-3 telegraph "
+                         "authority response (central custody NOT ESTABLISHED; 6 blocking "
+                         "defects; own prior citation error withdrawn)",
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -241,6 +244,25 @@ def main() -> int:
              "result": "verified: zero Status.* matches; line 517 reads 'no agent "
                        "introduces a tag namespace'; Dead exists only as an enemy AI "
                        "StateTree state (line 615)"},
+            {"claim": "A1-R4 cites MEAD-A line 506, not 505 - my prior review was wrong",
+             "method": "git show the exact A1-R4 blob 2cc548fa and count occurrences of 505",
+             "result": "0 occurrences of 505; the text says (506). My A1-R4 review section "
+                       "7.2 erred by verifying the MEAD-A line and not grepping the citing "
+                       "document. Withdrawn in this review section 0.3 with root cause."},
+            {"claim": "C2's Core-owned surface exists in only one of three candidate MEADs",
+             "method": "grep for TDDCore in MEAD-A, MEAD-B, MEAD-C",
+             "result": "MEAD-C only (lines 227/228/267). MEAD-A has no TDDCore module at all "
+                       "(section 4.2 lists TDDRuntime/{Core,Character,Combat,...}); MEAD-B has "
+                       "zero occurrences. So C2 and C9 are MEAD-C-only conditions."},
+            {"claim": "Coalescing is never prohibited by a normative clause in A1's response",
+             "method": "grep -i coalesc across the response; classify each hit",
+             "result": "3 hits: section 5.7 commentary, section 6.2 commentary, and one "
+                       "section 10.2 test description. No condition, no P-obligation and no "
+                       "section 7.2 clause forbids it."},
+            {"claim": "Six of twelve conditions and eight of twelve P obligations have no test",
+             "method": "regex every C1-C12 and P1-P12 against the section 10.2 suite rows",
+             "result": "uncovered conditions C1,C2,C8,C10,C11,C12; uncovered obligations "
+                       "P1,P2,P3,P7,P9,P10,P11,P12. Case counts sum to 30, matching A1's claim."},
             {"claim": "A1-R3 3.3(a)'s inverted conversion is corrected in A1-R4",
              "method": "re-derive d(local)/d(axis) from A1-R4 2.1, round-trip at 4 rates",
              "result": "verified: local=axis*rate (multiply), axis=local/rate (divide), "
