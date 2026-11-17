@@ -376,13 +376,37 @@ pre_ok = bool(preamble8) and 'no C-05 audio responsibility' in preamble8[0] and 
 # never which finding numbers it happens to contain. What decides *ownership* here is
 # grammar and position, not a list of permitted phrases.
 AGENT_REF = re.compile(r'agent[-\s]?([12])\b', re.I)
-# A negation covers an audio mention only if nothing separates them: no comma, no
-# clause separator and no coordinating conjunction. 'owns no camera, but owns audio
-# cues' must not read as a negation of the audio cue.
-NEG_BEFORE = re.compile(r'\b(?:no|zero|none\s+of\s+the)\b'
-                        r'(?:(?!\b(?:and|but|yet|while|although|whereas)\b)[^.;|,]){0,28}?\baudio\b', re.I)
-NEG_AFTER = re.compile(r'\baudio\b[^.;|]{0,40}?\b(?:is|are|was|were)\s+not\s+'
-                       r'(?:owned|claimed|carried|held|assigned|a\s+responsibility)\b', re.I)
+# A negation must deny ownership or responsibility, not merely put 'no' before 'audio'.
+# S4.3.1 accepted any 'no ... audio' within 28 characters, so 'has no problem owning audio
+# cues' and 'has no objection to owning audio cues' read as denials when they are the
+# opposite. The constructions below are the bounded set of grammatical *denials*; each has
+# to contain the audio mention it denies, and anything outside the set is a positive
+# statement. This list is not an exemption list: failing to match it makes a mention an
+# offender, it does not make a line exempt.
+_DENIAL_NOUN = r'(?:responsibility|ownership|authority|duty|obligation|mandate)'
+_MODS = r'(?:(?:C-05|contract|cue|cues|of|any|the)\s+){0,2}?'
+NEG_BEFORE = (
+    # 'owns no audio cue', 'has no C-05 audio responsibility', 'carries no audio duty'
+    re.compile(r'\b(?:owns?|owned|owning|has|have|had|holds?|carries|carry|claims?|exercises?)\s+no\s+'
+               + _MODS + r'audio\b', re.I),
+    # 'no audio responsibility', 'no C-05 audio ownership'
+    re.compile(r'\bno\s+' + _MODS + r'audio\s+' + _DENIAL_NOUN + r'\b', re.I),
+    # 'no responsibility for audio cue selection', 'no ownership of audio'
+    re.compile(r'\bno\s+' + _DENIAL_NOUN + r'\s+(?:for|over|of)\s+' + _MODS + r'audio\b', re.I),
+    # 'is not responsible for audio', 'is not the owner of audio'
+    re.compile(r'\b(?:is|are|was|were)\s+not\s+(?:responsible|the\s+owner|an\s+owner)\s+(?:for|of)\s+'
+               + _MODS + r'audio\b', re.I),
+    # 'does not own audio', 'do not own any audio'
+    re.compile(r'\b(?:does|do|did)\s+not\s+own\s+' + _MODS + r'audio\b', re.I),
+    # 'owns none of the audio'
+    re.compile(r'\bowns?\s+none\s+of\s+the\s+audio\b', re.I),
+)
+# The reversed form: the mention comes first and the denial follows it.
+NEG_AFTER = (
+    re.compile(r'\baudio\b[^.;|]{0,40}?\b(?:is|are|was|were)\s+not\s+'
+               r'(?:owned|claimed|carried|held|assigned|a\s+responsibility)\b', re.I),
+    re.compile(r'\baudio\b[^.;|]{0,30}?\b(?:is|are)\s+(?:no|not\s+a)\s+' + _DENIAL_NOUN + r'\b', re.I),
+)
 SEGMENT = re.compile(r'[.;|]')
 
 
@@ -391,10 +415,15 @@ def audio_mentions(ln):
 
 
 def negated_mention(ln, pos):
-    """True iff a negative construction covers *this* mention and no other one."""
-    if any(m.start() <= pos <= m.end() for m in NEG_BEFORE.finditer(ln)):
-        return True
-    return any(m.start() <= pos <= m.end() for m in NEG_AFTER.finditer(ln))
+    """True iff a bounded denial construction covers *this* mention and no other one.
+
+    'Covers' is positional: the construction's own text must span the mention, so a denial
+    of one thing can never be borrowed by another mention on the same line.
+    """
+    for pattern in NEG_BEFORE + NEG_AFTER:
+        if any(m.start() <= pos <= m.end() for m in pattern.finditer(ln)):
+            return True
+    return False
 
 
 def segment_bounds(ln, pos):
@@ -546,7 +575,7 @@ check('DV-26', (not stale) and observ and both,
       f"PO-3 and PO-5 both retained {both}")
 
 # ---------------------------------------------------------------- DV-27 provenance, no placeholders
-REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_1_PROVENANCE.md'
+REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_2_PROVENANCE.md'
 DECISION = 'docs/DECISION_C05_SUCCESSOR_IDENTITY_004_2_V1.md'
 # fenced code blocks are evidence transcripts, not prose claims: strip them first
 prose = re.sub(r'```.*?```', '', s, flags=re.S)

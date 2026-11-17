@@ -21,10 +21,11 @@ import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 VALIDATOR = ROOT / 'docs/validation/dv_c05.py'
-DOC = sorted(ROOT.glob('docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_1.md'))[0] \
-    if (ROOT / 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_1.md').exists() \
-    else ROOT / 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3.md'
+DOC = next((ROOT / f'docs/AGENT1_C05_CONTRACT_SUCCESSOR_{v}.md'
+             for v in ('V4_3_2', 'V4_3_1', 'V4_3') if (ROOT / f'docs/AGENT1_C05_CONTRACT_SUCCESSOR_{v}.md').exists()),
+            ROOT / 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3.md')
 PREDECESSORS = {
+    'S4.3.1': ROOT / 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_1.md',
     'S4.3': ROOT / 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3.md',
     'S4.2': ROOT / 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_2.md',
     'S4.1': ROOT / 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md',
@@ -148,6 +149,35 @@ case('TD-4c the same text inside a [QUOTED] review-disposition table', 'DV-22', 
 case('TD-4d a [QUOTED] marker pasted into live §8/§9 text does not exempt it', 'DV-22', 'FAIL',
      inject('| a [QUOTED] | b |\n\n' + HIST))
 
+# ------------------- 3b. S4.3.2: 'no <noun> audio' is not a denial of audio ownership
+print('\n== S4.3.2 — only bounded denials count as negations (TD cases) ==')
+case('TD-6  "has no problem owning audio cues"', 'DV-22', 'FAIL',
+     inject('Agent 1 has no problem owning audio cues.'),
+     'S4.3.1 read any "no ... audio" as a denial')
+case('TD-7  "has no objection to owning audio cues"', 'DV-22', 'FAIL',
+     inject('Agent 1 has no objection to owning audio cues.'))
+case('TD-8  "has no restriction on owning audio cues"', 'DV-22', 'FAIL',
+     inject('Agent 1 has no restriction on owning audio cues.'))
+case('TD-9  "has no difficulty taking responsibility for audio cues"', 'DV-22', 'FAIL',
+     inject('Agent 1 has no difficulty taking responsibility for audio cues.'))
+case('TD-10 "no issue with owning" — same class, different noun', 'DV-22', 'FAIL',
+     inject('Agent 1 has no issue with owning audio cues.'))
+case('TD-11 a positive assertion following "no objection to owning"', 'DV-22', 'FAIL',
+     inject('Agent 1 has no objection to owning audio cues, and Agent 1 owns audio cue selection.'))
+case('TD-12 "has no C-05 audio responsibility" still passes', 'DV-22', 'PASS',
+     inject('Agent 1 has no C-05 audio responsibility.'))
+case('TD-13 "owns no audio cues" still passes', 'DV-22', 'PASS', inject('Agent 1 owns no audio cues.'))
+case('TD-14 "has no responsibility for audio cue selection" still passes', 'DV-22', 'PASS',
+     inject('Agent 1 has no responsibility for audio cue selection.'))
+case('TD-15 "does not own any audio cues" passes (verbal denial)', 'DV-22', 'PASS',
+     inject('Agent 1 does not own any audio cues.'))
+case('TD-16 "is not responsible for audio cue selection" passes', 'DV-22', 'PASS',
+     inject('Agent 1 is not responsible for audio cue selection.'))
+case('TD-17 "has no ownership of audio cue selection" passes', 'DV-22', 'PASS',
+     inject('Agent 1 has no ownership of audio cue selection.'))
+case('TD-18 the same phrase inside an authorised historical block passes', 'DV-22', 'PASS',
+     inject_marked('Reviewer wrote: Agent 1 has no objection to owning audio cues.'))
+
 # ------------------------------------------------------- 4. N-1: the escape hatch is closed
 print('\n== N-1 — DV-22, Agent 2\'s demonstrated injection ==')
 INJ = 'Agent 1 owns the camera and audio cues for the player.'
@@ -176,7 +206,7 @@ case('a wrong historical count inside a marked block is exempt', 'DV-24', 'PASS'
 
 # ------------------------------------------------------------- 6. the predecessors still fail
 print('\n== predecessors — the checks still fail where the defects were ==')
-for label, check, expect in (('S4.3', 'DV-22', 'PASS'), ('S4.2', 'DV-22', 'FAIL'),
+for label, check, expect in (('S4.3.1', 'DV-22', 'PASS'), ('S4.3', 'DV-22', 'PASS'), ('S4.2', 'DV-22', 'FAIL'),
                              ('S4.1', 'DV-22', 'FAIL'), ('S3', 'DV-22', 'FAIL'),
                              ('S4.0', 'DV-24', 'FAIL')):
     path = PREDECESSORS[label]
