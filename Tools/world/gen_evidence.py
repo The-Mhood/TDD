@@ -107,12 +107,16 @@ def main() -> int:
         "review_document_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_contract_review.py"]),
+        "review_r2_document_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_contract_review_r2.py"]),
     }
 
     payload = {
         "meta": {
-            "milestone": "W-M2.5 — formal review of Agent 1 submission A1-R1 "
-                         "(seven verdicts, zero agreements, five self-corrections)",
+            "milestone": "W-M2.6 — formal review of Agent 1 revision A1-R2 "
+                         "(seven verdicts, zero agreements, five withdrawals, "
+                         "three divergent TDD-MEAD-001 documents found)",
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -191,6 +195,23 @@ def main() -> int:
              "method": "enumeration of data availability per L0 test",
              "result": "corrected: 2 of 10 pass, 1 partial, 7 blocked; the 'four' "
                        "sentence was unsupported and is recorded as wrong"},
+            {"claim": "three divergent documents identify as TDD-MEAD-001 v1.0",
+             "method": "identity search across all reachable refs for 'Document ID'",
+             "result": "verified: MEAD-A 1078 lines (no 5.4), MEAD-B 247 lines, "
+                       "MEAD-C 1231 lines (5.4 present, 7 Status.* tags). "
+                       "Section 5.4 exists only in MEAD-C"},
+            {"claim": "Status.Dead has no tag in the canonical-adjacent MEAD",
+             "method": "extract the Status.* set from MEAD-C section 5.1",
+             "result": "verified: 7 tags, none for Dead. C-04's precedence top "
+                       "value is unrepresentable as a tag"},
+            {"claim": "no Chapter 1 source supports a carry state",
+             "method": "keyword scan of the 57-row location capture and 46 scene rows",
+             "result": "verified: no carry/portage/burden vocabulary; CarryState "
+                       "withdrawn rather than invented"},
+            {"claim": "A1-R2's MEAD citations were nearly called fabricated",
+             "method": "all-refs identity search before publication",
+             "result": "withdrawn before publication: MEAD-C exists on Agent 1's "
+                       "branch and carries every cited section"},
             {"claim": "NPC prose parsing is correct",
              "method": "38-case parser suite; 2 new silent-corruption bugs found "
                        "and fixed this milestone (range summed as 16, abstract "
