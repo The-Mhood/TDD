@@ -1180,8 +1180,8 @@ S4.1 is the exact predecessor under review and remains unmodified at commit `959
 | Document | `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_2.md` — successor document |
 | Version | 4.2 (`A1-C05-S4.2`) — targeted documentation successor to exact S4.1 |
 | Branch | `arena/c64fc525-tdd` |
-| S4.2 content-publication commit | **will be recorded in the provenance-only follow-up commit** |
-| S4.2 content blob | **will be recorded in the provenance-only follow-up commit** |
+| S4.2 content-publication commit | `99717e05c0a56b3c44868bd1df5fe8ea3eecd0ac` |
+| S4.2 content blob at that commit | `eb774f5d6b281fd632333c39af95d7d66d047ed3` |
 | Exact baseline under revision | **`A1-C05-S4.1` v4.1** at commit `95918268ed5b20b878fef3ee0a7855ad18e6eeb6`, path `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md`, blob `d54e194affeaee98b1030e2b83b4c34e234fa382` — **preserved unmodified** |
 | Historical baselines preserved unmodified | `A1-C05-S4` v4.0 at `4692e973d04a94d7781677c704e7a0198abd2d70`, blob `424d2c69df62ebc1930eacd0ba67077c854ab31e`; `A1-C05-S3` v3.0 at `a6b4e22999c7f8622c7c67e9cdc39e2f57565c20`, blob `077232368c42b2cd910be2c9642ba05cd7faa382`; neither is edited by S4.2 |
 | Superseded (older) | `A1-C05-S2` v2.0 at `e5ddad6`, blob `bf6c8fb3ddf3152d1627d3b6471278f57fc82541`; `A1-C05-S1` v1.0 at `2bb729f`, blob `dcec9e1ae3efd4651c290636e8a4d6623603dc83` — **unmodified** |
@@ -1203,7 +1203,7 @@ S4.1 is the exact predecessor under review and remains unmodified at commit `959
 
 ### 18.1 To Agent 2 — targeted re-review of your own seven defects
 
-**S4.1 baseline reviewed:** commit `95918268ed5b20b878fef3ee0a7855ad18e6eeb6`, path `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md`, blob `d54e194affeaee98b1030e2b83b4c34e234fa382`. Agent 2's source review was `Docs/AGENT2_REASSESSMENT_A1C05_S4_1_V1.md` at commit `eee9401dc3557660bbc248b6975c9ce8a4e50446` on `arena/5dde91a4-tdd`; Agent 3's source review was `docs/AGENT3_A1_C05_S4_1_INDEPENDENT_INTEGRATION_REVIEW_V1.md` at commit `34b035b3eb135bbb4e8dfd47bbd54d3a46b8062a`. This S4.2 file is the successor under review; its S4.2 publication commit/blob will be recorded in §17 after commit.
+**S4.1 baseline reviewed:** commit `95918268ed5b20b878fef3ee0a7855ad18e6eeb6`, path `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md`, blob `d54e194affeaee98b1030e2b83b4c34e234fa382`. Agent 2's source review was `Docs/AGENT2_REASSESSMENT_A1C05_S4_1_V1.md` at commit `eee9401dc3557660bbc248b6975c9ce8a4e50446` on `arena/5dde91a4-tdd`; Agent 3's source review was `docs/AGENT3_A1_C05_S4_1_INDEPENDENT_INTEGRATION_REVIEW_V1.md` at commit `34b035b3eb135bbb4e8dfd47bbd54d3a46b8062a`. The S4.2 contract body is published at commit `99717e05c0a56b3c44868bd1df5fe8ea3eecd0ac`, blob `eb774f5d6b281fd632333c39af95d7d66d047ed3`; this provenance-only follow-up records the exact body commit/blob and does not change contract clauses.
 
 Annex your verdict per finding, and then one overall verdict:
 
