@@ -131,20 +131,27 @@ def main() -> int:
         "review_c05_s4_1_document_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_review_a1c05_s4_1.py"]),
+        "review_c05_s4_1_addendum_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_review_a1c05_s4_1_addendum.py"]),
     }
 
     payload = {
         "meta": {
-            "milestone": "W-M2.13 — independent reassessment of A1-C05-S4.1 v4.1, blob "
-                         "d54e194a, path docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md. "
-                         "10 AGREE, 3 AGREE WITH CONDITIONS, 1 DISAGREE over 7 defects and "
-                         "7 conditions. Outcome: TARGETED REVISION. D-6a (DV-11 count) is "
-                         "RESOLVED and verified twice; D-4 audio ownership is still present "
-                         "in the section 8 preamble and DV-22 still reports PASS on it; "
-                         "C4c-N1 (PO-3 reason b falsified by PO-5) confirmed unchanged. "
-                         "CORRECTION: the W-M2.12 evidence entry claiming no V4_1 exists on "
-                         "any remote head was FALSE WHEN PUBLISHED - S4.1 was pushed 4m35s "
-                         "before that commit. Withdrawn in the review section 1",
+            "milestone": "W-M2.14 — Addendum A1 to the A1-C05-S4.1 reassessment: closure "
+                         "taxonomy. W-M2.13 used three conflicting closure vocabularies; "
+                         "sections 6.1/6.3 and 7 called D-1a/D-1b/D-6b non-gating while "
+                         "section 9 listed all three as PASS conditions. Reconciled onto one "
+                         "four-class taxonomy: D-4 + DV-22-scope PASS-BLOCKING; D-1a + C4c-N1 "
+                         "PASS-CONDITION; D-1b + D-6b ADVISORY; D-6a RESOLVED. D-1b "
+                         "RECLASSIFIED down - TN-C-14 already defines the consumer inline, so "
+                         "both readings have identical compliance sets. D-1a UPGRADED - my "
+                         "own finding was understated: 'at least once per frame' constrains a "
+                         "count not an interval and permits a 1.98-frame gap, so the claimed "
+                         "one-frame bound does not follow and T-C05-64 cannot pass as "
+                         "written. D-4, C4c-N1 and D-6a findings unchanged. Agent 3's "
+                         "independent S4.1 review (34b035b) exists and targets the same blob; "
+                         "kept independent, not used as evidence",
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -620,6 +627,81 @@ def main() -> int:
                        "PROPOSED / NOT RUN; DESIGN_ONLY; no MEAD selected; B-11, B-12, B-13 "
                        "and B-15 all still open. The 47 document and arithmetic checks in "
                        "this milestone prove nothing about contract behaviour."},
+
+            # ---- W-M2.14: Addendum A1, closure taxonomy ----
+            {"claim": "W-M2.13's sections 6, 7 and 9 disagreed on which findings gate PASS",
+             "method": "compare the required-item lists in section 9 against the gating "
+                       "statements in sections 6.1, 6.3 and 7's Blocks? column",
+             "result": "CONTRADICTION CONFIRMED. Section 6.1 says D-1a/D-1b are 'neither "
+                       "gating'; section 6.3 says D-6b is 'cosmetic, non-gating'; section 7 "
+                       "marks all three 'No (minor)'/'No (cosmetic)'; section 9 lists "
+                       "D-1a/D-1b/D-6b among what would move the review to PASS. Corrected "
+                       "in the addendum sections 1 and 3."},
+            {"claim": "D-1b is a normative specification gap, as W-M2.13 section 7 said",
+             "method": "read TN-C-14 cell 2 verbatim rather than my own summary of it; then "
+                       "trace the compliance set of both candidate readings",
+             "result": "OVER-CLASSIFIED, now reclassified ADVISORY. The clause defines the "
+                       "consumer inline: 'A consumer whose behaviour depends on remaining "
+                       "time - it acts on TN-C-10's output'. TN-C-10's output is the aged "
+                       "remaining time R(t)=max(0,R0-(Axis(t)-AxisNow)*ProducerRate). A "
+                       "consumer that does not act on it has nothing to be stale about, so "
+                       "both readings require the same pulls and forbid the same omissions. "
+                       "Identical compliance sets means no normative gap. My call-site "
+                       "recommendation is withdrawn."},
+            {"claim": "TN-C-14's one-frame staleness bound follows from 'at least once per "
+                      "frame', as TN-C-14, section 1 row 2, T-C05-64 and section 14.2 all state",
+             "method": "read TN-C-14 cell 5 (the requirement) against its cell 4 (the claimed "
+                       "guarantee); construct the worst-case legal pull schedule and compute "
+                       "the largest achievable gap between consecutive pulls",
+             "result": "DOES NOT FOLLOW - W-M2.13's D-1a was understated. 'At least once per "
+                       "frame' constrains a count, not an interval. A schedule pulling at "
+                       "0.99, 1.99, 2.99 satisfies it in every frame while leaving a "
+                       "1.98-frame gap between pulls. So 'bounded by one frame, by "
+                       "construction' is false, and T-C05-64's assertion of 'at most one "
+                       "frame' cannot pass against the obligation as written. Upgraded from "
+                       "minor/non-gating to PASS-CONDITION. W-M2.13's own 'not a same-frame "
+                       "guarantee' reasoning is also withdrawn: given PO-5 it is empty."},
+            {"claim": "the corrected taxonomy is internally consistent",
+             "method": "check that each finding appears in exactly one class, that the PASS "
+                       "list matches the non-advisory classes, and that the advisory list "
+                       "matches the ADVISORY class",
+             "result": "verified: PASS-BLOCKING = {D-4, D-22-scope}; PASS-CONDITION = {D-1a, "
+                       "C4c-N1}; ADVISORY = {D-1b, D-6b}; RESOLVED = {D-6a}. No finding is "
+                       "in two classes; neither advisory item appears in the PASS list; both "
+                       "PASS conditions and both blocking items appear in it."},
+            {"claim": "D-4, C4c-N1 and D-6a are unchanged by this addendum",
+             "method": "re-read section 8's preamble in blob d54e194a; check the addendum "
+                       "states each as unchanged; confirm the reviewed blob still resolves",
+             "result": "verified unchanged: section 8's preamble still reads 'Agent 1 for "
+                       "defence, dodge, camera and audio'; C4c-N1 is stated as unchanged with "
+                       "section 6.2 standing; D-6a remains RESOLVED. "
+                       "95918268:docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md still resolves "
+                       "to d54e194a."},
+            {"claim": "W-M2.13 is preserved unmodified and the addendum is separately "
+                      "identifiable",
+             "method": "git diff eee9401 against the review path; compare the two artifact "
+                       "paths and IDs",
+             "result": "verified: zero diff on Docs/AGENT2_REASSESSMENT_A1C05_S4_1_V1.md "
+                       "since eee9401. The addendum is "
+                       "Docs/AGENT2_REASSESSMENT_A1C05_S4_1_ADDENDUM_A1.md with its own ID "
+                       "TDD-A2-REASSESS-A1C05-S4-1-ADDENDUM-A1, declaring what it amends."},
+            {"claim": "Agent 3's independent review of the exact S4.1 blob is outstanding",
+             "method": "git ls-remote all heads, then git log 1eb613f3..origin/a3branch and "
+                       "grep the artifact for the S4.1 blob and commit hashes",
+             "result": "NO LONGER OUTSTANDING. Commit 34b035b on arena/c64fc525-tdd adds "
+                       "docs/AGENT3_A1_C05_S4_1_INDEPENDENT_INTEGRATION_REVIEW_V1.md (114 "
+                       "lines, committed 2026-11-17 18:21:50Z). It names blob d54e194a twice "
+                       "and commit 95918268 three times - the same reviewed object - and "
+                       "states S4.0 was used only as a byte-diff baseline. Kept independent: "
+                       "its findings are not used as evidence for mine, its cluster-1 "
+                       "arbitration finding is not assessed here, and it has not reviewed "
+                       "this addendum."},
+            {"claim": "this addendum closes C-05, U-07 or any acceptance case",
+             "method": "none - document and arithmetic checks only",
+             "result": "NOT CLAIMED. C-05 and U-07 remain open; 0 of 67 cases executed; "
+                       "DESIGN_ONLY; no MEAD selected; no signature, freeze, merge or M0 "
+                       "authorisation. The 47 addendum tests prove nothing about contract "
+                       "behaviour."},
         ],
     }
 
