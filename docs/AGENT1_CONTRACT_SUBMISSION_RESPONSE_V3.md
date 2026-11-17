@@ -477,6 +477,7 @@ Agent 2's reported suites (337 world tests, 114 canon tests, 14 L0 checks, 13/13
 | Document | `docs/AGENT1_CONTRACT_SUBMISSION_RESPONSE_V3.md` |
 | Version | 1.2 (`A1-R3`) — a **successor** to `A1-R2`, published because five contracts require replacement clauses |
 | Branch | `arena/3bc206a0-tdd` |
+| Publishing commit | `be0badfd7528f8b4788117c361e85715f40d74ff` (this document) |
 | `A1-R1` | `docs/AGENT1_CONTRACT_SUBMISSION_RESPONSE_V1.md`, commit `97828db`, blob `25ab47c2…` — **unchanged** |
 | `A1-R2` | `docs/AGENT1_CONTRACT_SUBMISSION_RESPONSE_V2.md`, commit `f578fe6`, blob `bdcd0fe…` (current file adds one provenance line, commit `b9ab305`) — **unchanged in substance and not overwritten** |
 | Governing addendum | `TDD-TD-INT-001` v1.2, commit `e121bbb` |
