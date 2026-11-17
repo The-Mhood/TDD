@@ -15,7 +15,9 @@
 | Agent 2's C-05 submission (the ownership assignment I must reconcile with) | `A2-C05-1.0` (in `A2-C01…C07-1.0`) | `3ac438b32fcd73ceb22dcd81385356f7b8b39644` | §8, "Implementation owner" row |
 | TD integration decisions | v1.2 | `e121bbbf09562e3cba0efe81aad971809685db23` | C-05 row |
 | Agent 2's reviews (prior) | `7ea0a85`, `586152b` | as cited | read only; **no review of the S1 blob exists yet** |
-| MEAD-A / MEAD-B / MEAD-C | candidates | `912fac9` / `d32660f` / `169a8d8` | read only; **none selected** |
+| MEAD-A — `Docs/00_MASTER_ENGINEERING_ARCHITECTURE.md` | candidate architecture, **not selected** | at `586152b` (Agent 2 branch tip, `arena/5dde91a4-tdd`) | blob `bd0f3afdf24736349f2045bf0ee423ee0b4e1a78`, read only |
+| MEAD-B — `docs/MASTER_ENGINEERING_ARCHITECTURE.md` | candidate architecture, **not selected** | at `1eb613f` (Agent 3 branch tip, `arena/c64fc525-tdd`) | blob `1e8d1bd1b223c364c02464f6036e3f9ee9a9b0a7`, read only |
+| MEAD-C — `docs/01_ARCHITECTURE/MASTER_ENGINEERING_ARCHITECTURE.md` | candidate architecture, **none selected** | unchanged on this branch (`2bb729f` and later) | blob `f49354631c86601e9311865901bf1fcd44846d89`, read only |
 
 ---
 
