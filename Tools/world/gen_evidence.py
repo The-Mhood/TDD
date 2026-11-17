@@ -119,13 +119,16 @@ def main() -> int:
         "review_c05_3_document_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_review_a1_c05_3.py"]),
+        "review_c05_s2_document_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_review_a1c05_s2.py"]),
     }
 
     payload = {
         "meta": {
-            "milestone": "W-M2.9 — independent review of Agent 1's C-05-3 telegraph "
-                         "authority response (central custody NOT ESTABLISHED; 6 blocking "
-                         "defects; own prior citation error withdrawn)",
+            "milestone": "W-M2.10 — review of A1-C05-S2 v2.0 (2 DISAGREE: INV-1 includes "
+                         "an aging field; 3 of 4 named consumers need absent identity "
+                         "fields. 3 AGREE WITH CONDITIONS. 9 narrow corrections)",
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -249,6 +252,27 @@ def main() -> int:
              "result": "0 occurrences of 505; the text says (506). My A1-R4 review section "
                        "7.2 erred by verifying the MEAD-A line and not grepping the citing "
                        "document. Withdrawn in this review section 0.3 with root cause."},
+            {"claim": "INV-1 as written is false because it includes RemainingLocalSeconds",
+             "method": "locate INV-1 in the reviewed blob; compute R(t) at two instants "
+                       "inside one revision using A1-R4 section 3.3(e)",
+             "result": "INV-1 lists RemainingLocalSeconds among fields identical at equal "
+                       "revision. At ProducerRate 0.05, R0 0.20: frame 0 -> 0.2000, frame 2 "
+                       "-> 0.1800, revision unchanged at 1. Every conforming producer "
+                       "therefore violates INV-1 every frame, and equal-revision discard "
+                       "(TN-C-01) loses the aged delta."},
+            {"claim": "The later provenance correction changes no contract text",
+             "method": "git diff reviewed blob bf6c8fb against branch-tip blob 30a98b8",
+             "result": "6 insertions, 3 deletions, 9 changed lines, all in section 0 MEAD "
+                       "rows and section 16 publication rows. All contract clauses "
+                       "byte-identical. The user's statement is accurate."},
+            {"claim": "WindowKey and AttackTag are absent from a snapshot whose consumers "
+                      "were assigned by name",
+             "method": "grep the reviewed blob for both; parse FTDDTelegraphSnapshot fields; "
+                       "compare against A2-C05 section 7.6 Required list",
+             "result": "0 occurrences of either in the blob. Snapshot carries exactly "
+                       "AttackInstanceId, SourceEntityId, Phase, Timing. My own submission "
+                       "marks both Required for parry/block and names montage selection as a "
+                       "consumer, so 3 of my 4 named consumers cannot act without them."},
             {"claim": "C2's Core-owned surface exists in only one of three candidate MEADs",
              "method": "grep for TDDCore in MEAD-A, MEAD-B, MEAD-C",
              "result": "MEAD-C only (lines 227/228/267). MEAD-A has no TDDCore module at all "
