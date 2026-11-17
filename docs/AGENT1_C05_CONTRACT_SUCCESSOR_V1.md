@@ -621,8 +621,8 @@ It is not evidence that any obligation holds, that any suite compiles, or that t
 | Document | `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V1.md` — **new file** |
 | Version | 1.0 (`A1-C05-S1`) |
 | Branch | `arena/3bc206a0-tdd` |
-| Publishing commit | `PUB_COMMIT` |
-| Blob at that commit | `PUB_BLOB` |
+| Publishing commit | `6af9d807f0a43e9155d6b3cafcedf90223d4db24` |
+| Blob at that commit | `ac65aaa15322542c4ffd7f07bb5796b153dc1b03` |
 | Superseded position | `TDD-A1-C05-3-RESPONSE-001` v1.0 at `22c29da`, blob `a94b49ef…` — **unmodified** |
 | Baseline | `A1-R4` v1.3 at `142cabd`, blob `2cc548fa…` — **unmodified** |
 | `A1-R1` / `A1-R2` / `A1-R3` | blobs `25ab47c2…` / `5ee2769…` / `109331f3…` — **unmodified** |
