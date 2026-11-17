@@ -33,10 +33,10 @@ Matches the requested blob exactly. **I did not review the branch tip.**
 ### 0.2 The tip, and why the difference is immaterial
 
 The branch tip is `ec3c2af7455db614f7c9090fbe3c7033cd2fcaf8`; the file there is blob
-`80060de67e00d26ee2be0a50df9f1ac4ce8a2d70`. I diffed the two blobs rather than assuming:
+`80060dea6685f2f17cae1128ef1a4532eed4e316`. I diffed the two blobs rather than assuming:
 
 ```
-$ git diff 07723236 80060de6 --stat
+$ git diff 07723236 80060dea --stat
  docs/AGENT1_C05_CONTRACT_SUCCESSOR_V3.md | 6 +++---
 ```
 

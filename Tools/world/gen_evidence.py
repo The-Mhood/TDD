@@ -125,14 +125,19 @@ def main() -> int:
         "review_c05_s3_document_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_review_a1c05_s3.py"]),
+        "review_c05_s4_document_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_review_a1c05_s4.py"]),
     }
 
     payload = {
         "meta": {
-            "milestone": "W-M2.11 — targeted review of A1-C05-S3 v3.0 (7 AGREE, 3 AGREE "
-                         "WITH CONDITIONS, 1 DISAGREE. Outcome: TARGETED REVISION. C9 "
-                         "unresolved - DV-11 is agent-level and cannot fail on the "
-                         "TN-C-12/13 mis-mapping; 7 named defects D-1..D-7)",
+            "milestone": "W-M2.12 — independent review of A1-C05-S4 v4.0 (requested path "
+                         "V4_1.md does not exist on any remote head; reviewed the S4 "
+                         "document scoped to D-1..D-7). 8 AGREE, 4 AGREE WITH CONDITIONS, "
+                         "2 DISAGREE. Outcome: TARGETED REVISION. Five of seven defects "
+                         "fully closed; D-4 audio survives in the section 8 preamble; "
+                         "DV-11 is now genuinely row-level with a tamper proof",
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -409,7 +414,7 @@ def main() -> int:
                        "non-blocking. Section 14.1 states 'No status in 14.1 has changed "
                        "since S1' and no closure is claimed anywhere"},
             {"claim": "the S3 blob reviewed differs from the branch tip only in placeholders",
-             "method": "git diff of blob 07723236 against tip blob 80060de6",
+             "method": "git diff of blob 07723236 against tip blob 80060dea",
              "result": "verified: 3 insertions, 3 deletions, all PUB_COMMIT/PUB_BLOB "
                        "placeholder fill in section 17 and section 18.1. Every normative "
                        "clause byte-identical"},
@@ -418,6 +423,108 @@ def main() -> int:
              "result": "NOT CLAIMED. C-05 and U-07 remain open; 62 cases PROPOSED / NOT RUN; "
                        "0 executed. 66 document checks pass and prove nothing about "
                        "contract behaviour"},
+
+            # ---- W-M2.12: A1-C05-S4 v4.0 independent review ----
+            {"claim": "the requested document path exists and is A1-C05-S4.1",
+             "method": "git ls-remote all heads; git ls-tree every remote head for V4_1; "
+                       "git log --all --grep='4.1'",
+             "result": "NOT FOUND. No docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_1.md exists on "
+                       "any remote branch and no commit mentions a 4.1. The published "
+                       "successor is docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4.md, internally "
+                       "A1-C05-S4 v4.0, whose section 1/2 are scoped to exactly D-1..D-7"},
+            {"claim": "S4's reviewed blob differs from the branch tip only in placeholders",
+             "method": "git diff 424d2c69 (content) against d72831e7 (tip)",
+             "result": "verified: 5 insertions, 5 deletions - PUB_COMMIT/PUB_BLOB placeholder "
+                       "fill plus the paragraph explaining it. No normative clause differs"},
+            {"claim": "S4's 43 obligations split 19 P / 15 C / 6 R / 3 A",
+             "method": "parse every '| **TN-x-nn' row from sections 7-9 of blob 424d2c69",
+             "result": "verified: 43 rows, exact split"},
+            {"claim": "S4's 67 cases over 18 suites, 23 document checks",
+             "method": "parse suite table 12.1 and section 13.1; regex all T-C05-nn",
+             "result": "verified: 18 suites summing 67, ids 01-67 complete and none extra, "
+                       "DV-1..DV-23 = 23 checks, section 11.2 inverts onto all 67 with no "
+                       "orphans either way"},
+            {"claim": "DV-11 is now genuinely row-level and discriminates rows 6 vs 7",
+             "method": "parse the 5.4 token->row table from the document, then re-implement "
+                       "DV-11's stated rule (prefix allowed-row set + row intersection) over "
+                       "all 43 implementer cells, rather than reading its PASS",
+             "result": "verified: 7 declared, 5 observed, 43 cells, 0 failures. A TN-C "
+                       "obligation carrying the row-7 token would fail, which is the "
+                       "behaviour S3's agent-level check could not produce. The section 13.2 "
+                       "tamper proof against S3 is real and names both mis-mapped rows"},
+            {"claim": "D-4 audio ownership is fully resolved",
+             "method": "whole-document search for any clause assigning audio to Agent 1",
+             "result": "NOT RESOLVED. Section 5.2 row 5, section 6.1 and TN-C-15 are correct, "
+                       "but the section 8 preamble still reads 'Agent 1 for defence, dodge, "
+                       "camera and audio'. DV-22 checks only row 5, row 6 and TN-C-15, so it "
+                       "reports PASS on a document that still contains the defect. This is "
+                       "the same failure class as S3's DV-11"},
+            {"claim": "S4's declared/observed token counts are internally consistent",
+             "method": "extract every statement of the counts and compare with the parsed "
+                       "distinct 7th-cell token set",
+             "result": "INCONSISTENT in one place: section 1 row 6 says '7 declared, 6 "
+                       "observed'; the actual observed count is 5. Section 2.1, section 2.2, "
+                       "section 5.4, DV-11 and section 18.1 all correctly say 5. Third "
+                       "consecutive revision with a wrong count in the DV-11 narrative"},
+            {"claim": "section 5.4's 'Used by' tallies are accurate",
+             "method": "per-token breakdown of the 43 implementer cells",
+             "result": "IMPRECISE: 'producer owner' is declared as '19 TN-P rows' but occupies "
+                       "23 cells (19 TN-P + 4 TN-R); 'each consumer' is declared as '11 TN-C "
+                       "rows' but occupies 12. The mappings are correct; the tallies omit rows"},
+            {"claim": "PO-5 resolves the D-2 content collision",
+             "method": "trace reading A vs reading B for a frame with one phase change and "
+                       "one dilation change against PO-5, TN-P-11 and INV-1",
+             "result": "verified resolved: PO-5 makes reading B the only legal reading and "
+                       "makes it satisfiable by requiring publication between applications. "
+                       "T-C05-51 asserts ProducerRate per message and T-C05-65 adds the "
+                       "mid-frame pull with a batching negative control"},
+            {"claim": "PO-5 leaves the stated reason for PO-3 intact",
+             "method": "compare section 3.6 reason (b) 'internal application order is not "
+                       "observable' against PO-5's mid-frame pull guarantee and T-C05-65",
+             "result": "CONTRADICTION FOUND: PO-5 and T-C05-65 make the internal application "
+                       "order observable within the frame, so reason (b) is now false. The "
+                       "PO-3 rule remains correct and needed (reasons (a) and (c) survive); "
+                       "the justification attached to it is stale"},
+            {"claim": "TN-C-14's one-frame staleness bound actually holds",
+             "method": "trace a lost Retimed through AD-1, PO-5, TN-P-11, TN-C-14 and AD-1 "
+                       "across frame F and F+1",
+             "result": "holds as an UPPER bound, and holds only because PO-5 forbids live "
+                       "state ahead of publication. It is not a same-frame guarantee: a pull "
+                       "landing before the producer's publication in F sees the stale "
+                       "revision, so worst case is up to one frame, not zero"},
+            {"claim": "identity constancy is consistent across all clauses (D-3/C6-1)",
+             "method": "check section 3.8, section 6.1, TN-P-07, TN-P-19, TN-P-04, T-C05-62, "
+                       "T-C05-66 and DV-23's zero-unquoted-phrase claim",
+             "result": "verified consistent: TN-P-07's dead identity clause removed, "
+                       "TN-P-19 names the close-and-reopen path, T-C05-62's untestable rows "
+                       "replaced by a falsifiable assertion, 0 unquoted occurrences of the "
+                       "rejected phrase"},
+            {"claim": "INV-2 states its precondition in the normative clause (D-7/C4a-1)",
+             "method": "read the INV-2 row in section 4.6 and TN-C-10; re-derive the "
+                       "equivalence at four axes",
+             "result": "verified: 'INV-2 holds only while ProducerRate and PhaseEndAxis are "
+                       "fixed' is in the clause, TN-C-10 echoes it, and both forms remain "
+                       "identical to 1e-12 at axis 0/2/4/8 including the clamps"},
+            {"claim": "the VF list is consistent across its three homes (C4a-2)",
+             "method": "extract the VF names from section 3.2, INV-1 and the Timing struct "
+                       "comment and compare as sets",
+             "result": "verified: all three name exactly the same seven fields; DV-12 states "
+                       "set equality. Noted: DV-12 also passes on S3, so it is a drift guard "
+                       "rather than a defect detector - S4 states this itself"},
+            {"claim": "S4 resolved the TN-C-11 / TN-A-01-02 conflict without moving the "
+                      "arbitration boundary",
+             "method": "read C05-6.4's three domains against TN-C-11, TN-A-02, TN-A-03 and "
+                       "C05-6.1",
+             "result": "verified: creation/selection/outcome separation is sound; no C-05 "
+                       "value including AttackTag can decide a hit; TN-A-03 is MEAD-neutral "
+                       "(names inputs, not components); TD-09 not reopened; B-15 records "
+                       "that this is S4's own resolution, not Agent 3's wording"},
+            {"claim": "S4's provenance record and honesty claims",
+             "method": "check section 13.3, section 17 and section 18 for closure claims",
+             "result": "verified: 0 acceptance tests claimed executed, all 67 cases marked "
+                       "PROPOSED / NOT RUN, no MEAD selected, U-07 open, B-11/B-12/B-13/B-15 "
+                       "all recorded as open. Section 13.3 correctly states that 23 document "
+                       "checks prove nothing about contract behaviour"},
         ],
     }
 

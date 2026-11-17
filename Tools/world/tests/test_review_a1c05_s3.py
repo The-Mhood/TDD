@@ -23,7 +23,7 @@ S3_BLOB = "077232368c42b2cd910be2c9642ba05cd7faa382"
 S3_COMMIT = "a6b4e22999c7f8622c7c67e9cdc39e2f57565c20"
 S3_PATH = "docs/AGENT1_C05_CONTRACT_SUCCESSOR_V3.md"
 
-TIP_BLOB = "80060de67e00d26ee2be0a50df9f1ac4ce8a2d70"
+TIP_BLOB = "80060dea6685f2f17cae1128ef1a4532eed4e316"
 A1_HEAD = "ec3c2af7455db614f7c9090fbe3c7033cd2fcaf8"
 
 S2_BLOB = "bf6c8fb3ddf3152d1627d3b6471278f57fc82541"
@@ -69,6 +69,16 @@ class TestProvenance(Base):
         import hashlib
         blob = hashlib.sha1(b"blob %d\x00" % len(t.encode()) + t.encode()).hexdigest()
         self.assertEqual(blob, S3_BLOB)
+
+    def test_tip_blob_hash_is_the_real_one(self):
+        """Regression: W-M2.12 found this hash mis-transcribed; assert it resolves."""
+        out = subprocess.run(["git", "rev-parse",
+                              f"{A1_HEAD}:docs/AGENT1_C05_CONTRACT_SUCCESSOR_V3.md"],
+                             capture_output=True, text=True, cwd=REPO, check=False)
+        if out.returncode != 0:
+            self.skipTest("A1 tip commit not available")
+        self.assertEqual(out.stdout.strip(), TIP_BLOB,
+                         "TIP_BLOB must equal the blob at A1_HEAD, not a transcription")
 
     def test_review_declares_it_did_not_review_the_tip(self):
         self.assertIn("I did not review the branch tip", self.flat)
