@@ -110,13 +110,16 @@ def main() -> int:
         "review_r2_document_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_contract_review_r2.py"]),
+        "review_r3_document_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_contract_review_r3.py"]),
     }
 
     payload = {
         "meta": {
-            "milestone": "W-M2.6 — formal review of Agent 1 revision A1-R2 "
-                         "(seven verdicts, zero agreements, five withdrawals, "
-                         "three divergent TDD-MEAD-001 documents found)",
+            "milestone": "W-M2.7 — formal review of Agent 1 revision A1-R3 "
+                         "(seven verdicts, 0 signed, one blocking arithmetic defect "
+                         "in the Option A+ conversion, ten asks)",
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -219,6 +222,22 @@ def main() -> int:
              "result": "verified: line 476 'FTDamageRequest', line 478 'FTDDDamageRequest'. "
                        "A third spelling 'FTDDamageRequest' appears only in reconciliation V3's "
                        "transcription of my proposal"},
+            {"claim": "A1-R3 3.3(a)'s conversion is inverted",
+             "method": "derive d(local)/d(axis) from A1-R3 3.2's own axis definition",
+             "result": "verified: axis advances by PrimaryDilation, local by "
+                       "PrimaryDilation*CustomDilation, so local=axis*rate. 3.3(a) "
+                       "divides. Error is 1/rate^2; at rate 0.05 a 0.20s window "
+                       "reports as 80s. 3.3(b)'s retime rule uses the inverse."},
+            {"claim": "MEAD-C section 5.4's two struct spellings differ in length",
+             "method": "character-level extraction of every DamageRequest token",
+             "result": "verified: line 476 FTDamageRequest (15 chars), line 478 "
+                       "FTDDamageRequest (16 chars). A1-R3 uses the 17-char "
+                       "FTDDDamageRequest once and selects it silently."},
+            {"claim": "MEAD-A has no Status.* namespace and forbids new ones",
+             "method": "full-text extraction plus heading read",
+             "result": "verified: zero Status.* matches; line 517 reads 'no agent "
+                       "introduces a tag namespace'; Dead exists only as an enemy AI "
+                       "StateTree state (line 615)"},
             {"claim": "NPC prose parsing is correct",
              "method": "38-case parser suite; 2 new silent-corruption bugs found "
                        "and fixed this milestone (range summed as 16, abstract "
