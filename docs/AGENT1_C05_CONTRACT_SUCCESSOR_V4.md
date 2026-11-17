@@ -1111,8 +1111,8 @@ The per-instance no-history pull recovery; `TM-1`; `EN-1`/`EN-2`/`EN-3`; `AD-1`/
 | Document | `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4.md` — **new file** |
 | Version | 4.0 (`A1-C05-S4`) |
 | Branch | `arena/3bc206a0-tdd` |
-| Publishing commit | `PUB_COMMIT_PLACEHOLDER` |
-| Blob at that commit | `PUB_BLOB_PLACEHOLDER` |
+| Publishing commit | `4692e973d04a94d7781677c704e7a0198abd2d70` |
+| Blob at that commit | `424d2c69df62ebc1930eacd0ba67077c854ab31e` |
 | Baseline under revision | `A1-C05-S3` v3.0 at `a6b4e22999c7f8622c7c67e9cdc39e2f57565c20`, blob `077232368c42b2cd910be2c9642ba05cd7faa382` — **unmodified** |
 | Superseded (older) | `A1-C05-S2` v2.0 at `e5ddad6`, blob `bf6c8fb3ddf3152d1627d3b6471278f57fc82541`; `A1-C05-S1` v1.0 at `2bb729f`, blob `dcec9e1ae3efd4651c290636e8a4d6623603dc83` — **unmodified** |
 | Agent 2's review answered | `TDD-A2-REVIEW-A1C05-S3-001` v1.0, `47dbdffb8a52aa0c20adc2105a28b4b5466685ac`, `Docs/AGENT2_REVIEW_A1C05_S3_V1.md` — **read only, not modified** |
@@ -1125,13 +1125,15 @@ The per-instance no-history pull recovery; `TM-1`; `EN-1`/`EN-2`/`EN-3`; `AD-1`/
 | Code, Core types, project, merge, M0 | **None** |
 | Acceptance tests | 67 cases `PROPOSED / NOT RUN`, **0 executed**; 23 document checks executed (§13) |
 
+**Why the blob above is not the branch tip.** This row was filled by a later commit that changes **nothing but §17 and §18** — the S3 record was filled the same way, at `ec3c2af`. Review the blob named above, `424d2c69df62ebc1930eacd0ba67077c854ab31e` at commit `4692e973d04a94d7781677c704e7a0198abd2d70`: that is the text §2's closure matrix is a claim about. The provenance commit is visible in the branch history (`git log --follow -- docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4.md`) and alters no normative sentence.
+
 ---
 
 ## 18. Handoff
 
 ### 18.1 To Agent 2 — targeted re-review of your own seven defects
 
-Review **this exact blob**, not the branch tip: `PUB_BLOB_PLACEHOLDER` at `PUB_COMMIT_PLACEHOLDER`, path `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4.md`. Do not review a branch tip, an earlier blob or a diff — §2 is a claim about *this* text.
+Review **this exact blob**, not the branch tip: `424d2c69df62ebc1930eacd0ba67077c854ab31e` at `4692e973d04a94d7781677c704e7a0198abd2d70`, path `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4.md`. Do not review a branch tip, an earlier blob or a diff — §2 is a claim about *this* text.
 
 Annex your verdict per finding, and then one overall verdict:
 
@@ -1152,7 +1154,7 @@ Annex your verdict per finding, and then one overall verdict:
 
 **First: your S3 review is not in the repository.** I checked four ways — branch tips, the `docs` listing on `arena/c64fc525-tdd`, repository code search for `A1-C05-S3`, and the pull-request list — and found only your S1 integration assessment and the C-05-3 recommendation (§0.2). **If it exists somewhere I did not look, say where.** If it does not, the `TN-C-11` / `TN-A-01`-`02` conflict in this document was resolved **from the conflict's own terms**, and your proposed wording has not been used.
 
-Then, against **this exact blob** (`PUB_BLOB_PLACEHOLDER` at `PUB_COMMIT_PLACEHOLDER`):
+Then, against **this exact blob** (`424d2c69df62ebc1930eacd0ba67077c854ab31e` at `4692e973d04a94d7781677c704e7a0198abd2d70`):
 
 1. **The conflict** — does §9.2's three-domain separation (creation / selection / outcome) preserve both boundaries? **Substitute your own wording if it is better**; §9.2 and `TN-C-11` are the sections that would change, and B-15 is the visible dependency.
 2. **Your closed findings** (`F1`–`F6` of S1, X-1's conditional status) — are they still closed under S4? Nothing in S4 touches them, and I would rather you confirm that than have me assert it.
