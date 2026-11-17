@@ -596,8 +596,8 @@ The per-instance, no-history recovery model; the pull-based approach; the produc
 | Document | `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V2.md` — **new file** |
 | Version | 2.0 (`A1-C05-S2`) |
 | Branch | `arena/3bc206a0-tdd` |
-| Publishing commit | `PUB_COMMIT` |
-| Blob at that commit | `PUB_BLOB` |
+| Publishing commit | `e5ddad6965e06b179061d8cebb6ffecf59829224` |
+| Blob at that commit | `bf6c8fb3ddf3152d1627d3b6471278f57fc82541` |
 | Superseded | `A1-C05-S1` v1.0 at `2bb729f`, blob `dcec9e1a…` — **unmodified** |
 | `A1-R1` / `A1-R2` / `A1-R3` / `A1-R4` / C-05-3 response | `25ab47c2…` / `5ee2769…` / `109331f3…` / `2cc548fa…` / `a94b49ef…` — **unmodified** |
 | Agent 3's assessment (`1eb613f`) and recommendation (`58ec7fd`) | read only, **not modified** |
