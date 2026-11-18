@@ -555,7 +555,13 @@ NEG_BEFORE = (
     re.compile(r'\b(?:no|none\s+of\s+the)\s+' + _MODS + r'audio\b' + _Q_GAP + r'{0,50}?'
                r'\bbelong(?:s)?\s+to\s+' + AGENT1 + r'\b', re.I),
     # the same quantified subject with the other possession predicates the widening taught
-    re.compile(r'\bno\s+' + _MODS + r'audio\b' + _Q_GAP + r'{0,50}?\b(?:is|are|was|were)\s+'
+    # S4.3.11 (D-b, denial side): once attribution reads the passive auxiliary chain, its denial has
+    # to read the same chain, or 'No audio cue has been owned by Agent 1' would be read as an
+    # assignment. The subject also takes `none of the`, matching the belongs-to construction above,
+    # because the widened attribution otherwise reports 'None of the audio cues have been owned by
+    # Agent 1' — measured as two new false alarms before this change and zero after.
+    re.compile(r'\b(?:no|none\s+of\s+the)\s+' + _MODS + r'audio\b' + _Q_GAP + r'{0,50}?'
+               r'\b(?:is|are|was|were|has|have|had)\s+(?:been\s+)?'
                r'(?:owned|claimed|carried|held|supplied|provided|selected|chosen)\s+by\s+'
                + AGENT1 + r'\b', re.I),
     re.compile(r'\bno\s+' + _MODS + r'audio\b' + _Q_GAP + r'{0,50}?\b(?:is|are|was|were)\s+'
@@ -570,7 +576,13 @@ NEG_BEFORE = (
     # 'not' is matched by 'not', with or without a space after the comma — so it is removed and
     # the negator is required. 'owns the camera, not the audio cues' and 'owns the camera, not
     # any audio cues' still pass, which TD-104…TD-107 assert.
-    re.compile(r'\bnot\s+(?:the\s+|any\s+)' + _MODS + r'audio\b', re.I),
+    # S4.3.11 (D-a): `never` is the same object negation as `not` — 'Agent 1 owns the camera, never
+    # the audio cues' is a true denial that the literal `not` could not read, so the check rejected
+    # a statement the contract endorses (TN-C-15 gives audio to Agent 2 alone). The negator set is
+    # widened *here only*: `never` does not enter NEG_AFTER and does not enter _FOIL_ANY, because
+    # Agent 2's assessment measured that a general `not|never` foil re-opens 'Not only does Agent 1
+    # own the audio cues' (a positive claim) as a false negative.
+    re.compile(r'(?:\bnot|\bnever)\s+(?:the\s+|any\s+)' + _MODS + r'audio\b', re.I),
 )
 # The reversed form: the mention comes first and the denial follows it. Two scope rules
 # (S4.3.3), because a later denial was cancelling an earlier positive assertion:
@@ -649,13 +661,26 @@ def segment_bounds(ln, pos):
     return (max(before) + 1 if before else 0), (min(after) if after else len(ln))
 
 
+# The passive participles the attribution reads — and its denial, above (S4.3.11).
+_FO_PART = r'(?:owned|claimed|carried|held|supplied|provided|selected|chosen)'
+
 # S4.3.7 — every construction below is built from AGENT1/AGENT1_POSS rather than re-spelled, and
 # the class is widened to the remaining positive-ownership forms the same probe matrix found:
 # possession by the synonym, 'belongs to', and 'owner is' (A2 MAJOR-1 and the class it belongs to).
 FORWARD_OWNER = (
-    re.compile(r'\baudio\b[^.;|]{0,40}?\b(?:is|are|was|were)\s+'
-               r'(?:owned|claimed|carried|held|supplied|provided|selected|chosen)\s+by\s+'
-               + AGENT1 + r'\b', re.I),
+    # S4.3.11 (D-b, attribution side): the passive is read through its auxiliary chain, and — in the
+    # third alternative — with no copula at all, because 'The audio cue, supplied by Agent 1, drives
+    # the mixer' is an appositive attribution with nothing for `is|are|was|were` to match (R-5).
+    # The guards on that third alternative are load-bearing, not decoration: with the copula simply
+    # made optional, the pattern also reads a *negated* passive — 'are not provided by Agent 1',
+    # 'have never been owned by Agent 1' — as an assignment, which was measured as eight new false
+    # alarms on legitimate denials. A `not`/`never` immediately before the participle, or a `been`
+    # that means the sentence already had an auxiliary, therefore disqualifies the zero-copula read.
+    re.compile(r'\baudio\b[^.;|]{0,40}?\b(?:'
+               r'(?:is|are|was|were)\s+' + _FO_PART + ''
+               r'|(?:has|have|had)\s+been\s+' + _FO_PART + ''
+               r'|(?<!\bnot\s)(?<!\bnever\s)(?<!\bbeen\s)' + _FO_PART + ')'
+               r'\s+by\s+' + AGENT1 + r'\b', re.I),
     re.compile(r'\baudio\b[^.;|]{0,30}?\b(?:is|are|was|were)\s+' + AGENT1_POSS + r'\b', re.I),
     re.compile(r'\baudio\b[^.;|]{0,14}?(?::|\u2014|--)\s*' + AGENT1 + r'\b', re.I),
     re.compile(r'\baudio\b[^.;|]{0,40}?\bbelongs?\s+to\s+' + AGENT1 + r'\b', re.I),
@@ -876,7 +901,7 @@ check('DV-26', (not stale) and observ and both,
       f"PO-3 and PO-5 both retained {both}")
 
 # ---------------------------------------------------------------- DV-27 provenance, no placeholders
-REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_10_PROVENANCE.md'
+REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_11_PROVENANCE.md'
 DECISION = 'docs/DECISION_C05_SUCCESSOR_IDENTITY_004_2_V1.md'
 # fenced code blocks are evidence transcripts, not prose claims: strip them first
 prose = re.sub(r'```.*?```', '', s, flags=re.S)

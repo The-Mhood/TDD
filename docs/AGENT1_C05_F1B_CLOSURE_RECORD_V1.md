@@ -111,8 +111,8 @@ Each was reproduced by me before being recorded; none is a defect in `F-1` or `F
 
 | # | Item | Status | Owner / next action |
 |---|---|---|---|
-| 1 | **§3.6 residual families + the appositive `never` construction** — incl. the appositive `Agent 1` family (`L-3`) | **`OPEN — assessment requested`** | Agent 2, per `docs/AGENT1_C05_AGENT2_ASSESSMENT_REQUEST_V1.md`; `F-1b` stays closed while it is assessed |
-| 2 | `L-1` and `L-2` (documentary, S4.3.10 text) | **`OPEN — parked`** | Agent 1, documentation-only revision, **TD authorisation required** |
+| 1 | **§3.6 residual families + the appositive `never` construction** — incl. the appositive `Agent 1` family (`L-3`) | **`PARTIALLY CLOSED at S4.3.11`** — assessed at `f0f80b9` (`TDD-A2-ASSESS-C05-RESIDUAL-001` v1.0); `D-a` + `D-b` closed, `D-c` (`R-4`/`R-4b`) deferred, `D-d` refused (see `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_11.md` §2.26). Originally: `OPEN — assessment requested` | Agent 2, per `docs/AGENT1_C05_AGENT2_ASSESSMENT_REQUEST_V1.md`; `F-1b` stays closed while it is assessed |
+| 2 | `L-1` and `L-2` (documentary, **S4.3.10 text only**) | **`OPEN — parked` on S4.3.10**; **do not recur in S4.3.11**, whose own text is re-measured from its finished form (§2.26.5) | Agent 1, documentation-only revision of S4.3.10 if TD authorises one; no action needed for S4.3.11 |
 | 3 | `TN-C-11` / `TN-A-01` / `TN-A-02` (tag vs arbitration authority) | **`OPEN`** — unresolved, `B-15` stays `OPEN` because Agent 3's S3 review is absent | TD / Agent 3 |
 | 4 | `U-07` | **`OPEN`** | TD |
 | 5 | `TD-06`, `TD-09`, `TD-12` | **`OPEN`** — external blockers `B-1`, `B-2`, `B-4` | TD |

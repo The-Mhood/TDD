@@ -511,6 +511,54 @@ case('TD-120 the current document still passes DV-22 (MINOR-1 class)', 'DV-22', 
 case('TD-121 the current document still passes DV-24 (MINOR-1 class)', 'DV-24', 'PASS',
      str(NEWEST))
 
+# ------- 5k. S4.3.11: D-a (the `never` object negation) and D-b (the passive auxiliary chain)
+print('\n== S4.3.11 — D-a and D-b: the negator set and the passive chain (TD-authorised A+D) ==')
+case('TD-122 Agent 2 R-1: a "never" object negation is not an assignment (D-a)', 'DV-22', 'PASS',
+     inject('Agent 1 owns the camera, never the audio cues.'),
+     "a true denial the literal 'not' could not read; TN-C-15 gives audio to Agent 2 alone, so "
+     'rejecting this sentence rejected the contract\'s own position')
+case('TD-123 R-1b: "never any"', 'DV-22', 'PASS',
+     inject('Agent 1 owns the camera, never any audio cues.'))
+case('TD-124 R-1c: "never" with no comma at all', 'DV-22', 'PASS',
+     inject('Agent 1 owns the camera never the audio cues.'),
+     'no comma is involved: the negator word is the mechanism, not the punctuation')
+case('TD-125 Agent 2 R-3b: the perfect passive is attributed (D-b)', 'DV-22', 'FAIL',
+     inject('The audio cues have been owned by Agent 1.'),
+     'FORWARD_OWNER required is|are|was|were before the participle, so the auxiliary chain was invisible')
+case('TD-126 D-b: the same with "had been"', 'DV-22', 'FAIL',
+     inject('The audio cues had been owned by Agent 1.'))
+case('TD-127 Agent 2 R-5: an appositive participle with no copula', 'DV-22', 'FAIL',
+     inject('The audio cue, supplied by Agent 1, drives the mixer.'))
+case('TD-128 R-5b: the same attribution with no commas', 'DV-22', 'FAIL',
+     inject('The audio cue supplied by Agent 1 drives the mixer.'),
+     "the comma plays no part: the missing copula does, which is why R-5 and R-3b are one family")
+case('TD-129 R-5c: the same with "provided"', 'DV-22', 'FAIL',
+     inject('The audio cue, provided by Agent 1, drives the mixer.'))
+case('TD-130 D-b guard: a negated passive is not an assignment', 'DV-22', 'PASS',
+     inject('The audio cues are not provided by Agent 1.'),
+     "making the copula optional without this guard reads 'not provided by Agent 1' as ownership")
+case('TD-131 D-b guard: "have never been owned by"', 'DV-22', 'PASS',
+     inject('The audio cues have never been owned by Agent 1.'))
+case('TD-132 D-b denial side: "No audio cue has been owned by Agent 1"', 'DV-22', 'PASS',
+     inject('No audio cue has been owned by Agent 1.'),
+     'the widened attribution needs its denial to read the same chain')
+case('TD-133 D-b denial side: "None of the audio cues have been owned by"', 'DV-22', 'PASS',
+     inject('None of the audio cues have been owned by Agent 1.'))
+case('TD-134 D-b guard is narrow: a later positive assignment still fails', 'DV-22', 'FAIL',
+     inject('Audio cues are not owned by anyone and are owned by Agent 1.'),
+     'the guard must not stop the attribution reading a later clause (TD-40\'s shape)')
+case('TD-135 D-b control: the copula form is unchanged', 'DV-22', 'FAIL',
+     inject('The audio cue is supplied by Agent 1.'))
+case('TD-136 D-b control: attribution to Agent 2 is still not an offence', 'DV-22', 'PASS',
+     inject('The audio cues have been owned by Agent 2.'))
+case('TD-137 R-4 DEFERRED (D-c): the appositive "not" foil is still missed', 'DV-22', 'PASS',
+     inject('Agent 1, not Agent 2, owns the audio cues.'),
+     'Agent 2 measured that the one-line fix to _FOIL_ANY re-opens "Not only does Agent 1 own the '
+     'audio cues" and collides with D-b; this case pins today\'s verdict so a later cycle must move '
+     'it deliberately, and marks it as a known open defect rather than a requirement')
+case('TD-138 R-4b DEFERRED (D-c): the appositive "never" foil is still missed', 'DV-22', 'PASS',
+     inject('Agent 1, never Agent 2, owns the audio cues.'))
+
 # ------------------------------------------------------------- 6. the predecessors still fail# ------------------------------------------------------------- 6. the predecessors still fail
 print('\n== predecessors — the checks still fail where the defects were ==')
 for label, check, expect in (('S4.3.1', 'DV-22', 'PASS'), ('S4.3', 'DV-22', 'PASS'), ('S4.2', 'DV-22', 'FAIL'),
