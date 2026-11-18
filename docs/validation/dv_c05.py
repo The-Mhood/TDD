@@ -561,8 +561,16 @@ NEG_BEFORE = (
     re.compile(r'\bno\s+' + _MODS + r'audio\b' + _Q_GAP + r'{0,50}?\b(?:is|are|was|were)\s+'
                + AGENT1_POSS + r'\b', re.I),
     # 'owns the camera, not the audio cues' — the *object* is negated (S4.3.6, found when
-    # 'the first agent' became attributable: the line is a genuine denial and must not fail)
-    re.compile(r'(?:\bnot|,)\s+(?:the\s+|any\s+)' + _MODS + r'audio\b', re.I),
+    # 'the first agent' became attributable: the line is a genuine denial and must not fail).
+    # S4.3.10: the negation must be *stated*. Until S4.3.9 this construction also accepted a bare
+    # comma, `(?:\bnot|,)`, so it matched ', the audio' on its own — and in a comma splice that
+    # carries no negation at all, it negated the object of a clause that asserts ownership:
+    # 'No audio cue is provided for Agent 2, the audio cue belongs to Agent 1' passed DV-22
+    # (Agent 2's F-1b). The comma alternative contributed no intended form — a comma followed by
+    # 'not' is matched by 'not', with or without a space after the comma — so it is removed and
+    # the negator is required. 'owns the camera, not the audio cues' and 'owns the camera, not
+    # any audio cues' still pass, which TD-104…TD-107 assert.
+    re.compile(r'\bnot\s+(?:the\s+|any\s+)' + _MODS + r'audio\b', re.I),
 )
 # The reversed form: the mention comes first and the denial follows it. Two scope rules
 # (S4.3.3), because a later denial was cancelling an earlier positive assertion:
@@ -868,7 +876,7 @@ check('DV-26', (not stale) and observ and both,
       f"PO-3 and PO-5 both retained {both}")
 
 # ---------------------------------------------------------------- DV-27 provenance, no placeholders
-REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_9_PROVENANCE.md'
+REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_10_PROVENANCE.md'
 DECISION = 'docs/DECISION_C05_SUCCESSOR_IDENTITY_004_2_V1.md'
 # fenced code blocks are evidence transcripts, not prose claims: strip them first
 prose = re.sub(r'```.*?```', '', s, flags=re.S)

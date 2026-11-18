@@ -461,6 +461,56 @@ case('TD-102 semicolon-joined contradicting ownership (control)', 'DV-22', 'FAIL
 case('TD-103 sentence-joined contradicting ownership (control)', 'DV-22', 'FAIL',
      inject('No audio cue is assigned to Agent 2. The audio cue belongs to Agent 1.'))
 
+# ------- 5j. S4.3.10: a bare comma is not a negation (Agent 2 F-1b, TD-authorised)
+print('\n== S4.3.10 — the object negation must be stated, so a comma splice cannot excuse ownership ==')
+case('TD-104 Agent 2 F-1b verbatim: comma splice, no negator anywhere', 'DV-22', 'FAIL',
+     inject('No audio cue is provided for Agent 2, the audio cue belongs to Agent 1.'),
+     "the S4.3.6 object-negation construction matched ', the audio' on its own and negated the "
+     "object of a clause that asserts Agent 1's ownership; the comma alternative is gone")
+case('TD-105 the same splice with "is owned by"', 'DV-22', 'FAIL',
+     inject('No audio cue is assigned to Agent 2, the audio cue is owned by Agent 1.'))
+case('TD-106 the same splice with the possessive predicate', 'DV-22', 'FAIL',
+     inject("No audio cue is provided for Agent 2, the audio cue is Agent 1's."))
+case('TD-107 the same splice naming the first agent by synonym', 'DV-22', 'FAIL',
+     inject('No audio cue is provided for Agent 2, the audio cue belongs to the first agent.'))
+case('TD-108 a comma-joined object list is an assertion, not a denial', 'DV-22', 'FAIL',
+     inject('Agent 1 owns the camera, the audio cues.'),
+     'the comma alone used to negate the second object')
+case('TD-109 the legitimate object negation after the synonym still passes', 'DV-22', 'PASS',
+     inject('The first agent owns the camera, not the audio cues.'),
+     "TD-50's form: the negation is stated, so the mention is the object of it")
+case('TD-110 the legitimate object negation naming Agent 1 still passes', 'DV-22', 'PASS',
+     inject('Agent 1 owns the camera, not the audio cues.'))
+case('TD-111 the object negation with "any" still passes', 'DV-22', 'PASS',
+     inject('Agent 1 owns the camera, not any audio cues.'))
+case('TD-112 the object negation after a longer object list still passes', 'DV-22', 'PASS',
+     inject('Agent 1 owns the camera and the montage, not the audio cues.'))
+case('TD-113 "but not the audio cues" still passes', 'DV-22', 'PASS',
+     inject('Agent 1 owns the camera, but not the audio cues.'),
+     'the negator may follow a conjunction: what the rule requires is the negator, not the comma')
+case('TD-114 a positive ownership statement is still caught (control)', 'DV-22', 'FAIL',
+     inject('The audio cue belongs to Agent 1.'),
+     'the correction must not buy the denial by weakening the positive form')
+case('TD-115 a positive and-list is still caught (control)', 'DV-22', 'FAIL',
+     inject('Agent 1 owns the camera and audio cues for the player.'))
+case('TD-116 the S4.3.9 F-1 case is still caught (control)', 'DV-22', 'FAIL',
+     inject('No audio cue is assigned to Agent 2 and the audio cue belongs to Agent 1.'),
+     'closing F-1b must not reopen the F-1 fail-open')
+case('TD-117 the F-1 comma + "but" case is still caught (control)', 'DV-22', 'FAIL',
+     inject('No audio cue is provided for Agent 2, but the audio cue belongs to Agent 1.'))
+case('TD-118 CONDITION-1 control: the quantified denial still passes', 'DV-22', 'PASS',
+     inject('No audio cue belongs to Agent 1.'))
+case('TD-119 CONDITION-2 control: a capitalised two-line wrap still fails', 'DV-24', 'FAIL',
+     replace_in_doc(LIVE, 'Counts: 6 declared\nThe audit shows 5 observed.\n\n' + LIVE))
+NEWEST = ROOT / 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_10.md'
+assert NEWEST.exists(), NEWEST
+case('TD-120 the current document still passes DV-22 (MINOR-1 class)', 'DV-22', 'PASS',
+     str(NEWEST),
+     'MINOR-1 was a hand-restated figure drifting from its runner: the published text is '
+     're-checked here, so a stale count cannot pass unnoticed')
+case('TD-121 the current document still passes DV-24 (MINOR-1 class)', 'DV-24', 'PASS',
+     str(NEWEST))
+
 # ------------------------------------------------------------- 6. the predecessors still fail# ------------------------------------------------------------- 6. the predecessors still fail
 print('\n== predecessors — the checks still fail where the defects were ==')
 for label, check, expect in (('S4.3.1', 'DV-22', 'PASS'), ('S4.3', 'DV-22', 'PASS'), ('S4.2', 'DV-22', 'FAIL'),
