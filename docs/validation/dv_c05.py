@@ -617,7 +617,7 @@ check('DV-26', (not stale) and observ and both,
       f"PO-3 and PO-5 both retained {both}")
 
 # ---------------------------------------------------------------- DV-27 provenance, no placeholders
-REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_4_PROVENANCE.md'
+REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_5_PROVENANCE.md'
 DECISION = 'docs/DECISION_C05_SUCCESSOR_IDENTITY_004_2_V1.md'
 # fenced code blocks are evidence transcripts, not prose claims: strip them first
 prose = re.sub(r'```.*?```', '', s, flags=re.S)
