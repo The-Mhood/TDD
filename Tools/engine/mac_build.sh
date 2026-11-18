@@ -129,20 +129,42 @@ if [ "$SKIP_TESTS" -eq 1 ]; then
 else
   say "4. automation tests (filter: $TEST_FILTER)"
   log="$EVIDENCE/03-automation-${TEST_FILTER}.log"
+  report="$EVIDENCE/automation-report"
+  # -TestExit makes the editor exit on its own instead of hanging, and
+  # -ReportExportPath writes a machine-readable index.json next to the log.
   "$EDITOR_CMD" "$PROJECT" \
       -ExecCmds="Automation RunTests ${TEST_FILTER};Quit" \
+      -TestExit="Automation Test Queue Empty" \
+      -ReportExportPath="$report" \
       -unattended -nopause -nullrhi -nosplash -stdout -FullStdOutLogOutput -log \
       >"$log" 2>&1
   rc=$?
+  tested=$(grep -c "^LogAutomationController: Test Started" "$log" 2>/dev/null || true)
   passed=$(grep -c "Result={Passed}" "$log" 2>/dev/null || true)
   failed=$(grep -c "Result={Failed}" "$log" 2>/dev/null || true)
-  tested=$(grep -c "^LogAutomationController: Test Started" "$log" 2>/dev/null || true)
+
+  if [ -f "$report/index.json" ] && command -v python3 >/dev/null 2>&1; then
+    counts=$(python3 - "$report/index.json" <<'PYPARSE'
+import json, sys
+data = json.load(open(sys.argv[1], encoding="utf-8"))
+tests = data.get("tests") or []
+state = [(t.get("state") or ("Success" if t.get("succeeded") else "Fail")) for t in tests]
+print(len(tests),
+      sum(1 for s in state if str(s).lower() in ("success", "passed")),
+      sum(1 for s in state if str(s).lower() not in ("success", "passed")))
+PYPARSE
+)
+    set -- $counts
+    tested="${1:-$tested}"; passed="${2:-$passed}"; failed="${3:-$failed}"
+    say "  report: $report/index.json"
+  fi
+
   say "  exit=$rc  tests started=${tested:-0}  passed=${passed:-0}  failed=${failed:-0}"
   if [ "${failed:-0}" -gt 0 ] || [ "$rc" -ne 0 ]; then
     step_fail "automation failures (see 03-automation-${TEST_FILTER}.log)"
     grep -m 10 "Result={Failed}\|Error:" "$log" | sed 's/^/      /'
   elif [ "${tested:-0}" -eq 0 ]; then
-    step_fail "no test matched filter '${TEST_FILTER}' — the foundation test may not be compiled into the editor"
+    step_fail "no test matched filter '${TEST_FILTER}' — the test module may not be compiled into the editor target"
   else
     say "  ok — automation tests passed"
   fi
