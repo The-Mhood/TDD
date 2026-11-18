@@ -1,0 +1,29 @@
+# Unreal Engine generated output
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# IDE and build-system output
+.vs/
+.idea/
+.vscode/
+*.sln
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
+*.xcodeproj/
+*.xcworkspace/
+*.xcuserstate
+
+# Crash and local logs
+CrashReportClient/
+*.log
+*.dmp
+
+# OS/editor temporary files
+.DS_Store
+Thumbs.db
