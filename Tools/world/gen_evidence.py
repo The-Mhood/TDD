@@ -149,6 +149,9 @@ def main() -> int:
         "review_c05_final_verify_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_review_a1c05_final_verify.py"]),
+        "review_c05_s4_3_10_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_review_a1c05_s4_3_10.py"]),
     }
 
     payload = {
@@ -278,6 +281,62 @@ def main() -> int:
                 "an explicit fetch; its example was not inspected, not reconstructed and not "
                 "attributed. Governance unchanged: C-05 DESIGN_ONLY, unsigned, unfrozen, U-07 "
                 "open, no MEAD, 0 of 67 acceptance cases executed, and the 106 instrument "
+                "regressions are not acceptance tests."
+            ),
+            "w_m2_20": (
+                "W-M2.20 - FINAL independent verification of Agent 1's S4.3.10, commit "
+                "7662926, the targeted F-1b correction cycle. Document blob 857778e1 (2441 "
+                "lines), register 675014ec, validator 353a2bff, suite 7ab55805, path "
+                "docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_10.md. Outcome: PASS WITH UNRELATED "
+                "LIMITATIONS; no further revision requested. THE CHANGE IS ONE ALTERNATION: the "
+                "S4.3.6 object-negation construction loses its bare comma alternative, so the "
+                "negator must be stated ('\\bnot\\s+(?:the\\s+|any\\s+)'). Validator diff "
+                "is +11/-3 in two hunks (the alternation plus the mandatory REG path bump) and "
+                "the suite diff is +50/-0, so no carried case was edited. F-1b IS CLOSED AND "
+                "CLOSED BY THE INTENDED RULE: 'No audio cue is provided for Agent 2, the audio "
+                "cue belongs to Agent 1.' is PASS at 83c24f9 and FAIL at 7662926, and I traced "
+                "the cause by instrumenting the predicate rather than reading the verdict - at "
+                "S4.3.9 NEG_BEFORE[10] matched the literal ', the audio' at span (36,47) and, "
+                "because a denial excuses a mention only when its match spans it, set "
+                "negated_mention=True and excused a clause asserting ownership; at S4.3.10 no "
+                "pattern spans the mention, negated_mention goes False and the 'belongs to' "
+                "attribution at attributed_to_agent_1 records the offence. All five reported "
+                "forms move PASS -> FAIL (verbatim splice, 'is owned by', possessive, synonym, "
+                "comma-joined object list). NOTHING LEGITIMATE WAS SACRIFICED: eight object "
+                "negations including the longer-list control ('the camera, the lighting rig, the "
+                "montage track, and not the audio cues') still PASS and six positive-ownership "
+                "controls still FAIL, at both revisions. NOTHING PREVIOUSLY VERIFIED WAS "
+                "WEAKENED: F-1's and/but/semicolon forms still FAIL, all five CONDITION-1 forms "
+                "still PASS (including TD-82 and TD-101), CONDITION-2 and the three-line and "
+                "two-line connective wraps still FAIL, MINOR-1's pairs read 10 matches the "
+                "runner, and all seven _joinable boundaries plus the cross-pairing control "
+                "still PASS. REPRODUCED FROM CLEAN ARCHIVES: S4.3.9 27/27 and 129/129; S4.3.10 "
+                "27/27 and 147/147, where 147 = 121 distinct TD ids (TD-01..TD-121, of which 18 "
+                "are new as TD-104..TD-121, contiguous) plus 20 non-TD cases, derived rather "
+                "than read, and 147 - 18 = 129 carried equals S4.3.9's own total. --compare "
+                "against the S4.3.9 validator, parsing all 147 rows: EXACTLY FIVE moves, all "
+                "PASS -> FAIL, TD-104..TD-108; 0 rows disagree with their own expectation; all "
+                "129 carried cases stable; the thirteen other new cases do not move. THE 25/27 "
+                "FIGURE IS HONEST AND NONE OF IT IS OBTAINED BY SUPPRESSION: S4.3.9's text "
+                "scores 27/27 under its own validator and 25/27 under the corrected one, the "
+                "two failures being DV-27 (it names its own register) and DV-22 with one "
+                "offender at line 964, which is S4.3.9's own prose reproduction of F-1b. "
+                "S4.3.10 does not delete that sentence - it appears twice, both inside [QUOTED] "
+                "tables - so the reproduction is labelled rather than silenced, and the "
+                "corrected validator examines MORE (165 mentions vs 155) while finding FEWER "
+                "offenders (0 vs 1). Every predecessor tally reproduces unchanged (S4.3.9 "
+                "25/27, S4.3.8 through S4.3.4 each 26/27). Normative contract untouched: 43 "
+                "obligation rows, six named clauses, 17 case specifications, 18 suites / 67 "
+                "cases and D-1..D-7 all byte-identical to 72d218a8, and S4.3.9 unmodified. "
+                "THREE UNRELATED LIMITATIONS, NONE RAISED AS A REVISION: section 13.1's DV-22 "
+                "result row states exempt lines 343 and mentions 146 where the runner prints "
+                "401 and 165, but the row is BYTE-IDENTICAL to S4.3.8's where those values were "
+                "correct, so it is an inherited snapshot affecting no verdict; the version block "
+                "says the suite grows '129 -> 146' while line 331 correctly says 147; and the "
+                "appositive Agent 1 family still passes at both revisions, which is Agent 1's "
+                "own residual family, explicitly out of scope, unchanged, and not investigated "
+                "further. Governance unchanged: C-05 DESIGN_ONLY, unsigned, unfrozen, U-07 "
+                "open, no MEAD, 0 of 67 acceptance cases executed, and the 147 instrument "
                 "regressions are not acceptance tests."
             ),
             "w_m2_19": (
@@ -882,6 +941,145 @@ def main() -> int:
                        "DESIGN_ONLY; no MEAD selected; no signature, freeze, merge or M0 "
                        "authorisation. The 47 addendum tests prove nothing about contract "
                        "behaviour."},
+
+            # ---- W-M2.20: final C-05 verification of Agent 1's S4.3.10 (F-1b) ----
+            {"claim": "the reviewed commit is 7662926 and the register pins it correctly",
+             "method": "git fetch, then rev-parse of the four named blobs at 7662926 before "
+                       "any check and again immediately before committing; git ls-tree for any "
+                       "S4.3.11",
+             "result": "VERIFIED. 7662926c4c3b7293daedcc393c0ec4d015cdd883, dated "
+                       "2026-11-18 10:07:45 +0000, parent 83c24f9 (S4.3.9). All four blobs "
+                       "match the register exactly: document 857778e1 (2441 lines), register "
+                       "675014ec, validator 353a2bff, suite 7ab55805. No V4_3_11 exists on any "
+                       "ref. Every predecessor document is byte-identical between 83c24f9 and "
+                       "7662926 (S4.3.9 72d218a8, S4.3.8 3c6bab6c, S4.3.7 0a0c36be, S4.3.6 "
+                       "e3a1fa85), so nothing earlier was silently rewritten."},
+            {"claim": "the change is confined to one alternation plus the mandatory REG bump",
+             "method": "read the whole validator diff against 83c24f9 and the suite numstat",
+             "result": "CONFINED. Validator +11/-3 in two hunks: the object-negation "
+                       "construction loses its comma alternative, and REG advances to the "
+                       "S4.3.10 register path. 'One alternation removed, nothing added' is "
+                       "literally true - the the/any requirement, the modifier class, the noun, "
+                       "the case-insensitivity and the positional span rule are untouched. "
+                       "Suite +50/-0: no deletions, so no carried case was edited or removed."},
+            {"claim": "F-1b is closed and closed by the intended DV-22 ownership logic",
+             "method": "inject the original failing statement before the active section at "
+                       "both revisions, then instrument negated_mention, attributed_to_agent_1 "
+                       "and every NEG_BEFORE span match rather than reading only the verdict",
+             "result": "CLOSED, AND PROVEN TO BE THE INTENDED RULE. 'No audio cue is provided "
+                       "for Agent 2, the audio cue belongs to Agent 1.' is PASS at 83c24f9 and "
+                       "FAIL at 7662926. At S4.3.9, NEG_BEFORE[10] matched the literal string "
+                       "', the audio' at span (36,47); because a denial excuses a mention only "
+                       "when its match spans it, that bare comma set negated_mention=True for "
+                       "mention@42 and excused a clause that asserts ownership. At S4.3.10 no "
+                       "NEG_BEFORE entry spans mention@42, negated_mention goes False, "
+                       "attributed_to_agent_1 stays True via the 'belongs to' form, and the "
+                       "mention is recorded as an offence. That is the ownership logic, not an "
+                       "unrelated rule and not document formatting."},
+            {"claim": "the four reported equivalent constructions move as claimed",
+             "method": "inject each form at both revisions and compare",
+             "result": "ALL FIVE MOVE, PASS -> FAIL: TD-104 verbatim comma splice, TD-105 'is "
+                       "owned by', TD-106 possessive, TD-107 synonym, and TD-108 the "
+                       "comma-joined object list ('Agent 1 owns the camera, the audio cues.'). "
+                       "I note TD-108 is a comma-separated object LIST, not a passive "
+                       "construction; my first probe used a passive appositive and did not "
+                       "move, which is correct, and I re-read the case before reporting."},
+            {"claim": "legitimate object negations were protected, not sacrificed",
+             "method": "eight legitimate forms and six positive-ownership controls at both "
+                       "revisions",
+             "result": "ALL PROTECTED. 'owns the camera, not the audio cues', 'not any', "
+                       "'but not', 'not any' without a comma, ',not' with no space after the "
+                       "comma, the longer-list control ('the camera, the lighting rig, the "
+                       "montage track, and not the audio cues'), its 'any' variant, and the "
+                       "C-05 modifier form all PASS at both. The six positive-ownership "
+                       "controls all FAIL at both. So the fix is not bought by weakening the "
+                       "positive form, and the comma is neither required nor sufficient - the "
+                       "stated negator is what carries the rule."},
+            {"claim": "F-1, CONDITION-1, CONDITION-2, MINOR-1 and the seven boundaries remain intact",
+             "method": "re-run every preserved family directly against both validators rather "
+                       "than relying on the suite",
+             "result": "ALL INTACT. F-1: the 'and', ', but' and ';' forms all still FAIL. "
+                       "CONDITION-1: all five quantified-denial forms still PASS, including "
+                       "TD-82 and TD-101, the two controls the assignment names, both PASS -> "
+                       "PASS. CONDITION-2: the three capitalised two-line wraps and the "
+                       "three-line and two-line connective forms all still FAIL. MINOR-1: "
+                       "DV-24 reports pairs read 10 at both revisions, matching the runner. "
+                       "All seven block and sentence boundaries and the cross-pairing control "
+                       "still PASS, so no false join was reintroduced."},
+            {"claim": "the reported suite and validation results reproduce from clean archives",
+             "method": "git archive of both commits; run each commit's own validator on its own "
+                       "document and each suite; derive the case total from the source",
+             "result": "REPRODUCED. S4.3.9: 27/27 and 129/129. S4.3.10: 27/27 and 147/147. I "
+                       "derived 147 rather than reading it: 121 distinct TD ids (TD-01..TD-121) "
+                       "plus 20 non-TD cases carried from S4.3, of which 18 are new "
+                       "(TD-104..TD-121, contiguous, no gaps). 147 - 18 = 129 carried, which "
+                       "equals S4.3.9's own total, so the register's '129 carried + 18 added' "
+                       "is arithmetically correct."},
+            {"claim": "only the five intended verdicts move and all 129 carried cases are stable",
+             "method": "run the S4.3.10 suite with --compare against the S4.3.9 validator and "
+                       "parse all 147 result rows rather than a sample",
+             "result": "EXACTLY FIVE MOVE, all PASS -> FAIL, all in the F-1b family: TD-104, "
+                       "TD-105, TD-106, TD-107, TD-108. Zero rows disagree with their own "
+                       "expectation (0 of 147). All 129 carried cases keep their expected "
+                       "verdicts, and the thirteen other new cases do not move - TD-109..TD-113 "
+                       "(legitimate negations, PASS both), TD-114/115 (positive ownership, FAIL "
+                       "both), TD-116/117 (F-1, FAIL both), TD-118 (CONDITION-1, PASS both), "
+                       "TD-119 (CONDITION-2, FAIL both), TD-120/121 (the document's own "
+                       "verdicts, PASS both). No unexpected verdict change anywhere."},
+            {"claim": "the 25/27 and 27/27 figures are explained by a quotation classification",
+             "method": "reproduce all three cross-applications and locate the single DV-22 "
+                       "offender; then check where the failing sentence sits at each revision",
+             "result": "HONESTLY EXPLAINED, AND NOTHING IS SUPPRESSED. The two figures are not "
+                       "the same measurement: S4.3.9's text under its OWN validator is 27/27, "
+                       "and under the S4.3.10 validator is 25/27. The two failures are DV-27 "
+                       "(it names its own register - unavoidable) and DV-22 with exactly one "
+                       "offender at line 964. That line is S4.3.9's own paragraph REPORTING "
+                       "F-1b by quoting the failing sentence in ordinary prose, and prose is "
+                       "not an exempt region, so the corrected rule reads it as it reads a real "
+                       "assertion. S4.3.10 does not delete the sentence: it appears twice there "
+                       "and I verified both occurrences sit inside [QUOTED] tables (lines 327 "
+                       "and 1006). The finding stays fully reported and the reproduction is "
+                       "labelled. The mention count moves the opposite way from suppression: "
+                       "S4.3.10 evaluates 165 mentions against 0 offenders, versus S4.3.9's 155 "
+                       "against 1 - more of the document examined, fewer offenders found."},
+            {"claim": "every predecessor tally is unchanged",
+             "method": "apply the S4.3.10 validator to each predecessor document in its own "
+                       "clean archive and compare with the tallies the document states",
+             "result": "ALL MATCH. S4.3.9 25/27, S4.3.8 26/27, S4.3.7 26/27, S4.3.6 26/27, "
+                       "S4.3.5 26/27, S4.3.4 26/27 - each exactly as the document claims, so no "
+                       "predecessor's score was disturbed by the correction."},
+            {"claim": "no remaining defect affects F-1 or F-1b",
+             "method": "re-read section 13.1's DV-22 result row against the runner; grep the "
+                       "version block; probe the appositive family",
+             "result": "NO DEFECT AFFECTS F-1 OR F-1b. Three unrelated limitations are recorded "
+                       "and NOT raised as revisions. L-1: section 13.1, headed 'the "
+                       "twenty-seven checks and their actual output', states DV-22 exempt lines "
+                       "343 and mentions 146 where the runner prints 401 and 165 - and the row "
+                       "is BYTE-IDENTICAL to S4.3.8's, where those values were correct (I "
+                       "verified S4.3.8's runner prints 343/146). So it is an inherited "
+                       "snapshot, not introduced by this change, and it affects no verdict. "
+                       "L-2: the version block says the suite grows '129 -> 146' while line 331 "
+                       "correctly says 147. L-3: the appositive Agent 1 family still passes at "
+                       "both revisions - Agent 1's own residual family, explicitly out of scope "
+                       "by directive, unchanged here, and not investigated further."},
+            {"claim": "no normative contract boundary moved",
+             "method": "byte-compare 43 obligation rows, TN-C-11/14/15, TN-A-01..03, the 17 case "
+                       "specifications and D-1..D-7 between 72d218a8 and 857778e1; check the "
+                       "S4.3.9 path for an empty range diff",
+             "result": "NONE MOVED. 43 -> 43 rows identical; six named clauses identical; 17 "
+                       "case specs identical; 18 suites / 67 cases identical; D-1..D-7 all two "
+                       "rows each and identical, not reopened; S4.3.9 unmodified with an empty "
+                       "diff. TN-C-11 and the TN-A boundary remain UNRESOLVED and I did not "
+                       "resolve them."},
+            {"claim": "C-05, U-07, a MEAD, TD-09 or the TN-A boundary is resolved here",
+             "method": "none - read-only verification, every mutation on a copy under /tmp",
+             "result": "NOT CLAIMED and NOT TOUCHED. C-05 DESIGN_ONLY, unsigned, unfrozen; U-07 "
+                       "OPEN; no MEAD selected; 0 of 67 acceptance cases executed; no "
+                       "implementation authority. I modified no implementation and no "
+                       "documentation: 7662926 and 83c24f9 are untouched and the tree is clean. "
+                       "I did not widen validator coverage, introduce a rule, or investigate an "
+                       "unrelated residual family. Verdict PASS WITH UNRELATED LIMITATIONS, and "
+                       "I request no further revision."},
 
             # ---- W-M2.19: final C-05 verification against Agent 1's S4.3.8 ----
             {"claim": "a successor to S4.3.7 was published and is the object of this review",

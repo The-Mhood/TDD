@@ -116,14 +116,19 @@ class TestSuccessorIsPublished(Base):
                 self.skipTest("commit unavailable")
             self.assertEqual(r.stdout.strip(), blob, spec)
 
-    def test_agent1_head_is_s438(self):
-        r = subprocess.run(["git", "ls-remote", "origin",
-                            "refs/heads/arena/3bc206a0-tdd"],
+    def test_reviewed_commit_is_still_intact(self):
+        """S4.3.8 is an immutable historical record now that Agent 1 has moved on.
+
+        This review found a fail-open regression at c4761f5; Agent 1 answered it at
+        S4.3.9 (83c24f9) and S4.3.10 (7662926). So the correct assertion is no longer
+        "the head has not moved" - it is "the commit reviewed here still exists and
+        still carries the blobs this review pinned", so the finding stays checkable.
+        """
+        r = subprocess.run(["git", "rev-parse", "--verify", "%s^{commit}" % TARGET],
                            capture_output=True, text=True, cwd=ROOT, check=False)
-        if r.returncode != 0 or not r.stdout.strip():
-            self.skipTest("remote unavailable")
-        self.assertEqual(r.stdout.split()[0], TARGET,
-                         "head moved - reissue the review against the new commit")
+        if r.returncode != 0:
+            self.skipTest("commit no longer present in this clone")
+        self.assertEqual(r.stdout.strip(), TARGET)
 
     def test_s437_predecessor_unmodified(self):
         a = git_show("%s:docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_7.md" % PREDECESSOR)
