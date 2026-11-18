@@ -140,6 +140,9 @@ def main() -> int:
         "review_c05_s4_3_5_arch_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_review_a1c05_s4_3_5.py"]),
+        "review_c05_s4_3_6_instrument_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_review_a1c05_s4_3_6.py"]),
     }
 
     payload = {
@@ -193,6 +196,43 @@ def main() -> int:
                 "looking correct. Governance unchanged: C-05 and U-07 open, DESIGN_ONLY, "
                 "unsigned, unfrozen, no MEAD selected, 0 of 67 acceptance cases executed, and "
                 "the 67 instrument regressions are not acceptance tests."
+            ),
+            "w_m2_17": (
+                "W-M2.17 - independent review of Agent 1's S4.3.6, commit 034d091, document "
+                "blob e3a1fa85, validator 840fed67, suite ee69f549, path "
+                "docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_6.md, 1931 lines. Outcome: PASS WITH "
+                "CONDITIONS, one condition C-1. This is a review of INSTRUMENTS, not of "
+                "contract behaviour: S4.3.6 changes no contract sentence, which I verified "
+                "byte-wise rather than accepting (43 obligation rows, six clauses, 17 case "
+                "specifications, the section 8 preamble and TN-C-11/14/15 and TN-A-01..03 all "
+                "identical; D-1..D-7 not reopened). Reproduction: document 27/27; regression "
+                "suite 86/86 with 0 expectation mismatches across all 86 rows; every "
+                "predecessor tally reproduced (26/27 for S4.3 through S4.3.5 failing DV-27 "
+                "alone; S4.2 24/27 failing DV-22, DV-24 and DV-27, and I add that S4.2 scores "
+                "27/27 under the validator that shipped with it, so the 24/27 measures checker "
+                "growth, not a defect); twelve verdicts move, eleven PASS to FAIL and one FAIL "
+                "to PASS (TD-47, a false positive removed), with no carried-forward case "
+                "regressing. DV-22: TD-42..TD-51 all correct, both of my published W-M2.16 "
+                "escapes now closed, and BOTH documented departures independently assessed and "
+                "ACCEPTED - whereas is correctly not a foil because it coordinates independent "
+                "clauses, and the object-negation form does not hide a second assignment. "
+                "DV-24: TD-52..TD-55 correct. DV-11: all three gaps real and closed, each PASS "
+                "before and FAIL after, TD-60 failing before and after as reported. FINDINGS: "
+                "MAJOR-1 - 'The audio cues are the first agent's.' still escapes, because the "
+                "synonym was taught to AGENT_REF and nearest-prior attribution but not to "
+                "FORWARD_OWNER's possessive literal; MAJOR-2 - a foil longer than the "
+                "32-character FOIL_BEFORE window re-inverts attribution to Agent 2, the same "
+                "failure TD-42 fixed at shorter distance; MINOR-1 - DV-24 joins only adjacent "
+                "lines so a three-line wrap escapes; MINOR-2 - TD-60 asserts the right outcome "
+                "but does not isolate the subset rule. Both MAJORs reproduce a clean 27/27. No "
+                "false positives were introduced by any of the three corrections (13 valid "
+                "denials and 8 benign co-occurrences all still pass). Agent 3's S4.3.5 QA "
+                "review is CONFIRMED ABSENT across 77 reachable commits, re-verified after an "
+                "explicit fetch because a partial fetch once made me report artifacts absent "
+                "wrongly; its DV-24 and DV-11 items are marked UNABLE TO VERIFY and nothing is "
+                "attributed to Agent 3. Governance unchanged: C-05 DESIGN_ONLY, unsigned, "
+                "unfrozen, U-07 open, no MEAD, 0 of 67 acceptance cases executed, and the 86 "
+                "instrument regressions are not acceptance tests."
             ),
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
@@ -744,6 +784,112 @@ def main() -> int:
                        "DESIGN_ONLY; no MEAD selected; no signature, freeze, merge or M0 "
                        "authorisation. The 47 addendum tests prove nothing about contract "
                        "behaviour."},
+
+            # ---- W-M2.17: independent review of A1-C05-S4.3.6 instruments ----
+            {"claim": "the reviewed document is the exact published S4.3.6 blob",
+             "method": "git fetch, then git rev-parse 034d091:docs/"
+                       "AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_6.md before reading, and again at "
+                       "commit time",
+             "result": "verified: 034d091e1abcb507fdba6df4a05318a15aa5d7a1 resolves to "
+                       "e3a1fa85243a4749591363d4196bb5d65dad7c84, exactly the stated blob, 1931 "
+                       "lines. Note: the objects were NOT in the local clone and "
+                       "git rev-parse 034d091 initially failed with 'unknown revision' until I "
+                       "fetched the branch - recorded because an abbreviated hash failing to "
+                       "resolve is not evidence of absence."},
+            {"claim": "S4.3.5 is unmodified and the instruments are pinned",
+             "method": "rev-parse the predecessor path at both commits and diff the range; "
+                       "rev-parse the validator and suite blobs named in the register",
+             "result": "VERIFIED. S4.3.5 is a0b46f46 at baa31db AND at 034d091, and "
+                       "git diff --stat baa31db 034d091 on that path is empty. Validator "
+                       "840fed67 and suite ee69f549 both match the register fields exactly. "
+                       "Every result was produced from a git archive extraction of 034d091, so "
+                       "no branch-tip instrument could be substituted - the specific defect I "
+                       "found in my own W-M2.15 module and published as MINOR-4."},
+            {"claim": "the register's reported tallies reproduce",
+             "method": "run the shipped validator and suite in a clean archive of 034d091; run "
+                       "the S4.3.6 checker against nine predecessor blobs; run each "
+                       "predecessor's own validator against its own blob",
+             "result": "ALL REPRODUCE. S4.3.6 document 27/27. Suite 86/86 with 0 expectation "
+                       "mismatches across all 86 parsed rows. S4.3.5/4/3/2/1/3 each 26/27 failing "
+                       "DV-27 ONLY. S4.2 24/27 failing DV-22, DV-24 and DV-27 - and I add the "
+                       "clarification the register omits: S4.2 scores 27/27 under the validator "
+                       "that shipped with it (381be714), so the 24/27 measures checker growth, "
+                       "not a defect in S4.2. S4.1 and S4.0 21/27, S3 10/27."},
+            {"claim": "twelve verdicts move and no carried-forward case regresses",
+             "method": "run the suite with --compare against the baa31db validator (6927644f "
+                       "blob) and parse all 86 rows mechanically",
+             "result": "EXACT. 12 rows move: 11 PASS -> FAIL (TD-42..TD-46, TD-52..TD-54, "
+                       "TD-56..TD-58) and 1 FAIL -> PASS (TD-47, a FALSE POSITIVE being "
+                       "removed, not a relaxation). TD-48..TD-51, TD-55, TD-59, TD-60 and all "
+                       "pre-existing cases stable. 0 rows where the new verdict differs from the "
+                       "expected verdict."},
+            {"claim": "the DV-22 correction closes my published MAJOR-1",
+             "method": "33 injected audio-assignment forms against the shipped validator on a "
+                       "copy of the reviewed blob",
+             "result": "CLOSED for the forms I published and for the foil markers. TD-42..TD-51 "
+                       "all behave correctly (10/10). Both of my W-M2.16 escapes now FAIL. The "
+                       "'whereas' departure is CORRECT and I verified it rather than accepting "
+                       "the note: whereas joins independent clauses, so its subject is the "
+                       "following reference; treating it as a foil would lose a true positive. "
+                       "The object-negation form does not hide a second assignment on the same "
+                       "line. 13 valid-denial and 8 benign-co-occurrence probes all PASS: no "
+                       "false positive was introduced."},
+            {"claim": "DV-22 is now complete",
+             "method": "probe beyond Agent 1's published set, then confirm the overall tally",
+             "result": "FALSE - MAJOR-1 and MAJOR-2. Two false negatives each give a clean "
+                       "27/27. (A) 'The audio cues are the first agent's.' - the synonym was "
+                       "taught to AGENT_REF and to nearest-prior attribution but NOT to "
+                       "FORWARD_OWNER, whose possessive pattern is still the literal "
+                       "agent[-\\s]?1. The literal form correctly FAILs, so this is a partial "
+                       "lexical extension. (B) A foil longer than the 32-character FOIL_BEFORE "
+                       "window is not seen as a foil, so attribution re-inverts to Agent 2 - the "
+                       "identical failure TD-42 was built to fix, at a longer distance."},
+            {"claim": "the DV-24 and DV-11 corrections are complete",
+             "method": "mutate the live document and compare the baa31db validator with the "
+                       "034d091 one on the same text",
+             "result": "DV-11 PASS (8 probes, 0 escapes): the three gaps are real and closed - "
+                       "every number and range parsed, subset instead of intersection, and the "
+                       "section 5.4 hand cell counts compared. Each was PASS before and FAIL "
+                       "after; TD-60 fails before AND after, as reported. DV-24 PASS WITH "
+                       "CONDITIONS: TD-52..TD-55 reproduce and 10 of 11 extra probes are "
+                       "correct, but a pair wrapped over THREE lines (or across a blank line) "
+                       "escapes, because the cross-line scan joins only adjacent pairs."},
+            {"claim": "no contract sentence changed and no obligation weakened",
+             "method": "byte-compare 43 obligation rows, six clauses, 17 case specifications, "
+                       "the section 8 preamble and the named TN clauses between a0b46f46 and "
+                       "e3a1fa85; read the two sections that were added",
+             "result": "NONE. 43 -> 43 rows, 0 changed, 0 lost, 0 gained. 18 suites / 67 cases "
+                       "identical. 5.2, 5.4, 9.2, 4.9, 3.6, 4.2 identical. TN-C-11, TN-C-14, "
+                       "TN-C-15, TN-A-01..03 identical. T-C05-63 and T-C05-64 identical. Section "
+                       "8 preamble identical, 'camera and audio' absent. D-1..D-7 carried "
+                       "unchanged and not reopened. The ~196 added lines are two administrative "
+                       "sections (0.9 and 13.3.6) plus disposition material."},
+            {"claim": "the Agent 3 S4.3.5 QA review is genuinely absent",
+             "method": "fetch arena/c64fc525-tdd explicitly, then search every reachable commit "
+                       "for the named filename and for DV-24 mentions in the three Agent 3 files",
+             "result": "CONFIRMED ABSENT. Three AGENT3 files exist, all published before S4.3; "
+                       "none is the named QA review; no commit among 77 reachable contains it; "
+                       "DV-24 appears 0 times in all three. I re-ran this because on a previous "
+                       "milestone a partial fetch made me wrongly report artifacts absent. I did "
+                       "NOT reconstruct Agent 3's counterexamples and did NOT attribute any "
+                       "example to Agent 3. Agent 3's published S4.1 review DOES contain a DV-11 "
+                       "finding, and it AGREES with my independent 0-failure result."},
+            {"claim": "a passing suite means the validator is complete or the contract is ready",
+             "method": "kept separate deliberately throughout",
+             "result": "IT DOES NOT. 86/86 are tests of the checker. 27/27 is a structural check "
+                       "on the document. Neither says anything about telegraph, producer or "
+                       "consumer behaviour - there is no engine (B-3). The 67 acceptance cases "
+                       "are PROPOSED / NOT RUN and 0 were executed. The three escapes recorded "
+                       "here are exactly the case where a green suite did NOT mean a complete "
+                       "instrument."},
+            {"claim": "C-05, U-07, a MEAD, TD-09 or the TN-A boundary is resolved here",
+             "method": "none - instrument and document checks only",
+             "result": "NOT CLAIMED and NOT TOUCHED. C-05 DESIGN_ONLY, unsigned, unfrozen; "
+                       "U-07 OPEN; no MEAD selected; 0 of 67 acceptance cases executed; no "
+                       "implementation authority. TN-C-11 / TN-A-01 / TN-A-02 remain "
+                       "UNRESOLVED and I do not resolve them. B-1/TD-06, B-2/TD-09, B-4/TD-12 "
+                       "and B-13 remain OPEN. I edited no Agent 1 file: all mutations were "
+                       "applied to copies in /tmp and 034d091 is untouched."},
 
             # ---- W-M2.16: independent architecture review of A1-C05-S4.3.5 ----
             {"claim": "the reviewed document is the exact published S4.3.5 blob",
