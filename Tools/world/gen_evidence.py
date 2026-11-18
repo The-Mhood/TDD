@@ -155,6 +155,9 @@ def main() -> int:
         "assess_c05_residual": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_assess_c05_residual.py"]),
+        "milestone_c05_s4_3_11": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_milestone_c05_s4_3_11.py"]),
     }
 
     payload = {
@@ -285,6 +288,49 @@ def main() -> int:
                 "attributed. Governance unchanged: C-05 DESIGN_ONLY, unsigned, unfrozen, U-07 "
                 "open, no MEAD, 0 of 67 acceptance cases executed, and the 106 instrument "
                 "regressions are not acceptance tests."
+            ),
+            "w_m2_22": (
+                "W-M2.22 - S4.3.11 implementation milestone RECORDED. Commit 06a4a8b, "
+                "document blob 19295516 (2581 lines), register 9b4edc0d, validator 9e88c5a4, "
+                "suite ca0a4f90, path docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_11.md. This "
+                "records an instrument correction as a milestone; it is NOT contract "
+                "approval, NOT MEAD completion and NOT closure of C-05. Measured "
+                "independently from a clean git archive: 27/27 document checks, 164/164 "
+                "suite (147 carried + 17 new TD-122 to TD-138, no pre-existing case edited), "
+                "12/14 assessment probes, 26/26 required controls, 17/17 independent edge "
+                "cases, 0 of 67 acceptance cases executed. SEVEN OF NINE RESIDUAL PROBES "
+                "CLOSED: R-1, R-1b, R-1c by D-a and R-3b, R-5, R-5b, R-5c by D-b. The two "
+                "that did not move are exactly the two deferred: R-4 and R-4b remain PASS "
+                "(still missed) and are now pinned by TD-137 and TD-138 as characterisation "
+                "tests, so implementing D-c later must move them. C is UNIMPLEMENTED - "
+                "_FOIL_ANY is byte-identical to 7662926 with no not and no never - and the "
+                "not-only hazard it would re-open ('Not only does Agent 1 own the audio "
+                "cues.') is still caught as FAIL. D-d is REFUSED: _FO_PART still reads only "
+                "owned, claimed, carried, held, supplied, provided, selected, chosen. F-1b "
+                "not reopened; TD-104 to TD-121 carried unchanged. ONE AUTHORISED DEVIATION, "
+                "and it closes my own assessment caveat: Agent 1 did not make the copula "
+                "merely optional, because applied literally that also reads a NEGATED "
+                "passive as an assignment - eight new false alarms on legitimate denials, "
+                "measured - so the zero-copula read carries negative lookbehinds on not, "
+                "never and been and the denial side reads the same auxiliary chain. "
+                "Re-measured at 06a4a8b the denial predicate is clean rather than "
+                "order-saved: 'Audio is not owned by Agent 1.' is negated True attributed "
+                "False, 'Audio is not provided by Agent 1.' is negated False attributed "
+                "False. THAT RESOLVES ASSESSMENT SECTION 5.3. ONE DOCUMENTATION "
+                "REQUIREMENT OUTSTANDING: L-1 RECURS AT S4.3.11 and is NOT closed by "
+                "construction. Section 13.1's DV-22 row publishes 'exempt lines 343 (fenced "
+                "201, quoted table 139, marked block 3) ... audio mentions evaluated 146' - "
+                "byte-identical across S4.3.10 and S4.3.11 - while the S4.3.11 runner "
+                "prints 432 (228, 201, 3) and 169 mentions, offenders still 0. That "
+                "contradicts the document's own Section 2.26 claim that its text is "
+                "re-measured from its finished form, and the governance record's inference "
+                "that both L-1 and L-2 therefore do not recur. L-2 IS genuinely closed at "
+                "S4.3.11 (no stale 146-suite claim survives; Section 17 states 164). The L-1 "
+                "correction is a documentary edit to one DV-22 cell needing TD authorisation "
+                "and was NOT made here. Governance unchanged: C-05 DESIGN_ONLY, unsigned, "
+                "unfrozen, not closed; U-07 OPEN; no MEAD; B-15 OPEN; TN-C-11/TN-A-01/"
+                "TN-A-02 untouched; 0 of 67 acceptance cases executed. No further "
+                "implementation changes requested from Agent 2 at this stage."
             ),
             "w_m2_21": (
                 "W-M2.21 - ASSESSMENT ONLY, in response to A1-C05-REQ-A2-001 v1.0. Not a "
