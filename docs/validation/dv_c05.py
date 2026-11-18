@@ -513,6 +513,21 @@ def is_foil(ln, m):
 # offender, it does not make a line exempt.
 _DENIAL_NOUN = r'(?:responsibility|ownership|authority|duty|obligation|mandate)'
 _MODS = r'(?:(?:C-05|contract|cue|cues|of|any|the)\s+){0,2}?'
+# A quantified denial ('no audio cue ... belongs to Agent 1') may not reach its possession verb
+# across a clause boundary. S4.3.8 allowed any character except '.', ';' and '|' in that gap,
+# so 'No audio cue is assigned to Agent 2 and the audio cue belongs to Agent 1' was read as one
+# denial: the gap crossed the conjunction, and a line that *asserts* Agent 1's ownership passed.
+# The gap below stops at a coordinating conjunction or a clause separator, so the denial can only
+# cover its own clause.
+#
+# `_NOT_CROSS` (defined further down, for NEG_AFTER) is the same idea but not the same set: it
+# also excludes the relative pronouns 'that', 'which', 'who' and 'whose', and a *restrictive*
+# relative belongs inside the quantified subject — 'no audio cue **that** belongs to Agent 1' is
+# one denial, not two clauses. Measured: applying _NOT_CROSS verbatim here turns TD-82 and TD-83
+# from PASS into FAIL. Hence a narrower gap rather than the existing one.
+_Q_GAP = (r'(?:(?!\b(?:and|but|yet)\b)'            # no coordinating conjunction
+          r'[^.;|,\u2014\u2013])')                  # no clause punctuation
+
 NEG_BEFORE = (
     # 'owns no audio cue', 'has no C-05 audio responsibility', 'carries no audio duty'
     re.compile(r'\b(?:owns?|owned|owning|has|have|had|holds?|carries|carry|claims?|exercises?)\s+no\s+'
@@ -537,13 +552,13 @@ NEG_BEFORE = (
     # A *determiner-quantified subject* denies possession without a negated verb, so the
     # 'belongs to' widening read it as an assignment. The quantifier governs the mention, so
     # the construction spans it — 'no ... audio ... belong(s) to <Agent 1>'.
-    re.compile(r'\b(?:no|none\s+of\s+the)\s+' + _MODS + r'audio\b[^.;|]{0,50}?'
+    re.compile(r'\b(?:no|none\s+of\s+the)\s+' + _MODS + r'audio\b' + _Q_GAP + r'{0,50}?'
                r'\bbelong(?:s)?\s+to\s+' + AGENT1 + r'\b', re.I),
     # the same quantified subject with the other possession predicates the widening taught
-    re.compile(r'\bno\s+' + _MODS + r'audio\b[^.;|]{0,50}?\b(?:is|are|was|were)\s+'
+    re.compile(r'\bno\s+' + _MODS + r'audio\b' + _Q_GAP + r'{0,50}?\b(?:is|are|was|were)\s+'
                r'(?:owned|claimed|carried|held|supplied|provided|selected|chosen)\s+by\s+'
                + AGENT1 + r'\b', re.I),
-    re.compile(r'\bno\s+' + _MODS + r'audio\b[^.;|]{0,50}?\b(?:is|are|was|were)\s+'
+    re.compile(r'\bno\s+' + _MODS + r'audio\b' + _Q_GAP + r'{0,50}?\b(?:is|are|was|were)\s+'
                + AGENT1_POSS + r'\b', re.I),
     # 'owns the camera, not the audio cues' — the *object* is negated (S4.3.6, found when
     # 'the first agent' became attributable: the line is a genuine denial and must not fail)
@@ -853,7 +868,7 @@ check('DV-26', (not stale) and observ and both,
       f"PO-3 and PO-5 both retained {both}")
 
 # ---------------------------------------------------------------- DV-27 provenance, no placeholders
-REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_8_PROVENANCE.md'
+REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_9_PROVENANCE.md'
 DECISION = 'docs/DECISION_C05_SUCCESSOR_IDENTITY_004_2_V1.md'
 # fenced code blocks are evidence transcripts, not prose claims: strip them first
 prose = re.sub(r'```.*?```', '', s, flags=re.S)

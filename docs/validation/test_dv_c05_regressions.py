@@ -431,6 +431,36 @@ case('TD-94 the correct pair across a capitalised wrap passes (control)', 'DV-24
      replace_in_doc(LIVE, 'Counts: 7 declared\nThe audit shows 5 observed.\n\n' + LIVE),
      'removing the continuation gate must not make a correct restatement fail')
 
+# ------- 5i. S4.3.9: the quantified denial may not reach its verb across a clause boundary
+print('\n== S4.3.9 — DV-22 quantified denial is confined to its own clause ==')
+case('TD-95 Agent 2 F-1 verbatim: denial + "and" + contradicting ownership', 'DV-22', 'FAIL',
+     inject('No audio cue is assigned to Agent 2 and the audio cue belongs to Agent 1.'),
+     "S4.3.8's gap crossed the conjunction, so a line asserting Agent 1's ownership was "
+     "excused by a denial that speaks about Agent 2 — the exact reproduced fail-open")
+case('TD-96 denial + comma + "but" + contradicting ownership', 'DV-22', 'FAIL',
+     inject('No audio cue is provided for Agent 2, but the audio cue belongs to Agent 1.'),
+     'the second reproduced form')
+case('TD-97 the same fail-open with "is owned by"', 'DV-22', 'FAIL',
+     inject('No audio cue is provided for Agent 2 and the audio cue is owned by Agent 1.'),
+     'the other possession predicate the quantified family covers')
+case('TD-98 the same fail-open with the possessive predicate', 'DV-22', 'FAIL',
+     inject("No audio cue is assigned to Agent 2 and the audio cue is Agent 1's."))
+case('TD-99 the same fail-open naming the first agent by synonym', 'DV-22', 'FAIL',
+     inject('No audio cue is assigned to Agent 2 and the audio cue belongs to the first agent.'))
+case('TD-100 a positive ownership statement in the same shape is still caught (control)',
+     'DV-22', 'FAIL',
+     inject('The audio cue belongs to Agent 1.'),
+     'the correction must not buy the denial by weakening the positive form')
+case('TD-101 a restriction inside the quantified clause is still a denial (control)',
+     'DV-22', 'PASS',
+     inject('No audio cue in the shared read-surface registry belongs to Agent 1.'),
+     'the gap still spans a clause-internal modifier: narrowing must not over-reject')
+case('TD-102 semicolon-joined contradicting ownership (control)', 'DV-22', 'FAIL',
+     inject('No audio cue is assigned to Agent 2; the audio cue belongs to Agent 1.'),
+     "';' was already excluded in S4.3.8; this control isolates the gap class")
+case('TD-103 sentence-joined contradicting ownership (control)', 'DV-22', 'FAIL',
+     inject('No audio cue is assigned to Agent 2. The audio cue belongs to Agent 1.'))
+
 # ------------------------------------------------------------- 6. the predecessors still fail# ------------------------------------------------------------- 6. the predecessors still fail
 print('\n== predecessors — the checks still fail where the defects were ==')
 for label, check, expect in (('S4.3.1', 'DV-22', 'PASS'), ('S4.3', 'DV-22', 'PASS'), ('S4.2', 'DV-22', 'FAIL'),
