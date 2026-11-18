@@ -9,9 +9,11 @@ Original Igbo-inspired folklore retold as original dark fantasy — **not** a de
 
 ---
 
-## Current state of this repository (2026-11-16)
+## Current state of this repository (2026-11-18)
 
-**This repository contains architecture and governance documents only. There is no Unreal project, no code and no game content yet.**
+**The Unreal project now exists in this repository, and it has never been compiled.** As of `TDD-IMPL-FOUNDATION-001`, the repository contains a real UE 5.8 project at the root — `TDD.uproject`, nine C++ modules (`TDD`, `TDDCore`, `TDDWorld`, `TDDGameplay`, `TDDAI`, `TDDNarrative`, `TDDUI`, `TDDEditor`, `TDDTests`), both target files, `Config/`, an automation-test foundation and two toolchain verifiers — plus the architecture and governance documents.
+
+**Status: `IMPLEMENTED_UNVERIFIED`.** The skeleton is statically checked (`58/58` structural checks) and **no Unreal Engine exists in the workspace**, so the project has not been built, opened, cooked or run, and no acceptance case has been executed. `Tools/engine/preflight.sh` re-measures any machine and currently reports `NOT READY — 4 blocking gap(s)`; the exact engine/machine requirement is in `docs/06_IMPLEMENTATION/UNREAL_PROJECT_FOUNDATION_V1.md` §5. There is still **no game content**. See `docs/00_GOVERNANCE/STATUS_AND_CLAIMS.md`.
 
 Verified by inspection: the repository was an empty initialised repo (one 6-byte README, one commit) before this documentation set was added. The production Art Bible lives in Google Drive; it currently holds 176 indexed files, of which **7 are approved designs** and none is a production-ready 3D asset.
 
@@ -28,6 +30,10 @@ Read `docs/00_GOVERNANCE/STATUS_AND_CLAIMS.md` before believing any status claim
 | `docs/01_ARCHITECTURE/MASTER_ENGINEERING_ARCHITECTURE.md` | **Primary deliverable.** Full architecture: project assessment, module design, all gameplay systems, AI, animation, narrative, persistence, interfaces, testing, performance, phasing, risks |
 | `docs/00_GOVERNANCE/PROJECT_STATE_2026-11-16.md` | Evidence-based audit of the repository, the workspace and the Art Bible |
 | `docs/00_GOVERNANCE/STATUS_AND_CLAIMS.md` | Status vocabulary + current claim ledger |
+| `TDD.uproject`, `Source/`, `Config/`, `Tools/engine/` | **The Unreal project** — UE 5.8 pin, nine modules on the MEAD §3.2 graph, targets, config, automation-test foundation, `preflight.sh` and `verify_project_structure.py` (`IMPLEMENTED_UNVERIFIED`: never compiled) |
+| `docs/06_IMPLEMENTATION/UNREAL_PROJECT_FOUNDATION_V1.md` | What was created, what is verified vs unverified, the exact engine/machine blocker and the installation requirement |
+| `docs/06_IMPLEMENTATION/C05_DEPENDENCY_OWNERSHIP_MATRIX_V1.md` | Every outstanding C-05 dependency (B-1…B-15) with owner, recorded status, the exact decision required and what it blocks — **no decision invented** |
+| `docs/06_IMPLEMENTATION/C05_TRANCHE_1_MAPPING_V1.md` | The 17 first-tranche cases mapped to modules, test kinds, automation names and fixtures; `T-C05-11` deferred pending TD-06; **0 implemented, 0 executed** |
 | `docs/00_GOVERNANCE/OPEN_QUESTIONS.md` | 22 decisions needed, what each blocks, and the default assumption while open |
 | `docs/01_ARCHITECTURE/CODING_STANDARDS.md` | Mandatory coding, naming, tick, logging, test and commit rules |
 | `docs/03_DECISIONS/ADR-0001…0012` | Architecture decision records (engine pin, modules, GAS, animation provider, AI stack, persistence, canon gating, audio, experimental features, single-player, verification boundary) |

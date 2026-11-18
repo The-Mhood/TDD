@@ -1,0 +1,20 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "5.8",
+	"Category": "Game",
+	"Description": "The Disobedient Daughter. Engine pin UE 5.8 per ADR-0001; contract C-05 successor A1-C05-S4.3.11 (DESIGN_ONLY).",
+	"Modules": [
+		{ "Name": "TDD",          "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "TDDCore",      "Type": "Runtime", "LoadingPhase": "PreDefault" },
+		{ "Name": "TDDWorld",     "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "TDDGameplay",  "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "TDDAI",        "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "TDDNarrative", "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "TDDUI",        "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "TDDEditor",    "Type": "Editor",  "LoadingPhase": "Default" },
+		{ "Name": "TDDTests",     "Type": "Editor",  "LoadingPhase": "Default" }
+	],
+	"Plugins": [
+		{ "Name": "EnhancedInput", "Enabled": true }
+	]
+}
