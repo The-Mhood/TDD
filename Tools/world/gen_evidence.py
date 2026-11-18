@@ -152,6 +152,9 @@ def main() -> int:
         "review_c05_s4_3_10_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_review_a1c05_s4_3_10.py"]),
+        "assess_c05_residual": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_assess_c05_residual.py"]),
     }
 
     payload = {
@@ -282,6 +285,43 @@ def main() -> int:
                 "attributed. Governance unchanged: C-05 DESIGN_ONLY, unsigned, unfrozen, U-07 "
                 "open, no MEAD, 0 of 67 acceptance cases executed, and the 106 instrument "
                 "regressions are not acceptance tests."
+            ),
+            "w_m2_21": (
+                "W-M2.21 - ASSESSMENT ONLY, in response to A1-C05-REQ-A2-001 v1.0. Not a "
+                "revision: the validator, suite, contract, register and implementation "
+                "documents were not modified, and 7662926 and 50578ed are preserved. Scope: the "
+                "14 residual probes Agent 1 reproduced against S4.3.10 (commit 7662926, "
+                "validator 353a2bff, suite 7ab55805). All 14 reproduce exactly as stated - six "
+                "fail-open (R-3b, R-4, R-4b, R-5, R-5b, R-5c), three fail-closed (R-1, R-1b, "
+                "R-1c), five correct. FOUR DISTINCT DEFECTS OVER THREE SITES, all in the "
+                "instrument and none in the contract: D-a the object-negation negator set takes "
+                "literal 'not' so 'never' is unread; D-b FORWARD_OWNER[0] demands a simple "
+                "copula so perfect aspect and bare participles are unread; D-c _FOIL_ANY omits "
+                "'not' and 'never' so an appositive foil governs attribution; D-d the participle "
+                "taxonomy, recorded and deliberately refused as a content expansion. AGENT 1'S "
+                "PREMISE IS FALSIFIED: R-4 and R-5 do not share a comma root - R-5b contains no "
+                "commas at all and still fails, and adding only 'is' flips the same sentence, so "
+                "the mechanism is the missing copula. R-1c likewise fails with no comma in it. "
+                "REACHABILITY, in the contract's own voice: TN-C-15 assigns audio cue selection "
+                "to Agent 2 alone, so an Agent-1 audio-ownership claim would contradict the "
+                "contract; 165 live audio mentions contain 21 attributed to Agent 1 and all 21 "
+                "are quoted probe examples in meta-discussion, so none of the six fail-open "
+                "shapes is reachable and only R-1 (rejecting a TRUE denial) has a live path. "
+                "MEASURED REGRESSION MATRIX - document validation / 147-case suite / 26-control "
+                "required set / 14 probes correct: baseline 27/27, 147/147, 26/26, 5/14; A "
+                "(never into the object-negation set) 27/27, 147/147, 26/26, 8/14; D (optional "
+                "copula) 27/27, 147/147, 26/26, 9/14; A+D 27/27, 147/147, 26/26, 12/14; C "
+                "(not|never into _FOIL_ANY) 27/27, 147/147, 26/26, 7/14; C+D 26/27, 147/147, "
+                "18/26, 11/14. C MUST NOT BE IMPLEMENTED even though it passes every existing "
+                "check alone: it re-opens 'Not only does Agent 1 own the audio cues.' from FAIL "
+                "to PASS, and combined with D it turns TD-28's control 'Audio is not owned by "
+                "Agent 1.' into a false alarm because 'not' then marks Agent 1 itself as a foil, "
+                "breaking eight required controls and the clean document. RECOMMENDATION: one "
+                "cycle for R-1 + R-3b + R-5 (A+D), deferring R-4/R-4b to a separate item and "
+                "refusing D-d. R-4/R-4b must stay unchanged in that cycle. F-1b remains CLOSED "
+                "and is not reopened. Governance unchanged: C-05 DESIGN_ONLY, unsigned, "
+                "unfrozen, U-07 OPEN, no MEAD, TN-C-11/TN-A-01/TN-A-02 untouched, B-15 OPEN, "
+                "L-1/L-2 parked, 0 of 67 acceptance cases executed."
             ),
             "w_m2_20": (
                 "W-M2.20 - FINAL independent verification of Agent 1's S4.3.10, commit "
