@@ -326,6 +326,73 @@ case('TD-60 a row whose owner is the wrong agent is caught (the owner clause)', 
      replace_in_doc(_ROW_C5, '| `Agent 2, C-05 consumer` | Agent 2 | **row 7** (outside C-05: placement, assets, tuning) |'),
      "row 7's owner is Agent 2 but outside C-05; the TN-C cells may only use rows 5-6")
 
+# --------------- 5e. S4.3.7: DV-22 — the possessor synonym and the foil that outgrew a window
+print('\n== S4.3.7 — DV-22: the synonym as possessor, and a foil longer than the old window ==')
+case('TD-61 the possessive synonym (Agent 2 MAJOR-1)', 'DV-22', 'FAIL',
+     inject("The audio cues are the first agent's."),
+     "MAJOR-1 verbatim: AGENT_REF learned the synonym, FORWARD_OWNER still spelled the literal")
+case('TD-62 a foil carrying a subordinate clause (Agent 2 MAJOR-2)', 'DV-22', 'FAIL',
+     inject('Agent 1, unlike what the wargame community might generally assume about Agent 2, '
+            'owns the audio cues.'),
+     'MAJOR-2 verbatim: the marker fell outside the fixed 32-character window and the foil '
+     'became the subject again')
+case('TD-63 "belongs to" the synonym', 'DV-22', 'FAIL',
+     inject('The audio cues belong to the first agent.'),
+     'the class MAJOR-1 belongs to: a positive-ownership form taught to no attribution path')
+case("TD-64 the cue's owner is the synonym", 'DV-22', 'FAIL',
+     inject("The audio cue's owner is the first agent."))
+case('TD-65 dash attribution to the synonym', 'DV-22', 'FAIL',
+     inject('The audio cues -- the first agent.'))
+case('TD-66 "do not belong to" is a denial, not an assignment (control)', 'DV-22', 'PASS',
+     inject('The audio cues do not belong to the first agent.'),
+     'the false positive the "belongs to" widening created before its denial was taught')
+case('TD-67 the mention is the contrasted object, not the owned thing (control)', 'DV-22', 'PASS',
+     inject('The camera, rather than the audio cues, is owned by Agent 1.'),
+     'a contrast marker governs the mention only when it stands directly before it')
+case('TD-68 a marker in the previous clause does not drop the subject (control)', 'DV-22', 'PASS',
+     inject('Unlike the earlier draft, Agent 1 owns the camera.'),
+     'clause-bounded foil detection must not discard a genuine subject')
+case('TD-69 a short foil still fails (control)', 'DV-22', 'FAIL',
+     inject('Agent 1, unlike Agent 2, owns the audio cues.'))
+case('TD-70 the possessive denial is still accepted (control)', 'DV-22', 'PASS',
+     inject("The audio cues are not the first agent's."),
+     'teaching the possessor the synonym must not make its denial an assignment')
+
+# ------------- 5f. S4.3.7: DV-24 — a three-line wrap, and the false joins that closing it risks
+print('\n== S4.3.7 — DV-24: three-line wraps, with the false-join controls ==')
+case('TD-71 the pair wrapped across three lines (Agent 2 MINOR-1 / the same class)', 'DV-24', 'FAIL',
+     replace_in_doc(LIVE, 'Counts: 6 declared\nand then\n5 observed.\n\n' + LIVE),
+     'joining only adjacent lines left this unassembled')
+case('TD-72 a three-line wrap with an intervening continuation', 'DV-24', 'FAIL',
+     replace_in_doc(LIVE, 'Counts: 6 declared\nin the audit\nand 5 observed.\n\n' + LIVE))
+case('TD-73 the correct pair across three lines (control)', 'DV-24', 'PASS',
+     replace_in_doc(LIVE, 'Counts: 7 declared\nand then\n5 observed.\n\n' + LIVE))
+case('TD-74 unrelated adjacent facts are not joined (control)', 'DV-24', 'PASS',
+     replace_in_doc(LIVE, 'The camera pass declared 6 priorities.\nThe instrument observed 5 events.\n\n' + LIVE),
+     'a sentence terminator ends a claim; a wrap does not cross one')
+case('TD-75 a list boundary is not joined (control)', 'DV-24', 'PASS',
+     replace_in_doc(LIVE, '- declared 6\n- observed 5\n\n' + LIVE),
+     'block structure is a hard boundary for the join')
+case('TD-76 two separate single-sided facts are not joined (control)', 'DV-24', 'PASS',
+     replace_in_doc(LIVE, 'Line one declared 7 in full.\nLine two observed 5 in full.\n\n' + LIVE))
+
+# ------------------- 5g. S4.3.7: DV-11 — the owner clause, enforced directly and not by accident
+print('\n== S4.3.7 — DV-11: the owner-column clause, enforced as its own rule ==')
+case('TD-77 the owner clause is violated with the allowed-row rule satisfied (the discriminator)',
+     'DV-11', 'FAIL',
+     replace_in_doc(_ROW_C5, '| `Agent 2, C-05 consumer` | Agent 2 | **row 5** (inside C-05: consumer integration) |'),
+     'row 5 is inside TN-C\'s {5, 6}, so the subset rule passes; only ownership fails. '
+     'Under the S4.3.6 validator this document PASSES, which is what makes it a discriminator')
+case('TD-78 correct owner-column evidence: the unmodified table (control)', 'DV-11', 'PASS', str(DOC))
+case('TD-79 a dual-owned row stays legal for Agent 1 (control)', 'DV-11', 'PASS',
+     replace_in_doc('| `Agent 1, shared support` | Agent 1 | **row 4** |',
+                    '| `Agent 1, shared support` | Agent 1 | **row 2** |'),
+     'row 2 is owned by both agents and is inside TN-R\'s {2, 4}: the owner rule must not reject it')
+case('TD-80 the allowed-row rule still fires on its own (row 7)', 'DV-11', 'FAIL',
+     replace_in_doc(_ROW_C5, '| `Agent 2, C-05 consumer` | Agent 2 | **row 7** (outside C-05: placement, assets, tuning) |'),
+     'TD-60 restated: row 7 fails the *allowed-row* rule under both validators, so it never '
+     'isolated ownership — that is what TD-77 adds')
+
 # ------------------------------------------------------------- 6. the predecessors still fail
 print('\n== predecessors — the checks still fail where the defects were ==')
 for label, check, expect in (('S4.3.1', 'DV-22', 'PASS'), ('S4.3', 'DV-22', 'PASS'), ('S4.2', 'DV-22', 'FAIL'),

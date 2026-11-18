@@ -263,10 +263,62 @@ for c in table_rows(S54):
             real = sum(1 for r in ALL if r[6] == ctok and r[0].strip('*')[:4] == pref_i)
             if int(npi) != real:
                 claim_fails.append(f"'{ctok}' {pref_i}: §5.4 says {npi} cells, observed {real}")
-check('DV-11', not fails and not claim_fails and len(decl) == 7 and len(observed) == 5,
+# The third clause of the §5.4 rule — "the row's owner must match the token's agent" — was
+# enforced only *through* the row in S4.3.6: every row that belonged to the wrong agent also
+# sat outside its prefix's allowed set, so the subset test caught it by accident. TD-60
+# demonstrates exactly that weakness: it fails under both validators because row 7 is outside
+# TN-C's {5, 6}, so it never exercises ownership at all. S4.3.7 enforces the clause directly.
+#
+# Row owners, as §5.2 states them (declared here and *verified against the document* below, so
+# a change to §5.2 breaks the check rather than silently re-defining it):
+#   1 gameplay production        Agent 2 on enemy attacks, Agent 1 on the player's   {1, 2}
+#   2 producer-side implementation  the owner of that producer                      {1, 2}
+#   3 shared contract artefacts  the contract layer, owner via TD-12                {contract}
+#   4 shared read-surface support  Agent 1                                          {1}
+#   5 consumer integration (Agent 1)                                                {1}
+#   6 consumer integration (Agent 2)                                                {2}
+#   7 resolved outside C-05 (Agent 2)                                               {2}
+#   8 arbitration                                                                    {1}
+ROW_OWNER = {1: {'1', '2'}, 2: {'1', '2'}, 3: {'contract'}, 4: {'1'},
+             5: {'1'}, 6: {'2'}, 7: {'2'}, 8: {'1'}}
+# §5.2's table is a blockquote ('> | Activity | Owner | Basis |'), so the quote markers come off
+# before the rows are read.
+S52 = '\n'.join(re.sub(r'^\s*>\s?', '', l)
+                 for l in section('### 5.2 C05-7.2', '### 5.3').split('\n'))
+rows52 = table_rows(S52)[1:]          # drop the header row
+# verify the declared map against §5.2's own words, rather than trusting the constant
+owner_map_ok = len(rows52) == 8
+if owner_map_ok:
+    owner_map_ok = ('(Agent 1)' in rows52[4][0] and '(Agent 2)' in rows52[5][0]
+                    and 'Agent 2' in rows52[6][0] and 'contract layer' in rows52[2][1].lower()
+                    and rows52[3][1].startswith('**Agent 1')
+                    and rows52[7][1].startswith('**Agent 1')
+                    and 'Agent 1' in rows52[0][1] and 'Agent 2' in rows52[0][1]
+                    and 'Agent 1' in rows52[1][1] and 'Agent 2' in rows52[1][1])
+# token -> the agent(s) that own its work, read from §5.4's own 'Agent' column
+TOK_AGENT = {}
+for c in table_rows(S54):
+    if len(c) >= 3 and c[0].startswith('`'):
+        t_ = c[0].strip('`')
+        named = set(re.findall(r'agent\s*([12])', c[1], re.I))
+        celly = (c[1] + ' ' + t_).lower()
+        TOK_AGENT[t_] = named or ({'contract'} if 'contract layer' in celly else {'?'})
+owner_fails = []
+owner_checks = 0
+for tok, rws in decl.items():
+    for r_ in sorted(rws):
+        owner_checks += 1
+        own = ROW_OWNER.get(r_, set())
+        who = TOK_AGENT.get(tok, set())
+        if own and who and not (own & who):
+            owner_fails.append(f"'{tok}' declares row {r_}, whose owner is "
+                               f"{'/'.join(sorted(own))}, but the token's agent is {'/'.join(sorted(who))}")
+
+check('DV-11', not fails and not claim_fails and not owner_fails and owner_map_ok
+      and len(decl) == 7 and len(observed) == 5,
       f"{len(decl)} declared / {len(observed)} observed tokens, {len(ALL)} cells; "
       f"declared-unused {sorted(set(decl) - set(observed))}; failures {fails[:3]}; "
-      f"cell-count claims {len(claims)} checked, failures {claim_fails[:3]}")
+      f"cell-count claims {len(claims)} checked, failures {claim_fails[:3]}" + f"; owner checks {owner_checks} (map verified {owner_map_ok}), failures {owner_fails}")
 
 # ---------------------------------------------------------------- DV-12 VF set across three homes
 names7 = ['Phase', 'WindupEndAxis', 'ActiveEndAxis', 'RecoveryEndAxis', 'ProducerRate', 'WindowKey', 'AttackTag']
@@ -412,6 +464,11 @@ pre_ok = bool(preamble8) and 'no C-05 audio responsibility' in preamble8[0] and 
 # 'Agent 2' inside the contrastive clause, so the predicate read the sentence backwards.
 # The synonym is read from a named group (a bare alternative would leave group(1) as None),
 # and a reference introduced by a contrastive marker is never the subject.
+# S4.3.7 — Agent 2's MAJOR-1: extending AGENT_REF alone left every *other* attachment path
+# re-spelling the literal 'agent 1', so 'The audio cues are the first agent's.' was accepted.
+# The agent-1 name is now written once and every pattern below is derived from it.
+AGENT1 = r'(?:agent[-\s]?1|the\s+first\s+agent)'
+AGENT1_POSS = AGENT1 + r"\s*[\'\u2019]s"
 AGENT_REF = re.compile(r'agent[-\s]?(?P<num>[12])\b|the\s+first\s+agent\b', re.I)
 # The foil marker is what precedes the reference, so the test runs on the text in front of
 # the match and only has to end with the marker.
@@ -426,9 +483,27 @@ def agent_of(m):
     return m.group('num') if m.group('num') else '1'
 
 
+_CLAUSE_BREAK = re.compile(r'[,;(\u2014]')
+_FOIL_ANY = re.compile(r'\b(?:unlike|as\s+opposed\s+to|rather\s+than|but\s+not)\b', re.I)
+
+
 def is_foil(ln, m):
-    """True when *m* is a contrastive foil ('unlike Agent 2') and not the subject."""
-    return bool(FOIL_BEFORE.search(ln[max(0, m.start() - 32):m.start()]))
+    """True when *m* is a contrastive foil ('unlike Agent 2') and not the subject.
+
+    S4.3.7 — Agent 2's MAJOR-2: the S4.3.6 test looked at a fixed 32-character window ending
+    at the reference, so a foil carrying a subordinate clause pushed its marker outside the
+    window and the foil became the subject again — the same inversion TD-42 fixed, one clause
+    further away. The foil is now bound to the clause the reference sits in: scan back to the
+    nearest clause boundary (comma, semicolon, parenthesis, em dash) and ask whether *that*
+    clause opens with a contrastive marker. A marker in an earlier clause does not count, so
+    'Unlike the earlier draft, Agent 1 owns the audio cues' keeps Agent 1 as the subject.
+    """
+    head = ln[:m.start()]
+    brk = [b.end() for b in _CLAUSE_BREAK.finditer(head)]
+    clause = head[brk[-1]:] if brk else head
+    if len(clause) > 120:
+        return False
+    return bool(_FOIL_ANY.search(clause))
 # A negation must deny ownership or responsibility, not merely put 'no' before 'audio'.
 # S4.3.1 accepted any 'no ... audio' within 28 characters, so 'has no problem owning audio
 # cues' and 'has no objection to owning audio cues' read as denials when they are the
@@ -453,6 +528,10 @@ NEG_BEFORE = (
     re.compile(r'\b(?:does|do|did)\s+not\s+own\s+' + _MODS + r'audio\b', re.I),
     # 'owns none of the audio'
     re.compile(r'\bowns?\s+none\s+of\s+the\s+audio\b', re.I),
+    # 'does not belong to the first agent' (S4.3.7, found by the same probe matrix that
+    # widened the positive possessor: the new 'belongs to' form needed its denial)
+    re.compile(r'\baudio\b[^.;|]{0,30}?\b(?:does|do|did)\s+not\s+belong\s+to\s+'
+               + AGENT1 + r'\b', re.I),
     # 'owns the camera, not the audio cues' — the *object* is negated (S4.3.6, found when
     # 'the first agent' became attributable: the line is a genuine denial and must not fail)
     re.compile(r'(?:\bnot|,)\s+(?:the\s+|any\s+)' + _MODS + r'audio\b', re.I),
@@ -483,9 +562,10 @@ NEG_AFTER = (
 _UNIVERSAL = re.compile(r'\b(?:anyone|anybody|nobody|no[\s-]?one)\b', re.I)
 _POS_OWNER_1 = re.compile(
     # a *positive* ownership phrase: 'not owned by Agent 1' is a denial, not an assertion
-    r'(?<!\bnot\s)\b(?:owned|claimed|carried|held|supplied|provided|selected)\s+by\s+agent[-\s]?1\b'
-    r'|\bagent[-\s]?1[\'\u2019]s\s+(?:audio|cues?|cue)\b'
-    r'|\baudio\b[^.;|]{0,14}:\s*agent[-\s]?1\b', re.I)
+    r'(?<!\bnot\s)\b(?:owned|claimed|carried|held|supplied|provided|selected)\s+by\s+' + AGENT1 + r'\b'
+    r'|' + AGENT1_POSS + r'\s+(?:audio|cues?|cue)\b'
+    r'|\baudio\b[^.;|]{0,14}:\s*' + AGENT1 + r'\b'
+    r'|\baudio\b[^.;|]{0,40}?\bbelongs?\s+to\s+' + AGENT1 + r'\b', re.I)
 SEGMENT = re.compile(r'[.;|]')
 
 
@@ -533,12 +613,37 @@ def segment_bounds(ln, pos):
     return (max(before) + 1 if before else 0), (min(after) if after else len(ln))
 
 
+# S4.3.7 — every construction below is built from AGENT1/AGENT1_POSS rather than re-spelled, and
+# the class is widened to the remaining positive-ownership forms the same probe matrix found:
+# possession by the synonym, 'belongs to', and 'owner is' (A2 MAJOR-1 and the class it belongs to).
 FORWARD_OWNER = (
     re.compile(r'\baudio\b[^.;|]{0,40}?\b(?:is|are|was|were)\s+'
-               r'(?:owned|claimed|carried|held|supplied|provided|selected)\s+by\s+agent[-\s]?1\b', re.I),
-    re.compile(r'\baudio\b[^.;|]{0,30}?\b(?:is|are)\s+agent[-\s]?1[\'\u2019]s\b', re.I),
-    re.compile(r'\baudio\b[^.;|]{0,14}?:\s*agent[-\s]?1\b', re.I),
-)
+               r'(?:owned|claimed|carried|held|supplied|provided|selected|chosen)\s+by\s+'
+               + AGENT1 + r'\b', re.I),
+    re.compile(r'\baudio\b[^.;|]{0,30}?\b(?:is|are|was|were)\s+' + AGENT1_POSS + r'\b', re.I),
+    re.compile(r'\baudio\b[^.;|]{0,14}?(?::|\u2014|--)\s*' + AGENT1 + r'\b', re.I),
+    re.compile(r'\baudio\b[^.;|]{0,40}?\bbelongs?\s+to\s+' + AGENT1 + r'\b', re.I),
+    re.compile(r'\baudio\b[^.;|]{0,30}?\bown(?:er|ers|ership)\b[^.;|]{0,16}?'
+               r'(?:is|are|:)\s*' + AGENT1 + r'\b', re.I))
+
+
+_CONTRAST_OBJECT = re.compile(r'(?:unlike|as\s+opposed\s+to|rather\s+than|but\s+not)\s+'
+                              r'(?:the\s+|any\s+|all\s+)?$', re.I)
+
+
+def _mention_is_contrast(ln, pos):
+    """True when the *mention* is the object of a contrast ('rather than the audio cues').
+
+    The marker has to govern this mention directly — a marker earlier in the same clause
+    governs whatever follows it, not a mention several words further on. Testing the text
+    immediately in front of the mention is what separates
+    'The camera, rather than the audio cues, is owned by Agent 1' (the audio is the excluded
+    object) from 'Agent 1 rather than Agent 2 owns the audio cues' (the audio is the object
+    the first agent owns, and the contrast governs only the agent reference).
+    """
+    head = ln[max(0, pos - 40):pos]
+    cut = [b.end() for b in _CLAUSE_BREAK.finditer(head)]
+    return bool(_CONTRAST_OBJECT.search(head[cut[-1]:] if cut else head))
 
 
 def attributed_to_agent_1(ln, pos):
@@ -549,6 +654,10 @@ def attributed_to_agent_1(ln, pos):
     ('audio cues are owned by Agent 1', 'audio cues are Agent 1's', 'audio cues: Agent 1').
     A reference that merely appears later in the sentence does not attribute anything.
     """
+    if _mention_is_contrast(ln, pos):
+        # 'The camera, rather than the audio cues, is owned by Agent 1' — the mention is the
+        # contrasted object, not the thing owned (S4.3.7; a false positive the widening created)
+        return False
     start, _end = segment_bounds(ln, pos)
     before = [m for m in AGENT_REF.finditer(ln, start, pos) if not is_foil(ln, m)]
     if before and agent_of(before[-1]) == '1':
@@ -645,11 +754,47 @@ anchors = {
 }
 anchors_present = {k: (computed in [v for _, v in pairs(t)] if t else False) for k, t in anchors.items()}
 scanned = [(i + 1, pr) for i, ln in enumerate(lines) if not MASK[i] for _, pr in pairs(ln)]
-# a restatement wrapped across a line break is still a restatement (S4.3.6)
-for i in range(len(lines) - 1):
-    if MASK[i] or MASK[i + 1]:
-        continue
-    scanned += [(i + 1, pr) for _, pr in pairs(lines[i].rstrip() + ' ' + lines[i + 1].lstrip())]
+# A restatement wrapped across a line break is still a restatement. S4.3.6 joined adjacent
+# pairs only, so a three-line wrap escaped (Agent 2's MINOR-1 and the same class reported
+# separately). S4.3.7 joins runs of up to three lines, under guards that stop unrelated
+# adjacent facts being welded into a pair that neither line states:
+#   * never across a block boundary — table row, heading, blockquote, list item, fence, blank;
+#   * never across a sentence terminator — a wrap is mid-sentence, a new fact is not;
+#   * the next line must continue the sentence (lowercase or a connective/digit);
+#   * the window may carry at most one 'declared' and one 'observed' label, so two separate
+#     claims cannot be cross-paired into a contradiction.
+_BLOCK_START = re.compile(r'\s*(?:\||#|>|[-*+]\s|\d+[.)]\s|`)')
+_SENT_END = re.compile(r'[.!?]\s*$')
+_CONT_START = re.compile(r'\s*(?:[a-z0-9]|and\b|or\b|then\b|with\b|versus\b|vs\.?\b|to\b|'
+                         r'of\b|in\b|for\b|per\b|the\b|each\b)')
+
+
+def _joinable(a, b):
+    """Can line b be a continuation of line a (same claim, same paragraph)?"""
+    if not a.strip() or not b.strip():
+        return False
+    if _BLOCK_START.match(a) or _BLOCK_START.match(b):
+        return False
+    if _SENT_END.search(a):
+        return False
+    return bool(_CONT_START.match(b))
+
+
+def _one_each(txt):
+    return len(re.findall(r'declared(?!-)', txt, re.I)) <= 1 and len(re.findall(r'observed', txt, re.I)) <= 1
+
+
+for k in (1, 2):
+    for i in range(len(lines) - k):
+        window = list(range(i, i + k + 1))
+        if any(MASK[j] for j in window):
+            continue
+        if not all(_joinable(lines[a], lines[a + 1]) for a in window[:-1]):
+            continue
+        joined = ' '.join(lines[j].strip() for j in window)
+        if not _one_each(joined):
+            continue
+        scanned += [(i + 1, pr) for _, pr in pairs(joined)]
 bad_pairs = [(n, pr) for n, pr in scanned if pr != computed]
 check('DV-24', all(anchors_present.values()) and len(scanned) >= 3 and not bad_pairs,
       f"computed {computed[0]} declared / {computed[1]} observed; anchor sites "
@@ -684,7 +829,7 @@ check('DV-26', (not stale) and observ and both,
       f"PO-3 and PO-5 both retained {both}")
 
 # ---------------------------------------------------------------- DV-27 provenance, no placeholders
-REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_6_PROVENANCE.md'
+REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_7_PROVENANCE.md'
 DECISION = 'docs/DECISION_C05_SUCCESSOR_IDENTITY_004_2_V1.md'
 # fenced code blocks are evidence transcripts, not prose claims: strip them first
 prose = re.sub(r'```.*?```', '', s, flags=re.S)
