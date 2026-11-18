@@ -7,7 +7,7 @@
 #   1. checks the environment (macOS, Xcode, UE 5.8, the descriptor)
 #   2. generates project files
 #   3. builds <Project>Editor and <Project> for Mac Development
-#   4. runs the automation tests headless and reads the result out of the log
+#   4. runs the automation tests headless and reconciles log events with the JSON report
 #
 # Every step writes its log to Saved/BuildEvidence/<UTC timestamp>/ and the script
 # prints a summary with the real exit status of each step. It never reports a build
@@ -181,32 +181,29 @@ else
       -unattended -nopause -nullrhi -nosplash -stdout -FullStdOutLogOutput -log \
       >"$log" 2>&1
   rc=$?
-  tested=$(grep -c "^LogAutomationController: Test Started" "$log" 2>/dev/null || true)
-  passed=$(grep -c "Result={Passed}" "$log" 2>/dev/null || true)
-  failed=$(grep -c "Result={Failed}" "$log" 2>/dev/null || true)
-
-  if [ -f "$report/index.json" ] && command -v python3 >/dev/null 2>&1; then
-    counts=$(python3 - "$report/index.json" <<'PYPARSE'
-import json, sys
-data = json.load(open(sys.argv[1], encoding="utf-8"))
-tests = data.get("tests") or []
-state = [(t.get("state") or ("Success" if t.get("succeeded") else "Fail")) for t in tests]
-print(len(tests),
-      sum(1 for s in state if str(s).lower() in ("success", "passed")),
-      sum(1 for s in state if str(s).lower() not in ("success", "passed")))
-PYPARSE
-)
-    set -- $counts
-    tested="${1:-$tested}"; passed="${2:-$passed}"; failed="${3:-$failed}"
+  parser="$REPO/Tools/engine/parse_automation_report.py"
+  parse_args=(--log "$log")
+  if [ -f "$report/index.json" ]; then
+    parse_args+=(--report "$report/index.json")
     say "  report: $report/index.json"
   fi
+  if counts=$(python3 "$parser" "${parse_args[@]}"); then
+    IFS=$'\t' read -r discovered tested passed failed unclassified <<< "$counts"
+  else
+    step_fail "could not parse automation results (see 03-automation-${TEST_FILTER}.log)"
+    discovered=0; tested=0; passed=0; failed=0; unclassified=0
+  fi
 
-  say "  exit=$rc  tests started=${tested:-0}  passed=${passed:-0}  failed=${failed:-0}"
-  if [ "${failed:-0}" -gt 0 ] || [ "$rc" -ne 0 ]; then
+  say "  exit=$rc  tests discovered=${discovered:-0}  started=${tested:-0}  passed=${passed:-0}  failed=${failed:-0}  unclassified=${unclassified:-0}"
+  if [ "$rc" -ne 0 ] || [ "${failed:-0}" -gt 0 ]; then
     step_fail "automation failures (see 03-automation-${TEST_FILTER}.log)"
     grep -m 10 "Result={Failed}\|Error:" "$log" | sed 's/^/      /'
-  elif [ "${tested:-0}" -eq 0 ]; then
+  elif [ "${discovered:-0}" -eq 0 ]; then
     step_fail "no test matched filter '${TEST_FILTER}' — the test module may not be compiled into the editor target"
+  elif [ "${tested:-0}" -ne "${discovered:-0}" ]; then
+    step_fail "started ${tested:-0} of ${discovered:-0} discovered tests; automation run is incomplete"
+  elif [ "${unclassified:-0}" -ne 0 ] || [ "$((passed + failed))" -ne "${tested:-0}" ]; then
+    step_fail "one or more started tests has no classified terminal result"
   else
     say "  ok — automation tests passed"
   fi
