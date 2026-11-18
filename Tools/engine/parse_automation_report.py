@@ -17,7 +17,9 @@ from typing import Any
 
 
 DISCOVERED_RE = re.compile(r"Found\s+(\d+)\s+automation tests?\s+based on\b", re.IGNORECASE)
-STARTED_RE = re.compile(r"LogAutomationController:\s*Test Started(?:\b|[.:])", re.IGNORECASE)
+# UE versions/log routes differ in the category prefix and event suffix, so
+# recognize the stable event phrase rather than requiring one log category.
+STARTED_RE = re.compile(r"\bTest Started\b", re.IGNORECASE)
 PASSED_LOG_RE = re.compile(r"Result=\{(?:Passed|Success)\}", re.IGNORECASE)
 FAILED_LOG_RE = re.compile(r"Result=\{(?:Failed|Fail|Error|Aborted)\}", re.IGNORECASE)
 
@@ -81,7 +83,8 @@ def main() -> int:
             failed = len(FAILED_LOG_RE.findall(log_text))
             unclassified = max(0, started - passed - failed)
 
-        print(f"{discovered}\t{started}\t{passed}\t{failed}\t{unclassified}")
+        completed = passed + failed
+        print(f"{discovered}\t{started}\t{completed}\t{passed}\t{failed}\t{unclassified}")
         return 0
     except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as exc:
         print(f"automation report parsing failed: {exc}", file=sys.stderr)

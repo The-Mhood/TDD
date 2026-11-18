@@ -188,13 +188,13 @@ else
     say "  report: $report/index.json"
   fi
   if counts=$(python3 "$parser" "${parse_args[@]}"); then
-    IFS=$'\t' read -r discovered tested passed failed unclassified <<< "$counts"
+    IFS=$'\t' read -r discovered tested completed passed failed unclassified <<< "$counts"
   else
     step_fail "could not parse automation results (see 03-automation-${TEST_FILTER}.log)"
-    discovered=0; tested=0; passed=0; failed=0; unclassified=0
+    discovered=0; tested=0; completed=0; passed=0; failed=0; unclassified=0
   fi
 
-  say "  exit=$rc  tests discovered=${discovered:-0}  started=${tested:-0}  passed=${passed:-0}  failed=${failed:-0}  unclassified=${unclassified:-0}"
+  say "  exit=$rc  tests discovered=${discovered:-0}  started=${tested:-0}  completed=${completed:-0}  passed=${passed:-0}  failed=${failed:-0}  unclassified=${unclassified:-0}"
   if [ "$rc" -ne 0 ] || [ "${failed:-0}" -gt 0 ]; then
     step_fail "automation failures (see 03-automation-${TEST_FILTER}.log)"
     grep -m 10 "Result={Failed}\|Error:" "$log" | sed 's/^/      /'
@@ -202,7 +202,7 @@ else
     step_fail "no test matched filter '${TEST_FILTER}' — the test module may not be compiled into the editor target"
   elif [ "${tested:-0}" -ne "${discovered:-0}" ]; then
     step_fail "started ${tested:-0} of ${discovered:-0} discovered tests; automation run is incomplete"
-  elif [ "${unclassified:-0}" -ne 0 ] || [ "$((passed + failed))" -ne "${tested:-0}" ]; then
+  elif [ "${completed:-0}" -ne "${tested:-0}" ] || [ "${unclassified:-0}" -ne 0 ] || [ "$((passed + failed))" -ne "${completed:-0}" ]; then
     step_fail "one or more started tests has no classified terminal result"
   else
     say "  ok — automation tests passed"
