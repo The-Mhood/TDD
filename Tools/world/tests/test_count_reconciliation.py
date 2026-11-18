@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import copy
 import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -142,6 +143,30 @@ class TestTamperDetection(unittest.TestCase):
                         problems)
 
 
+_SECTION_START = "<!-- COUNT-CHECK-DISCUSSION-START -->"
+_SECTION_END = "<!-- COUNT-CHECK-DISCUSSION-END -->"
+
+
+def _strip_marked_sections(text: str) -> str:
+    """Remove explicitly marked discussion sections before the 191 scan.
+
+    A review that documents this very check has to be able to name the number it
+    flags. Exempting by *region* keeps the scan honest for ordinary prose, which is
+    the only place a stale live count could mislead a reader.
+    """
+    out, skipping = [], False
+    for line in text.splitlines():
+        if _SECTION_START in line:
+            skipping = True
+            continue
+        if _SECTION_END in line:
+            skipping = False
+            continue
+        if not skipping:
+            out.append(line)
+    return "\n".join(out)
+
+
 class TestNoStaleArithmetic(unittest.TestCase):
     """Guard against the specific error that already shipped once."""
 
@@ -165,7 +190,10 @@ class TestNoStaleArithmetic(unittest.TestCase):
                 continue
             if path.suffix not in {".md", ".py", ".json"}:
                 continue
-            if path.name in ("test_count_reconciliation.py", "gen_evidence.py"):
+            # W-M2.18: a test module that *exercises* this check must contain the
+            # strings it asserts on. Same convention as the two names above.
+            if path.name in ("test_count_reconciliation.py", "gen_evidence.py",
+                             "test_review_a1c05_s4_3_7.py"):
                 continue
             # Evidence artifacts record this correction as a claim; they are
             # generated output, not prose that could mislead a reader.
@@ -175,12 +203,26 @@ class TestNoStaleArithmetic(unittest.TestCase):
                 text = path.read_text(encoding="utf-8")
             except (UnicodeDecodeError, OSError):
                 continue
+            # W-M2.18: a review *of this check* must be able to quote the number it
+            # discusses. A document may fence such a discussion in an explicitly
+            # marked section; the markers are the same shape as the QUOTED-HISTORY
+            # regions the C-05 validator uses, so exemption is by location, never by
+            # which words a line happens to contain.
+            text = _strip_marked_sections(text)
             # A mention of 191 is legitimate only when it is describing the
             # historical error. Flag it when it is presented as a live count.
             correction_markers = ("corrects", "correction", "191 → 196",
                                   "191 -> 196", "recorded as 191", "was 191",
                                   "191 when")
             for line_no, line in enumerate(text.splitlines(), 1):
+                if "191" not in line:
+                    continue
+                # A git object id is a hex digest, not a count. The suite blob
+                # 2a33543a8b6941262915e9a33b614411910b030b contains the digits
+                # "191" at offset 31 by coincidence, which made this check flag a
+                # correct citation as a stale location count (W-M2.18). Mask
+                # 7-40 char hex runs before looking for the count.
+                line = re.sub(r"\b[0-9a-f]{7,40}\b", "<sha>", line, flags=re.I)
                 if "191" not in line:
                     continue
                 lowered = line.lower()
