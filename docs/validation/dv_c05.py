@@ -532,6 +532,19 @@ NEG_BEFORE = (
     # widened the positive possessor: the new 'belongs to' form needed its denial)
     re.compile(r'\baudio\b[^.;|]{0,30}?\b(?:does|do|did)\s+not\s+belong\s+to\s+'
                + AGENT1 + r'\b', re.I),
+    # 'No audio cue belongs to Agent 1', 'None of the audio cues belong to the first agent',
+    # 'There is no audio cue that belongs to Agent 1' (S4.3.8, Agent 2's CONDITION-1).
+    # A *determiner-quantified subject* denies possession without a negated verb, so the
+    # 'belongs to' widening read it as an assignment. The quantifier governs the mention, so
+    # the construction spans it — 'no ... audio ... belong(s) to <Agent 1>'.
+    re.compile(r'\b(?:no|none\s+of\s+the)\s+' + _MODS + r'audio\b[^.;|]{0,50}?'
+               r'\bbelong(?:s)?\s+to\s+' + AGENT1 + r'\b', re.I),
+    # the same quantified subject with the other possession predicates the widening taught
+    re.compile(r'\bno\s+' + _MODS + r'audio\b[^.;|]{0,50}?\b(?:is|are|was|were)\s+'
+               r'(?:owned|claimed|carried|held|supplied|provided|selected|chosen)\s+by\s+'
+               + AGENT1 + r'\b', re.I),
+    re.compile(r'\bno\s+' + _MODS + r'audio\b[^.;|]{0,50}?\b(?:is|are|was|were)\s+'
+               + AGENT1_POSS + r'\b', re.I),
     # 'owns the camera, not the audio cues' — the *object* is negated (S4.3.6, found when
     # 'the first agent' became attributable: the line is a genuine denial and must not fail)
     re.compile(r'(?:\bnot|,)\s+(?:the\s+|any\s+)' + _MODS + r'audio\b', re.I),
@@ -760,7 +773,12 @@ scanned = [(i + 1, pr) for i, ln in enumerate(lines) if not MASK[i] for _, pr in
 # adjacent facts being welded into a pair that neither line states:
 #   * never across a block boundary — table row, heading, blockquote, list item, fence, blank;
 #   * never across a sentence terminator — a wrap is mid-sentence, a new fact is not;
-#   * the next line must continue the sentence (lowercase or a connective/digit);
+#   * in a **three**-line window each internal boundary must continue the sentence (lowercase
+#     or a connective/digit). S4.3.7 applied that gate to two-line windows as well, which
+#     rejected every capitalised continuation ('Counts: 6 declared' / 'The audit shows 5
+#     observed') and so *lost* detection of real hazards without buying safety: the block and
+#     sentence guards carry the false-join defence, and 'one label each' rules out cross-pairing
+#     (S4.3.8, Agent 2's CONDITION-2);
 #   * the window may carry at most one 'declared' and one 'observed' label, so two separate
 #     claims cannot be cross-paired into a contradiction.
 _BLOCK_START = re.compile(r'\s*(?:\||#|>|[-*+]\s|\d+[.)]\s|`)')
@@ -769,15 +787,20 @@ _CONT_START = re.compile(r'\s*(?:[a-z0-9]|and\b|or\b|then\b|with\b|versus\b|vs\.
                          r'of\b|in\b|for\b|per\b|the\b|each\b)')
 
 
-def _joinable(a, b):
-    """Can line b be a continuation of line a (same claim, same paragraph)?"""
+def _joinable(a, b, require_cont):
+    """Can line b be a continuation of line a (same claim, same paragraph)?
+
+    *require_cont* is set for the internal boundaries of a three-line window only. A two-line
+    window is already made safe by the block and sentence guards plus 'one label each', and
+    gating it on the continuation left every capitalised wrap unread (Agent 2's CONDITION-2).
+    """
     if not a.strip() or not b.strip():
         return False
     if _BLOCK_START.match(a) or _BLOCK_START.match(b):
         return False
     if _SENT_END.search(a):
         return False
-    return bool(_CONT_START.match(b))
+    return bool(_CONT_START.match(b)) if require_cont else True
 
 
 def _one_each(txt):
@@ -789,7 +812,8 @@ for k in (1, 2):
         window = list(range(i, i + k + 1))
         if any(MASK[j] for j in window):
             continue
-        if not all(_joinable(lines[a], lines[a + 1]) for a in window[:-1]):
+        require_cont = k == 2          # three-line windows keep the stricter gate
+        if not all(_joinable(lines[a], lines[a + 1], require_cont) for a in window[:-1]):
             continue
         joined = ' '.join(lines[j].strip() for j in window)
         if not _one_each(joined):
@@ -829,7 +853,7 @@ check('DV-26', (not stale) and observ and both,
       f"PO-3 and PO-5 both retained {both}")
 
 # ---------------------------------------------------------------- DV-27 provenance, no placeholders
-REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_7_PROVENANCE.md'
+REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_8_PROVENANCE.md'
 DECISION = 'docs/DECISION_C05_SUCCESSOR_IDENTITY_004_2_V1.md'
 # fenced code blocks are evidence transcripts, not prose claims: strip them first
 prose = re.sub(r'```.*?```', '', s, flags=re.S)

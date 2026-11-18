@@ -393,7 +393,45 @@ case('TD-80 the allowed-row rule still fires on its own (row 7)', 'DV-11', 'FAIL
      'TD-60 restated: row 7 fails the *allowed-row* rule under both validators, so it never '
      'isolated ownership — that is what TD-77 adds')
 
-# ------------------------------------------------------------- 6. the predecessors still fail
+# ------- 5h. S4.3.8: the quantified denial (DV-22) and the capitalised continuation (DV-24)
+print('\n== S4.3.8 — DV-22 quantified denial, and DV-24 two-line capitalised continuations ==')
+case('TD-81 "No audio cue belongs to Agent 1" is not an assignment', 'DV-22', 'PASS',
+     inject('No audio cue belongs to Agent 1.'),
+     "Agent 2 CONDITION-1 verbatim: a determiner-quantified subject denies possession "
+     "without negating the verb, so the 'belongs to' widening read it as ownership")
+case('TD-82 "There is no audio cue that belongs to the first agent"', 'DV-22', 'PASS',
+     inject('There is no audio cue that belongs to the first agent.'))
+case('TD-83 "None of the audio cues belong to the first agent"', 'DV-22', 'PASS',
+     inject('None of the audio cues belong to the first agent.'))
+case('TD-84 a genuine "belongs to" assignment is still caught (control)', 'DV-22', 'FAIL',
+     inject('The audio cues belong to the first agent.'),
+     'the denial must not be bought by weakening the positive form')
+case('TD-85 "No audio cue is owned by Agent 1" (same quantified family)', 'DV-22', 'PASS',
+     inject('No audio cue is owned by Agent 1.'),
+     'the same determiner-quantifier gap with the other possession predicates')
+case('TD-86 the confirmed two-line capitalised wrap (Agent 2 CONDITION-2)', 'DV-24', 'FAIL',
+     replace_in_doc(LIVE, 'Counts: 6 declared\nThe audit shows 5 observed.\n\n' + LIVE),
+     'the confirmed Counts example: S4.3.7 gated two-line windows on a lowercase continuation '
+     'and accepted it')
+case('TD-87 a two-line wrap continued by "Then"', 'DV-24', 'FAIL',
+     replace_in_doc(LIVE, 'Counts: 6 declared\nThen 5 observed.\n\n' + LIVE))
+case('TD-88 a two-line wrap continued by "And"', 'DV-24', 'FAIL',
+     replace_in_doc(LIVE, 'Counts: 6 declared\nAnd 5 observed.\n\n' + LIVE))
+case('TD-89 a lowercase two-line wrap still fails (control)', 'DV-24', 'FAIL',
+     replace_in_doc(LIVE, 'Counts: 6 declared\nand 5 observed.\n\n' + LIVE))
+case('TD-90 a heading boundary is still not joined (control)', 'DV-24', 'PASS',
+     replace_in_doc(LIVE, '# Heading declared 6\nThe row observed 5\n\n' + LIVE))
+case('TD-91 a blockquote boundary is still not joined (control)', 'DV-24', 'PASS',
+     replace_in_doc(LIVE, '> quote declared 6\n> quote observed 5\n\n' + LIVE))
+case('TD-92 a table-row boundary is still not joined (control)', 'DV-24', 'PASS',
+     replace_in_doc(LIVE, '| a declared 6\n| a observed 5\n\n' + LIVE))
+case('TD-93 a fence boundary is still not joined (control)', 'DV-24', 'PASS',
+     replace_in_doc(LIVE, '```\ndeclared 6\nobserved 5\n```\n\n' + LIVE))
+case('TD-94 the correct pair across a capitalised wrap passes (control)', 'DV-24', 'PASS',
+     replace_in_doc(LIVE, 'Counts: 7 declared\nThe audit shows 5 observed.\n\n' + LIVE),
+     'removing the continuation gate must not make a correct restatement fail')
+
+# ------------------------------------------------------------- 6. the predecessors still fail# ------------------------------------------------------------- 6. the predecessors still fail
 print('\n== predecessors — the checks still fail where the defects were ==')
 for label, check, expect in (('S4.3.1', 'DV-22', 'PASS'), ('S4.3', 'DV-22', 'PASS'), ('S4.2', 'DV-22', 'FAIL'),
                              ('S4.1', 'DV-22', 'FAIL'), ('S3', 'DV-22', 'FAIL'),
