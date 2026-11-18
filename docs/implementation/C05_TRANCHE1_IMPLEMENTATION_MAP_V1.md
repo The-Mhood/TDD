@@ -69,13 +69,13 @@ Assignments below are the Project Owner's requested coordination routing. They a
 
 ## 5. First-tranche gate and status
 
-**Ready to begin after gates:** project/module foundation exists; test map and owner routing are prepared. **Not ready for C-05 code/test execution:** the canonical MEAD/type owner, formal design freeze, required clock/arbitration decisions and UE toolchain are not yet in place.
+**Ready to begin after gates:** project/module foundation exists; test map and owner routing are prepared. **Not ready for C-05 code/test execution:** the canonical MEAD/type owner, formal design freeze, required clock/arbitration decisions and UE toolchain are not yet in place. The first available verified target should be Mac Development on the owner's authorized Mac; Win64 requires separate verification on an authorized Windows host.
 
-Once TD-12 and the exact C-05 freeze are approved, and the UE 5.8/Win64 toolchain is available:
+Once TD-12 and the exact C-05 freeze are approved, and the UE 5.8 toolchain is available on the authorized Mac host:
 
 1. Implement one agreed producer/read interface and consumer baseline using only the frozen types.
 2. Add deterministic automation fixtures for A/B/E cases above; keep T-C05-11 outside the tranche until TD-06.
-3. Build `TheDisobedientDaughterEditor Win64 Development`, run the 17 named filters/cases, and preserve complete logs, engine identity, commit, exit status and assertions.
+3. Build `TheDisobedientDaughterEditor Mac Development` on the authorized Mac host, run the 17 named filters/cases, and preserve complete logs, engine identity, commit, exit status and assertions. Verify Win64 separately on an authorized Windows host before claiming Windows compatibility.
 4. Agent 2 independently validates test-to-contract mapping and evidence; Agent 3 checks traceability, dependency compliance and governance; Project Owner approves the next tranche/status change.
 
 No acceptance test, C-05 runtime interface, gameplay behavior, or contract status was changed by this mapping.

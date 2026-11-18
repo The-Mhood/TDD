@@ -1,64 +1,91 @@
-# Unreal Project Foundation — V1
+# Unreal Project Foundation — V1 (platform consolidation update)
 
-**Date:** 2026-11-18 UTC
 **Repository/branch:** `The-Mhood/TDD` / `arena/c64fc525-tdd`
-**Authority:** Project Owner directive “CREATE THE UNREAL PROJECT AND COMMENCE C-05 IMPLEMENTATION.”
-**Status:** Project files created; Editor open/build/Automation execution **BLOCKED / NOT RUN** because the Unreal toolchain is unavailable in this workspace.
+**Engine association:** Unreal Engine **5.8** (`EngineAssociation: "5.8"`)
+**Current state:** One canonical project descriptor and a minimal C++ runtime/editor foundation exist. This Linux sandbox cannot install or run Unreal; project open/build/Automation results are **NOT RUN**.
 
-## 1. Project decisions
+## 1. Canonical project and platform intent
 
-- **Engine baseline selected:** Unreal Engine **5.8** (`EngineAssociation: "5.8"`). This follows MEAD-A's UE 5.8 proposal at `912fac9f76a1011f8c823b368a92a0edf059a283` (`Docs/00_MASTER_ENGINEERING_ARCHITECTURE.md`, blob `bd0f3afdf24736349f2045bf0ee423ee0b4e1a78`) and the Project Owner's instruction to select an engine baseline. This selects only an initial project engine association; it does not select MEAD-A as the canonical architecture. It is not a claim that UE 5.8 is installed or that the exact patch/build has been verified.
-- **Initial target:** **Windows x64 (Win64), Development**; an Editor target is also defined. This follows MEAD-A's PC-first proposal, but is only the first development target, not a shipping-platform or minimum-hardware commitment.
-- **Project name/location:** `TheDisobedientDaughter.uproject` at the repository root; module `TheDisobedientDaughter`.
-- **Initial module architecture:** one minimal runtime game module, with no third-party plugins. This creates a project shell without selecting among the materially different MEAD candidates, adding speculative module boundaries, or assigning the C-05 contract layer. C-05 interfaces remain gated by TD-12 and formal contract freeze.
+- **Only authoritative project descriptor:** repository-root `TheDisobedientDaughter.uproject`. Repository/index/history inspection on this branch found no `TDD.uproject`; it was not present to merge or delete. Do not create a second descriptor. If a separate external copy exists on the owner's machine, do not copy it into the repository; use this root descriptor and migrate any unique needed settings explicitly after review.
+- **Engine:** UE 5.8, initially selected as an engine association, not a verified installed patch/build and not a choice of canonical MEAD.
+- **Platforms:** Mac and Windows are both listed as project target platforms for the current project workflows. Mac is the immediate development host/target; Win64 remains a production candidate. PS5 remains an intended production path, but is intentionally not declared as an enabled target here: access, console SDK/engine integration and platform tooling are gated by Sony/Epic authorization.
+- **Module architecture:** one minimal runtime module, `TheDisobedientDaughter`, with no third-party plugin or speculative contract module. Existing `TheDisobedientDaughterTarget` and `TheDisobedientDaughterEditorTarget` rules are platform-generic; UE's installed UBT selects the requested Mac or Win64 platform. The project GameMode is a minimal `AGameModeBase` subclass. No gameplay system or C-05 interface is introduced.
 
-The engine/target choice is versioned here because the owner explicitly directed project creation. It does **not** resolve TD-12, choose a canonical MEAD, change C-05 semantics, or change any acceptance-case identity.
+## 2. Consolidation and files
 
-## 2. Files established
+`TheDisobedientDaughter.uproject` is kept at the repository root as the sole descriptor. Its `TargetPlatforms` list is now `Mac`, `Windows` (previously Windows only). There was no second descriptor in the tracked tree, available history, or filesystem under this checkout, so consolidation means retaining the one existing descriptor and extending its platform declaration—not renaming it, copying it, or removing project history.
 
 | Path | Purpose |
 |---|---|
-| `TheDisobedientDaughter.uproject` | UE project descriptor, engine association 5.8, one runtime module, Windows target platform. |
-| `Source/TheDisobedientDaughter.Target.cs` | Game target. |
-| `Source/TheDisobedientDaughterEditor.Target.cs` | Editor target. |
-| `Source/TheDisobedientDaughter/TheDisobedientDaughter.Build.cs` | Minimal Core/CoreUObject/Engine module dependencies. |
-| `Source/TheDisobedientDaughter/Private/TheDisobedientDaughter.cpp` | Primary runtime module registration. |
-| `Source/TheDisobedientDaughter/Public/TDDGameMode.h` and `Private/TDDGameMode.cpp` | Project-owned minimal `AGameModeBase` subclass; no gameplay rules added. |
-| `Source/TheDisobedientDaughter/Private/Tests/TDDProjectFoundationTests.cpp` | Real Unreal Automation Framework smoke test asserting the project GameMode class is registered and derives from `AGameModeBase`. |
-| `Config/DefaultEngine.ini` | Engine entry map and project GameMode defaults. |
-| `Config/DefaultGame.ini` | Project identity/version settings. |
-| `.gitignore` | Unreal-generated binaries, intermediate/cache/saved output and common IDE artifacts. |
+| `TheDisobedientDaughter.uproject` | Canonical root descriptor, UE 5.8, one runtime module, Mac and Windows project target platforms. |
+| `Source/TheDisobedientDaughter.Target.cs` | Game target; generic UBT target rules. |
+| `Source/TheDisobedientDaughterEditor.Target.cs` | Editor target; generic UBT target rules. |
+| `Source/TheDisobedientDaughter/TheDisobedientDaughter.Build.cs` | Runtime module with Core/CoreUObject/Engine dependencies. |
+| `Source/TheDisobedientDaughter/Private/TheDisobedientDaughter.cpp` | Runtime module registration. |
+| `Source/TheDisobedientDaughter/Public/TDDGameMode.h`, `Private/TDDGameMode.cpp` | Minimal project `AGameModeBase`; no gameplay behavior. |
+| `Source/TheDisobedientDaughter/Private/Tests/TDDProjectFoundationTests.cpp` | Unreal Automation source test `TDD.Foundation.GameModeClass`; not yet compiled or run. |
+| `Config/DefaultEngine.ini`, `Config/DefaultGame.ini` | Engine startup/GameMode and project identity settings. |
+| `.gitignore` | Unreal generated outputs and IDE/temp exclusions. |
 
-The project uses the engine's `/Engine/Maps/Entry` map; no fabricated `.umap`, `.uasset`, C-05 stub, or placeholder test was added. The smoke test is foundation-only, not a C-05 acceptance test.
+No fabricated map/assets or placeholder tests are added. Engine `/Engine/Maps/Entry` remains the configured startup map.
 
-## 3. Verification state and exact toolchain blocker
+## 3. Exact Mac requirements and preparation plan
 
-| Gate | Result | Evidence / next action |
+Epic's versioned [UE macOS Development Requirements](https://dev.epicgames.com/documentation/unreal-engine/macos-development-requirements-for-unreal-engine?application_version=5.8) lists for UE 5.8: minimum macOS Sonoma 14.5, Xcode 26.0 minimum and Xcode 26.1.1 recommended; it warns Xcode 26.4 is incompatible. The page recommends 32 GB+ memory and lists 16 GB as minimum. This Apple M4 / 16 GB machine meets the listed minimum memory and processor class, but has no headroom over the memory minimum for editor, shader compilation, Xcode, and other tools; expect memory pressure and close other applications. Epic's M2+ rendering feature notes describe hardware ray tracing/MegaLights as experimental and Nanite/Virtual Shadow Maps as beta on Apple Silicon, so validate the chosen feature set and performance on the actual M4.
+
+The same Epic page's broad current headline/recommended OS text is older than the supplied `macOS 27.2.1` and recommends Sequoia 15 for the UE 5.8 row. It does **not** certify macOS 27.2.1. Treat OS 27 compatibility as unverified; an Editor launch/build/Automation smoke run on the actual host is required before claiming support. Epic's UE 5.8 release-note search content has a conflicting older macOS Xcode table (15.2 minimum); use the dedicated versioned macOS Development Requirements page's UE 5.8 row as the install target, and confirm with the exact installed UE 5.8 build/UBT before production. Do not install Xcode 26.4 for this project baseline.
+
+**Prepare on the owner's Mac (not executable from this Linux sandbox):**
+
+1. Install an authorized UE 5.8 Editor distribution from Epic Games Launcher or an authorized Epic source build; include Mac support. Confirm exact engine changelist/patch and Mac SDK/compiler reported by that build.
+2. Install **Xcode 26.1.1** (recommended; **26.0 is the stated minimum**) and its command-line tools. Do not use 26.4. Complete first-launch component installation and license acceptance.
+3. Select and record the active developer directory and verify toolchain versions:
+   ```sh
+   xcode-select -p
+   xcodebuild -version
+   xcrun --sdk macosx --show-sdk-version
+   clang++ --version
+   ```
+4. Open the root `TheDisobedientDaughter.uproject` in UE 5.8. Let the Editor generate project metadata as needed; do not commit generated `Intermediate`, `Binaries`, `Saved`, or user IDE files.
+5. Build the Editor target for Mac Development with the `Build.sh` shipped by that exact UE installation (substitute the installed engine root):
+   ```sh
+   "$UE_ROOT/Engine/Build/BatchFiles/Mac/Build.sh" \
+     TheDisobedientDaughterEditor Mac Development \
+     -Project="$PWD/TheDisobedientDaughter.uproject" -WaitMutex
+   ```
+   To build the game target separately, use `TheDisobedientDaughter Mac Development` with the same project argument. After a successful Editor build, run the foundation Automation filter with that installation's commandlet:
+   ```sh
+   "$UE_ROOT/Engine/Binaries/Mac/UnrealEditor-Cmd" \
+     "$PWD/TheDisobedientDaughter.uproject" -unattended -nop4 -NullRHI \
+     -ExecCmds="Automation RunTests TDD.Foundation.GameModeClass;Quit" \
+     -TestExit="Automation Test Queue Empty" -log
+   ```
+   Preserve the full commands/output, engine build/changelist, macOS and Xcode versions, log, exit codes, and test result for Agent 2's independent review. These commands are instructions only; none has run here.
+
+**No Mac installation, opening, build, or test has been performed by this agent.** The checkout host is Linux x86_64 and lacks Unreal Editor, UBT, RunUAT, .NET and the Apple/Xcode toolchain; it cannot install onto the owner's Mac. No remote Mac access is available in the session.
+
+## 4. Windows and PS5 path
+
+- **Windows x64:** the generic Game and Editor targets remain; build with the same UE 5.8 project on an authorized Windows x64 host using the UE 5.8-compatible Visual Studio 2022 C++ toolchain and Windows SDK as reported by the exact installed UBT. Windows compilation/cooking/package verification still needs to be run separately.
+- **PS5:** preserving future intent is not equivalent to platform enablement. Epic's [PS5 development guidance](https://dev.epicgames.com/documentation/en-us/unreal-engine/development-for-playstation-5-in-unreal-engine) requires PS5 documentation access permissions after NDA requirements, and Sony-approved developer status/access is required. Named blocker owner: Project Owner / organization console administrator to secure Sony partner status, Epic console access, SDK and dev kit; Agent 1 to integrate once authorized; Agent 2 to verify on authorized console tooling. Do not put proprietary SDKs, binaries, secrets, or gated details in this repo without authorization.
+
+## 5. Verification ledger
+
+| Check | Result | Evidence |
 |---|---|---|
-| Project descriptor syntax | **PASS — static JSON parse only** | Descriptor parses as JSON and names the module/target. This does not prove Unreal accepts it. |
-| Project opens in Unreal Editor | **BLOCKED / NOT RUN** | No `UnrealEditor` binary is available in the current Linux workspace. No editor launch is claimed. |
-| Project generation/compile | **BLOCKED / NOT RUN** | No `UnrealBuildTool`, `RunUAT`, .NET SDK/runtime or UE installation is available. `g++` alone is not an Unreal toolchain. |
-| Automation test discovery/execution | **BLOCKED / NOT RUN** | Test source exists, but no Editor build or Unreal Automation runner is available. No C-05 case has been executed. |
-| Package/cook | **BLOCKED / NOT RUN** | No UE AutomationTool, Windows SDK or authorized Windows runner is available. |
+| Number and location of descriptors in this checkout | **PASS: 1** | `find` and `git ls-files` found only root `TheDisobedientDaughter.uproject`; history contains only its addition. `TDD.uproject` is absent here. |
+| Descriptor JSON and platform list | **PASS: static only** | Python JSON parse confirms engine association `5.8`, module `TheDisobedientDaughter`, and platforms `Mac`, `Windows`. Not a UE validation. |
+| Project structure and references | **PASS: static only** | Source/target/config files and configured GameMode references are present. |
+| Open in UE 5.8 | **BLOCKED / NOT RUN** | No Unreal Editor in this Linux sandbox; no access to owner's Mac. |
+| Compile Mac module | **BLOCKED / NOT RUN** | No Mac/Xcode host or UE installation available to this agent. |
+| Foundation Automation test | **BLOCKED / NOT RUN** | Test source exists only; no compiled Editor or Automation runner. Agent 2 has not independently verified this consolidation or run. |
+| Win64 / PS5 builds | **NOT RUN** | Require the corresponding authorized host and platform toolchains. |
 
-### Installation/toolchain process assigned
+## 6. Governance and C-05 boundary
 
-- **Required host:** an authorized Windows 10/11 x64 development machine or runner with supported disk/GPU capacity and project access. The Linux agent sandbox is not the editor host.
-- **Engine:** install an available, licensed **Unreal Engine 5.8** distribution (Epic Games Launcher binary installation or an authorized Epic-source build); include Editor, Win64 target support and UnrealBuildTool/AutomationTool. Do not download engine binaries or source from unofficial mirrors.
-- **Compiler/SDK:** install Visual Studio 2022 with the C++ game-development/Desktop C++ components and the Windows SDK supported by that UE 5.8 build. Confirm exact versions with the installed UBT/engine requirements and record them; do not infer an SDK version here.
-- **Access:** an authorized operator must have the required Epic account/license and permitted engine/source access. Credentials must not be placed in chat or the repository.
-- **Owner/sequence:** Agent 1 coordinates installation or identifies the already-installed authorized host; Agent 3 records the environment manifest; Agent 2 independently checks the project-open/build/test evidence. No host/operator confirmation has been received in this environment, and I cannot perform the installation from this sandbox: the engine is absent and outbound access is limited to GitHub/API, npm and PyPI rather than Epic's distribution services.
-- **First verification commands:** on the authorized host, use the installed UE 5.8 editor to open and close/reopen the root `.uproject`; build `TheDisobedientDaughterEditor Win64 Development`; run Unreal Automation filter `TDD.Foundation.GameModeClass`; preserve exact command, engine/build version, runner, logs and exit status. These commands are a procedure only; none has run here.
+C-05 remains `DESIGN_ONLY`, unsigned/unfrozen, and 0/67 acceptance cases executed. The proposed first tranche remains unimplemented/unrun; T-C05-11 remains deferred pending TD-06. This foundation change does not resolve C-05 dependencies, establish a formal freeze/kickoff, choose a canonical MEAD, or start gameplay implementation. L-2 remains CLOSED; S4.3.10 and its historical `147/147` evidence are preserved. No project-opening/build/test or Agent 2 verification claim is made.
 
-## 4. C-05 implementation boundary
+## References
 
-This foundation does not contain C-05 runtime types or behavior. The user authorized creating the project now, but the C-05 direction itself requires the relevant contract decisions and formal kickoff authorization before acceptance execution. In particular, TD-12 still controls the canonical MEAD and contract-layer owner; TD-06 controls shared-axis timing; TD-09 controls arbitration. The 17-case mapping and owner/task register are in `docs/implementation/C05_TRANCHE1_IMPLEMENTATION_MAP_V1.md`.
-
-- C-05 contract remains `DESIGN_ONLY`, unsigned and unfrozen.
-- T-C05-01…10 and T-C05-21…27 remain **PROPOSED / NOT RUN**; T-C05-11 remains deferred until TD-06 is resolved.
-- L-2 remains **CLOSED**; S4.3.10 and both L-2 evidence commits remain untouched.
-- No C-05 implementation, C-05 API, project status promotion, or gameplay behavior claim is made by this project foundation.
-
-## 5. Scope and follow-up
-
-This is a genuine source/config project foundation committed inside the existing repository, not a disconnected sample. Its loading and build compatibility remain unverified until the authorized UE 5.8 toolchain is available. The prior bootstrap HOLD is superseded only to the extent of this Project Owner's explicit project-foundation direction; it is not blanket authorization to choose a canonical MEAD or freeze C-05.
+- Epic, [macOS Development Requirements for UE 5.8](https://dev.epicgames.com/documentation/unreal-engine/macos-development-requirements-for-unreal-engine?application_version=5.8) — OS, Xcode, memory, rendering feature notes.
+- Epic, [Development for PlayStation 5 in Unreal Engine](https://dev.epicgames.com/documentation/en-us/unreal-engine/development-for-playstation-5-in-unreal-engine) — console permissions and access gate.
