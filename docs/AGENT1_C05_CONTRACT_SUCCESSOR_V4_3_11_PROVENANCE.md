@@ -8,8 +8,9 @@
 |---|---|
 | Document | `docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_11.md` |
 | Version | 4.3.11 (`A1-C05-S4.3.11`) |
-| **Blob of this document** | **`1929551681d6f6852076606384e22ad1424e266e`** |
-| Lines | 2,581 |
+| **Blob of this document** | **`d9c3016cbd50d119721a1d09941bf69d31bc2527`** |
+| Lines | 2,587 |
+| **Earlier blob of this document** | `1929551681d6f6852076606384e22ad1424e266e` — as first published in `06a4a8b`, **preserved intact**; superseded by the documentation-only correction below |
 | Validator | `docs/validation/dv_c05.py`, blob **`9e88c5a44c09788646198cbd77c4259c82534efe`** |
 | Regression suite | `docs/validation/test_dv_c05_regressions.py`, blob **`ca0a4f902de74180fbf165013462a728130ddb07`** |
 | Branch | `arena/3bc206a0-tdd` |
@@ -24,7 +25,7 @@ The full hash is spelled out rather than abbreviated: an abbreviated hash in a p
 
 ```bash
 git rev-parse HEAD:docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_11.md
-# 1929551681d6f6852076606384e22ad1424e266e   (must equal the field above)
+# d9c3016cbd50d119721a1d09941bf69d31bc2527   (must equal the field above)
 git rev-parse HEAD:docs/validation/dv_c05.py                      # 9e88c5a44c09788646198cbd77c4259c82534efe
 git rev-parse HEAD:docs/validation/test_dv_c05_regressions.py     # ca0a4f902de74180fbf165013462a728130ddb07
 python3 docs/validation/dv_c05.py docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_11.md    # 27/27
@@ -47,6 +48,20 @@ python3 docs/validation/test_dv_c05_regressions.py                              
 ### Counts, derived by running the suite
 
 **164** cases — the 147 carried forward plus 17 added: `TD-122`…`TD-138` in §5k. `--compare` against the S4.3.10 validator (`/tmp/dv_s4310.py`, blob `353a2bff`) shows **exactly eight verdicts move**, all intended: `TD-122`…`TD-124` **FAIL → PASS** (the fail-closed denials, now accepted) and `TD-125`…`TD-129` **PASS → FAIL** (the unattributed passives, now caught). **No carried-forward case moves**, including the two deferred `R-4` pins and every one of the twenty-six required controls.
+
+### The `L-1` documentation correction (S4.3.11-L1, TD-authorised)
+
+**This register accompanies the corrected document, not the first publication.** The first publication of S4.3.11 is commit **`06a4a8b47ab67d1525e738bd998000cb63dd4809`**, document blob **`1929551681d6f6852076606384e22ad1424e266e`** — **intact and unmodified**; nothing was amended or force-pushed. A later commit on the same branch replaces this document's blob with **`d9c3016cbd50d119721a1d09941bf69d31bc2527`** and updates this register and the status ledger alongside it.
+
+| Item | First publication (`06a4a8b`) | Corrected (this register) |
+|---|---|---|
+| §13.1's `DV-22` result cell | `exempt lines 343 (fenced 201, quoted table 139, marked block 3); … mentions 146; scan offenders 0` — **S4.3.8's snapshot, inherited from S4.3.10** | `exempt lines 432 (fenced 228, quoted table 201, marked block 3); … mentions 169; scan offenders 0` — **the archived validator's own output** |
+| §2.26.5's explanation | claimed `L-1` did not recur in this revision | records that **`L-1` recurred in the published artifact**, that the figures came from S4.3.10, that the discrepancy is **documentary only**, and that this follow-up changes no behaviour |
+| `docs/validation/dv_c05.py` | `9e88c5a44c09788646198cbd77c4259c82534efe` | **`9e88c5a44c09788646198cbd77c4259c82534efe` — byte-identical** |
+| `docs/validation/test_dv_c05_regressions.py` | `ca0a4f902de74180fbf165013462a728130ddb07` | **`ca0a4f902de74180fbf165013462a728130ddb07` — byte-identical** |
+| Test verdicts, probe outcomes, acceptance results | 27/27, 164/164, 12/14, 26/26, 0 executed | **identical** — no predicate, threshold, exemption rule or case changed |
+
+**Why the discrepancy could exist with a green run.** `DV-22` prints its own counts; it never read the cell that restated them. The verification was therefore correct and the transcription was wrong — which is exactly the failure mode `L-1` was raised for at `6a7da5b`, and the reason it is corrected against the run rather than against the previous text. `L-2` did **not** recur: this revision states the suite as 164 in both §13 and §17, and it stays parked against the unmodified S4.3.10 text.
 
 ### Normative clauses: byte-identical
 
@@ -71,7 +86,7 @@ python3 docs/validation/test_dv_c05_regressions.py                              
 | `TDD-A1-C05-SUCCESSOR-004.3.8` | `c4761f52003958fb95c405db56591063f255f55f`, blob `3c6bab6c63b6ed47e82a490a8858819080695f86` | S4.3.8 |
 | `TDD-A1-C05-SUCCESSOR-004.3.9` | `83c24f9ce974c8194d5788d62c28043cc7511974`, blob `72d218a865b6713f78cb22308fa3dea81c74ac39` | S4.3.9 |
 | `TDD-A1-C05-SUCCESSOR-004.3.10` | `7662926c4c3b7293daedcc393c0ec4d015cdd883`, blob `857778e18a35b35b1a5420905ec5f1482fddf868` | S4.3.10, the baseline this revision corrects |
-| `TDD-A1-C05-SUCCESSOR-004.3.11` | this document, blob `1929551681d6f6852076606384e22ad1424e266e` | **this revision** |
+| `TDD-A1-C05-SUCCESSOR-004.3.11` | this document, blob `d9c3016cbd50d119721a1d09941bf69d31bc2527` (first published as `19295516…` in `06a4a8b`, preserved intact) | **this revision** |
 
 **Residual, unchanged:** line 3 of the file on `arena/c64fc525-tdd` still reads `…-004.2`. Removing it requires a commit on a branch this revision may read and may not write; that remains TD's to direct.
 
@@ -89,7 +104,7 @@ Agent 2's §1.3 rule — *re-verify any negative existence claim as the last act
 | Predicate diff vs `7662926` | `docs/validation/dv_c05.py`: **+31 / −6** lines, confined to three constructions (the object negator, the passive attribution, the quantified denial), their comments, one shared participle constant and the `REG` constant |
 | Suite diff vs `7662926` | `docs/validation/test_dv_c05_regressions.py`: **+48 / −0** lines — 17 new cases and their section header; **no existing case edited, renamed or removed** |
 | Predecessor blobs at the tip | S4.3.10 `857778e1`, S4.3.9 `72d218a8`, S4.3.8 `3c6bab6c`, S4.3.7 `0a0c36be`, S4.3.6 `e3a1fa85`, S4.3.5 `a0b46f46`, S4.3.4 `41df692d`, S4.3.3 `d827e017`, S4.3.2 `74840d70`, S4.3.1 `c8708ef0`, S4.3 `74546027` — unchanged |
-| `python3 docs/validation/dv_c05.py docs/…V4_3_11.md` | **27/27 checks passed** — `DV-22` 0 offenders of 169 mentions, `DV-24` 10 pairs / 0 disagreeing / anchors 3/3, `DV-11` 7 declared / 5 observed / 43 cells / 7 cell-count claims / 8 owner checks |
+| `python3 docs/validation/dv_c05.py docs/…V4_3_11.md` (corrected document) | **27/27 checks passed** — `DV-22` 0 offenders of 169 mentions, exempt lines 432 (fenced 228, quoted 201, marked 3), matching the corrected §13.1 cell exactly, `DV-24` 10 pairs / 0 disagreeing / anchors 3/3, `DV-11` 7 declared / 5 observed / 43 cells / 7 cell-count claims / 8 owner checks |
 | Same checker on earlier blobs | S4.3.10 **26/27** (`DV-27` only — it names its own register), `DV-22` **0 offenders of 165 mentions** on it, so the correction fires on nothing new; S4.3.9 **25/27** (`DV-22` + `DV-27`); S4.3.8 … S4.3.1 and S4.3 **26/27**; S4.2 **24/27**; S4.1 **21/27**; S4.0 **21/27**; S3 **10/27** — **every predecessor tally matches the one S4.3.10 published** |
 | `python3 docs/validation/test_dv_c05_regressions.py` | **164/164 cases behaved as required** |
 | `--compare /tmp/dv_s4310.py` | **8 verdicts move, all intended**: `TD-122`…`TD-124` **FAIL → PASS**, `TD-125`…`TD-129` **PASS → FAIL**; every carried case and all 17 other new cases stable |
