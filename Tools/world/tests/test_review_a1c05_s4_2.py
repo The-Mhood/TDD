@@ -29,6 +29,9 @@ S3_BLOB = "077232368c42b2cd910be2c9642ba05cd7faa382"
 
 PROV_REGISTER = "docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_2_PROVENANCE.md"
 PROV_BLOB = "eda9bd2671650b0c41a8aa1cff97da0dd0fad593"
+# validator that shipped WITH S4.2 - the review of a pinned blob must be
+# reproducible with the pinned instrument (W-M2.16 finding)
+S42_VALIDATOR_BLOB = "381be714954415ba2ef62c32888ed8597b6688f3"
 
 ALLOWED_ROWS = {"TN-P": {2}, "TN-C": {5, 6}, "TN-R": {2, 4}, "TN-A": {8}}
 
@@ -492,8 +495,15 @@ class TestDuplicateIdentity(Base):
 # ---------------------------------------------------------------------------
 
 class TestValidatorExecuted(Base):
+    # The validator MUST be pinned to the reviewed commit, not read from the branch tip.
+    # W-M2.16 found this: bound to `origin/arena/3bc206a0-tdd`, this class silently started
+    # testing Agent 1's LATER validator against the EARLIER S4.2 text, so S4.2 dropped from
+    # 27/27 to 24/27 the moment Agent 1 published S4.3. A review of a pinned blob must be
+    # reproduced with the instrument that shipped with that blob.
+    DV_AT_REVIEW = S42_COMMIT + ":docs/validation/dv_c05.py"
+
     def run_dv(self, text):
-        src = git_show("origin/arena/3bc206a0-tdd:docs/validation/dv_c05.py")
+        src = git_show(self.DV_AT_REVIEW)
         if src is None:
             self.skipTest("validator unavailable")
         import tempfile, sys
@@ -590,3 +600,37 @@ class TestVerdict(Base):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestInstrumentIsPinned(unittest.TestCase):
+    """Regression guard for the defect W-M2.16 found in this module's own review.
+
+    The reviewed S4.2 blob must be scored by the validator published with it, not by a
+    later one read from a branch tip. This test fails if anything in this module reverts
+    to reading the instrument from a moving ref.
+    """
+
+    def test_module_does_not_read_validator_from_a_branch_tip(self):
+        import re as _re
+        src = (Path(__file__).resolve()).read_text(encoding="utf-8")
+        # allowed: branch reads for provenance/existence checks (PROV_REGISTER, S42_PATH)
+        bad = _re.findall(r'origin/arena/[^"\']*docs/validation/dv_c05\.py', src)
+        self.assertEqual(bad, [], "validator must be pinned: %r" % bad)
+
+    def test_pinned_validator_is_the_one_that_shipped_with_s42(self):
+        got = subprocess.run(["git", "rev-parse", TestValidatorExecuted.DV_AT_REVIEW],
+                             capture_output=True, text=True, check=False)
+        if got.returncode != 0:
+            self.skipTest("commit unavailable")
+        self.assertEqual(got.stdout.strip(),
+                         "381be714954415ba2ef62c32888ed8597b6688f3")
+        self.assertEqual(got.stdout.strip(), S42_VALIDATOR_BLOB)
+
+    def test_reading_the_tip_would_change_the_result(self):
+        """Proves the pin matters: the newer validator scores S4.2 lower."""
+        newer = subprocess.run(["git", "rev-parse",
+                                "baa31db:docs/validation/dv_c05.py"],
+                               capture_output=True, text=True, check=False)
+        if newer.returncode != 0:
+            self.skipTest("commit unavailable")
+        self.assertNotEqual(newer.stdout.strip(), S42_VALIDATOR_BLOB)

@@ -137,6 +137,9 @@ def main() -> int:
         "review_c05_s4_2_document_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_review_a1c05_s4_2.py"]),
+        "review_c05_s4_3_5_arch_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_review_a1c05_s4_3_5.py"]),
     }
 
     payload = {
@@ -158,6 +161,39 @@ def main() -> int:
                          "TARGETED REVISION. Agent 1's shipped validator independently "
                          "reproduces 27/27 on the reviewed blob and discriminates on "
                          "S4.1/S4.0/S3",
+            "w_m2_16": (
+                "W-M2.16 - independent ARCHITECTURE review (not a confirmation exercise) of "
+                "A1-C05-S4.3.5, blob a0b46f46 at baa31db, path "
+                "docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_5.md, 1779 lines. Outcome: PASS WITH "
+                "CONDITIONS, one condition C-1. The C-05 ownership model is coherent, "
+                "implementable and internally consistent; authority boundaries are correctly "
+                "assigned and held; message ownership, audio ownership, state transitions and "
+                "timing semantics are sufficiently precise; the normative clauses agree with "
+                "the architecture, obligations, ownership tables and proposed cases; no "
+                "contradiction, impossible requirement or hidden dependency was found; the "
+                "identity and scope decisions are preserved with no silent architecture "
+                "change (43 obligation rows, 6 clauses and 17 case specifications are "
+                "byte-identical to S4.3.4); all seven prior defects D-1..D-7 and all seven "
+                "conditions are genuinely closed, verified against the text and by executing "
+                "the instruments rather than reading the status column; the Agent 3 "
+                "TN-C-11/TN-A-01/TN-A-02 conflict is accurately represented as S4's own "
+                "resolution with Agent 3 asked to confirm, and remains unresolved where it "
+                "should (TD-09 OPEN); no architectural regression was found. ONE MAJOR, "
+                "THREE MINOR, FOUR OBSERVATIONS, ZERO BLOCKERS. MAJOR-1: DV-22 still admits "
+                "two false negatives - contrastive apposition ('Agent 1, unlike Agent 2, "
+                "owns the audio cues') and the number-word form ('The first agent owns the "
+                "audio cues') - both reproducing a clean 27/27; the contract text is correct, "
+                "so this is a defect in the certificate, not the thing certified. The fix I "
+                "recommend was implemented and measured against three populations at once "
+                "(clean document 27/27 with 0 offenders, both escapes FAIL, existing suite "
+                "67/67); the intuitive alternative was measured, failed, and is recorded as "
+                "rejected. MINOR-1: the suite-count audit is a recorded table rather than an "
+                "enforced check, disclosed as such in the document. MINOR-2: closing C-1 will "
+                "stale eleven audit rows. MINOR-3: both obvious repairs to DV-22 fail while "
+                "looking correct. Governance unchanged: C-05 and U-07 open, DESIGN_ONLY, "
+                "unsigned, unfrozen, no MEAD selected, 0 of 67 acceptance cases executed, and "
+                "the 67 instrument regressions are not acceptance tests."
+            ),
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
             "python": platform.python_version(),
@@ -708,6 +744,115 @@ def main() -> int:
                        "DESIGN_ONLY; no MEAD selected; no signature, freeze, merge or M0 "
                        "authorisation. The 47 addendum tests prove nothing about contract "
                        "behaviour."},
+
+            # ---- W-M2.16: independent architecture review of A1-C05-S4.3.5 ----
+            {"claim": "the reviewed document is the exact published S4.3.5 blob",
+             "method": "git rev-parse baa31db3c631f0fc3e69a82b6d71207ad8061218:docs/"
+                       "AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_5.md before reading, and again at "
+                       "commit time",
+             "result": "verified: resolves to a0b46f46c81e85cea5d04b940aaf9aee46c19deb, exactly "
+                       "the requested blob, 1,779 lines. The same-commit provenance register "
+                       "0dba4a7c6eddd3ba0a3d61b408c2d3ee005a88cb also names that blob and "
+                       "spells the full hash rather than abbreviating it. The commit was the "
+                       "branch tip at review time, so no blob-versus-tip ambiguity arose."},
+            {"claim": "S4.3.5 changes nothing normative, as it states in section 0.7.5",
+             "method": "byte-compare against S4.3.4 (blob 41df692d) the 43 obligation rows, "
+                       "the clauses in 5.2/5.4/9.2/4.9/3.6/4.2, and all 17 case-specification "
+                       "rows",
+             "result": "TRUE. All 43 rows identical, all six clauses identical, all 17 case "
+                       "specifications identical. The revision is confined to the Scope-line "
+                       "figure, the 2.14 audit, and the 18.3 stamp, exactly as claimed."},
+            {"claim": "the suite-count correction and its audit are accurate",
+             "method": "run each commit's regression suite in an isolated git archive "
+                       "extraction of 40d29cc, 90971e0 and baa31db; read S4.3.4's Scope line",
+             "result": "CORRECT. Executed suite totals are 56 (S4.3.3), 67 (S4.3.4) and 67 "
+                       "(S4.3.5). S4.3.4's Scope line did read 'from 56 to 74'; S4.3.5 reads "
+                       "'from 56 to 67'. The '74' survives only as a quotation of the "
+                       "corrected error. The 11-row audit is a RECORDED TABLE, not an "
+                       "enforced front-matter check, and the document states that limitation "
+                       "in terms rather than implying otherwise - recorded as MINOR-1."},
+            {"claim": "DV-22's rewrite closes my N-1 keyword escape",
+             "method": "run the shipped validator on 24 injected audio-assignment forms in a "
+                       "clean archive, including the exact attack I published at S4.2",
+             "result": "CLOSED for keyword escapes and for 22 of my 24 forms. My original "
+                       "attack 'D-4 note: Agent 1 owns the camera and audio cues' is now "
+                       "CAUGHT, and the suite carries it as a permanent case. Exemption is "
+                       "now by location (fenced block, [QUOTED] table, marked history block), "
+                       "never by which words a line contains."},
+            {"claim": "DV-22 fully enforces audio single-ownership in all ownership prose",
+             "method": "inject 24 forms; for each, read the DV-22 verdict and the overall "
+                       "check total",
+             "result": "FALSE - MAJOR-1. Two false negatives reproduce a clean 27/27: (1) "
+                       "'Agent 1, unlike Agent 2, owns the audio cues' - attribution takes "
+                       "the nearest PRECEDING agent reference, which is Agent 2 inside the "
+                       "contrastive foil; (2) 'The first agent owns the audio cues' - AGENT_REF "
+                       "matches only agent[-\s]?[12]. Escape 2 is reachable, not artificial: "
+                       "this document uses 'the first agent' as a synonym for Agent 1 "
+                       "seventeen times, including in the sentence that defines the DV-22 "
+                       "criterion. The contract text is correct; the certificate overstates "
+                       "what it tests."},
+            {"claim": "the defect in DV-22 is fixable as I describe",
+             "method": "implement three candidate repairs in /tmp against throwaway archive "
+                       "extractions and measure each against three populations - the clean "
+                       "document, both escapes, and the existing 67 regression cases",
+             "result": "MEASURED, one rejected. (b) 'fail on any unattributable audio mention' "
+                       "is REJECTED: it produces 13-43 false positives on the clean document "
+                       "because authority/disposition tables discuss audio without naming an "
+                       "agent, so 27/27 collapses. A naive '|the first agent' regex alternative "
+                       "is also ineffective - group(1) is None for that branch. (a) as "
+                       "specified DOES work: clean document 27/27 with 0 offenders, both "
+                       "escapes FAIL with 1 offender each, all denials still pass, and the "
+                       "full 67-case suite passes 67/67 with zero collateral damage. Nothing "
+                       "was committed; Agent 1's validator is unmodified."},
+            {"claim": "the arbitration boundary and the Agent 3 conflict are represented "
+                      "truthfully",
+             "method": "trace 5.2 rows 5-8 against TN-C-11, TN-C-15, TN-A-01..03, C05-6.4 and "
+                       "section 6.1; check that TN-A-02 was extended rather than narrowed; "
+                       "re-check the document's negative existence claim against every head",
+             "result": "TRUTHFUL. The three domains (creation/selection/outcome) hold: the "
+                       "producer authors AttackTag, a consumer may select on it, and nothing "
+                       "may decide a hit with it. TN-A-02 is extended, not weakened, and TN-A-03 "
+                       "gives it a positive failable form. The document states that Agent 3's "
+                       "review is NOT in the repository, credits the resolution as its own "
+                       "rather than Agent 3's, and asks Agent 3 to confirm or substitute. "
+                       "Verified: three AGENT3 files exist on arena/c64fc525-tdd and none "
+                       "mentions 7d03e1df or a0b46f46."},
+            {"claim": "I did not rely on Agent 3's conclusions or adjust my verdict to match",
+             "method": "no coordination; Agent 3's S4.2 and S4.3 assessments were not read and "
+                       "were not awaited",
+             "result": "NOT DONE. Where this review describes Agent 3's conflict or its "
+                       "counterexample it quotes AGENT 1's description of them in the reviewed "
+                       "text. The verdict PASS WITH CONDITIONS is mine, derived from my own "
+                       "injections and executions."},
+            {"claim": "the document validation constitutes architectural evidence",
+             "method": "kept separate deliberately throughout",
+             "result": "IT DOES NOT. 27/27 and 67/67 are structural checks on the document and "
+                       "on the checker. They prove internal consistency and that the "
+                       "instruments reach their intended defects. They prove nothing about "
+                       "whether a telegraph, producer or consumer behaves correctly - there is "
+                       "no engine (B-3). The 67 instrument regressions are NOT contract "
+                       "acceptance tests and I do not treat them as such."},
+            {"claim": "my own prior review artifacts still reproduce correctly",
+             "method": "re-ran the full world test suite before generating this evidence",
+             "result": "FOUND A DEFECT IN MY OWN W-M2.15 MODULE (MINOR-4). "
+                       "test_review_a1c05_s4_2.py read the validator from the branch tip "
+                       "origin/arena/3bc206a0-tdd instead of the reviewed commit, so when Agent "
+                       "1 published S4.3 the test began scoring the S4.2 document with the "
+                       "S4.3.5 validator and S4.2 fell from 27/27 to 24/27 - DV-22, DV-24 and "
+                       "DV-27 are checks S4.2 predates. FIXED IN THIS REVISION: pinned to "
+                       "a788f95:docs/validation/dv_c05.py (blob 381be714) and added "
+                       "TestInstrumentIsPinned to fail if a branch-tip read returns. S4.2 is "
+                       "27/27 again under the instrument that shipped with it. No W-M2.15 "
+                       "conclusion changes - every number was correct at the time. The "
+                       "review's own S4.2 24/27 figure is now labelled as measuring checker "
+                       "growth, not document quality."},
+            {"claim": "C-05, U-07, a MEAD or any acceptance case is closed by this review",
+             "method": "none - document, arithmetic and instrument checks only",
+             "result": "NOT CLAIMED. C-05 and U-07 remain open; 0 of 67 acceptance cases "
+                       "executed, all PROPOSED / NOT RUN; DESIGN_ONLY; no MEAD selected; no "
+                       "signature, freeze, merge or approval. B-1/TD-06, B-2/TD-09, "
+                       "B-4/TD-12 and B-13 remain OPEN. My 61 review tests prove nothing "
+                       "about contract behaviour."},
 
             # ---- W-M2.15: independent reassessment of A1-C05-S4.2 v4.2 ----
             {"claim": "the reviewed document is the exact published S4.2 blob",
