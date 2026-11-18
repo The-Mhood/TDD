@@ -69,6 +69,8 @@ def main():
     if not modules:
         block("descriptor declares no modules", "add at least the primary game module")
     src = root / "Source"
+    module_names = {m.get("Name") for m in modules}
+    module_deps = {}  # module -> project modules it names in its Build.cs
     for entry in modules:
         name = entry.get("Name")
         mtype = entry.get("Type")
@@ -94,6 +96,7 @@ def main():
             re.findall(r"PublicDependencyModuleNames\s*\.AddRange\s*\((.*?)\)", text, re.S))))
         prv = set(re.findall(r'"([A-Za-z0-9_]+)"', " ".join(
             re.findall(r"PrivateDependencyModuleNames\s*\.AddRange\s*\((.*?)\)", text, re.S))))
+        module_deps[name] = {d for d in pub | prv if d in module_names}
         editor_deps = {d for d in pub | prv if d.startswith(EDITOR_ONLY_DEP_PREFIXES)}
         if mtype == "Runtime" and editor_deps:
             block(f"module {name}: Type Runtime but depends on editor-only {sorted(editor_deps)}",
@@ -114,7 +117,10 @@ def main():
     for tname, text in targets_text.items():
         inc = re.search(r"IncludeOrderVersion\s*=\s*([A-Za-z0-9_.]+)", text)
         bs = re.search(r"DefaultBuildSettings\s*=\s*([A-Za-z0-9_.]+)", text)
-        extra = re.findall(r'"([A-Za-z0-9_]+)"', (re.search(r"ExtraModuleNames\s*\.AddRange\s*\((.*?)\)", text, re.S) or [None, ""])[1])
+        # both ExtraModuleNames.Add("X") and ExtraModuleNames.AddRange(new string[] { "X", ... })
+        extra = []
+        for call in re.finditer(r"ExtraModuleNames\s*\.\s*Add(?:Range)?\s*\(([^;]*?)\)\s*;", text, re.S):
+            extra += re.findall(r'"([A-Za-z0-9_]+)"', call.group(1))
         notes.append(f"{tname}: build settings {bs.group(1) if bs else 'unset'}, "
                      f"include order {inc.group(1) if inc else 'unset'}, modules {extra}")
         if inc and re.search(r"Unreal5_(\d+)", inc.group(1)):
@@ -122,9 +128,19 @@ def main():
             if assoc and assoc.startswith("5.") and pinned != int(assoc.split(".")[1]):
                 block(f"{tname}: IncludeOrderVersion pins 5.{pinned} while the project targets {assoc}",
                       "use EngineIncludeOrderVersion.Latest until a verified build pins an explicit value")
+        # A module satisfies the target if it is listed, or if it is reachable
+        # through Build.cs dependencies from a listed module (UBT links that closure);
+        # only modules with no such route must be added explicitly.
+        reachable, frontier = set(extra), list(extra)
+        while frontier:
+            cur = frontier.pop()
+            for dep in module_deps.get(cur) or ():
+                if dep not in reachable:
+                    reachable.add(dep)
+                    frontier.append(dep)
         missing = [m.get("Name") for m in modules
                    if m.get("Type") == ("Editor" if "Editor" in tname else "Runtime")
-                   and m.get("Name") not in extra]
+                   and m.get("Name") not in reachable]
         if missing:
             block(f"{tname}: ExtraModuleNames omits {missing}",
                   "add every module of that type to the matching target's ExtraModuleNames")
