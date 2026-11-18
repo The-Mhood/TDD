@@ -146,6 +146,9 @@ def main() -> int:
         "review_c05_s4_3_7_instrument_claims": run(
             [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
              "-p", "test_review_a1c05_s4_3_7.py"]),
+        "review_c05_final_verify_claims": run(
+            [py, "-m", "unittest", "discover", "-s", "Tools/world/tests",
+             "-p", "test_review_a1c05_final_verify.py"]),
     }
 
     payload = {
@@ -276,6 +279,58 @@ def main() -> int:
                 "attributed. Governance unchanged: C-05 DESIGN_ONLY, unsigned, unfrozen, U-07 "
                 "open, no MEAD, 0 of 67 acceptance cases executed, and the 106 instrument "
                 "regressions are not acceptance tests."
+            ),
+            "w_m2_19": (
+                "W-M2.19 - FINAL independent C-05 verification against Agent 1's S4.3.8, commit "
+                "c4761f5, document blob 3c6bab6c (2242 lines), register 60c00396, validator "
+                "cd1606c2, suite a99adaf6, path docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_8.md. "
+                "Outcome: TARGETED REVISION REQUIRED, one material blocker plus one "
+                "non-blocking observation. THE PREMISE MOVED UNDER ME: my first pass this "
+                "milestone found no successor (head still f1beb0c, no V4_3_8 on any ref) and I "
+                "wrote a review on that basis; that draft is void and preserved as "
+                "AGENT2_FINAL_VERIFY_C05_V1.md, because c4761f52 was published at 09:27:11 and "
+                "the guard test in my own module caught the movement. AGAINST S4.3.8 ITSELF: "
+                "both corrections are PRESENT AND CORRECT - my W-M2.18 CONDITION-1 and "
+                "CONDITION-2 are CLOSED. Five quantified-denial forms now PASS (three I "
+                "reported plus two new), three capitalised two-line continuations now FAIL with "
+                "the S4.3.6/S4.3.7/S4.3.8 inversion published exactly, and neither fix buys its "
+                "result by weakening the positive form - nine DV-22 controls keep their required "
+                "verdict and TD-84 still catches a genuine 'belongs to' assignment. CONDITION-2 "
+                "is solved differently from my proposal and better: rather than widening "
+                "_CONT_START to [a-zA-Z0-9], Agent 1 parameterised the gate for three-line "
+                "windows only, removing a guard that did no work on two-line windows; I tested "
+                "the consequence (seven boundaries, all hold) instead of accepting the reasoning. "
+                "Reproduced from a clean archive of c4761f5: document 27/27, suite 120/120 with 0 "
+                "expectation mismatches, where 120 = 114 literal case() definitions plus 6 "
+                "loop-generated, derived rather than read. The reported --compare movement is "
+                "exact: seven verdicts move (TD-81/82/83/85 FAIL to PASS, TD-86/87/88 PASS to "
+                "FAIL), 0 rows disagree. MINOR-1 is CLOSED: section 13.1, section 2.23 and the "
+                "register all state pairs read 10 and the runner prints 10, with the earlier "
+                "drift disclosed rather than hidden. Cases intact: TD-01..TD-80 all present, 14 "
+                "new cases contiguous as TD-81..TD-94, suite diff +39/-1 where the one deletion "
+                "is a comment. Normative contract untouched: 43 obligation rows, TN-C-11/14/15, "
+                "TN-A-01..03, 17 case specifications and D-1..D-7 all byte-identical to "
+                "0a0c36be, and S4.3.7 unmodified. THE ONE BLOCKER, F-1: the three DV-22 patterns "
+                "added to close CONDITION-1 allow their internal gap to be any character except "
+                "'.', ';' and '|', so the gap crosses a comma and a conjunction and the denial "
+                "excuses a genuine ownership assertion later on the same line. 'No audio cue is "
+                "assigned to Agent 2 and the audio cue belongs to Agent 1.' and the ', but' form "
+                "both moved FAIL to PASS against S4.3.7 - a REGRESSION, and fail-OPEN, the "
+                "direction DV-22 exists to prevent. The ';' form is still caught, and removing "
+                "only the three new patterns restores both failures, so the cause is proven by "
+                "experiment rather than inferred. The suite cannot see it: TD-84's control uses "
+                "a separate line and no case places a denial and an offence on one line, so all "
+                "120 pass while the class is open - the same blind spot shape as CONDITION-2 at "
+                "S4.3.7. Scope is small: exclude the conjunction/comma class from that gap, or "
+                "reuse _NOT_CROSS which the module already defines at line 561 for NEG_AFTER. I "
+                "verified the diagnosis and did not write the fix, because designing the "
+                "correction is Agent 1's work. F-2 NON-BLOCKING: removing the continuation gate "
+                "from two-line windows is sound today (I could not construct a false join and "
+                "all seven boundaries hold) but rests the defence on three rules instead of "
+                "four; recorded, explicitly NOT a reason for the verdict, and no revision asked "
+                "for on its account. Governance unchanged: C-05 DESIGN_ONLY, unsigned, "
+                "unfrozen, U-07 open, no MEAD, 0 of 67 acceptance cases executed, and the 120 "
+                "instrument regressions are not acceptance tests."
             ),
             "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
             "agent": "Agent 2 (world structure / level architecture)",
@@ -827,6 +882,145 @@ def main() -> int:
                        "DESIGN_ONLY; no MEAD selected; no signature, freeze, merge or M0 "
                        "authorisation. The 47 addendum tests prove nothing about contract "
                        "behaviour."},
+
+            # ---- W-M2.19: final C-05 verification against Agent 1's S4.3.8 ----
+            {"claim": "a successor to S4.3.7 was published and is the object of this review",
+             "method": "git fetch of arena/3bc206a0-tdd, then rev-parse of the four named "
+                       "blobs, before any check and again immediately before committing",
+             "result": "TRUE, but the premise failed on my first pass and I must record that. "
+                       "My first attempt this milestone found Agent 1's head still at f1beb0c "
+                       "with no V4_3_8 on any ref, and I wrote a review on that basis. That "
+                       "review was correct when written and is now VOID: the guard test in my "
+                       "own module failed an hour later and c4761f52 was published at "
+                       "2026-11-18 09:27:11 +0000. The void draft is preserved as "
+                       "Docs/AGENT2_FINAL_VERIFY_C05_V1.md and superseded by V2. This is the "
+                       "TIP-BINDING rule working as intended - a pinned head is a moving "
+                       "target, and only a test that fails on movement catches it."},
+            {"claim": "the two corrections this task asks me to verify are present at the target",
+             "method": "run the shipped S4.3.8 validator against nine injected counterexamples "
+                       "in a scratch copy, and compare each against the S4.3.7 verdict",
+             "result": "BOTH PRESENT AND CORRECT - my W-M2.18 CONDITION-1 and CONDITION-2 are "
+                       "CLOSED. DV-22: all three quantified denials I reported now PASS, plus "
+                       "two new forms ('is owned by', possessive). DV-24: all three capitalised "
+                       "continuations now FAIL, and the S4.3.6/S4.3.7/S4.3.8 inversion the "
+                       "review asked for is published exactly. Neither fix buys its result by "
+                       "weakening the positive form: nine DV-22 controls keep their required "
+                       "verdict (four denials PASS, five offences FAIL), and TD-84 proves a "
+                       "genuine 'belongs to' assignment still fails."},
+            {"claim": "the F-2 root cause in my own first draft was correct",
+             "method": "test the recommendation instead of asserting it: instrument the module "
+                       "and measure whether the _UNIVERSAL guard is reachable for the probes",
+             "result": "FALSE - my first draft was WRONG and I corrected it before publishing. "
+                       "I had named _UNIVERSAL at line 562 and recommended widening it; the "
+                       "guard is nested inside the NEG_AFTER loop, all three probes produce an "
+                       "empty NEG_AFTER hit set, and the fix would have changed nothing. The "
+                       "real cause was a NEG_BEFORE detector gap. Agent 1 found the same cause "
+                       "independently and fixed it in the right place. Recorded because a "
+                       "reviewer's recommendation is a claim and must be run, not reasoned "
+                       "about."},
+            {"claim": "the S4.3.8 quantified-denial fix introduces no fail-open regression",
+             "method": "compose a quantified denial and a real ownership offence on ONE line, "
+                       "vary the separator (comma, and, but, semicolon), and compare S4.3.7 "
+                       "against S4.3.8; then remove only the three new patterns to prove cause",
+             "result": "FALSE - F-1, a MATERIAL BLOCKER and a regression against S4.3.7. The "
+                       "new patterns allow their internal gap to be any character except '.', "
+                       "';' and '|', so the gap crosses a comma and a conjunction. 'No audio "
+                       "cue is assigned to Agent 2 and the audio cue belongs to Agent 1.' and "
+                       "the ', but' form both moved FAIL -> PASS: a line that asserts Agent 1 "
+                       "owns the cue is now accepted. The ';' form is still caught, which "
+                       "isolates the cause to the gap class. Removing only the three S4.3.8 "
+                       "patterns restores both failures, so causation is proven rather than "
+                       "inferred. This is fail-OPEN, the direction DV-22 exists to prevent."},
+            {"claim": "the suite would catch the F-1 regression",
+             "method": "grep the S4.3.8 suite for any case placing a denial and an offence on "
+                       "the same line",
+             "result": "IT WOULD NOT, and this is the point. TD-84 is the control proving the "
+                       "positive form was not weakened, and it uses a SEPARATE line. No case "
+                       "combines a quantified denial with a real offence on one line, so all "
+                       "120 cases pass while this class is open. Same shape of blind spot as "
+                       "CONDITION-2 at S4.3.7: a green suite is not evidence of completeness, "
+                       "which is why every finding here is a probe and not a suite result."},
+            {"claim": "the _joinable change reintroduces no false joins",
+             "method": "test all seven block and sentence boundaries independently, plus "
+                       "cross-pairing and the three-line internal gate",
+             "result": "NO FALSE JOIN, but the check is weaker by construction and I record it "
+                       "as F-2 non-blocking. S4.3.8 removed the continuation gate from two-line "
+                       "windows, so the false-join defence there now rests on the block guard, "
+                       "the sentence guard and the one-label-each rule. List item, sentence "
+                       "terminator, heading, blockquote, table row, fence and blank line all "
+                       "still PASS; cross-pairing PASSes; the three-line internal gate and the "
+                       "two-line lowercase wrap still FAIL. I could not construct a false join, "
+                       "so I did not raise a condition on a hypothesis."},
+            {"claim": "the S4.3.8 solution to CONDITION-2 matches what I asked for",
+             "method": "read the diff and test the consequence rather than the design",
+             "result": "IT DIFFERS, and theirs is better. I proposed widening _CONT_START to "
+                       "[a-zA-Z0-9]. Agent 1 instead parameterised the gate and applied it to "
+                       "three-line windows only (dv_c05.py:790-797, 815), on the reasoning that "
+                       "a two-line window is already protected by the other three rules. That "
+                       "removes a gate which was doing no work rather than pretending a "
+                       "capitalised sentence continues one. I checked the consequence - seven "
+                       "boundaries, all hold - instead of accepting the reasoning."},
+            {"claim": "the reported headline results reproduce from a clean archive",
+             "method": "git archive c4761f5 extraction; run the shipped validator and suite; "
+                       "derive the case total from the source rather than reading it",
+             "result": "BOTH REPRODUCE. Document 27/27. Suite 120/120 with 0 expectation "
+                       "mismatches. I derived 120 as 114 literal case() definitions plus 6 "
+                       "generated by the PREDECESSORS loop - a raw grep would have undercounted, "
+                       "the trap I logged at W-M2.15. Identities pinned: document 3c6bab6c "
+                       "(2242 lines), register 60c00396, validator cd1606c2, suite a99adaf6. "
+                       "S4.3.7 is byte-identical at both commits (0a0c36be), so the predecessor "
+                       "was not rewritten to accommodate the successor."},
+            {"claim": "the reported --compare movement is accurate",
+             "method": "run the suite's own --compare against the S4.3.7 validator "
+                       "(f1beb0c:docs/validation/dv_c05.py) and parse every row",
+             "result": "EXACTLY AS CLAIMED. Seven verdicts move: TD-81, TD-82, TD-83, TD-85 "
+                       "FAIL -> PASS (four false alarms removed) and TD-86, TD-87, TD-88 "
+                       "PASS -> FAIL (three missed hazards restored). Zero rows disagree with "
+                       "their own expectation. I re-derived this rather than accepting the "
+                       "register's sentence, because a reported delta is exactly the kind of "
+                       "figure that drifts."},
+            {"claim": "the reported pair count matches the runner, closing MINOR-1",
+             "method": "compare section 13.1, section 2.23 and the register against the "
+                       "validator's own DV-24 line",
+             "result": "CLOSED AND CORRECT. Section 13.1, section 2.23 and the register all "
+                       "state 'pairs read 10', and the runner prints 10 on this document. "
+                       "Agent 1 also discloses why the S4.3.7 figure drifted (measured mid-draft, "
+                       "never re-measured) and states both the 9 and the 10 so the drift stays "
+                       "visible - the right disposition for MINOR-1."},
+            {"claim": "no case was deleted and the new cases are isolated",
+             "method": "numstat and full diff of the suite between f1beb0c and c4761f5; "
+                       "enumerate case ids",
+             "result": "INTACT. Suite diff is +39/-1 and the single deleted line is a comment "
+                       "('# ---- 6. the predecessors still fail'). TD-01..TD-80 all still "
+                       "present (80 of 80); the 14 new cases are TD-81..TD-94, contiguous with "
+                       "no gaps and no renumbering."},
+            {"claim": "no normative contract boundary moved",
+             "method": "byte-compare 43 obligation rows, TN-C-11/14/15, TN-A-01..03, the 17 case "
+                       "specifications and D-1..D-7 between 0a0c36be and 3c6bab6c",
+             "result": "NONE MOVED. 43 -> 43 rows, all identical. Six named clauses identical. "
+                       "17 case specs identical. 18 suites / 67 cases identical. D-1..D-7 all "
+                       "two rows each and identical, not reopened. S4.3.7 unmodified with an "
+                       "empty diff. TN-C-11 and the TN-A boundary remain UNRESOLVED and I did "
+                       "not resolve them; I propose no normative change to improve validator "
+                       "behaviour."},
+            {"claim": "a clean 27/27 and a green suite mean the revision is verified",
+             "method": "kept separate deliberately; everything reproduced from a git archive "
+                       "extraction of c4761f5, never from the working tree",
+             "result": "THEY DO NOT, and this milestone is the clearest case yet. The document "
+                       "scores 27/27 and the suite 120/120 while containing a fail-open "
+                       "regression in the very check it was written to repair, because no case "
+                       "places a denial and an offence on the same line. The 120 cases are "
+                       "tests of the checker; 0 of the 67 acceptance cases were executed "
+                       "because there is no engine."},
+            {"claim": "C-05, U-07, a MEAD, TD-09 or the TN-A boundary is resolved here",
+             "method": "none - read-only verification, every mutation on a copy under /tmp",
+             "result": "NOT CLAIMED and NOT TOUCHED. C-05 DESIGN_ONLY, unsigned, unfrozen; U-07 "
+                       "OPEN; no MEAD selected; 0 of 67 acceptance cases executed; no "
+                       "implementation authority. I modified no Agent 1 file: c4761f5 is "
+                       "untouched and git diff over the reviewed paths is empty. Verdict "
+                       "TARGETED REVISION REQUIRED on F-1 alone: the quantified-denial "
+                       "correction is present and correct, and it lets a real ownership offence "
+                       "through on the same line."},
 
             # ---- W-M2.18: independent review of A1-C05-S4.3.7 instruments ----
             {"claim": "the reviewed document is the exact published S4.3.7 blob",
