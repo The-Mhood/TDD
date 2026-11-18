@@ -262,6 +262,70 @@ case('a wrong historical count inside a marked block is exempt', 'DV-24', 'PASS'
      MUT.replace(QUIET, '<!-- QUOTED-HISTORY-START -->\nS4 said 7 declared, 6 observed.\n'
                          '<!-- QUOTED-HISTORY-END -->\n\n' + QUIET, 1))
 
+# ------------------------------ 5b. S4.3.6: the attributed dialects (Agent 2's MAJOR-1)
+print('\n== S4.3.6 — DV-22 attribution: the synonym and the contrastive foil (Agent 2 cases) ==')
+case('TD-42 "Agent 1, unlike Agent 2, owns the audio cues"', 'DV-22', 'FAIL',
+     inject('Agent 1, unlike Agent 2, owns the audio cues.'),
+     'Agent 2 MAJOR-1, verbatim: the nearest reference was the foil')
+case('TD-43 "The first agent owns the audio cues"', 'DV-22', 'FAIL',
+     inject('The first agent owns the audio cues.'),
+     'Agent 2 MAJOR-1, verbatim: the document\'s own synonym for Agent 1')
+case('TD-44 "as opposed to"', 'DV-22', 'FAIL',
+     inject('Agent 1, as opposed to Agent 2, owns the audio cues.'))
+case('TD-45 "rather than"', 'DV-22', 'FAIL',
+     inject('Agent 1 rather than Agent 2 owns the audio cues.'))
+case('TD-46 "but not"', 'DV-22', 'FAIL',
+     inject('Agent 1 but not Agent 2 owns the audio cues.'))
+case('TD-47 a foil naming the first agent leaves Agent 2 the subject', 'DV-22', 'PASS',
+     inject('Agent 2, unlike Agent 1, owns the audio cues.'),
+     'the mention is Agent 2\'s; dropping it would be a false positive')
+case('TD-48 "Agent 1, unlike Agent 2, owns no audio cues"', 'DV-22', 'PASS',
+     inject('Agent 1, unlike Agent 2, owns no audio cues.'))
+case('TD-49 "The first agent has no C-05 audio responsibility"', 'DV-22', 'PASS',
+     inject('The first agent has no C-05 audio responsibility.'))
+case('TD-50 object negation after the synonym ("not the audio cues")', 'DV-22', 'PASS',
+     inject('The first agent owns the camera, not the audio cues.'),
+     'found when the synonym became attributable: a genuine denial that must not fail')
+case('TD-51 "whereas" is a clause, not a foil', 'DV-22', 'FAIL',
+     inject('Agent 2 does not own them, whereas Agent 1 owns the audio cues.'),
+     'measured deviation from Agent 2\'s recipe: dropping this reference loses a true positive')
+
+# ------------------- 5c. S4.3.6: DV-24 forms that reached the prose without reaching the check
+print('\n== S4.3.6 — DV-24: label-first, sentence-split and line-wrapped pairs ==')
+
+
+def replace_in_doc(old, new):
+    assert old in BASE, old[:60]
+    return BASE.replace(old, new, 1)
+
+
+case('TD-52 "declared: 6, observed: 5" — punctuation after the label', 'DV-24', 'FAIL',
+     replace_in_doc(LIVE, 'Counts: declared: 6, observed: 5.\n\n' + LIVE))
+case('TD-53 the pair wrapped across a line break', 'DV-24', 'FAIL',
+     replace_in_doc(LIVE, 'Counts: 6 declared\nand 5 observed.\n\n' + LIVE))
+case('TD-54 the pair split by a sentence break', 'DV-24', 'FAIL',
+     replace_in_doc(LIVE, 'It said 6 declared. Then 5 observed.\n\n' + LIVE))
+case('TD-55 the correct pair in the same forms still passes (control)', 'DV-24', 'PASS',
+     replace_in_doc(LIVE, 'Counts: declared: 7, observed: 5. Also 7 declared\nand 5 observed.\n\n' + LIVE))
+
+# ---------------------------------- 5d. S4.3.6: DV-11 gaps (declaration parse, subset, counts)
+print('\n== S4.3.6 — DV-11: declaration parse, subset rule and hand cell counts ==')
+_ROW_PO = '| `producer owner` | Agent 2 on enemy producers; Agent 1 on the player producer | **row 2** (inside C-05: producer implementation) |'
+_CNT_PO = '| **23 cells** (19 `TN-P`, 4 `TN-R`) |'
+case('TD-56 a token declaring an extra disallowed row is caught', 'DV-11', 'FAIL',
+     replace_in_doc(_ROW_PO, '| `producer owner` | Agent 2 on enemy producers; Agent 1 on the player producer | **rows 2 and 5** (inside C-05: producer implementation) |'),
+     'an intersection test passed this on the strength of row 2 alone')
+case('TD-57 a token declaring a disallowed range is caught', 'DV-11', 'FAIL',
+     replace_in_doc(_ROW_PO, '| `producer owner` | Agent 2 on enemy producers; Agent 1 on the player producer | **rows 2–5** (inside C-05: producer implementation) |'))
+case('TD-58 the §5.4 hand cell count is compared with the instrument', 'DV-11', 'FAIL',
+     replace_in_doc(_CNT_PO, '| **22 cells** (19 `TN-P`, 3 `TN-R`) |'),
+     "Agent 2's D-6b class: a hand-restated count drifting from the computed one")
+case('TD-59 the unmodified §5.4 table still passes (control)', 'DV-11', 'PASS', str(DOC))
+_ROW_C5 = '| `Agent 2, C-05 consumer` | Agent 2 | **row 6** (inside C-05: consumer integration) |'
+case('TD-60 a row whose owner is the wrong agent is caught (the owner clause)', 'DV-11', 'FAIL',
+     replace_in_doc(_ROW_C5, '| `Agent 2, C-05 consumer` | Agent 2 | **row 7** (outside C-05: placement, assets, tuning) |'),
+     "row 7's owner is Agent 2 but outside C-05; the TN-C cells may only use rows 5-6")
+
 # ------------------------------------------------------------- 6. the predecessors still fail
 print('\n== predecessors — the checks still fail where the defects were ==')
 for label, check, expect in (('S4.3.1', 'DV-22', 'PASS'), ('S4.3', 'DV-22', 'PASS'), ('S4.2', 'DV-22', 'FAIL'),

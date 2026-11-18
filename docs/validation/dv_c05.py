@@ -220,11 +220,18 @@ decl = {}
 for c in table_rows(S54):
     if len(c) >= 3 and c[0].startswith('`'):
         tok = c[0].strip('`')
-        m = re.search(r'rows?\s+(\d+)(?:[–-](\d+))?', c[2])
+        m = re.search(r'rows?\s+([\d\s,–\-]*(?:and|&)?[\d\s,–\-]*)', c[2])
         if not m:
             continue
-        a = int(m.group(1)); b = int(m.group(2)) if m.group(2) else a
-        decl[tok] = set(range(a, b + 1))
+        # S4.3.6: read *every* number or range in the cell, not just the first. 'rows 2 and 5'
+        # used to be read as {2}, silently discarding the row the declaration named second.
+        rows = set()
+        for a_, b_ in re.findall(r'(\d+)\s*(?:[–-]\s*(\d+))?', m.group(1)):
+            lo = int(a_); hi = int(b_) if b_ else lo
+            rows |= set(range(lo, hi + 1))
+        if not rows:
+            continue
+        decl[tok] = rows
 allowed = {'TN-P': {2}, 'TN-C': {5, 6}, 'TN-R': {2, 4}, 'TN-A': {8}}
 observed, fails = {}, []
 for r in ALL:
@@ -233,11 +240,33 @@ for r in ALL:
     pref = oid[:4]
     if tok not in decl:
         fails.append(f"{oid}: token '{tok}' not declared")
-    elif not (decl[tok] & allowed[pref]):
+    elif not decl[tok] <= allowed[pref]:
+        # S4.3.6: subset, not intersection. 'rows 2 and 5' for a TN-P cell used to pass on
+        # the strength of row 2 alone, leaving row 5 — a row the prefix may not use —
+        # unexamined. The rule is that the token's row set lies inside the allowed set.
         fails.append(f"{oid}: token '{tok}' maps to rows {sorted(decl[tok])}, allowed for {pref} are {sorted(allowed[pref])}")
-check('DV-11', not fails and len(decl) == 7 and len(observed) == 5,
+
+# The §5.4 'Used by' column states the cell counts the instrument finds (Agent 2's D-6b).
+# S4.3.6: those hand-restated counts are compared with the computed ones instead of being
+# left to drift — the same class of defect DV-24 closes for the declared/observed pair.
+claims, claim_fails = {}, []
+for c in table_rows(S54):
+    if len(c) >= 4 and c[0].startswith('`'):
+        ctok = c[0].strip('`')
+        mcnt = re.search(r'\*\*(\d+)\s+cell', c[3])
+        if not mcnt:
+            continue
+        claims[ctok] = int(mcnt.group(1))
+        if claims[ctok] != observed.get(ctok, 0):
+            claim_fails.append(f"'{ctok}': §5.4 says {claims[ctok]} cells, observed {observed.get(ctok, 0)}")
+        for npi, pref_i in re.findall(r'(\d+)\s*`(TN-[A-Z])`', c[3]):
+            real = sum(1 for r in ALL if r[6] == ctok and r[0].strip('*')[:4] == pref_i)
+            if int(npi) != real:
+                claim_fails.append(f"'{ctok}' {pref_i}: §5.4 says {npi} cells, observed {real}")
+check('DV-11', not fails and not claim_fails and len(decl) == 7 and len(observed) == 5,
       f"{len(decl)} declared / {len(observed)} observed tokens, {len(ALL)} cells; "
-      f"declared-unused {sorted(set(decl) - set(observed))}; failures {fails[:3]}")
+      f"declared-unused {sorted(set(decl) - set(observed))}; failures {fails[:3]}; "
+      f"cell-count claims {len(claims)} checked, failures {claim_fails[:3]}")
 
 # ---------------------------------------------------------------- DV-12 VF set across three homes
 names7 = ['Phase', 'WindupEndAxis', 'ActiveEndAxis', 'RecoveryEndAxis', 'ProducerRate', 'WindowKey', 'AttackTag']
@@ -375,7 +404,31 @@ pre_ok = bool(preamble8) and 'no C-05 audio responsibility' in preamble8[0] and 
 # There is still no keyword allowlist: what exempts a line is where it is (a region),
 # never which finding numbers it happens to contain. What decides *ownership* here is
 # grammar and position, not a list of permitted phrases.
-AGENT_REF = re.compile(r'agent[-\s]?([12])\b', re.I)
+# S4.3.6 — Agent 2's MAJOR-1. Two attribution defects, one cause: the predicate recognised
+# only the literal 'Agent <digit>' forms and took the nearest reference before the mention
+# unconditionally. So 'The first agent owns the audio cues' matched nothing (the document
+# itself uses 'the first agent' seventeen times, including to state this very rule), and in
+# 'Agent 1, unlike Agent 2, owns the audio cues' the nearest reference was the *foil*
+# 'Agent 2' inside the contrastive clause, so the predicate read the sentence backwards.
+# The synonym is read from a named group (a bare alternative would leave group(1) as None),
+# and a reference introduced by a contrastive marker is never the subject.
+AGENT_REF = re.compile(r'agent[-\s]?(?P<num>[12])\b|the\s+first\s+agent\b', re.I)
+# The foil marker is what precedes the reference, so the test runs on the text in front of
+# the match and only has to end with the marker.
+# 'whereas' is deliberately NOT a foil: it introduces a clause whose subject is the
+# reference that follows it, so 'A, whereas Agent 1 owns the audio cues' asserts Agent 1's
+# ownership. Dropping that reference loses a true positive (measured: probe C7).
+FOIL_BEFORE = re.compile(r'(?:unlike|as\s+opposed\s+to|rather\s+than|but\s+not)\s*$', re.I)
+
+
+def agent_of(m):
+    """Which agent a AGENT_REF match designates: '1' for 'Agent 1' and 'the first agent'."""
+    return m.group('num') if m.group('num') else '1'
+
+
+def is_foil(ln, m):
+    """True when *m* is a contrastive foil ('unlike Agent 2') and not the subject."""
+    return bool(FOIL_BEFORE.search(ln[max(0, m.start() - 32):m.start()]))
 # A negation must deny ownership or responsibility, not merely put 'no' before 'audio'.
 # S4.3.1 accepted any 'no ... audio' within 28 characters, so 'has no problem owning audio
 # cues' and 'has no objection to owning audio cues' read as denials when they are the
@@ -400,6 +453,9 @@ NEG_BEFORE = (
     re.compile(r'\b(?:does|do|did)\s+not\s+own\s+' + _MODS + r'audio\b', re.I),
     # 'owns none of the audio'
     re.compile(r'\bowns?\s+none\s+of\s+the\s+audio\b', re.I),
+    # 'owns the camera, not the audio cues' — the *object* is negated (S4.3.6, found when
+    # 'the first agent' became attributable: the line is a genuine denial and must not fail)
+    re.compile(r'(?:\bnot|,)\s+(?:the\s+|any\s+)' + _MODS + r'audio\b', re.I),
 )
 # The reversed form: the mention comes first and the denial follows it. Two scope rules
 # (S4.3.3), because a later denial was cancelling an earlier positive assertion:
@@ -454,7 +510,10 @@ def negated_mention(ln, pos):
             # so read the rest of the clause as well: a denial that names another agent says
             # nothing about Agent 1's ownership and must not excuse the mention.
             tail = re.split(r'[.;|,]', ln[m.end():])[0][:30]
-            named = [r.group(1) for r in AGENT_REF.finditer(m.group(0) + tail)]
+            # a contrastive foil is dropped here as well: in 'not assigned to Agent 2' the
+            # named agent is the *excluded* party, which says nothing about the first agent
+            frag = m.group(0) + tail
+            named = [agent_of(r) for r in AGENT_REF.finditer(frag) if not is_foil(frag, r)]
             if named:
                 if named[0] == '1':
                     return True
@@ -491,8 +550,8 @@ def attributed_to_agent_1(ln, pos):
     A reference that merely appears later in the sentence does not attribute anything.
     """
     start, _end = segment_bounds(ln, pos)
-    before = [m for m in AGENT_REF.finditer(ln, start, pos)]
-    if before and before[-1].group(1) == '1':
+    before = [m for m in AGENT_REF.finditer(ln, start, pos) if not is_foil(ln, m)]
+    if before and agent_of(before[-1]) == '1':
         return True
     return any(pat.search(ln, max(0, pos - 40), pos + 60) and
                any(m.start() <= pos <= m.end() for m in pat.finditer(ln)) for pat in FORWARD_OWNER)
@@ -548,14 +607,17 @@ NTOK = r'(\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve
 # "declared (7) and observed (5)" (words between the numbers) but may never skip over
 # another number — a second pair on the same line cannot hide behind the first.
 # 'declared' must not be the first half of 'declared-but-unused'.
-DECL_OBS = re.compile(NTOK + r'[\s(]{0,3}declared(?!-)[^0-9;.]{0,24}?' + NTOK
+DECL_OBS = re.compile(NTOK + r'[\s(]{0,3}declared(?!-)[^0-9]{0,24}?' + NTOK
                       + r'[\s(]{0,3}observed', re.I)
 # Reverse order ('6 observed of 7 declared'). A comma in the separator means a list,
 # not a restatement, so the reverse form is read only across a comma-free window.
 OBS_DECL = re.compile(NTOK + r'[\s(]{0,3}observed[^0-9,;.]{0,24}?' + NTOK
                       + r'[\s(]{0,3}declared(?!-)', re.I)
 # Parenthetical form: 'declared (7) ... observed (5)', number attached to the word.
-DECL_PAREN = re.compile(r'declared(?!-)\s*\(?\s*' + NTOK + r'\s*\)?[^0-9]{0,24}?observed\s*\(?\s*'
+# S4.3.6 — three forms that were reaching the prose without reaching the check: a label
+# followed by punctuation ('declared: 6, observed: 5'), a pair split by a sentence break
+# ('6 declared. Then 5 observed.') and a pair wrapped across a line break (scanned below).
+DECL_PAREN = re.compile(r'declared(?!-)[\s:(]{0,4}' + NTOK + r'\s*\)?[^0-9]{0,24}?observed[\s:(]{0,4}'
                         + NTOK, re.I)
 
 def num_of(tok):
@@ -583,6 +645,11 @@ anchors = {
 }
 anchors_present = {k: (computed in [v for _, v in pairs(t)] if t else False) for k, t in anchors.items()}
 scanned = [(i + 1, pr) for i, ln in enumerate(lines) if not MASK[i] for _, pr in pairs(ln)]
+# a restatement wrapped across a line break is still a restatement (S4.3.6)
+for i in range(len(lines) - 1):
+    if MASK[i] or MASK[i + 1]:
+        continue
+    scanned += [(i + 1, pr) for _, pr in pairs(lines[i].rstrip() + ' ' + lines[i + 1].lstrip())]
 bad_pairs = [(n, pr) for n, pr in scanned if pr != computed]
 check('DV-24', all(anchors_present.values()) and len(scanned) >= 3 and not bad_pairs,
       f"computed {computed[0]} declared / {computed[1]} observed; anchor sites "
@@ -617,7 +684,7 @@ check('DV-26', (not stale) and observ and both,
       f"PO-3 and PO-5 both retained {both}")
 
 # ---------------------------------------------------------------- DV-27 provenance, no placeholders
-REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_5_PROVENANCE.md'
+REG = 'docs/AGENT1_C05_CONTRACT_SUCCESSOR_V4_3_6_PROVENANCE.md'
 DECISION = 'docs/DECISION_C05_SUCCESSOR_IDENTITY_004_2_V1.md'
 # fenced code blocks are evidence transcripts, not prose claims: strip them first
 prose = re.sub(r'```.*?```', '', s, flags=re.S)
