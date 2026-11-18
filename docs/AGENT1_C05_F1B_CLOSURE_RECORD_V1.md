@@ -93,7 +93,7 @@ Each was reproduced by me before being recorded; none is a defect in `F-1` or `F
 | **2353** (§17, Version row) | `… the suite grows 129 → **146**` | **no** — the suite is **147**, as `147/147` in the same document states |
 | §13 intro, §13.3.10 and this register | `147` throughout | yes |
 
-**Disposition: `OPEN — parked`**, same reason and same route as `L-1`: a one-digit correction inside the verified document, to be made in a documentation-only revision. **It is not a second defect class** — it is the same drift as `L-1` in one digit.
+**Disposition: `OPEN — parked`**, same reason and same route as `L-1`: a one-digit correction inside the verified document, to be made in a documentation-only revision. **It is not a second defect class** — it is the same drift as `L-1` in one digit. **Recorded in full at `docs/AGENT1_C05_L2_COUNT_ADDENDUM_V1.md`** (`A1-C05-ADDENDUM-L2-001`, documentation only): it confirms lines 331 and 2353 as the conflict, adds the further concordant statements at lines 1812, 1818 and 2192, and fixes the historical reading as `129 → 147 (+18)`. The artifact itself is still unmodified.
 
 ### `L-3` — the appositive `Agent 1` family is still accepted (out of scope, by directive)
 
