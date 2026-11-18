@@ -47,7 +47,7 @@ def project_deps(build_cs):
         names |= set(re.findall(r'"([A-Za-z0-9_]+)"', block))
     for name in re.findall(r"PublicDependencyModuleNames\s*\.Add\s*\(\s*\"([A-Za-z0-9_]+)\"", text):
         names.add(name)
-    return {n for n in names if n in ALLOWED}
+    return names
 
 
 def main():
@@ -82,10 +82,19 @@ def main():
                        for p in impls)
         check(f"{name}: has a module implementation", has_impl, f"{len(impls)} .cpp file(s)")
         if build_cs.is_file():
-            deps = project_deps(build_cs)
-            extra = deps - ALLOWED[name]
-            check(f"{name}: dependencies obey MEAD 3.2", not extra,
-                  f"undeclared upward edge(s): {sorted(extra)}" if extra else "")
+            # policy comparison is over *project* modules only: engine/plugin modules are
+            # not part of the MEAD 3.2 graph and must not read as violations
+            deps = project_deps(build_cs) & set(ALLOWED)
+            if name not in ALLOWED:
+                # A module this verifier has no rule for: report it rather than guessing a
+                # policy for it. This keeps the tool usable on a tree authored elsewhere
+                # (e.g. when reconciling two foundations), where the graph may differ.
+                check(f"{name}: module is in this verifier's declared graph", False,
+                      "unknown module - no MEAD 3.2 rule on file for it")
+            else:
+                extra = deps - ALLOWED[name]
+                check(f"{name}: dependencies obey MEAD 3.2", not extra,
+                      f"undeclared upward edge(s): {sorted(extra)}" if extra else "")
 
     for target in ("TDD.Target.cs", "TDDEditor.Target.cs"):
         path = ROOT / "Source" / target
