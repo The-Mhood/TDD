@@ -333,6 +333,58 @@ def main():
                             f"UPROPERTY/UFUNCTION in {rel} (keep the member private), or move it "
                             f"to a public section; UHT rejects Blueprint specifiers on private members")
 
+    # ---- UHT enum reflection guard ---------------------------------------
+    # UHT can only reflect enums declared with UENUM. A UPROPERTY or UFUNCTION
+    # signature that uses a plain C++ enum (no UENUM) fails with "Unable to
+    # find 'class', 'delegate', 'enum', or 'struct' with name '<Enum>'".
+    # Scan every header: collect plain (non-UENUM) enum names, then block any
+    # UPROPERTY/UFUNCTION whose declaration text (type, return type or
+    # parameters) uses such an enum.
+    if src.is_dir():
+        header_texts = {}
+        for hdr in sorted(src.rglob("*.h")):
+            try:
+                header_texts[hdr.relative_to(root)] = hdr.read_text(
+                    encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+        plain_enums = set()
+        for rel, htext in header_texts.items():
+            for m in re.finditer(r"(?m)^\s*enum(?:\s+class)?\s+(\w+)", htext):
+                prefix = htext[:m.start()]
+                last = max(prefix.rfind(";"), prefix.rfind("}"))
+                window = prefix[last:] if last != -1 else prefix
+                if not re.search(r"UENUM\s*\(", window):
+                    plain_enums.add(m.group(1))
+        for rel, htext in header_texts.items():
+            for m in re.finditer(r"\b(?:UPROPERTY|UFUNCTION)\s*\(", htext):
+                open_idx = htext.find("(", m.start())
+                # Find the closing paren of the specifier list, depth-aware.
+                depth = 0
+                close_idx = open_idx
+                while close_idx < len(htext):
+                    if htext[close_idx] == "(":
+                        depth += 1
+                    elif htext[close_idx] == ")":
+                        depth -= 1
+                        if depth == 0:
+                            break
+                    close_idx += 1
+                if depth != 0:
+                    continue
+                after = htext[close_idx + 1:]
+                ends = [i for i in (after.find(";"), after.find("{")) if i != -1]
+                sig = after[:min(ends) if ends else len(after)]
+                for name in sorted(plain_enums):
+                    if re.search(r"\b" + re.escape(name) + r"\b", sig):
+                        line = htext[:m.start()].count("\n") + 1
+                        block(
+                            f"{rel}:{line}: UHT error class — UPROPERTY/UFUNCTION uses plain "
+                            f"enum '{name}' which UHT cannot reflect",
+                            f"add UENUM(BlueprintType) to the '{name}' enum declaration in "
+                            f"{rel} before its reflected use (keep the underlying type and "
+                            f"existing behaviour; do not remove reflection)")
+
     # ---- targets
     target_files = sorted(src.glob("*.Target.cs")) if src.is_dir() else []
     if not target_files:

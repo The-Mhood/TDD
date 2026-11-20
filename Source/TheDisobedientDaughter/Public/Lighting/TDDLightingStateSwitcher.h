@@ -48,6 +48,11 @@ class THEDISOBEDIENTDAUGHTER_API ATDDLightingStateSwitcher : public AActor
 public:
     ATDDLightingStateSwitcher();
 
+    /**
+     * Lighting state machine. UENUM so UHT can reflect the type for the
+     * CurrentState UPROPERTY and the ApplyState UFUNCTION parameter.
+     */
+    UENUM(BlueprintType)
     enum class ETDDLightingState : uint8
     {
         Dawn,

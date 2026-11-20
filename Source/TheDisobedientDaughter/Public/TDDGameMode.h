@@ -28,6 +28,11 @@ class THEDISOBEDIENTDAUGHTER_API ATDDGameMode : public AGameModeBase
 public:
     ATDDGameMode();
 
+    /**
+     * Encounter state machine. UENUM so UHT can reflect the type for the
+     * EncounterState UPROPERTY below; underlying type unchanged (uint8).
+     */
+    UENUM(BlueprintType)
     enum class ETDDEncounterState : uint8
     {
         NotStarted,
