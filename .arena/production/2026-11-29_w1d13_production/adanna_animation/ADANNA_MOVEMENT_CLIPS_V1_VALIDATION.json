@@ -1,0 +1,12 @@
+{
+  "clips": [
+    "idle",
+    "walk",
+    "run",
+    "dodge_left",
+    "crouch_recover",
+    "look_back"
+  ],
+  "keyframe_poses_tested": 23,
+  "verdict": "PASS"
+}
