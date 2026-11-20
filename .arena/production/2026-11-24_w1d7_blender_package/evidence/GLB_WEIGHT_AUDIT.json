@@ -4,13 +4,13 @@
     "verts": 4404,
     "unweighted_verts": 0,
     "all_deforming_meshes_weighted": true,
-    "note": "rebuilt GLBs after W1D7 visual fixes (neck/shoulder/torus/braid/sash)"
+    "note": "post D11 sash fix rebuild (Guard only changed)"
   },
   "GUARD_CLASS_V1": {
     "meshes": 17,
-    "verts": 3212,
+    "verts": 3190,
     "unweighted_verts": 0,
     "all_deforming_meshes_weighted": true,
-    "note": "rebuilt GLBs after W1D7 visual fixes (neck/shoulder/torus/braid/sash)"
+    "note": "post D11 sash fix rebuild (Guard only changed)"
   }
 }

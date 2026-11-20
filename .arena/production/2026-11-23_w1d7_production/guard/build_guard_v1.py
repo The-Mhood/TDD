@@ -42,7 +42,10 @@ for side, sx in (("L", -1), ("R", 1)):
 # costume: one-shoulder wrap (covers anatomical LEFT shoulder/torso), skirt, sash, armband R
 ellipsoid(P("wrap_oneshoulder_indigo", "cloth_indigo_plain_v1", blend(1.24, 1.40, "pelvis", "spine")), (-0.03, 0, 1.35), (0.185*S, 0.135, 0.155), 24, 12)
 ellipsoid(P("skirt_wrap_indigo", "cloth_indigo_plain_v1", "pelvis"), (0, 0, 0.90), (0.195*S, 0.15, 0.25), 24, 12)
-torus(P("waist_sash_plain", "cloth_sash_undyed_v1", "pelvis"), (0, 0, 1.06), 0.205, 0.030, 24, 10, squash_z=0.55)
+# W1D7 re-inspection fix: a circular torus sash protruded as a disc (skirt
+# cross-section at sash height is elliptical ~0.171 x 0.115 m). Flattened
+# ellipsoid band hugs the skirt (protrudes ~0.02 m uniformly = wrapped cloth).
+ellipsoid(P("waist_sash_plain", "cloth_sash_undyed_v1", "pelvis"), (0, 0, 1.06), (0.188, 0.138, 0.038), 24, 10)
 # visual fix: ring around the vertical arm (default Z axis), not axis='x' strip
 torus(P("armband_plain_bronze_R", "bronze_plain_v1", "upperarm.R"), (0.275*S, 0, 1.36), 0.062, 0.012, 20, 10)
 for side, sx in (("L", -1), ("R", 1)):  # sandal soles

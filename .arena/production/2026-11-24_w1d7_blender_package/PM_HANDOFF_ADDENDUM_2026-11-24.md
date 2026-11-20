@@ -5,3 +5,7 @@ For PM/owner: the only outstanding infrastructure action from W1 D7 is now a pac
 - PM receives from that run: 2× `.blend` (native editable), 2× FBX (Unreal-ready), 2× Blender QC JSONs, 8 preview PNGs, 2 deformation re-checks — completing the W1 D7 §4 export package for Adanna + guard.
 - Parallel lanes unaffected: CH01 settlement modules and both GLB models are already importable today (see W1 D7 handoff); this package adds the Blender-native projects/FBX, it does not gate anything else.
 - If the run errors: README §8 maps each message to one action; QC JSON + log return to Design for a script-side fix. No owner troubleshooting beyond §8.
+
+## UPDATE — Mac qualification evidence (2026-11-24)
+- Mac runs completed (Blender 4.2.23 LTS): first run `6999ea7`, corrected rerun `a341f33` — `.blend` + FBX + QC JSONs + deformation re-checks + 8 previews committed in `output/`. Visual gate: **Adanna PASS**; **Guard conditional** (sash fix rebuilt, one rerun outstanding) — see `VISUAL_GATE_CLOSURE_2026-11-24.md`.
+- PM can integrate NOW: `output/ADANNA_AD03_V2/ADANNA_AD03_V2.fbx` and the current Guard FBX; Guard FBX refreshes with the sash rerun (geometry-only change, same skeleton/materials).
