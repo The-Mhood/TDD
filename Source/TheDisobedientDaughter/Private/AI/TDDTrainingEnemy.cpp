@@ -3,6 +3,7 @@
 #include "AIController.h"
 #include "AI/TDDCombatBrainComponent.h"
 #include "Combat/TDDCombatComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/StaticMesh.h"
 #include "UObject/ConstructorHelpers.h"

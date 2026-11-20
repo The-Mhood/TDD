@@ -21,6 +21,22 @@ EDITOR_ONLY_DEP_PREFIXES = ("UnrealEd", "UnrealEd", "EditorStyle", "ToolMenus", 
                             "EditorFramework", "PropertyEditor", "AssetTools", "DataValidation",
                             "EditorScriptingUtilities", "PlacementMode", "ClassViewer", "GraphEditor")
 
+# IWYU guard: a .cpp that uses a UE component (by type name or by calling an
+# accessor that returns a component pointer) must include that component's
+# header directly. A missing include yields an incomplete-type compile error
+# (e.g. SetupAttachment(GetCapsuleComponent()) with only a forward declaration).
+# This static check catches it before UBT so the owner's Mac build is not wasted.
+# Each rule: (regex matching usage in a .cpp, required include header).
+COMPONENT_INCLUDE_RULES = [
+    (r"\bUCapsuleComponent\b", "Components/CapsuleComponent.h"),
+    (r"GetCapsuleComponent\s*\(", "Components/CapsuleComponent.h"),
+    (r"\bUStaticMeshComponent\b", "Components/StaticMeshComponent.h"),
+    (r"\bUSceneComponent\b", "Components/SceneComponent.h"),
+    (r"\bUSpringArmComponent\b", "GameFramework/SpringArmComponent.h"),
+    (r"\bUCameraComponent\b", "Camera/CameraComponent.h"),
+    (r"\bUCharacterMovementComponent\b", "GameFramework/CharacterMovementComponent.h"),
+]
+
 
 def main():
     ap = argparse.ArgumentParser()
@@ -105,6 +121,25 @@ def main():
         if name.endswith("Tests") and mtype == "Runtime" and phase == "PostEngineInit":
             warn(f"module {name}: Type Runtime, LoadingPhase PostEngineInit — it will load in a packaged game",
                  "test modules are normally Type Editor so they exist only in the editor target")
+
+    # ---- IWYU component-include guard -------------------------------------
+    # Scan every .cpp in the project for UE component usage (type name or
+    # accessor call) and verify the matching header is included directly.
+    # Catches incomplete-type compile errors before UBT runs on the owner's Mac.
+    if src.is_dir():
+        for cpp in sorted(src.rglob("*.cpp")):
+            try:
+                text = cpp.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            rel = cpp.relative_to(root)
+            for pattern, header in COMPONENT_INCLUDE_RULES:
+                if re.search(pattern, text) and f'"{header}"' not in text:
+                    block(
+                        f"{rel}: uses a UE component (pattern {pattern}) without "
+                        f'#include \"{header}\"',
+                        f"add #include \"{header}\" to {rel}; a missing include "
+                        f"causes an incomplete-type compile error")
 
     # ---- targets
     target_files = sorted(src.glob("*.Target.cs")) if src.is_dir() else []

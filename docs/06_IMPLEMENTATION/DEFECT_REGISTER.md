@@ -19,6 +19,13 @@
 | D-W1-003 | Pure test runner | A piped `while` loop ran in a subshell, so compile/runtime failures could be printed while the runner returned success; the documented `--evidence-dir` argument was also ignored. | Keep the suite loop in the current shell, parse the evidence argument, and add a fake-compiler regression contract invoked by the daily train. | `TDD-Tool.PureRunnerContract PASS`; deliberately failed all six compiles and verified runner exit was non-zero. |
 | D-W1D2-001 | Player state integration contract | Connecting CMC physics exposed that Airborne could not request Land, and Block could not exit on guard release, leaving runtime state stuck in those states. | Add only the two event/interruption edges and expand the exhaustive 14×14 matrix assertions. | `TDDStateMachineTests` 659/659, including direct grounded/guard-release assertions. |
 
+## Resolved during W1 D8 (build defects)
+
+| ID | Area | Finding | Resolution | Evidence |
+|---|---|---|---|---|
+| D-W1D8-001 | UHT (header tool) | `TDDAdannaCharacter.h:72` — `CharacterMeshAsset` was `BlueprintReadOnly` on a private member without `AllowPrivateAccess`, failing UHT. | Added `meta=(AllowPrivateAccess="true")`, matching adjacent private Blueprint-readable properties; `EditDefaultsOnly, BlueprintReadOnly` contract unchanged. | Owner Mac train 1 (commit `181ccbe`); scan confirmed 0 other private `BlueprintReadOnly` members missing the metadata. |
+| D-W1D8-002 | UBT (incomplete-type) | `TDDTrainingEnemy.cpp:29` — `GreyboxVisual->SetupAttachment(GetCapsuleComponent())` used `UCapsuleComponent` with only a forward declaration (missing `Components/CapsuleComponent.h`), failing compilation. | Added `#include "Components/CapsuleComponent.h"` (matching `TDDAdannaCharacter.cpp`). | Owner Mac train 2 (commit `9f36558`); `build_readiness.py` IWYU guard now catches this class pre-UBT. Engine verification pending Mac rerun. |
+
 ## Verification blockers (not product defects)
 
 | ID | Blocker | Impact | Required action | State |
