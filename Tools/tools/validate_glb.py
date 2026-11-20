@@ -90,19 +90,34 @@ def check_manifest(path: Path, manifest: Path) -> dict:
         doc = json.loads(manifest.read_text("utf-8-sig"))
     except (OSError, json.JSONDecodeError) as e:
         return fail(str(path), f"manifest unparsable: {e}")
-    recorded = None
-    for key in ("sha256", "hashes", "files"):
-        section = doc.get(key)
-        if isinstance(section, dict):
-            for k, v in section.items():
-                if path.name in k or k in path.name or Path(k).name == path.name:
-                    if isinstance(v, str) and len(v) == 64:
-                        recorded = v.lower()
-                    elif isinstance(v, dict) and "sha256" in v:
-                        recorded = str(v["sha256"]).lower()
     actual = hashlib.sha256(path.read_bytes()).hexdigest()
+    recorded = None
+
+    # Production handoffs may name a payload by a semantic key in `files`
+    # (e.g. preserved_source_glb) and keep the matching digest under that same
+    # key in `sha256`. Resolve the semantic key through its path before hashing.
+    files = doc.get("files", {})
+    if isinstance(files, dict):
+        for key, value in files.items():
+            if isinstance(value, str) and Path(value).name == path.name:
+                digest = doc.get("sha256", {}).get(key)
+                if isinstance(digest, str) and len(digest) == 64:
+                    recorded = digest.lower()
+                    break
+
+    # Also support direct filename/path-to-hash maps used by simpler manifests.
     if recorded is None:
-        return {"file": str(path), "ok": True, "manifest": "not listed (no hash check)", "sha256": actual}
+        for key in ("sha256", "hashes", "files"):
+            section = doc.get(key)
+            if isinstance(section, dict):
+                for k, v in section.items():
+                    if isinstance(k, str) and Path(k).name == path.name:
+                        if isinstance(v, str) and len(v) == 64:
+                            recorded = v.lower()
+                        elif isinstance(v, dict) and "sha256" in v:
+                            recorded = str(v["sha256"]).lower()
+    if recorded is None:
+        return {"file": str(path), "ok": False, "manifest": "not listed or no usable sha256", "sha256": actual}
     ok = actual == recorded
     return {"file": str(path), "ok": ok, "manifest": "sha256 verified" if ok else "sha256 MISMATCH",
             "sha256": actual, "recorded": recorded}

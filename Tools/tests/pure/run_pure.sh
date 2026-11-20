@@ -19,6 +19,21 @@ if ! command -v g++ >/dev/null 2>&1; then
   exit 2
 fi
 
+CXX="${CXX:-g++}"
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --evidence-dir)
+      [ "$#" -ge 2 ] || { echo "error: --evidence-dir requires a path" >&2; exit 2; }
+      EVIDENCE_DIR="$2"
+      shift 2
+      ;;
+    *)
+      echo "error: unknown argument: $1" >&2
+      exit 2
+      ;;
+  esac
+done
+
 CXXFLAGS="-std=c++20 -O1 -Wall -Wextra -I$PUBLIC"
 BUILD_DIR="$(mktemp -d)"
 trap 'rm -rf "$BUILD_DIR"' EXIT
@@ -29,12 +44,12 @@ passed=0
 failed=0
 
 # Find every standalone test (files whose name ends in Tests.cpp).
-find "$REPO/Tests/Standalone" -name "*Tests.cpp" | sort | while read -r src; do
+while IFS= read -r src; do
   name="$(basename "$src" .cpp)"
   exe="$BUILD_DIR/$name"
   log="$BUILD_DIR/$name.log"
 
-  if ! g++ $CXXFLAGS "$src" -o "$exe" 2>"$log.compile"; then
+  if ! "$CXX" $CXXFLAGS "$src" -o "$exe" 2>"$log.compile"; then
     echo "TDD_RESULT TDD-Pure.$name FAIL reason=compile_error"
     echo "compile errors for $name:"
     head -15 "$log.compile" | sed 's/^/  /'
@@ -51,7 +66,7 @@ find "$REPO/Tests/Standalone" -name "*Tests.cpp" | sort | while read -r src; do
     echo "TDD_RESULT TDD-Pure.$name FAIL $(printf '%s' "$out" | tail -1)"
     printf '%s\n' "$out" | tail -15 | sed 's/^/  /'
   fi
-done
+done < <(find "$REPO/Tests/Standalone" -name "*Tests.cpp" | sort)
 
 if [ -n "$EVIDENCE_DIR" ]; then
   mkdir -p "$EVIDENCE_DIR"

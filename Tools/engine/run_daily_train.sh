@@ -37,6 +37,13 @@ else
 fi
 printf '%s\n' "$out" > "$EVIDENCE/10-pure-results.txt"
 grep '^TDD_RESULT' "$EVIDENCE/10-pure-results.txt" | sed 's/^/  /'
+if bash "$REPO/Tools/tests/pure/test_runner_contract.sh" > "$EVIDENCE/11-runner-contract.txt" 2>&1; then
+  say "  ok — runner failure-propagation contract"
+  sed 's/^/  /' "$EVIDENCE/11-runner-contract.txt"
+else
+  say "  FAILED — pure runner contract; see 11-runner-contract.txt"
+  rc_total=1
+fi
 say
 
 # ---------- 2. full UE build + automation -----------------------------------
