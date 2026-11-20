@@ -1,0 +1,71 @@
+{
+  "set": "ADANNA_TEXSET_V1_PROCEDURAL",
+  "date": "2026-11-20",
+  "status": "PRODUCTION-TARGET BASES v1 - NOT final art; TD ratifies on import (texel density, values). CQ-9 unaffected.",
+  "authority": "AD-03 (owner 2026-11-20: TD/CD may approve pipeline); palette FP-01; plain-textile-only respected (no emblems of cultural specificity); pendant/armlet FICTIONAL tags preserved",
+  "files": [
+    {
+      "file": "T_ADANNA_IndigoCloth_BC_2048.png",
+      "map": "BaseColor",
+      "space": "sRGB",
+      "use": "bandeau, wrap skirt, sash",
+      "size": 2048
+    },
+    {
+      "file": "T_ADANNA_IndigoCloth_R_2048.png",
+      "map": "Roughness",
+      "space": "linear",
+      "use": "cloth roughness (high, variable)",
+      "size": 2048
+    },
+    {
+      "file": "T_ADANNA_VegetLeather_BC_2048.png",
+      "map": "BaseColor",
+      "space": "sRGB",
+      "use": "baldric strap, belt wraps",
+      "size": 2048
+    },
+    {
+      "file": "T_ADANNA_VegetLeather_BC_worn_2048.png",
+      "map": "BaseColor",
+      "space": "sRGB",
+      "use": "baldric, contact-worn variant",
+      "size": 2048
+    },
+    {
+      "file": "T_ADANNA_VegetLeather_R_2048.png",
+      "map": "Roughness",
+      "space": "linear",
+      "use": "leather roughness",
+      "size": 2048
+    },
+    {
+      "file": "T_ADANNA_VegetLeather_R_worn_2048.png",
+      "map": "Roughness",
+      "space": "linear",
+      "use": "leather roughness, worn/contact zones",
+      "size": 2048
+    },
+    {
+      "file": "T_ADANNA_Bronze_BC_2048.png",
+      "map": "BaseColor",
+      "space": "sRGB",
+      "use": "coiled armlet, spiral pendant (FICTIONAL), temple cuffs",
+      "size": 2048
+    },
+    {
+      "file": "T_ADANNA_Bronze_R_2048.png",
+      "map": "Roughness",
+      "space": "linear",
+      "use": "bronze roughness (brushed + patina variance)",
+      "size": 2048
+    }
+  ],
+  "exclusions": [
+    "skin (SSS authored in shader, not baked here)",
+    "hair (strand geo/alpha, later)",
+    "blade/scabbard (CQ-9)",
+    "any patterned textile (plain only)"
+  ],
+  "generator": "build_textures.py - deterministic seed 20261120; pure PIL; no external assets"
+}
