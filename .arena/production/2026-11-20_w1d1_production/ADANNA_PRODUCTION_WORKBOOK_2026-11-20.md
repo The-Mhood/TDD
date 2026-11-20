@@ -140,3 +140,11 @@ Modelling → QC-1 (topology checklist §3) → UV → QC-2 (texel density, seam
 
 ### 10.5 What is deliberately NOT in this manifest
 No canon claims, no promotion steps, no image regeneration, no weapon final forms (CQ-9), no idemili/mask/textile-restricted items. The package ends at owner review; shipping/release is not this workbook's call.
+
+## 11. OWNER DECISIONS APPLIED — 2026-11-20 W1 D3 (supersedes conflicting lines above where noted)
+- **AD-01 applied:** final blade/scabbard geometry DEFERRED. `Socket_Scabbard`, `Socket_Baldric`, `Socket_Weapon_R`-equivalents remain **socket placeholders only**; no scabbard/blade mesh, no CQ-9 geometry work. CQ-9 stays open and is explicitly **non-blocking** for all unrelated character production.
+- **AD-02 in flight:** V003 vs V004 selection is **Our Eyes + Research exact-version assessment → CD delegated selection/correction**. This workbook's V004-measurements-consistent finding is evidence for that review, NOT an approval. No plate may enter model build before CD records the candidate selection.
+- **AD-03 pipeline authority:** TD/CD may approve Blender→Unreal modelling/topology/texture/rig against the approved master ref + TD-SPEC-001 Addendum A baseline. No invented cultural details — full stop.
+- **AD-04 animation scope:** PM defines the MINIMUM set from actual gameplay. Non-combat authoring may proceed as PROVISIONAL (labelled); combat set = PM-minimum only; no cinematic/facial expansion without explicit ruling.
+- **Identity locks:** unchanged and binding (scar LEFT cheekbone; coiled armlet LEFT upper arm; spiral pendant FICTIONAL on braided cord; 3 bronze + 2 coral LEFT-temple; baldric anatomical LEFT→RIGHT). Armlet consultant restriction in force. Pendant stays FICTIONAL in manifest and materials.
+- **Start-now list (per owner):** everything independent of AD-02/CQ-9 — §10 manifest (D01–D09), QC tooling, evidence pack, non-combat PROVISIONAL anims, greybox/engine integration hooks, LOD budget test scenes.

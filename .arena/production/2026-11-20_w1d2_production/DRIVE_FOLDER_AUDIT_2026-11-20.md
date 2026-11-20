@@ -38,3 +38,6 @@ Tool: `update_file` with `name` parameter only. No other field passed.
 2. Rule on the two `THE_DISOBEDIENT_DAUGHTER_ART_BIBLE` trees and the lowercase `tools/uploads/locreg/drive` handover working dirs (keep-preserved vs standardise).
 3. Rule on `OUR_EYES_FINAL_193_*` name–content mismatch (11 images) — renaming deferred to preserve traceability.
 4. Confirm chapter-folder naming intent for Ch01 (`Home_Settlement` vs `Forbidden_Forest`) before any change.
+
+## 6. OWNER CLOSURE — 2026-11-20 (W1 D3)
+Owner decisions applied: root `Untitled folder` stays UNCHANGED until its spreadsheet is understood; both Art Bible trees + handover identity preserved as-is; `OUR_EYES_FINAL_193_*` names preserved for traceability (11-image/name mismatch documented, NOT renamed); ALL chapter folder names preserved incl. Ch01 differences; NO further renames/moves/deletions/restructuring without a specific evidenced reason. The single executed rename (`Media ` → `Media`) stands as the only audit action. Audit CLOSED; no further action authorised.
