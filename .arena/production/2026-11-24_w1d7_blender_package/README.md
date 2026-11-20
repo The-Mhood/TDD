@@ -73,6 +73,7 @@ Visual (2 minutes, human): open the 8 PNGs. Check: character upright, ~head-to-f
 | `missing input: …` (exit 4) | Wrong/shallow checkout: `git fetch && git checkout arena/6e649a9b-tdd && git pull`, re-run |
 | `input checksum mismatch` (exit 4) | Same as above — do not edit the GLBs; the package is qualified against the hashed files |
 | `FINISHER FAIL: Icosphere: no vertex groups` | **Fixed in finisher v1.1** (that object is Blender's own bone-shape helper — see `ROOT_CAUSE_ICOSPHERE.md`). `git pull` this package and re-run `./run_all.sh` |
+| `FINISHER FAIL: height 0.52 m outside 1.6-2.0` | **Fixed in finisher v1.2** (0.52 m was the tallest single part — the shin segment — not the character; true combined height 1.84/1.77 m — see `ROOT_CAUSE_HEIGHT.md`). `git pull` and re-run `./run_all.sh` |
 | `FINISHER FAIL: …` + QC JSON written | Read the one-line `error` in `output/<NAME>/<NAME>_BLENDER_QC.json`, send that file + the terminal log to Design; do not edit scripts. Design fixes script-side (you will get a one-commit update, then re-run) |
 | Previews look wrong (flat/exploded) | Send the 4 PNGs of that character to Design with the QC JSON; do not attempt manual repair |
 | Partial run (one character done) | Just re-run `./run_all.sh` — it is idempotent and overwrites its own outputs |

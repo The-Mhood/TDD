@@ -14,6 +14,9 @@
 #   7. Writes <NAME>_BLENDER_QC.json next to the outputs.
 #
 # Invoked ONLY via run_all.sh (which passes --input/--name/--outdir after "--").
+# v1.2 (2026-11-24): height measured as combined world-space bbox over skinned
+# parts (was: max single-part object dimension = 0.521 m shin segment -> false
+# fail). 1.6-2.0 m requirement unchanged; see ROOT_CAUSE_HEIGHT.md.
 # v1.1 (2026-11-24): object classification fix. Blender 4.2's glTF importer
 # creates an "Icosphere" bone-shape HELPER mesh (imp/gltf2_blender_node.py
 # armature_display(): primitive_ico_sphere_add -> hidden "glTF_not_exported"
@@ -86,14 +89,32 @@ for o in meshes:
         s = sum(ge.weight for ge in v.groups if ge.group in groups)
         if s < 0.001: unweighted += 1
         wmin, wmax = min(wmin, s), max(wmax, s)
-dims = Vector((0, 0, 0))
-for o in meshes:
-    dims.x = max(dims.x, o.dimensions.x); dims.y = max(dims.y, o.dimensions.y); dims.z = max(dims.z, o.dimensions.z)
+# v1.2 measurement fix: character height = COMBINED world-space bbox over all
+# skinned part meshes (bound-box corners x matrix_world). v1.0/v1.1 wrongly used
+# max(per-object dimensions.z), which measures the tallest single PART (the
+# 0.521 m shin segment), not the character. Gate range 1.6-2.0 m is unchanged.
+bpy.context.view_layer.update()
+def world_bbox(objs):
+    pts = []
+    for o in objs:
+        pts += [o.matrix_world @ Vector(c) for c in o.bound_box]
+    xs = [p.x for p in pts]; ys = [p.y for p in pts]; zs = [p.z for p in pts]
+    return [min(xs), max(xs)], [min(ys), max(ys)], [min(zs), max(zs)]
+bbx, bby, bbz = world_bbox(meshes)
+height_m = bbz[1] - bbz[0]
+legacy_single_part_max = max(o.dimensions.z for o in meshes)
 qc["checks"].update({"triangles": total_tris, "weight_sum_min": round(wmin, 3),
                      "weight_sum_max": round(wmax, 3), "unweighted_verts": unweighted,
-                     "dims_m": [round(d, 3) for d in dims], "bones": len(arm.data.bones)})
+                     "bones": len(arm.data.bones),
+                     "world_bbox_m": {"x": [round(v, 3) for v in bbx], "y": [round(v, 3) for v in bby], "z": [round(v, 3) for v in bbz]},
+                     "height_m_combined_world": round(height_m, 3),
+                     "diagnostic_legacy_max_single_part_z_m": round(legacy_single_part_max, 3),
+                     "armature_transform": {"location": [round(v, 3) for v in arm.location],
+                                            "scale": [round(v, 3) for v in arm.scale]},
+                     "scene_units": {"system": bpy.context.scene.unit_settings.system,
+                                     "scale_length": bpy.context.scene.unit_settings.scale_length}})
 if unweighted: fail(f"{unweighted} unweighted vertices")
-if not (1.6 < dims.z < 2.0): fail(f"height {dims.z:.2f} m outside 1.6-2.0")
+if not (1.6 < height_m < 2.0): fail(f"height {height_m:.2f} m outside 1.6-2.0")
 
 # --- pose / deformation smoke test ----------------------------------------
 def evaluated_bbox():
