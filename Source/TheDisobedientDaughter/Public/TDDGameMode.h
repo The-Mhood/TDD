@@ -65,6 +65,6 @@ private:
 
     float DefeatTimer = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="TDD|Encounter", meta=(ClampMin="0.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="TDD|Encounter", meta=(ClampMin="0.0", AllowPrivateAccess="true"))
     float DefeatRestartDelay = 3.0f;
 };

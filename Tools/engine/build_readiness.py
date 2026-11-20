@@ -70,6 +70,22 @@ SUBSYSTEM_BASE_INCLUDE_RULES = [
     (r"\bULocalPlayerSubsystem\b", "Subsystems/LocalPlayerSubsystem.h"),
 ]
 
+# UHT private Blueprint-access guard: UHT rejects Blueprint visibility
+# specifiers on private members unless meta=(AllowPrivateAccess="true") is
+# present (e.g. "BlueprintReadOnly should not be used on private members").
+# C++ default access applies: a `class` body defaults to private, a `struct`
+# body to public. Catches this UHT error class before the Mac build.
+BLUEPRINT_SPECIFIERS = (
+    "BlueprintReadOnly",
+    "BlueprintCallable",
+    "BlueprintPure",
+    "BlueprintImplementableEvent",
+    "BlueprintNativeEvent",
+    "BlueprintEditable",
+    "BlueprintGetProperty",
+    "BlueprintSetProperty",
+)
+
 
 def main():
     ap = argparse.ArgumentParser()
@@ -274,6 +290,44 @@ def main():
                             f"initialize it at the declaration, e.g. '{base} {member_name} = {base}(...)'; "
                             f"a mem-init list in the user constructor is not enough because UHT "
                             f"also generates a default constructor")
+
+    # ---- UHT private Blueprint-access guard -----------------------------
+    # Scan every header: track the current access section (public:/private:/
+    # protected:, with C++ default access per class/struct body) and block any
+    # UPROPERTY/UFUNCTION carrying a Blueprint visibility specifier while in a
+    # private section without AllowPrivateAccess metadata.
+    if src.is_dir():
+        for hdr in sorted(src.rglob("*.h")):
+            try:
+                htext = hdr.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            rel = hdr.relative_to(root)
+            events = []
+            for m in re.finditer(r"(?m)^\s*(public|private|protected)\s*:", htext):
+                events.append((m.start(), "access", m.group(1)))
+            for m in re.finditer(r"\b(class|struct)\s+[^;{]*\{", htext):
+                events.append((m.start(), "open", m.group(1)))
+            for m in re.finditer(r"\b(UPROPERTY|UFUNCTION)\s*\(", htext):
+                end = htext.find(";", m.end())
+                if end == -1:
+                    continue
+                events.append((m.start(), "member", htext[m.start():end]))
+            events.sort(key=lambda e: e[0])
+            current_access = "public"
+            for _pos, kind, payload in events:
+                if kind == "open":
+                    current_access = "private" if payload == "class" else "public"
+                elif kind == "access":
+                    current_access = payload
+                elif kind == "member" and current_access == "private":
+                    if any(s in payload for s in BLUEPRINT_SPECIFIERS) and "AllowPrivateAccess" not in payload:
+                        block(
+                            f"{rel}: UHT error class — private member with a Blueprint visibility "
+                            f"specifier and no AllowPrivateAccess metadata",
+                            f"add meta=(AllowPrivateAccess=\"true\") to the member's "
+                            f"UPROPERTY/UFUNCTION in {rel} (keep the member private), or move it "
+                            f"to a public section; UHT rejects Blueprint specifiers on private members")
 
     # ---- targets
     target_files = sorted(src.glob("*.Target.cs")) if src.is_dir() else []
