@@ -189,10 +189,11 @@ void ATDDAdannaProxyCharacter::BeginPlay()
         }
     }
 
-    for (TActorIterator<ATDDForbiddenForestLevel> It(GetWorld()); It; ++It)
+    // Take the first matching level actor. The iterator is already positioned on it,
+    // so no loop is needed; the old single-pass `for` left `++It` unreachable.
+    if (TActorIterator<ATDDForbiddenForestLevel> It(GetWorld()); It)
     {
         ForestLevel = *It;
-        break;
     }
 
     UE_LOG(LogTemp, Display, TEXT("TDD M1: Adanna rigid-part technical proxy ready; NOT the final character."));

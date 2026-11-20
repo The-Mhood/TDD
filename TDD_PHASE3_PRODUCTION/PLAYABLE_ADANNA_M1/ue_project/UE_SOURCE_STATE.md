@@ -51,6 +51,31 @@ Only `Source/*.Target.cs` is loadable. A second editor-target copy named
 audit reported V7, and it caused the first compile to fail before any C++ was built. It has been
 deleted; `scripts/audit_ue_macos.py` now fails on any `TargetRules` file not named `*.Target.cs`.
 
+### Known compile-time hazards under V7
+
+`BuildSettingsVersion.V7` raises `UnreachableCodeWarningLevel` (among others) to `Error`, so code
+that compiles cleanly at V5 can fail at V7 on Clang diagnostics that were previously warnings.
+One instance has already cost a --error on the owner Mac: a `for (TActorIterator<T> It(W); It; ++It)`
+whose body ended in an immediate `break`. The increment was unreachable, Clang emitted
+`-Wunreachable-code-loop-increment`, and V7 made it fatal.
+
+Use the iterator's own bool instead. `TActorIterator` positions itself on the first suitable actor
+inside its constructor (`++(*this)`), and `operator bool()` reports whether it points at one:
+
+```cpp
+// presence only - no loop needed
+const bool bExists = static_cast<bool>(TActorIterator<APlayerStart>(World));
+
+// need the first actor
+if (TActorIterator<ATDDForbiddenForestLevel> It(World); It)
+{
+    ForestLevel = *It;
+}
+```
+
+Do not use a `while`/`for` with an unconditional `break`, and do not silence the diagnostic:
+`scripts/audit_ue_macos.py` fails on both, and on `bWarningsAsErrors = false`.
+
 Toolchain requirement: Xcode 26.0 minimum, 26.1.1 recommended; **Xcode 26.4 is not compatible with Unreal Engine**. Metal 1.2 class GPU required and satisfied by M4.
 
 ## Owner/studio verification sequence

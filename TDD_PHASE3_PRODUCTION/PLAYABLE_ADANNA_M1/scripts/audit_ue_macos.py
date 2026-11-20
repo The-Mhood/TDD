@@ -162,6 +162,95 @@ def main() -> dict:
     check("runbook names the real editor target file",
           "TDD_GAMEEditor.Target.cs" in runbook_now)
 
+    # ---- 1c. Clang -Werror hazards from BuildSettingsVersion.V7 ---------------------
+    # V7 raises UnreachableCodeWarningLevel to Error, so a loop whose increment can
+    # never execute becomes a hard error (-Wunreachable-code-loop-increment). This is
+    # how the first real compile failed on three TActorIterator loops.
+    def unreachable_increments(code: str) -> list:
+        """Line numbers of for-loops whose increment is unreachable.
+
+        A loop whose body reaches an unconditional `break`/`return` before any
+        conditional statement can never run its increment. Clang diagnoses exactly
+        that, and V7 makes it an error.
+        """
+        hits = []
+        lines = code.splitlines()
+        for idx, line in enumerate(lines):
+            m = re.match(r"\s*for\s*\(", line)
+            if not m:
+                continue
+            # locate the body opening brace
+            j, depth = idx, 0
+            while j < len(lines):
+                depth += lines[j].count("(") - lines[j].count(")")
+                if depth <= 0 and "{" in lines[j]:
+                    break
+                j += 1
+                if j - idx > 6:
+                    break
+            if j >= len(lines):
+                continue
+            # walk the body at brace depth 1, collecting top-level statements
+            d = 0
+            stmt = ""
+            unconditional = False
+            started = False
+            for k in range(j, len(lines)):
+                for ch in lines[k]:
+                    if ch == "{":
+                        d += 1
+                        if d == 1:
+                            started = True
+                            continue
+                    if ch == "}":
+                        d -= 1
+                        if d == 0:
+                            if unconditional:
+                                hits.append(idx + 1)
+                            k = len(lines)
+                            break
+                        continue
+                    if d == 1:
+                        stmt += ch
+                        if ch == ";":
+                            t = stmt.strip()
+                            if t.startswith("break"):
+                                unconditional = True
+                            elif re.match(r"^(if|switch|for|while|do|return)\b", t):
+                                pass  # may exit conditionally; do not claim unreachability
+                            elif t.startswith(("{", "}")):
+                                pass
+                            stmt = ""
+                if d == 0 and started:
+                    break
+        return hits
+
+    src_texts = {f.name: read(f) for f in sorted(list(SRC.rglob("*.cpp")) + list(SRC.rglob("*.h")))}
+    offenders = {n: v for n, v in ((n, unreachable_increments(t)) for n, t in src_texts.items()) if v}
+    check("no for-loop with an unreachable increment (V7 makes it -Werror)",
+          not offenders, str(offenders))
+
+    # Never fix this class of error by silencing the diagnostic.
+    suppressed = [n for n, t in src_texts.items()
+                  if "-Wno-" in t or "pragma clang diagnostic ignored" in t]
+    check("project sources suppress no Clang warnings", not suppressed, str(suppressed))
+    check("module keeps warnings fatal (no bWarningsAsErrors = false)",
+          not re.search(r"bWarningsAsErrors\s*=\s*false", build_cs))
+    # Any TActorIterator presence test must be a real one. A `for` header that is not
+    # followed by a loop body doing work indicates someone reintroduced the pattern.
+    iterator_files = [n for n, t in src_texts.items() if "TActorIterator" in t]
+    check("actor presence tests exist where expected",
+          set(iterator_files) == {"TDDForbiddenForestLevel.cpp", "TDDForbiddenForestGameMode.cpp",
+                                  "TDDAdannaProxyCharacter.cpp"}, str(sorted(iterator_files)))
+    for name in iterator_files:
+        text = "\n".join(l for l in src_texts[name].splitlines()
+                          if not l.strip().startswith("//"))
+        for m in re.finditer(r"TActorIterator<([^>]+)>", text):
+            line = text[:m.start()].count("\n")
+            ctx = text.splitlines()[line]
+            ok = ("static_cast<bool>" in ctx) or ctx.lstrip().startswith("if (TActorIterator")
+            check("%s:%d presence test uses the iterator bool" % (name, line + 1), ok, ctx.strip())
+
     # ---- 2. Module dependencies ----------------------------------------------------
     for dep in ("Core", "CoreUObject", "Engine", "InputCore"):
         check("Build.cs declares %s" % dep, '"%s"' % dep in build_cs)

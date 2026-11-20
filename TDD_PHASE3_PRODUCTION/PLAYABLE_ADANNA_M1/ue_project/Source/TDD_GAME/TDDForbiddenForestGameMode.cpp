@@ -14,12 +14,11 @@ void ATDDForbiddenForestGameMode::StartPlay()
 {
     if (UWorld* World = GetWorld())
     {
-        bool bLevelAlreadyPresent = false;
-        for (TActorIterator<ATDDForbiddenForestLevel> It(World); It; ++It)
-        {
-            bLevelAlreadyPresent = true;
-            break;
-        }
+        // Presence test only: the iterator is positioned on the first match at
+        // construction. A `for` that broke immediately made `++It` unreachable, which
+        // V7 reports as -Werror,-Wunreachable-code-loop-increment.
+        const bool bLevelAlreadyPresent =
+            static_cast<bool>(TActorIterator<ATDDForbiddenForestLevel>(World));
         if (!bLevelAlreadyPresent)
         {
             FActorSpawnParameters SpawnInfo;

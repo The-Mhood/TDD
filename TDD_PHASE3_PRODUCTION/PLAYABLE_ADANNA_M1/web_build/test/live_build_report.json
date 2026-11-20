@@ -1,10 +1,10 @@
 {
-  "generated": "2026-11-20T06:59:13.371Z",
+  "generated": "2026-11-20T07:32:17.192Z",
   "overallPass": true,
   "classification": "Static/live HTTP delivery, recursive local ES-module resolution, generated asset integrity, capture presence, UE source-file presence and durable-record verification. NOT an automated WebGL rendering test or Unreal compile/cook/package test.",
   "server": {
     "command": "node server.mjs",
-    "port": 44101,
+    "port": 42603,
     "host": "0.0.0.0",
     "requestedFrom": "127.0.0.1 sandbox loopback"
   },
@@ -402,7 +402,7 @@
     {
       "name": "macOS static audit is green",
       "ok": true,
-      "detail": "106/106"
+      "detail": "113/113"
     },
     {
       "name": "macOS audit does not claim compile",

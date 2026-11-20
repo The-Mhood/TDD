@@ -42,6 +42,14 @@ Unreal Engine 5.8**. The project was retargeted and inspected rather than assume
 Retargeted: `EngineAssociation` 5.4 → **5.8**; `TargetPlatforms` Windows/Linux → **Mac**;
 `PythonScriptPlugin` enabled for the owner-side helper.
 
+**Compile reached C++ (2026-11-19).** Past the target-rules rejection, UBT began compiling the
+module and Clang failed on three `TActorIterator` loops that broke on their first iteration
+(`-Werror,-Wunreachable-code-loop-increment`). V7 promotes `UnreachableCodeWarningLevel` to
+`Error`, which is what turned a latent defect into a hard error: the loops were always pointless,
+not newly wrong. Replaced with the iterator's own bool (`static_cast<bool>(TActorIterator<...>(World))`
+where only presence is needed, `if (TActorIterator<...> It(World); It)` where the actor is used).
+No warning was disabled.
+
 **Correction (2026-11-19, after the first owner-machine compile).** The earlier claim that
 `BuildSettingsVersion`/`IncludeOrderVersion` had been retargeted was **false**. The edit landed in
 `Source/TDD_GAMEEditorTarget.cs`, which UBT never loads: the launcher engine loads only

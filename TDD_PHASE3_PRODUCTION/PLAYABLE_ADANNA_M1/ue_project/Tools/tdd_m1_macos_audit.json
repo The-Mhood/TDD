@@ -206,6 +206,48 @@
       "detail": ""
     },
     {
+      "name": "no for-loop with an unreachable increment (V7 makes it -Werror)",
+      "ok": true,
+      "severity": "error",
+      "detail": "{}"
+    },
+    {
+      "name": "project sources suppress no Clang warnings",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "module keeps warnings fatal (no bWarningsAsErrors = false)",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "actor presence tests exist where expected",
+      "ok": true,
+      "severity": "error",
+      "detail": "['TDDAdannaProxyCharacter.cpp', 'TDDForbiddenForestGameMode.cpp', 'TDDForbiddenForestLevel.cpp']"
+    },
+    {
+      "name": "TDDAdannaProxyCharacter.cpp:186 presence test uses the iterator bool",
+      "ok": true,
+      "severity": "error",
+      "detail": "if (TActorIterator<ATDDForbiddenForestLevel> It(GetWorld()); It)"
+    },
+    {
+      "name": "TDDForbiddenForestGameMode.cpp:18 presence test uses the iterator bool",
+      "ok": true,
+      "severity": "error",
+      "detail": "static_cast<bool>(TActorIterator<ATDDForbiddenForestLevel>(World));"
+    },
+    {
+      "name": "TDDForbiddenForestLevel.cpp:200 presence test uses the iterator bool",
+      "ok": true,
+      "severity": "error",
+      "detail": "const bool bHasPlayerStart = static_cast<bool>(TActorIterator<APlayerStart>(World));"
+    },
+    {
       "name": "Build.cs declares Core",
       "ok": true,
       "severity": "error",
@@ -644,8 +686,8 @@
       "detail": ""
     }
   ],
-  "checksPassed": 106,
-  "checksTotal": 106,
+  "checksPassed": 113,
+  "checksTotal": 113,
   "errors": [],
   "compile_verified": false,
   "pie_verified": false,

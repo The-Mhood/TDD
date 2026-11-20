@@ -22,6 +22,17 @@
 
 10. **Current independent production cycle — Adanna technical import handoff.** `PLAY/scripts/build_adanna_uv_handoff.py` produced `PLAY/model/adanna_m1_technical_proxy_uv.glb` with face-corner UV0 and an embedded 8-slot provisional material atlas while preserving the original GLB, 21-joint skin and five clips. Also produced `adanna_m1_uv_atlas.png`, `adanna_m1_uv_layout.png`, `adanna_m1_collision_proxy.obj`, `adanna_m1_ue_import_manifest.json` and `adanna_m1_uv_validation.json`; review copies are under `PLAY/web_build/captures/`. Root `OWNER_STUDIO_UNREAL_REQUEST.md` contains the exact owner information/access request. `PLAY/ue_project/Tools/TDD_M1_Unreal_Setup.py` is a source-only owner-side Editor helper for engine-version capture, project-owned `.umap` creation/save and labelled technical import attempts; it has not been executed because no UE binary exists here. Status: **COMPLETED AND VERIFIED** for local file/GLB validation; **PROVISIONAL — AWAITING CREATIVE APPROVAL**; UE integration remains **BLOCKED — OWNER-STUDIO DEPENDENCY**.
 
+11a. **Same compile, next blocker: three Clang `-Werror` loops.** With the shared environment
+fixed, compilation started and failed at `TDDForbiddenForestLevel.cpp:209`,
+`TDDForbiddenForestGameMode.cpp:18`, `TDDAdannaProxyCharacter.cpp:192` — all
+`loop will run at most once (loop increment never executed) [-Werror,-Wunreachable-code-loop-increment]`.
+Each loop set a flag (or took the actor) then `break`-ed immediately, so `++It` could never run.
+The iterator is positioned on the first match by its constructor, so the loop was never needed.
+Replaced with `static_cast<bool>(TActorIterator<T>(World))` for pure presence tests and
+`if (TActorIterator<T> It(World); It)` where the actor is used. Zero-, one- and many-actor cases
+behave as before. No suppression, no `-Werror` change. Audit gained an unreachable-increment
+detector plus anti-suppression checks (**113/113**, negative controls verified).
+
 11. **First owner-machine compile — UBT rejected the target rules (2026-11-19).** No C++ was
 compiled. UBT stopped with `TDD_GAMEEditor modifies the values of properties:
 [UndefinedIdentifierWarningLevel: Off != Error, UnreachableCodeWarningLevel: Off != Error,
@@ -32,9 +43,9 @@ but does not match UBT's `*.Target.cs` pattern, so it was never loaded; the live
 `Off` while the engine's shared environment builds them `Error`. Fixed by `V7`/`Unreal5_8` in both
 live targets, deleting the dead file, and fixing the audit and live verifier that had certified the
 dead copy. `BuildEnvironment = Unique` was rejected as the fix: an installed engine refuses it.
-Audit **106/106** with negative controls. No compile has been proven.
+Audit **113/113** with negative controls. No compile has been proven.
 
-12. **Earlier work cycle — macOS / UE 5.8 retarget and scaffold repair.** The owner environment is known, so the scaffold was retargeted and machine-audited instead of assumed compatible. `EngineAssociation` → `5.8`, `BuildSettingsVersion.V7`, `EngineIncludeOrderVersion.Unreal5_8`, `TargetPlatforms: ["Mac"]`, `PythonScriptPlugin` enabled. Ten defects were found and fixed, including one that would have silently prevented the game mode ever applying (map/game-mode keys under a section UE ignores), instanced-mesh pools registered too late to build collision, a missing `APlayerStart`, removed `EditorLevelLibrary` calls in the setup helper, an invented steel blade contradicting Phase 1 restrictions, and a pendant transform that displaced geometry 1.3 m outside the body. New: `ue_project/Tools/TDD_M1_Unreal_Setup_macOS.py` (original preserved for audit), `ue_project/README_MACOS_UE58.md`, and `scripts/audit_ue_macos.py` → **106/106** static compatibility checks.
+12. **Earlier work cycle — macOS / UE 5.8 retarget and scaffold repair.** The owner environment is known, so the scaffold was retargeted and machine-audited instead of assumed compatible. `EngineAssociation` → `5.8`, `BuildSettingsVersion.V7`, `EngineIncludeOrderVersion.Unreal5_8`, `TargetPlatforms: ["Mac"]`, `PythonScriptPlugin` enabled. Ten defects were found and fixed, including one that would have silently prevented the game mode ever applying (map/game-mode keys under a section UE ignores), instanced-mesh pools registered too late to build collision, a missing `APlayerStart`, removed `EditorLevelLibrary` calls in the setup helper, an invented steel blade contradicting Phase 1 restrictions, and a pendant transform that displaced geometry 1.3 m outside the body. New: `ue_project/Tools/TDD_M1_Unreal_Setup_macOS.py` (original preserved for audit), `ue_project/README_MACOS_UE58.md`, and `scripts/audit_ue_macos.py` → **113/113** static compatibility checks.
 
 ## macOS / UE 5.8 compatibility findings
 

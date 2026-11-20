@@ -205,12 +205,11 @@ void ATDDForbiddenForestLevel::BuildRouteAndBoundary()
     // the generated map has no authored player start, so place one at the world spawn.
     if (UWorld* World = GetWorld())
     {
-        bool bHasPlayerStart = false;
-        for (TActorIterator<APlayerStart> It(World); It; ++It)
-        {
-            bHasPlayerStart = true;
-            break;
-        }
+        // Presence test only: TActorIterator is positioned on the first suitable actor
+        // by its own constructor, so its bool operator already answers "does one exist?".
+        // The previous `for` broke on its first iteration, leaving `++It` unreachable;
+        // V7 raises UnreachableCodeWarningLevel to Error (-Wunreachable-code-loop-increment).
+        const bool bHasPlayerStart = static_cast<bool>(TActorIterator<APlayerStart>(World));
         if (!bHasPlayerStart)
         {
             FActorSpawnParameters SpawnInfo;
