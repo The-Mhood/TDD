@@ -1,6 +1,7 @@
 # Release Readiness Plan (Phase 6)
 
-**Document ID:** TDD-PLAN-RRP-001 · **Version:** 1.0 · **Date:** 2026-11-20
+**Document ID:** TDD-PLAN-RRP-001 · **Version:** 1.1 · **Date:** 2026-11-20
+**v1.1 (review pass):** G-02 corrected — it referenced "11 M1 ACs"; the accepted M1 specification contains **31** ACs (AC-01…AC-31) and that is the correct traceability target; gates now explicitly evaluated against the owner-approved release scope (SA register, ROADMAP v2.0 §5).
 **Mandate (owner, Phase 6):** full validation and QA with a defect register (severity, repro, ownership, resolution evidence); performance with profiling evidence only; commercial preparation (platforms, packaging, crash reporting, licensing, store assets); 11 release gates; a final release-readiness report containing actual evidence.
 **Companions:** QUALITY_ENGINEERING_PLAN.md (gate definitions) · MILESTONE_ACCEPTANCE_CRITERIA.md M9/M10 (milestone-level ACs) · RISK_AND_BLOCKER_REGISTER.md.
 
@@ -99,10 +100,12 @@ Owner rule: **no optimization or performance claim without profiling evidence.**
 
 All must pass with actual committed evidence. Waiver = owner-ratified ADR stating impact (none anticipated).
 
+**Scope rule (accelerated model):** gates are evaluated against the **owner-approved release scope** — under the 4–8-week fast-track that is the ch. 1 release candidate (SA-1; ROADMAP v2.0 §5). Matrix rows, inventories and sign-offs (G-01, G-03, G-07, G-08) therefore cover shipped content only; each SA-approved scope adjustment is restated in the final report's "Known limitations" (§8.9) so the report never implies content that was not shipped. Post-RC chapters re-enter through the same gates per wave.
+
 | Gate | Definition | Required evidence |
 |---|---|---|
 | **G-01** | **Full validation matrix 100% executed** (V-01…V-18), zero unexecuted rows | Matrix with 18/18 linked evidence paths |
-| **G-02** | **All 11 M1 ACs-of-record for combat/movement still green** in the final build (regression of the accepted baseline — spec v1.4 is the contract) | Final-run bundles × 3 cold runs |
+| **G-02** | **All 31 M1 ACs (AC-01…AC-31, spec v1.4) still green** in the final build — full regression of the accepted baseline (spec v1.4 is the contract; traceability: M1 spec §5 ↔ MAC M1.32 row ↔ this gate) | Final-run bundles × 3 cold runs, 31/31 `TDD_RESULT` lines quoted |
 | **G-03** | **Defect register closed to policy:** P0 = 0 open, P1 = 0 open, P2 ≤ 5 with owner-ratified deferrals (impact stated) | Register snapshot |
 | **G-04** | **Save/load soak:** 100 cycles + migration + corruption recovery, zero corruption | Soak report |
 | **G-05** | **Performance sign-off:** all MEAD §15 budgets met on reference HW in reference scene + every chapter reference encounter; 2-h soak clean | Per-chapter .utrace + CSV + soak log, machine named |

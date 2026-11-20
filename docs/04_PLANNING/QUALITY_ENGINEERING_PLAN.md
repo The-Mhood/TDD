@@ -1,8 +1,9 @@
 # Quality Engineering Plan
 
-**Document ID:** TDD-PLAN-QUAL-001 · **Version:** 1.0 · **Date:** 2026-11-20
+**Document ID:** TDD-PLAN-QUAL-001 · **Version:** 1.1 · **Date:** 2026-11-20
+**v1.1 (review pass):** added claim-classification policy (item 6) per the owner's technical-claims audit; C-1 and §4 phrasing clarified — reproducibility is a *verified design property*, not an engine guarantee (TR-19 T2); all requirement rows already carry a measurement method (verified in the audit — TR-19).
 **Mandate (owner, Phase 4):** measurable quality requirements per system with an explicit evaluation method; dedicated quality gates (screenshots, transition inspection, repro scenarios, deterministic combat cases, multi-scenario AI); no placeholder asset may claim production readiness; quality gaps tracked by player impact and technical risk.
-**Companions:** MILESTONE_ACCEPTANCE_CRITERIA.md (per-milestone ACs) · RELEASE_READINESS_PLAN.md (Phase 6 execution).
+**Companions:** MILESTONE_ACCEPTANCE_CRITERIA.md (per-milestone ACs) · RELEASE_READINESS_PLAN.md (Phase 6 execution) · TR-19 (claims audit + conventions).
 
 ## 1. Quality policy (binding)
 
@@ -11,6 +12,7 @@
 3. **Placeholder discipline.** Interim assets (mannequin, labelled proxies, placeholder VFX/audio) are allowed *in development* but are (a) labelled in-tree (filename prefix `WIP_` / ledger tag `interim`), (b) never cited as evidence for a production-readiness claim, and (c) tracked in the quality gap register (§8) with a named replacement task. A milestone that exits on interim assets states so explicitly in the progress report.
 4. **Reference hardware discipline.** Visual and performance sign-off requires the reference PC (D-12). Mac (Metal) captures are labelled `DEV-HW` and are look-development evidence only (D-19).
 5. **No silent regression.** Any gate that previously passed and now fails is a P1 defect until triaged (not a "re-baseline").
+6. **Claim classification (TR-19, binding).** Statements about engine behaviour are classed [DS-G] design guarantee (enforced in code + tested) / [BUD] budget (target until measured) / [EN-V] engine behaviour (verify by named test before citing as fact) / [ST] status claim (dated citation) / [UNV] unverified (no claim permitted). An [UNV] item may never appear in a report as fact; it appears as "to be verified by \<test\>". The audit of the existing planning set is TR-19; the conventions apply to all future documents and reports.
 
 ## 2. Domain quality requirements & evaluation methods
 
@@ -57,7 +59,7 @@
 
 | # | Measurable requirement | Evaluation method | Gate / when |
 |---|---|---|---|
-| C-1 | Deterministic combat cases: 10-case seeded battery (exact input timestamps → exact outcome log: hits landed, damage values, posture, staggers, deaths); byte-identical across 3 runs | Battery CSV + 3-run diff (see §4 for the 10 cases) | M3 (MAC M3.5), M8 |
+| C-1 | Deterministic combat cases: 10-case seeded battery (exact input timestamps → exact outcome log: hits landed, damage values, posture, staggers, deaths); outcome logs identical across 3 runs *within the same platform/build/test conditions* — a verified design property (no-async gameplay paths, seeded RNG, fixed test frame clock), **not** an engine guarantee; cross-platform determinism is not claimed (TR-19 T2); any mismatch = P1 root-cause, never re-baseline | Battery CSV + 3-run diff (see §4 for the 10 cases) | M3 (MAC M3.5), M8 |
 | C-2 | No double-hits: every attack lands each hit exactly once (10-hit-per-attack gauntlet vs dummy) | Hit-registration log vs expected | M3 (MAC M3.2) |
 | C-3 | Timing windows exact to spec: light chain cancel from frame after active, chain window 0.15–0.45 s; guard-ready 0.08 s; parry window 0.15 s; i-frames 0.10–0.45 s (AC verified 0.11–0.44) | Frame-timestamped input sequences, outcome asserted | M3 (AC-verified values) |
 | C-4 | Damage taxonomy 100%: 5 categories × 8 defender states (idle/run/dodge-active/dodge-iframe/block/parry/stagger/dead) all resolve per M1 spec §3.2.1 | Taxonomy matrix automation (all 40 cells) | M3 (MAC M3.4) |
@@ -116,7 +118,7 @@
 
 ## 4. Deterministic combat case battery (QG-COMBAT, 10 cases)
 
-Seeded; exact input timestamps; outcome log = (event, frame, subject, value) tuples; 3-run byte-identical required.
+Seeded; exact input timestamps; outcome log = (event, frame, subject, value) tuples; 3-run identity within the same platform/build/test conditions required (reproducibility per C-1/TR-19 T2 — the battery *is* the verification; a failing run is a P1 defect, not a design change).
 
 1. **L1-chain-full** — 4 light attacks from rest: chain window respected, cancel points exact.
 2. **L1-cancel-heavy** — light-2 → heavy cancel: commit point respected, no cancel after commit.

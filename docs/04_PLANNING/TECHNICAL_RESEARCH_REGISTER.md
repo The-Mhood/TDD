@@ -1,7 +1,8 @@
 # Technical Research Register
 
-**Document ID:** TDD-PLAN-TRR-001 · **Version:** 1.0 · **Date:** 2026-11-20
+**Document ID:** TDD-PLAN-TRR-001 · **Version:** 1.1 · **Date:** 2026-11-20
 **Owner:** Takeover Technical Lead · **Status:** Research complete for M1–M4 scope; items marked OPEN re-verify on the first reference-hardware run.
+**v1.1 (review pass):** reference-PC timing reconciled to one authoritative date — **order at P-01 (Day 0)**, arrives W1, calibrated W2, Windows CI node from W2 (TR-13/TR-15 corrected; TR-18 added with full specification/cost/validation); TR-19 adds the technical-claims audit (engine-behaviour statements that were phrased as guarantees are reclassified with measurable ACs and named verification methods); RG-05 retimed.
 
 **Evidence key:** `[E]` = Epic official documentation fetched 2026-11-20 (URLs inline) · `[A]` = Agent 4 assessment (2026-11-18, fetched Epic docs, in-repo at `origin/arena/b2c58152-tdd:docs/`) · `[R]` = accepted in-repo document (ADR / M1 spec / MEAD / Agent 2 world docs) · `[T]` = technical judgement of the Takeover Lead, to be confirmed by a named verification run.
 
@@ -186,7 +187,7 @@
 | PSO precompilation + shader compile cache shipped | Zero packaged-build shader stutter (MEAD §15.3) | **Adopted** |
 | Metal profiling on Mac | Useful for dev-loop regressions, **not** for budget sign-off | **Dev only** |
 
-**Decision:** budgets are law from the first slice; the reference machine (D-12 purchase at M6 entry) is the only authority for GPU numbers.
+**Decision:** budgets are law from the first slice; the reference machine (D-12 — **ordered at P-01/Day-0 under the accelerated plan**; specification and validation procedure in TR-18) is the only authority for GPU numbers. The RTX 3060 Ti / 1440p@60 anchor is a *budget target, not a proven fact*: it becomes "established" only when TR-18's benchmark procedure has been executed on the reference scene.
 
 ## TR-14 Automated testing
 
@@ -212,9 +213,9 @@
 | RunUAT packaging (Cook/Package) on the Mac | Works [A: Agent 4 §1.3] | **Adopted** (Gate D from M1 exit) |
 | Git LFS for binaries (ADR-0104: text-only git, ≤ 5 MB rule, content definitions as CSV/JSON) | ADR-0104 ratified | **Adopted**; LFS provisioning = owner action (D-19-adjacent, see ROADMAP M2) |
 | GitHub Actions macOS runners for package verification | Limited UE licensing/quota practicalities; optional | **Deferred** — owner Mac is the build host; a hosted smoke runner is a release-phase option, not a blocker |
-| Windows build host (future reference PC doubles as it) | Agent 4: the single most important non-Mac purchase [A] | **Adopted at M6 entry** (D-12) |
+| Windows build host (future reference PC doubles as it) | Agent 4: the single most important non-Mac purchase [A] | **Adopted — order at Day 0 (P-01); Windows CI node operational from W2** (D-12, timing clarified 2026-11-20; see TR-18) |
 
-**Decision:** build = one command on the owner Mac; packaging = RunUAT same host; LFS on; hosted CI deferred with a named decision point at M10.
+**Decision:** build = one command on the owner Mac (daily test train, ROADMAP v2.0 §4.3); packaging = RunUAT same host; LFS on; the reference PC serves as the self-hosted Windows CI node from W2 (supersedes the old "hosted CI deferred to M10" timing for the fast-track — hosted runners remain a release-phase option only).
 
 ## TR-16 Engine/platform facts (verified 2026-11-20)
 
@@ -239,6 +240,64 @@
 
 **Decision (D-25):** canon-status fields + validators in the engine (MEAD §9.8); GLB exchange standard; no MetaHuman.
 
+## TR-18 Reference hardware — specification, cost, purchase timing, validation (v1.1)
+
+**Requirement:** a DX12 reference machine that (a) is the sole authority for visual/perf sign-off (D-19), (b) defines the min-spec the game must hit (MEAD §15.1 anchor: 8-core + RTX 3060 Ti + 16 GB, 1440p@60, 1% low ≥ 50), (c) under the accelerated plan doubles as the **Windows build/CI node from W2** — so it must be present in W1.
+
+**Purchase timing — single authoritative date (reconciles T00 D-12, TR-13, TR-15, ROADMAP, dep-map):** **order at P-01, i.e. ratification day (Day 0)**. The earlier texts carried three different timings — T00: "Phase 3 entry"; TR-15: "M6 entry"; ROADMAP/dep-map v1.0: "M2 exit" / "M5 entry (week 6–8)". Those were all correct *for the 13–14-month plan*, whose first sign-off need was ~W16. The accelerated plan (owner instruction, 4–8 weeks) needs Windows verification at **Checkpoint A (W4)** and look-dev/perf sign-off from **W3–W5**; with 1–2 weeks of used-market shipping lead, any order date later than Day 0 removes one of those. **All prior timings are superseded by Day-0.**
+
+**Recommended specification (DX12, Windows 11 Pro):**
+
+| Tier | CPU | GPU | RAM | Storage | OS | Est. cost (Nov 2026, used/new) |
+|---|---|---|---|---|---|---|
+| **Minimum (sign-off floor = min-spec anchor)** | Ryzen 5 5600 / i5-12400 (6c/12t) | RTX 3060 **12 GB** (closest current card to the 3060 Ti anchor; used 3060 Ti also acceptable if found ≤ 3060-12GB price) | **32 GB** DDR4-3200 | 1 TB NVMe Gen4 | Win 11 Pro | **$750–950** |
+| **Recommended (dev + CI + headroom)** | Ryzen 7 5700X / i5-13600K (8c/16t+) | RTX 4070 / 4070 SUPER (or used RTX 3080 12 GB) | **32 GB** (64 if ≤ +$100) | 2 TB NVMe Gen4 | Win 11 Pro | **$1,300–1,700** (new) / $1,000–1,300 (used GPU) |
+
+- **Why 32 GB even though the min-spec anchor is 16 GB:** Epic recommends 32 GB [E: Epic macOS page equivalent guidance for PC: 32 GB recommended]; World Partition headroom (RG-04); and the machine runs build + editor + test train concurrently as a CI node. The *shipped min-spec claim* stays 16 GB: the RAM budget (≤ 10 GB, MEAD §15.2) is measured on the reference machine and, by construction, leaves a 16 GB machine inside budget.
+- **Alternatives considered:** (a) used RTX 3090 24 GB build (~$1,200) — maximum GPU headroom, +250 W PSU; acceptable if within the recommended-tier budget, not required. (b) Cloud GPU (e.g. g4dn-class) for CI overflow only — **not acceptable as the sign-off reference**: sign-off requires a stable, named physical machine identity (TR-13). (c) Mac Studio M3 Ultra as a *second* Metal dev host — optional, does not substitute for any DX12 requirement.
+- **What can be tested on the current Mac (M4, 16 GB) immediately (W0–W2):** all in-workspace pure-core C++ suites (g++ 12.2 verified 2026-11-20); all UE logic + world functional tests and gauntlets on Metal at **dev level** (D-19: look-dev/approximate, not sign-off); movement/traversal/combat verification (AC-01…31); save/load, UI, audio event verification; performance *development* captures (labelled `DEV-HW`). **What requires the Windows reference machine:** final visual sign-off (Lumen HWRT / DX12; Metal is beta/experimental per [E]), all performance sign-off + the min-spec 1440p@60 claim, packaged primary-platform builds, PSO precompilation / zero shader-stutter check (RRP G-07), RHI-specific behaviour (R-21), and — from W2 — CI runs that de-risk the single-Mac bottleneck.
+
+**1440p/60 validation procedure (the RTX 3060 Ti class is "established" only after this is executed — per owner instruction):**
+1. Build `TDD-Perf.ReferenceScene.CH01_Encounter` (fixed 8-enemy spawns + 4 VFX layers + scripted combat path — MEAD §15.3) in a Development + Shipping pair.
+2. 3 × 10-minute runs: cold start, warm, steady-state (post 5-min burn-in). Capture `.utrace` + frame histogram + `memreport -full`.
+3. **Pass criteria (all, on the minimum-tier card at 1440p internal):** mean ≥ 59.5 fps; 1% low ≥ 50 fps; hitches > 50 ms ≤ 1 per 10 min; VRAM ≤ 8 GB; RAM ≤ 10 GB.
+4. Record machine identity (OS build, GPU + driver version, CPU, RAM, UE 5.8.4 CL, RHI) in the ledger; archive traces (LFS) + CSV summary (text).
+5. Re-run at every chapter gate and at final sign-off; the regression rule (MEAD §15.4: > 5 % frame-time or > 100 MB VRAM blocks) applies from the first capture.
+6. If the minimum tier fails any criterion: the *budget* or the *min-spec* changes — via documented review + ADR, never by silent acceptance (Roadmap Rule 2/6).
+
+**Owner actions:** ratify tier (minimum vs recommended) in the P-01 batch; order Day 0; ship to the build location; one-time Windows setup (UE 5.8.4 install, ~1 h, runbook provided at P-04).
+
+## TR-19 Technical claims audit (v1.1)
+
+**Mandate (owner, review pass):** statements describing engine behaviour as *guaranteed* when it still requires testing must be reclassified; every requirement needs a measurable AC + named verification method. This section is the audit of the planning set (and the accepted specs it inherits); the same conventions now apply to all future documents.
+
+**Claim classes (binding convention):**
+- **[DS-G] Design guarantee** — a property we *enforce in code* (assertion/arbitration/data); holds only while the enforcing code and its tests hold. Never "the engine guarantees this."
+- **[BUD] Budget** — a numeric target; unproven until measured on the named hardware.
+- **[EN-V] Engine behaviour** — plausible UE behaviour we rely on; must be verified by a named test before any claim cites it as fact.
+- **[ST] Status claim** — a statement about the engine/platform's current state; requires a dated citation.
+- **[UNV] Unverified** — no claim permitted; the document must say "to be verified by \<test\>".
+
+| # | Claim as previously phrased | Where | Reclassified | Why | Measurable AC + named verification method |
+|---|---|---|---|---|---|
+| T1 | "No floating capsule / no teleport-into-geometry" | QUALITY P-1/P-2, MAC M2.5 | **[DS-G]** enforced by floor-trace + trace assertions in every state exit — not an engine property (UE capsule resolution is approximate; tunneling at high velocity is possible) | Engine does not guarantee non-penetration | AC: zero assertion failures; verification: 100-run movement sweep (M1-S1), 1000-placement fuzz (QG-PHYS #1), E1–E7 suites (M2.1–2.3) |
+| T2 | "Deterministic combat outcomes (byte-identical × 3 runs)" | QUALITY C-1, MAC M3.5 | **[DS-G]** design target — same platform/build/seed → reproducible outcome log, *enforced* by: no async in gameplay paths, seeded RNG, fixed frame clock in tests. **Cross-platform determinism is NOT claimed** (RHI/FPU/task ordering may differ) | Reproducibility is a property of our constraints + test conditions, not a UE guarantee | AC: 10-case battery × 3 runs, outcome logs identical; verification: QG-COMBAT battery (QUALITY §4); any mismatch = P1 defect, root-caused — never re-baselined |
+| T3 | "No animation pop on cancels (≤ 10 cm / ≤ 15°)" | QUALITY A-2 | **[DS-G]** design target via pose-matching/blend setup, **measured** per case — engine does not guarantee continuity | Anim blending can pop if mis-set | AC: per-cancel joint delta bounds; verification: cancel-case battery (QUALITY §4 cases 1–3) with 5-frame post-cancel capture |
+| T4 | "Foot-slide ≤ 5 cm" | QUALITY A-1, MAC M3.7 | **[BUD]** measured lab metric, not a guarantee | IK/retarget quality varies per clip | AC: ≤ 5 cm over 30 s lab run per clip family; verification: foot-locator CSV (lab gauntlet); per-clip inventory gate at each animation milestone |
+| T5 | "AI ≤ 2.0 ms" | QUALITY I-5, MEAD §15.2 | **[BUD]** budget — no measurement exists yet | Never measured on this codebase | AC: scope-measured ≤ 2.0 ms at 8 agents; verification: Insights scope report (M4-10, then every chapter gate); regression rule from first capture |
+| T6 | "Visual parity Windows vs Mac" | MAC M5.7, QUALITY G-9 | **[EN-V]** — parity is **not expected and not claimed**; Metal Lumen/Nanite are beta/experimental [ST: Epic macOS page, fetched 2026-11-20] | Cross-RHI parity is untested and engine-marked experimental | AC: parity *documented* — identical capture set on both platforms, per-frame deltas recorded, Windows is the reference; verification: dual QG-SHOT sets + delta table (M5.7); any Metal-only crash = P1 |
+| T7 | "World Partition streams with no visible holes" | MAC M2.6 | **[EN-V]** engine capability + our setup; never measured in this project | WP correctness depends on data/levels-of-detail config | AC: full traversal gauntlet completes with zero hole-exposure; verification: streaming gauntlet + streaming log (M2.6, then per chapter); pop-in counter in soak |
+| T8 | "Nanite/VSM usable on M4 (beta); Lumen HWRT on Metal (experimental)" | TR-01, D-19 | **[ST]** status claim, cited [E: Epic macOS requirements page, fetched 2026-11-20] — plus our own stability evidence | Vendor status can change per release | AC: 4-h Metal stability soak clean (RG-01) before any Metal look-dev sign-off relies on it; re-verify at each UE patch |
+| T9 | "Motion Matching is production-ready in UE 5.7 (Fortnite)" | TR-03, D-21 | **[ST]** cited [strayspark 2026-06-11 / 2026-08-17; GASP sample] — **not** evidence for *our* corpus | Production-ready for their corpus ≠ ours | AC: M3-10 spike passes (foot-slide ≤ 5 cm, blend edges clean on our clips) before MM adoption; revert path = provider interface (ADR-0005) |
+| T10 | "Save round-trip byte-identical; no corruption" | MAC M6.2 | **[DS-G]** `USaveGame` serialization of a fixed payload is deterministic *by design* + atomic write (tmp→verify→rotate) enforced; **corruption resistance is a design guarantee enforced by the atomic-write protocol**, verified not assumed | FS-level behaviour (power loss) is not engine-guaranteed | AC: round-trip byte-identical; interrupt test → valid save or valid `.bak`, never torn file; verification: `TDD-Unit.Persistence.*` (named in MEAD §14.2) + M9-04 100-cycle soak |
+| T11 | "No double-hits; taxonomy 100%; same-frame posture promotion; Dead > Stagger" | QUALITY C-2/C-4/C-5, MAC M3 | **[DS-G]** enforced by the single arbitration pipeline (M1 spec §3.2.1 ordering) | These are *our* rules, implemented and tested — not engine properties | AC: 40-cell taxonomy matrix; 10-hit-per-attack gauntlet; verification: QG-COMBAT + taxonomy suite (named in spec §5) |
+| T12 | "60 fps @ 1440p on RTX 3060 Ti class" | MEAD §15.1, D-12, RRP §5 | **[BUD] [UNV until TR-18 executed]** — the anchor is a *target*, not a proven fact | Never benchmarked in this project (owner instruction: "do not treat as proven") | AC: TR-18 procedure pass (mean ≥ 59.5, 1% low ≥ 50, VRAM ≤ 8 GB, RAM ≤ 10 GB) on the reference scene; verification: 3 × 10-min runs, archived |
+| T13 | "In-workspace (agent-side) testing of pure logic" | ROADMAP v1.0 §6, TR-14 | **[ST] verified with a scope limit:** the agent workspace has **no Unreal Engine** (ADR-0012, environmental fact) — agents cannot compile/run *UE-dependent* code. What is verified: the sandbox has **g++ 12.2 (checked 2026-11-20)** and a **proven precedent** (dodge math 18/18 host-compiled in-sandbox, TR-14). Therefore: UE-**independent pure cores** (new constraint, ADR-0109) are testable agent-side on every commit; **all UE-dependent code remains agent-unverifiable** and is verified exclusively on the daily Mac test train + Windows CI | v1.0 text over-claimed "in-sandbox suites for every commit" for all logic | AC: pure-core suites (state-transition table, damage arbitration, token policy, phase selector, narrative conditions, save schema) compile + pass under g++ in the agent workspace, evidence committed; verification: first pure-core suite at P-08 (W1 d1–d2), then per commit. Any UE header in a "pure" file = contract violation at merge review |
+| T14 | "Chapter load ≤ 15 s cold / 5 s warm; hitches ≤ 1/10 min" | MEAD §15.3, MAC M7.c.1 | **[BUD]** targets, unmeasured | No streaming data exists yet | AC: measured per chapter on reference HW; verification: streaming reports (M2.7 first data point) + gauntlet |
+| T15 | "PSO precompilation → zero packaged shader stutter" | TR-13, RRP G-07 | **[EN-V]** UE PSO precompile is effective for the common case but per-machine/per-driver; "zero" is verified, not assumed | Driver/OS variation | AC: 30-min clean-machine play, zero shader-compile events in log; verification: G-07 procedure per platform |
+
+**Corrections applied in this review pass:** ROADMAP v2.0 (verification model per T13), QUALITY_ENGINEERING_PLAN v1.1 (T2/T3 phrasing + conventions), MAC v1.1 (M3.5 reproducible-not-guaranteed phrasing), dep-map v1.1 (S21/T6 notes), WBS v2.0 (verification assignments). **No accepted spec was changed**; where an accepted spec makes the same over-claim (e.g. M1 spec determinism ACs), it stands as-is — those are *requirements* (which are exactly the verification target), not claims of fact.
+
 ---
 
 ## Research gaps to close (named, owned, dated)
@@ -249,4 +308,4 @@
 | RG-02 | CMC root-motion consumption in `MOVE_Flying`/`MOVE_Walking` as ADR-0013 specifies | `TDD-Unit.Movement.RootMotionAppliesToCapsule` on first Mac run (ADR-0013 §3 provisional rule) | M1 S3 |
 | RG-03 | Motion Matching corpus requirements (clip count, tagging) for the M3+ upgrade | GASP sample study + 1-week spike on the M4 when the animation corpus exists | M3 entry |
 | RG-04 | 16 GB editor+cook headroom with World Partition content | Measured during first WP slice; trigger D-18 + plugin pruning; 32 GB upgrade option if blocked | M5 |
-| RG-05 | Windows DX12 reference-hardware bring-up (install, driver, budget baseline) | One-time bring-up run on the purchased machine; baseline capture archived | M6 entry |
+| RG-05 | Windows DX12 reference-hardware bring-up (install, driver, budget baseline) | One-time bring-up run on the purchased machine (arrives W1); baseline capture archived; Windows CI live from W2 | W2 (was: M6 entry — retimed for the accelerated plan) |

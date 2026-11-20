@@ -1,7 +1,31 @@
 # Milestone Acceptance Criteria
 
-**Document ID:** TDD-PLAN-MAC-001 · **Version:** 1.0 · **Date:** 2026-11-20
-**Conventions:** ACs marked **[A]** are inherited from accepted specifications (M1 spec v1.4, MEAD TDD-MEAD-001) and are unchanged. ACs marked **[N]** are new takeover criteria. Every AC has a measurement method. A milestone exits when ALL of its ACs have committed evidence (bundle path + `TDD_RESULT`/report in the ledger). "3 cold runs" = 3 separate process launches, no warm cache reuse, on the owner's Mac (both platforms from M6).
+**Document ID:** TDD-PLAN-MAC-001 · **Version:** 1.1 · **Date:** 2026-11-20
+**v1.1 (review pass):** added Checkpoint A (W4) and Checkpoint B (W8/RC) AC sections for the accelerated model (ROADMAP v2.0); milestone numbering confirmed consistent with ROADMAP and dep map (M7 = content integration, M8 = optimization, M9 = QA, M10 = release); M3.5 phrasing aligned to TR-19 T2 (reproducibility within same platform/build/test conditions, verified by the battery — not an engine guarantee).
+**Conventions:** ACs marked **[A]** are inherited from accepted specifications (M1 spec v1.4, MEAD TDD-MEAD-001) and are unchanged. ACs marked **[N]** are new takeover criteria. Every AC has a measurement method. A milestone exits when ALL of its ACs have committed evidence (bundle path + `TDD_RESULT`/report in the ledger). "3 cold runs" = 3 separate process launches, no warm cache reuse, on the owner's Mac (both platforms from W2 on the reference PC).
+
+## Checkpoints (accelerated model, ROADMAP v2.0 §4.1)
+
+Checkpoints are *go/no-go reviews* on top of milestone gates — they carry no new gameplay ACs; they bundle existing ACs + evidence + the 8-point report.
+
+| AC | Checkpoint A (end W4) | Measurement | Evidence |
+|---|---|---|---|
+| A-1 | M1 gate exited (AC-01…31, 3 cold runs) + M2 gate exited (E1–E7, streaming data) | MAC M1/M2 rows, all green | Bundles × 3 |
+| A-2 | Playable core loop in one session: movement → traversal (vault + drop) → combat (light chain + dodge + parry vs 1 archetype or dummy) → death → checkpoint respawn, in the forest slice | Scripted gauntlet (F-02) + one recorded manual pass | Gauntlet report + recording |
+| A-3 | Verification on 2 machines: Mac train green + Windows CI green (parity deltas documented) | Two evidence bundles from same commit | Ledger |
+| A-4 | Save/load smoke: save at 10 min play, reload, position + flags identical | Restore-compare test | Test log |
+| A-5 | No P0/P1 defects open; every interim asset labelled (QUALITY §7) | Defect register snapshot + asset audit | Register |
+| A-6 | 8-point checkpoint report delivered; owner go/no-go on W5–8 scope (SA register confirmation) | The report | Ledger |
+
+| AC | Checkpoint B (end W8 — Chapter 1 RC) | Measurement | Evidence |
+|---|---|---|---|
+| B-1 | All M-gates through M6 exited + M7.02 chapter-1 gate record + M8.1–M8.6 + M9.1–M9.5 (scoped to approved RC scope, SA-1) | MAC rows, all green | Bundles + ledger |
+| B-2 | **All 11 release gates (RRP §7) evaluated with actual evidence** | Gate table | RRP report |
+| B-3 | 1440p/60 validated on reference scene per TR-18 (mean ≥ 59.5, 1% low ≥ 50, VRAM ≤ 8 GB, RAM ≤ 10 GB, hitches ≤ 1/10 min) — the min-spec anchor is now *proven, not assumed* | TR-18 procedure output | .utrace + CSV, machine named |
+| B-4 | Zero unlabelled interim assets in the package (SA-6 status explicit: RC or dev-milestone) | Package asset audit (zero `WIP_`/`interim`) | Audit report |
+| B-5 | P0 = 0 open, P1 = 0 open, P2 ≤ 5 owner-ratified deferrals | Defect register final | Register |
+| B-6 | Final release-readiness report delivered (RRP §8) incl. 20-path evidence audit | The report | Report + audit |
+| B-7 | Owner release decision recorded (release / hold / extend window) | Decision record | Ledger |
 
 ## M0 — Foundation [PASSED 2026-11-18; residual ACs below]
 
@@ -81,7 +105,7 @@ All 31 ACs of **M1 spec v1.4 §5** [A], unchanged: timing (AC-01…AC-04: 180° 
 | M5.5 **[N]** | Production Adanna imported via GLB pipeline; identity locks verified (25, LEFT-temple cuffs/coral beads, LEFT-cheek scar, no gold/mirroring — M1 art spec); technical validation per MEAD §8.5 | Validation report + turnaround capture | Ledger |
 | M5.6 **[N]** | Slice loop: forest → first encounter → memory anchor → checkpoint → chapter transition, streaming-ready (≤ 2 s stream, no pop) | Loop gauntlet + streaming log | Ledger |
 | M5.7 **[N]** | Windows + Mac parity of visuals: same capture set on both platforms, differences documented (Metal = dev-level per D-19) | 2 capture sets + delta notes | Ledger |
-| M5.8 **[N]** | **M7-00 content staffing decision recorded** (owner) with named capacity and a 4-week production rhythm plan | Decision record (issue comment / ADR) | Ledger |
+| M5.8 **[N]** | **Content staffing confirmed (owner, F-07 — fast-track: moved to W0, not deferred to slice time)** with named capacity and a 4-week production rhythm plan; W4 hard dates (Adanna model, combat anim set) agreed | Decision record (issue comment / ADR) | Ledger |
 
 ## M6 — Systems integration
 

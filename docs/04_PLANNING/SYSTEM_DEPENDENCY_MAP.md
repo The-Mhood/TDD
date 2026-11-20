@@ -1,6 +1,7 @@
 # System Dependency Map
 
-**Document ID:** TDD-PLAN-SDM-001 · **Version:** 1.0 · **Date:** 2026-11-20
+**Document ID:** TDD-PLAN-SDM-001 · **Version:** 1.1 · **Date:** 2026-11-20
+**v1.1 (review pass):** fixed milestone-name inconsistency in the graph (M8 = optimization/stability, M9 = full QA, M10 = packaging/release; content integration is M7 — matching ROADMAP and MAC); S21 hardening is M6 (soak M9), matching SYSTEM_REQUIREMENTS S21; reference-PC timing reconciled to a single authoritative date (order at P-01/Day-0 — see §5); critical path updated to the accelerated model (ROADMAP v2.0).
 **Companion to:** MASTER_PROJECT_ROADMAP.md. IDs: S## = systems in SYSTEM_REQUIREMENTS.md; M# = milestones in MILESTONE_ACCEPTANCE_CRITERIA.md; D-## = owner decisions (T00 §9 / research register D-19…D-25); B-## = blocker register (RISK_AND_BLOCKER_REGISTER.md).
 
 ## 1. System dependency graph
@@ -47,14 +48,14 @@
                                          ▼                                 │
                      S16 Audio · S17 UI/UX · S18 Progression/chapter flow  │
                                          │                                 │
-        S19 Rendering/VFX (parallel from M5; sign-off needs reference PC)  │
-        S20 Character art/animation pipeline (parallel; content-gated)     │
+        S19 Rendering/VFX (W3→; look-dev on Mac, sign-off on reference PC) │
+        S20 Character art/animation pipeline (from W0, content-gated)      │
                                          │                                 │
                                          ▼                                 ▼
-                     S21 Save/persistence (contracts from M0; hardening M7)│
+            S21 Save/persistence (contracts M0; hardening M6; soak M9)     │
                                          │
                                          ▼
-                     M8 content integration → M9 optimization → M10 release
+  M7 content integration → M8 optimization/stability → M9 full QA → M10 release
 ```
 
 ## 2. Milestone prerequisites (the critical path)
@@ -69,9 +70,11 @@
 | M5 (graphics/vertical slice) | M2 forest slice; **reference PC (D-12)** for sign-off captures; art content pipeline producing chapter-1 assets | VFX/audio design (data) parallel; PCG scatter can run on Mac |
 | M6 (audio/UI/progression) | M4 world events; save contracts (M0 ✓); D-17 (consultant) for cultural content in UI/codex | UI framework + pseudo-loc parallel from M4 |
 | M7 (content integration, ch. 1 → 8) | M5 + M6 gated; **content production capacity** (dominant cost); ch. 8 environments canon approval (OAD-48) | Per-chapter waves once ch. 1 gates |
-| M8 (optimization/stability) | M7 ch. 1 complete + all chapters in flight; reference PC | — |
+| M8 (optimization/stability) | M7 ch. 1 complete (approved RC scope, SA-1) + reference PC | — |
 | M9 (full QA) | M8 perf gate | — |
 | M10 (packaging/release) | M9; platform decisions final; legal/licensing audit | store assets parallel from M8 |
+
+**Milestone names are fixed** (this table is the authority, matching MASTER_PROJECT_ROADMAP and MILESTONE_ACCEPTANCE_CRITERIA): M7 = content integration, M8 = optimization/stability, M9 = full QA, M10 = packaging/release. Under the accelerated model (ROADMAP v2.0) these gates are reached in W1–W8 *within the owner-approved release scope* (SA-1: ch. 1); chapters 2–8 become post-RC waves with the same gate definitions.
 
 ## 3. Interface contracts that gate parallel work (MEAD §13.2 frozen surfaces)
 
@@ -103,21 +106,24 @@ Parallel workstreams may start the moment these contracts exist (frozen until an
 | Q-18/Q-19 — animation/art pipeline staffing | All final visual/animation content | OPEN (D-14 covers the interim) |
 | D-16 — PS5 confirmation | Sony application + all PS5 work | OPEN |
 
-## 5. Critical path (current, 2026-11-20)
+## 5. Critical path (accelerated model, 2026-11-20)
 
 ```
-Owner ratification (D-10…D-18)
-  → M1 evidence archive + M0′ run (owner Mac, 1 command)
-  → M1 S1–S8 (agent code ↔ owner Mac runs, ~2–4 weeks)
-  → M2 traversal + forest slice
-  → M3 combat foundation
-  → M5 entry: reference PC purchase (D-12) ──┐
-  → M4/M6 parallel                          │ (longest lead-time item after the Mac)
-  → Vertical slice gate (ch. 1)             │
-  → M7 chapter waves (content-dominated) ◄──┘
+P-01 ratification + Day-0 orders (reference PC, content team, NVMe)
+  → P-08 core contracts (W1 d1–d2)
+  → M1 core (W1–W3) ── M1 gate W3 (AC-01…31, 3 cold runs)
+  → M2 traversal (W3–W4) ── M2 gate W4 ──► CHECKPOINT A (W4): verified core loop
+  → M3 combat (W4–W5) ── M3 gate W5
+  → M4 AI + pilot boss (W5–W6) ── M4 gate W6
+  → ch.1 content integration (W5–W7, content team; PCG/modular)
+  → M5 look-dev + perf baseline (W4–W7; reference PC from W2)
+  → M6 systems on live world (W6–W7: UI/audio/save/flow)
+  → M8 optimization (W7) → M9 QA (W8) → M10 packaging (W8)
+  ──► CHECKPOINT B (W8): ch.1 release candidate (RC) + final readiness report
+  → Post-RC waves: ch.2–8, remaining bosses/endings/memories (same gates, same bar)
 ```
 
-**Longest-lead items to trigger early (do not wait):** (1) owner ratification (this week); (2) reference PC purchase decision at M5 entry — order lead time matters (week 6–8 of the plan); (3) content pipeline staffing (Q-18/19) — starts the content clock that dominates M7; (4) Sony application prep (entity + GDD) if D-16 = yes — paperwork lead time is months; (5) LFS provisioning (one owner action).
+**Day-0 actions (all at P-01 — do not wait):** (1) owner ratification incl. SA scope register (this week); (2) **reference PC order — the single authoritative purchase date is Day 0 (ratification day)**; shipping lead 1–2 weeks → arrives W1, calibrated W2, Windows CI node from W2 (dependency: the accelerated plan needs Windows verification at Checkpoint A (W4) and look-dev/perf sign-off from W3–W5 — every later order date removes one of those; the earlier plan's "M2 exit" / "M5 entry" / "Phase 3 entry" timings are superseded, see TR-15/TR-18); (3) content team mobilization (Q-18/19) — the content clock dominates W5–W8; (4) CD-3 archetype + Q-14 boss mechanics + CD-2 consultant engagement kickoffs (approvals needed by W3, else SA-2/SA-5 deepen); (5) LFS provisioning (one owner action); (6) Sony application only if D-16 = yes — post-RC under the fast-track (SA-7).
 
 ## 6. What is NOT on the critical path (safe to defer)
 

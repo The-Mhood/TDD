@@ -1,6 +1,7 @@
 # System Requirements — Master Feature Inventory
 
-**Document ID:** TDD-PLAN-SYSREQ-001 · **Version:** 1.0 · **Date:** 2026-11-20
+**Document ID:** TDD-PLAN-SYSREQ-001 · **Version:** 1.1 · **Date:** 2026-11-20
+**v1.1 (review pass):** S02 adds the UE-independent pure-core constraint (TR-19 T13, ADR-0109 — the verification model behind the accelerated plan); S15/S23 reference-PC timing corrected to the authoritative Day-0 order (TR-18); milestone references aligned to the fast-track weeks where they named the old schedule.
 **Conventions:** `[ACCEPTED]` = requirement from an accepted in-repo specification (M1 spec v1.4, ADRs, MEAD TDD-MEAD-001, Agent 2 world docs, C-05 design record) — changes require the documented review process. `[NEW]` = Takeover Lead recommendation, ratifiable via ADR. Each system: 11 fields per the plan. "AC" = acceptance criteria location. Effort is agent-weeks (aw) unless stated; owner-Mac runs are part of each verification, not extra.
 
 ---
@@ -27,7 +28,7 @@
 |---|---|
 | Current state | Single module `TheDisobedientDaughter`; no core types yet. `[ACCEPTED]` target graph = ADR-0003 (9 modules) + MEAD §3.2; D-05 defers the split. |
 | Intended behaviour | All shared types/interfaces/events live in one place; no cross-system header coupling; everything data-driven where the specs say so. |
-| Required functionality | GameplayTags vocabulary (states, status, interact verbs, canon status); `FTDDDamageRequest`; state table schema; `ITDDInteractable`, `ITDDAudioService`, `ITDDSaveProvider`, `ITDDLocomotionAnimProvider` declarations; config data assets; named log categories. |
+| Required functionality | GameplayTags vocabulary (states, status, interact verbs, canon status); `FTDDDamageRequest`; state table schema; `ITDDInteractable`, `ITDDAudioService`, `ITDDSaveProvider`, `ITDDLocomotionAnimProvider` declarations; config data assets; named log categories. **Pure-core constraint (TR-19 T13, ADR-0109):** all arbitration/policy/transition/condition/serialization logic is implemented as UE-independent C++ with a thin UE wrapper — so the logic layer is testable agent-side (g++, no Mac queue) while all UE-dependent behaviour is verified on the daily train + Windows CI. A UE header inside a pure file is a merge-blocking contract violation. |
 | Dependencies | M0. |
 | Architecture | Single module now (D-05); files under `Source/TheDisobedientDaughter/Public/Core/` structured so the ADR-0003 split is a move, not a rewrite. |
 | Implementation tasks | T05 tags + damage request struct (pure, testable); T06 provider interface declarations (empty implementations where content is absent); T07 log categories + error/warning discipline (no silent degradation — STATUS_AND_CLAIMS rule 4). |
@@ -235,7 +236,7 @@
 |---|---|
 | Current state | M0 build loop verified; packaging NOT RUN; no CI; no LFS. |
 | Intended behaviour | Reproducible builds from tagged commits; one-command Mac build+test+package; versioned installers; update strategy. |
-| Required functionality | Packaging scripts (Mac now, Windows at M6 with the reference PC); versioning scheme; build metadata in binary; crash/telemetry decision (Q-22); platform store requirements (Phase 6). |
+| Required functionality | Packaging scripts (Mac now; Windows CI on the reference PC from W2 — Day-0 order, TR-18); versioning scheme; build metadata in binary; crash/telemetry decision (Q-22); platform store requirements (Phase 6). |
 | Dependencies | Reference PC (Windows packaging); store accounts (M10). |
 | Architecture | TR-15 decisions. |
 | Implementation tasks | T01/T02 (above) + T47 versioning + T48 Windows build bring-up (M6) + T49 release packaging pipeline (M10). |
@@ -364,7 +365,7 @@
 | Current state | Budgets accepted (MEAD §15). AC-28 in M1. No captures yet. |
 | Intended behaviour | Every phase gate runs the reference scene; regressions block gates; zero optimization claim without profiling evidence. |
 | Required functionality | `TDD-Perf.ReferenceScene.CH01_Encounter` (fixed path/spawns/VFX), Insights workflow, budget dashboards per system, hitch/pop-in/shader-stutter counters, memory reports. |
-| Dependencies | Reference PC for sign-off (M6); Mac captures for dev-loop regressions. |
+| Dependencies | Reference PC (ordered Day 0; calibrated W2; sign-off authority from W5 look-dev / W7 baseline — TR-18); Mac captures for dev-loop regressions (labelled `DEV-HW`). |
 | Architecture | TR-13 + MEAD §15 (authoritative). |
 | Implementation tasks | T72 reference scene + capture automation; T73 per-system scope instrumentation (Insights scopes per MEAD §15.2 buckets); T74 regression rules in the gate process; T75 optimization passes (M8, evidence-per-fix). |
 | TDD requirements | `TDD-Perf.*` gauntlet at every gate; regression rule: > 5 % frame-time or > 100 MB VRAM blocks the gate (MEAD §15.4). |
