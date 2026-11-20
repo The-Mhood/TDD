@@ -15,3 +15,6 @@ Adanna AD-03 V3 + Guard Class V2 both passed their sculpt-milestone visual gates
 
 ## UPDATE — Sculpt milestone 2 built, awaiting Mac qualification (2026-11-25)
 Adanna AD-03 V4 + Guard Class V3 (elliptical garments, waist overlap, hem lips, softened faces; Guard genuine one-shoulder wrap + 72 mm sash) are built and pass all source-level checks — see `2026-11-25_w1d9_sculpt2/SCULPT_MILESTONE_2_REPORT.md`. `run_all.sh` + `INPUT_CHECKSUMS.sha256` now point at the M2 GLBs. **PM: keep integrating the milestone-1 FBX pair (V3/V2) — do not switch to M2 until the Mac run passes and Design closes the M2 gate in the report.** Milestone-1 outputs remain the fallback.
+
+## UPDATE — Definitive Adanna V5 (2026-11-26)
+Owner directed a definitive Adanna from an approved concept: concept set internally approved under delegated CD authority and AD-03 V5 built from it (cropped wrap, folded waistband, pendant on chest, back baldric, sandals) — see `2026-11-26_w1d10_definitive_adanna/DEFINITIVE_ADANNA_DELIVERY_REPORT.md`. `run_all.sh` now finishes ADANNA_AD03_V5 + GUARD_CLASS_V3. **PM: keep integrating the qualified milestone-1 FBX pair until the V5 Mac run passes and Design closes the gate; V5 is not yet Blender-qualified.**
