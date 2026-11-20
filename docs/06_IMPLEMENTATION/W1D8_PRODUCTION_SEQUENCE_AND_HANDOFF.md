@@ -126,22 +126,46 @@ unblocks engine work.
 | **Tests / gates** | E1–E7 green ×3; streaming budget within B-12 caps; Checkpoint A AC-A1…A6 |
 | **Enables** | W5–8: M3 combat, M4 AI/boss, ch.1 content, M8 perf, M9 QA → Checkpoint B (W8 RC) |
 
+### Visual batch 1 (Design @ `1e56daf`) — integrated into the existing stages
+
+Design's roadmap visual batch 1 is received and integrated (full mapping + decisions in
+`W1D8_VISUAL_BATCH1_INTEGRATION_RECORD.md`). It slots into existing stages; no stage is
+reordered or skipped, and it does not divert the UHT/Mac-verification critical path.
+
+| Visual deliverable | Slots into | Owner / action |
+|---|---|---|
+| Adanna 6 unarmed poses | **Stage C/D** — shared-skeleton retarget test + first anim set | PM coordinates; impl produces retarget test + anim set (depends on Stage A) |
+| Environment Kit V1 (compound + construction) | **Stage E** — CH01 settlement swap, pairs with existing W1 D7 KIT modules | PM coordinates swap; **follow smoother plaster correction**; stays provisional, never canon |
+| Physical VFX board (dust/impact/rain/fire) | **Stage D/E + M5** — combat feel + ambience | PM coordinates VFX; physical base only, no ability VFX until gameplay defines abilities |
+| Guard animation set — **CONFIRMED by PM** | **Stage B** → Design produces Guard pose board → Stage C/D | PM confirms set: idle, patrol, alert, hit-react, defeat |
+| Enemy/encounter classes | **Stage B hold** | **BLOCKED** until story supplies class list; no classes invented visually |
+
+Integration baseline unchanged: milestone-1 FBX pair (Adanna V3 / Guard V2) remains the
+PM integration target until the V5/V3 Mac run lands; V2/V1 remain rollback fallbacks.
+Nothing in this batch is visually integrated or engine-verified PASS until implementation
++ Mac evidence exist.
+
 ---
 
 ## 3. Immediate handoffs (what happens next, in order)
 
-1. **PM → Owner (critical path):** tree committed at `ab45856`; all owner-run scripts
-   syntax-clean and one-command. **Owner runs `Tools/engine/run_daily_train.sh`** on the
-   Mac. This is the single next action that unblocks all engine verification.
-2. **PM → Design (parallel):** confirm the combat-anim-set retarget target (shared
-   `HUMAN_BASE_PROPOSED` skeleton — direct retarget, no bone mapping) and the env-kit v1
-   cadence. Design proceeds on its existing visual-dev lanes without waiting.
+1. **PM → Owner (critical path):** tree committed at `5ea2997` (UHT fix + ledger fix
+   applied); all owner-run scripts syntax-clean and one-command. **Owner runs
+   `Tools/engine/run_daily_train.sh`** on the Mac to rerun the build + automation that
+   failed at the UHT error. This is the single next action that unblocks all engine
+   verification.
+2. **PM → Design (parallel):** **Guard animation set CONFIRMED** — idle, patrol, alert,
+   hit-react, defeat (PM decision, executed). Design proceeds to produce the Guard pose
+   board next. The shared `HUMAN_BASE_PROPOSED` skeleton makes the retarget
+   drop-in (no bone mapping). Design continues its visual-dev lanes without waiting.
 3. **PM (now, no owner input needed):** V3 production import script prepared and
    hash-verified (`import_adanna_production_v3.py`); greybox builder ready; ledger updated
    with the W1 D8 pure-run evidence. These execute in-engine once Stage A is green.
-4. **PM (now):** pure-core M2-01/02 traversal logic can be developed and tested
-   agent-side in parallel (frozen contract, parallel-safe per ROADMAP §4.5) — does not
-   wait for the Mac.
+4. **PM (now):** visual batch 1 (`1e56daf`) integrated into the sequence — Adanna poses
+   queued for the Stage C retarget test, Env Kit V1 queued for the Stage E CH01 swap
+   (smoother plaster correction carried), VFX board queued for VFX/TD, enemy classes
+   held. Pure-core M2-01/02 traversal logic can also be developed agent-side in parallel
+   (frozen contract, parallel-safe per ROADMAP §4.5) — does not wait for the Mac.
 
 ## 4. Execution discipline (preserved, not relaxed)
 
