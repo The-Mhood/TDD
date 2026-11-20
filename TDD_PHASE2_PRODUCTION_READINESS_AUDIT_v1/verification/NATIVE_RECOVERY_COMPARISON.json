@@ -1,0 +1,68 @@
+{
+  "fresh_export_sha256": "3333454895af3a52d45fa1d6ab66f7ec7cf23c629db4f290d15eb45f1e9de666",
+  "tracked_reference_sha256": "6c748b24085f3e8932e272be2727d71b199da528a8510d2610520054100d41c9",
+  "equal_part_names": true,
+  "different_parts": [
+    "word/styles.xml"
+  ],
+  "same_word_document_xml": true,
+  "parts": [
+    {
+      "part": "word/numbering.xml",
+      "sha256": "228f31aec9cbf053eeadf6aaa0091939c823fbaa1ff75e4880125c713e9ddc2b"
+    },
+    {
+      "part": "word/settings.xml",
+      "sha256": "26f2853fde05b88d4b0a9da0bb016d56a896901f60c9272dddf33c3f3fa61e4a"
+    },
+    {
+      "part": "word/fontTable.xml",
+      "sha256": "8e6ce523dcd916a23e8e3ed0bb131be02f487289a44add8b869b3b68cbbcdd36"
+    },
+    {
+      "part": "word/_rels/fontTable.xml.rels",
+      "sha256": "a12f55545229607955261b4adc8c29ad1bf2d04967d18474180d9991d1b2581a"
+    },
+    {
+      "part": "word/styles.xml",
+      "sha256": "55ae5664ed3c10f5427d5d23822f586df94e0f81c2a2691d079c74ad314dd8b7"
+    },
+    {
+      "part": "word/document.xml",
+      "sha256": "581989dfbce3dd0e0ce0cef17439f940d9255c167a06fe5ed2f30b959560712a"
+    },
+    {
+      "part": "word/_rels/document.xml.rels",
+      "sha256": "48b5495e85129f9b16cda96ca3c0292e9996b5d9cd7819ba492de4c92819a350"
+    },
+    {
+      "part": "_rels/.rels",
+      "sha256": "1cc87395d4a229f21c23af406724de12dd9454071925f983e4b648a7b2be8cc5"
+    },
+    {
+      "part": "word/fonts/RobotoMono-boldItalic.ttf",
+      "sha256": "916d29cf6aa5feaac118c2a7a1e73e219bf416d62e2eba0dcd16ba7884abfe20"
+    },
+    {
+      "part": "word/theme/theme1.xml",
+      "sha256": "b2295d3198893d2c03f5e584c749a15751b798aefdcd9bee2889f13903d68cb2"
+    },
+    {
+      "part": "word/fonts/RobotoMono-regular.ttf",
+      "sha256": "a275f540a758ab95efa05ca38adfd46d5708b84b1072cf571dab15de906ff67e"
+    },
+    {
+      "part": "word/fonts/RobotoMono-italic.ttf",
+      "sha256": "97e29915ff7e4e6844ca6ea9b70093058e7b5c86af162b07bfca9e17d29cd378"
+    },
+    {
+      "part": "word/fonts/RobotoMono-bold.ttf",
+      "sha256": "b424bafd6bcda6e739d22c79045a172c71a0c6fb047e6331a4b288f0215c57a1"
+    },
+    {
+      "part": "[Content_Types].xml",
+      "sha256": "8a875455da6f1e077ea4a44be6536c9f5057845cd41b7c14b37b1a237bad36be"
+    }
+  ],
+  "note": "Only fresh recovery export versus protected tracked DOCX compared. Historical export bytes absent: no claim byte- or XML-equivalence to historical exported receipt. Same document.xml versus tracked source supports unchanged body text relative to that reference, not identical styling/container."
+}

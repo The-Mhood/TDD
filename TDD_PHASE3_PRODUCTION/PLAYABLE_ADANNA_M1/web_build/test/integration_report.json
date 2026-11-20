@@ -1,0 +1,210 @@
+{
+  "test": "TDD Playable Adanna M1 — shared-simulation real-time integration test",
+  "date": "2026-11-19",
+  "overallPass": true,
+  "fixedStepHz": 60,
+  "replayFps": 15,
+  "replayFrames": 120,
+  "checks": [
+    {
+      "name": "camera boom collision shortens distance",
+      "pass": true,
+      "detail": {
+        "desired": 4.4,
+        "actual": 1.65,
+        "occluded": true
+      }
+    },
+    {
+      "name": "walk produced displacement",
+      "pass": true,
+      "detail": {
+        "spawnY": -18,
+        "finalY": 5.82
+      }
+    },
+    {
+      "name": "run exceeded 4.5 m/s proxy speed",
+      "pass": true,
+      "detail": {
+        "maxSpeed": 5.6
+      }
+    },
+    {
+      "name": "camera yaw changed through input",
+      "pass": true,
+      "detail": {
+        "maxDeltaRadians": 1.418
+      }
+    },
+    {
+      "name": "jump reached airborne height",
+      "pass": true,
+      "detail": {
+        "maxZ": 1.077
+      }
+    },
+    {
+      "name": "landing returned to ground",
+      "pass": true,
+      "detail": {
+        "grounded": true,
+        "landCount": 1
+      }
+    },
+    {
+      "name": "camera follows character",
+      "pass": true,
+      "detail": {
+        "target": {
+          "x": -2.3635324596697656,
+          "y": 5.824591459643993,
+          "z": 1.5404335768336304
+        },
+        "player": {
+          "x": -2.3635324596697656,
+          "y": 5.824591459643993,
+          "z": -0.009566423166369761
+        }
+      }
+    },
+    {
+      "name": "basic interaction registered",
+      "pass": true,
+      "detail": {
+        "used": [
+          "boundary_waymarker"
+        ],
+        "interactCount": 1
+      }
+    },
+    {
+      "name": "route progress advanced",
+      "pass": true,
+      "detail": {
+        "maxProgress": 0.39
+      }
+    },
+    {
+      "name": "character collision resolves against tree",
+      "pass": true,
+      "detail": {
+        "obstacle": "FOREST_TREE_01",
+        "collisionCount": 57,
+        "finalDistance": 0.986,
+        "minDistance": 0.986
+      }
+    },
+    {
+      "name": "isolated jump/land cycle",
+      "pass": true,
+      "detail": {
+        "jumpCount": 1,
+        "landCount": 1,
+        "maxZ": 1.085,
+        "grounded": true
+      }
+    }
+  ],
+  "finalSnapshot": {
+    "time": 8,
+    "step": 480,
+    "player": {
+      "position": {
+        "x": -2.3635324596697656,
+        "y": 5.824591459643993,
+        "z": -0.009566423166369761
+      },
+      "velocity": {
+        "x": 2.293699585952915,
+        "y": 5.087910769582363,
+        "z": 0
+      },
+      "yaw": 0.4227062476067497,
+      "grounded": true,
+      "airborneTime": 0,
+      "animation": "run",
+      "turning": false,
+      "speed": 5.581,
+      "limbPhase": 5.730322012957087
+    },
+    "camera": {
+      "yaw": 0.46147042611569855,
+      "pitch": 0.25,
+      "distance": 4.4,
+      "desiredDistance": 4.4,
+      "occluded": false,
+      "eye": {
+        "x": -4.261793609534066,
+        "y": 2.007314445067415,
+        "z": 2.6290109975535314
+      },
+      "target": {
+        "x": -2.3635324596697656,
+        "y": 5.824591459643993,
+        "z": 1.5404335768336304
+      }
+    },
+    "interaction": {
+      "available": false,
+      "target": null,
+      "message": ""
+    },
+    "route": {
+      "index": 3,
+      "progress": 0.3901457449807808,
+      "target": {
+        "x": 1,
+        "y": 12,
+        "label": "Stream crossing"
+      },
+      "objectiveComplete": false
+    },
+    "counters": {
+      "collisionCount": 0,
+      "cameraCollisionCount": 92,
+      "jumpCount": 1,
+      "landCount": 1,
+      "interactCount": 1
+    },
+    "events": [
+      {
+        "time": 1.567,
+        "type": "interaction",
+        "id": "boundary_waymarker",
+        "message": "Boundary acknowledged. Follow the white cloth and laterite path."
+      },
+      {
+        "time": 4.717,
+        "type": "jump"
+      },
+      {
+        "time": 5.4,
+        "type": "land"
+      }
+    ]
+  },
+  "events": [
+    {
+      "time": 1.567,
+      "type": "interaction",
+      "id": "boundary_waymarker",
+      "message": "Boundary acknowledged. Follow the white cloth and laterite path."
+    },
+    {
+      "time": 4.717,
+      "type": "jump"
+    },
+    {
+      "time": 5.4,
+      "type": "land"
+    }
+  ],
+  "classification": "Automated fixed-step simulation of the same game.js module used by the live browser build; not a Unreal Engine cook/package test.",
+  "unrealStatus": {
+    "compileVerified": false,
+    "packageVerified": false,
+    "preciseBlocker": "No Unreal Engine binary or recovered project version in this sandbox."
+  },
+  "nextAction": "Run render_replay.py to produce frame captures/GIF/MP4 from these actual simulation states, then verify static/live build files."
+}

@@ -1,0 +1,96 @@
+{
+  "parent_id": "1S3KUeDS9nU6FBPFP3akG5YlJpVZvMdzM",
+  "connector_response_request_id": "7ece6268-2d5b-4d58-8d86-b10929a6d949",
+  "page": 1,
+  "observed_count": 8,
+  "entries": [
+    {
+      "id": "1eq2v3UMJOtd7feeG4fU2bkZNxoPk3YyT",
+      "name": "Chapter_01_Forbidden_Forest_Exploratory_Moodboards",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1S3KUeDS9nU6FBPFP3akG5YlJpVZvMdzM"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1gwLanTncZaIbihu-Oxpdvf1Uq5GePtmq",
+      "name": "Chapter_01_Home_Settlement_Exploratory_Moodboards",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1S3KUeDS9nU6FBPFP3akG5YlJpVZvMdzM"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1ySp_MbF0I2fYXclW0tKve9zg4SyqLyDp",
+      "name": "Chapter_03_City_of_Living_Dead_Exploratory_Moodboards",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1S3KUeDS9nU6FBPFP3akG5YlJpVZvMdzM"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1lV4NCvrj9wNdEVKiV1kYd-xl5SMU2PYR",
+      "name": "Chapter_08_Ancestral_Realm_Combined_Direction",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1S3KUeDS9nU6FBPFP3akG5YlJpVZvMdzM"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "1WQJk_7C_4etXqcBNB3rfWBPlVMCMO55i",
+      "name": "Chapter_08_Ancestral_Realm_Directions",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1S3KUeDS9nU6FBPFP3akG5YlJpVZvMdzM"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1ywTZAOGDsIa7Ia713CT21IV2CyWUiVZO",
+      "name": "Chapter_08_Character_Compositions",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1S3KUeDS9nU6FBPFP3akG5YlJpVZvMdzM"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "11Dq42fI9zCln4ylwdilSMjB4ME8NF3Oe",
+      "name": "OUR_EYES_DEFINED_SCOPE_STUDIES",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1S3KUeDS9nU6FBPFP3akG5YlJpVZvMdzM"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1I3EsGxPusCtPIPHwtl5X4zqI-L8g_wWO",
+      "name": "CHAR_OKWU_HOOD_FEATURE_EXPLORATION_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1S3KUeDS9nU6FBPFP3akG5YlJpVZvMdzM"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 559489,
+      "md5": "7753afa23cf9b0ca50ed2b482a555fcf",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

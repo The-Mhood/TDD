@@ -1,0 +1,147 @@
+{
+  "parent_id": "1EnnXFOl1nRZgH5y5fcaBiXq5nNKZ7buG",
+  "connector_response_request_id": "965bd018-1561-4a2e-9a25-3065bf9b9968",
+  "page": 1,
+  "observed_count": 11,
+  "entries": [
+    {
+      "id": "1npa47C9oBNu1Db4qVvRGghK6wC65gWqu",
+      "name": "EXP001_INTEGRITY_QUARANTINE",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1EnnXFOl1nRZgH5y5fcaBiXq5nNKZ7buG"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1JxQwdks0hObYrtMyC4yW6Gqg2xkeN_cM",
+      "name": "OUR_EYES_CD_FINAL_VERDICTS_v1",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1EnnXFOl1nRZgH5y5fcaBiXq5nNKZ7buG"
+      ],
+      "drive_version": "1",
+      "is_folder": true
+    },
+    {
+      "id": "1ZQSG2axTSEnv8MLRRpclT-i15M5zIWEr",
+      "name": "OUR_EYES_FULL_PENDING_REFRESH_v1",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1EnnXFOl1nRZgH5y5fcaBiXq5nNKZ7buG"
+      ],
+      "drive_version": "1",
+      "is_folder": true
+    },
+    {
+      "id": "1NUS5FfrZZZgY0uB2-PnCKm_f5V0G5ub5",
+      "name": "CHAPTER_08_ANCESTRAL_REALM_DIRECTIONS.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1EnnXFOl1nRZgH5y5fcaBiXq5nNKZ7buG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 7855,
+      "md5": "3ec82234c6f947e98a593311d0db86a5",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1aOfwI8u8pNTAhyJwHRWs51keNt_M_qW4",
+      "name": "CHAPTER_08_BOARD_REGISTER.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1EnnXFOl1nRZgH5y5fcaBiXq5nNKZ7buG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 24386,
+      "md5": "34ddb6edcea070bf0e3011d3c16c33e8",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "18Nv6bP6eGnSErj1U6M1H_jM-W4wM5x47",
+      "name": "ENDING_PROPOSALS.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1EnnXFOl1nRZgH5y5fcaBiXq5nNKZ7buG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 7382,
+      "md5": "da905d5a34cd288ea620ad32fd8e51cc",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Gvx_dr6UPB1r6rH1ATzv_M-kkEJUZkjZ",
+      "name": "ENVIRONMENTAL_DENSITY_ASSESSMENT.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1EnnXFOl1nRZgH5y5fcaBiXq5nNKZ7buG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 4311,
+      "md5": "69b4073a9d9054659e9eea3e4b9ef136",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "13_V3eNiQI7Yk5by6dZRzUAKts2Y4nXU3",
+      "name": "MOODBOARD_GENERATION_LIST.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1EnnXFOl1nRZgH5y5fcaBiXq5nNKZ7buG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 15899,
+      "md5": "3375dbbd2da7013f930adc2c2ced195d",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1cvJZeGnH1u53y9yQJYHnBW_cvBzVta-O",
+      "name": "NNEKA_MEMORIES_AND_TIMELINE.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1EnnXFOl1nRZgH5y5fcaBiXq5nNKZ7buG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 21024,
+      "md5": "ee65f69e09a8688d149367f314599723",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1RQzeGv7H64HunppjByHIM8H_SSYWLg0g",
+      "name": "POST_SYNC_RECONCILIATION_MANIFEST_2026-11-16.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1EnnXFOl1nRZgH5y5fcaBiXq5nNKZ7buG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 14348,
+      "md5": "a2f4495ae49c6401a51072c52f99e9dc",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1s56OYHtFYrhlilXfkIRpG_dbrunkWPFx",
+      "name": "POST_SYNC_VERIFICATION_REPORT_2026-11-16.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1EnnXFOl1nRZgH5y5fcaBiXq5nNKZ7buG"
+      ],
+      "drive_version": "6",
+      "is_folder": false,
+      "bytes": 12340,
+      "md5": "493e637e34fd63891272cd91c1c169de",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

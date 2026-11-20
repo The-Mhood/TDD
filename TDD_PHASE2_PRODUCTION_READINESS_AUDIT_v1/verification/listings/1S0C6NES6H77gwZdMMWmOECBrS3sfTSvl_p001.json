@@ -1,0 +1,56 @@
+{
+  "parent_id": "1S0C6NES6H77gwZdMMWmOECBrS3sfTSvl",
+  "connector_response_request_id": "4a2e681a-7281-46cd-aa79-56fed6fb4900",
+  "page": 1,
+  "observed_count": 4,
+  "entries": [
+    {
+      "id": "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz",
+      "name": "Chapter_08_Ancestral_Realm_Combined_Direction",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1S0C6NES6H77gwZdMMWmOECBrS3sfTSvl"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "14Bv2pPpVNjZoLJ93YS6K-yaMgCwGtFzV",
+      "name": "Chapter_08_Ancestral_Realm_Directions",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1S0C6NES6H77gwZdMMWmOECBrS3sfTSvl"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1QzLoG2XG-SGDJZI_mZf7zyPXU2ovnyiM",
+      "name": "Chapter_08_Character_Compositions",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1S0C6NES6H77gwZdMMWmOECBrS3sfTSvl"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "15P0MJGoHff0pRVXWxTF1k-89A65ZwP2w",
+      "name": "CHAR_OKWU_HOOD_FEATURE_EXPLORATION_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1S0C6NES6H77gwZdMMWmOECBrS3sfTSvl"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 559489,
+      "md5": "7753afa23cf9b0ca50ed2b482a555fcf",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

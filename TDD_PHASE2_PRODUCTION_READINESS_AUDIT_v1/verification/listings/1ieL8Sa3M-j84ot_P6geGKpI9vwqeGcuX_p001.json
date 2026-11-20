@@ -1,0 +1,26 @@
+{
+  "parent_id": "1ieL8Sa3M-j84ot_P6geGKpI9vwqeGcuX",
+  "connector_response_request_id": "da204b79-a3db-473f-835b-e3d2b43f332b",
+  "page": 1,
+  "observed_count": 1,
+  "entries": [
+    {
+      "id": "1gw8oqjETLXuS-Sgp2qIlfTArpTG12dYj",
+      "name": "CHAR_NNEKA_MASTER_REFERENCE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1ieL8Sa3M-j84ot_P6geGKpI9vwqeGcuX"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 535790,
+      "md5": "e11558f65f3804e13c4f46e1f142c48b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

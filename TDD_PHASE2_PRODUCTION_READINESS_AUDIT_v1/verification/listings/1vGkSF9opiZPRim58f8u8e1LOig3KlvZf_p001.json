@@ -1,0 +1,143 @@
+{
+  "parent_id": "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf",
+  "connector_response_request_id": "13c5a126-9657-47d8-a9b9-ea08dc933dde",
+  "page": 1,
+  "observed_count": 10,
+  "entries": [
+    {
+      "id": "1nIDlHOGiJbm7MEJ9xt3MJjsC7hAVz_60",
+      "name": "B2_CAND_SCENE_CH01-SCN-006_A_LARGE_FAMILY_COMPOUND_V002_1672x941.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 655645,
+      "md5": "ecac3a9ae184688d22c05250c18b601d",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1OB-WeC6Z6hrOt3oQquEYoOZ-ICrpbRW2",
+      "name": "B2_CAND_SCENE_CH01-SCN-010_SMITHY_V002_1672x941.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 479195,
+      "md5": "2b5b25b34f08274f496cfb12a9a5196d",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Ra_Aqb6OIzStdjRhT4lldGlatTuH6sef",
+      "name": "B2_CAND_SCENE_CH01-SCN-014_WATER_COLLECTION_POINT_V002_1672x941.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 717301,
+      "md5": "1f78db2514885ad3d1dc29a009fde71a",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1rWjKHHTvwL7oxaqVs8W1oGO2Vqyvm5Ff",
+      "name": "B2_CAND_SCENE_CH01-SCN-027_POTTERS_YARD_V002_1672x941.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 679024,
+      "md5": "bac4b3cff61ef9c698ff6c8a9c0c1f84",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1_vJFw7KNJRn435OijQHdjDhds0G-gF6n",
+      "name": "B2_CAND_VR-011_LANDING_OF_UNCLAIMED_V002_2560x1440.png",
+      "mime_type": "image/png",
+      "parents": [
+        "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 2487843,
+      "md5": "f27c1b98e2d4b415c99cb9326210eef6",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1s2nj3g1sIoeG_GSOZx80h4gWPAOCii1B",
+      "name": "B2_CAND_VR-011_LANDING_OF_UNCLAIMED_V003.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 140648,
+      "md5": "bad276dd99538ff44824240838f8b0fa",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1lPnwpnYUXtsVdPAqmVPK0Wu-54vu58dt",
+      "name": "B2_RETOUCH_GUIDE_VR-006_BLOCKED.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 950629,
+      "md5": "23e113720ad6d37476bf53e23a2f6be9",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1C_jk77ERIws4CsKIyHD1txrfBWwAaiSp",
+      "name": "B2_RETOUCH_GUIDE_VR-007_BLOCKED.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 901594,
+      "md5": "0837a24ad66067361655192b42fb0227",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "13Dc48FnSA9nvCUzL2zBq6zNv6axFLtIG",
+      "name": "ENV_CH04-INT-001_A_FISHING_SHELTER_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 270003,
+      "md5": "8abc676e02f4b0a068d0810241ca797f",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1e98rcp-QG7u5z9ihXmbabgGDXe94XTEa",
+      "name": "ENV_CH04-INT-002_A_RIVERBANK_HOUSE_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 399039,
+      "md5": "3261013e9e7b46f61ce4ea7243ea816b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

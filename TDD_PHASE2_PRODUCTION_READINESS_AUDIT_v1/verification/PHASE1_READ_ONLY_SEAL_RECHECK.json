@@ -1,0 +1,5 @@
+{
+  "good": 504,
+  "errors": [],
+  "action": "Read-only comparison after batch20; no seal/source rebuilt or changed. Historical completed execution not repeated."
+}

@@ -1,0 +1,164 @@
+{
+  "status": "PROPOSED / CARRY-FORWARD REGISTER ONLY — no new CD approval, waiver or instruction is issued here",
+  "evidence_first_rule": "Check remaining corpus and existing settled decisions before presenting a question as new. Rows marked carry-forward are controls, not requests to vote again.",
+  "decisions": [
+    {
+      "decision_id": "P2-CD01",
+      "topic": "Actual film adaptation and selected shot package",
+      "state": "OPEN IN INSPECTED EVIDENCE; CHECK REMAINING CORPUS FIRST",
+      "related_gaps": [
+        "P2-G00",
+        "P2-G01"
+      ],
+      "existing_control": "135 game scene entries, eight chapters, memories, quests, bosses, states and alternate endings are proposals, not automatic cinematic build orders.",
+      "decision_needed": "Identify/confirm the authoritative film treatment, timed shot package, selected ending/memories, runtime and delivery when existing evidence has been reconciled.",
+      "decision_owner": "CD/director with story/editorial and producer",
+      "consequence": "Defines asset/view/action/camera/effects scope and unlocks meaningful staffing, budget, hardware and schedule estimates.",
+      "closure_evidence": "Exact approved treatment/animatic/shot manifest IDs and version, selected/excluded content and signed delivery assumptions.",
+      "recommendation_not_execution": "Size production from an approved cut or deliberately scoped sequence, not the entire historical game backlog; do not lower the cinematic target."
+    },
+    {
+      "decision_id": "P2-CD02",
+      "topic": "Adanna production interpretation versus preserved artwork",
+      "state": "NEW TECHNICAL RELEASE NEEDED ONLY IF COMMISSIONED; SOURCE PRESERVATION IS SETTLED",
+      "related_gaps": [
+        "P2-G03",
+        "P2-G07",
+        "P2-G08"
+      ],
+      "existing_control": "LEFT_SIDE/BACK stay V003 / PRESERVE / UNAPPROVED, viewer-left BACK = anatomical LEFT; geometry/pose/alignment/scale/likeness/costume and painted LEFT-shoulder→RIGHT-hip baldric remain locked. Front/three-quarter V005 are internal concept only. Costume V002 is interim partial upper-body only.",
+      "decision_needed": "Approve any separate technical body/garment/hidden-surface interpretation actually required by the selected shots; do not ask for or infer a change to preserved sheets.",
+      "decision_owner": "CD with character/costume supervisor; applicable Research gates remain separate",
+      "consequence": "Enables a consistent native model and deformation-ready wardrobe without silently promoting an unapproved view.",
+      "closure_evidence": "Exact production interpretation authority, required surface/closure decisions and approved camera/action envelope; unchanged source hashes.",
+      "recommendation_not_execution": "Resolve only necessary unknowns; no automatic full turnaround, V004 side/back, mirroring or wardrobe redesign."
+    },
+    {
+      "decision_id": "P2-CD03",
+      "topic": "CQ-9 blade-design authority before hand fit",
+      "state": "EXISTING OPEN DEPENDENCY — NOT WAIVED",
+      "related_gaps": [
+        "P2-G04",
+        "P2-G23"
+      ],
+      "existing_control": "Blade board remains REVIEW REQUIRED; ~60cm overall/~42cm blade are provisional, no approved hand-scale view. Withdrawn 65%/70%/coordinates and standalone sheath aesthetics are not authority.",
+      "decision_needed": "Resolve exact blade/sheath design and permitted fictional material/period basis before approving dimensions, attachment, grip or draw mechanics.",
+      "decision_owner": "CD; prop/weapon designer and relevant Research expertise support, rigger verifies later fit",
+      "consequence": "Weapon-contact modelling/rigging and commissioned draw/carry action can then be scoped safely.",
+      "closure_evidence": "Signed exact design source/version and metric construction/fit brief, followed by successful commissioned action test.",
+      "recommendation_not_execution": "Keep fit and rig downstream of design authority; do not manufacture canon through proportional resizing."
+    },
+    {
+      "decision_id": "P2-CD04",
+      "topic": "Chapter8 film use, canon and spatial/metric interpretation",
+      "state": "OPEN FOR FILM USE; EXISTING DESIGN APPROVALS AND LIMITED WAIVER ARE SETTLED",
+      "related_gaps": [
+        "P2-G09",
+        "P2-G10"
+      ],
+      "existing_control": "Five environment designs remain design-approved, canon pending. V013 retains an express waiver of BOTH item5 components solely for internal exploratory composition; item5 is NOT DONE. No scale/canon/cultural clearance or source resize follows.",
+      "decision_needed": "If selected, approve their story use and only the common-layout/measurement decisions needed by commissioned shots.",
+      "decision_owner": "CD with production designer/layout lead",
+      "consequence": "Enables reusable spatial assembly without remodelling approved identity or converting non-metric fantasy hierarchy into unapproved architecture.",
+      "closure_evidence": "Shot-linked canon/use decision plus approved shared plan/sections/metric datums; preserved five boards and V013 exact hashes.",
+      "recommendation_not_execution": "Do not re-vote the existing design approvals or the limited waiver; never call item5 complete because haze or a waiver exists."
+    },
+    {
+      "decision_id": "P2-CD05",
+      "topic": "Still-open Bible/board continuity conflicts",
+      "state": "EVIDENCE RECONCILIATION FIRST; ONLY GENUINELY UNRESOLVED SHOT-RELEVANT CONFLICTS GO TO CD",
+      "related_gaps": [
+        "P2-G05",
+        "P2-G12",
+        "P2-G16",
+        "P2-G21",
+        "P2-G29"
+      ],
+      "existing_control": "Approved identities/timeline and chapter constraints stand. Proposed children outside CH01, Quiet Garden only-living-plant wording versus Nneka-house vegetation, CH02 enclosure/state wording, CH05 architecture exceptions and character hair/cloth variants must not be silently resolved.",
+      "decision_needed": "For each selected-shot conflict not already settled, identify controlling version/temporal scope and exact allowed interpretation; record whether a proposal is superseded, excluded or separately approved. If a CH6impossible-space beat is selected, approve the exact portal/reflection/recursive-room temporal-spatial interpretation without converting the unestablished Memory Room/Nneka attribution into canon.",
+      "decision_owner": "CD with story/continuity, environment/character leads and Research where factual claims arise",
+      "consequence": "Prevents invented child presence, unauthorized plant deletion, state/geography drift and composite character identities.",
+      "closure_evidence": "Conflict row with both exact sources, existing-decision search result, controlling decision and bounded implementation instruction.",
+      "recommendation_not_execution": "No new design resolution is inferred by this audit. Check existing evidence before asking the owner to repeat a decision."
+    },
+    {
+      "decision_id": "P2-CD06",
+      "topic": "H3 / Landing and Field of Cloth authority boundary",
+      "state": "CARRY-FORWARD D9/RQ-01 — NO FRESH H3 VISUAL/CULTURAL RELEASE",
+      "related_gaps": [
+        "P2-G18",
+        "P2-G19"
+      ],
+      "existing_control": "Landing is CH07-SUB004/SCN011; Field of Cloth is CH07-SUB005. V002/V003 are parallel proposals, not proven replacements. Cargo is unidentified, not established bodies. Trashed supplementary review is not live clearance.",
+      "decision_needed": "After appropriate exact-scope evidence/consultation, CD chooses a permitted fictional adaptation or excludes the material from the selected film. CD fiction choice cannot authenticate actual practice.",
+      "decision_owner": "Research lead + appropriately scoped Igbo consultant and relevant living custodian if restricted practice is implicated; CD chooses fiction",
+      "consequence": "Only exact cleared scope can enter commissioned design; unrelated production need not wait.",
+      "closure_evidence": "Attributed allowed/prohibited scope for exact file/version/shot, consultation provenance and CD adaptation/exclusion record.",
+      "recommendation_not_execution": "No repaint, density/cloth repair, inferred bodies, ritual exception or gate waiver as a shortcut."
+    },
+    {
+      "decision_id": "P2-CD07",
+      "topic": "SCN028 and SCN030 protected gates",
+      "state": "CARRY-FORWARD — NOT A NEW CORRECTION REQUEST",
+      "related_gaps": [
+        "P2-G20"
+      ],
+      "existing_control": "SCN028 requires Research+CD loom specification. SCN030 stays NOT RECOMMENDED, no patch/regeneration; replacement requires CD+Research/living-custodian direction.",
+      "decision_needed": "Only if the selected film uses these beats: provide the already-required exact construction or replacement scope through the proper authority, or exclude the beat.",
+      "decision_owner": "CD with Research/craft specialist; relevant living-custodian direction for SCN030 as required",
+      "consequence": "Avoids impossible weaving rigs or forbidden repair work; does not block unrelated settings/characters.",
+      "closure_evidence": "Approved functional loom brief and action test for SCN028; explicit permitted replacement scope or exclusion for SCN030.",
+      "recommendation_not_execution": "Akwete wording or an accepted environment cannot stand in for these gates. No work is commissioned here."
+    },
+    {
+      "decision_id": "P2-CD08",
+      "topic": "Chapter4 implementation authority and paddle reference",
+      "state": "LOOK/STAGING CHOICES SETTLED; NATIVE IMPLEMENTATION AND SPECIALIST EVIDENCE STILL REQUIRED",
+      "related_gaps": [
+        "P2-G14",
+        "P2-G15"
+      ],
+      "existing_control": "Soft silver-overcast baseline; fictional side-set freestanding rack cold/unlit; E53/E54 relights failed, not replacements. Fishing Shelter 1376×768 accepted for internal concept only; no universal canvas rule. Paddle insertion needs an approved attributed reference.",
+      "decision_needed": "Once selected and native packages verified, authorize only the bounded technical scene/lighting/paddle delivery; resolve craft evidence with the correct specialist.",
+      "decision_owner": "CD + Research/fishing-gear specialist; lighting/prop supervisors execute authorized delivery",
+      "consequence": "Enables true native lighting/contacts without restaging or heat/smoke invention.",
+      "closure_evidence": "Approved paddle/tool reference and native overcast proof meeting geometry/count/cold-rack preservation tests.",
+      "recommendation_not_execution": "No sunny chapter variant, full-frame generation, upscale remedy, extra people or fire/smoke to prove function."
+    },
+    {
+      "decision_id": "P2-CD09",
+      "topic": "Project technical standards, specialists and budget/capacity",
+      "state": "NOT ESTABLISHED IN INSPECTED EVIDENCE — CHECK REMAINING RESOURCE DOCUMENTS FIRST",
+      "related_gaps": [
+        "P2-G22",
+        "P2-G24",
+        "P2-G25",
+        "P2-G27"
+      ],
+      "existing_control": "Cinematic reliability/reusability/scalability remain the target; the CD need not execute every specialist discipline. No beginner downgrade or unjustified expensive stack is permitted.",
+      "decision_needed": "Approve actual delivery and measured capacity/budget plan, accountable specialists, one pinned colour/render/handoff workflow and conditional paid-tool choices.",
+      "decision_owner": "CD/producer with pipeline/render TD and department leads",
+      "consequence": "Makes scope/quality/schedule trade-offs explicit rather than guessing RAM/GPU/render costs or silently lowering standards.",
+      "closure_evidence": "Actual resource/licence/staffing inventory, representative benchmark and cost/schedule/storage/restore plan against selected shots.",
+      "recommendation_not_execution": "Start with a capable consolidated toolchain; add specialist tools or farm capacity only when tests demonstrate value. No procurement is authorized."
+    },
+    {
+      "decision_id": "P2-CD10",
+      "topic": "Technical stage-release policy and final audit sign-off",
+      "state": "PROPOSED POLICY — NOT A GLOBAL READINESS VERDICT",
+      "related_gaps": [
+        "P2-G00",
+        "P2-G02",
+        "P2-G08",
+        "P2-G09",
+        "P2-G25"
+      ],
+      "existing_control": "Visual approval is not modelling, materials, rigging, animation, lighting, render or canon approval; rejected/exploratory files remain restricted. Phase2 is audit-only.",
+      "decision_needed": "Adopt the H stage evidence/acceptance gates for future commissioned production; final all-file audit sign-off waits for actual coverage completion and final source/asset reconciliation.",
+      "decision_owner": "CD approves creative/stage use; relevant technical lead signs specialist evidence; audit lead certifies only work actually inspected",
+      "consequence": "Allows safe parallel work without calling all assets ready or placing unrelated work on a generic HOLD.",
+      "closure_evidence": "Per-stage native deliverable/test/decision manifest and completed all-file inspection trace. Any remaining exception keeps the report explicitly qualified, never silently complete.",
+      "recommendation_not_execution": "Release the specific tested asset/shot/stage, not an entire folder or project by implication."
+    }
+  ]
+}

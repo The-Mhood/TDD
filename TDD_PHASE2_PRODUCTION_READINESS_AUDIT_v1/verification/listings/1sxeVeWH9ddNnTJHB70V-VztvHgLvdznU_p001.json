@@ -1,0 +1,103 @@
+{
+  "parent_id": "1sxeVeWH9ddNnTJHB70V-VztvHgLvdznU",
+  "connector_response_request_id": "e8957392-10eb-4857-b9f1-eb99a6f95ba2",
+  "page": 1,
+  "observed_count": 9,
+  "entries": [
+    {
+      "id": "1pD0zr7c8p1mq_W-U2wmP_UG6x-57yfq0",
+      "name": "Chapter_01_Forbidden_Forest",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1sxeVeWH9ddNnTJHB70V-VztvHgLvdznU"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1jSsq4NgMhrSpRusOtaF6gz_xcrxVZs18",
+      "name": "Chapter_02_Kingdom_Beneath_Earth",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1sxeVeWH9ddNnTJHB70V-VztvHgLvdznU"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1KWwunwSR91xTgNYxd81JFLgx1Pz6Td-K",
+      "name": "Chapter_03_City_of_Living_Dead",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1sxeVeWH9ddNnTJHB70V-VztvHgLvdznU"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1Rxj1km6AMx0ZitbPcPT04VqTpk2JewQw",
+      "name": "Chapter_04_River_of_Idemili",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1sxeVeWH9ddNnTJHB70V-VztvHgLvdznU"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1W5Qh-Vw5nJmeIDJd7VE8KStWPIkIhWPj",
+      "name": "Chapter_05_Mountain_of_Thunder",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1sxeVeWH9ddNnTJHB70V-VztvHgLvdznU"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1x56dNqZIbO1d7Vl3jpAGcQ6qM0hY30Zd",
+      "name": "Chapter_06_Kingdom_of_Masks",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1sxeVeWH9ddNnTJHB70V-VztvHgLvdznU"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1W99nZFbPYLEF7PtpRbYv2sJ3U6Y62uCY",
+      "name": "Chapter_07_Gates_of_the_Dead",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1sxeVeWH9ddNnTJHB70V-VztvHgLvdznU"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1ZfyxFpgI-MvcLgzV776vH4CDpD7jUgug",
+      "name": "Chapter_08_The_Last_Daughter",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1sxeVeWH9ddNnTJHB70V-VztvHgLvdznU"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1ehkUK118Xozncy8LbTOcqTlMD-ZrR0hk",
+      "name": "Home_Settlement",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1sxeVeWH9ddNnTJHB70V-VztvHgLvdznU"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

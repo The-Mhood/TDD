@@ -1,0 +1,351 @@
+{
+  "parent_id": "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6",
+  "connector_response_request_id": "14854075-0746-496d-b68d-2ed93565d4db",
+  "page": 1,
+  "observed_count": 26,
+  "entries": [
+    {
+      "id": "1-8M2RcVos5E70rStfwP5Q3ypgWjsb9ya",
+      "name": "ART_BIBLE_INDEX.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "5",
+      "is_folder": false,
+      "bytes": 77440,
+      "md5": "41088bf9d9fb7f804d703476872d2cb5",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "16TtGVqf1XVazG8RcQ6g9Ic1_0o3VorSN",
+      "name": "ART_BIBLE_INDEX_BATCH4W_2026-11-16.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 91022,
+      "md5": "c525f774d67e5486bc73dca1621c7134",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1q4f863nT8PXv9nw4bVVcX1ExwCuFEhrH",
+      "name": "ART_BIBLE_INDEX_POST_SYNC_2026-11-16.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 90183,
+      "md5": "2fa5e1f56a77d52f0d46ae9094a71b02",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1GUlmxdpclJfetXYXBeOIRS7H85YOdI9d",
+      "name": "ART_BIBLE_INDEX_POST_SYNC_2026-11-16.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "7",
+      "is_folder": false,
+      "bytes": 88510,
+      "md5": "055a6cc7bf4dd857780852e629055642",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1utsjIH4WYg1fJ_b_fd0xDzf4nyQkYJuL",
+      "name": "ART_BIBLE_MASTER_INDEX.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "12",
+      "is_folder": false,
+      "bytes": 80973,
+      "md5": "25013af345697eb302470ed13e579894",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1ntf2gnwyZf-t0J2zreugsg4E58vWVMdJ",
+      "name": "ART_BIBLE_MASTER_INDEX_BATCH4W_2026-11-16.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 98116,
+      "md5": "4d62c9d1b833b3124407358aa7a12f5c",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1rpbhHDyWvlW4iTGeEw4tuThPDIA2YXSU",
+      "name": "ART_BIBLE_MASTER_INDEX_CURRENT_REVIEW_VERDICT_v7.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "8",
+      "is_folder": false,
+      "bytes": 163692,
+      "md5": "79f87ed2aabbe5c41aa31fb3e584bb79",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "14RC5VzDyGXcDyed_AdEj9djGNxUEMCwb",
+      "name": "ART_BIBLE_MASTER_INDEX_POST_SYNC_2026-11-16.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 99540,
+      "md5": "d2f1d82647dbad0ead6f6d893203d52e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1r5TKhV74Q3hATrSwwm9r-zP4HxRIwF4f",
+      "name": "ART_BIBLE_MASTER_INDEX_POST_SYNC_2026-11-16.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "8",
+      "is_folder": false,
+      "bytes": 96727,
+      "md5": "1f132ed33c07eae4fcc25ba5e896eb29",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "12CMMa4KXCux-JnPDpIylX33KTHdY6HVy",
+      "name": "ART_BIBLE_MASTER_INDEX_POST_SYNC_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 102144,
+      "md5": "9fa90dd8bbac5fc4513c8854c5fcc4c6",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1K1mpYk66GR43YGyGJelsqx3-YxDLPSG4",
+      "name": "ART_BIBLE_MASTER_INDEX_POST_SYNC_2026-11-17_v2.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 107543,
+      "md5": "d0a8e6cb0f2d63b811332b69a592311e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Dpb_GHNikhi_Qu6Ni62j69gQHP_65P06",
+      "name": "ART_BIBLE_MASTER_INDEX_POST_SYNC_2026-11-17_v3.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 112308,
+      "md5": "5a7ad668344538064074516c9402a282",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1c-XEpJ1U-FD_9caljZaIdxpvoVQGhP3m",
+      "name": "ART_BIBLE_MASTER_INDEX_POST_SYNC_2026-11-17_v4.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 126838,
+      "md5": "3c9effc415b3692cce6510263250d7f2",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1GgamDj2A_OsJTdUW5l6x0UuHK8bLkGJq",
+      "name": "ART_BIBLE_MASTER_INDEX_POST_SYNC_2026-11-17_v5.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 139097,
+      "md5": "4e5b8d60d984e25387478a4cdfae92ae",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "15z1XhvJSt0rNL_d4JAY2_ufz6vq53vTR",
+      "name": "ART_BIBLE_MASTER_INDEX_POST_SYNC_2026-11-17_v6.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 147356,
+      "md5": "5c0be6c8d357e145bb53c22f8d210bbc",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "108X3kh0hkz8hXdaDSIBA3aIdMiXNNi8E",
+      "name": "GOOGLE_DRIVE_SYNC_LOG.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "6",
+      "is_folder": false,
+      "bytes": 24985,
+      "md5": "1ef75ddc2c35ad0101aad00ee844ba22",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1mq90fXAaS8h09F5FDbQKuklds5sZQX_8",
+      "name": "GOOGLE_DRIVE_SYNC_LOG_BATCH4W_2026-11-16.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 32941,
+      "md5": "82c6ac9857a8e4b5420fa68b933e6ba7",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1pMbGvss5LaG1AdvSqavUVC_x6q1Tl7sM",
+      "name": "GOOGLE_DRIVE_SYNC_LOG_CURRENT_REVIEW_VERDICT_v7.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 76366,
+      "md5": "08039204d89f197170554a8d1e5b0d76",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Rb6dRh3OypvO0DjUg-J5jVZld1ZHXuDh",
+      "name": "GOOGLE_DRIVE_SYNC_LOG_POST_SYNC_2026-11-16.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 33826,
+      "md5": "8a6b140f9c6737adb778a7961d968abe",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1biszY08YK2LWDelx6A2vN9nBqbEDq-cz",
+      "name": "GOOGLE_DRIVE_SYNC_LOG_POST_SYNC_2026-11-16.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "11",
+      "is_folder": false,
+      "bytes": 30279,
+      "md5": "3cf1dc8f4dfdc3f28c416176a6037d2f",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1nn8NG0Ar_2crNaIIHAH2MpEBaBBZjYK_",
+      "name": "GOOGLE_DRIVE_SYNC_LOG_POST_SYNC_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 36405,
+      "md5": "79a719d9f2b108b8351db16a33198999",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1ZE8p5OhqE1D9cb80fyu59NSogTqOD7vW",
+      "name": "GOOGLE_DRIVE_SYNC_LOG_POST_SYNC_2026-11-17_v2.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 40464,
+      "md5": "36f1cae7295d285431f64698abe9d0bf",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1ZUGzUCnHdT4PqyYmGuPEkH33gZPMDx30",
+      "name": "GOOGLE_DRIVE_SYNC_LOG_POST_SYNC_2026-11-17_v3.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 44294,
+      "md5": "858d7bfb08a7986ad04ee04f74ece87c",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1f-CER34eN7q6SPFPSFKPf3PY6tqCVjyw",
+      "name": "GOOGLE_DRIVE_SYNC_LOG_POST_SYNC_2026-11-17_v4.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 55008,
+      "md5": "643e11c3f1e4ba1a302e289fb31be731",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1xD0NURcm2n7My-kZWHGs5zAqwmTZdYX5",
+      "name": "GOOGLE_DRIVE_SYNC_LOG_POST_SYNC_2026-11-17_v5.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 64084,
+      "md5": "2d6178aa2ef045ab397c64216cfed07c",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1TkcaXDsQ7MJq1fqI4gR-dca7xnE_DJWE",
+      "name": "GOOGLE_DRIVE_SYNC_LOG_POST_SYNC_2026-11-17_v6.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 71470,
+      "md5": "d00149c9016517de681167a1a16f565e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

@@ -1,0 +1,572 @@
+[
+  {
+    "code": "B01",
+    "new_id": "1aHbIZPm4H8JAimpdVA8ZPFjyu4m8-B2U",
+    "original_or_derivative_id": "1s2nj3g1sIoeG_GSOZx80h4gWPAOCii1B",
+    "md5": "bad276dd99538ff44824240838f8b0fa",
+    "sha256": "6ef2456d4d028bccdae710360b3abc04310d2b34ae99b8b701b799c8fbe8821a",
+    "bytes": 140648,
+    "dimensions": [
+      1365,
+      768
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "B03",
+    "new_id": "1OPxsdTwfNRJ7nCZGRnV-xqIngS7O5LkB",
+    "original_or_derivative_id": "1Rxo6My76m13XUAEVS00M3-bVzMVIxQgb",
+    "md5": "9d0b57620ee6bad955ded5e3a8b4befc",
+    "sha256": "22f072b5e8936bf64dc99cc85d347c4d92690fed11af82b3569d01224a593923",
+    "bytes": 241010,
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "B05",
+    "new_id": "1FheMKP-cRN7pjqMNbVwpwK-4VVKQ7rZY",
+    "original_or_derivative_id": "1hldnXwv2_grB2Q6YWvQFRPdcIs3dR_h3",
+    "md5": "821dd5b39fcbf60e9caf40ff8059e865",
+    "sha256": "017c02a12b5d3010f591204b464017ca1893e48a7b3568f5bffebb1be3d5d7d7",
+    "bytes": 342730,
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "B07",
+    "new_id": "1xo0PkGFH_BjrKpKgqMMx2Cbf0WfTErNP",
+    "original_or_derivative_id": "1j03tjjtHXt6s5iHJfgJS3M_j17aNmiMg",
+    "md5": "5e5bb058fdd761d859fda2d95cabb68e",
+    "sha256": "5601f89c4d8707daae6ee80eea5e1d97cff533809776fb1b0624574e140dfcb7",
+    "bytes": 245080,
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "B11",
+    "new_id": "1M1mnXP91wQOW0Wr87tPDAcxd9J0OF9BG",
+    "original_or_derivative_id": "1npYn0kJB2FFjTxPyGdACAsCqKk8ZbDPq",
+    "md5": "766ce2bfed229421627323b8c7ba3c70",
+    "sha256": "2e2eba64a5e19747b1349d933515cb1777ac2f7e75a85246c09f98375d665a3b",
+    "bytes": 319754,
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "B13",
+    "new_id": "15Lu7Y6aoRUdyv6QfKXsIf5pJtGx9zi63",
+    "original_or_derivative_id": "1X-eO-Svbzo46ozPXbsE-JpT4SEfWMgOw",
+    "md5": "d4312825d677faf65863186c5249c0f0",
+    "sha256": "4e21d61db1974b95a2453dc0c00ecd13a27cfcf6e105ff218a43e24323cba925",
+    "bytes": 349340,
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "B15",
+    "new_id": "1X7D9PNnS4q_s0f5ogvPw0LnKcnQzVnmE",
+    "original_or_derivative_id": "1TBXHgJlUmmbMWcMhG9PQn0eS07bdbum9",
+    "md5": "1bea08e784023a5a0c526bf3eca050f1",
+    "sha256": "a4c915f241ad0bbf1cf46812961f5ba80c416d04c006947e30410ca93081186e",
+    "bytes": 344781,
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "B17",
+    "new_id": "1OY1TO4QdVOKTeBvV-E0ih8heJZK-xuL6",
+    "original_or_derivative_id": "1_Lw07vpd0aOo0XnI7-xrbWZTWhypg7vU",
+    "md5": "ca1ce79791caba1536354836f554abce",
+    "sha256": "15863690c940e0a67d502b4106a3101370714c732e11855718cd7bb2b66c7495",
+    "bytes": 388491,
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "B29",
+    "new_id": "1hPVGS7pL-fbND1MWJlRbbAWrpTVK7v3v",
+    "original_or_derivative_id": "1w0sSsFVxbPKPScXVHAZvj7wBHK7DnYCu",
+    "md5": "7cf439f3297a14b76deda85efaf44856",
+    "sha256": "cdfb176f5a89e25e4c39d6c2577e22da2778c5768e704c391984f2c8164857e8",
+    "bytes": 296529,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "B30",
+    "new_id": "1rsTokmziVOT_vs8lvo_0meFdjelaj-mL",
+    "original_or_derivative_id": "1s28ocisLsI-BOpGMY65MMT-yU9hbHDOY",
+    "md5": "424e44c7737356930c0cf13c097d6c63",
+    "sha256": "b168ecd96227a0bf3ebced0049a3ff78e0d348306fbf6637e3ac189bce07e09a",
+    "bytes": 372877,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "B36",
+    "new_id": "1hgzdUHVEgeO5AUrW5hfwy0RTvaB0hP17",
+    "original_or_derivative_id": "1OOnKZsctqMp19dzMhTrDqFLTTzRoRMf1",
+    "md5": "04caf20e3eea50e47b27d4334f9af1fe",
+    "sha256": "90aeb114b376e6668f8ba16dc25c9a1e84194728374d69d039029eb13a5c6293",
+    "bytes": 417217,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "B43",
+    "new_id": "1-_IdFS1-ySQ4X_BwGrceiSSsuqSq31yl",
+    "original_or_derivative_id": "1gAun9ET_l0Ro8-oD2yIeKILp9jBx0rjJ",
+    "md5": "5e7831862e0803edde1850bbc730b287",
+    "sha256": "6af7be076a921037e3187fd886231bf2af39398f1f8723d4a665873daacfb024",
+    "bytes": 140951,
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "D01",
+    "new_id": "1ne1I9N4HyEmEpAKmD1UNVmpMvP6RHEL0",
+    "original_or_derivative_id": "11MmHTZ-CawZrvknG21bsgqqKXJ-7x2nP",
+    "md5": "75908260a12da2a1260b105659b7d6ee",
+    "sha256": "8917617dca0cdc168569dbf4478776612fcb1ffd445e3231c6ace59955cab679",
+    "bytes": 2574938,
+    "dimensions": [
+      2560,
+      1440
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "D03",
+    "new_id": "1HP2m8e0z8Ug7_4_yeJal3zVvj18luRa6",
+    "original_or_derivative_id": "1MA20ws6ujgQazDb66BgDOHIjrNgfT29x",
+    "md5": "4231e27e25a259e2083ba8878779b99d",
+    "sha256": "ae7e1bf7711726beb880c014d5f3f4fded33a3dcfb183e09110c10fdd5ffdc67",
+    "bytes": 2290525,
+    "dimensions": [
+      2560,
+      1440
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "D04",
+    "new_id": "1GcfptqCp9Qg4z7LA0SEejlwbYqiZozbu",
+    "original_or_derivative_id": "14uOMGJYXucAHpfCByFi8TW_i1ZxriKMy",
+    "md5": "703d87e2851e179364aed3ebcfae1943",
+    "sha256": "0c512e1863297411fc850c03eebec84fcc34f0d024529daf14b116ddb98b14e4",
+    "bytes": 2444893,
+    "dimensions": [
+      2560,
+      1440
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "D07",
+    "new_id": "1N-o3NotlbzRrLwM1NpAtfk34vXT0lfo0",
+    "original_or_derivative_id": "1_vJFw7KNJRn435OijQHdjDhds0G-gF6n",
+    "md5": "f27c1b98e2d4b415c99cb9326210eef6",
+    "sha256": "1b784fff49310cae9a5773150c1df7b0ef4a73bcb6c5827f026aa00d3c5ed482",
+    "bytes": 2487843,
+    "dimensions": [
+      2560,
+      1440
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "D08",
+    "new_id": "10ukVC-rOfhe9txoqIzosArcreKzprcmZ",
+    "original_or_derivative_id": "1MuhupyLWP2fqLn0mhfAzXXTjy0q6sqa0",
+    "md5": "b4986e76bac7497d4890f3616c2b6339",
+    "sha256": "b76058fe5fb7b125e342c689872879e14fffb755016bc4c6a059e4a3f97ffb6a",
+    "bytes": 3931605,
+    "dimensions": [
+      2560,
+      1440
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E01",
+    "new_id": "1_evuFIDG6nFE6IuR3pe3v2h7oz0YE7gA",
+    "original_or_derivative_id": "1oGMObicz17rFr3O-HRXjjvRIbS2W3QQJ",
+    "md5": "0c6e27076c876b6eaa5714d4b39b7a1e",
+    "sha256": "43ddf105c199fcd94ab84974b7f6b758e3ea147e90fd5093061e09df1f340dce",
+    "bytes": 848513,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E02",
+    "new_id": "1u8_dLZNYXRK5k0cZHUq9Ds8jDPXW8Krq",
+    "original_or_derivative_id": "1Ji0NUXNJfos4Qvodp8ZNWIzlxAcUWOTk",
+    "md5": "db2e8b0444aad1fb8779e3ae4f36e5d8",
+    "sha256": "ef25d1d247334c576834fe34d1b457b32bedb3c8c38a3b69337fd6a4a5c78f8a",
+    "bytes": 692198,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E03",
+    "new_id": "1QVLe6dh5pA4jXQ_mYQhN5GAS3367dz3k",
+    "original_or_derivative_id": "1nIDlHOGiJbm7MEJ9xt3MJjsC7hAVz_60",
+    "md5": "ecac3a9ae184688d22c05250c18b601d",
+    "sha256": "bffb3a073601504e32c43fff163602a84fbf9bb96015ad94cf855f7fe80e8e9c",
+    "bytes": 655645,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E04",
+    "new_id": "1N4AnEYjJFjq70E4qQcytXo-jHUaxUSfm",
+    "original_or_derivative_id": "1hTmInOVfZ_EIHzv4RWIM_BzGru-r4uOp",
+    "md5": "864076c118c639c5fe79e4621f65a82a",
+    "sha256": "9eb0137053559530b69c894ab30176ad7315c911415a03ce1ca54623b8d76f00",
+    "bytes": 499283,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E05",
+    "new_id": "1EuBi0RNpYkqsy9KW65rX8q6NPGl0P4q9",
+    "original_or_derivative_id": "136GaYOi8QJFC60xb9hfmtr3bp_Rdn2vp",
+    "md5": "839d585ed0601d7ca760c06b65ee8d75",
+    "sha256": "f03b80f1de03048ef9b8986a9bf3414eb8df86a982bac4c811ef187ebc9bf42b",
+    "bytes": 648234,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E06",
+    "new_id": "1krucyyjoC1ZGwCeu2XLSmR3LbXOHPOhf",
+    "original_or_derivative_id": "1xtum5Ln3jiXSwtXQJVLr1jw55EnfvmJw",
+    "md5": "1f9206fc6dc3d1af924b5bae2644c45c",
+    "sha256": "b8daa2cfb84567c5e5284de310bea50bc9ef18f2aa8fe46eb4826a1826b7d5e8",
+    "bytes": 562510,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E07",
+    "new_id": "184RRp01AWkqYGGFUVLAI7yrT2tfcDqsE",
+    "original_or_derivative_id": "1OB-WeC6Z6hrOt3oQquEYoOZ-ICrpbRW2",
+    "md5": "2b5b25b34f08274f496cfb12a9a5196d",
+    "sha256": "fa279c74895b9a91a3bd3e71099086496a83226af9b7ccaf465e6ae723b17292",
+    "bytes": 479195,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E08",
+    "new_id": "1Ggh6doQ6IPBqPz4Mvq2NaEj0J8dDI5Qj",
+    "original_or_derivative_id": "1a4dO7GjSe89mDr1xQXWf2iszj8wAblgh",
+    "md5": "0e14778fc699ba67676bb28d18696852",
+    "sha256": "ee24e3b5cb7ba6dd19c94d8dfc0223210ad3ed7a025568d5e850ff7eb6c85ff2",
+    "bytes": 601280,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E09",
+    "new_id": "1VTtkDNbnxdepMGqLWLDoELD4sDLKJ3fX",
+    "original_or_derivative_id": "1OnmKtOuDB2CaYb71HfzxznLCcLF7un5t",
+    "md5": "2c64ccadf76cf78ada9b720fd478347a",
+    "sha256": "955a58037733aa20cd0fb84e4d4a591739a44b8bc677093d92ee4876eb2ee45a",
+    "bytes": 550764,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E10",
+    "new_id": "1r63KEc8JczN-UMih1Zsb9hslX03zlxo4",
+    "original_or_derivative_id": "1Ra_Aqb6OIzStdjRhT4lldGlatTuH6sef",
+    "md5": "1f78db2514885ad3d1dc29a009fde71a",
+    "sha256": "24286c6f4bcb17eb094258f326991240bad0ded7cad183c67baf6ff0aab4fd70",
+    "bytes": 717301,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E11",
+    "new_id": "1uCO473-hYNmWcsHU16imkARfF6h79gzp",
+    "original_or_derivative_id": "1keM066YH3olFbX5b1xhxbKqIITSeTJrG",
+    "md5": "b5b8924d2e5f7fa1479a12c2cb1ab147",
+    "sha256": "bd648bc7afa1aefeb69d756974c13244a3dc6628f4bdd4ade67f5a313d484a0e",
+    "bytes": 812586,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E12",
+    "new_id": "1pUpVCU2jXcLpocm45Bmo7oLtDU_1h8Nb",
+    "original_or_derivative_id": "1uUV4ZaZekbL3MfyTfCZDBdLXuj2NFP3s",
+    "md5": "f5d9e96da8f5b791a652783297bc0d73",
+    "sha256": "736a0c61d1c7e6ca3d1662626026eaa9ee6b9bc8060cf30d081b8f4f785697ed",
+    "bytes": 652287,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E13",
+    "new_id": "1vFG-hpej16w4ikMaAxZ1bfmJVscw7skp",
+    "original_or_derivative_id": "1iR48S7upDhIp-zQ_cVqHTcS8V66xH2Gl",
+    "md5": "2f8b0995c40c8c7d391afb46a0052fcb",
+    "sha256": "cace3dbc828818710fb00be4fcf67e7d3d4677127644b8428a0753fb42653908",
+    "bytes": 764959,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E14",
+    "new_id": "1X5tsb3_KSYPlAzMZEzCqNa6l5bMA-r3M",
+    "original_or_derivative_id": "1ffC9c575D2fzrH_aahnokHg8GXpd5_63",
+    "md5": "edd2f3e6a0f5aa6cff06dd1f77176330",
+    "sha256": "71e9b36bcffda79e1c79281cfecc8e8180a6dd0f676dd389b775d945cfd0e1a1",
+    "bytes": 497748,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E17",
+    "new_id": "1ltlaigJOtaNs-sJjr0jwApZiWhT3PyMG",
+    "original_or_derivative_id": "1N9evqu7rf1BspncPBVZZVAs_HKv-ZCkA",
+    "md5": "9069fc6346e82986aa33085378318293",
+    "sha256": "b996f98a326f17502a1be227537ffbf8af9a6f985b8765135e12d6bc270297cf",
+    "bytes": 664448,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E18",
+    "new_id": "1Dk8uuVjAXVj1GOv1VXmiW-TfFaKYEU_w",
+    "original_or_derivative_id": "1rWjKHHTvwL7oxaqVs8W1oGO2Vqyvm5Ff",
+    "md5": "bac4b3cff61ef9c698ff6c8a9c0c1f84",
+    "sha256": "524a19c91aaff62be7a82c09dc01ce17a7eb5cfa0dbac136b89b01998645034d",
+    "bytes": 679024,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E48",
+    "new_id": "1Clz61vqjKFcV7mSX5EMyjb1qnFg8rAjM",
+    "original_or_derivative_id": "1xDJaz1ip1sU4mNFkUpjjPFcCkOGu1d-N",
+    "md5": "3089de400520bb8bb59912134790af82",
+    "sha256": "47ac2c340ffdf929b30dbda775e3b5527a626d7125a879ee0b45a65dabfc190e",
+    "bytes": 289520,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E50",
+    "new_id": "12GOMXfKY2hTenIGj8BwUVcJmjQ6WzwGx",
+    "original_or_derivative_id": "1OmXsyhC7HZJrZuLjFqBKNkpAq4lqUWf2",
+    "md5": "8b02b0087f181b0aa3f9d8c2fdc525d8",
+    "sha256": "9c5fa0e505b61088a27a5cf1162610209c3bc1d644b1ac4a6b3b0c6f35cc7bd3",
+    "bytes": 361993,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E51",
+    "new_id": "1upDzPg-CMUNg6alk9VsZrvdlLHKYbAVI",
+    "original_or_derivative_id": "13Dc48FnSA9nvCUzL2zBq6zNv6axFLtIG",
+    "md5": "8abc676e02f4b0a068d0810241ca797f",
+    "sha256": "6e71f9fc793dfb4add64af7d862be737ab525b153e87e989252f377486c73761",
+    "bytes": 270003,
+    "dimensions": [
+      1376,
+      768
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "D03_SELECTED",
+    "new_id": "1Ug908Xf-JSL18TAFWamzb1C_SkfZgYin",
+    "original_or_derivative_id": "1hQqFawUsv8oM_aX_4JJNqqkBmVoiTmvd",
+    "md5": "58c8d6445df5072fb163e5ffcca55ada",
+    "sha256": "975992bcf794d0c0636579d94d0b09e99683189bc8003811a6f30dba67f3867b",
+    "bytes": 2186990,
+    "dimensions": [
+      2560,
+      1440
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  },
+  {
+    "code": "E50_SELECTED",
+    "new_id": "16tTxehEYQ86VwyivcqGtMiqHR-ci8_Dd",
+    "original_or_derivative_id": "1p1erIKGaOy4UX3MWCFgJTnIAcX1XSz0e",
+    "md5": "f9459f7a2e6e98848246c282f0a6b796",
+    "sha256": "765fd1caee6d886dc92f6a513993c735f8ce7ba5bbb63d74e3aa86e7a31f81e8",
+    "bytes": 1726907,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "full_decode_success": true,
+    "download_by_copy_id_after_original_snapshot": true,
+    "listed_in_expected_parent": true
+  }
+]

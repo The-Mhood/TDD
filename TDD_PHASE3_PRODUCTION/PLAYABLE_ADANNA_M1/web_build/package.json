@@ -1,0 +1,12 @@
+{
+  "name": "tdd-playable-adanna-m1",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "TDD — first playable Adanna / Forbidden Forest M1 real-time integration proof",
+  "scripts": {
+    "serve": "node server.mjs",
+    "test": "node test/integration_test.mjs",
+    "verify:build": "node test/live_build_verification.mjs"
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "parent_id": "1gwLanTncZaIbihu-Oxpdvf1Uq5GePtmq",
+  "connector_response_request_id": "6f4e25d8-c5c0-4233-9b11-1d119812adc4",
+  "page": 1,
+  "observed_count": 11,
+  "entries": [
+    {
+      "id": "1P2luHPfzPuPYneF2vN6NNBcGeQxSnhUm",
+      "name": "ENV_HOME_SETTLEMENT_PALM_WINE_SHELTER_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1gwLanTncZaIbihu-Oxpdvf1Uq5GePtmq"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 322315,
+      "md5": "10a8aac17dcf6a99a410209cf2c544df",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1gP2HT_YK64vheFCU-urQYfI22g_iZPs6",
+      "name": "SCENE_CH01-SCN-001_A_SMALL_FAMILY_HOUSE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1gwLanTncZaIbihu-Oxpdvf1Uq5GePtmq"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 274842,
+      "md5": "e2cab35bcd4802924b5dc7bf2a95d0c5",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1TqnMIUGsVEifSChGbZS-szimMj--wH1U",
+      "name": "SCENE_CH01-SCN-002_A_LARGE_FAMILY_COMPOUND_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1gwLanTncZaIbihu-Oxpdvf1Uq5GePtmq"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 262602,
+      "md5": "fe60166381c923932b8afc39a03146d6",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1As5OuTZ3kpm1_KhASOWZSnQUCwmo-q25",
+      "name": "SCENE_CH01-SCN-003_A_LARGE_FAMILY_COMPOUND_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1gwLanTncZaIbihu-Oxpdvf1Uq5GePtmq"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 326973,
+      "md5": "d9bb2240106a74b00b7f9f48a78f9a58",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1tUiTrj-tiPlp6_iZvPXiFYMSifld9wtw",
+      "name": "SCENE_CH01-SCN-004_A_LARGE_FAMILY_COMPOUND_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1gwLanTncZaIbihu-Oxpdvf1Uq5GePtmq"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 275423,
+      "md5": "b3325f5b77759e39369e566c4f8617bf",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Yjq-Xg7PXR_XmkyCYWIgXn5JjmjqZX49",
+      "name": "SCENE_CH01-SCN-011_MARKET_STALLS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1gwLanTncZaIbihu-Oxpdvf1Uq5GePtmq"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 384654,
+      "md5": "b1a90d4e5ad3f3a1f1d40bb424f5e9ee",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1n4Fe993nc4lQupelO-W4lxHvxHcwHjwo",
+      "name": "SCENE_CH01-SCN-016_FARMS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1gwLanTncZaIbihu-Oxpdvf1Uq5GePtmq"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 340179,
+      "md5": "536c7006eb9d20c0d1530bd503df3daf",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1tMSalHr-3w1Iy8nsv8NIDan_Rgxr8OXF",
+      "name": "SCENE_CH01-SCN-020_PALM_WINE_SHELTER_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1gwLanTncZaIbihu-Oxpdvf1Uq5GePtmq"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 265166,
+      "md5": "49e5c67b9bf4f65054f766654a238379",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1FNT6gBcyIO1gDOjBVq7oPDEJZDQerLtK",
+      "name": "SCENE_CH01-SCN-023_COMPOUND_GARDENS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1gwLanTncZaIbihu-Oxpdvf1Uq5GePtmq"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 420030,
+      "md5": "1fa8a63649f0d7b660c5534f3a453b4b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1R4zze9yWJ-JanZ-PnznSNfAOADR-xcZn",
+      "name": "SCENE_CH01-SCN-029_HEALERS_HOUSE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1gwLanTncZaIbihu-Oxpdvf1Uq5GePtmq"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 299471,
+      "md5": "12029a00815ca7e7f1073a98459f9675",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "19jXciTCW_rkOmrdelEiC9jwLE3WHwCWo",
+      "name": "SCENE_CH01-SCN-031_KITCHEN_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1gwLanTncZaIbihu-Oxpdvf1Uq5GePtmq"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 303064,
+      "md5": "a734069132ba3e7c29d36db547939210",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

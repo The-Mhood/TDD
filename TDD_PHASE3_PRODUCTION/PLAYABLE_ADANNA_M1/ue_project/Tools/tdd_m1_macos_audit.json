@@ -1,0 +1,434 @@
+{
+  "generated": "2026-11-20",
+  "status": "COMPLETED AND VERIFIED",
+  "scope": "static source inspection for macOS/UE 5.8 compatibility only; NOT a compile, PIE, cook, package or device test",
+  "target_environment": {
+    "machine": "Apple M4 Mac, 16 GB RAM, macOS 27.2.1, ARM64",
+    "engine": "Unreal Engine 5.8"
+  },
+  "checks": [
+    {
+      "name": "uproject EngineAssociation is 5.8",
+      "ok": true,
+      "severity": "error",
+      "detail": "found='5.8'"
+    },
+    {
+      "name": "Game target uses BuildSettingsVersion.V7",
+      "ok": true,
+      "severity": "error",
+      "detail": "5.8 ships V7; V5 emits an upgrade prompt"
+    },
+    {
+      "name": "Editor target uses BuildSettingsVersion.V7",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "IncludeOrderVersion is Unreal5_8",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "uproject targets Mac",
+      "ok": true,
+      "severity": "error",
+      "detail": "['Mac']"
+    },
+    {
+      "name": "uproject declares required Python plugin",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "Build.cs declares Core",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "Build.cs declares CoreUObject",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "Build.cs declares Engine",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "Build.cs declares InputCore",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "Build.cs adds no Windows-only module",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "module implementation present",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper avoids EditorLevelLibrary",
+      "ok": true,
+      "severity": "error",
+      "detail": "deprecated since UE 5.0, removed from the default path in 5.7+"
+    },
+    {
+      "name": "macOS helper uses LevelEditorSubsystem",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper creates the map from a template",
+      "ok": true,
+      "severity": "error",
+      "detail": "new_level alone leaves no saved .umap on disk"
+    },
+    {
+      "name": "macOS helper saves the map explicitly",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper repoints map config",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper writes its report under Saved/",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper has a dry-run switch",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper never deletes assets",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper backs up config before edit",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token 'C:\\\\\\\\' in helper",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token 'Program Files' in helper",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token 'UnrealEditor.exe' in helper",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token 'RunUAT.bat' in helper",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token 'cmd.exe' in helper",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token 'Win64' in helper",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token in uproject",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in Target.cs",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in EditorTarget.cs",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in Build.cs",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in character.h",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in character.cpp",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in level.cpp",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in level.h",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no hardcoded /Users/ absolute path in project files",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "preserved original helper retained unchanged",
+      "ok": true,
+      "severity": "error",
+      "detail": "kept for audit; do not execute"
+    },
+    {
+      "name": "old helper filename is a non-executing stub",
+      "ok": true,
+      "severity": "error",
+      "detail": "prevents launching the obsolete helper by mistake; original bytes remain in the preserved copy"
+    },
+    {
+      "name": "preserved helper documents its superseded status",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "GameDefaultMap is under GameMapsSettings",
+      "ok": true,
+      "severity": "error",
+      "detail": "under /Script/Engine.Engine the key is ignored and the game mode never applies"
+    },
+    {
+      "name": "GlobalDefaultGameMode is under GameMapsSettings",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no GameDefaultMap under /Script/Engine.Engine",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "input ini carries no hand-authored AxisMappings",
+      "ok": true,
+      "severity": "error",
+      "detail": "UE5 serialises these as map keys; code-registered bindings are used instead"
+    },
+    {
+      "name": "BindKey handlers take no parameters",
+      "ok": true,
+      "severity": "error",
+      "detail": "BindKey requires a parameterless handler; float-axis handlers fail to compile"
+    },
+    {
+      "name": "movement keys bound as press/release pairs",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "signed keyboard axis state applied each tick",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "UCLASS generated.h include is last in TDDAdannaProxyCharacter.h",
+      "ok": true,
+      "severity": "error",
+      "detail": "a .generated.h include not last in the header breaks UHT"
+    },
+    {
+      "name": "UCLASS generated.h include is last in TDDForbiddenForestLevel.h",
+      "ok": true,
+      "severity": "error",
+      "detail": "a .generated.h include not last in the header breaks UHT"
+    },
+    {
+      "name": "UCLASS generated.h include is last in TDDForbiddenForestGameMode.h",
+      "ok": true,
+      "severity": "error",
+      "detail": "a .generated.h include not last in the header breaks UHT"
+    },
+    {
+      "name": "UPROPERTY members use TObjectPtr, not raw pointers",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no invented blade geometry in the UE proxy",
+      "ok": true,
+      "severity": "error",
+      "detail": "Phase 1 forbids inventing blade design; only the approved hip mount marker may exist"
+    },
+    {
+      "name": "UE proxy keeps the approved LEFT-hip cross-draw mount marker",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "UE proxy carries no invented character dimensions",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "character header includes InputCoreTypes for EKeys",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "level spawns a PlayerStart when none exists",
+      "ok": true,
+      "severity": "error",
+      "detail": "a generated map with no PlayerStart cannot possess a pawn in PIE"
+    },
+    {
+      "name": "forest level uses TActorIterator (EngineUtils included)",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "INSTANCED pool registers before AddInstance is ever called",
+      "ok": true,
+      "severity": "error",
+      "detail": "registration inside the factory at index 1646; first AddInstance call site at 4995"
+    },
+    {
+      "name": "registration occurs exactly once per pool",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "collidable pools enable QueryAndPhysics",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no unused constexpr TCHAR in TDDAdannaProxyCharacter.cpp",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no unused constexpr TCHAR in TDDForbiddenForestLevel.cpp",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "CreatePart return assigned to TObjectPtr is legal",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "Instanced pool array stores TObjectPtr",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "GLB import requests skeletal mesh options",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "OBJ import kept static",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS packaging expects Xcode",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS packaging expects Metal",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS packaging expects RunUAT.sh",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS packaging expects arm64",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    }
+  ],
+  "checksPassed": 69,
+  "checksTotal": 69,
+  "errors": [],
+  "compile_verified": false,
+  "pie_verified": false,
+  "cook_verified": false,
+  "package_verified": false,
+  "runnable_build_verified": false,
+  "classification": "static audit evidence; Unreal execution remains BLOCKED \u2014 OWNER-STUDIO DEPENDENCY"
+}

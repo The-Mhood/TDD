@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Disobedient Daughter — Hall of Posts M1</title>
+<style>
+:root { color-scheme: dark; }
+body { margin:0; background:#0b0908; color:#e8dec8; font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif; }
+header { padding:28px 42px 18px; border-bottom:1px solid #4a3824; background:linear-gradient(180deg,#15100d,#0b0908); }
+h1 { margin:0 0 5px; font:700 34px Georgia,serif; letter-spacing:.02em; color:#e6cd9d; }
+.sub { color:#b8a78d; }
+main { max-width:1280px; margin:0 auto; padding:28px 42px 60px; }
+.panel { background:#12100e; border:1px solid #3d3022; border-radius:10px; padding:18px; margin:20px 0; box-shadow:0 12px 35px #0008; }
+img { max-width:100%; display:block; border:1px solid #4a3824; border-radius:6px; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.badge { display:inline-block; padding:4px 9px; border:1px solid #8c6a3f; border-radius:999px; color:#e6cd9d; font-size:13px; margin-right:8px; }
+a { color:#d8b77e; }
+input[type=range] { width:100%; accent-color:#8c6a3f; }
+code { color:#d8c8aa; }
+footer { color:#8d816f; font-size:14px; }
+</style>
+</head>
+<body>
+<header>
+<h1>The Hall of Posts — M1 Visual Production Proof</h1>
+<div class="sub">The Disobedient Daughter · Phase 3 · H2/H3 modular technical blockout · approved design, canon pending</div>
+</header>
+<main>
+<section class="panel">
+<span class="badge">SOURCE: HALL_OF_POSTS_V004</span><span class="badge">OAD-45 APPROVED</span><span class="badge">CANON PENDING</span><span class="badge">NOT FINAL FILM SET</span>
+<p>Derived from the exact approved Chapter 8 environment board and Art Bible direction. No generic demo asset, invented character, V013, H3, CQ-9, rejected/superseded artwork, or limited internal study is used as production authority.</p>
+<p><a href="renders/HALL_OF_POSTS_M1_REVIEW_SHEET.png">Open full review sheet</a> · <a href="model/hall_of_posts_m1.glb">Download assembled GLB</a> · <a href="model/hall_of_posts_m1.obj">Download OBJ</a> · <a href="production_manifest.json">Production manifest</a></p>
+</section>
+<section class="panel"><h2>Hero render from actual 3D geometry</h2><img src="renders/hall_of_posts_hero.png" alt="Hall of Posts hero render"></section>
+<section class="panel"><h2>Interactive turntable scrubber</h2>
+<img id="frame" src="renders/turntable_frames/frame_00.png" alt="Turntable frame">
+<input id="scrub" type="range" min="0" max="7" value="0" step="1">
+<p class="sub">Frame <span id="frameNo">0</span> / 7 · <a href="renders/hall_of_posts_turntable.gif">Download animated GIF</a></p>
+</section>
+<section class="panel"><h2>Source / result comparison</h2><img src="renders/reference_vs_render.png" alt="Source and result comparison"></section>
+<section class="panel"><h2>Production state</h2>
+<div class="grid"><div>
+<h3>Geometry</h3><p>45,670 vertices · 72,246 triangles · 9 named nodes</p>
+<p>Modules: HALL_BENCH_MODULE, HALL_POST_MODULE, HALL_ROOF_BAY_MODULE, HALL_STOOL_MODULE, HALL_WALL_OPENING_MODULE</p>
+<p>Units are neutral proxies (<code>1 ≈ 1 m</code> for camera/layout only), not approved story dimensions.</p>
+</div><div>
+<h3>Exact next release gate</h3><p>CD selects film use/canon and approves one shared Chapter 8 spatial, metric and camera interpretation. Then M2 converts this proxy to final H3 topology/UVs and M3 delivers H4 earth/hardwood/thatch PBR plus H9 moving-camera lighting proof.</p>
+</div></div></section>
+<footer>Preserved Phase 1 authority · no calibrated texture maps, rig, animation, final compositing or final global readiness verdict claimed.</footer>
+</main>
+<script>
+const frames = ["renders/turntable_frames/frame_00.png", "renders/turntable_frames/frame_01.png", "renders/turntable_frames/frame_02.png", "renders/turntable_frames/frame_03.png", "renders/turntable_frames/frame_04.png", "renders/turntable_frames/frame_05.png", "renders/turntable_frames/frame_06.png", "renders/turntable_frames/frame_07.png"];
+const img = document.getElementById('frame');
+const scrub = document.getElementById('scrub');
+const label = document.getElementById('frameNo');
+scrub.addEventListener('input', () => { const i = Number(scrub.value); img.src = frames[i]; label.textContent = i; });
+</script>
+</body></html>

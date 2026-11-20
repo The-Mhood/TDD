@@ -1,0 +1,221 @@
+{
+  "parent_id": "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY",
+  "connector_response_request_id": "abc19b4c-e6b5-447d-bf73-6ea6129f30cf",
+  "page": 1,
+  "observed_count": 16,
+  "entries": [
+    {
+      "id": "11_wobbfZUDaknS7z67-J_Y5Ktur0J1VG",
+      "name": "ENV_GATES_DEAD_COUNTING_HOUSE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 703718,
+      "md5": "3e426b18ffd5bdbecfc37bc5f338a338",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1jMBVm82BTT7vWxOInBsqFNVZMcYoY3p6",
+      "name": "ENV_GATES_DEAD_ESTABLISHING_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 650058,
+      "md5": "12e89114a41bf6f04d1edc4e9b5f7b1a",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1SHc8LKeSyBxOyrioJizleJ-B2-n9fvUH",
+      "name": "ENV_GATES_DEAD_GATHERING_GROUND_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "5",
+      "is_folder": false,
+      "bytes": 678400,
+      "md5": "4cfce2a39232745c47a0687a8dde2c1f",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1D5yuYHpSQGmmwbCpttsAkQRf-Yd_91-F",
+      "name": "ENV_GATES_DEAD_GATHERING_GROUND_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 619343,
+      "md5": "93bd2c0a272ee4504029175003b603b5",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1DwY9jqCtpIqa4_tfQOjPmFuW1f2gXEh6",
+      "name": "ENV_GATES_DEAD_GATHERING_GROUND_V003.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 638989,
+      "md5": "faa45df6799cc06f3795c6e170296e15",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1fzm9YmHAZepPI2TmW8CIC6YimYAudNRZ",
+      "name": "ENV_GATES_DEAD_HOLDING_PITS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "5",
+      "is_folder": false,
+      "bytes": 676990,
+      "md5": "d04c772fa0c53f2c691371f082176309",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "13KaziO3T4rtWk70e5WlLs7pwl3Lwjdyk",
+      "name": "ENV_GATES_DEAD_HOLLOW_KING_ARENA_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 636343,
+      "md5": "d9c6862abb8c6e4ba2cb860472d3b2d7",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1vfUg_0HsrcFnCFWzjqtYlVR89WDJqchn",
+      "name": "ENV_GATES_DEAD_MARKET_OF_FORGOTTEN_OBJECTS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 645650,
+      "md5": "1a14795241e349efc888a5f189debb5e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1l02JJr6sIpQxPV6RHQKOAnv8R32tzBEF",
+      "name": "ENV_GATES_DEAD_MARKET_OF_FORGOTTEN_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 713576,
+      "md5": "514c619290ce0f8ffb9cfc4a9ae47183",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1eqErP_82BULcXcV9IILaQ3vl0M4z4mG7",
+      "name": "ENV_GATES_DEAD_MARKET_OF_FORGOTTEN_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 665233,
+      "md5": "a95c96ef66fc15d951d47f7d6c12f4bd",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1WVV0TiX-CpnfLK7DSMf1mXtG46bqLQck",
+      "name": "ENV_GATES_DEAD_OLD_RULERS_COMPOUND_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 705405,
+      "md5": "abcbad7373eeae870181da5947b51adb",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1mOFqgGroG5NH1kOGuR5dxqcU-VccY75m",
+      "name": "ENV_GATES_DEAD_OUTER_GATE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "5",
+      "is_folder": false,
+      "bytes": 688339,
+      "md5": "8ef38c104e2de1c43fca431a2b1b2d99",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1oKys079TdGlgXLz3sVOPfubMZWYdO9Z9",
+      "name": "ENV_GATES_DEAD_QUIET_HOUSES_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 689791,
+      "md5": "b216f5dbb8dd8d566d468805abb80ecc",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1wX2VVxMKaSz7mntPvHJkoLzpW0DRdeL5",
+      "name": "ENV_GATES_DEAD_RIVER_CROSSING_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 533268,
+      "md5": "4b56f9169daa970d13fea7674327ee5a",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "17jdljZ0Sc8j5t6ZgLRLBawacroIswe4G",
+      "name": "ENV_GATES_DEAD_UNDER_RIVER_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "5",
+      "is_folder": false,
+      "bytes": 595548,
+      "md5": "ce9a5d05ddee23c8ee64e607cc2f771e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1RBldJCwXlZlCEZ09tKTS6s74oePCjoGq",
+      "name": "ENV_GATES_DEAD_UNDER_RIVER_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1m_TyUNuEXvssuPOkZY0lRnihFyJU5aHY"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 820368,
+      "md5": "8c95b10ad750a6493f6ee8b5b7d6e52a",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

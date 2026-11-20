@@ -1,0 +1,358 @@
+{
+  "milestone": "M1",
+  "title": "The Hall of Posts \u2014 H2/H3 modular blockout and look-development proof",
+  "status": "technical production proxy; not final film set, canon approval, or global readiness verdict",
+  "created": "2026-11-19",
+  "source": {
+    "file": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_HALL_OF_POSTS_V004.jpg",
+    "drive_id": "1MHCd25z3x-cfBUf-eoCJvDLqwvYj9Ins",
+    "sha256": "1667149c143713b51679585dbf0d0d93dcb7371cb9d0dd3211b615845b0d84a2",
+    "approval": "STATUS APPROVED; client OAD-45, 2026-11-15; approved environment design",
+    "canon": "PENDING APPROVAL",
+    "consultant_review": "still required on board; no cultural claim made",
+    "register_id": "CH08-INT-003",
+    "cleared_for": "character compositions in the hall (CH08-SCN-017)",
+    "carry_forward": [
+      "floor looks wet",
+      "carved bands deeper than plain and worn",
+      "upper half very dark"
+    ]
+  },
+  "authority_boundary": {
+    "production_authority_used": "approved Hall of Posts V004 environment design and Chapter 8 / Art Bible direction only",
+    "not_used": [
+      "V013 / Ancestral Establishing / Wall of Houses",
+      "Adanna unapproved views or body interpretation",
+      "CQ-9 blade/sheath",
+      "H3 / Landing / Field of Cloth",
+      "six visual-release-only passes",
+      "rejected/superseded artwork",
+      "failed corrections",
+      "external-authority assets",
+      "limited internal studies"
+    ],
+    "final_release_dependency": "CD film use/canon selection and one approved shared spatial/metric/camera interpretation (P2-G09 / P2-CD04)"
+  },
+  "units": "neutral technical proxy; 1 unit approximately 1 m for camera/layout only; not approved story or production dimensions",
+  "geometry": {
+    "vertices": 45670,
+    "triangles": 72246,
+    "bounds_xyz": [
+      [
+        -10.72,
+        -20.0,
+        0.0
+      ],
+      [
+        10.72,
+        43.57610942391023,
+        9.65
+      ]
+    ],
+    "post_instances": 36,
+    "stool_instances": 1
+  },
+  "nodes": [
+    {
+      "node": "EARTH_FLOOR",
+      "material_key": "EARTH_FLOOR",
+      "vertices": 5124,
+      "triangles": 2562,
+      "baseColorRGB": [
+        51,
+        38,
+        34
+      ],
+      "pbr_roughness": 0.88,
+      "pbr_metallic": 0.0,
+      "render_only": false
+    },
+    {
+      "node": "WET_AISLE",
+      "material_key": "WET_EARTH_AISLE",
+      "vertices": 1464,
+      "triangles": 732,
+      "baseColorRGB": [
+        32,
+        26,
+        24
+      ],
+      "pbr_roughness": 0.43,
+      "pbr_metallic": 0.0,
+      "render_only": false
+    },
+    {
+      "node": "EARTHEN_WALLS",
+      "material_key": "EARTHEN_WALL",
+      "vertices": 656,
+      "triangles": 984,
+      "baseColorRGB": [
+        44,
+        28,
+        23
+      ],
+      "pbr_roughness": 0.9,
+      "pbr_metallic": 0.0,
+      "render_only": false
+    },
+    {
+      "node": "RENDER_EXPOSURE_CARDS",
+      "material_key": "EXPOSURE_CARD",
+      "vertices": 672,
+      "triangles": 336,
+      "baseColorRGB": [
+        97,
+        92,
+        87
+      ],
+      "pbr_roughness": 1.0,
+      "pbr_metallic": 0.0,
+      "render_only": true
+    },
+    {
+      "node": "EARTHEN_BENCHES",
+      "material_key": "EARTHEN_BENCH",
+      "vertices": 480,
+      "triangles": 720,
+      "baseColorRGB": [
+        51,
+        38,
+        34
+      ],
+      "pbr_roughness": 0.86,
+      "pbr_metallic": 0.0,
+      "render_only": false
+    },
+    {
+      "node": "HARDWOOD_POSTS",
+      "material_key": "HARDWOOD_POST",
+      "vertices": 30456,
+      "triangles": 60480,
+      "baseColorRGB": [
+        27,
+        18,
+        15
+      ],
+      "pbr_roughness": 0.82,
+      "pbr_metallic": 0.0,
+      "render_only": false
+    },
+    {
+      "node": "ROOF_BEAMS",
+      "material_key": "ROOF_BEAM",
+      "vertices": 2426,
+      "triangles": 4168,
+      "baseColorRGB": [
+        30,
+        21,
+        18
+      ],
+      "pbr_roughness": 0.86,
+      "pbr_metallic": 0.0,
+      "render_only": false
+    },
+    {
+      "node": "THATCH_ROOF",
+      "material_key": "THATCH",
+      "vertices": 4336,
+      "triangles": 2168,
+      "baseColorRGB": [
+        26,
+        17,
+        13
+      ],
+      "pbr_roughness": 0.94,
+      "pbr_metallic": 0.0,
+      "render_only": false
+    },
+    {
+      "node": "SINGLE_STOOL",
+      "material_key": "STOOL_WOOD",
+      "vertices": 56,
+      "triangles": 96,
+      "baseColorRGB": [
+        31,
+        25,
+        23
+      ],
+      "pbr_roughness": 0.78,
+      "pbr_metallic": 0.0,
+      "render_only": false
+    }
+  ],
+  "modules": {
+    "HALL_BENCH_MODULE": "model/modules/HALL_BENCH_MODULE.glb",
+    "HALL_POST_MODULE": "model/modules/HALL_POST_MODULE.glb",
+    "HALL_ROOF_BAY_MODULE": "model/modules/HALL_ROOF_BAY_MODULE.glb",
+    "HALL_STOOL_MODULE": "model/modules/HALL_STOOL_MODULE.glb",
+    "HALL_WALL_OPENING_MODULE": "model/modules/HALL_WALL_OPENING_MODULE.glb"
+  },
+  "materials": {
+    "EARTH_FLOOR": {
+      "base": "P5_WORN_EARTH",
+      "roughness": 0.88,
+      "metallic": 0.0,
+      "spec": 0.1
+    },
+    "WET_EARTH_AISLE": {
+      "base": "P3_EARTH_DARK",
+      "roughness": 0.43,
+      "metallic": 0.0,
+      "spec": 0.55
+    },
+    "EARTHEN_WALL": {
+      "base": "P4_LATERITE",
+      "roughness": 0.9,
+      "metallic": 0.0,
+      "spec": 0.04
+    },
+    "EARTHEN_BENCH": {
+      "base": "P5_WORN_EARTH",
+      "roughness": 0.86,
+      "metallic": 0.0,
+      "spec": 0.08
+    },
+    "HARDWOOD_POST": {
+      "base": "P2_WOOD",
+      "roughness": 0.82,
+      "metallic": 0.0,
+      "spec": 0.1
+    },
+    "CARVED_BAND": {
+      "base": "P5_WORN_EARTH",
+      "roughness": 0.76,
+      "metallic": 0.0,
+      "spec": 0.12
+    },
+    "ROOF_BEAM": {
+      "base": "P1_CHAR",
+      "roughness": 0.86,
+      "metallic": 0.0,
+      "spec": 0.06
+    },
+    "THATCH": {
+      "base": "P1_CHAR",
+      "roughness": 0.94,
+      "metallic": 0.0,
+      "spec": 0.02
+    },
+    "FIBRE_LASHING": {
+      "base": "P6_PALE",
+      "roughness": 0.92,
+      "metallic": 0.0,
+      "spec": 0.02
+    },
+    "STOOL_WOOD": {
+      "base": "P3_EARTH_DARK",
+      "roughness": 0.78,
+      "metallic": 0.0,
+      "spec": 0.1
+    },
+    "EXPOSURE_CARD": {
+      "base": "P6_PALE",
+      "roughness": 1.0,
+      "metallic": 0.0,
+      "spec": 0.0,
+      "emission": 0.45
+    }
+  },
+  "palette_hex": {
+    "P0_DEEP": "#0F0B0A",
+    "P1_CHAR": "#19100D",
+    "P2_WOOD": "#1E1512",
+    "P3_EARTH_DARK": "#201A18",
+    "P4_LATERITE": "#2C1C17",
+    "P5_WORN_EARTH": "#332622",
+    "P6_PALE": "#645956"
+  },
+  "deliverables": {
+    "assembled_glb": "model/hall_of_posts_m1.glb",
+    "assembled_obj": "model/hall_of_posts_m1.obj",
+    "hero_render": "renders/hall_of_posts_hero.png",
+    "review_sheet": "renders/HALL_OF_POSTS_M1_REVIEW_SHEET.png",
+    "contact_sheet": "renders/hall_of_posts_contact_sheet.png",
+    "turntable_gif": "renders/hall_of_posts_turntable.gif",
+    "reference_vs_render": "renders/reference_vs_render.png",
+    "site": "index.html"
+  },
+  "turntable_frames": [
+    "renders/turntable_frames/frame_00.png",
+    "renders/turntable_frames/frame_01.png",
+    "renders/turntable_frames/frame_02.png",
+    "renders/turntable_frames/frame_03.png",
+    "renders/turntable_frames/frame_04.png",
+    "renders/turntable_frames/frame_05.png",
+    "renders/turntable_frames/frame_06.png",
+    "renders/turntable_frames/frame_07.png"
+  ],
+  "camera_proxies": {
+    "hero_eye": [
+      0.0,
+      -25.0,
+      3.15
+    ],
+    "hero_target": [
+      0.0,
+      10.0,
+      3.35
+    ],
+    "fov_degrees": 62.0,
+    "note": "derived from approved board's low central one-point composition; no approved lens or camera is claimed"
+  },
+  "render": {
+    "engine": "in-repo deterministic CPU triangle rasterizer",
+    "lighting": "low-key neutral side/far exposure cards; no flame, lamp, neon or generic particles",
+    "post": "depth haze, projected contact shadows, restrained bloom, vignette, grain",
+    "source_calibrated_maps": false
+  },
+  "evaluation": {
+    "verdict": "H2/H3 technical blockout suitable for composition and modularity review; NOT a finished film set, final asset, or canon approval",
+    "approved_reads_present": [
+      "central aisle",
+      "repeated giant carved hardwood post bays",
+      "forked/lashed heads",
+      "great beams into depth",
+      "thatch roof",
+      "earth benches",
+      "one ordinary stool",
+      "wet-looking floor",
+      "dark upper half",
+      "bright side openings",
+      "board palette"
+    ],
+    "art_bible_reads": [
+      "grounded dark palette",
+      "low-key motivated side/far exposure",
+      "no neon/generic particles",
+      "no theatrical flame or invented fantasy lighting",
+      "ordinary functional set dressing"
+    ],
+    "excluded": [
+      "stone posts",
+      "figures",
+      "animals",
+      "regalia",
+      "extra tools",
+      "flame",
+      "wind",
+      "day/night invention"
+    ],
+    "deviations": [
+      "carving is read as measured relief bands, not final figurative/cultural iconography",
+      "post silhouettes and carved bands are simplified for a reproducible proxy",
+      "exterior is a neutral exposure gradient, not an approved landscape or architectural view",
+      "side openings and far aperture are composition/camera proxies pending CD spatial release",
+      "CPU rasterizer uses palette-based colour and material intent, not calibrated PBR textures"
+    ],
+    "limitations": [
+      "canon pending",
+      "consultant review noted on board remains outstanding",
+      "no approved dimensions",
+      "no final topology/UVs/PBR maps",
+      "no rig/animation/VFX/comp",
+      "no native DCC or GPU benchmark in sandbox",
+      "render exposure cards are non-production render aids"
+    ]
+  },
+  "next_milestone": "M2: after CD release, final H3 modular kit with production topology/UVs; then M3 H4 PBR materials and H9 moving-camera lighting/render proof."
+}

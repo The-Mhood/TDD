@@ -1,0 +1,29 @@
+{
+  "records_archive": {
+    "name": "OUR_EYES_CD_FINAL_VERDICTS_v1.zip",
+    "local_path": "OUR_EYES_CD_FINAL_VERDICTS_v1/OUR_EYES_CD_FINAL_VERDICTS_v1.zip",
+    "bytes": 21904284,
+    "md5": "0202f7cab2d65bca3f42c8f53ff0a57f",
+    "sha256": "b1c1b3f2de0a9382f188e72746ccc14c24f00fbcc14d8a0cf3ddcc1e2b46afc7",
+    "zip_members": 506,
+    "crc_all_pass": true,
+    "member_manifest_payloads_all_hash_verified": true,
+    "prefix": "OUR_EYES_CD_FINAL_VERDICTS_v1"
+  },
+  "held36_archive": {
+    "name": "CD_FINAL_VERDICTS_AND_RELEASE_36.zip",
+    "local_path": "OUR_EYES_CD_FINAL_VERDICTS_v1/CD_FINAL_VERDICTS_AND_RELEASE_36.zip",
+    "bytes": 32964772,
+    "md5": "046025d92ab1aa0f02fb8e3396a70303",
+    "sha256": "fa9c00e1aac647b10e36e55e968c37b9227f81fe92a6b6d72030a80f65193651",
+    "zip_members": 165,
+    "crc_all_pass": true,
+    "member_manifest_payloads_all_hash_verified": true,
+    "prefix": "CD_FINAL_VERDICTS_AND_RELEASE_36",
+    "held_original_payloads": 36,
+    "selected_derivative_payloads": 2,
+    "other_157_original_payloads": 0
+  },
+  "all_archive_tests_passed": true,
+  "qualification": "Independent local CRC/member hash/decode QA precedes upload. Connector publication and independent new-ID re-download tests are recorded separately, never inferred from this archive build."
+}

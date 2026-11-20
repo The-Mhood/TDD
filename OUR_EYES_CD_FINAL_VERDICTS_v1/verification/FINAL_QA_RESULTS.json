@@ -1,0 +1,317 @@
+{
+  "result": "PASS",
+  "scope_originals": 193,
+  "original_payloads_reopened": 193,
+  "original_raster_decodes": 105,
+  "original_utf8_decodes": 88,
+  "original_total_bytes": 70416758,
+  "copy_payloads_reopened": 38,
+  "final_derivative_attempts_recomputed": 6,
+  "all_20_issue_decisions_present": true,
+  "checks": [
+    {
+      "check": "fixed_original_identity_set",
+      "passed": true,
+      "details": "193 unique unchanged source IDs"
+    },
+    {
+      "check": "final_verdicts",
+      "passed": true,
+      "details": "Eight final labels, no indefinite HOLD"
+    },
+    {
+      "check": "fixed_roles",
+      "passed": true,
+      "details": "76+26+1+2+88=193"
+    },
+    {
+      "check": "complete_listing_visual_release",
+      "passed": true,
+      "details": "Observed complete connector enumeration, manually normalized"
+    },
+    {
+      "check": "no_name_collision_visual_release",
+      "passed": true,
+      "details": "Within-folder only; intentional cross-folder copies are not collisions"
+    },
+    {
+      "check": "complete_listing_rejected",
+      "passed": true,
+      "details": "Observed complete connector enumeration, manually normalized"
+    },
+    {
+      "check": "no_name_collision_rejected",
+      "passed": true,
+      "details": "Within-folder only; intentional cross-folder copies are not collisions"
+    },
+    {
+      "check": "complete_listing_superseded",
+      "passed": true,
+      "details": "Observed complete connector enumeration, manually normalized"
+    },
+    {
+      "check": "no_name_collision_superseded",
+      "passed": true,
+      "details": "Within-folder only; intentional cross-folder copies are not collisions"
+    },
+    {
+      "check": "complete_listing_aids",
+      "passed": true,
+      "details": "Observed complete connector enumeration, manually normalized"
+    },
+    {
+      "check": "no_name_collision_aids",
+      "passed": true,
+      "details": "Within-folder only; intentional cross-folder copies are not collisions"
+    },
+    {
+      "check": "complete_listing_studies",
+      "passed": true,
+      "details": "Observed complete connector enumeration, manually normalized"
+    },
+    {
+      "check": "no_name_collision_studies",
+      "passed": true,
+      "details": "Within-folder only; intentional cross-folder copies are not collisions"
+    },
+    {
+      "check": "complete_listing_corrections",
+      "passed": true,
+      "details": "Observed complete connector enumeration, manually normalized"
+    },
+    {
+      "check": "no_name_collision_corrections",
+      "passed": true,
+      "details": "Within-folder only; intentional cross-folder copies are not collisions"
+    },
+    {
+      "check": "complete_listing_external",
+      "passed": true,
+      "details": "Observed complete connector enumeration, manually normalized"
+    },
+    {
+      "check": "no_name_collision_external",
+      "passed": true,
+      "details": "Within-folder only; intentional cross-folder copies are not collisions"
+    },
+    {
+      "check": "complete_listing_documents",
+      "passed": true,
+      "details": "Observed complete connector enumeration, manually normalized"
+    },
+    {
+      "check": "no_name_collision_documents",
+      "passed": true,
+      "details": "Within-folder only; intentional cross-folder copies are not collisions"
+    },
+    {
+      "check": "complete_listing_original_container",
+      "passed": true,
+      "details": "Observed complete connector enumeration, manually normalized"
+    },
+    {
+      "check": "no_name_collision_original_container",
+      "passed": true,
+      "details": "Within-folder only; intentional cross-folder copies are not collisions"
+    },
+    {
+      "check": "complete_listing_assistant_container",
+      "passed": true,
+      "details": "Observed complete connector enumeration, manually normalized"
+    },
+    {
+      "check": "no_name_collision_assistant_container",
+      "passed": true,
+      "details": "Within-folder only; intentional cross-folder copies are not collisions"
+    },
+    {
+      "check": "complete_listing_pending",
+      "passed": true,
+      "details": "Observed complete connector enumeration, manually normalized"
+    },
+    {
+      "check": "no_name_collision_pending",
+      "passed": true,
+      "details": "Within-folder only; intentional cross-folder copies are not collisions"
+    },
+    {
+      "check": "destination_sets",
+      "passed": true,
+      "details": "199 primary files + two preserved containers; every original exact parent joined"
+    },
+    {
+      "check": "payload_ledger",
+      "passed": true,
+      "details": "193 post-filing exact-original-ID download/hash/open/listing passes"
+    },
+    {
+      "check": "independent_original_snapshot_recheck",
+      "passed": true,
+      "details": "All 193 source-ID snapshots rehashed and fully reopened, no new semantic/visual approval inferred"
+    },
+    {
+      "check": "held_cohort_copy_scope",
+      "passed": true,
+      "details": "Only 36 held originals + selected D03/E50 derivatives; other 157 originals excluded"
+    },
+    {
+      "check": "copy_identity_is_distinct",
+      "passed": true,
+      "details": "All 38 package IDs are distinct from primary originals/derivatives/containers"
+    },
+    {
+      "check": "independent_copy_snapshot_recheck",
+      "passed": true,
+      "details": "38 exact-copy-ID snapshots rehashed and full raster decoded; all passed"
+    },
+    {
+      "check": "six_derivative_pixel_recomputations",
+      "passed": true,
+      "details": "Actual byte hashes, full PNG opening, dimensions, saved difference bitmap, bounds/counts and exact finite-mask RGB tests recomputed. Whole-frame tests are explicitly vacuous outside mask."
+    },
+    {
+      "check": "generated_patch_provenance",
+      "passed": true,
+      "details": "Exact E46 non-deterministic generated patch input is bundled and hash-identical"
+    },
+    {
+      "check": "research_payloads_and_read_boundary",
+      "passed": true,
+      "details": "36 exact canonical held-cohort Research payloads checked; only 15 fresh semantic rereads claimed"
+    },
+    {
+      "check": "all_issue_ids",
+      "passed": true,
+      "details": "16 substantive issue decisions + four explicitly distinct documentary errata"
+    },
+    {
+      "check": "approval_segregation_and_finite_dependencies",
+      "passed": true,
+      "details": "Only six old visual passes in APPROVED; conditional, external and correction objects outside. All ten authority/two correction cases have exact finite roles/questions/tools/tests."
+    },
+    {
+      "check": "movement_reconciliation",
+      "passed": true,
+      "details": "106 direct + 87 contained = 193; intact containers verified"
+    },
+    {
+      "check": "empty_pending_rescan",
+      "passed": true,
+      "details": "Complete latest scan request 33ff3e94-4bf2-4542-8d4c-7bd19d9ad1ab"
+    },
+    {
+      "check": "generation_ledger_protected_and_code_parses",
+      "passed": true,
+      "details": "Post-execution portability/ledger protection edits parsed, not rerun over adjudicated output"
+    },
+    {
+      "check": "historical_assessment_preservation",
+      "passed": true,
+      "details": "193 labelled historical assessment files copied unchanged; old wording is not current authority"
+    },
+    {
+      "check": "tracked_history_unchanged",
+      "passed": true,
+      "details": "No tracked baseline/history/screenshot/DOCX file edits"
+    }
+  ],
+  "derivative_tests": [
+    {
+      "code": "D03",
+      "output_hashes_match": true,
+      "native_dimensions_match": true,
+      "changed_pixels_recomputed": 1050512,
+      "difference_bbox_recomputed": [
+        0,
+        130,
+        2560,
+        1440
+      ],
+      "out_of_mask_changes_recomputed": 0,
+      "art_changed_pixels_recomputed": 472,
+      "whole_frame_mask_vacuity_disclosed": false,
+      "decision_not_inferred_from_pixel_test": true
+    },
+    {
+      "code": "D06",
+      "output_hashes_match": true,
+      "native_dimensions_match": true,
+      "changed_pixels_recomputed": 1050380,
+      "difference_bbox_recomputed": [
+        0,
+        130,
+        2560,
+        1440
+      ],
+      "out_of_mask_changes_recomputed": 0,
+      "art_changed_pixels_recomputed": 340,
+      "whole_frame_mask_vacuity_disclosed": false,
+      "decision_not_inferred_from_pixel_test": true
+    },
+    {
+      "code": "E46",
+      "output_hashes_match": true,
+      "native_dimensions_match": true,
+      "changed_pixels_recomputed": 30351,
+      "difference_bbox_recomputed": [
+        459,
+        581,
+        688,
+        745
+      ],
+      "out_of_mask_changes_recomputed": 0,
+      "art_changed_pixels_recomputed": null,
+      "whole_frame_mask_vacuity_disclosed": false,
+      "decision_not_inferred_from_pixel_test": true
+    },
+    {
+      "code": "E50",
+      "output_hashes_match": true,
+      "native_dimensions_match": true,
+      "changed_pixels_recomputed": 12803,
+      "difference_bbox_recomputed": [
+        702,
+        505,
+        839,
+        617
+      ],
+      "out_of_mask_changes_recomputed": 0,
+      "art_changed_pixels_recomputed": null,
+      "whole_frame_mask_vacuity_disclosed": false,
+      "decision_not_inferred_from_pixel_test": true
+    },
+    {
+      "code": "E53",
+      "output_hashes_match": true,
+      "native_dimensions_match": true,
+      "changed_pixels_recomputed": 1573352,
+      "difference_bbox_recomputed": [
+        0,
+        0,
+        1672,
+        941
+      ],
+      "out_of_mask_changes_recomputed": 0,
+      "art_changed_pixels_recomputed": null,
+      "whole_frame_mask_vacuity_disclosed": true,
+      "decision_not_inferred_from_pixel_test": true
+    },
+    {
+      "code": "E54",
+      "output_hashes_match": true,
+      "native_dimensions_match": true,
+      "changed_pixels_recomputed": 1573352,
+      "difference_bbox_recomputed": [
+        0,
+        0,
+        1672,
+        941
+      ],
+      "out_of_mask_changes_recomputed": 0,
+      "art_changed_pixels_recomputed": null,
+      "whole_frame_mask_vacuity_disclosed": true,
+      "decision_not_inferred_from_pixel_test": true
+    }
+  ],
+  "qualification": "Local computed verification of actual saved downloads plus normalized observed connector joins; no raw API archive, semantic reread or cultural/production approval inferred. Archive/publication checks are separate post-seal receipts."
+}

@@ -1,0 +1,46 @@
+{
+  "parent_id": "1P-5sX_fz2pkJCo0QnmU9T2zHu8iaqbFk",
+  "connector_response_request_id": "2e035307-9ca5-4cf7-b35f-fe56b9a44283",
+  "page": 1,
+  "observed_count": 3,
+  "entries": [
+    {
+      "id": "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab",
+      "name": "ASSISTANT_VA_SUBMISSIONS",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1P-5sX_fz2pkJCo0QnmU9T2zHu8iaqbFk"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "1YUCfczTDGsdcMGz3favvphMabMR9q9PJ",
+      "name": "ORIGINAL_VA_SUBMISSIONS",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1P-5sX_fz2pkJCo0QnmU9T2zHu8iaqbFk"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1CSiUHZDyE4NsKxIYEcUYSPFepYQBpOyp",
+      "name": "00_ORIGINAL_VA_DIRECTIVE.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1P-5sX_fz2pkJCo0QnmU9T2zHu8iaqbFk"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 5129,
+      "md5": "c6b04b4318249c57523eab6de4cfbe91",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

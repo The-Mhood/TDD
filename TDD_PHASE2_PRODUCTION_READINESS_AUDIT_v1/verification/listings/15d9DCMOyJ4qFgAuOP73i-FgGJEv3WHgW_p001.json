@@ -1,0 +1,195 @@
+{
+  "parent_id": "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW",
+  "connector_response_request_id": "a2a9133e-3642-46bb-8603-93cb43e152b1",
+  "page": 1,
+  "observed_count": 14,
+  "entries": [
+    {
+      "id": "14cVjbwXui5g3DQvcH_k2ztFbxV9pBZPE",
+      "name": "CHAR_SUPPORTING_BLACKSMITH_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 608994,
+      "md5": "0f0a8033d034baabde65cdb6eeb94b48",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "12q5OnKb2vV11uxwslLP5_ele_2TLNaEU",
+      "name": "CHAR_SUPPORTING_HEALER_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 671300,
+      "md5": "2b0717a8853a9c2d4387c05bc9e1c8fe",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1emafm4IbQ1Phf6uf5euAwl_koYHw8GHP",
+      "name": "CHAR_SUPPORTING_HUNTER_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 573955,
+      "md5": "d49581c89cf30fd7463bc0e05be160a1",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1erMuuB6JCGwwl6QHWZOeIWaoJdR5IpLy",
+      "name": "CHAR_SUPPORTING_MERCHANT_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 778999,
+      "md5": "815bd015f8ccbf6a4d143f39bcece490",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1nvHDLPWLf2GVBGm8Jy3G6zenGGMlJ-Nz",
+      "name": "CHAR_SUPPORTING_PALACE_SERVANT_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 641754,
+      "md5": "1d2922be1889c30f43190bfc316fe57a",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1O_JYoHhUuqW220e-FNCA3iZ1v56oeUFJ",
+      "name": "CHAR_SUPPORTING_PRIEST_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 616781,
+      "md5": "0ebd12c70e0d3b85a990a16004545eab",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1J46eqXFJoGYxK830lIQxx2Cu4AuFbV1C",
+      "name": "CHAR_SUPPORTING_REBEL_LEADER_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 575438,
+      "md5": "83c70d3fbfb319c7e0b23b43360276ef",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1aFpl2RbRnGP2XhaAo-Xc8gd2ygwgey9H",
+      "name": "CHAR_SUPPORTING_ROGUE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 519664,
+      "md5": "6ad7e5d53d6998d7bf81102ee425d965",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "13WHCYxIVjLwDcaMW9h_xI4pbWbo8-sep",
+      "name": "CHAR_SUPPORTING_ROYAL_GUARD_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 575293,
+      "md5": "80966b99b2efbe8d5b8fe38a1b7ed5fe",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1NCNGakEKbiRtg0B14jlcH7S48gieN898",
+      "name": "CHAR_SUPPORTING_ROYAL_GUARD_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 525656,
+      "md5": "267262040a35737f20c267a02ca4dfd0",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1592761WHn_spMRX7zB28zCPN8kOQAqLD",
+      "name": "CHAR_SUPPORTING_TRAVELLING_STORYTELLER_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 719582,
+      "md5": "0fe13a5542469674894972d04d489344",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1ufqJu_jKB6GaIpw1MwCeTRbbENcYgiHk",
+      "name": "CHAR_SUPPORTING_VILLAGE_ELDER_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 590844,
+      "md5": "0592c581880c00f15ada5d5dd96f8ee9",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "13xx_AT_xK8_vjHcvroPvtWlNSBW9jvEi",
+      "name": "CHAR_SUPPORTING_VILLAINS_LIEUTENANT_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 608874,
+      "md5": "42f0fabbd85b811f624f8e929c9b8a2a",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1biB2OHihX1mmwB_Ods_IIhFo2NLWs_KK",
+      "name": "CHAR_SUPPORTING_WARRIOR_COMPANION_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 535377,
+      "md5": "9fb9996580768b72738fd14884e35325",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

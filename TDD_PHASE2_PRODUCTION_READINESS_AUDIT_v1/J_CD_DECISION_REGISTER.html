@@ -1,0 +1,122 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>TDD — CD decision register</title><style>
+:root{--paper:#fffefa;--ink:#202a32;--muted:#5a6770;--line:#d8dfdc;--accent:#25675e;--warn:#8e4928;--back:#edf1ee}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--back);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}.shell{max-width:1480px;margin:auto;display:grid;grid-template-columns:290px minmax(0,1fr);gap:28px;padding:28px}.side{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow:auto;padding:22px 18px;border:1px solid var(--line);border-radius:12px;background:#f7f9f5}.eyebrow{font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:750;color:var(--accent)}.badge{display:inline-block;background:#fff0e5;border:1px solid #e5c6ad;border-radius:100px;color:var(--warn);font-size:12px;font-weight:700;padding:4px 11px;margin:12px 0}.side .toc ul{padding-left:16px}.side .toc>ul{padding-left:0;list-style:none}.side .toc{font-size:12px;line-height:1.5}.side .toc a{text-decoration:none;display:inline-block;margin:4px 0}.side p{font-size:12px;color:var(--muted)}main{background:var(--paper);padding:50px 52px 64px;border:1px solid var(--line);border-radius:14px;min-width:0;box-shadow:0 12px 40px #1d3b2a08}h1,h2,h3{line-height:1.23;letter-spacing:-.025em}h1{font-size:30px;margin:60px 0 24px;border-top:2px solid var(--accent);padding-top:24px}h1:first-child{margin:0;border:0;padding:0;font-size:37px}h2{font-size:23px;margin-top:32px}h3{font-size:18px;color:var(--accent);margin-top:27px}p,li{max-width:90ch}strong{font-weight:680}hr{border:0;border-top:1px solid var(--line);margin:34px 0}blockquote{margin:20px 0;padding:14px 20px;background:#fff2e8;border-left:4px solid var(--warn)}table{border-collapse:collapse;width:100%;font-size:12px;line-height:1.5;margin:23px 0;table-layout:auto}th,td{text-align:left;vertical-align:top;border:1px solid var(--line);padding:11px 12px;overflow-wrap:anywhere}th{background:#eaf2ed;font-size:11px;letter-spacing:.025em}tr:nth-child(even) td{background:#f8faf7}code{font:11px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;background:#eff2ec;border-radius:3px;padding:2px 4px}pre{overflow:auto;white-space:pre-wrap}.footer{margin-top:42px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}.jump{display:inline-block;padding:7px 11px;border:1px solid var(--line);border-radius:7px;margin:3px 2px;font-size:12px;text-decoration:none;background:white}@media(max-width:1050px){.shell{grid-template-columns:1fr;padding:12px;gap:14px}.side{position:static;max-height:none;padding:18px}.side .toc{display:none}main{padding:28px 23px}h1:first-child{font-size:29px}table{font-size:11px}td,th{padding:8px 7px}}@media print{@page{size:A4;margin:17mm}.shell{display:block;padding:0}.side{display:none}body{background:white;font-size:10pt}main{padding:0;border:0;box-shadow:none}h1{page-break-before:always;font-size:22pt}h1:first-child{page-break-before:auto;font-size:27pt}h2,h3{break-after:avoid}table{font-size:7.5pt}tr{break-inside:avoid}a{color:inherit}th{background:#eef2ee!important}.footer{font-size:8pt}}
+</style></head><body><div class="shell"><aside class="side"><div class="eyebrow">TDD / Production audit</div><div class="badge">Coverage qualified · not final</div><p>Audit only. No design change, approval promotion or gate waiver.</p><a class="jump" href="TDD_PHASE2_A_TO_J_WORKING_AUDIT.html">A–J report</a><a class="jump" href="D_PRODUCTION_GAP_REGISTER.html">Detailed gaps</a><a class="jump" href="G_ARTIST_READY_BRIEFS.html">Artist briefs</a><a class="jump" href="J_CD_DECISION_REGISTER.html">CD register</a><div class="toc">
+<ul>
+<li><a href="#j-creative-director-decision-register">J. Creative Director decision register</a><ul>
+<li><a href="#p2-cd01-actual-film-adaptation-and-selected-shot-package">P2-CD01 — Actual film adaptation and selected shot package</a></li>
+<li><a href="#p2-cd02-adanna-production-interpretation-versus-preserved-artwork">P2-CD02 — Adanna production interpretation versus preserved artwork</a></li>
+<li><a href="#p2-cd03-cq-9-blade-design-authority-before-hand-fit">P2-CD03 — CQ-9 blade-design authority before hand fit</a></li>
+<li><a href="#p2-cd04-chapter8-film-use-canon-and-spatialmetric-interpretation">P2-CD04 — Chapter8 film use, canon and spatial/metric interpretation</a></li>
+<li><a href="#p2-cd05-still-open-bibleboard-continuity-conflicts">P2-CD05 — Still-open Bible/board continuity conflicts</a></li>
+<li><a href="#p2-cd06-h3-landing-and-field-of-cloth-authority-boundary">P2-CD06 — H3 / Landing and Field of Cloth authority boundary</a></li>
+<li><a href="#p2-cd07-scn028-and-scn030-protected-gates">P2-CD07 — SCN028 and SCN030 protected gates</a></li>
+<li><a href="#p2-cd08-chapter4-implementation-authority-and-paddle-reference">P2-CD08 — Chapter4 implementation authority and paddle reference</a></li>
+<li><a href="#p2-cd09-project-technical-standards-specialists-and-budgetcapacity">P2-CD09 — Project technical standards, specialists and budget/capacity</a></li>
+<li><a href="#p2-cd10-technical-stage-release-policy-and-final-audit-sign-off">P2-CD10 — Technical stage-release policy and final audit sign-off</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside><main><h1 id="j-creative-director-decision-register">J. Creative Director decision register</h1>
+<p>PROPOSED / CARRY-FORWARD REGISTER ONLY — no new CD approval, waiver or instruction is issued here</p>
+<p>Check remaining corpus and existing settled decisions before presenting a question as new. Rows marked carry-forward are controls, not requests to vote again.</p>
+<h2 id="p2-cd01-actual-film-adaptation-and-selected-shot-package">P2-CD01 — Actual film adaptation and selected shot package</h2>
+<p><strong>State / not a new approval:</strong> OPEN IN INSPECTED EVIDENCE; CHECK REMAINING CORPUS FIRST</p>
+<p><strong>Existing control — preserve:</strong> 135 game scene entries, eight chapters, memories, quests, bosses, states and alternate endings are proposals, not automatic cinematic build orders.</p>
+<p><strong>Genuinely needed decision / evidence:</strong> Identify/confirm the authoritative film treatment, timed shot package, selected ending/memories, runtime and delivery when existing evidence has been reconciled.</p>
+<p><strong>Decision owner:</strong> CD/director with story/editorial and producer</p>
+<p><strong>Production consequence:</strong> Defines asset/view/action/camera/effects scope and unlocks meaningful staffing, budget, hardware and schedule estimates.</p>
+<p><strong>Closure evidence:</strong> Exact approved treatment/animatic/shot manifest IDs and version, selected/excluded content and signed delivery assumptions.</p>
+<p><strong>Recommendation, not execution:</strong> Size production from an approved cut or deliberately scoped sequence, not the entire historical game backlog; do not lower the cinematic target.</p>
+<p><strong>Related gaps:</strong> P2-G00, P2-G01</p>
+<hr />
+<h2 id="p2-cd02-adanna-production-interpretation-versus-preserved-artwork">P2-CD02 — Adanna production interpretation versus preserved artwork</h2>
+<p><strong>State / not a new approval:</strong> NEW TECHNICAL RELEASE NEEDED ONLY IF COMMISSIONED; SOURCE PRESERVATION IS SETTLED</p>
+<p><strong>Existing control — preserve:</strong> LEFT_SIDE/BACK stay V003 / PRESERVE / UNAPPROVED, viewer-left BACK = anatomical LEFT; geometry/pose/alignment/scale/likeness/costume and painted LEFT-shoulder→RIGHT-hip baldric remain locked. Front/three-quarter V005 are internal concept only. Costume V002 is interim partial upper-body only.</p>
+<p><strong>Genuinely needed decision / evidence:</strong> Approve any separate technical body/garment/hidden-surface interpretation actually required by the selected shots; do not ask for or infer a change to preserved sheets.</p>
+<p><strong>Decision owner:</strong> CD with character/costume supervisor; applicable Research gates remain separate</p>
+<p><strong>Production consequence:</strong> Enables a consistent native model and deformation-ready wardrobe without silently promoting an unapproved view.</p>
+<p><strong>Closure evidence:</strong> Exact production interpretation authority, required surface/closure decisions and approved camera/action envelope; unchanged source hashes.</p>
+<p><strong>Recommendation, not execution:</strong> Resolve only necessary unknowns; no automatic full turnaround, V004 side/back, mirroring or wardrobe redesign.</p>
+<p><strong>Related gaps:</strong> P2-G03, P2-G07, P2-G08</p>
+<hr />
+<h2 id="p2-cd03-cq-9-blade-design-authority-before-hand-fit">P2-CD03 — CQ-9 blade-design authority before hand fit</h2>
+<p><strong>State / not a new approval:</strong> EXISTING OPEN DEPENDENCY — NOT WAIVED</p>
+<p><strong>Existing control — preserve:</strong> Blade board remains REVIEW REQUIRED; ~60cm overall/~42cm blade are provisional, no approved hand-scale view. Withdrawn 65%/70%/coordinates and standalone sheath aesthetics are not authority.</p>
+<p><strong>Genuinely needed decision / evidence:</strong> Resolve exact blade/sheath design and permitted fictional material/period basis before approving dimensions, attachment, grip or draw mechanics.</p>
+<p><strong>Decision owner:</strong> CD; prop/weapon designer and relevant Research expertise support, rigger verifies later fit</p>
+<p><strong>Production consequence:</strong> Weapon-contact modelling/rigging and commissioned draw/carry action can then be scoped safely.</p>
+<p><strong>Closure evidence:</strong> Signed exact design source/version and metric construction/fit brief, followed by successful commissioned action test.</p>
+<p><strong>Recommendation, not execution:</strong> Keep fit and rig downstream of design authority; do not manufacture canon through proportional resizing.</p>
+<p><strong>Related gaps:</strong> P2-G04, P2-G23</p>
+<hr />
+<h2 id="p2-cd04-chapter8-film-use-canon-and-spatialmetric-interpretation">P2-CD04 — Chapter8 film use, canon and spatial/metric interpretation</h2>
+<p><strong>State / not a new approval:</strong> OPEN FOR FILM USE; EXISTING DESIGN APPROVALS AND LIMITED WAIVER ARE SETTLED</p>
+<p><strong>Existing control — preserve:</strong> Five environment designs remain design-approved, canon pending. V013 retains an express waiver of BOTH item5 components solely for internal exploratory composition; item5 is NOT DONE. No scale/canon/cultural clearance or source resize follows.</p>
+<p><strong>Genuinely needed decision / evidence:</strong> If selected, approve their story use and only the common-layout/measurement decisions needed by commissioned shots.</p>
+<p><strong>Decision owner:</strong> CD with production designer/layout lead</p>
+<p><strong>Production consequence:</strong> Enables reusable spatial assembly without remodelling approved identity or converting non-metric fantasy hierarchy into unapproved architecture.</p>
+<p><strong>Closure evidence:</strong> Shot-linked canon/use decision plus approved shared plan/sections/metric datums; preserved five boards and V013 exact hashes.</p>
+<p><strong>Recommendation, not execution:</strong> Do not re-vote the existing design approvals or the limited waiver; never call item5 complete because haze or a waiver exists.</p>
+<p><strong>Related gaps:</strong> P2-G09, P2-G10</p>
+<hr />
+<h2 id="p2-cd05-still-open-bibleboard-continuity-conflicts">P2-CD05 — Still-open Bible/board continuity conflicts</h2>
+<p><strong>State / not a new approval:</strong> EVIDENCE RECONCILIATION FIRST; ONLY GENUINELY UNRESOLVED SHOT-RELEVANT CONFLICTS GO TO CD</p>
+<p><strong>Existing control — preserve:</strong> Approved identities/timeline and chapter constraints stand. Proposed children outside CH01, Quiet Garden only-living-plant wording versus Nneka-house vegetation, CH02 enclosure/state wording, CH05 architecture exceptions and character hair/cloth variants must not be silently resolved.</p>
+<p><strong>Genuinely needed decision / evidence:</strong> For each selected-shot conflict not already settled, identify controlling version/temporal scope and exact allowed interpretation; record whether a proposal is superseded, excluded or separately approved. If a CH6impossible-space beat is selected, approve the exact portal/reflection/recursive-room temporal-spatial interpretation without converting the unestablished Memory Room/Nneka attribution into canon.</p>
+<p><strong>Decision owner:</strong> CD with story/continuity, environment/character leads and Research where factual claims arise</p>
+<p><strong>Production consequence:</strong> Prevents invented child presence, unauthorized plant deletion, state/geography drift and composite character identities.</p>
+<p><strong>Closure evidence:</strong> Conflict row with both exact sources, existing-decision search result, controlling decision and bounded implementation instruction.</p>
+<p><strong>Recommendation, not execution:</strong> No new design resolution is inferred by this audit. Check existing evidence before asking the owner to repeat a decision.</p>
+<p><strong>Related gaps:</strong> P2-G05, P2-G12, P2-G16, P2-G21, P2-G29</p>
+<hr />
+<h2 id="p2-cd06-h3-landing-and-field-of-cloth-authority-boundary">P2-CD06 — H3 / Landing and Field of Cloth authority boundary</h2>
+<p><strong>State / not a new approval:</strong> CARRY-FORWARD D9/RQ-01 — NO FRESH H3 VISUAL/CULTURAL RELEASE</p>
+<p><strong>Existing control — preserve:</strong> Landing is CH07-SUB004/SCN011; Field of Cloth is CH07-SUB005. V002/V003 are parallel proposals, not proven replacements. Cargo is unidentified, not established bodies. Trashed supplementary review is not live clearance.</p>
+<p><strong>Genuinely needed decision / evidence:</strong> After appropriate exact-scope evidence/consultation, CD chooses a permitted fictional adaptation or excludes the material from the selected film. CD fiction choice cannot authenticate actual practice.</p>
+<p><strong>Decision owner:</strong> Research lead + appropriately scoped Igbo consultant and relevant living custodian if restricted practice is implicated; CD chooses fiction</p>
+<p><strong>Production consequence:</strong> Only exact cleared scope can enter commissioned design; unrelated production need not wait.</p>
+<p><strong>Closure evidence:</strong> Attributed allowed/prohibited scope for exact file/version/shot, consultation provenance and CD adaptation/exclusion record.</p>
+<p><strong>Recommendation, not execution:</strong> No repaint, density/cloth repair, inferred bodies, ritual exception or gate waiver as a shortcut.</p>
+<p><strong>Related gaps:</strong> P2-G18, P2-G19</p>
+<hr />
+<h2 id="p2-cd07-scn028-and-scn030-protected-gates">P2-CD07 — SCN028 and SCN030 protected gates</h2>
+<p><strong>State / not a new approval:</strong> CARRY-FORWARD — NOT A NEW CORRECTION REQUEST</p>
+<p><strong>Existing control — preserve:</strong> SCN028 requires Research+CD loom specification. SCN030 stays NOT RECOMMENDED, no patch/regeneration; replacement requires CD+Research/living-custodian direction.</p>
+<p><strong>Genuinely needed decision / evidence:</strong> Only if the selected film uses these beats: provide the already-required exact construction or replacement scope through the proper authority, or exclude the beat.</p>
+<p><strong>Decision owner:</strong> CD with Research/craft specialist; relevant living-custodian direction for SCN030 as required</p>
+<p><strong>Production consequence:</strong> Avoids impossible weaving rigs or forbidden repair work; does not block unrelated settings/characters.</p>
+<p><strong>Closure evidence:</strong> Approved functional loom brief and action test for SCN028; explicit permitted replacement scope or exclusion for SCN030.</p>
+<p><strong>Recommendation, not execution:</strong> Akwete wording or an accepted environment cannot stand in for these gates. No work is commissioned here.</p>
+<p><strong>Related gaps:</strong> P2-G20</p>
+<hr />
+<h2 id="p2-cd08-chapter4-implementation-authority-and-paddle-reference">P2-CD08 — Chapter4 implementation authority and paddle reference</h2>
+<p><strong>State / not a new approval:</strong> LOOK/STAGING CHOICES SETTLED; NATIVE IMPLEMENTATION AND SPECIALIST EVIDENCE STILL REQUIRED</p>
+<p><strong>Existing control — preserve:</strong> Soft silver-overcast baseline; fictional side-set freestanding rack cold/unlit; E53/E54 relights failed, not replacements. Fishing Shelter 1376×768 accepted for internal concept only; no universal canvas rule. Paddle insertion needs an approved attributed reference.</p>
+<p><strong>Genuinely needed decision / evidence:</strong> Once selected and native packages verified, authorize only the bounded technical scene/lighting/paddle delivery; resolve craft evidence with the correct specialist.</p>
+<p><strong>Decision owner:</strong> CD + Research/fishing-gear specialist; lighting/prop supervisors execute authorized delivery</p>
+<p><strong>Production consequence:</strong> Enables true native lighting/contacts without restaging or heat/smoke invention.</p>
+<p><strong>Closure evidence:</strong> Approved paddle/tool reference and native overcast proof meeting geometry/count/cold-rack preservation tests.</p>
+<p><strong>Recommendation, not execution:</strong> No sunny chapter variant, full-frame generation, upscale remedy, extra people or fire/smoke to prove function.</p>
+<p><strong>Related gaps:</strong> P2-G14, P2-G15</p>
+<hr />
+<h2 id="p2-cd09-project-technical-standards-specialists-and-budgetcapacity">P2-CD09 — Project technical standards, specialists and budget/capacity</h2>
+<p><strong>State / not a new approval:</strong> NOT ESTABLISHED IN INSPECTED EVIDENCE — CHECK REMAINING RESOURCE DOCUMENTS FIRST</p>
+<p><strong>Existing control — preserve:</strong> Cinematic reliability/reusability/scalability remain the target; the CD need not execute every specialist discipline. No beginner downgrade or unjustified expensive stack is permitted.</p>
+<p><strong>Genuinely needed decision / evidence:</strong> Approve actual delivery and measured capacity/budget plan, accountable specialists, one pinned colour/render/handoff workflow and conditional paid-tool choices.</p>
+<p><strong>Decision owner:</strong> CD/producer with pipeline/render TD and department leads</p>
+<p><strong>Production consequence:</strong> Makes scope/quality/schedule trade-offs explicit rather than guessing RAM/GPU/render costs or silently lowering standards.</p>
+<p><strong>Closure evidence:</strong> Actual resource/licence/staffing inventory, representative benchmark and cost/schedule/storage/restore plan against selected shots.</p>
+<p><strong>Recommendation, not execution:</strong> Start with a capable consolidated toolchain; add specialist tools or farm capacity only when tests demonstrate value. No procurement is authorized.</p>
+<p><strong>Related gaps:</strong> P2-G22, P2-G24, P2-G25, P2-G27</p>
+<hr />
+<h2 id="p2-cd10-technical-stage-release-policy-and-final-audit-sign-off">P2-CD10 — Technical stage-release policy and final audit sign-off</h2>
+<p><strong>State / not a new approval:</strong> PROPOSED POLICY — NOT A GLOBAL READINESS VERDICT</p>
+<p><strong>Existing control — preserve:</strong> Visual approval is not modelling, materials, rigging, animation, lighting, render or canon approval; rejected/exploratory files remain restricted. Phase2 is audit-only.</p>
+<p><strong>Genuinely needed decision / evidence:</strong> Adopt the H stage evidence/acceptance gates for future commissioned production; final all-file audit sign-off waits for actual coverage completion and final source/asset reconciliation.</p>
+<p><strong>Decision owner:</strong> CD approves creative/stage use; relevant technical lead signs specialist evidence; audit lead certifies only work actually inspected</p>
+<p><strong>Production consequence:</strong> Allows safe parallel work without calling all assets ready or placing unrelated work on a generic HOLD.</p>
+<p><strong>Closure evidence:</strong> Per-stage native deliverable/test/decision manifest and completed all-file inspection trace. Any remaining exception keeps the report explicitly qualified, never silently complete.</p>
+<p><strong>Recommendation, not execution:</strong> Release the specific tested asset/shot/stage, not an entire folder or project by implication.</p>
+<p><strong>Related gaps:</strong> P2-G00, P2-G02, P2-G08, P2-G09, P2-G25</p>
+<hr /><div class="footer">Additive working audit. Raw source art/download staging is not bundled as a complete source backup. The explicit remaining-inspection queue controls completeness. Recommendations are not execution.</div></main></div></body></html>

@@ -1,0 +1,26 @@
+{
+  "parent_id": "1ySp_MbF0I2fYXclW0tKve9zg4SyqLyDp",
+  "connector_response_request_id": "13cd66c9-beed-4a5e-9654-e0e14fdd93fc",
+  "page": 1,
+  "observed_count": 1,
+  "entries": [
+    {
+      "id": "1hYtwaO_phRGrucDfpkb6ySU6wVOVlPDK",
+      "name": "ENV_CH03-INT-003_THE_CLOTH_SELLERS_SHOP_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1ySp_MbF0I2fYXclW0tKve9zg4SyqLyDp"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 337294,
+      "md5": "15dfa0374c53fef9fc72226decca2ef2",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

@@ -1,0 +1,167 @@
+[
+  {
+    "code": "B01",
+    "research_id": "1Q8GCZgZpZk-fff4Yp5m1sXTXBPF9ejbm",
+    "path": "google_drive/B01_B2_CAND_VR-011_LANDING_OF_UNCLAIMED_V003.md",
+    "sha256_match": true,
+    "sha256": "a524b0120f21f39960af20cf6c9a19230c237fed8a8209bbb5013bd809d2cf19",
+    "md5": "ea97fea41daf553f999184606a23cd86",
+    "bytes": 2774,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "B03",
+    "research_id": "1jL4g6Ghjzk6wy79kBFCTmhqnl-E-Ysi1",
+    "path": "google_drive/B03_CH01-SET-001-ST01_V002.md",
+    "sha256_match": true,
+    "sha256": "877a095316a1edefdd18bc9cd845679cd9c8aae5e7cbea45624d20dc1e40693e",
+    "md5": "e00695636fbe36747739ee29be3e3381",
+    "bytes": 2192,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "B05",
+    "research_id": "1Es9tbkn1hFq1n1SOpSv50Vu4LtxdSt9R",
+    "path": "google_drive/B05_CH01-SET-001-ST02_V002.md",
+    "sha256_match": true,
+    "sha256": "b582e6a081268e7b118f7ea991e43290a137a69ec73f3b926769cbe4c1b68fa8",
+    "md5": "ffc5669a2d01156ee674a62e6b5401a6",
+    "bytes": 2058,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "B07",
+    "research_id": "1ZGNfJYR3YHaG5TLM3PMqWL5d15aVB49N",
+    "path": "google_drive/B07_CH01-SET-001-ST03_V002.md",
+    "sha256_match": true,
+    "sha256": "0c9acdf8334225e3afd575d2826f1b01c7866634ae115dd06cb1d46886dfe92c",
+    "md5": "26d0deefaf8f8313431f14d87740de8f",
+    "bytes": 2294,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "B11",
+    "research_id": "1IFIggqUR4iEyAsbpOaITEqogaqd9sUds",
+    "path": "google_drive/B11_CH01-SET-001-ST04_V004.md",
+    "sha256_match": true,
+    "sha256": "7f6c2e8162253f8ab72097ab1939835a3ae086ce5caf8d9af0fe8d6cb4c50a53",
+    "md5": "b13386ac46dd7e53c09f0b37d0609155",
+    "bytes": 2014,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "B13",
+    "research_id": "1sk3yIpIzeFrownI4CGmX49E1U5_9XudK",
+    "path": "google_drive/B13_CH01-SET-001-ST05_V002.md",
+    "sha256_match": true,
+    "sha256": "1909d839045f372027a9d2d7396f573c9bcb9cf6dcfde7bdb5b44b19c319331e",
+    "md5": "c900f152bdae0c6b63110e6017fe760c",
+    "bytes": 2213,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "B15",
+    "research_id": "18k-axnu8KJy5Wil_rRfViYsMRcU1SQIy",
+    "path": "google_drive/B15_CH01-SET-001-ST06_V002.md",
+    "sha256_match": true,
+    "sha256": "4e09a15fd9eb33de1644d6faff976bff86f0945422c7cc4c31fbdae5a4c1cf12",
+    "md5": "33a7a166f2ae36e1158994169eb4b8c0",
+    "bytes": 2224,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "B17",
+    "research_id": "1DSFkzpraf9IPWB3P8bTj1o7y7LjO4qMC",
+    "path": "google_drive/B17_CH01-SET-001-ST07_V002.md",
+    "sha256_match": true,
+    "sha256": "8892113f164b791938ec410cbe0490e05145a4ec4c657e8343e1f672975816c4",
+    "md5": "ddb28ca0c611fc243e4ceaaf3357123e",
+    "bytes": 2132,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "B29",
+    "research_id": "1fxhWsyTXEvDLgdwESwjeheMJUswpnhfS",
+    "path": "google_drive/B29_ENV_CH04-EXP-003_THE_SMALL_ISLANDS_V001.md",
+    "sha256_match": true,
+    "sha256": "1a3189bf4ffdc6ded13b8728dcefb3f1f91f85feee892abce37e8f83c186c57d",
+    "md5": "445d78b630aaf412bf1ee11b19277e47",
+    "bytes": 2150,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "B30",
+    "research_id": "1Oi1j9NrJDQkhc4lqhr0GX_Hg2CBN70qa",
+    "path": "google_drive/B30_ENV_CH04-EXP-006_THE_CAVE_BEHIND_THE_LOW_FALLS_V001.md",
+    "sha256_match": true,
+    "sha256": "d6e74a92044024838db8f925753dc21aa6926c59f9d3a338b018e8d0f0dae1c1",
+    "md5": "1df03a2ce45472ffeca4600a9762f4fd",
+    "bytes": 2253,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "B36",
+    "research_id": "15S7sUdkLvF72je2iJ_gGr1v5JchV6bIP",
+    "path": "google_drive/B36_ENV_CH05-INT-001_THE_HERDERS_SHELTER_V001.md",
+    "sha256_match": true,
+    "sha256": "26ceacf5a84d0a37b8ae3e997c17149f4fdd189cc1639958c45aade6112f408d",
+    "md5": "e605412cf5b31e2b12901031b96e8028",
+    "bytes": 2460,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "B43",
+    "research_id": "1DQ4-4kZ-kWI9ypFc0cIzKHRsbghYRJ_m",
+    "path": "google_drive/B43_PROP_ADANNA_SCABBARD_SIMPLE_LEATHER_V001.md",
+    "sha256_match": true,
+    "sha256": "a58103e7d6cba509920bbf60dca0d04ff54da68c1cc410f7ea243a3d6e85f7e5",
+    "md5": "656bae8cf27ff63178ef4837a4d07937",
+    "bytes": 2384,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "D03",
+    "research_id": "1opopRAS_h__wG3LiUteqR5jUcdrq9iwI",
+    "path": "google_drive/D03_B2_CAND_CHAR_ADANNA_TURNAROUND_FRONT_V004_2560x1440.md",
+    "sha256_match": true,
+    "sha256": "ad4a899b2d1bd626a4e4cbfb4a56bf5db83b6ea8de201b69b01c389ffeb0c313",
+    "md5": "4fbfbfb5d6ccd0d3db168cbd0a2d9758",
+    "bytes": 3202,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "D07",
+    "research_id": "1h-0LbK1aG9oNXJtbbs5TCoAA5V7lewLz",
+    "path": "google_drive/D07_B2_CAND_VR-011_LANDING_OF_UNCLAIMED_V002_2560x1440.md",
+    "sha256_match": true,
+    "sha256": "6243a33038ee7ad18143934ade847ced60b960787861e5447dbadbf9b527451a",
+    "md5": "1d836fcf76fa1d7ae87e8101f297f4ac",
+    "bytes": 3902,
+    "size_match": true,
+    "fully_read_this_execution": true
+  },
+  {
+    "code": "D08",
+    "research_id": "1velKrvO0BGkBZyta_aSRtlk1JIKysPgB",
+    "path": "google_drive/D08_CAND_ESTABLISHING_V013_2560x1440.md",
+    "sha256_match": true,
+    "sha256": "1de804765c5054a9be8a9eb481eced3f7402a9501a445a6e0398752659b19163",
+    "md5": "eea996b787a058ec54981dd6a588b995",
+    "bytes": 4122,
+    "size_match": true,
+    "fully_read_this_execution": true
+  }
+]

@@ -1,0 +1,412 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>TDD — Conditional artist-ready briefs</title><style>
+:root{--paper:#fffefa;--ink:#202a32;--muted:#5a6770;--line:#d8dfdc;--accent:#25675e;--warn:#8e4928;--back:#edf1ee}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--back);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}.shell{max-width:1480px;margin:auto;display:grid;grid-template-columns:290px minmax(0,1fr);gap:28px;padding:28px}.side{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow:auto;padding:22px 18px;border:1px solid var(--line);border-radius:12px;background:#f7f9f5}.eyebrow{font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:750;color:var(--accent)}.badge{display:inline-block;background:#fff0e5;border:1px solid #e5c6ad;border-radius:100px;color:var(--warn);font-size:12px;font-weight:700;padding:4px 11px;margin:12px 0}.side .toc ul{padding-left:16px}.side .toc>ul{padding-left:0;list-style:none}.side .toc{font-size:12px;line-height:1.5}.side .toc a{text-decoration:none;display:inline-block;margin:4px 0}.side p{font-size:12px;color:var(--muted)}main{background:var(--paper);padding:50px 52px 64px;border:1px solid var(--line);border-radius:14px;min-width:0;box-shadow:0 12px 40px #1d3b2a08}h1,h2,h3{line-height:1.23;letter-spacing:-.025em}h1{font-size:30px;margin:60px 0 24px;border-top:2px solid var(--accent);padding-top:24px}h1:first-child{margin:0;border:0;padding:0;font-size:37px}h2{font-size:23px;margin-top:32px}h3{font-size:18px;color:var(--accent);margin-top:27px}p,li{max-width:90ch}strong{font-weight:680}hr{border:0;border-top:1px solid var(--line);margin:34px 0}blockquote{margin:20px 0;padding:14px 20px;background:#fff2e8;border-left:4px solid var(--warn)}table{border-collapse:collapse;width:100%;font-size:12px;line-height:1.5;margin:23px 0;table-layout:auto}th,td{text-align:left;vertical-align:top;border:1px solid var(--line);padding:11px 12px;overflow-wrap:anywhere}th{background:#eaf2ed;font-size:11px;letter-spacing:.025em}tr:nth-child(even) td{background:#f8faf7}code{font:11px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;background:#eff2ec;border-radius:3px;padding:2px 4px}pre{overflow:auto;white-space:pre-wrap}.footer{margin-top:42px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}.jump{display:inline-block;padding:7px 11px;border:1px solid var(--line);border-radius:7px;margin:3px 2px;font-size:12px;text-decoration:none;background:white}@media(max-width:1050px){.shell{grid-template-columns:1fr;padding:12px;gap:14px}.side{position:static;max-height:none;padding:18px}.side .toc{display:none}main{padding:28px 23px}h1:first-child{font-size:29px}table{font-size:11px}td,th{padding:8px 7px}}@media print{@page{size:A4;margin:17mm}.shell{display:block;padding:0}.side{display:none}body{background:white;font-size:10pt}main{padding:0;border:0;box-shadow:none}h1{page-break-before:always;font-size:22pt}h1:first-child{page-break-before:auto;font-size:27pt}h2,h3{break-after:avoid}table{font-size:7.5pt}tr{break-inside:avoid}a{color:inherit}th{background:#eef2ee!important}.footer{font-size:8pt}}
+</style></head><body><div class="shell"><aside class="side"><div class="eyebrow">TDD / Production audit</div><div class="badge">Coverage qualified · not final</div><p>Audit only. No design change, approval promotion or gate waiver.</p><a class="jump" href="TDD_PHASE2_A_TO_J_WORKING_AUDIT.html">A–J report</a><a class="jump" href="D_PRODUCTION_GAP_REGISTER.html">Detailed gaps</a><a class="jump" href="G_ARTIST_READY_BRIEFS.html">Artist briefs</a><a class="jump" href="J_CD_DECISION_REGISTER.html">CD register</a><div class="toc">
+<ul>
+<li><a href="#g-artist-ready-production-briefs">G. Artist-ready production briefs</a><ul>
+<li><a href="#p2-b01-film-shot-demand-and-authority-handoff">P2-B01 — Film shot-demand and authority handoff</a><ul>
+<li><a href="#inputs">Inputs</a></li>
+<li><a href="#instructions">Instructions</a></li>
+<li><a href="#deliverables">Deliverables</a></li>
+<li><a href="#objective-acceptance-tests">Objective acceptance tests</a></li>
+</ul>
+</li>
+<li><a href="#p2-b02-adanna-bounded-technical-character-interpretation">P2-B02 — Adanna: bounded technical character interpretation</a><ul>
+<li><a href="#inputs_1">Inputs</a></li>
+<li><a href="#instructions_1">Instructions</a></li>
+<li><a href="#deliverables_1">Deliverables</a></li>
+<li><a href="#objective-acceptance-tests_1">Objective acceptance tests</a></li>
+</ul>
+</li>
+<li><a href="#p2-b03-cq-9-weaponsheath-construction-and-contact-test">P2-B03 — CQ-9 weapon/sheath construction and contact test</a><ul>
+<li><a href="#inputs_2">Inputs</a></li>
+<li><a href="#instructions_2">Instructions</a></li>
+<li><a href="#deliverables_2">Deliverables</a></li>
+<li><a href="#objective-acceptance-tests_2">Objective acceptance tests</a></li>
+</ul>
+</li>
+<li><a href="#p2-b04-approved-chapter8-settings-common-camera-ready-spatial-interpretation">P2-B04 — Approved Chapter8 settings: common camera-ready spatial interpretation</a><ul>
+<li><a href="#inputs_3">Inputs</a></li>
+<li><a href="#instructions_3">Instructions</a></li>
+<li><a href="#deliverables_3">Deliverables</a></li>
+<li><a href="#objective-acceptance-tests_3">Objective acceptance tests</a></li>
+</ul>
+</li>
+<li><a href="#p2-b05-hero-and-background-props-construction-reuse-and-operation">P2-B05 — Hero and background props: construction, reuse and operation</a><ul>
+<li><a href="#inputs_4">Inputs</a></li>
+<li><a href="#instructions_4">Instructions</a></li>
+<li><a href="#deliverables_4">Deliverables</a></li>
+<li><a href="#objective-acceptance-tests_4">Objective acceptance tests</a></li>
+</ul>
+</li>
+<li><a href="#p2-b06-character-rig-facialgroom-and-secondary-motion-validation">P2-B06 — Character rig, facial/groom and secondary-motion validation</a><ul>
+<li><a href="#inputs_5">Inputs</a></li>
+<li><a href="#instructions_5">Instructions</a></li>
+<li><a href="#deliverables_5">Deliverables</a></li>
+<li><a href="#objective-acceptance-tests_5">Objective acceptance tests</a></li>
+</ul>
+</li>
+<li><a href="#p2-b07-chapter4-silver-overcast-lighting-native-proof-not-another-2d-replacement">P2-B07 — Chapter4 silver-overcast lighting: native proof, not another 2D replacement</a><ul>
+<li><a href="#inputs_6">Inputs</a></li>
+<li><a href="#instructions_6">Instructions</a></li>
+<li><a href="#deliverables_6">Deliverables</a></li>
+<li><a href="#objective-acceptance-tests_6">Objective acceptance tests</a></li>
+</ul>
+</li>
+<li><a href="#p2-b08-restricted-fictional-design-boundary-h3-masks-and-proposed-practices">P2-B08 — Restricted fictional-design boundary: H3, masks and proposed practices</a><ul>
+<li><a href="#inputs_7">Inputs</a></li>
+<li><a href="#instructions_7">Instructions</a></li>
+<li><a href="#deliverables_7">Deliverables</a></li>
+<li><a href="#objective-acceptance-tests_7">Objective acceptance tests</a></li>
+</ul>
+</li>
+<li><a href="#p2-b09-look-development-render-and-compositing-proof-package">P2-B09 — Look-development, render and compositing proof package</a><ul>
+<li><a href="#inputs_8">Inputs</a></li>
+<li><a href="#instructions_8">Instructions</a></li>
+<li><a href="#deliverables_8">Deliverables</a></li>
+<li><a href="#objective-acceptance-tests_8">Objective acceptance tests</a></li>
+</ul>
+</li>
+<li><a href="#p2-b10-pipeline-capacity-specialist-staffing-and-purchase-decision">P2-B10 — Pipeline capacity, specialist staffing and purchase decision</a><ul>
+<li><a href="#inputs_9">Inputs</a></li>
+<li><a href="#instructions_9">Instructions</a></li>
+<li><a href="#deliverables_9">Deliverables</a></li>
+<li><a href="#objective-acceptance-tests_9">Objective acceptance tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</aside><main><h1 id="g-artist-ready-production-briefs">G. Artist-ready production briefs</h1>
+<p>AUDIT RECOMMENDATIONS ONLY — briefs are not commissioned and authorize no source/design alteration</p>
+<p>Use existing evidence first. Each brief starts only for the selected film shots and after its listed authority gates. Technical proposals remain labelled non-canon until separately accepted.</p>
+<h2 id="p2-b01-film-shot-demand-and-authority-handoff">P2-B01 — Film shot-demand and authority handoff</h2>
+<p><strong>Related gaps:</strong> P2-G00, P2-G01, P2-G02, P2-G21</p>
+<p><strong>Specialist:</strong> Story/editorial lead + layout supervisor + asset coordinator; CD approves the treatment</p>
+<p><strong>Start condition:</strong> Existing film evidence has been reconciled; no need to ask the owner to repeat a supplied decision.</p>
+<h3 id="inputs">Inputs</h3>
+<ul>
+<li>Complete scene/location registers and timeline</li>
+<li>Sealed 193-source crosswalk and exact CD authority</li>
+<li>Any existing film script/boards/animatic found during remaining inspection</li>
+</ul>
+<h3 id="instructions">Instructions</h3>
+<ol>
+<li>Make one row per actually selected shot, not per game proposal: ID, beat, duration, temporal state, characters/wardrobes, visible and interacted props, set extent, camera envelope, effects and sound/graphics dependencies.</li>
+<li>Link every row to exact governing source IDs/hashes and permitted use. Mark proposed game activities/alternate endings as unselected unless expressly chosen.</li>
+<li>Identify required views/sections/contacts from those cameras; do not commission an encyclopedic sheet set. Flag contradictions and outside-authority needs rather than choosing a new design.</li>
+</ol>
+<h3 id="deliverables">Deliverables</h3>
+<ul>
+<li>Versioned timed animatic/shot list if authorized by CD</li>
+<li>Shot-to-logical-asset/version/authority matrix</li>
+<li>Selected/excluded/proposed scope list and resource assumptions</li>
+</ul>
+<h3 id="objective-acceptance-tests">Objective acceptance tests</h3>
+<ul>
+<li>Every selected shot has a CD-approved beat and no unsupported added people/animals/cultural action.</li>
+<li>Every asset requirement joins exact design authority and a named technical deliverable; no orphan build or unallocated blocker.</li>
+<li>Runtime, fps/aspect/colour/output and intended camera/acting requirements are explicit before estimates become commitments.</li>
+</ul>
+<p><strong>Do not:</strong> Do not turn 135 game entries, eight chapters, UI tiles, seven memories or three endings into a film build order. Do not reopen the closed 6/21/12 review or sealed193 decisions.</p>
+<p><strong>Dependencies:</strong> Remaining audit evidence; CD/editorial selection. This brief does not authorize artwork generation.</p>
+<hr />
+<h2 id="p2-b02-adanna-bounded-technical-character-interpretation">P2-B02 — Adanna: bounded technical character interpretation</h2>
+<p><strong>Related gaps:</strong> P2-G03, P2-G05, P2-G07, P2-G08</p>
+<p><strong>Specialist:</strong> Senior character modeller with costume/groom technical artist; facial/body rigger joins before final topology</p>
+<p><strong>Start condition:</strong> CD has approved the exact separate production interpretation and resolved newly visible construction needed by selected shots; no preserved raster needs alteration.</p>
+<h3 id="inputs_1">Inputs</h3>
+<ul>
+<li>Approved Adanna portrait 1k08XH8VjNJAnSoMNU4YvBPtBEUdYD20y</li>
+<li>Preserved LEFT_SIDE/BACK V003 and selected front/three-quarter V005 internal-study references</li>
+<li>Interim partial upper-body Costume V002 1OcNpG55dadGkIUUar7W0Vm5Lkb2QGLJR</li>
+<li>Selected camera/action rows from P2-B01</li>
+</ul>
+<h3 id="instructions_1">Instructions</h3>
+<ol>
+<li>Build only the approved body/wardrobe interpretation in a separate native working asset, preserving likeness and left-sided identifiers. Do not derive height or a neutral body from a printed head grid alone.</li>
+<li>Keep skin, garments, straps, rigid ornaments and groom separate with explicit layer order, attachment points and collision roles. Unknown hidden construction remains a decision, not an artist invention.</li>
+<li>Choose deformation topology/UV detail from required face/shoulder/hip/hand shots; static rigid props do not need a universal all-quad rule. Keep modelling units/transforms and pivot convention documented.</li>
+<li>Review a neutral-light turn and only the commissioned close-up/camera poses against the authority packet before final texturing. No new character design is accepted by a technical pass.</li>
+</ol>
+<h3 id="deliverables_1">Deliverables</h3>
+<ul>
+<li>Approved technical interpretation sheet/decision references where actually needed</li>
+<li>Versioned native model with separated named objects, units, UVs and dependency manifest</li>
+<li>Neutral and approved-camera review renders with source-ID comparisons</li>
+<li>Rigger handoff: required motion/contacts and unresolved exclusions</li>
+</ul>
+<h3 id="objective-acceptance-tests_1">Objective acceptance tests</h3>
+<ul>
+<li>CD confirms the approved likeness and identifiers in the actual camera envelope.</li>
+<li>Required garment/skin surfaces are defined and no accessory/cloth/groom intersection is visible in required poses.</li>
+<li>Original V003 side/back hashes are unchanged, still PRESERVE/UNAPPROVED; no automatic V004, mirror, blade or full-body approval inferred from V005.</li>
+</ul>
+<p><strong>Do not:</strong> No redesign, automatic full turnaround, scar duplication, BACK armlet flip, baldric reversal or use of CQ-9 weapon dimensions. Do not clear RQ-10-1/U-11 through modelling.</p>
+<p><strong>Dependencies:</strong> P2-B01; explicit CD technical-design authority; CQ-9 before weapon contact. Production work is not started by this audit.</p>
+<hr />
+<h2 id="p2-b03-cq-9-weaponsheath-construction-and-contact-test">P2-B03 — CQ-9 weapon/sheath construction and contact test</h2>
+<p><strong>Related gaps:</strong> P2-G04, P2-G23</p>
+<p><strong>Specialist:</strong> Prop/weapon designer and modeller, character rigger, action animator; appropriate research where a factual claim is proposed</p>
+<p><strong>Start condition:</strong> CD resolves blade-design authority first. CQ-9 cannot be replaced by a good-looking sheath or a percentage measurement.</p>
+<h3 id="inputs_2">Inputs</h3>
+<ul>
+<li>Review-required blade board 1V12Sq2BZdIqjsgkx5GRpzGxc3nS3Gbac</li>
+<li>Standalone sheath 1gAun9ET_l0Ro8-oD2yIeKILp9jBx0rjJ as non-authoritative appearance reference only</li>
+<li>Approved character interpretation and commissioned carry/draw/contact shots</li>
+</ul>
+<h3 id="instructions_2">Instructions</h3>
+<ol>
+<li>After design selection, document units/datums, blade/grip/guard sections, sheath throat/cavity, hanger/baldric interface and approved material intent. Show only missing angles/sections needed to build and operate it.</li>
+<li>Place the approved grip in the approved hand, check fingers/thumb and wrist/forearm travel, and solve only the shot-required carry/draw/re-sheath path. Keep original sources untouched.</li>
+<li>Use contact/attachment constraints with clear parent switches; test cloth and body clearance before final prop materials or action animation.</li>
+</ol>
+<h3 id="deliverables_2">Deliverables</h3>
+<ul>
+<li>Signed exact-version weapon authority and metric construction specification</li>
+<li>Native separated blade/sheath/attachment model</li>
+<li>Real-time contact/draw test and collision/attachment notes</li>
+<li>Known exclusions and source traceability</li>
+</ul>
+<h3 id="objective-acceptance-tests_2">Objective acceptance tests</h3>
+<ul>
+<li>Approved geometry fits sheath and hand without impossible intersections.</li>
+<li>Every commissioned action completes without attachment pops, side swaps or costume penetration.</li>
+<li>No ~60cm/~42cm provisional value, 65%/70% guide or withdrawn coordinate is represented as original authority.</li>
+</ul>
+<p><strong>Do not:</strong> Do not insert a blade into preserved Adanna views, invent weapon canon or execute the withdrawn retouch guides.</p>
+<p><strong>Dependencies:</strong> CQ-9 design decision, P2-B01/P2-B02 and any relevant research/period decisions.</p>
+<hr />
+<h2 id="p2-b04-approved-chapter8-settings-common-camera-ready-spatial-interpretation">P2-B04 — Approved Chapter8 settings: common camera-ready spatial interpretation</h2>
+<p><strong>Related gaps:</strong> P2-G09, P2-G10, P2-G21</p>
+<p><strong>Specialist:</strong> Environment/layout supervisor with architectural modeller; CD retains design/canon authority</p>
+<p><strong>Start condition:</strong> CD has selected film use/canon and approved necessary metric/layout interpretation; no dimension is invented as existing canon.</p>
+<h3 id="inputs_3">Inputs</h3>
+<ul>
+<li>Approved Hall V004 1MHCd25z3x-cfBUf-eoCJvDLqwvYj9Ins</li>
+<li>Mothers' Courtyard V007 1EMYjEMCzfqhwEAfpvN8uDNfAddgLpVue</li>
+<li>Nneka interior V003 1kT8ucpt6HVWhWEM8xvLRxTyGGjrNIxgf and house V004 1JIoAiQ20goibDA-ujYr95iyihBTLKZWj</li>
+<li>Sealed Quarter V003 13jAtOMkXBazG2jbcFWZeBLsI1mufWJqU</li>
+<li>Selected shot cameras, character/prop contacts and exact Bible sections</li>
+</ul>
+<h3 id="instructions_3">Instructions</h3>
+<ol>
+<li>Create one coherent greybox plan for only the used spatial components. Record approved measurements, elevations, entrances, interior/exterior joins and camera paths.</li>
+<li>Preserve approved post/tree/door/roof/cloth/prop landmarks. Reconcile nested courtyard views in one spatial model; an inset is not proof of portal placement or parent assignment.</li>
+<li>Generate only missing reverse/elevation/section information needed by selected cameras. Keep approved sheen/carving and non-metric V013 study unchanged; do not revive folded-stair or add figures.</li>
+<li>Test the actual shot lens envelope and actor/prop clearance before final structural detail and UV/material production.</li>
+</ol>
+<h3 id="deliverables_3">Deliverables</h3>
+<ul>
+<li>Source-linked plan/elevation/section set limited to shot needs</li>
+<li>Native proxy scene with approved units/datums and cameras</li>
+<li>Camera/actor traversal proof and inside/outside continuity sheet</li>
+<li>Explicit unresolved/excluded areas; versioned layout authority</li>
+</ul>
+<h3 id="objective-acceptance-tests_3">Objective acceptance tests</h3>
+<ul>
+<li>All selected cameras, doors and actor paths fit one approved layout without collisions or changing landmarks.</li>
+<li>Inside/outside and reverse cuts agree; no required visible structure is hidden behind an unexplained illustration gap.</li>
+<li>All five original boards are unchanged with design approval preserved; no canon, metric or production approval is silently inherited.</li>
+</ul>
+<p><strong>Do not:</strong> No automatic V013 resizing/sharpening, universal camera lock, remodelling approved art as a correction, or construction of an entire game world.</p>
+<p><strong>Dependencies:</strong> P2-B01/P2-G02; Chapter8 use/scale decisions, specialist structural interpretation only where selected shots demand it.</p>
+<hr />
+<h2 id="p2-b05-hero-and-background-props-construction-reuse-and-operation">P2-B05 — Hero and background props: construction, reuse and operation</h2>
+<p><strong>Related gaps:</strong> P2-G07, P2-G14, P2-G20, P2-G23</p>
+<p><strong>Specialist:</strong> Prop technical artist/modeller; relevant craft specialist for fishing, forging, weaving or instrument operation</p>
+<p><strong>Start condition:</strong> Each prop's design/form authority and required action are explicit; external gates are closed or the prop/action is excluded.</p>
+<h3 id="inputs_4">Inputs</h3>
+<ul>
+<li>Selected shot interaction list</li>
+<li>Exact approved setting/character source IDs</li>
+<li>Existing Research/CD restrictions for blade, loom, drums, paddles, medicine, regalia and cultural claims</li>
+</ul>
+<h3 id="instructions_4">Instructions</h3>
+<ol>
+<li>Classify hero-contact, hero-visible static and background dressing. Set detail/UV/LOD budgets from actual screen size/parallax rather than one fixed polygon count.</li>
+<li>For contact props record units, grip/pivot/contact surfaces, attachment/hinge limits and required before/after state. For a functional mechanism obtain attributed construction evidence before modelling moving parts.</li>
+<li>Share approved repeated families/variants without copying unapproved motifs or changing character prop identity. Preserve clay E48 toy requirement, cold racks/hearths and tally-stroke-not-writing rules.</li>
+<li>SCN028 loom work cannot begin from an image labelled Akwete; SCN030 cannot be patched or regenerated. Paddle insertion waits for an approved reference; no heating cold racks to prove purpose.</li>
+</ol>
+<h3 id="deliverables_4">Deliverables</h3>
+<ul>
+<li>Per-selected-prop authority/interaction sheet</li>
+<li>Native model/material package with named pivots/attachments and approved variants</li>
+<li>Shot-distance silhouette/detail proof and contact/operation test</li>
+<li>Dependency/rights/research notes</li>
+</ul>
+<h3 id="objective-acceptance-tests_4">Objective acceptance tests</h3>
+<ul>
+<li>Required contacts and mechanisms operate plausibly with no slipping/intersections or unauthorized shape/material/side changes.</li>
+<li>Background detail survives the actual lens/motion without unnecessary unseen modelling or rigging.</li>
+<li>No cultural meaning, species, ritual use or period claim is invented from an appearance.</li>
+</ul>
+<p><strong>Do not:</strong> Do not turn every visible jar/hoe/canoe into a separate hero build or use generic libraries to override source identity.</p>
+<p><strong>Dependencies:</strong> P2-B01/B03 as applicable; precise design decisions and Research/craft gates.</p>
+<hr />
+<h2 id="p2-b06-character-rig-facialgroom-and-secondary-motion-validation">P2-B06 — Character rig, facial/groom and secondary-motion validation</h2>
+<p><strong>Related gaps:</strong> P2-G05, P2-G06, P2-G08, P2-G24</p>
+<p><strong>Specialist:</strong> Character TD/body-facial rigger and animation supervisor; groom/cloth specialist only for demonstrated shot needs</p>
+<p><strong>Start condition:</strong> Visible design and topology/UV interfaces are approved; no rig is used to invent hidden character features.</p>
+<h3 id="inputs_5">Inputs</h3>
+<ul>
+<li>Released character/wardrobe/prop model packages</li>
+<li>Approved selected expression/dialogue/action list</li>
+<li>Okwu void, Idemili contact, Amadioha scar/lightning and Hollow King cavity constraints</li>
+</ul>
+<h3 id="instructions_5">Instructions</h3>
+<ol>
+<li>Build required body/hand/eye/facial controls with stable asymmetry and explicit naming. Add phoneme/viseme capability only for actual approved language/dialogue; expression stills are targets, not a rig definition.</li>
+<li>Test the commissioned shoulder/hip/hand/neck range and contact tasks at actual shot distance; maintain eyelid/lip volume, scar placement and ornament attachment.</li>
+<li>Use a proxy groom/cloth collision setup before render density; choose constrained/animated secondary motion when sufficient. Cache expensive simulation only after blocking/animation inputs stabilize.</li>
+<li>Do not reveal or rig a prohibited Okwu face, infer python chirality from viewer-side reversal, or make a cavity pass through the body without authority.</li>
+</ol>
+<h3 id="deliverables_5">Deliverables</h3>
+<ul>
+<li>Versioned native rig and deformation test scene</li>
+<li>Approved-camera expression/action reel</li>
+<li>Groom/cloth proxy and cache/dependency manifest where needed</li>
+<li>Performance/memory report and animator-facing control notes</li>
+</ul>
+<h3 id="objective-acceptance-tests_5">Objective acceptance tests</h3>
+<ul>
+<li>No required pose collapses skin, eyelids/lips or silhouette; no accessory/groom/cloth penetration in the approved envelope.</li>
+<li>Contact and attachment switches are stable; secondary motion and caches replay deterministically through shot handles.</li>
+<li>Animator can open/use the rig within measured machine capacity; original design restrictions remain intact.</li>
+</ul>
+<p><strong>Do not:</strong> No automatic full facial library, muscle system, cloth sim or creature rig solely because software supports it.</p>
+<p><strong>Dependencies:</strong> P2-B01/B02/B03/B05; approved facial/action scope and exact specialist character decisions.</p>
+<hr />
+<h2 id="p2-b07-chapter4-silver-overcast-lighting-native-proof-not-another-2d-replacement">P2-B07 — Chapter4 silver-overcast lighting: native proof, not another 2D replacement</h2>
+<p><strong>Related gaps:</strong> P2-G15, P2-G22, P2-G25</p>
+<p><strong>Specialist:</strong> Lighting/look-development supervisor, with compositor for review transforms</p>
+<p><strong>Start condition:</strong> Native scene availability and its design authority are verified. This audit neither assumes a scene exists nor authorizes generating a replacement.</p>
+<h3 id="inputs_6">Inputs</h3>
+<ul>
+<li>Canoe Shed V002 16E4umob2MQdXGMRt1M9upT5yYOJ8-3UV</li>
+<li>Two-House Landing V002 1Zjbufzzg6J4eL-OEKVZgBgNV8hMw1lig</li>
+<li>Failed E53/E54 attempts as failure evidence only</li>
+<li>Approved geometry/native shot scene, if existing, otherwise separately commissioned through prior gates</li>
+</ul>
+<h3 id="instructions_6">Instructions</h3>
+<ol>
+<li>Retain approved canoe/house/rack/tool counts and geometry; use nondestructive sky/area-light/exposure/material controls to match the chosen soft silver-overcast chapter baseline.</li>
+<li>Render at the actual approved camera and a diagnostic angle only if authorized, with neutral and chapter review transforms recorded. Check shadow direction/softness, highlight colour and sky-to-ground ratio in motion.</li>
+<li>Keep the freestanding side-set fish rack cold/unlit. No fire, smoke, furnace, added people, sunny chapter variant or full-frame generative restaging.</li>
+</ol>
+<h3 id="deliverables_6">Deliverables</h3>
+<ul>
+<li>Versioned native lighting setup and colour-management settings</li>
+<li>Before/native-proof review frames and short moving proof</li>
+<li>Performance/AOV/comp handoff and explicit approved geometry manifest</li>
+</ul>
+<h3 id="objective-acceptance-tests_6">Objective acceptance tests</h3>
+<ul>
+<li>Warm directional sun/shadows no longer contradict silver-overcast direction in the commissioned shot.</li>
+<li>Geometry/counts/staging remain the chosen approved design and the cold rack remains cold.</li>
+<li>E53/E54 V003 failed relights are not named replacements; actual native proof is separately reviewed and approved.</li>
+</ul>
+<p><strong>Do not:</strong> Do not call a colour grade a physical relight or invent albedo/light reconstruction from a flattened JPEG.</p>
+<p><strong>Dependencies:</strong> P2-B01/B04/B05 where relevant; native scene and material release, no generation authorized here.</p>
+<hr />
+<h2 id="p2-b08-restricted-fictional-design-boundary-h3-masks-and-proposed-practices">P2-B08 — Restricted fictional-design boundary: H3, masks and proposed practices</h2>
+<p><strong>Related gaps:</strong> P2-G17, P2-G18, P2-G20</p>
+<p><strong>Specialist:</strong> Research lead, appropriately scoped cultural consultant and relevant living custodian if restricted practice is implicated; CD selects fiction</p>
+<p><strong>Start condition:</strong> The intended fictional use is stated precisely; historical/trashed reviews are not counted as live clearance.</p>
+<h3 id="inputs_7">Inputs</h3>
+<ul>
+<li>Exact H3 V002/V003 source IDs and separate Field of Cloth reference</li>
+<li>Current D9/RQ-01 and SCN028/SCN030 controls</li>
+<li>Selected film usage/copy/camera context; existing research evidence, including its restrictions and history</li>
+</ul>
+<h3 id="instructions_7">Instructions</h3>
+<ol>
+<li>Separate visible image facts, proposed fictional interpretation and any asserted real-world practice/locality/meaning. Do not identify cargo as bodies or a mask as an authentic masquerade from appearance.</li>
+<li>Document who is qualified to speak to the exact proposed practice and what they can/cannot authorize. Obtain living-custodian direction only when the actual scope implicates it; do not invent universal restrictions or proxy scholarly authority.</li>
+<li>Give CD a source-cited allowed/excluded/needs-replacement boundary for the exact file/version/shot. No artist starts a visual repair as a workaround for an authority gate.</li>
+</ol>
+<h3 id="deliverables_7">Deliverables</h3>
+<ul>
+<li>Attributed evidence/scope statement with source IDs and consultation provenance</li>
+<li>Exact allowed/prohibited fictional use and residual limits</li>
+<li>CD adaptation/exclusion decision; separate design brief only if later authorized</li>
+</ul>
+<h3 id="objective-acceptance-tests_7">Objective acceptance tests</h3>
+<ul>
+<li>D9/RQ-01 and other protected gates have explicit exact-scope closure evidence or the material is excluded from commissioned work.</li>
+<li>Fictional CD choice is not represented as authenticity, permission for an unrelated practice or restoration of a trashed review.</li>
+<li>Field SUB005 and Landing SUB004 remain correctly mapped; SCN030 has no patch/regeneration order.</li>
+</ul>
+<p><strong>Do not:</strong> No invented consultant, custodian, clearance, ritual exception, recovered-original provenance or new generation.</p>
+<p><strong>Dependencies:</strong> P2-B01 selected use and existing authority controls. Consultation need is not waived by visual quality.</p>
+<hr />
+<h2 id="p2-b09-look-development-render-and-compositing-proof-package">P2-B09 — Look-development, render and compositing proof package</h2>
+<p><strong>Related gaps:</strong> P2-G06, P2-G22, P2-G25, P2-G26, P2-G29</p>
+<p><strong>Specialist:</strong> Look-development/lighting TD, compositor, editor/QC; CD approves look and storytelling</p>
+<p><strong>Start condition:</strong> Project colour workflow and native application/render versions are pinned; no source palette is mistaken for calibrated material data.</p>
+<h3 id="inputs_8">Inputs</h3>
+<ul>
+<li>Released geometry/rig/layout and exact chapter rules</li>
+<li>Actual delivery/frame-rate/aspect/display targets</li>
+<li>Approved moving shot samples covering skin/groom, dim interior, water/volume and emission where actually used</li>
+<li>If selected: batch20 exact CH6threshold/Still WaterV002/Memory Room/Unfinished Edge sources and their approved impossible-space effect/camera interpretation</li>
+</ul>
+<h3 id="instructions_8">Instructions</h3>
+<ol>
+<li>Document colour/data texture spaces, working scene-linear space, view transform and review/output encoding. Choose only needed shader channels, UDIMs and render AOVs, with tested tangent/displacement and depth/vector conventions.</li>
+<li>Render temporal tests at actual shot scale: close-up skin/eyes/hair, distant repeated thatch/foliage, dark voids and volumes, water/speculars and WHITE lightning only when selected. Preserve no-flame/no-wind and cold-rack restrictions.</li>
+<li>Deliver controllable graphics/holdouts/IDs/volumes and verify premultiplication/edge behaviour. Validate titles, diacritics and safe areas from approved copy; no game HUD is ordered automatically.</li>
+<li>Measure peak memory and p95 frame time; check denoising/flicker in motion rather than accepting a single attractive frame.</li>
+<li>For selected CH6impossible-space shots, prototype a separate reflected/portal scene or controlled camera/layer treatment with explicit occlusion/holdouts, mapping and exposure. Keep intentional midday/absent-door reflection distinct from physical dusk; do not relight the whole world or assume an expensive recursive/deep engine is required. Test recursive-room/world-edge beats only if commissioned.</li>
+</ol>
+<h3 id="deliverables_8">Deliverables</h3>
+<ul>
+<li>Pinned native render/colour/comp templates and dependency manifest</li>
+<li>Representative approved moving proof and reference comparisons</li>
+<li>Documented image sequence/AOV/ID/holdout package as required</li>
+<li>Reopen/re-render/recomp and QC/performance report</li>
+</ul>
+<h3 id="objective-acceptance-tests_8">Objective acceptance tests</h3>
+<ul>
+<li>Reopened scene and comp reproduce the signed look without missing assets or colour shifts.</li>
+<li>No visible seams, temporal flicker, unstable denoising, clipped unwanted light, bad alpha edges or prohibited design reveal.</li>
+<li>Outputs match approved delivery; measured memory/time/storage fit actual capacity with agreed headroom.</li>
+<li>Selected moving-camera/actor tests show no false-reflection/portal projection pops, incorrect parallax, alpha/occlusion leaks or unintended room/identity/lighting reveal; native mapping and comp reproduce the approved effect with original boards unchanged.</li>
+</ul>
+<p><strong>Do not:</strong> No fixed universal sample count, texture size, ACES adoption, camera lock or expensive renderer by default; prove what this film needs.</p>
+<p><strong>Dependencies:</strong> P2-B01 and released asset/animation inputs; P2-B10 capacity validation.</p>
+<hr />
+<h2 id="p2-b10-pipeline-capacity-specialist-staffing-and-purchase-decision">P2-B10 — Pipeline capacity, specialist staffing and purchase decision</h2>
+<p><strong>Related gaps:</strong> P2-G01, P2-G27, P2-G28</p>
+<p><strong>Specialist:</strong> Producer + pipeline/render TD; CD sets standards, approves spend and delegates specialist execution</p>
+<p><strong>Start condition:</strong> Existing resource evidence is checked before requesting it again. No assumed hardware or film duration is used as fact.</p>
+<h3 id="inputs_9">Inputs</h3>
+<ul>
+<li>Actual CPU/RAM/GPU/VRAM/OS/drives/display/licences/network inventory</li>
+<li>Team skills/availability, budget/schedule and approved delivery</li>
+<li>Representative authorized proxy/native shot tests, not only this audit's sandbox</li>
+</ul>
+<h3 id="instructions_9">Instructions</h3>
+<ol>
+<li>Run a small reproducible benchmark including the selected hero groom/cloth, repeated environment, darkest volume and water/emission case actually present. Record version/settings, median/p95 time, peak RAM/VRAM, cache IO and viewport response.</li>
+<li>Calculate total frames from approved durations/fps; render-hours from measured per-frame time and effective worker concurrency; storage from measured sequence/AOV/cache bytes and revision/backup policy. Include startup/retry/QC overhead explicitly.</li>
+<li>Choose essential DCC/paint/comp/edit/tracking/backup tools first. Add sculpting/texturing/simulation/farm capabilities only when the benchmark and assigned specialists justify their cost.</li>
+<li>Test an independent restore/reopen of a native asset and shot. Do not use downloaded sync/build scripts or change canonical Drive organisation to make the test pass.</li>
+</ol>
+<h3 id="deliverables_9">Deliverables</h3>
+<ul>
+<li>Actual resource/licence/staffing worksheet and measured benchmark</li>
+<li>Capacity/cost/schedule sheet with assumptions and headroom</li>
+<li>Essential/conditional/unneeded software and hardware decision</li>
+<li>Version-pinned handoff/backup/restore procedure with named owners</li>
+</ul>
+<h3 id="objective-acceptance-tests_9">Objective acceptance tests</h3>
+<ul>
+<li>The approved quality target fits measured capacity or an explicit funded alternative plan; no quality downgrade is hidden as a beginner accommodation.</li>
+<li>All specialist deliverables have an accountable executor; the CD is not assumed to perform every discipline.</li>
+<li>Restore/reopen/re-render test succeeds independently; procurement/farm bookings are not made without owner approval.</li>
+</ul>
+<p><strong>Do not:</strong> No blind GPU/workstation purchase, fixed universal VRAM minimum, unsolicited paid stack or claim that a cloud farm fixes unresolved design.</p>
+<p><strong>Dependencies:</strong> P2-B01 selected cut/delivery, actual resources and approved budget; no procurement executed by this audit.</p>
+<hr /><div class="footer">Additive working audit. Raw source art/download staging is not bundled as a complete source backup. The explicit remaining-inspection queue controls completeness. Recommendations are not execution.</div></main></div></body></html>

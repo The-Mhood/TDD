@@ -1,0 +1,65 @@
+{
+  "parent_id": "1dgDDj-JqZhZdacUJgxrFZHWByN6h3dC5",
+  "connector_response_request_id": "e38c7690-7d40-423d-8f3e-215ea88f9cd7",
+  "page": 1,
+  "observed_count": 4,
+  "entries": [
+    {
+      "id": "16E4umob2MQdXGMRt1M9upT5yYOJ8-3UV",
+      "name": "ENV_CH04-INT-003_THE_CANOE_SHED_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1dgDDj-JqZhZdacUJgxrFZHWByN6h3dC5"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 393111,
+      "md5": "c0eda25149958ecf6a6eff5764f67ae0",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Slo9WE8ezx6yDe-zS-moGTItO-f1dQ_t",
+      "name": "ENV_CH04-INT-003_THE_CANOE_SHED_V003.png",
+      "mime_type": "image/png",
+      "parents": [
+        "1dgDDj-JqZhZdacUJgxrFZHWByN6h3dC5"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 2671009,
+      "md5": "5ef3dedeea74529772efdb7611a269db",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Zjbufzzg6J4eL-OEKVZgBgNV8hMw1lig",
+      "name": "ENV_CH04-SET-002_THE_TWO_HOUSE_LANDING_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1dgDDj-JqZhZdacUJgxrFZHWByN6h3dC5"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 371136,
+      "md5": "b90eb10a3a9ff284f59702413f6301c4",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1lrjAnGZRQ7srJxZMTg7Gs7wxZUlDEm_H",
+      "name": "ENV_CH04-SET-002_THE_TWO_HOUSE_LANDING_V003.png",
+      "mime_type": "image/png",
+      "parents": [
+        "1dgDDj-JqZhZdacUJgxrFZHWByN6h3dC5"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 2561404,
+      "md5": "c69b19bb81d7191c6c65529c2c11508b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

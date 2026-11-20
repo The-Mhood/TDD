@@ -1,0 +1,162 @@
+[
+  {
+    "sha256": "9e220d65a331ea4bed32eed84732c203447455a87df22967bff63ba33411cf85",
+    "bytes": 990,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/9e220d65a331ea4bed32eed84732c203447455a87df22967bff63ba33411cf85/ARCHIVED_TO_DRIVE.md",
+    "source_archive": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_03_City_of_the_Living_Dead/ARCHIVED_TO_DRIVE.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "9f6a4fa4bbdbc9d99c8791133cce82153ad1323d1a0a1efa6c95bd53a9f0ae9a",
+    "bytes": 1075,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/9f6a4fa4bbdbc9d99c8791133cce82153ad1323d1a0a1efa6c95bd53a9f0ae9a/ARCHIVED_TO_DRIVE.md",
+    "source_archive": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_01_Forbidden_Forest/ARCHIVED_TO_DRIVE.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "1e3a27e1d850f95fc5bb47a33c267ed91ac5a6e56cee0ac4f09494c9e990a4c2",
+    "bytes": 871,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/1e3a27e1d850f95fc5bb47a33c267ed91ac5a6e56cee0ac4f09494c9e990a4c2/ARCHIVED_TO_DRIVE.md",
+    "source_archive": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_04_River_of_Idemili/ARCHIVED_TO_DRIVE.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "4ffbad3bd1fa75fa3673f6d2a7ffb6449ff22c45fdaca0e14b1f7ede2ddc5823",
+    "bytes": 851,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/4ffbad3bd1fa75fa3673f6d2a7ffb6449ff22c45fdaca0e14b1f7ede2ddc5823/ARCHIVED_TO_DRIVE.md",
+    "source_archive": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_02_Kingdom_Beneath_the_Earth/ARCHIVED_TO_DRIVE.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "be9dc9849108da2f1f186e5d86cce1f6172a22c223ccb570d0bf7edfda284b89",
+    "bytes": 1626,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/be9dc9849108da2f1f186e5d86cce1f6172a22c223ccb570d0bf7edfda284b89/README.md",
+    "source_archive": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/16_REJECTED_DESIGNS/README.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "a09386cabdcb77afc39fc0ecd9fdfe8e32d65ded681e326f26aa9f811cda566a",
+    "bytes": 35570,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/a09386cabdcb77afc39fc0ecd9fdfe8e32d65ded681e326f26aa9f811cda566a/ART_BIBLE_INDEX.md",
+    "source_archive": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ART_BIBLE_INDEX.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "a87e5fdeb381325fe63182445f2f4b2e8239a1bcaa8bb81ca3500c40e9bd6169",
+    "bytes": 8360,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/a87e5fdeb381325fe63182445f2f4b2e8239a1bcaa8bb81ca3500c40e9bd6169/CHARACTER_DESIGN_REGISTER.md",
+    "source_archive": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/CHARACTER_DESIGN_REGISTER.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "6fb3889586d45d681073048ee7dcf5c952e5ac504f579359e22ee0743286fb6c",
+    "bytes": 2491,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/6fb3889586d45d681073048ee7dcf5c952e5ac504f579359e22ee0743286fb6c/CHARACTER_NAMES_PROPOSAL.md",
+    "source_archive": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/CHARACTER_NAMES_PROPOSAL.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "b30c899c198776dcd41165654f266a3920b0a5082bff988214b66525ac44a17b",
+    "bytes": 7920,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/b30c899c198776dcd41165654f266a3920b0a5082bff988214b66525ac44a17b/ENVIRONMENT_DESIGN_REGISTER.md",
+    "source_archive": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ENVIRONMENT_DESIGN_REGISTER.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "679e19db524317ac33031c2245403a0a0132e8d9d09f31a4feab4b38e53112df",
+    "bytes": 4157,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/679e19db524317ac33031c2245403a0a0132e8d9d09f31a4feab4b38e53112df/OPEN_ART_DECISIONS.md",
+    "source_archive": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/OPEN_ART_DECISIONS.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "988d7826e30b1859c7397ec231ae517f8256254cf5602a4c1ce3d7cd7b7ae421",
+    "bytes": 3463,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/988d7826e30b1859c7397ec231ae517f8256254cf5602a4c1ce3d7cd7b7ae421/VISUAL_STYLE_GUIDE.md",
+    "source_archive": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/VISUAL_STYLE_GUIDE.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "83d4f63aea85234b463aad756a553b2bb670e41287095214f9e6a28e78b1a2ca",
+    "bytes": 954,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/83d4f63aea85234b463aad756a553b2bb670e41287095214f9e6a28e78b1a2ca/ARCHIVED_TO_DRIVE.md",
+    "source_archive": "1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_04_River_of_Idemili/ARCHIVED_TO_DRIVE.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "b6b860714938c5b5ad165f2406b56c7ba25487f8556636843452becec1b57629",
+    "bytes": 1718,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/b6b860714938c5b5ad165f2406b56c7ba25487f8556636843452becec1b57629/README.md",
+    "source_archive": "1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/16_REJECTED_DESIGNS/README.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "22bdb81d64a01d1270204ce0391a6f9df5f610c80a89d6f8eef5ccf0e5111467",
+    "bytes": 37949,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/22bdb81d64a01d1270204ce0391a6f9df5f610c80a89d6f8eef5ccf0e5111467/ART_BIBLE_INDEX.md",
+    "source_archive": "1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ART_BIBLE_INDEX.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "c71ad91c989e30fa6c924aaa455ca7737f59b3f75b0ecd3627f70e58493dcf38",
+    "bytes": 9067,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/c71ad91c989e30fa6c924aaa455ca7737f59b3f75b0ecd3627f70e58493dcf38/ENVIRONMENT_DESIGN_REGISTER.md",
+    "source_archive": "1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ENVIRONMENT_DESIGN_REGISTER.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "f90c84587cd080dc4d52d4a966b1f3b1fdb87cf824dbfe0aea30a0c24b02e49f",
+    "bytes": 4213,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/f90c84587cd080dc4d52d4a966b1f3b1fdb87cf824dbfe0aea30a0c24b02e49f/OPEN_ART_DECISIONS.md",
+    "source_archive": "1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/OPEN_ART_DECISIONS.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "9a4ede65db18a7a87958448b35d9a94960d9e98513141d7da7bf7bc0f9aff7b8",
+    "bytes": 891,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/9a4ede65db18a7a87958448b35d9a94960d9e98513141d7da7bf7bc0f9aff7b8/ARCHIVED_TO_DRIVE.md",
+    "source_archive": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_05_Mountain_of_Thunder/ARCHIVED_TO_DRIVE.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "7e4edf983d356736421fa3b0d7a2701d354244480470e6588b3461cfa9765003",
+    "bytes": 1808,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/7e4edf983d356736421fa3b0d7a2701d354244480470e6588b3461cfa9765003/README.md",
+    "source_archive": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/16_REJECTED_DESIGNS/README.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "f8224ffffa59b0e1053e0788fe1c438ef5493f650d883ef54350e7280df98939",
+    "bytes": 40330,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/f8224ffffa59b0e1053e0788fe1c438ef5493f650d883ef54350e7280df98939/ART_BIBLE_INDEX.md",
+    "source_archive": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ART_BIBLE_INDEX.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  },
+  {
+    "sha256": "8ad2de5c8ae2a311e8ea2fb6f67eeef52114fa8adb001526ad4cbfa869b8d042",
+    "bytes": 10213,
+    "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/8ad2de5c8ae2a311e8ea2fb6f67eeef52114fa8adb001526ad4cbfa869b8d042/ENVIRONMENT_DESIGN_REGISTER.md",
+    "source_archive": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3",
+    "source_member": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ENVIRONMENT_DESIGN_REGISTER.md",
+    "purpose": "Durable small text evidence copy for complete semantic audit; exact bytes only, no source script execution or approval inheritance."
+  }
+]

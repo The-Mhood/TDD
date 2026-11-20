@@ -1,0 +1,26 @@
+{
+  "parent_id": "1hSAxthJ96jfgSIUVpglHw26OSVrJQ-6Q",
+  "connector_response_request_id": "e8c24290-8ca3-4498-ac23-f5d231acbab2",
+  "page": 1,
+  "observed_count": 1,
+  "entries": [
+    {
+      "id": "1V12Sq2BZdIqjsgkx5GRpzGxc3nS3Gbac",
+      "name": "WEAPON_ADANNA_PRIMARY_BLADE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1hSAxthJ96jfgSIUVpglHw26OSVrJQ-6Q"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 521776,
+      "md5": "bbeb0788667643d86e9adfde0326399e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

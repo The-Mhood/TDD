@@ -1,0 +1,58 @@
+{
+  "production_root": {
+    "id": "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ",
+    "path": "PRODUCTION"
+  },
+  "pending": {
+    "id": "11DxQ0d_noAPbZCPrYQBkUonHFl_cFAWm",
+    "path": "PRODUCTION/PENDING"
+  },
+  "original_container": {
+    "id": "1YUCfczTDGsdcMGz3favvphMabMR9q9PJ",
+    "path": "PRODUCTION/PENDING/ORIGINAL_VA_SUBMISSIONS"
+  },
+  "assistant_container": {
+    "id": "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab",
+    "path": "PRODUCTION/PENDING/ASSISTANT_VA_SUBMISSIONS"
+  },
+  "final_records": {
+    "id": "1JxQwdks0hObYrtMyC4yW6Gqg2xkeN_cM",
+    "path": "PRODUCTION/10_DOCUMENTATION/Production_Reports/OUR_EYES_CD_FINAL_VERDICTS_v1"
+  },
+  "visual_release": {
+    "id": "1QAlhbwuG63DEcHwfcTI-gbLp680cui7Q",
+    "path": "PRODUCTION/14_APPROVED_DESIGNS/OUR_EYES_VISUAL_RELEASE_ONLY_NOT_PRODUCTION"
+  },
+  "rejected": {
+    "id": "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG",
+    "path": "PRODUCTION/16_REJECTED_DESIGNS/OUR_EYES_FINAL_193_REJECTED"
+  },
+  "superseded": {
+    "id": "1nRUYZLog7y1-EWFt0sPQ22n50IEnSb4P",
+    "path": "PRODUCTION/19_LEGACY_BATCH_ARCHIVES/OUR_EYES_FINAL_193_SUPERSEDED"
+  },
+  "documents": {
+    "id": "1P-5sX_fz2pkJCo0QnmU9T2zHu8iaqbFk",
+    "path": "PRODUCTION/10_DOCUMENTATION/Production_Reports/OUR_EYES_CD_FINAL_VERDICTS_v1/DOCUMENTARY_EVIDENCE_88"
+  },
+  "aids": {
+    "id": "1CA2zjdW4b7vO0dTSgDz6Oi_b-5nwsIuZ",
+    "path": "PRODUCTION/18_REFERENCE_MATERIAL/OUR_EYES_REVIEW_AIDS_27"
+  },
+  "corrections": {
+    "id": "1dgDDj-JqZhZdacUJgxrFZHWByN6h3dC5",
+    "path": "PRODUCTION/OUR_EYES_AUTHORISED_CORRECTIONS_NOT_APPROVED"
+  },
+  "external": {
+    "id": "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf",
+    "path": "PRODUCTION/OUR_EYES_EXTERNAL_AUTHORITY_REQUIRED"
+  },
+  "release36": {
+    "id": "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb",
+    "path": "PRODUCTION/10_DOCUMENTATION/Production_Reports/OUR_EYES_CD_FINAL_VERDICTS_v1/CD_FINAL_VERDICTS_AND_RELEASE_36"
+  },
+  "studies": {
+    "id": "11Dq42fI9zCln4ylwdilSMjB4ME8NF3Oe",
+    "path": "PRODUCTION/15_EXPLORATORY_DESIGNS/OUR_EYES_DEFINED_SCOPE_STUDIES"
+  }
+}

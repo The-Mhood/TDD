@@ -1,0 +1,39 @@
+{
+  "parent_id": "1icvOapXvsuIunPUguFQjy1uGYL380Vh_",
+  "connector_response_request_id": "5288e89d-fa1a-4373-8a25-2004fe009bb1",
+  "page": 1,
+  "observed_count": 2,
+  "entries": [
+    {
+      "id": "131hAmvi7fLtkPFcWRAIbpCiQe1ADXLiu",
+      "name": "LOCATION_CHANGELOG.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1icvOapXvsuIunPUguFQjy1uGYL380Vh_"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 37269,
+      "md5": "fa615651eb8b155316deabd6a28cf86b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1c6SaYn1U2JLX0wu6sg-fpvPX5T1LAb0Q",
+      "name": "OPEN_ART_DECISIONS.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1icvOapXvsuIunPUguFQjy1uGYL380Vh_"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 21812,
+      "md5": "905a29f1e46593ff96ffe7fbc33f1aae",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

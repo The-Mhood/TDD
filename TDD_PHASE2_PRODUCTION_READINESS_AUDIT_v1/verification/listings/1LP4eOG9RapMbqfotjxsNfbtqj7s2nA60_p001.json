@@ -1,0 +1,270 @@
+{
+  "parent_id": "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60",
+  "connector_response_request_id": "710b00be-c2c6-45ec-ae43-605bce942e12",
+  "page": 1,
+  "observed_count": 20,
+  "entries": [
+    {
+      "id": "1nRUYZLog7y1-EWFt0sPQ22n50IEnSb4P",
+      "name": "OUR_EYES_FINAL_193_SUPERSEDED",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1o2mFlhEAow2ADx9ohA3VE9yVvZ7HVeQq",
+      "name": "ART_BIBLE_INDEX_superseded_early_copy.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "6",
+      "is_folder": false,
+      "bytes": 14980,
+      "md5": "6d848bd65f8041323e27aac32fe2cf1a",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "16A5_UCJIltKP4aORoQsDoOhnTszTbinE",
+      "name": "BATCH_01_Visual_Identity_2026-11-15.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 11775904,
+      "md5": "b40d4c45a2010d983d2ebb5985c8ae78",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1xDa-eLAA_uqiXqM_UFYwsEeg3-tE8DUx",
+      "name": "BATCH_02_Remaining_Cast_2026-11-15.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "5",
+      "is_folder": false,
+      "bytes": 11330918,
+      "md5": "2f5a95d05203bc838140a24736439f76",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "11_vDmOZKYOr7kxdCBVNjA8FSltpB4ukG",
+      "name": "BATCH_03_NPC_Population_partial_2026-11-15.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 1653457,
+      "md5": "a643b94c9b25f15d25cd9a8b0efeaa85",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1DTDcHHJ2rwGINsJaKeFdtmzIznYWP8ik",
+      "name": "DOCUMENTATION_2026-11-15.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "5",
+      "is_folder": false,
+      "bytes": 17781,
+      "md5": "517e0b576c05fd871e664ced27ee38fb",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1gsyfHhJPTx5X9u171BLG5CElJLqzhjev",
+      "name": "REFERENCE_CONTROL_and_REJECTED_2026-11-15.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 25140978,
+      "md5": "36ba47eb04ab00b6b2b91e0459a1ebdd",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1DokBx6aufmOt7pd0hWqh5cDLPKdwVTC9",
+      "name": "UPDATE_2026-11-15b_Batch2_final_and_Batch3_part2.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 12217418,
+      "md5": "51ce07711ecb9d7001e3715bc2288398",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1k82WpFG3y11YI8Yw990fQn55xh7ogdbh",
+      "name": "UPDATE_2026-11-15c_Batch3_final_and_Batch1_backlog.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 11592515,
+      "md5": "51646eb0396d89ffea9a97ea44e449c3",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "19SlpafY-5Kig8XdZbHxkpR-F-PRT0oBF",
+      "name": "UPDATE_2026-11-15d_Fix_round_and_Batch4_Forest_part1.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 13258708,
+      "md5": "10fc3b5bd3d814600eec025f38cd6e2d",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1V-JB45XmA43JlHL19qrA7J_zzPb9ZyhD",
+      "name": "UPDATE_2026-11-15e_Batch4_Forest_part2_and_Okorie.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 16884808,
+      "md5": "2fb5e239936cfa848a9cc618a2ffd85e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1f9M9GUHbV2nC06jraFU3ra1SXphDVSrW",
+      "name": "UPDATE_2026-11-15f_Forest_complete_and_Chapter2_part1.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 26346056,
+      "md5": "00ec63a26775166920813204e16dce88",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1TxGIVY6M1fdcYV9RdUuuyGm6Z7nHkra9",
+      "name": "UPDATE_2026-11-15g_Chapter2_complete_and_Chapter3_start.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 20719528,
+      "md5": "65f9907a5c64e7c0ce1083719113c6d2",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "14F5kaYYanZTYMSl21h_SlqmR6ijejOK1",
+      "name": "UPDATE_2026-11-15h_Locations_Ch1-3_title_layout_corrected.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 19860186,
+      "md5": "0638524545b87f09bec2047054db2829",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1ymJms5K4mKCXirF8SruCUQ4dPf6E5uNP",
+      "name": "UPDATE_2026-11-15i_Chapter3_part2_and_Chapter2_redos.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 26083843,
+      "md5": "540bcf4d5a987b9c37fdc3d45dd5f74f",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "153muRvSyGjLaZfGNkRXTkUO40Ut8Gi3b",
+      "name": "UPDATE_2026-11-15j_Chapter3_complete_and_Chapter4_start.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 19199010,
+      "md5": "08c9eac8cd7d033306c0572a97d7f461",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1KndWNVmF7iLDboS8iBKeULXapOEYA-qx",
+      "name": "UPDATE_2026-11-15k_Chapter4_complete.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 17005865,
+      "md5": "a32d59265ad63b36b6f6f1e94f955ffc",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+      "name": "UPDATE_2026-11-15l_Chapter5_part1.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 10030740,
+      "md5": "7a66a69a56824b89c5dcf3e79e4851a3",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9",
+      "name": "UPDATE_2026-11-15m_Chapter5_complete_and_Chapter6_start.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 18497468,
+      "md5": "d0aa82bb61bc2d6cb61f6073e4dc06d0",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3",
+      "name": "UPDATE_2026-11-15n_Chapter6_complete_and_Chapter7_start.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 13201046,
+      "md5": "13d70b6c3600a599e7aaa2c283c1800e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

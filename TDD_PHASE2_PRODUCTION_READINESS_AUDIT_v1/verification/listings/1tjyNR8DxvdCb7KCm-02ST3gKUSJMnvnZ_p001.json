@@ -1,0 +1,103 @@
+{
+  "parent_id": "1tjyNR8DxvdCb7KCm-02ST3gKUSJMnvnZ",
+  "connector_response_request_id": "9f32dcd3-11f2-4109-9609-1a0eeab49357",
+  "page": 1,
+  "observed_count": 9,
+  "entries": [
+    {
+      "id": "1y6_MlhcWg8PHFFmGB6vI12O9XjRBmC-j",
+      "name": "Adanna",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1tjyNR8DxvdCb7KCm-02ST3gKUSJMnvnZ"
+      ],
+      "drive_version": "5",
+      "is_folder": true
+    },
+    {
+      "id": "1o_NY_ZxGltnyLzBjxd_1ldcvsY6BPv0n",
+      "name": "Amadioha",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1tjyNR8DxvdCb7KCm-02ST3gKUSJMnvnZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "1cO8ocqWowHak44R1EVnCEWsyibsBMNz0",
+      "name": "Ezeani",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1tjyNR8DxvdCb7KCm-02ST3gKUSJMnvnZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "1QPjoNy5kantthPL8SDs4VNJx_uIrP1D7",
+      "name": "Hollow_King",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1tjyNR8DxvdCb7KCm-02ST3gKUSJMnvnZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "1T-qczebBIo08vXQkH_7TNB4P4ZAPkn0-",
+      "name": "Idemili",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1tjyNR8DxvdCb7KCm-02ST3gKUSJMnvnZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "1ieL8Sa3M-j84ot_P6geGKpI9vwqeGcuX",
+      "name": "Nneka",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1tjyNR8DxvdCb7KCm-02ST3gKUSJMnvnZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "1e9N6l6eUzk0mA_myxOL062DzX46F84OW",
+      "name": "NPC_Population",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1tjyNR8DxvdCb7KCm-02ST3gKUSJMnvnZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "13b_oRpqnrW7l9qNYwsACE95ca5CpfuGA",
+      "name": "Okwu",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1tjyNR8DxvdCb7KCm-02ST3gKUSJMnvnZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "15d9DCMOyJ4qFgAuOP73i-FgGJEv3WHgW",
+      "name": "Supporting_Characters",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1tjyNR8DxvdCb7KCm-02ST3gKUSJMnvnZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

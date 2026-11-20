@@ -1,0 +1,26 @@
+{
+  "parent_id": "1UrSRH9gyZuY_ZUy-8nP5BcLXdGi3i-Om",
+  "connector_response_request_id": "d287d282-e390-40d6-82d9-1fdb09afc6d8",
+  "page": 1,
+  "observed_count": 1,
+  "entries": [
+    {
+      "id": "1IthZH7demq9py_h4IcvFWofwtgjO7lMW",
+      "name": "ART_MATERIAL_LANGUAGE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1UrSRH9gyZuY_ZUy-8nP5BcLXdGi3i-Om"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 816498,
+      "md5": "4b52140f9393bc179ab748716e79b611",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

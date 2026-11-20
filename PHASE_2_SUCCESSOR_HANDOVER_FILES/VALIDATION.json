@@ -1,0 +1,24 @@
+{
+  "status": "HANDOVER_VALIDATED",
+  "handover_exists": true,
+  "handover_bytes": 75194,
+  "handover_sha256": "1054b044b1969a5eda90ac72ee2cfbe71d4c967f865f8d949723a642079d2112",
+  "required_A_to_L_sections": true,
+  "local_output_links_verified": 90,
+  "broken_output_links": [],
+  "existing_files_preserved": 974,
+  "existing_bytes_preserved": 76278547,
+  "changed_or_lost_existing_files": [],
+  "phase1_sealed_entries_pass": 504,
+  "phase1_seal_errors": [],
+  "inspection_ledger_unchanged": true,
+  "phase2_inspections_added": 0,
+  "phase2_complete": false,
+  "first_successor_action": "Read root handover then RESUME_PLAN; wait for owner authorisation before actual source viewing.",
+  "transient_loss_explicitly_documented": true,
+  "original_batch21_checkpoint_present": false,
+  "source_cache_current_presence": [
+    false,
+    false
+  ]
+}

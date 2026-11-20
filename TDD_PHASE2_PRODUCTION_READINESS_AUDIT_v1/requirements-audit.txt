@@ -1,0 +1,3 @@
+# Audit catalogue/report utilities only; not the animation-production toolchain.
+Pillow==13.0.0
+Markdown==3.11.3

@@ -1,0 +1,91 @@
+{
+  "parent_id": "1QAlhbwuG63DEcHwfcTI-gbLp680cui7Q",
+  "connector_response_request_id": "9a8c9fc0-e64c-4e21-b112-b99c80319094",
+  "page": 1,
+  "observed_count": 6,
+  "entries": [
+    {
+      "id": "1lnMePbbXNHmDZTnbmcJW47RGbMtIfjo4",
+      "name": "B2_CAND_SCENE_CH01-SCN-022_STREETS_V002_1672x941.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1QAlhbwuG63DEcHwfcTI-gbLp680cui7Q"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 653983,
+      "md5": "5de0d4a73317c9a9a994b8c4cfbfdb34",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1GTFnMdZMqesUXdWeLhFApVdiRsownwb0",
+      "name": "B2_CAND_SCENE_CH01-SCN-032_WELLS_V002_1672x941.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1QAlhbwuG63DEcHwfcTI-gbLp680cui7Q"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 770431,
+      "md5": "3e5022b918e6a0e80e62a788ffed98ad",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1OwSkuBRB1VMKdI7iPE4sYw3xypr-EyZD",
+      "name": "B2_CAND_SCENE_CH01-SCN-033_GATES_V002_1672x941.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1QAlhbwuG63DEcHwfcTI-gbLp680cui7Q"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 629033,
+      "md5": "995d69623e1233f68573be098aa6bee8",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1CKaEzdNb-Xom9W0DprYxMtPspIphuFqi",
+      "name": "B2_CAND_SCENE_CH01-SCN-034_ROADS_V002_1672x941.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1QAlhbwuG63DEcHwfcTI-gbLp680cui7Q"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 597901,
+      "md5": "fce770de8914f21dbd2b62e12bbc6927",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1SR7CRZC9MZjTBsEi84_N3b4sesAmDsiq",
+      "name": "ENV_CH03-INT-005_A_SLEEPING_ROOM_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1QAlhbwuG63DEcHwfcTI-gbLp680cui7Q"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 220967,
+      "md5": "f8bc416ce2d9f7917973fb4fb0dc9e35",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1bs7I2_iPaWQMANPkCLu8YA3x_24FiS9n",
+      "name": "ENV_CH03-SUB-006_THE_BACK_PLOTS_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1QAlhbwuG63DEcHwfcTI-gbLp680cui7Q"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 391457,
+      "md5": "95d9b92d34b090aa94bc1faaf7bddc63",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

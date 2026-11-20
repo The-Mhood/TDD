@@ -1,0 +1,63 @@
+{
+  "parent_id": "1dl0AufjGpoq7SKibxyhmxMjjLEkgKivi",
+  "connector_response_request_id": "54a0bfb5-5e20-4046-a0d0-402a6b737fd4",
+  "page": 1,
+  "observed_count": 5,
+  "entries": [
+    {
+      "id": "12x6bSBUzssp5ChyJTGhC6vvUmZWnXGoi",
+      "name": "Art_Bible_Index",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1dl0AufjGpoq7SKibxyhmxMjjLEkgKivi"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1icvOapXvsuIunPUguFQjy1uGYL380Vh_",
+      "name": "Changelogs",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1dl0AufjGpoq7SKibxyhmxMjjLEkgKivi"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1eEveQsAcCqgkGSGDaqrl9n-F7x5XjqDg",
+      "name": "Character_Registers",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1dl0AufjGpoq7SKibxyhmxMjjLEkgKivi"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1dUo8bxktltXd-ZPYo9uqks7L6fRm3cfT",
+      "name": "Location_Registers",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1dl0AufjGpoq7SKibxyhmxMjjLEkgKivi"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1xVy9r40VeVI8xE-1bT_290BU6dAskAbq",
+      "name": "Production_Reports",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1dl0AufjGpoq7SKibxyhmxMjjLEkgKivi"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

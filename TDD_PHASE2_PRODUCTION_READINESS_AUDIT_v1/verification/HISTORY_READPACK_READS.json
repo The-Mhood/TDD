@@ -1,0 +1,26 @@
+[
+  {
+    "pack_sha256": "024ec08f49c18a3061803183edeefde74880928b027545aa6bf7a340f2a9e9c6",
+    "pack_path": "_phase2_stage/readpacks/history_lossless.txt",
+    "start": 1,
+    "end": 471,
+    "actual_read_note": "All four chronological CD disposition registers v1-v4 complete; source labels dates/round numbers distinguish historical rounds from closed39/current193. Followed literal repeats to earlier pack lines and preserved eight limited/exploratory-tier constraints; no new approval or action inferred.",
+    "basis": "Actual bounded functions.read_file text return; source/repeat expansion validated by independently roundtripped manifest. Preparation alone never supplies this receipt."
+  },
+  {
+    "pack_sha256": "024ec08f49c18a3061803183edeefde74880928b027545aa6bf7a340f2a9e9c6",
+    "pack_path": "_phase2_stage/readpacks/history_lossless.txt",
+    "start": 472,
+    "end": 786,
+    "actual_read_note": "Closed39verdict full and EXP integrity cleanup full: exact6visual/21notapproved/12blocked, chirality and preserve controls, existing EXP parent-only quarantine audit not new work/recovery; traced alltableIDs and stale pre-move/current locations.",
+    "basis": "Actual bounded functions.read_file text return; source/repeat expansion validated by independently roundtripped manifest. Preparation alone never supplies this receipt."
+  },
+  {
+    "pack_sha256": "024ec08f49c18a3061803183edeefde74880928b027545aa6bf7a340f2a9e9c6",
+    "pack_path": "_phase2_stage/readpacks/history_lossless.txt",
+    "start": 787,
+    "end": 1045,
+    "actual_read_note": "Both full post-sync manifest and verification report:32checked, SourceAworking-drafts notpromoted, SourceBauthority, clothing-only standards/no auto ritual exception, fiveCH8designapprovednotcanon, later history controls counts/instructions.",
+    "basis": "Actual bounded functions.read_file text return; source/repeat expansion validated by independently roundtripped manifest. Preparation alone never supplies this receipt."
+  }
+]

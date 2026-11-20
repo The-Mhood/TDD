@@ -1,0 +1,18 @@
+{
+  "source_id": "1eluxeCI2FxkJO6lZ6xf2QdIYqleh61wwfUeQ52bSJfo",
+  "export_sha256": "96435b4f94222aa2c90fe7097c2e15adfaad22f429d93690d8b78f563e13109a",
+  "text_extraction": "_phase2_stage/readpacks/native_CD_REVIEW_complete.txt",
+  "text_sha256": "1881a1b059df40482c3ce319873fbc1568bc3e2e5fbee3787e994ac5dc9d9087",
+  "body_paragraphs_including_tables": 405,
+  "tables": 16,
+  "embedded_media_members": [],
+  "other_word_xml_parts": [
+    "word/numbering.xml",
+    "word/settings.xml",
+    "word/fontTable.xml",
+    "word/styles.xml",
+    "word/document.xml",
+    "word/theme/theme1.xml"
+  ],
+  "read_state": "NOT YET FRESHLY SEMANTICALLY READ; export and extraction are not content review"
+}

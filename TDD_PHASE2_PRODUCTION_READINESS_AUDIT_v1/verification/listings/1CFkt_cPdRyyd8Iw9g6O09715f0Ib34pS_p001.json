@@ -1,0 +1,127 @@
+{
+  "parent_id": "1CFkt_cPdRyyd8Iw9g6O09715f0Ib34pS",
+  "connector_response_request_id": "003f4718-e913-4caa-a84b-b5e39658f9dd",
+  "page": 1,
+  "observed_count": 9,
+  "entries": [
+    {
+      "id": "1QAlhbwuG63DEcHwfcTI-gbLp680cui7Q",
+      "name": "OUR_EYES_VISUAL_RELEASE_ONLY_NOT_PRODUCTION",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1CFkt_cPdRyyd8Iw9g6O09715f0Ib34pS"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1P9HkYTLZoVsFe3GmM27vD00toOo-u7cf",
+      "name": "B2_CAND_VR-010_WASHING_PLACE_V005_2560x1440.png",
+      "mime_type": "image/png",
+      "parents": [
+        "1CFkt_cPdRyyd8Iw9g6O09715f0Ib34pS"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 3269297,
+      "md5": "28bfb666cbbb65186d79cbb8eb3cd9dc",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1FY3hw3602iB-1405RgUIO3ih2USmck_Y",
+      "name": "CHAR_ADANNA_MASTER_REFERENCE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1CFkt_cPdRyyd8Iw9g6O09715f0Ib34pS"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 585862,
+      "md5": "901a5009ab5ff44a81fb3799c7e6de6d",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1oddffinYV3HI3U0ujwQrA3-XXWKtqUik",
+      "name": "CHAR_AMADIOHA_MASTER_REFERENCE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1CFkt_cPdRyyd8Iw9g6O09715f0Ib34pS"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 594434,
+      "md5": "5006697a3dc1328ceffd836dd988d7fb",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1MHCd25z3x-cfBUf-eoCJvDLqwvYj9Ins",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_HALL_OF_POSTS_V004.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1CFkt_cPdRyyd8Iw9g6O09715f0Ib34pS"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 654031,
+      "md5": "aeb06f6c3b9fcab5c4687859fe528dba",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1EMYjEMCzfqhwEAfpvN8uDNfAddgLpVue",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_MOTHERS_COURTYARD_SAME_COURTYARD_V007.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1CFkt_cPdRyyd8Iw9g6O09715f0Ib34pS"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 952871,
+      "md5": "58a625f4c16aa71cf55f7ee4887a7eda",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1kT8ucpt6HVWhWEM8xvLRxTyGGjrNIxgf",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_NNEKAS_HOUSE_INTERIOR_V003.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1CFkt_cPdRyyd8Iw9g6O09715f0Ib34pS"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 652956,
+      "md5": "c54695f08e50442db087f882b0cfb3a4",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1JIoAiQ20goibDA-ujYr95iyihBTLKZWj",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_NNEKAS_HOUSE_V004.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1CFkt_cPdRyyd8Iw9g6O09715f0Ib34pS"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 580415,
+      "md5": "8eec0c112ea14a8aa1d8328ed10004e7",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "13jAtOMkXBazG2jbcFWZeBLsI1mufWJqU",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_SEALED_QUARTER_V003.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1CFkt_cPdRyyd8Iw9g6O09715f0Ib34pS"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 703560,
+      "md5": "4c67a8fb0068babaef4654d5b01a4154",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

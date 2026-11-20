@@ -1,0 +1,26 @@
+{
+  "parent_id": "1o_NY_ZxGltnyLzBjxd_1ldcvsY6BPv0n",
+  "connector_response_request_id": "752053c6-5922-4ef1-b798-fa799eeb0901",
+  "page": 1,
+  "observed_count": 1,
+  "entries": [
+    {
+      "id": "1jepQVvOy_J9qFgHw4vxr9wrp9wYSqSlj",
+      "name": "CHAR_AMADIOHA_MASTER_REFERENCE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1o_NY_ZxGltnyLzBjxd_1ldcvsY6BPv0n"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 594434,
+      "md5": "5006697a3dc1328ceffd836dd988d7fb",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

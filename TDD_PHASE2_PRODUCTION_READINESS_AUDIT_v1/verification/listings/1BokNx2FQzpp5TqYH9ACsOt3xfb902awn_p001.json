@@ -1,0 +1,63 @@
+{
+  "parent_id": "1BokNx2FQzpp5TqYH9ACsOt3xfb902awn",
+  "connector_response_request_id": "5663ccb7-6130-48da-8aa1-839c2c9f3ffb",
+  "page": 1,
+  "observed_count": 5,
+  "entries": [
+    {
+      "id": "1thK7wW-mB5wZPtkwLxteg1BzIhnSfsat",
+      "name": "Colour_Palette",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1BokNx2FQzpp5TqYH9ACsOt3xfb902awn"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1oBNubBGQeQ9hzs6ekEl5BrWZiZ_IVYlF",
+      "name": "Cultural_References",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1BokNx2FQzpp5TqYH9ACsOt3xfb902awn"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1gLCcBwjtJljPJpzUfuELhxXR6pgvjS09",
+      "name": "Master_Overview",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1BokNx2FQzpp5TqYH9ACsOt3xfb902awn"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1V9wa771A-Kid8vtkbPAEHC09xeLiTzvX",
+      "name": "Material_Language",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1BokNx2FQzpp5TqYH9ACsOt3xfb902awn"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1mDftUfBUkA0g76XhPNnmNdR5gQwE1wIZ",
+      "name": "Visual_Identity",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1BokNx2FQzpp5TqYH9ACsOt3xfb902awn"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

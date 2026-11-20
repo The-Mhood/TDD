@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1UuP2I9szyZvITuyT5Z8q1NilBZBboQZa",
+    "name": "SCENE_AND_MICROLOCATION_MASTER_REGISTER.md",
+    "md5": "8860bd464ebace0d0bede03b750b718a",
+    "sha256": "f495d44557489675b3db6673c4f4ab8e44ef75bd584f95beaf7045f2bedf52ff",
+    "bytes": 279079,
+    "matches_historical_fingerprint": true,
+    "read_or_display_scope": "Relevant full scene/location extracts read; Nneka/Establishing boards displayed. This hash test is not a new entire-register read."
+  },
+  {
+    "id": "1IT5RVzd7kBsPeo3hdJpTliqj4h6O6C9R",
+    "name": "LOCATION_MASTER_REGISTER.md",
+    "md5": "7eb30fe48aa8ba7ba091bb069a694e6a",
+    "sha256": "166e416f6cad2f897298d8fbce67454889e4297a4afbe82c7f4c1478f00fce17",
+    "bytes": 534861,
+    "matches_historical_fingerprint": true,
+    "read_or_display_scope": "Relevant full scene/location extracts read; Nneka/Establishing boards displayed. This hash test is not a new entire-register read."
+  },
+  {
+    "id": "1JIoAiQ20goibDA-ujYr95iyihBTLKZWj",
+    "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_NNEKAS_HOUSE_V004.jpg",
+    "md5": "8eec0c112ea14a8aa1d8328ed10004e7",
+    "sha256": "4529c791434d1794eb4488dff74e8bec70ec25e7f8bdfc08425dd65010db5ed1",
+    "bytes": 580415,
+    "matches_historical_fingerprint": true,
+    "read_or_display_scope": "Relevant full scene/location extracts read; Nneka/Establishing boards displayed. This hash test is not a new entire-register read."
+  },
+  {
+    "id": "1qi7TsLi5v8pfM4mHYLWvJEaSdPPyl_qW",
+    "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_ESTABLISHING_V005.jpg",
+    "md5": "6f32d454bb7b6f15ce31e3bffa136385",
+    "sha256": "5f8e0a9b9a8621d8daa0ebe22757d62f9f1610a816e6d3067c0e5c169ecc4c98",
+    "bytes": 786106,
+    "matches_historical_fingerprint": true,
+    "read_or_display_scope": "Relevant full scene/location extracts read; Nneka/Establishing boards displayed. This hash test is not a new entire-register read."
+  }
+]

@@ -1,0 +1,24 @@
+# Generated downloads, recovery staging, and local dependencies
+/.cache/
+/google_drive/
+/_final_release_stage/
+__pycache__/
+*.py[cod]
+# Portable release archives are published to Drive; tracked reports record hashes.
+/OUR_EYES_CD_FINAL_VERDICTS_v1/*.zip
+/_phase2_stage/
+
+# Unreal project transient/generated state (never commit engine artefacts)
+/TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/Binaries/
+/TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/Intermediate/
+/TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/Saved/
+/TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/DerivedDataCache/
+/TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/.vs/
+*.xcworkspace
+*.xcodeproj
+
+# Regenerable capture bulk: 120 replay PNG frames + GIF reconstruction.
+# Rebuild with: PYTHONPATH=.cache/phase3-python python3 PLAY/scripts/render_replay.py
+# The MP4, HUD still, contact sheet and review sheet stay tracked as the actual evidence.
+/TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/web_build/captures/frames/
+/TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/web_build/captures/playable_replay.gif

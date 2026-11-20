@@ -1,0 +1,91 @@
+{
+  "parent_id": "1E9Xce50jUlAS3G_2C7ak7CnUCmFwld8y",
+  "connector_response_request_id": "8be554ea-0170-4beb-ae3b-88a52dd42552",
+  "page": 1,
+  "observed_count": 6,
+  "entries": [
+    {
+      "id": "1XXYDLktrYooVyoFh5K7L3S2mCVTii4zK",
+      "name": "OUR_EYES_CD_DISPOSITION_REGISTER_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1E9Xce50jUlAS3G_2C7ak7CnUCmFwld8y"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 5877,
+      "md5": "d7f0ea5db3fa04a532ae55bdd74b14fc",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1UERM2hK_ruXNHzGQAkbXUv9Br277e93g",
+      "name": "OUR_EYES_CD_DISPOSITION_REGISTER_2026-11-17_v2.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1E9Xce50jUlAS3G_2C7ak7CnUCmFwld8y"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 18684,
+      "md5": "3d2050bf7cbdbf1310ab603deb769182",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1DZexfMkLsiDqHq3w2t7x_h5ru_WJrAw5",
+      "name": "OUR_EYES_CD_DISPOSITION_REGISTER_2026-11-17_v3.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1E9Xce50jUlAS3G_2C7ak7CnUCmFwld8y"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 34630,
+      "md5": "13ce1e685ac8983d9481ae8aef1ade70",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1l6VcTxuf8R-LgvfMyh-NkBFvWXEeeIDB",
+      "name": "OUR_EYES_CD_DISPOSITION_REGISTER_2026-11-17_v4.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1E9Xce50jUlAS3G_2C7ak7CnUCmFwld8y"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 49276,
+      "md5": "56e79726bf22ac9255511fa148b5503c",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1zMTwzOX8NBxpg-E72hda-ARIzoiXHa0O",
+      "name": "OUR_EYES_CURRENT_REVIEW_CD_VERDICT.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1E9Xce50jUlAS3G_2C7ak7CnUCmFwld8y"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 28212,
+      "md5": "91c17dcfca53d5b00b6a2f74b0a3efb6",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Qkx4dCm6e2qLk7NMHdJH7kvvQGYbrxnH",
+      "name": "OUR_EYES_EXP001_INTEGRITY_CLEANUP_AUDIT.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1E9Xce50jUlAS3G_2C7ak7CnUCmFwld8y"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 14711,
+      "md5": "21158e3c56cc77712e9df7ade990e0cc",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

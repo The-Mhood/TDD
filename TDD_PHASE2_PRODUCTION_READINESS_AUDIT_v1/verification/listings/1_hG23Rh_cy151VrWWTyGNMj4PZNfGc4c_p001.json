@@ -1,0 +1,26 @@
+{
+  "parent_id": "1_hG23Rh_cy151VrWWTyGNMj4PZNfGc4c",
+  "connector_response_request_id": "2912d5ca-71fa-49ea-8c29-8f2368e8f729",
+  "page": 1,
+  "observed_count": 1,
+  "entries": [
+    {
+      "id": "1InZGJ-aGe2sp5sMYpUFra0iOX3iWQAr_",
+      "name": "CHAR_IDEMILI_MASTER_REFERENCE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1_hG23Rh_cy151VrWWTyGNMj4PZNfGc4c"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 662376,
+      "md5": "993860bca3d0d11f78faeace6e45b2b1",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

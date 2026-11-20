@@ -1,0 +1,43 @@
+{
+  "parent_id": "17ZOOMRXHYWE1DKBYJUG9rdhjCrapFB1X",
+  "connector_response_request_id": "8b49c7c3-e0cd-4d4b-b12b-b8e148495a45",
+  "page": 1,
+  "observed_count": 3,
+  "entries": [
+    {
+      "id": "1kThR-DE2SUGuvLclkJ-_QVPrtiFN95C2",
+      "name": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "17ZOOMRXHYWE1DKBYJUG9rdhjCrapFB1X"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1nUhAxaOp2ipdPRxoJHv15w2luRegCmWd",
+      "name": "tools",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "17ZOOMRXHYWE1DKBYJUG9rdhjCrapFB1X"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1sUbBCY3B5lbKS5K2FguLeLpq-vkSdaek",
+      "name": "uploads",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "17ZOOMRXHYWE1DKBYJUG9rdhjCrapFB1X"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

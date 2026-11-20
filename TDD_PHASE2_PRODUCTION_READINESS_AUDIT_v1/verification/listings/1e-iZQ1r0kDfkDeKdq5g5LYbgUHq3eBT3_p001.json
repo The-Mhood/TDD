@@ -1,0 +1,12 @@
+{
+  "parent_id": "1e-iZQ1r0kDfkDeKdq5g5LYbgUHq3eBT3",
+  "connector_response_request_id": "a942939e-64e0-403c-8548-9867fe5defd0",
+  "page": 1,
+  "observed_count": 0,
+  "entries": [],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

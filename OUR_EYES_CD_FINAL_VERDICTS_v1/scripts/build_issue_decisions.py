@@ -1,0 +1,203 @@
+#!/usr/bin/env python3
+"""Current delegated-CD issue decisions; historical assessment is never edited.
+No Drive mutation. Run before build_final_register.py and build_final_reports.py.
+"""
+from pathlib import Path
+import json
+B=Path(__file__).resolve().parents[1]
+S=json.loads((B/'verification/SOURCE_SCOPE_193.json').read_text())
+ALL=[r['code'] for r in S]
+def seq(prefix,a,b): return [f'{prefix}{n:02d}' for n in range(a,b+1)]
+ISSUES=[]
+def add(code,title,scope,state,facts,decision,directions,executed,remaining,not_assumed,evidence):
+    scope=sorted(set(scope.split() if isinstance(scope,str) else scope))
+    assert all(c in ALL for c in scope)
+    ISSUES.append(dict(issue_code=code,title=title,scope_codes=scope,final_state=state,verified_facts=facts,cd_decision_and_rationale=decision,precise_directions=directions,actual_completion=executed,remaining_dependency_and_objective_test=remaining,assumptions_not_made=not_assumed,evidence_paths=evidence.split()))
+add('G01','Authority, fixed denominator and closed-cycle history',ALL,
+    'CLOSED — current delegated execution completed; history preserved',
+    'The prior refresh was assessment-only. The user subsequently delegated final creative disposition, bounded execution and physical filing. Historical Round 6 is 6 accepted / 21 not-approved / 12 blocked; it is not the 193-original denominator. The fixed role split is 76 creative rasters, 26 comparisons, 1 diagnostic, 2 blocked guides and 88 support records.',
+    'Use the new authority for this operation only. Keep settled visual passes and all older history at their exact limited tier. Every original receives one of the eight permitted final verdicts; no generic HOLD remains.',
+    'Retain identities, names, original payloads and Research. Never derive cultural, production or canon approval from administrative clearance. Preserve the tracked review pack, decision DOCX, REVIEW/B4W JPEGs, courtyard/F1–F4 history and five root screenshots.',
+    '193 final verdicts recorded. 106 original files moved directly; 87 documentary originals relocated inside two preserved containers. All 193 original-ID destination downloads passed size/MD5/SHA256 and opening tests. All 38 intentional copies independently verified; PENDING complete listing is empty.',
+    'None for completed disposition and physical clearance. Ten original external-authority cases and two original correction cases have permanent identified storage and exact dependencies, not unresolved filing.',
+    'No retrospective claim that previous assessments performed this work, and no new consultant, engineer or human acknowledgement is claimed.',
+    'CD_EXECUTION_AUTHORITY.md verification/PHYSICAL_CLEARANCE.json verification/destination_payload_checks.json verification/destination_listing_observations.json')
+add('G02','Establishing V013 mandatory item 5','D08 F14 F39 F40 E32',
+    'CLOSED FOR DEFINED USE — explicit waiver; item 5 NOT DONE',
+    'The exact V012 rejection brief and F40 establish two unfinished item-5 components: basal-hut re-proportioning and left-flank edge sharpening. Haze or absence of a numeric target was not a waiver. V005 is current-best/in-review; Nneka V004 has environment-design approval, not realm-canon approval.',
+    'The delegated CD expressly waived BOTH components only for unchanged V013 internal fictional-world exploratory composition. Preserve the composition rather than inventing percentages or damaging its landmark. This is a new limited-use decision, not historical completion.',
+    'Keep V013 unchanged and outside APPROVED. No arbitrary resize/sharpen, character composition, scale, location/cultural/canon or production permission. Keep the original pending wording as history; the separate verdict controls the exact permitted use.',
+    'Explicit two-part waiver written and published in CD_EXECUTION_AUTHORITY.md; D08 routed to defined-scope studies and included as an unchanged verified package copy.',
+    'No remaining dependency for this limited study. Item 5 remains NOT DONE. Any different use would need its own exact-scope decision; none is commissioned here.',
+    'No haze-as-authority, numeric size target, identified person in the cord-linked plot-stake crop, or promotion of the V005 source is assumed.',
+    'CD_EXECUTION_AUTHORITY.md verification/additional_governing_hash_checks.json evidence/HISTORICAL_SOURCE_ASSESSMENTS/D08.md')
+add('G03','H3 / VR-011 D9 RQ-01 and subject/version lineage','D07 B01 C09 E40',
+    'DISPOSITION COMPLETE — H3 authority gate remains uncleared',
+    'D07 filename V002 / board header V001 is a real preserved discrepancy. B01 V003 is a parallel proposal, not a proven replacement. Cargo is unidentified, not proven human bodies. The supplementary cultural-review object is trashed and historical only.',
+    'Keep both H3 proposals in permanent EXTERNAL AUTHORITY REQUIRED storage with D9/RQ-01 effective. Record working CD mapping CH07-SUB-004 / CH07-SCN-011 Landing of the Unclaimed; Field of Cloth is C09 submission framing/alias, not an authenticated separate practice.',
+    'No H3 visual lift, relabel, source overwrite or restoration. Research lead and appropriately scoped Igbo cultural consultant must establish locality/meaning/restrictions; involve the relevant living custodian only if a restricted local practice is implicated. CD then selects the exact fictional adaptation.',
+    'Non-destructive lineage/working-mapping note recorded. D07/B01 moved unchanged to external storage; both copied unchanged into the package external section. Exact canonical D07 Research was freshly read and hash-verified, not substituted by RR11.',
+    'Attributed cloth/cargo/metaphor evidence and a written exact-source-ID permitted-scope/exclusions decision. Objective closure is a scoped consultant/custodian decision linked to evidence and an exact-file CD decision; until then no H3 release.',
+    'No bodies, ritual identity, cultural authentication or automatic V003 supersession is inferred.',
+    'CD_EXECUTION_AUTHORITY.md verification/research_fresh_checks.json evidence/HISTORICAL_SOURCE_ASSESSMENTS/D07.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/B01.md')
+add('G04','Adanna BACK and LEFT_SIDE preserved V003','D01 D04 F15 F34 F45',
+    'CLOSED — preservation disposition; still UNAPPROVED',
+    'BACK viewer-left is anatomical LEFT. D01 BACK and D04 LEFT_SIDE are V003 preservation views, not missing V004 deliveries. CQ-9, RQ-10-1 and U-11 are not cleared.',
+    'Retain unchanged as reference evidence with V003 / PRESERVE / UNAPPROVED explicit. The current best evidence supports preservation, not new speculative corrections.',
+    'No V004, mirroring, armlet movement, blade insertion, pose/geometry/alignment/scale/likeness/costume change or alteration of the LEFT-shoulder-to-RIGHT-hip baldric. Seven-correction-scope qualifications and applicable OAD-55/56 controls remain.',
+    'Both exact originals filed in reference storage and independently verified; both intentional copies are in the package preserved-unapproved section. No raster operation or new version was performed on either.',
+    'None for reference retention. A different future use is not approved by this disposition; CQ-9/RQ-10-1/U-11 remain explicit controls, not silently completed corrections.',
+    'No anatomical-side reversal, absent-delivery accusation or complete-turnaround approval is made.',
+    'CD_EXECUTION_AUTHORITY.md verification/destination_payload_checks.json verification/copy_payload_checks.json')
+add('G05','Adanna FRONT / THREE_QUARTER cord execution','D03 D06 F17',
+    'COMPLETED — two selected limited-study derivatives',
+    'Exact V004 originals, approved master and native target crops support a narrow cord operation. Historical THREE_QUARTER cord stopped at the chest; repaired upper-arm pixels were already improved. The current outputs are separately named V005 derivatives.',
+    'Select D03 FRONT V005 and D06 THREE_QUARTER V005 as internal concept studies only. Restrained braid/connection is accepted at native concept scale. Accept the existing D06 arm tonal finish for this limited use without repainting it.',
+    'Cord mask only in figure art, plus disclosed documentary-margin chrome. Preserve pendant silhouette and every art pixel outside the cord mask, repaired arm, pose, scale, alignment, likeness, braids, costume and baldric. No side/back increment or blade work.',
+    'Two V005 PNGs generated, inspected, selected, uploaded and independently downloaded/opened/hash-verified. D03 changes 472 art pixels; D06 changes 340 art pixels. Documentary chrome adds separately disclosed changes. D06 endpoint was refined to (1073.8,442.5); its first attempt is retained unselected.',
+    'None for the selected internal studies. Cultural/material, CQ-9, RQ-10-1, U-11, weapon fit/rigging and complete-turnaround approval are NOT cleared.',
+    'Whole-board changed-pixel totals include chrome and are not reported as cord-only totals. No production/cultural approval follows from native RGB equality.',
+    'CD_EXECUTION_RESULTS_AND_SCOPE.md correction_evidence/CORRECTION_ATTEMPTS.json evidence/HISTORICAL_adanna_v004_pixel_verification.json')
+add('G06','Blade authority precedes sheath fit and retouch guides','B43 E44 E45 F01',
+    'SHEATH STUDY SELECTED — guide/weapon authority dependency retained',
+    'The provisional blade board exists but is REVIEW REQUIRED, with provisional 60 cm and no hand-scale authority. Withdrawn 65%/70%/coordinates are unusable. B43 shows a standalone simple sheath, not a visible blade/interface. F01 hand-scale bypass is not authority.',
+    'Choose B43 aesthetically as a standalone fictional sheath concept only. Keep E44/E45 as blocked-guide EXTERNAL AUTHORITY REQUIRED evidence. Design authority must precede hand-scale, fit or rigging.',
+    'Do not execute guides, resize sheath, invent dimensions/material species or apply the withdrawn percentages. CD + Research weapon-design authority must identify and approve the exact blade design before a separately scoped prop/rigging fit review.',
+    'B43 unchanged study filed and copied to defined-scope release. Both blocked guides filed permanently outside APPROVED. Existing blade/master evidence verified; no fit, scale or weapon correction performed.',
+    'Signed exact-version blade-design authority with dimensional provenance, then hand/character-scale interface evidence and qualified fit review. Aesthetic sheath acceptance or provisional dimensions cannot satisfy this test.',
+    'No blade canon, scabbard mouth fit, leather species or hand-scale approval is invented.',
+    'CD_EXECUTION_AUTHORITY.md CD_EXECUTION_RESULTS_AND_SCOPE.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/F01.md')
+add('G07','Settlement states and claimed historical owner exceptions',
+    'B03 B05 B07 B11 B13 B15 B17'.split()+seq('C',3,9),
+    'CLOSED — new standalone scopes, not a continuous approved state series',
+    'C03–C09 cite later owner exceptions/accepted camera variance and a contemporary cultural context. Scoped historical searches did not independently establish the originating consolidated instruction; that does not prove global absence. The frames vary in architecture and continuity.',
+    'Make new delegated decisions rather than indefinitely waiting on a historical exception: B05 midday layout and B11 night image are selected limited studies; B03/B07/B13 are lighting/weather references. B15/B17 are contemporary-context fictional market/ordinary-assembly studies, not states of the old kit or ethnography.',
+    'No universal pixel-camera lock, painterly-only rule or global historical-material ban. For any separately authorised later state series, central doorway/hall, enclosing compound, square and forest/farm horizon are the common anchors; architecture cannot vary just for time of day. No such series is commissioned now.',
+    'All seven unchanged current images given final role-appropriate verdicts and filed; all seven package copies verified. Contemporary-context and plain-cloth scope and no cross-asset NPC-dress authority are explicit.',
+    'None for selected standalone/reference uses. The originating historical exception remains unproven, but is not a prerequisite for this newly delegated narrow permission. No continuous settlement design kit is released.',
+    'No falsified provenance, automatic misconduct inference, universal roof/material ban or blanket photoreal rejection is made.',
+    'CD_EXECUTION_AUTHORITY.md evidence/HISTORICAL_formal_reconciliation_overrides.json verification/research_fresh_checks.json')
+add('G08','ST04 stone-ring identity, four removals and resampled delivery','B09 B10 B11 C05 C06',
+    'CLOSED FOR LIMITED STUDY — historical ring function remains unknown',
+    'B09 V002 is present. B10 V003 is native 1264×843 and admits generative geometry drift; B11 V004 is reported Lanczos-resampled to 1536×1024, not new native detail. Removal history does not identify the original ring function.',
+    'Accept B11 ring-free concept at its delivered concept scale, with junction/lighting residuals disclosed. Retain earlier versions as separate superseded evidence. Do not seek ritual identity to justify additional removals.',
+    'No further ring/niche/speck/branch deletion. Keep source/version identity, preserve C05/C06 claims as attributed history, and label resampling accurately. New CD limited permission is not a claim of surgical preservation in old generative edits.',
+    'B09/B10 superseded and B11 study physically filed. B11 unchanged package copy independently verified. C05 missing-source interpretation corrected by final annotation: source V002 is B09.',
+    'None for this study. The historical function of B09 ring is unknown and is not classified by this operation; no religious/hearth claim is permitted.',
+    'No sacred-ring, hearth or ritual classification, native-resolution uplift, or full exact-preservation claim for B10/B11 is made.',
+    'CD_EXECUTION_AUTHORITY.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/C05.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/C06.md')
+add('G09','CH01 habitat/setting versus registered activity-scene coverage',seq('E',1,21),
+    'DISPOSITION COMPLETE — settings scoped; missing scene beats not completed',
+    'Scene-register entries and the actual frames differ: E03 exterior is not SCN006 windowless store/yam-rack/oil-jar coverage; E04 is not SCN007 sleeping corner; E05 is interior rather than SCN008 roof repair; E06 interior is not SCN009 veranda action; E09 backroom is not SCN013 exterior action; E11 local stream is not SCN015 gear preparation. E17 does not deliver boy/goats dusk action.',
+    'Select E01/E02 for composition and E04/E05/E06/E09/E11/E13/E14/E17 as internal setting/habitat studies only. E08 is market-setting reference; E16 rejected for its bare/unoccupied-house submitted use. E03/E07/E10/E18 require specialist evidence. Preserve exact accepted visual passes E15/E19/E20/E21 without reopening them.',
+    'No implicit people/children/animals/regalia/tools are authorised by scene-register text. OAD-40 governs. E11 is an unnamed local stream, not an authenticated Idemili river. Retain unfulfilled scene beats explicitly as undelivered, not assigned edits or approvals.',
+    'All 21 originals have final verdicts and verified physical destinations. Unchanged study/reference decisions executed as filing only. No new activity-scene raster was produced and no coverage claim was upgraded.',
+    'Only asset-specific external evidence listed in the master is still indispensable. Registered missing activity beats remain undelivered/out of this release, not a generic HOLD or a proposed new review cycle.',
+    'No automatic figure/animal waiver, material authentication, missing-beat completion or invented scene dimensions is assumed.',
+    'CD_EXECUTION_AUTHORITY.md CD_EXECUTION_RESULTS_AND_SCOPE.md evidence/HISTORICAL_applicable_CH01_scene_entries.md verification/additional_governing_hash_checks.json')
+add('G10','Textile, forging, market closing and square-gateway decisions','E03 E07 E08 E12',
+    'FINAL USE DECISIONS — two authority cases, one reference, one rejection',
+    'The large-compound textile/material and smithy process/layout are not sourced by a plain inventory. The market closing state is not established. Pointed-gate architectural idiom is a creative selection question, not proof of ritual or cultural identity.',
+    'E03 textile/material and E07 forging-process remain external-authority cases. E08 is retained as setting reference only. Reject E12 submitted pointed-gate village-square design; no default patch/regeneration.',
+    'Research + competent locally scoped textile/material and forging specialists must supply attributed annotated references for E03/E07; CD selects exact adaptation. Do not invent furnace dimensions, sacred metal or a gateway ethnicity, or silently commission closing-state crowds.',
+    'Four exact originals filed and copied into the corresponding external/reference/rejected package sections. Rejection/reference are final dispositions, not promised corrections.',
+    'E03: approved attributed cloth construction/use reference and explicit parent/store scope. E07: specialist-backed forge/bellows/anvil/tool spatial reference and exact-frame CD decision. E08 closing-state delivery remains undelivered; E12 has no established replacement.',
+    'No CD aesthetic choice is presented as process, cultural or historical authentication.',
+    'CD_EXECUTION_AUTHORITY.md CD_EXECUTION_RESULTS_AND_SCOPE.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/E03.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/E07.md')
+add('G11','Kitchen fuel, courtyard toy and passage footprint endpoint','E46 E48 E50',
+    'COMPLETED — two local derivatives and one unchanged visual adjudication',
+    'Cold stacked firewood was not legible in E46. E48 native bird crop supports a small matte irregular clay-toy concept reading. E50 endpoint was ambiguous; ash is not proven snow and concrete-like appearance is not actual concrete.',
+    'Select E46 V003 local cold-firewood derivative, E50 V003 local terminal-footprint clone and unchanged E48 courtyard clay-toy concept. These are internal studies, not material/process/cultural approval.',
+    'E46: finite-mask generated patch left of hearth/back wall, no fire/smoke/figures. E50: only far terminal impressions, donor offset [100,0], foreground trail ends before mound; retain ash, wall, camera/weather. E48: no raster paint; any later manufactured/3D toy must be clay, not wood.',
+    'E46 changes 30,351 pixels within bbox [459,581,688,745]. E50 changes 12,803 pixels within bbox [702,505,839,617]. RGB outside each finite mask is identical; source originals preserved. Both derivatives selected, uploaded and independently verified. E48 unchanged study filed; E50 selected output and original intentionally copied into package. E50 first ridge-transfer attempt retained unselected.',
+    'None for these narrow concepts. Actual material/process/cultural provenance and production construction are not established or promised.',
+    'No snow removal, actual concrete diagnosis, toy material laboratory proof or completed E48 paint correction is claimed.',
+    'CD_EXECUTION_RESULTS_AND_SCOPE.md correction_evidence/CORRECTION_ATTEMPTS.json correction_evidence/E46_firewood_patch_generated.png')
+add('G12','Fishing shelter canvas, cold hearth and mending practice','E51 F68',
+    'CANVAS ACCEPTED — technical/practice authority dependency retained',
+    'The actual E51 canvas is 1376×768, not 1672×941. Cold-hearth/mending-tool cues need attributed practical reference; a smoke allegation was not independently confirmed and a utility knife is not CQ-9 blade authority.',
+    'Accept the measured canvas for internal concept review only. Retain E51 as EXTERNAL AUTHORITY REQUIRED for the actual fishing-gear/cold-hearth use, outside APPROVED.',
+    'No upscale relabelled as new native detail and no automatic smoke removal/addition. Research lead + competent fishing-gear craft specialist must mark the correct cold-hearth and net-mending tool/staging reference, then CD decides exact frame.',
+    'Asset-specific dimension acceptance written, exact original filed in external storage and independently verified. Unchanged package external copy passed independent download/open/hash checks. No gear/hearth correction was performed.',
+    'Attributed approved gear/cold-hearth reference and exact-frame decision showing required cues; preserve 1376×768 identity unless a separately authorised genuinely new native output exists.',
+    'No universal 1536×1024 delivery standard, fake upscale detail, confirmed smoke defect or tool cultural authentication is inferred.',
+    'CD_EXECUTION_AUTHORITY.md verification/destination_payload_checks.json evidence/HISTORICAL_SOURCE_ASSESSMENTS/E51.md')
+add('G13','Paddle reference, silver-overcast lighting and cold side-set rack','E52 E53 E54 F68',
+    'PARTIAL EXECUTION — two attempted grades FAILED; paddle authority remains',
+    'Paddles are not established in E52. E53/E54 warm directional light conflicts with the selected CH04 soft silver overcast. F68 assigns E54 a COLD/UNLIT side-set rack. Cooler deterministic grades were actually generated but retained directional highlights/shadows on visual inspection.',
+    'Keep E52 external pending attributed paddle craft reference. Keep E53/E54 originals CORRECTION AUTHORISED with failed V003s as evidence, NOT replacements. Accept a fictional freestanding side-set fish rack in cold/unlit rest as the intended CD staging concept, not a documented smoking-process claim.',
+    'Preserve grounded houses, canoe counts, unfinished hull/chips and rack. No fire/smoke/people, new sunny chapter exception or whole-frame generative rerender. Next feasible correction is native-coordinate non-destructive relighting using capable paint/lighting controls or separable albedo/illumination/depth/normal inputs.',
+    'Two native-sized cooler V003 PNGs generated, decoded, displayed, visually failed, uploaded to correction evidence and independently hash/open-verified. E53/E54 source originals filed as correction sources; E52 filed in permanent external storage. No accepted overcast replacement exists.',
+    'E52: Research + competent canoe/paddle craft specialist supplies attributed plain paddle shape, scale relationship and insertion staging, then a separately bounded derivative and exact review. E53/E54: native non-destructive relighting tool/finishing artist or editable light/material passes, absent from supplied flat JPEGs. Test: same geometry/dimensions/counts, diffuse silver-overcast without directional sun cues, no added objects and disclosed exact hashes/difference proof; actual CD inspection must pass.',
+    'Whole-frame allowed masks make outside-mask tests vacuous, not geometric or physical-lighting proof. A cooler grade is not completed relighting or evidence that a cold rack needs smoke.',
+    'CD_EXECUTION_AUTHORITY.md CD_EXECUTION_RESULTS_AND_SCOPE.md correction_evidence/CORRECTION_ATTEMPTS.json')
+add('G14','Proposed-location material/geography/microbeat selection',
+    ['B23','B29','B30']+seq('B',35,42)+['C15','C16'],
+    'CLOSED — nine submitted uses rejected, two images retained as reference',
+    'The proposed LMR entries are creative comparison briefs, not proven story canon. The stone-city wall walk, river/islet microbeat, dry cave, enclosed hill-house, isolated dome/watchpost, bare shelf and uncanny/no-glass room beats are not delivered by several submitted frames. B36 own brief does include a dry-stone windbreak.',
+    'Reject B23/B29/B35/B37/B38/B39/B40/B41/B42 for submitted uses. Retain B30 falls/wet-rock lighting and B36 windbreak/thatch/boulder details as limited references, not complete approved locations. This closes these submissions without a speculative full-frame regeneration queue.',
+    'No universal stone ban, authenticated foreign geography, forest-backdrop mandate for B36, invented metric depth or general photoreal-style rejection. Do not patch these into larger assignments.',
+    'All eleven creative originals assigned final rejection/reference verdicts, physically retained unchanged at verified destinations. B29/B30/B36 are represented in the dedicated package in their correct rejected/reference sections.',
+    'None for the final rejection/reference dispositions. No approved replacement or new location brief is claimed. A genuinely new assignment is separate, not work promised by this report.',
+    'No apparent architectural/cultural identity is elevated to authenticity, canon or prohibited material classification.',
+    'CD_EXECUTION_AUTHORITY.md evidence/HISTORICAL_registered_location_requirements_full.md verification/additional_governing_hash_checks.json')
+add('G15','EXP integrity incident is separate completed history','B23 F16 F45 F68',
+    'CLOSED — no repeat quarantine/recovery operation',
+    'B23 is valid JPEG ID 1CFCPrQct-qvsw662-wOZAngxiXAOMfw3, 337726 bytes, MD5 bce36fd7b0192e77b6f2de64b4e4be65. The separately quarantined bad-text object is ID 1SsRkI8jhMeKC_VOSmRugvuMx3mo5O8uI, 2537 bytes, MD5 314681784166f5cd747f7f933f92b300. Quarantine/audit was already completed earlier.',
+    'Preserve incident history. Treat B23 only as a separate submitted creative image and reject its proposed wall-walk use. Do not infer recovery or replace the quarantined object from the JPEG filename.',
+    'Never repeat, restore, re-quarantine, re-audit, overwrite or delete that bad-text object in this operation. Any actual recovery would require independent source provenance and separate explicit authority.',
+    'No operation was performed on the bad-text object or quarantine/audit. B23 alone was filed unchanged as rejected creative evidence. F45 current original-ID readback and documentary membership were checked; its historical incident narrative remains unchanged.',
+    'None for this final disposition. No recovered original is established and no recovery is promised.',
+    'No recovered-original provenance from naming, unsupported actor attribution or new incident completion claim is made.',
+    'CD_EXECUTION_AUTHORITY.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/B23.md verification/destination_listing_observations.json')
+add('G16','Historical limited tiers and reserved Research/custodian gates','F11 F30 F35 F42 E24 E36 E39 E42',
+    'CLOSED AS CARRY-FORWARD — no limited tier promoted',
+    'Washing V005 remains domestic-only U27; Costume V002 is interim partial upper-body, not full-body canon; VR-008 V009 and CH03-INT-003 remain exploratory only. Historical supplementary cultural review is trashed, not live clearance. SCN028 loom specification and SCN030 replacement direction remain reserved.',
+    'Preserve every limited tier and related aids/documents. SCN028 requires Research + CD loom specification. SCN030 stays NOT RECOMMENDED with no patch/regeneration; replacement depends on CD + Research and relevant living-custodian direction.',
+    'No VR-008 V010 for chrome errata, full-body costume canon, approved-folder promotion, new scene output or restoration of the trashed review. These external controls are carried forward, not mutated or performed.',
+    'In-scope aids/documents retained unchanged in verified reference/documentary destinations. Current authority restates all named limited tiers. No out-of-denominator creative mutation or restoration was done.',
+    'Existing scope-specific gates remain where their exact standing records place them; this administrative release does not satisfy or reassign them. No external clearance is claimed.',
+    'No limited visual/exploratory acceptance becomes production/canon/cultural approval, and no historical trashed review is treated as live authority.',
+    'CD_EXECUTION_AUTHORITY.md evidence/HISTORICAL_external_evidence_verified.json')
+add('D01','DOCUMENTARY ERRATUM — Research interpretation corrections',
+    'A01 C01 C02 C05 C10 F04 F18 F25 F48 F55 F56 B09 E19 E26 E35',
+    'ANNOTATION COMPLETE — originals and published Research unchanged',
+    'A01 published index links the PENDING folder instead of its exact directive ID. C01 right-hand cross-draw and LEFT-hip phrasing are compatible, not conflicting chirality. C02 primary master and distinct portrait availability has been narrowed by verified references. C05 source V002 exists as B09. F04 raw text denies responsibility for the described moves. F18/C10 Wells refer to one lineage, not extra artwork. The actual H2 TD report supports authorised visual-only lift/designated ownership. F48 linked E26 Establishing comparison as VR008; the actual VR008 comparison is E35. F55 includes passes 9/10 and F56 pass 9 records a discarded local labelled intermediate.',
+    'Publish this explicit final erratum and per-code reconciliations; never silently repair source/Research or rerun historical actions. Current exact-ID source links in A override mistaken index navigation for this operation.',
+    'A01 exact source is 1CSiUHZDyE4NsKxIYEcUYSPFepYQBpOyp. C05 V002 is B09. F04 actor remains unproved. F18 Wells is E19 current lineage. E26 ID 1A10-FlflAwN3yuI_OVpgRSPS_nl0eCk0 is Establishing V005/v007; E35 MD5 ad788e8f6c871f3e99104fc467e950d1 is VR008 V005/v007. Keep H1/H2 visual-only and H3 D9/RQ01 separate. Log discarded does not mean deleted.',
+    'Final erratum issued in this report and joined to all named verdicts/source-ID hashes. All original records retained unchanged, opened and hash-verified at final documentary/reference destinations. No actor blame, source rewrite or repeat move performed.',
+    'None for correct operational interpretation. Underlying unproved historical actor/cause and omitted intermediates are not converted into facts; obtaining them is not a condition of documentary retention.',
+    'No live cultural clearance, source absence across all history, author-performed lift or duplicate Wells artwork is inferred.',
+    'evidence/HISTORICAL_SOURCE_ASSESSMENTS/A01.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/F04.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/F18.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/F25.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/F48.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/F55.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/F56.md')
+add('D02','DOCUMENTARY ERRATUM — arithmetic and measurement baselines','F32 E43 F49 F67',
+    'ANNOTATION COMPLETE — no historical measurement rerun claimed',
+    'F32 says five moves but lists seven rows, eight live candidates but lists nine, fourteen non-rejection files but 1+4+10=15. E43 art panel 1901×1169=2222269; 13618/2222269×100≈0.6128%, so the printed 0.61% is consistent, not a full-sheet denominator error. F49 2209 armlet pixels vs V005 and 4092 V007→V008 changes use different baselines. F67 untouched-aerial-river prose is qualified by its own feather/river-termination and sky residuals.',
+    'Use the corrected arithmetic and explicit comparison baseline as a documentary annotation, not as a reproduction of unavailable old native masks/pairs/scripts or proof of actual historical moves.',
+    'Keep erroneous original prose intact. Never rerun the seven/fourteen/fifteen historical filing instructions. Do not elevate compressed diagnostic masks or old perimeter-outside-mask claims to whole-concept preservation proof.',
+    'Final arithmetic/baseline annotation written and linked to exact source/Research fingerprints; documentary records retained unchanged. Only this operation’s six new derivative pixel tests were independently executed.',
+    'None for retention/annotation. Old raw pair/mask claims remain attributed and un-reproduced where source data is unavailable; no reconstruction is promised.',
+    'No contradictory totals are inferred from differing comparison baselines, and no historical all-river-pixels equality is endorsed.',
+    'evidence/HISTORICAL_SOURCE_ASSESSMENTS/F32.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/E43.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/F49.md evidence/HISTORICAL_SOURCE_ASSESSMENTS/F67.md')
+add('D03','DOCUMENTARY ERRATUM — ownership chronology, no misconduct inference',
+    ['F08','F09','F11']+seq('F',21,27),
+    'ANNOTATION COMPLETE — chronology preserved; no unsupported blame',
+    'Older OriginalVA/rebrief ownership differs from later AssistantVA accounts. Exact newer H1/H2 TD reports support the named visual-only lift/delegated revision owner; a complete assignment history for every file was not independently established. Folder/creator/Drive version alone does not prove the actor of a particular action.',
+    'Preserve temporal delegation/scope differences without alleging unauthorised work. This new user delegation governs current filing/corrections and is not retroactively attributed to earlier actors.',
+    'Do not contact, claim acknowledgement by, or reassign work to historical named agents. If a genuinely new task later requires delegation, that would need its then-current authority; no new task is issued by retaining old logs.',
+    'Ownership-chronology annotation and exact source/Research links recorded; all named documents retained unchanged. No notification or misconduct claim made.',
+    'None for documentary retention. Unproved historical assignments remain unproved rather than a generic HOLD on this completed disposition.',
+    'Different author/folder or a revision increment is not evidence of unauthorised work or a particular actor.',
+    'CD_EXECUTION_AUTHORITY.md evidence/HISTORICAL_ISSUES_ASSESSMENT_ONLY.md evidence/HISTORICAL_external_evidence_verified.json')
+add('D04','DOCUMENTARY ERRATUM — unavailable attempts and inspection boundaries','C07 F23 F53 F55 F56 F66',
+    'ANNOTATION COMPLETE — unavailable history not reconstructed',
+    'C07 expressly states non-conforming multi-panel attempts were overwritten during regeneration and not separately archived. That contradicts a withdrawn earlier denial, which must not recur. In F53/F55/F56, discarded local queue renders commonly means not selected/uploaded and retained locally, not deletion. Historical unavailable native pairs/masks/scripts and most external final rasters were not newly inspected.',
+    'Retain source-specific distinctions and read boundaries; do not make a blanket no-overwrite claim about unavailable historical attempts, or a blanket deletion claim about discarded local renders. Preserve C07 as evidence rather than attempting reconstruction.',
+    'Separate current integrity checks from semantic/visual review: 193 current original payloads and 38 copy payloads passed; this does not claim 193 new Research rereads or a fresh cultural visual pass on 105 rasters. Fifteen targeted canonical Research reports were freshly read; the other held-cohort Research reports were downloaded/hash-checked for the evidence package without a new semantic reread.',
+    'Final annotation and preserved historical assessments issued. Current original/copy payload opening and six derivative tests executed; unavailable historical multi-panel/native work was not reconstructed, deleted or claimed inspected.',
+    'None for documentary retention and accurate evidence boundaries. Unavailable historical attempts remain unavailable; this is not an instruction to recreate them.',
+    'No recovery, global absence, broader destruction, historical raw-mask reproduction or new cultural authentication is claimed.',
+    'evidence/HISTORICAL_formal_reconciliation_overrides.json evidence/HISTORICAL_SOURCE_ASSESSMENTS/C07.md verification/research_fresh_checks.json')
+assert [r['issue_code'] for r in ISSUES]==[f'G{i:02d}' for i in range(1,17)]+[f'D{i:02d}' for i in range(1,5)]
+(B/'verification/issue_decisions.json').write_text(json.dumps(ISSUES,indent=2,ensure_ascii=False)+'\n')
+(B/'verification/issue_code_scope.json').write_text(json.dumps({r['issue_code']:r['scope_codes'] for r in ISSUES},indent=2)+'\n')
+print('20 final issue decisions recorded; exact identity enrichment follows in C.')

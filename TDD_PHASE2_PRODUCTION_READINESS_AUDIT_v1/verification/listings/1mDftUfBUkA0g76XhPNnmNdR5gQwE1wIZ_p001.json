@@ -1,0 +1,39 @@
+{
+  "parent_id": "1mDftUfBUkA0g76XhPNnmNdR5gQwE1wIZ",
+  "connector_response_request_id": "30bd47e3-2f3b-49ab-91ac-a452121dca59",
+  "page": 1,
+  "observed_count": 2,
+  "entries": [
+    {
+      "id": "1d7aB_ASW8rEr2sSxjqeKwURRiewWwE_n",
+      "name": "ART_VISUAL_IDENTITY_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1mDftUfBUkA0g76XhPNnmNdR5gQwE1wIZ"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 668675,
+      "md5": "13368e1f07c9762c6cb9b5d9e37d6988",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1W9T-FqYIeAp41KyuZ4xlb3QlN0SnHMK1",
+      "name": "VISUAL_STYLE_GUIDE.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1mDftUfBUkA0g76XhPNnmNdR5gQwE1wIZ"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 3463,
+      "md5": "2839a705ec8ce0e6abe4782021a96b0b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

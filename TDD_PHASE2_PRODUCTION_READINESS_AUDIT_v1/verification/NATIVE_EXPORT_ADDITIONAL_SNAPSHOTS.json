@@ -1,0 +1,11 @@
+[
+  {
+    "source_id": "1eluxeCI2FxkJO6lZ6xf2QdIYqleh61wwfUeQ52bSJfo",
+    "operation": "google_drive.export_file",
+    "requested_mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "export_returned_bytes": 241492,
+    "snapshot": "_phase2_stage/drive/1eluxeCI2FxkJO6lZ6xf2QdIYqleh61wwfUeQ52bSJfo/reexport_3333454895af.docx",
+    "sha256": "3333454895af3a52d45fa1d6ab66f7ec7cf23c629db4f290d15eb45f1e9de666",
+    "note": "New export has equal byte size but different SHA256 from historical receipt. Keep both identities; not restored historical bytes and not a new semantic inspection. Native export nondeterminism or content equivalence must not be assumed."
+  }
+]

@@ -1,0 +1,73 @@
+{
+  "parent_id": "10I2aAjDuqC5M-Lm2OjSGd-07fLTtYWEf",
+  "connector_response_request_id": "4730c83b-96cd-43bc-8ddf-60ae809f07f3",
+  "page": 1,
+  "observed_count": 6,
+  "entries": [
+    {
+      "id": "134EYCiUJM_4HduNyrNYSgmgjrCVIZJU6",
+      "name": "Art_Bible_Index",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "10I2aAjDuqC5M-Lm2OjSGd-07fLTtYWEf"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1E9Xce50jUlAS3G_2C7ak7CnUCmFwld8y",
+      "name": "Asset_Registers",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "10I2aAjDuqC5M-Lm2OjSGd-07fLTtYWEf"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1Cse2Hvk11Ik8t4MyvuVmiq88Ja7ONeWt",
+      "name": "Changelogs",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "10I2aAjDuqC5M-Lm2OjSGd-07fLTtYWEf"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1YBqalsLXSjDibsJ2ccXcvPK_q5b1G0ZE",
+      "name": "Character_Registers",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "10I2aAjDuqC5M-Lm2OjSGd-07fLTtYWEf"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "166HP4NrAFTHNHoEjc218BfMP97F3zKYd",
+      "name": "Location_Registers",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "10I2aAjDuqC5M-Lm2OjSGd-07fLTtYWEf"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1EnnXFOl1nRZgH5y5fcaBiXq5nNKZ7buG",
+      "name": "Production_Reports",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "10I2aAjDuqC5M-Lm2OjSGd-07fLTtYWEf"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

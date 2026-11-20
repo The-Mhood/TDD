@@ -1,0 +1,1156 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>TDD — Phase2 A–J working production-readiness audit</title><style>
+:root{--paper:#fffefa;--ink:#202a32;--muted:#5a6770;--line:#d8dfdc;--accent:#25675e;--warn:#8e4928;--back:#edf1ee}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--back);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}.shell{max-width:1480px;margin:auto;display:grid;grid-template-columns:290px minmax(0,1fr);gap:28px;padding:28px}.side{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow:auto;padding:22px 18px;border:1px solid var(--line);border-radius:12px;background:#f7f9f5}.eyebrow{font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:750;color:var(--accent)}.badge{display:inline-block;background:#fff0e5;border:1px solid #e5c6ad;border-radius:100px;color:var(--warn);font-size:12px;font-weight:700;padding:4px 11px;margin:12px 0}.side .toc ul{padding-left:16px}.side .toc>ul{padding-left:0;list-style:none}.side .toc{font-size:12px;line-height:1.5}.side .toc a{text-decoration:none;display:inline-block;margin:4px 0}.side p{font-size:12px;color:var(--muted)}main{background:var(--paper);padding:50px 52px 64px;border:1px solid var(--line);border-radius:14px;min-width:0;box-shadow:0 12px 40px #1d3b2a08}h1,h2,h3{line-height:1.23;letter-spacing:-.025em}h1{font-size:30px;margin:60px 0 24px;border-top:2px solid var(--accent);padding-top:24px}h1:first-child{margin:0;border:0;padding:0;font-size:37px}h2{font-size:23px;margin-top:32px}h3{font-size:18px;color:var(--accent);margin-top:27px}p,li{max-width:90ch}strong{font-weight:680}hr{border:0;border-top:1px solid var(--line);margin:34px 0}blockquote{margin:20px 0;padding:14px 20px;background:#fff2e8;border-left:4px solid var(--warn)}table{border-collapse:collapse;width:100%;font-size:12px;line-height:1.5;margin:23px 0;table-layout:auto}th,td{text-align:left;vertical-align:top;border:1px solid var(--line);padding:11px 12px;overflow-wrap:anywhere}th{background:#eaf2ed;font-size:11px;letter-spacing:.025em}tr:nth-child(even) td{background:#f8faf7}code{font:11px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;background:#eff2ec;border-radius:3px;padding:2px 4px}pre{overflow:auto;white-space:pre-wrap}.footer{margin-top:42px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}.jump{display:inline-block;padding:7px 11px;border:1px solid var(--line);border-radius:7px;margin:3px 2px;font-size:12px;text-decoration:none;background:white}@media(max-width:1050px){.shell{grid-template-columns:1fr;padding:12px;gap:14px}.side{position:static;max-height:none;padding:18px}.side .toc{display:none}main{padding:28px 23px}h1:first-child{font-size:29px}table{font-size:11px}td,th{padding:8px 7px}}@media print{@page{size:A4;margin:17mm}.shell{display:block;padding:0}.side{display:none}body{background:white;font-size:10pt}main{padding:0;border:0;box-shadow:none}h1{page-break-before:always;font-size:22pt}h1:first-child{page-break-before:auto;font-size:27pt}h2,h3{break-after:avoid}table{font-size:7.5pt}tr{break-inside:avoid}a{color:inherit}th{background:#eef2ee!important}.footer{font-size:8pt}}
+</style></head><body><div class="shell"><aside class="side"><div class="eyebrow">TDD / Production audit</div><div class="badge">Coverage qualified · not final</div><p>Audit only. No design change, approval promotion or gate waiver.</p><a class="jump" href="TDD_PHASE2_A_TO_J_WORKING_AUDIT.html">A–J report</a><a class="jump" href="D_PRODUCTION_GAP_REGISTER.html">Detailed gaps</a><a class="jump" href="G_ARTIST_READY_BRIEFS.html">Artist briefs</a><a class="jump" href="J_CD_DECISION_REGISTER.html">CD register</a><div class="toc">
+<ul>
+<li><a href="#the-disobedient-daughter">THE DISOBEDIENT DAUGHTER</a><ul>
+<li><a href="#phase-2-visual-asset-art-bible-production-readiness-audit">Phase 2 — Visual Asset &amp; Art Bible Production-Readiness Audit</a><ul>
+<li><a href="#aj-working-report-coverage-qualified-audit-only">A–J working report · coverage-qualified · audit only</a></li>
+</ul>
+</li>
+<li><a href="#executive-position">Executive position</a><ul>
+<li><a href="#verified-accounting-at-this-snapshot">Verified accounting at this snapshot</a></li>
+<li><a href="#completed-inspection-batch-20">Completed inspection batch 20</a></li>
+<li><a href="#preservation-and-assurance-notes">Preservation and assurance notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#a-visual-asset-inventory">A. Visual asset inventory</a><ul>
+<li><a href="#a1-what-is-delivered-and-what-is-not-yet-complete">A1. What is delivered — and what is not yet complete</a></li>
+<li><a href="#a2-required-per-asset-reading-of-the-catalogue">A2. Required per-asset reading of the catalogue</a></li>
+<li><a href="#a3-inspected-continuity-and-duplication-findings-worth-carrying-forward">A3. Inspected continuity and duplication findings worth carrying forward</a></li>
+</ul>
+</li>
+<li><a href="#b-art-bible-completeness-assessment">B. Art Bible completeness assessment</a><ul>
+<li><a href="#b1-basis">B1. Basis</a></li>
+<li><a href="#b2-section-assessment">B2. Section assessment</a></li>
+<li><a href="#b3-contradictions-versus-settled-supersession">B3. Contradictions versus settled supersession</a></li>
+</ul>
+</li>
+<li><a href="#c-production-readiness-matrix">C. Production readiness matrix</a></li>
+<li><a href="#d-production-gap-register">D. Production gap register</a></li>
+<li><a href="#e-immediate-production-opportunities">E. Immediate production opportunities</a><ul>
+<li><a href="#e1-safe-work-now-within-this-audit">E1. Safe work now, within this audit</a></li>
+<li><a href="#e2-good-early-production-candidates-after-separate-authorization">E2. Good early production candidates after separate authorization</a></li>
+</ul>
+</li>
+<li><a href="#f-production-blockers-and-sequence">F. Production blockers and sequence</a><ul>
+<li><a href="#f1-immediate-blockers-with-narrow-consequences">F1. Immediate blockers, with narrow consequences</a></li>
+<li><a href="#f2-later-improvements-not-immediate-universal-blockers">F2. Later improvements, not immediate universal blockers</a></li>
+</ul>
+</li>
+<li><a href="#g-artist-ready-production-briefs">G. Artist-ready production briefs</a></li>
+<li><a href="#h-recommended-production-pipeline">H. Recommended production pipeline</a><ul>
+<li><a href="#h1-gates-and-concrete-delivery">H1. Gates and concrete delivery</a></li>
+<li><a href="#h2-safe-parallel-work-and-change-control">H2. Safe parallel work and change control</a></li>
+<li><a href="#h3-proposed-native-package-conventions">H3. Proposed native package conventions</a></li>
+</ul>
+</li>
+<li><a href="#i-software-and-hardware-recommendations">I. Software and hardware recommendations</a><ul>
+<li><a href="#i1-decision-basis-and-limitations">I1. Decision basis and limitations</a></li>
+<li><a href="#i2-essential-versus-conditional-tools">I2. Essential versus conditional tools</a></li>
+<li><a href="#i3-provisional-capability-tiers-not-purchase-specifications">I3. Provisional capability tiers — not purchase specifications</a></li>
+<li><a href="#i4-capacity-and-cost-worksheet">I4. Capacity and cost worksheet</a></li>
+</ul>
+</li>
+<li><a href="#j-creative-director-decision-register">J. Creative Director decision register</a><ul>
+<li><a href="#settled-controls-carried-forward-without-another-decision">Settled controls carried forward without another decision</a></li>
+<li><a href="#source-and-verification-navigation">Source and verification navigation</a><ul>
+<li><a href="#governing-and-core-references-actually-read">Governing and core references actually read</a></li>
+<li><a href="#reproducibility-and-scope-qualification">Reproducibility and scope qualification</a></li>
+</ul>
+</li>
+<li><a href="#completion-boundary">Completion boundary</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside><main><h1 id="the-disobedient-daughter">THE DISOBEDIENT DAUGHTER</h1>
+<h2 id="phase-2-visual-asset-art-bible-production-readiness-audit">Phase 2 — Visual Asset &amp; Art Bible Production-Readiness Audit</h2>
+<h3 id="aj-working-report-coverage-qualified-audit-only">A–J working report · coverage-qualified · audit only</h3>
+<p><strong>Status: Phase 2 is not complete. This is not an all-file inspection certificate or a global production-readiness verdict.</strong></p>
+<p>The known folders have been enumerated, substantial actual visual/text inspection has been performed, and this package supplies the requested A–J structure with source-linked findings, gaps, briefs and technical gates. <strong>Many actual files still have not been visually or semantically inspected.</strong> The remaining queue is explicit. A file catalogue, hash match, image decode, prepared readpack or recommendation does not satisfy that outstanding work.</p>
+<p><strong>Session date:</strong> 16 November 2026 UTC. Dates embedded in source filenames, documents and Drive metadata are retained as source evidence, not silently adopted as this audit's date or proof of chronology.<br />
+<strong>Scope:</strong> the canonical production Art Bible and the enumerated related visual/reference/review/history/archive evidence.<br />
+<strong>Authority:</strong> owner/CD decisions and exact limited tiers remain controlling. This report changes no design, source, approval, canon, filing destination or external gate. Phase2 remote writes: <strong>0</strong>.</p>
+<hr />
+<h2 id="executive-position">Executive position</h2>
+<p>The inspected material is a substantial <strong>visual-development and narrative-design foundation</strong>, not a beginner exercise. It includes approved identity anchors, approved environment designs, accepted limited visual outcomes, useful material/atmosphere studies and unusually explicit negative constraints. It deserves a cinematic production pipeline and competent specialist execution.</p>
+<p>It is not yet defensible to call the whole corpus production-ready. There are two different reasons, which must not be conflated:</p>
+<ol>
+<li><strong>Audit assurance is unfinished:</strong> uninspected files may contain relevant evidence. This report does not say the entire project lacks native models, rigs, maps, cameras or technical documents.</li>
+<li><strong>Specific inspected sources do not themselves deliver technical readiness:</strong> a flattened portrait is not topology or a rig; an environment perspective is not a measured connected set; a blade board with provisional dimensions is not an approved grip/draw system. Those limitations remain true even when the illustration has visual approval.</li>
+</ol>
+<p><strong>Recommended immediate sequence:</strong> finish evidence coverage → reconcile the actual film shot order and exact authority → close only the design/cultural dependencies affecting those shots → approve a bounded technical interpretation → validate a representative asset/shot through the H gates → scale production from measured results. Do not commission the entire historical game backlog or buy a large tool stack first.</p>
+<p>No accepted visual pass is reopened merely because a technical test remains. No rejected/exploratory source is promoted because it looks useful. The CD remains final creative decision-maker; modelling, facial rigging, simulation, lighting and pipeline work may be assigned to specialists without lowering the quality target.</p>
+<h3 id="verified-accounting-at-this-snapshot">Verified accounting at this snapshot</h3>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Verified accounting / limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Known folders / saved listing pages</td>
+<td>128 / 144; no known folder lacks a complete final page</td>
+</tr>
+<tr>
+<td>Known physical files</td>
+<td>1207; not a logical-asset count</td>
+</tr>
+<tr>
+<td>Physical source-ID/hash bindings</td>
+<td>636; some historical selected snapshots are unavailable locally</td>
+</tr>
+<tr>
+<td>Physical current representations available</td>
+<td>139; availability is not inspection</td>
+</tr>
+<tr>
+<td>Actual inspection observations</td>
+<td>364 = 312 whole-raster visual + 52 complete-semantic observations</td>
+</tr>
+<tr>
+<td>Distinct actually inspected payload hashes</td>
+<td>361; repeated representations/observations are not additional assets</td>
+</tr>
+<tr>
+<td>Physical sources linked to actually inspected exact bytes</td>
+<td>396; shared bytes do not share approval</td>
+</tr>
+<tr>
+<td>Archive members / distinct archive payloads</td>
+<td>1845 / 1129; CRC/hash/decode do not imply content inspection</td>
+</tr>
+<tr>
+<td>Distinct archive rasters still visually uninspected</td>
+<td>394; additional unbound/other records remain</td>
+</tr>
+<tr>
+<td>Associated local files / total catalogue records</td>
+<td>679 / 3731; includes intentional duplicates and evidence copies</td>
+</tr>
+<tr>
+<td>Outstanding catalogue records</td>
+<td>2999; record count, NOT distinct logical assets</td>
+</tr>
+<tr>
+<td>All-file inspection / final logical denominator</td>
+<td>NOT COMPLETE / NOT ESTABLISHED</td>
+</tr>
+<tr>
+<td>Phase2 remote writes / source design alterations</td>
+<td>0 / 0</td>
+</tr>
+</tbody>
+</table>
+<p>These are <strong>different denominators</strong>. Physical files, archive members, local associated copies, unique bytes, observations and logical production assets are not interchangeable. The final distinct logical-asset count and final film build count are not established. The sealed <strong>193-source Phase1 scope is closed history</strong>, not the denominator of Phase2. Its earlier <strong>6 accepted / 21 not approved / 12 blocked</strong> cycle is also not the complete project.</p>
+<h3 id="completed-inspection-batch-20">Completed inspection batch 20</h3>
+<p><a href="BATCH_20_PROGRESS_AND_FINDINGS.md">Batch 20 progress and findings</a> records <strong>79 newly inspected distinct payloads: 62 whole rasters and 17 complete documents</strong>. The Chapter5/6/7 update archives selected for that batch are fully content-covered across <strong>125 member records</strong>, with exact duplicates sharing inspection only. The archive-raster remainder fell <strong>456 → 394</strong>; additional physical/local files and semantic reconciliation remain outside that count.</p>
+<p>This is new actual inspection, not another integrity-only checkpoint. The complete 645-line batch-specific document delta pack was actually read with exact prior-read references followed; the separate older 13,909-line history pack is still only partly read.</p>
+<h3 id="preservation-and-assurance-notes">Preservation and assurance notes</h3>
+<ul>
+<li>The protected tracked review directory, decision DOCX, historical JPEGs and five root screenshots remain unchanged. A read-only recheck of the sealed Phase1 hash list is reported in <code>verification/PHASE1_READ_ONLY_SEAL_RECHECK.json</code>; no package was rebuilt or resealed.</li>
+<li>Current normalized listing pages are manually recorded successful connector responses, <strong>not raw API captures</strong>. Every known folder has a final complete page; that proves enumeration of the known scope, not content review.</li>
+<li>Exact-byte copies can share an actual recorded content inspection, with all identities retained. They <strong>never share approval automatically</strong>. Differently encoded images, different chrome and visually similar versions are not silently merged.</li>
+<li>The fresh native CD-review export is separately hashed and completely read. It is not the missing old exact export. Its <code>word/document.xml</code> equals the protected tracked DOCX, while <code>styles.xml</code> differs; no equivalence to the missing historical export or source-drift inference is claimed.</li>
+<li>Controlling amendments correct this auditor’s recording errors: <strong>E46 Kitchen V003 is an accepted limited internal firewood study, not a failed relight; only E53/E54 relights failed.</strong> Several state-study predecessor notes also incorrectly borrowed later versions’ limited tiers. The exact source-ID crosswalk controls: those predecessors remain <strong>REPLACED / SUPERSEDED</strong>; accepted/referenced later files are separately inspected and identified. Original observations remain auditable; the catalogue uses the corrected interpretation. No Phase1 decision changed.</li>
+</ul>
+<hr />
+<h1 id="a-visual-asset-inventory">A. Visual asset inventory</h1>
+<h2 id="a1-what-is-delivered-and-what-is-not-yet-complete">A1. What is delivered — and what is not yet complete</h2>
+<p>The machine-readable catalogue enumerates every currently known physical file, archive member and associated protected/local Phase1 file. It includes exact identities, paths, versions, byte fingerprints where verified, measured raster dimensions/aspects with an explicit fresh or historical exact-payload decode basis, inspection joins and exact Phase1 dispositions where applicable.</p>
+<p><strong>This is not yet a complete interpreted logical-asset inventory.</strong> Exhaustively identifying every depicted costume part, hairstyle, accessory, prop, variation, construction detail, visual duplicate and Bible/image contradiction requires completion of the remaining actual inspections and semantic grouping. Uninspected entries are labelled, not filled with filename-derived design claims.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="inventory/A1_PHYSICAL_FILE_CATALOGUE.csv">A1 physical catalogue</a></td>
+<td>Every known physical source ID; current listed path, version/MIME/size, verified representation, dimensions, inspection and exact-source disposition.</td>
+</tr>
+<tr>
+<td><a href="inventory/A2_ARCHIVE_MEMBER_CATALOGUE.csv">A2 archive members</a></td>
+<td>Every catalogued ZIP member, member path, parent archive/hash/CRC, payload hash, measurements and inspection join.</td>
+</tr>
+<tr>
+<td><a href="inventory/A3_ASSOCIATED_LOCAL_FILES.csv">A3 associated local files</a></td>
+<td>Protected repository sources and sealed Phase1 files, including intentional duplicate evidence.</td>
+</tr>
+<tr>
+<td><a href="inventory/A4_ACTUAL_CONTENT_OBSERVATIONS.csv">A4 actual observations</a></td>
+<td>Actually seen/read information, scope, unknowns, trace and controlling amendments.</td>
+</tr>
+<tr>
+<td><a href="inventory/A5_EXACT_BYTE_DUPLICATES.csv">A5 exact-byte duplicates</a></td>
+<td>Proven content duplicates across physical/archive/local records; no inherited authority.</td>
+</tr>
+<tr>
+<td><a href="inventory/A6_OUTSTANDING_INSPECTION_QUEUE.csv">A6 outstanding inspection queue</a></td>
+<td>Exact records still lacking appropriate actual content inspection; not a new owner review cycle.</td>
+</tr>
+<tr>
+<td><a href="inventory/CATALOGUE_DATA.json">Combined data</a></td>
+<td>Joined catalogue, observations, duplicate groups and per-raster stage-evidence matrix.</td>
+</tr>
+</tbody>
+</table>
+<p>A missing verified measurement means <strong>not measured</strong>, not zero resolution. Previously measured exact-hash dimensions are retained when ignored source snapshots disappear, explicitly labelled as historical receipts—not a fresh decode or a new content inspection. The mislabelled EXP text is classified by actual listed MIME/payload evidence, not treated as a JPEG because of its extension. Archive CRC and full raster decoding are integrity tests, not visual inspection. Native export bytes are distinguished from the native document's stored metadata size.</p>
+<h2 id="a2-required-per-asset-reading-of-the-catalogue">A2. Required per-asset reading of the catalogue</h2>
+<p>For a source ID, join <code>A1 → inspection_ledger_rows_1based → A4</code>; use <code>A2/A5</code> to trace identical members and copies. Keep approval on the <strong>specific physical/decision identity</strong>, even when an observation is shared through exact bytes. <code>C_PER_RASTER_EVIDENCE_MATRIX.csv</code> records stage-evidence limits; it does not manufacture a technical pass.</p>
+<p>The useful distinction is:</p>
+<ul>
+<li><strong>Reliable visible information:</strong> silhouette, observed colours under the depicted light, visible identity markers, surface appearance, composition and explicit printed qualifications.</li>
+<li><strong>Reliable written requirements:</strong> only the applicable governing Bible/CD specification, with historical/draft/proposed status retained.</li>
+<li><strong>Unknown unless separately established:</strong> physical dimensions, hidden surfaces, actual material chemistry, topology/UVs, fastening/attachment, rig/deformation, measured set connectivity, mechanics, animation, culture/period authenticity and production performance.</li>
+</ul>
+<p>No universal resolution, texture size or sheet count is imposed. A large board with a small illustration panel or an upscaled source does not provide native close-up detail. A source may be sufficient for visual intent but insufficient as a moving-camera background or a construction specification. Required extra views come from actual shot coverage, not an automatic checklist of every possible sheet.</p>
+<h2 id="a3-inspected-continuity-and-duplication-findings-worth-carrying-forward">A3. Inspected continuity and duplication findings worth carrying forward</h2>
+<ul>
+<li><strong>Portrait/detail crops are often the same view.</strong> They anchor identity but are not new orthographic angles or separated maps.</li>
+<li><strong>Adanna's historical turnarounds and costume versions are not interchangeable.</strong> Baked APPROVED/PRODUCTION labels in rejected V001 images do not override dispositions. Current LEFT_SIDE/BACK remain V003/PRESERVE/UNAPPROVED. Front/three-quarter V005 are selected internal cord studies only.</li>
+<li><strong>Five Chapter8 environment designs retain design approval, not story canon or technical set approval.</strong> Nested courtyard panels and doorway inserts do not prove one measured layout or parent assignment.</li>
+<li><strong>States are distinct studies, not a delivered continuous native set.</strong> Current state images visibly vary palace/compound architecture; contemporary-context market/assembly studies have their own restricted use and are not older-settlement clothing authority.</li>
+<li><strong>Some one-board location references cover multiple registered IDs.</strong> Quiet Houses/INT002 and Holding Pits/INT004 do not become independent complete interiors by being listed twice.</li>
+<li><strong>Blade/sheath and composition sources disagree with old 'approved short blade' wording.</strong> CQ-9 is not resolved by those captions, old percentages or sheath aesthetics.</li>
+<li><strong>Known false-flip risk:</strong> front/rear viewer-left/right reversal does not itself prove an anatomical staff/python change. The Okwu/Idemili amendments control; settled Adanna BACK chirality is not reopened.</li>
+<li><strong>Exact duplicates are proved in A5.</strong> Exhaustive visual/perceptual duplicate classification across the remaining distinct rasters is still unfinished; no global visual-duplicate count is claimed.</li>
+</ul>
+<hr />
+<h1 id="b-art-bible-completeness-assessment">B. Art Bible completeness assessment</h1>
+<h2 id="b1-basis">B1. Basis</h2>
+<p>The canonical scene register has been read completely: <strong>4,210 actual source lines / 135 detailed entries</strong>. The canonical location register has been read completely: <strong>11,895 actual source lines</strong>, using the original prefix and a verified lossless remaining readpack with all repeat references followed. Character/clothing registers, core style/cultural guides, decisions, Chapter8 directions/register, timeline/memory and ending documents, v7 master index, native review export and additional authority/history documents have actual read traces.</p>
+<p>That is substantial coverage of core requirements. It is <strong>not a claim that every Art Bible-associated document or illustration is read</strong>. Prepared historical readpacks remain incomplete outside their recorded actual ranges. Downloaded generation/sync/audit-builder scripts are evidence only and have not been executed.</p>
+<h2 id="b2-section-assessment">B2. Section assessment</h2>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What the read core provides</th>
+<th>Production-readiness limit / exact next requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project identity and visual language</td>
+<td>Grounded photoreal dark-fantasy direction, approved portrait anchors, palette/atmosphere examples and explicit restrictions.</td>
+<td>Not a calibrated colour/shader/render specification. Do not impose painterly-only treatment, a universal palette ratio or fixed board canvas. G22/G25.</td>
+</tr>
+<tr>
+<td>Story, timeline and character presence</td>
+<td>Nneka/Ezeani relationship, intentional dead-mother voice, age/time relationships, proposed memories/endings and chapter beats.</td>
+<td>Selected film treatment/cut is not established. CH04/CH05 child-presence proposals versus CH01-only scope require authority reconciliation if selected. G01/G21.</td>
+</tr>
+<tr>
+<td>Principal/supporting characters</td>
+<td>Portraits, turnarounds, expressions and later variants with meaningful visible identity detail.</td>
+<td>Crops/stills do not establish a consistent production body, hidden construction, facial system or rig. Age/hair/costume/master conflicts need source-specific resolution, not blending. G03/G05/G06/G08.</td>
+</tr>
+<tr>
+<td>Clothing, hair and ornaments</td>
+<td>Specific Adanna locks, covered guard decisions and applicable adult-settlement constructed-garment rule; clothing audit classes.</td>
+<td>Audit compliance is not design approval; some prose overgeneralizes women/elders. Patterns, layer order, attachment and deformation are not validated by lit cloth images. G07.</td>
+</tr>
+<tr>
+<td>Environments and spatial rules</td>
+<td>Rich complete proposed location specifications; materials, landmarks, atmosphere, constraints and some proposed scale/entry information.</td>
+<td>Connectivity is predominantly pending/proposed. Perspective/inset coverage is not plan/elevation/metric/native layout. No invented metric dimension is adopted. G09–G12/G16/G19.</td>
+</tr>
+<tr>
+<td>Props and craft/process</td>
+<td>Many visible tools, domestic objects, boats, drums, weapons and dressing; explicit source and restricted-use questions.</td>
+<td>Form/period/operation often unsourced or unresolved. Hero contacts require approved construction and a functioning test, especially blade, loom, fishing tools, paddles and smithing. G04/G14/G20/G23.</td>
+</tr>
+<tr>
+<td>Lighting/time/weather</td>
+<td>Strong chapter-specific negative rules and characteristic visual keys.</td>
+<td>Not a continuous state scene, camera/lens/exposure package or native light rig. CH02 enclosure/state conflicts and CH04 warm-lighting failures are not excused by a new sunny variant. G12/G15/G25.</td>
+</tr>
+<tr>
+<td>Animation and effects</td>
+<td>Expression intentions, pose/still activity ideas, atmosphere, WHITE lightning, ash/ember/void and other proposed effects.</td>
+<td>No timed acting/contact/facial/cache requirement is established for selected film shots. Do not order game combat/UI effects or wind where forbidden. G06/G24/G26.</td>
+</tr>
+<tr>
+<td>Cultural/research governance</td>
+<td>Explicit fiction-versus-authentication distinctions, specialist/consultant gates and exact protected cases.</td>
+<td>Visual quality/CD fiction choice does not authenticate practice. Trashed/historical reviews are not live clearance. G17/G18/G20.</td>
+</tr>
+<tr>
+<td>Handoff and technical production</td>
+<td>Good source-ID/hash/comparison/residual-disclosure expectations in the original coordination note and later execution evidence.</td>
+<td>A submission protocol is not native model/UV/material/rig/shot delivery. H defines proposed stage-specific gates; actual corpus-wide native evidence remains incompletely inspected. G00/G02/G27.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Assessment:</strong> the read core is useful for directing and constraining a professional adaptation. It does not justify universal production release or a claim that every proposed object/state must be built. No 'complete Bible' rating or percentage is issued before the remaining sections/files are actually inspected.</p>
+<h2 id="b3-contradictions-versus-settled-supersession">B3. Contradictions versus settled supersession</h2>
+<p>Do not confuse a resolved historical defect with a live design question. Later exact authority already settles Adanna BACK chirality, V003 preservation, Okwu darkness-only, covered guard/Okorie direction, Washing domestic-only, the limited V013 waiver, selected E46/E50 studies and failed E53/E54 relights. Those are carried forward, not put to another vote.</p>
+<p>G21 records genuinely unresolved <strong>proposal/authority conflicts to check against remaining evidence first</strong>: child-presence/time scope, Quiet Garden 'only living plant' language versus other proposed living vegetation, CH02 enclosure/state descriptions, CH05 general no-architecture language versus specific structures, and character hair/cloth details. An unresolved conflict is not permission to add, delete or redesign.</p>
+<hr />
+<h1 id="c-production-readiness-matrix">C. Production readiness matrix</h1>
+<p><strong>Legend:</strong> <strong>V</strong> = actually inspected visual/text intent; <strong>NV</strong> = technical readiness not verified; <strong>U</strong> = actual inspection outstanding; <strong>X</strong> = a named authority/design dependency prevents that specific production use. Neither NV nor U is a finding that the entire corpus contains no native delivery.</p>
+<table>
+<thead>
+<tr>
+<th>Source / exact ID</th>
+<th>Measured pixels</th>
+<th>Authority / permitted use</th>
+<th>Actual inspection</th>
+<th>Model / rig / final-shot evidence</th>
+<th>Gap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Adanna approved portrait / 1k08XH8VjNJAnSoMNU4YvBPtBEUdYD20y</td>
+<td>2560 × 1440</td>
+<td>Identity/reference anchor; not a body/rig</td>
+<td>V (A4 rows 1)</td>
+<td>NV / NV / NV</td>
+<td>G03/G05/G08</td>
+</tr>
+<tr>
+<td>Adanna LEFT_SIDE V003 / 14uOMGJYXucAHpfCByFi8TW_i1ZxriKMy</td>
+<td>2560 × 1440</td>
+<td>PRESERVE / UNAPPROVED; no V004</td>
+<td>V (A4 rows 126)</td>
+<td>NV / NV / NV</td>
+<td>G03/G04</td>
+</tr>
+<tr>
+<td>Adanna BACK V003 / 11MmHTZ-CawZrvknG21bsgqqKXJ-7x2nP</td>
+<td>2560 × 1440</td>
+<td>PRESERVE / UNAPPROVED; settled anatomical LEFT</td>
+<td>V (A4 rows 125)</td>
+<td>NV / NV / NV</td>
+<td>G03/G04</td>
+</tr>
+<tr>
+<td>Costume V002 / 1OcNpG55dadGkIUUar7W0Vm5Lkb2QGLJR</td>
+<td>2560 × 1440</td>
+<td>Interim partial UPPER-BODY working reference only</td>
+<td>V (A4 rows 108)</td>
+<td>NV / NV / NV</td>
+<td>G03/G07</td>
+</tr>
+<tr>
+<td>Primary blade V001 / 1V12Sq2BZdIqjsgkx5GRpzGxc3nS3Gbac</td>
+<td>2560 × 1440</td>
+<td>X: CQ-9 before fit/rig; provisional dimensions</td>
+<td>V (A4 rows 39,105)</td>
+<td>NV / NV / NV</td>
+<td>G04</td>
+</tr>
+<tr>
+<td>Hall of Posts V004 / 1MHCd25z3x-cfBUf-eoCJvDLqwvYj9Ins</td>
+<td>2560 × 1440</td>
+<td>Design-approved, canon pending</td>
+<td>V (A4 rows 100)</td>
+<td>NV / NV / NV</td>
+<td>G09</td>
+</tr>
+<tr>
+<td>Mothers Courtyard V007 / 1EMYjEMCzfqhwEAfpvN8uDNfAddgLpVue</td>
+<td>2560 × 1440</td>
+<td>Design-approved, canon pending; panels not measured layout</td>
+<td>V (A4 rows 101)</td>
+<td>NV / NV / NV</td>
+<td>G09</td>
+</tr>
+<tr>
+<td>Nneka interior V003 / 1kT8ucpt6HVWhWEM8xvLRxTyGGjrNIxgf</td>
+<td>2560 × 1440</td>
+<td>Design-approved, canon pending; doorway not connectivity proof</td>
+<td>V (A4 rows 102)</td>
+<td>NV / NV / NV</td>
+<td>G09</td>
+</tr>
+<tr>
+<td>Nneka house V004 / 1JIoAiQ20goibDA-ujYr95iyihBTLKZWj</td>
+<td>2560 × 1440</td>
+<td>Design-approved, canon pending</td>
+<td>V (A4 rows 103)</td>
+<td>NV / NV / NV</td>
+<td>G09</td>
+</tr>
+<tr>
+<td>Sealed Quarter V003 / 13jAtOMkXBazG2jbcFWZeBLsI1mufWJqU</td>
+<td>2560 × 1440</td>
+<td>Design-approved, canon pending; no parent assignment inferred</td>
+<td>V (A4 rows 104)</td>
+<td>NV / NV / NV</td>
+<td>G09</td>
+</tr>
+<tr>
+<td>Establishing V013 / 1MuhupyLWP2fqLn0mhfAzXXTjy0q6sqa0</td>
+<td>2560 × 1440</td>
+<td>Internal exploratory only; item5 NOT DONE / limited waiver</td>
+<td>V (A4 rows 130)</td>
+<td>NV / NV / NV</td>
+<td>G10</td>
+</tr>
+<tr>
+<td>H3 / VR011 V002 / 1_vJFw7KNJRn435OijQHdjDhds0G-gF6n</td>
+<td>2560 × 1440</td>
+<td>X: D9/RQ-01, no fresh H3 visual/cultural release</td>
+<td>V (A4 rows 127)</td>
+<td>NV / NV / NV</td>
+<td>G18</td>
+</tr>
+<tr>
+<td>Sleeping Room V002 / 1SR7CRZC9MZjTBsEi84_N3b4sesAmDsiq</td>
+<td>1672 × 941</td>
+<td>Accepted visual-only endpoint; not engineering/canon approval</td>
+<td>V (A4 rows 140)</td>
+<td>NV / NV / NV</td>
+<td>G08/G09/G13</td>
+</tr>
+<tr>
+<td>Streets V002 / 1lnMePbbXNHmDZTnbmcJW47RGbMtIfjo4</td>
+<td>1672 × 941</td>
+<td>Accepted visual-only endpoint; preserve</td>
+<td>V (A4 rows 136)</td>
+<td>NV / NV / NV</td>
+<td>G11</td>
+</tr>
+<tr>
+<td>Kitchen V003 / E46 / 1b2vTn10kpAsmmMaN53yzQ8G4pJZc1wR0</td>
+<td>1672 × 941</td>
+<td>Selected accepted internal firewood study, NOT failed</td>
+<td>V (A4 rows 146)</td>
+<td>NV / NV / NV</td>
+<td>G13</td>
+</tr>
+<tr>
+<td>Narrow Passages V003 / E50 / 1p1erIKGaOy4UX3MWCFgJTnIAcX1XSz0e</td>
+<td>1672 × 941</td>
+<td>Selected accepted internal endpoint study</td>
+<td>V (A4 rows 135)</td>
+<td>NV / NV / NV</td>
+<td>G13</td>
+</tr>
+<tr>
+<td>Fishing Shelter V002 / 13Dc48FnSA9nvCUzL2zBq6zNv6axFLtIG</td>
+<td>1376 × 768</td>
+<td>Internal canvas accepted; specialist craft question remains</td>
+<td>V (A4 rows 129)</td>
+<td>NV / NV / NV</td>
+<td>G14</td>
+</tr>
+<tr>
+<td>Canoe Shed V002 / 16E4umob2MQdXGMRt1M9upT5yYOJ8-3UV</td>
+<td>1672 × 941</td>
+<td>Native overcast proof needed if commissioned; failed V003 not replacement</td>
+<td>V (A4 rows 257)</td>
+<td>NV / NV / NV</td>
+<td>G15</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="inventory/C_PER_RASTER_EVIDENCE_MATRIX.csv">per-raster evidence matrix</a> covers physical raster IDs, including separate copies, with measured dimensions and inspection joins. It distinguishes reference use, modelling, materials, rigging, assembly, animation, lighting/render and compositing evidence. <strong>It is not the final per-logical-asset readiness matrix.</strong> That final grouping and native-package verification remain part of G00.</p>
+<p>For every asset eventually commissioned:</p>
+<ol>
+<li><strong>Reference-ready</strong> means exact authority and sufficient visible information for its intended shot—not merely a large image.</li>
+<li><strong>Model-ready</strong> requires a resolved interpretation and necessary dimensions/contacts/hidden visible surfaces—not every conceivable orthographic sheet.</li>
+<li><strong>Rig/animation-ready</strong> requires native topology, controls, tested poses/expressions and contacts appropriate to actual performances.</li>
+<li><strong>Render/comp-ready</strong> requires reliable materials, colour/light/camera continuity, memory/performance, layers and temporal QC.</li>
+<li>Each stage release is specific to the tested asset/version/shot envelope. It never promotes unrelated canon or cultural approval.</li>
+</ol>
+<hr />
+<h1 id="d-production-gap-register">D. Production gap register</h1>
+<p>The <a href="D_PRODUCTION_GAP_REGISTER.md">full detailed register</a> and <a href="production_gap_register.json">machine-readable data</a> contain <strong>30 current cross-cutting records</strong>, with all required fields: affected asset/scene and sources; current material; deficiency; production impact; priority; required solution; production instructions; objective acceptance criteria; dependency; specialist owner.</p>
+<p><strong>This is not an exhaustive final gap count.</strong> Uninspected material may close, refine or add findings. 'Critical blocker' applies to the named certification/release/selected-shot use, not a generic project HOLD. Existing unfulfilled registered activities are not automatically film orders.</p>
+<table>
+<thead>
+<tr>
+<th>Gap</th>
+<th>Affected production area</th>
+<th>Priority</th>
+<th>Required closure / specialist</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P2-G00</td>
+<td>Whole-corpus audit assurance, not an artwork defect</td>
+<td>critical blocker</td>
+<td>Auditor completes the exact outstanding records, not a new owner review cycle and not replacement of evidence already present. — Audit lead / source librarian; reviewer competent in animation asset handoff</td>
+</tr>
+<tr>
+<td>P2-G01</td>
+<td>Film adaptation, shot demand and build scope</td>
+<td>critical blocker</td>
+<td>First reconcile any existing film script/boards/animatic in the remaining corpus; then CD/editor select the actual film treatment and commissioned shots without inventing new story. — Director/CD, screenwriter or story editor, storyboard/layout lead, producer</td>
+</tr>
+<tr>
+<td>P2-G02</td>
+<td>Authority/version selection across the production Bible</td>
+<td>critical blocker</td>
+<td>Publish an additive per-selected-asset authority manifest, not edits to approved sources or sealed history. — Production coordinator / asset supervisor, CD sign-off</td>
+</tr>
+<tr>
+<td>P2-G03</td>
+<td>Adanna body/costume interpretation and preserved views</td>
+<td>critical blocker</td>
+<td>CD-authorized, shot-derived technical interpretation using the existing identity locks, with missing visible construction decisions separated from preserved source images. — Senior character modeller, costume technical artist, CD</td>
+</tr>
+<tr>
+<td>P2-G04</td>
+<td>Adanna primary blade, sheath, attachment and hand fit — CQ-9</td>
+<td>critical blocker</td>
+<td>Resolve weapon design authority first; only then approve a metric construction/fit specification and shot-specific interaction test. — Prop/weapon designer, character rigger, action animator; CD authority</td>
+</tr>
+<tr>
+<td>P2-G05</td>
+<td>Principal/supporting character identity continuity</td>
+<td>high</td>
+<td>Identity packet per selected character/temporal state, anchored to controlling masters and existing CD decisions, with unresolved differences explicitly adjudicated. — Character supervisor / sculptor, costume/groom lead, CD</td>
+</tr>
+<tr>
+<td>P2-G06</td>
+<td>Okwu hood/void, Amadioha lightning, Idemili python/hair and Hollow King cavities</td>
+<td>high</td>
+<td>Effect-specific technical interpretation and look/rig tests after exact design authority and required shots are selected. — Character/look-development supervisor, rigger, FX/lighting/compositing artists</td>
+</tr>
+<tr>
+<td>P2-G07</td>
+<td>Civilian costume / NPC wardrobe and separate garment construction</td>
+<td>high</td>
+<td>Select only commissioned characters/variants; reconcile their actual garments and approved exceptions with the CD before patterns and simulation. — Costume designer/technical artist, character modeller and cloth specialist as shot demands</td>
+</tr>
+<tr>
+<td>P2-G08</td>
+<td>Character topology, UVs, facial/body deformation and groom delivery</td>
+<td>high</td>
+<td>Validate existing native packages if found; otherwise commission shot-appropriate models and rigs only after design closure, using H gates. — Senior character technical director, modeller, facial rigger, groom/cloth artist</td>
+</tr>
+<tr>
+<td>P2-G09</td>
+<td>Five approved Chapter8 environment designs — shared spatial layout</td>
+<td>critical blocker</td>
+<td>After film use/canon decision, derive and approve one common spatial interpretation for the actual camera/actor envelope. — Environment/layout supervisor, architectural modeller, CD</td>
+</tr>
+<tr>
+<td>P2-G10</td>
+<td>Ancestral Establishing V013 / Wall of Houses — scale and fictional-world scope</td>
+<td>critical blocker</td>
+<td>Keep the existing waiver unchanged. Only if selected for the film, obtain separate authority for its production spatial interpretation and required camera envelope. — CD, environment concept/layout lead, production designer</td>
+</tr>
+<tr>
+<td>P2-G11</td>
+<td>CH01 activity coverage and state-series continuity</td>
+<td>high</td>
+<td>Select film-required states and activities; retain accepted studies as their exact limited references, then authorize any actual state/scene delivery separately. — Layout, editorial, continuity and lighting leads</td>
+</tr>
+<tr>
+<td>P2-G12</td>
+<td>Chapter2 interior/exterior, atmosphere and no-living-flame rules</td>
+<td>high</td>
+<td>Reconcile exact selected location/shot enclosure and temporal state against controlling Bible/CD records before light rigs or effects. — Environment/layout and lighting supervisors, CD</td>
+</tr>
+<tr>
+<td>P2-G13</td>
+<td>CH03 ash, toy bird and selected bounded concept corrections</td>
+<td>high</td>
+<td>Carry the exact accepted limited-study conditions into any commissioned native build; do not repeat or reverse the accepted correction. — Environment/prop modeller, look-development artist, continuity lead</td>
+</tr>
+<tr>
+<td>P2-G14</td>
+<td>Chapter4 Fishing Shelter — internal canvas and craft evidence</td>
+<td>high</td>
+<td>Research plus a competent fishing-gear craft specialist establish exact commissioned tool/process scope, followed by CD fictional adaptation approval. — Research lead, fishing-gear craft specialist, prop artist/animator, CD</td>
+</tr>
+<tr>
+<td>P2-G15</td>
+<td>Chapter4 Riverbank House, Canoe Shed and Two-House Landing</td>
+<td>high</td>
+<td>Preserve both failed attempts as history, not replacements. Once commissioned design/native scene is authorized, perform nondestructive native lighting and approved paddle work. — Prop modeller/research specialist and lighting/look-development supervisor</td>
+</tr>
+<tr>
+<td>P2-G16</td>
+<td>Chapter5 isolated granite dome / no-snow / WHITE-lightning direction</td>
+<td>high</td>
+<td>CD resolves the exact selected location/structure scope using existing Bible and remaining evidence before modelling those features. — Production designer/environment lead, FX/look-development lead, CD</td>
+</tr>
+<tr>
+<td>P2-G17</td>
+<td>Chapter6 masks, memory rooms and child-presence scope</td>
+<td>critical blocker</td>
+<td>Resolve only the selected fictional mask/room/child-related scope with Research and appropriately scoped consultation, then CD approval. — Research lead / appropriate consultant or custodian where implicated, CD, character/environment leads</td>
+</tr>
+<tr>
+<td>P2-G18</td>
+<td>H3 / VR-011 Landing and distinct Field of Cloth</td>
+<td>critical blocker</td>
+<td>Research establishes a non-restricted fictional approach, with appropriately scoped Igbo consultant and relevant living custodian if a restricted local practice is implicated; CD chooses the adaptation or excludes it from the film. — Research lead, appropriately scoped cultural consultant/custodian if implicated, CD</td>
+</tr>
+<tr>
+<td>P2-G19</td>
+<td>Chapter7 earth/timber/cloth, ash, ember cracks and layout reuse</td>
+<td>high</td>
+<td>For selected shots, reconcile the actual design/state and one shared layout; specify only effects and interaction needed by the edit. — Environment/layout, prop, FX and lighting supervisors</td>
+</tr>
+<tr>
+<td>P2-G20</td>
+<td>SCN028 Weaver / SCN030 Palace Courtyard protected dependencies</td>
+<td>critical blocker</td>
+<td>Retain both gates exactly. No Phase2 correction, patch, regeneration or workaround is authorized. — Research/craft specialist, appropriately scoped living custodian if implicated, CD, prop technical artist</td>
+</tr>
+<tr>
+<td>P2-G21</td>
+<td>Bible contradictions: temporal/presence, vegetation, hair and material descriptions</td>
+<td>high</td>
+<td>Reconcile exact wording and authority first, then record only still-open film-relevant questions for the CD. — Story/continuity and production-design leads, CD</td>
+</tr>
+<tr>
+<td>P2-G22</td>
+<td>Materials, textures, colour pipeline and effective reference detail</td>
+<td>high</td>
+<td>Choose and document a single project colour-management path, shader conventions and shot-derived texel/detail budgets; validate any native maps found before ordering new ones. — Look-development/texturing and lighting/compositing leads</td>
+</tr>
+<tr>
+<td>P2-G23</td>
+<td>Interaction props, dressing and functioning mechanisms</td>
+<td>high</td>
+<td>Rank actual selected props by interaction and screen size, then produce targeted construction/operation briefs with relevant specialists. — Prop modeller/technical artist, relevant craft specialist, rigger/animator</td>
+</tr>
+<tr>
+<td>P2-G24</td>
+<td>Animation, facial performance and secondary motion</td>
+<td>high</td>
+<td>Derive a performance test list from selected shots, with blocking approval before final animation/simulation. — Animation supervisor, facial animator/rigger, simulation artist where justified</td>
+</tr>
+<tr>
+<td>P2-G25</td>
+<td>Shot cameras, lighting, rendering, layers and compositing</td>
+<td>high</td>
+<td>Approve a minimal reproducible shot template and representative moving-shot tests before scaling render work. — Cinematography/layout, lighting/render technical director, compositor, editor/QC</td>
+</tr>
+<tr>
+<td>P2-G26</td>
+<td>Titles, transitions, particles and motion graphics</td>
+<td>medium</td>
+<td>Obtain editorial/CD-approved graphics list from the actual cut; validate spelling, attribution and licensed font/graphic use. — Motion designer, editor, language/research reviewer, CD</td>
+</tr>
+<tr>
+<td>P2-G27</td>
+<td>Toolchain, staffing, hardware, storage and render capacity</td>
+<td>critical blocker</td>
+<td>Check remaining evidence for current resources, then inventory actual OS/CPU/RAM/GPU/VRAM/storage/licences/team roles and benchmark representative authorized shots before procurement. — Producer, pipeline/render technical director; CD quality and procurement authority</td>
+</tr>
+<tr>
+<td>P2-G28</td>
+<td>Native export / missing local snapshots / integrity representations</td>
+<td>medium</td>
+<td>Preserve both receipts and source-version context; use the fresh verified representation for its actual complete semantic read without relabelling historical hashes. — Source librarian / pipeline audit engineer</td>
+</tr>
+<tr>
+<td>P2-G29</td>
+<td>CH6 impossible-space effects: threshold portal, wrong-time/false-door water reflections, recursive memory room and unfinished world edge</td>
+<td>high</td>
+<td>If selected for the film, CD first approves exact effect/temporal/spatial interpretation and camera envelope; then layout/FX/lighting/comp leads choose the simplest reproducible native/layered implementation that passes those shots. — Layout/cinematography lead, FX or compositing TD, lighting lead, CD</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Do not execute recommendations as approvals.</strong> The audit author owns G00 completion; it is not delegated back to the CD as another review cycle. Already supplied evidence must be inspected before asking for it again.</p>
+<hr />
+<h1 id="e-immediate-production-opportunities">E. Immediate production opportunities</h1>
+<h2 id="e1-safe-work-now-within-this-audit">E1. Safe work now, within this audit</h2>
+<ul>
+<li><strong>Finish evidence acquisition and actual inspection</strong> using A6, stable source IDs and the read ledgers. This needs no new design decision and must not reopen Phase1 execution.</li>
+<li><strong>Use the additive catalogue and authority crosswalk</strong> to find the exact retained source rather than relying on a filename, folder or baked approval label.</li>
+<li><strong>Measure and disclose actual reference limits:</strong> canvas versus artwork panel, source render/upscale, repeated view versus new view, native-export representation and missing local snapshots.</li>
+<li><strong>Reconcile an existing film treatment if present</strong> in remaining evidence; derive a source-cited shot-demand worksheet without inventing scenes, cast or dimensions.</li>
+<li><strong>Prepare specialist handoff/test specifications</strong> in G/H/I. Their preparation is audit documentation; their creative production is not authorized here.</li>
+</ul>
+<h2 id="e2-good-early-production-candidates-after-separate-authorization">E2. Good early production candidates after separate authorization</h2>
+<p>The useful starting point is a <strong>representative chosen shot</strong>, not a world-sized build. Select it from the actual approved film treatment, considering the strongest applicable approved references and real production difficulty. A quiet domestic shot can still require excellent acting, skin, cloth, contact, lighting and cinematography; it is not a quality downgrade.</p>
+<p>Once G01/G02 and applicable design gates close, independent work can safely include:</p>
+<ul>
+<li>reference preparation and an approved camera/layout proxy for a selected setting;</li>
+<li>material/look tests on approved forms while final topology/UV work proceeds, with interfaces controlled;</li>
+<li>rig feasibility tests on an approved provisional mesh before final surface polish;</li>
+<li>render/comp/backup benchmarking on authorized neutral/test inputs;</li>
+<li>editorial timing, approved dialogue/graphics copy and source/rights checks in parallel.</li>
+</ul>
+<p>Do not begin final garment topology before its construction is decided, detailed set dressing before shared layout is accepted, grip/draw rigging before CQ-9, or expensive simulation/rendering before blocking/capacity proof. Early tests may be throwaway technical studies; they are not approvals or film footage.</p>
+<hr />
+<h1 id="f-production-blockers-and-sequence">F. Production blockers and sequence</h1>
+<h2 id="f1-immediate-blockers-with-narrow-consequences">F1. Immediate blockers, with narrow consequences</h2>
+<table>
+<thead>
+<tr>
+<th>Blocker</th>
+<th>Stops</th>
+<th>Does not stop</th>
+<th>Closure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G00 incomplete actual inspection</td>
+<td>All-file audit certification and exhaustive claims.</td>
+<td>Continuing the read-only audit and maintaining the catalogue.</td>
+<td>Exact remaining files inspected, joins/authority/logical denominator reconciled; any access exception keeps report qualified.</td>
+</tr>
+<tr>
+<td>G01/G02 selected film scope and authority not established</td>
+<td>Binding build counts, final budget/schedule and unambiguous production handoff.</td>
+<td>Evidence reconciliation, source-preserving measurements and planning.</td>
+<td>Approved shot/asset/version/use manifest from existing evidence plus genuine CD decisions.</td>
+</tr>
+<tr>
+<td>CQ-9 / G04</td>
+<td>Final Adanna blade/sheath fit, grip/draw rigging and weapon contacts.</td>
+<td>Unrelated settings or characters; non-weapon reference audit.</td>
+<td>Weapon authority first, then metric construction and commissioned action proof.</td>
+</tr>
+<tr>
+<td>G03 preserved-view/hidden-construction authority</td>
+<td>Final unapproved body/wardrobe interpretation for newly visible areas.</td>
+<td>Preserving/reference-reading V003 and already authorized restricted studies.</td>
+<td>Separate bounded technical interpretation; no side/back increment or silent promotion.</td>
+</tr>
+<tr>
+<td>D9/RQ-01 / G18</td>
+<td>H3's implicated production/adaptation use.</td>
+<td>Unrelated chapter work with independent authority.</td>
+<td>Appropriate exact-scope evidence/consultation plus CD adaptation or exclusion; no new H3 lift here.</td>
+</tr>
+<tr>
+<td>SCN028 / SCN030</td>
+<td>Unspecified loom build; forbidden patch/regeneration or unauthorized replacement.</td>
+<td>Other independently cleared assets.</td>
+<td>Existing specified Research/CD/custodian process or exclusion.</td>
+</tr>
+<tr>
+<td>G09/G10 selected spatial/canon decisions</td>
+<td>Reusable final Chapter8 set construction and non-metric concept use as a surveyed world.</td>
+<td>Original five design approvals and V013 internal study.</td>
+<td>Approved shot-specific shared spatial interpretation and separate use/canon decision.</td>
+</tr>
+<tr>
+<td>G27 unmeasured resources/delivery</td>
+<td>Defensible hardware purchase, farm booking and committed throughput.</td>
+<td>Provisional capability planning and staffing specification.</td>
+<td>Actual resources + representative benchmark + approved capacity/budget plan.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="f2-later-improvements-not-immediate-universal-blockers">F2. Later improvements, not immediate universal blockers</h2>
+<p>Extra facial expressions not used by the cut, unseen building backs, high-detail background prop interiors, extra weather states, full-world navigation, game HUD/skill trees and elaborate destruction/crowd/muscle systems are <strong>not automatic requirements</strong>. Some may become necessary later if the film shot list demands them; otherwise avoid them. Lower priority does not mean lower visible quality.</p>
+<p>A missing view is critical only when it blocks an authorized visible surface, contact, deformation or camera. An illustration limitation is not a design fault that authorizes regeneration. Keep artist time on the selected deliverables.</p>
+<hr />
+<h1 id="g-artist-ready-production-briefs">G. Artist-ready production briefs</h1>
+<p><a href="G_ARTIST_READY_BRIEFS.md">Full briefs</a> · <a href="artist_ready_briefs.json">structured data</a></p>
+<p>Each brief identifies specialist, exact inputs, start condition, instructions, deliverables, acceptance tests, exclusions and dependencies. <strong>They are conditional commissioning specifications, not executed work or new generation authority.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Brief</th>
+<th>Deliverable focus</th>
+<th>Specialist / prerequisites</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P2-B01</td>
+<td>Film shot-demand and authority handoff</td>
+<td>Story/editorial lead + layout supervisor + asset coordinator; CD approves the treatment; Existing film evidence has been reconciled; no need to ask the owner to repeat a supplied decision.</td>
+</tr>
+<tr>
+<td>P2-B02</td>
+<td>Adanna: bounded technical character interpretation</td>
+<td>Senior character modeller with costume/groom technical artist; facial/body rigger joins before final topology; CD has approved the exact separate production interpretation and resolved newly visible construction needed by selected shots; no preserved raster needs alteration.</td>
+</tr>
+<tr>
+<td>P2-B03</td>
+<td>CQ-9 weapon/sheath construction and contact test</td>
+<td>Prop/weapon designer and modeller, character rigger, action animator; appropriate research where a factual claim is proposed; CD resolves blade-design authority first. CQ-9 cannot be replaced by a good-looking sheath or a percentage measurement.</td>
+</tr>
+<tr>
+<td>P2-B04</td>
+<td>Approved Chapter8 settings: common camera-ready spatial interpretation</td>
+<td>Environment/layout supervisor with architectural modeller; CD retains design/canon authority; CD has selected film use/canon and approved necessary metric/layout interpretation; no dimension is invented as existing canon.</td>
+</tr>
+<tr>
+<td>P2-B05</td>
+<td>Hero and background props: construction, reuse and operation</td>
+<td>Prop technical artist/modeller; relevant craft specialist for fishing, forging, weaving or instrument operation; Each prop's design/form authority and required action are explicit; external gates are closed or the prop/action is excluded.</td>
+</tr>
+<tr>
+<td>P2-B06</td>
+<td>Character rig, facial/groom and secondary-motion validation</td>
+<td>Character TD/body-facial rigger and animation supervisor; groom/cloth specialist only for demonstrated shot needs; Visible design and topology/UV interfaces are approved; no rig is used to invent hidden character features.</td>
+</tr>
+<tr>
+<td>P2-B07</td>
+<td>Chapter4 silver-overcast lighting: native proof, not another 2D replacement</td>
+<td>Lighting/look-development supervisor, with compositor for review transforms; Native scene availability and its design authority are verified. This audit neither assumes a scene exists nor authorizes generating a replacement.</td>
+</tr>
+<tr>
+<td>P2-B08</td>
+<td>Restricted fictional-design boundary: H3, masks and proposed practices</td>
+<td>Research lead, appropriately scoped cultural consultant and relevant living custodian if restricted practice is implicated; CD selects fiction; The intended fictional use is stated precisely; historical/trashed reviews are not counted as live clearance.</td>
+</tr>
+<tr>
+<td>P2-B09</td>
+<td>Look-development, render and compositing proof package</td>
+<td>Look-development/lighting TD, compositor, editor/QC; CD approves look and storytelling; Project colour workflow and native application/render versions are pinned; no source palette is mistaken for calibrated material data.</td>
+</tr>
+<tr>
+<td>P2-B10</td>
+<td>Pipeline capacity, specialist staffing and purchase decision</td>
+<td>Producer + pipeline/render TD; CD sets standards, approves spend and delegates specialist execution; Existing resource evidence is checked before requesting it again. No assumed hardware or film duration is used as fact.</td>
+</tr>
+</tbody>
+</table>
+<p>The CD should approve design interpretation and screen result; the relevant specialist should attest topology, rig, simulation, lighting, rendering or comp reliability. One approval cannot substitute for the other. A hired specialist must receive the restrictions and source-ID packet, not merely an attractive image or a vague request to 'make it cinematic'.</p>
+<hr />
+<h1 id="h-recommended-production-pipeline">H. Recommended production pipeline</h1>
+<p><strong>Proposed project policy, not a statement that these stages have already been executed.</strong> Existing approved designs/identities remain fixed unless the CD explicitly authorizes change. Technical release is separate from visual/cultural/canon authority.</p>
+<h2 id="h1-gates-and-concrete-delivery">H1. Gates and concrete delivery</h2>
+<table>
+<thead>
+<tr>
+<th>Gate / stage</th>
+<th>Required input and deliverable</th>
+<th>Objective release test / responsible sign-off</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H0 — Scope and authority</strong></td>
+<td>Selected shot rows; logical asset IDs and exact source versions/hashes; approval/use and Research dependencies.</td>
+<td>No unselected game scope or orphan authority. CD/producer approves use; coordinator validates joins. G00 remains a separate audit-completeness requirement.</td>
+</tr>
+<tr>
+<td><strong>H1 — Reference preparation</strong></td>
+<td>Source-preserving copies/crops clearly labelled; measured panel/detail limits; anatomical-side key; necessary missing-surface decisions only.</td>
+<td>Exact source hashes retained; no new view/detail inferred from crop/upscale; sufficient information for the selected camera/action. CD/department lead approves interpretation, not altered originals.</td>
+</tr>
+<tr>
+<td><strong>H2 — Proxy geometry and layout</strong></td>
+<td>Approved units/datums, actor/prop contact envelope, basic set plan/elevations/joins and selected cameras.</td>
+<td>Interior/exterior and reverse cuts fit one plan; door, actor and camera paths have no impossible clearance. CD/layout accepts. Proposed metrics are not represented as prior canon.</td>
+</tr>
+<tr>
+<td><strong>H3 — Modelling and UVs</strong></td>
+<td>Versioned native mesh; separated body/clothes/rigid props/groom; approved topology/detail and UV/pivot/naming conventions.</td>
+<td>No accidental non-manifold/normal/transform errors; required silhouette/deformation surfaces work; UV seams/stretch/texel detail pass actual framing. Modelling/rigging leads sign specialist evidence. No universal polygon count/all-quad rule.</td>
+</tr>
+<tr>
+<td><strong>H4 — Materials and texture/look development</strong></td>
+<td>Approved material intent, colour/data spaces, maps and dry/wet/ash masks only as selected; neutral and chapter light tests.</td>
+<td>No baked lighting treated as albedo; correct roughness/scale/weathering and identity; no seams/tiling/flicker or unapproved cultural/material claim. CD/look-development signs.</td>
+</tr>
+<tr>
+<td><strong>H5 — Rigging, facial and attachments</strong></td>
+<td>Native body/hand/eye/facial controls needed by the cut; prop/groom/cloth interfaces; required expression/action tests.</td>
+<td>Required poses/contacts and actual dialogue range without collapse, sliding or intersections; stable anatomical identifiers. No prohibited Okwu face or inferred cavity. Rig/animation leads sign; CD approves acting-read targets.</td>
+</tr>
+<tr>
+<td><strong>H6 — Scene assembly and camera/layout</strong></td>
+<td>Published asset versions linked into shot-native scenes; camera sensor/lens/focus/transform, time state and scale record.</td>
+<td>No missing dependencies; correct asset/variant and shared spatial continuity; actual shot framing/actor contact works. Layout/continuity/CD accepts. Camera changes are allowed when authorized—no universal pixel lock.</td>
+</tr>
+<tr>
+<td><strong>H7 — Blocking → animation</strong></td>
+<td>Timed editorial shot, body/face/eye/prop blocking before polish; required motion only.</td>
+<td>CD approves readable performance and staging; animation lead approves contacts/arcs/weight/continuity. Recut or layout changes are resolved before costly final motion and caches.</td>
+</tr>
+<tr>
+<td><strong>H8 — Secondary motion / FX</strong></td>
+<td>Stable animation inputs; only required cloth/groom/net/water/ash/lightning/fracture/graphics effects; versioned caches and handles.</td>
+<td>Deterministic replay, no penetration or temporal jumps; chapter no-flame/no-wind/WHITE-lightning/cold-rack rules maintained. FX/animation lead signs; CD approves look/timing.</td>
+</tr>
+<tr>
+<td><strong>H9 — Lighting and render proof</strong></td>
+<td>Pinned native engine/app/settings, project colour path, approved shot state and representative moving proof; measured memory/time.</td>
+<td>Correct skin/black-level/material/lens and chapter continuity; no prohibited reveal; noise, sampling and denoising stable in motion. Lighting/render lead signs technical proof; CD signs look.</td>
+</tr>
+<tr>
+<td><strong>H10 — Rendering and compositing</strong></td>
+<td>Versioned image sequences with required beauty/AOVs/IDs/holdouts/volumes, colour metadata, tested alpha/depth/vector conventions and comp scene.</td>
+<td>Independent reopen/re-render/recomp; no missing files, bad edges, colour shifts or flicker; required corrections are controllable without repainting the whole shot. Render/comp/QC signs.</td>
+</tr>
+<tr>
+<td><strong>H11 — Edit, graphics and final QC</strong></td>
+<td>Approved cut, audio/graphics copy/credits, delivery fps/aspect/colour/container and rights/source manifest.</td>
+<td>Frame/handle continuity, title/diacritic legibility, audio sync, exposure/colour consistency, technical conformance and final narrative/CD acceptance; release only exact versions that passed.</td>
+</tr>
+</tbody>
+</table>
+<p>No unseen native asset is certified by these gates. Check any existing package first; do not order a redundant rebuild because this partial audit has not reached it.</p>
+<h2 id="h2-safe-parallel-work-and-change-control">H2. Safe parallel work and change control</h2>
+<p><strong>Parallel after H0:</strong> authority/reference indexing; editorial timing; resource/restore tests; approved material test surfaces; model/rig feasibility on controlled provisional interfaces. <strong>Parallel after H2/H3:</strong> texture work on stable UVs, rigging on approved topology, environment dressing on approved layout, lighting look tests on versioned assets. <strong>After blocking:</strong> final animation, then expensive collision-dependent caches; render and comp proof may run early, final frames use signed inputs.</p>
+<p>Changes affecting silhouette, proportions, topology, UVs, contact dimensions, skeleton, camera/layout or wardrobe can invalidate downstream work. Raise a specific change record: exact asset/version, why, affected shots/stages, authority, migration/retest cost and approval. Never overwrite approved originals or silently update every linked scene to a new design.</p>
+<h2 id="h3-proposed-native-package-conventions">H3. Proposed native package conventions</h2>
+<p>These apply to <strong>future working/published production deliveries</strong>, not renaming the existing Drive corpus:</p>
+<ul>
+<li>Stable logical IDs plus variant/state and version; source filenames/IDs remain immutable provenance. Anatomical <code>L/R</code> is explicit; viewer-side labels are separate.</li>
+<li>Explicit scene units, axis/up/forward, transforms, pivots and export scale; verify a neutral scale test through actual DCC handoff rather than adopting unapproved story dimensions.</li>
+<li>Separate geometry, materials, textures, rig, groom, caches, cameras/lights and shot assembly; role/layer/collection names are consistent. Shared assets are referenced/version-pinned, not uncontrolled scene copies.</li>
+<li>Model authority, material authority, rig version and permitted use are recorded independently. UV/UDIM, normals, displacement and colour conventions are documented only as needed by chosen tools.</li>
+<li>Each publish carries application/plug-in versions, dependency manifest, source references/hashes, units, tests, restrictions and responsible sign-offs. Reopen on another working machine before handoff is called complete.</li>
+<li>Keep source control for code/config/manifests; use appropriate large-file/versioned storage for native art and caches. Do not put large datasets/renders in ordinary Git or execute historical sync scripts to reorganize canonical Drive.</li>
+</ul>
+<hr />
+<h1 id="i-software-and-hardware-recommendations">I. Software and hardware recommendations</h1>
+<h2 id="i1-decision-basis-and-limitations">I1. Decision basis and limitations</h2>
+<p>The actual film cut, workstation/OS/GPU/VRAM/RAM, licences, team capacity, budget and deadline have <strong>not been established from inspected evidence</strong>. Remaining resource documents must be checked before requesting them again. No exact workstation purchase, tool subscription, farm booking, price or current 'latest version' claim is made here.</p>
+<p>The quality target is grounded cinematic animation/dark fantasy with potentially demanding skin, braids/cloth, earthen/thatch sets, water/volumes and selected emissive effects—not necessarily every proposed game feature. The owner can act as CD and commission specialists. The recommendation is to minimize <strong>unnecessary pipeline complexity</strong>, not artistic or technical standards.</p>
+<h2 id="i2-essential-versus-conditional-tools">I2. Essential versus conditional tools</h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Recommended starting approach</th>
+<th>When a specialist/paid alternative earns its cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Native modelling, layout, rigging, animation, rendering</td>
+<td><strong>One version-pinned capable DCC.</strong> Blender is a reasonable consolidated option; Maya is reasonable if the actual team/pipeline already depends on it. Validate the chosen release/plug-ins on the benchmark.</td>
+<td>A second DCC only for a demonstrated interchange or specialist need. Do not buy both for perceived prestige.</td>
+</tr>
+<tr>
+<td>Reference, paint and texture preparation</td>
+<td>Krita or equivalent layered paint tool; DCC-native painting/procedural materials for appropriate assets. Preserve original references and distinguish colour/data maps.</td>
+<td>Substance 3D Painter/Designer or Mari where hero texturing, masks/UDIM scale and assigned artist proficiency measurably improve delivery. No automatic high-end texture suite for all dressing.</td>
+</tr>
+<tr>
+<td>Sculpting</td>
+<td>Existing DCC sculpting may suffice for approved forms and the assigned artist.</td>
+<td>ZBrush or equivalent for demonstrably heavy hero sculpt/detail workflows under a specialist. A polished sculpt is still not an animation-ready model.</td>
+</tr>
+<tr>
+<td>Garment/groom/FX</td>
+<td>Start with the chosen DCC's supported tools and controllable animation; test actual braids, fabric and effects.</td>
+<td>Marvelous Designer, dedicated grooming or Houdini when approved shot complexity demands pattern/simulation/procedural control and someone qualified owns it. CH07 does not get wind or flame because the tool supports it.</td>
+</tr>
+<tr>
+<td>Compositing</td>
+<td>A reliable scene-linear/layer-aware compositor; Blender compositor or Fusion may be enough for the selected shot package.</td>
+<td>Nuke or another specialist pipeline when shot/AOV/roto/deep/large-team demands and available expertise justify it. No complex deep pipeline without an actual need.</td>
+</tr>
+<tr>
+<td>Edit, review and delivery QC</td>
+<td>DaVinci Resolve or another validated NLE/colour/QC workflow appropriate to actual OS/licence/delivery. Agree review transforms, frame rate and audio handoff.</td>
+<td>Paid editions/features only when required by delivery/colour/performance/collaboration, not automatically.</td>
+</tr>
+<tr>
+<td>Tracking, source control and storage</td>
+<td>Structured CSV/JSON/issue tracker plus explicit asset/shot manifests; Git for code/config; versioned large-file art/cache storage with tested backup/restore. Keep canonical Drive sources untouched.</td>
+<td>A production-tracking suite/NAS/central asset service when real team concurrency, security and data volume exceed a simple controlled workflow.</td>
+</tr>
+<tr>
+<td>Interchange and distributed rendering</td>
+<td>Keep native scenes primary; test the few required exports. Local validated rendering is the initial benchmark, not an assumption about final throughput.</td>
+<td>USD/Alembic/FBX services, farm management and remote GPU capacity only when multiple applications/artists, cache scale or measured schedule needs justify them. A farm cannot solve an unresolved design.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Unnecessarily complex now, unless evidence proves otherwise:</strong> multiple competing render engines, USD/Katana-style orchestration for a small single-DCC team, full crowd/muscle systems, game UI/engine infrastructure, deep compositing by default, per-object high-resolution UDIMs, every weather state and full procedural destruction. Do not add a real-time engine solely because the source project was a game. Evaluate it only for a specific approved virtual-production/real-time delivery need.</p>
+<h2 id="i3-provisional-capability-tiers-not-purchase-specifications">I3. Provisional capability tiers — not purchase specifications</h2>
+<table>
+<thead>
+<tr>
+<th>Planning tier</th>
+<th>Useful capability target</th>
+<th>Restriction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reference/editorial/light proxy work</td>
+<td>Existing reliable machine; responsive SSD workspace, adequate RAM for actual source/cut sizes and a supported display/codec path.</td>
+<td>Benchmark first. No need to buy a hero-render workstation merely to catalogue references or edit proxies.</td>
+</tr>
+<tr>
+<td>Consolidated hero-asset / moderate shot development</td>
+<td><strong>64GB RAM and roughly 12–16GB GPU memory</strong> are reasonable candidates to test for this kind of look; fast local SSD scratch/work storage and a calibrated review path matter.</td>
+<td>Not a universal minimum, not proof of sufficiency and not a specific product recommendation. Renderer/OS/tool support and measured scene load decide.</td>
+</tr>
+<tr>
+<td>Dense groom/cloth/volume/heavy assembly work</td>
+<td>Test whether <strong>128GB RAM / 24GB-class VRAM or higher-capacity workers</strong> are needed, or whether proxies, instancing, partitioning and controlled caches solve the load.</td>
+<td>Only a measured high-load shot and funded schedule justify the upgrade. More hardware does not replace good assets/lighting or specialist skill.</td>
+</tr>
+<tr>
+<td>Final throughput / resilient storage</td>
+<td>Measured render workers, independent backup with restore test, sufficient cache/output volume, power protection appropriate to the actual site and reliable versioned handoffs.</td>
+<td>Do not assume the audit sandbox represents the owner's machine, network or studio infrastructure. No speculative local-price quote.</td>
+</tr>
+</tbody>
+</table>
+<p>A colour-managed display/review path, dependable storage and restore procedure are production requirements at the relevant stage. A powerful GPU without adequate memory, backups, source authority or disciplined versioning is not a production pipeline.</p>
+<h2 id="i4-capacity-and-cost-worksheet">I4. Capacity and cost worksheet</h2>
+<p>Use the actual cut and benchmark—not invented duration or a still-image average:</p>
+<ul>
+<li><code>frames = sum(ceil(approved_shot_duration_seconds × delivery_fps) + approved_handles)</code>.</li>
+<li><code>render_worker_hours = frames × measured_p95_seconds_per_frame / 3600</code>.</li>
+<li><code>elapsed_render_hours ≈ render_worker_hours / effective_concurrent_workers</code>, then add measured setup, failed-frame retry, cache/IO, comp and QC allowances. Hardware concurrency is not the same as usable throughput.</li>
+<li><code>output_storage = measured_bytes_per_frame_with_required_layers × frames × retained_output_versions</code>; add native assets, texture/groom/FX caches, editorial media and independent backups separately.</li>
+<li><code>cost = actual labour + approved licences + tested local/remote compute + storage/transfer/backup + agreed contingency</code>. Use real quotes only after scope and capacity are known.</li>
+</ul>
+<p>Benchmark the representative <strong>selected</strong> cases: hero skin/eyes/braids/cloth; repeated thatch/foliage/earth; darkest readable interior/void; water/volume/emission where used; worst camera/rig/cache case. Record app/renderer/settings, peak RAM/VRAM, median/p95 frame time, IO, viewport/rig responsiveness, temporal artefacts and restore/reopen result. Agree headroom against the schedule rather than promising a universal safety percentage.</p>
+<hr />
+<h1 id="j-creative-director-decision-register">J. Creative Director decision register</h1>
+<p><a href="J_CD_DECISION_REGISTER.md">Detailed register</a> · <a href="cd_decision_register.json">structured data</a></p>
+<p>These are not new approvals or a request to vote again on settled matters. <strong>Open-in-inspected-evidence</strong> means the remaining corpus must be checked first. <strong>Carry-forward</strong> means preserve the existing dependency; it is not reopened by this audit.</p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Topic / status</th>
+<th>Owner / closure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P2-CD01</td>
+<td>Actual film adaptation and selected shot package — OPEN IN INSPECTED EVIDENCE; CHECK REMAINING CORPUS FIRST</td>
+<td>CD/director with story/editorial and producer; Exact approved treatment/animatic/shot manifest IDs and version, selected/excluded content and signed delivery assumptions.</td>
+</tr>
+<tr>
+<td>P2-CD02</td>
+<td>Adanna production interpretation versus preserved artwork — NEW TECHNICAL RELEASE NEEDED ONLY IF COMMISSIONED; SOURCE PRESERVATION IS SETTLED</td>
+<td>CD with character/costume supervisor; applicable Research gates remain separate; Exact production interpretation authority, required surface/closure decisions and approved camera/action envelope; unchanged source hashes.</td>
+</tr>
+<tr>
+<td>P2-CD03</td>
+<td>CQ-9 blade-design authority before hand fit — EXISTING OPEN DEPENDENCY — NOT WAIVED</td>
+<td>CD; prop/weapon designer and relevant Research expertise support, rigger verifies later fit; Signed exact design source/version and metric construction/fit brief, followed by successful commissioned action test.</td>
+</tr>
+<tr>
+<td>P2-CD04</td>
+<td>Chapter8 film use, canon and spatial/metric interpretation — OPEN FOR FILM USE; EXISTING DESIGN APPROVALS AND LIMITED WAIVER ARE SETTLED</td>
+<td>CD with production designer/layout lead; Shot-linked canon/use decision plus approved shared plan/sections/metric datums; preserved five boards and V013 exact hashes.</td>
+</tr>
+<tr>
+<td>P2-CD05</td>
+<td>Still-open Bible/board continuity conflicts — EVIDENCE RECONCILIATION FIRST; ONLY GENUINELY UNRESOLVED SHOT-RELEVANT CONFLICTS GO TO CD</td>
+<td>CD with story/continuity, environment/character leads and Research where factual claims arise; Conflict row with both exact sources, existing-decision search result, controlling decision and bounded implementation instruction.</td>
+</tr>
+<tr>
+<td>P2-CD06</td>
+<td>H3 / Landing and Field of Cloth authority boundary — CARRY-FORWARD D9/RQ-01 — NO FRESH H3 VISUAL/CULTURAL RELEASE</td>
+<td>Research lead + appropriately scoped Igbo consultant and relevant living custodian if restricted practice is implicated; CD chooses fiction; Attributed allowed/prohibited scope for exact file/version/shot, consultation provenance and CD adaptation/exclusion record.</td>
+</tr>
+<tr>
+<td>P2-CD07</td>
+<td>SCN028 and SCN030 protected gates — CARRY-FORWARD — NOT A NEW CORRECTION REQUEST</td>
+<td>CD with Research/craft specialist; relevant living-custodian direction for SCN030 as required; Approved functional loom brief and action test for SCN028; explicit permitted replacement scope or exclusion for SCN030.</td>
+</tr>
+<tr>
+<td>P2-CD08</td>
+<td>Chapter4 implementation authority and paddle reference — LOOK/STAGING CHOICES SETTLED; NATIVE IMPLEMENTATION AND SPECIALIST EVIDENCE STILL REQUIRED</td>
+<td>CD + Research/fishing-gear specialist; lighting/prop supervisors execute authorized delivery; Approved paddle/tool reference and native overcast proof meeting geometry/count/cold-rack preservation tests.</td>
+</tr>
+<tr>
+<td>P2-CD09</td>
+<td>Project technical standards, specialists and budget/capacity — NOT ESTABLISHED IN INSPECTED EVIDENCE — CHECK REMAINING RESOURCE DOCUMENTS FIRST</td>
+<td>CD/producer with pipeline/render TD and department leads; Actual resource/licence/staffing inventory, representative benchmark and cost/schedule/storage/restore plan against selected shots.</td>
+</tr>
+<tr>
+<td>P2-CD10</td>
+<td>Technical stage-release policy and final audit sign-off — PROPOSED POLICY — NOT A GLOBAL READINESS VERDICT</td>
+<td>CD approves creative/stage use; relevant technical lead signs specialist evidence; audit lead certifies only work actually inspected; Per-stage native deliverable/test/decision manifest and completed all-file inspection trace. Any remaining exception keeps the report explicitly qualified, never silently complete.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="settled-controls-carried-forward-without-another-decision">Settled controls carried forward without another decision</h3>
+<ul>
+<li>Phase1's 193 exact sources and current destinations remain traceable; its sealed execution is not repeated.</li>
+<li>The six accepted visual passes remain accepted for their exact scope; technical prep does not cancel them.</li>
+<li>Adanna LEFT_SIDE/BACK stay V003/PRESERVE/UNAPPROVED, with settled anatomical chirality and baldric; no automatic increment or source changes.</li>
+<li>V013's two-component item5 waiver is internal-exploratory only; <strong>item5 NOT DONE</strong> remains explicit.</li>
+<li>H3 D9/RQ-01, Field/Landing mapping, unidentified cargo and parallel proposal identities remain unchanged; no trashed-review restoration.</li>
+<li>Washing V005 domestic-only U27; Costume V002 interim partial upper-body; VR008 V009 unchanged/exploratory-only/no V010 for chrome; CH03 cloth shop exploratory-only.</li>
+<li>SCN028 loom dependency and SCN030 NOT RECOMMENDED/no patch or regeneration remain protected.</li>
+<li>E46 firewood and E50 footprint endpoints are selected internal studies; E53/E54 failed relights are not replacements.</li>
+<li>No re-quarantine, recovery, restore, replacement or source-provenance inference for the bad EXP text. B23 is a different JPEG, not a recovered original by filename.</li>
+<li>No invented cultural authority, material chemistry, metric dimensions, actual scene requirements or automatic people/animal additions.</li>
+</ul>
+<hr />
+<h2 id="source-and-verification-navigation">Source and verification navigation</h2>
+<h3 id="governing-and-core-references-actually-read">Governing and core references actually read</h3>
+<table>
+<thead>
+<tr>
+<th>Reference</th>
+<th>Exact source / trace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Canonical production root</td>
+<td><code>1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ</code>; current documentation folder <code>10I2aAjDuqC5M-Lm2OjSGd-07fLTtYWEf</code> = 17_DOCUMENTATION.</td>
+</tr>
+<tr>
+<td>CD decisions</td>
+<td><code>1kMDn5oXmy6DhBJsROJ6EIn_ZXUPbLENx</code>; current user/CD constraints remain controlling.</td>
+</tr>
+<tr>
+<td>Phase1 delegated CD execution authority</td>
+<td><a href="https://drive.google.com/file/d/1385LR0rgupAuP8sJwb5hVq_t1J-u60c5/view">1385LR0rgupAuP8sJwb5hVq_t1J-u60c5</a>; local sealed authority and exact 193-source crosswalk.</td>
+</tr>
+<tr>
+<td>Location specifications</td>
+<td><a href="https://drive.google.com/file/d/1IT5RVzd7kBsPeo3hdJpTliqj4h6O6C9R/view">1IT5RVzd7kBsPeo3hdJpTliqj4h6O6C9R</a>; complete-read lossless manifest/ranges.</td>
+</tr>
+<tr>
+<td>Scene/micro-location specifications</td>
+<td><a href="https://drive.google.com/file/d/1UuP2I9szyZvITuyT5Z8q1NilBZBboQZa/view">1UuP2I9szyZvITuyT5Z8q1NilBZBboQZa</a>; complete 135-entry verbatim extraction with ranges in <code>SCENE_SOURCE_SPECIFICATIONS.json</code>.</td>
+</tr>
+<tr>
+<td>Chapter8 direction/register</td>
+<td><code>1NUS5FfrZZZgY0uB2-PnCKm_f5V0G5ub5</code> / <code>1aOfwI8u8pNTAhyJwHRWs51keNt_M_qW4</code>.</td>
+</tr>
+<tr>
+<td>Timeline/memories and endings</td>
+<td><code>1cvJZeGnH1u53y9yQJYHnBW_cvBzVta-O</code> / <code>18Nv6bP6eGnSErj1U6M1H_jM-W4wM5x47</code>.</td>
+</tr>
+<tr>
+<td>Style/cultural guides</td>
+<td><code>1W9T-FqYIeAp41KyuZ4xlb3QlN0SnHMK1</code> / <code>1nHRaY0K_nkcPH1wfpL5hHmYHoFOc2do-</code>; cited external claims are not independent live consultation.</td>
+</tr>
+<tr>
+<td>Source A/B reconciliation</td>
+<td><code>1RQzeGv7H64HunppjByHIM8H_SSYWLg0g</code> / <code>1s56OYHtFYrhlilXfkIRpG_dbrunkWPFx</code>; later Source A drafts are not automatically promoted by recency.</td>
+</tr>
+<tr>
+<td>Historical v7/current-cycle index</td>
+<td><code>1rpbhHDyWvlW4iTGeEw4tuThPDIA2YXSU</code>; index is not the whole Bible or an all-file inspection.</td>
+</tr>
+<tr>
+<td>Native CD-review index</td>
+<td><code>1eluxeCI2FxkJO6lZ6xf2QdIYqleh61wwfUeQ52bSJfo</code>; historical and fresh export receipts/read traces remain separate.</td>
+</tr>
+<tr>
+<td>All visual/document observations</td>
+<td><a href="inventory/A4_ACTUAL_CONTENT_OBSERVATIONS.csv">A4</a> plus <code>CONTENT_INSPECTION_LEDGER.json</code> and controlling <code>CONTENT_INSPECTION_AMENDMENTS.json</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reproducibility-and-scope-qualification">Reproducibility and scope qualification</h3>
+<ul>
+<li><code>verification/AUDIT_COVERAGE_STATUS.json</code> is the machine-readable status; it deliberately says <code>all_actual_files_inspected: false</code>.</li>
+<li><code>verification/remote_nodes.json</code> and <code>verification/listings/</code> preserve the enumerated identities and pagination basis. Their old per-node 'not inspected' placeholder is not the controlling content ledger; the catalogue joins the actual ledger separately.</li>
+<li><code>DOWNLOAD_HASH_CHECKS.json</code>, <code>PAYLOAD_BINDINGS.json</code>, <code>ARCHIVE_MEMBERS.json</code> and native-export receipts establish integrity joins, not approval or content review.</li>
+<li>Scene/location bounded-read and lossless-repeat records establish complete core register reading. <code>HISTORY_READPACK_READS.json</code> establishes <strong>only its actually read ranges</strong>, not the whole prepared history pack.</li>
+<li>The catalogue/report utilities are newly authored audit tools. <strong>No downloaded production/sync/generation script was executed.</strong> No artwork was generated or altered during this Phase2 audit.</li>
+<li>Raw recovery/staging and dependencies are deliberately excluded from Git. If ignored snapshots disappear, retain historical receipts and reacquire exact bytes as necessary; do not pretend they were restored.</li>
+</ul>
+<h2 id="completion-boundary">Completion boundary</h2>
+<p>The A–J working package makes the current evidence and actionable technical path usable, but <strong>does not complete the user's all-file audit acceptance criteria</strong>. Remaining work is the auditor-owned exact file/image/document/code inspection and reconciliation in A6/G00, final logical asset/component inventory and visual-duplicate/conflict classification, native-stage validation, actual film scope/resource reconciliation, and final A–J revision with a defensible readiness verdict.</p>
+<p><strong>No blanket 'ready', invented absence finding, new approval, gate waiver, source correction or production execution is declared.</strong></p><div class="footer">Additive working audit. Raw source art/download staging is not bundled as a complete source backup. The explicit remaining-inspection queue controls completeness. Recommendations are not execution.</div></main></div></body></html>

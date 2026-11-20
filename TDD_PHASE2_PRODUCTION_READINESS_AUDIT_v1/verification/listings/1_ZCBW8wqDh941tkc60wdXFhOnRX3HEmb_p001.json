@@ -1,0 +1,141 @@
+{
+  "parent_id": "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb",
+  "connector_response_request_id": "c7230b8c-57a3-466c-b0c5-a3d6a0488877",
+  "page": 1,
+  "observed_count": 11,
+  "entries": [
+    {
+      "id": "1RBWzDazxAvig6mPQ4Q3t5HYw6c3Lf4c4",
+      "name": "01_RELEASE_NOW_DEFINED_SCOPE",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb"
+      ],
+      "drive_version": "1",
+      "is_folder": true
+    },
+    {
+      "id": "1IRAxyBBYsjEcB7DbRk2D3yHjCqAO5Spm",
+      "name": "02_REFERENCE_PRESERVED_UNAPPROVED",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb"
+      ],
+      "drive_version": "1",
+      "is_folder": true
+    },
+    {
+      "id": "1v308HMpOQKLF__O-oo9V05ZfxBjkCoBY",
+      "name": "03_EXTERNAL_AUTHORITY_REQUIRED",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb"
+      ],
+      "drive_version": "1",
+      "is_folder": true
+    },
+    {
+      "id": "1Ti7k9bJTmIhe0AORZMtYiLzzTqxd4-Eq",
+      "name": "04_REJECTED",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb"
+      ],
+      "drive_version": "1",
+      "is_folder": true
+    },
+    {
+      "id": "1kXmUlkhvHOlPep9dnJ2VSCiHQg_nkbmM",
+      "name": "05_SUPERSEDED_AND_SELECTED_REPLACEMENTS",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb"
+      ],
+      "drive_version": "1",
+      "is_folder": true
+    },
+    {
+      "id": "1DFlL1_qJ0O9jRlxya-c5xBLaDFxTcjyH",
+      "name": "36_PACKAGE_MANIFEST.csv",
+      "mime_type": "text/csv",
+      "parents": [
+        "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 18802,
+      "md5": "c40397c9a9eba55020940e0585c7c446",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1L_E81CJnBvaWyjFaz-MKnqDufg2Dv4iN",
+      "name": "36_PACKAGE_MANIFEST.json",
+      "mime_type": "application/json",
+      "parents": [
+        "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 53716,
+      "md5": "02d2b394fc4ed6addac9791282b950cc",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1BTJ1JGmHjMwJuTKFAiusITo3ADlEvcR4",
+      "name": "36_REFERENCE_AND_EVIDENCE_INDEX.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 12920,
+      "md5": "a4c82f6242f461aea1e8cf0379b4d24f",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1DYrqU3tAZAx3_wdf-JfRIWd0fRsxMfmo",
+      "name": "36_RELEVANT_ISSUE_CLOSURE.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 20635,
+      "md5": "5ad810d56e4f55f4f4026a5b831c2237",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1MNlBW0TpQpEGPvyhy0-6fqy_rFvXxAEx",
+      "name": "B_36_ASSET_RELEASE_PACKAGE.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 87404,
+      "md5": "20569def5c36a37381a8091ecf9e5bcd",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Baus84vKG0dO3NTkfLTJbxXy7Wf0QztH",
+      "name": "CD_FINAL_VERDICTS_AND_RELEASE_36.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 32964772,
+      "md5": "046025d92ab1aa0f02fb8e3396a70303",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

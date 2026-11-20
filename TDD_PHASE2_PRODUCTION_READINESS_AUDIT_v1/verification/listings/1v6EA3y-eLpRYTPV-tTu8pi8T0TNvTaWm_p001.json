@@ -1,0 +1,39 @@
+{
+  "parent_id": "1v6EA3y-eLpRYTPV-tTu8pi8T0TNvTaWm",
+  "connector_response_request_id": "ee5547a6-9667-4d2b-840d-4ecae9c048ee",
+  "page": 1,
+  "observed_count": 2,
+  "entries": [
+    {
+      "id": "15_t6BgvOt6J-X04aq7SSxI_OlLqwl_9M",
+      "name": "COMP_ADANNA_NNEKAS_YARD_FULL_FIGURE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1v6EA3y-eLpRYTPV-tTu8pi8T0TNvTaWm"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 572607,
+      "md5": "173f5d758a4ce5bd6e0c6ed35ba448a5",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1shyJ5RwwKHcMhjkP5XrljoC9lq7T7Q9X",
+      "name": "README.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1v6EA3y-eLpRYTPV-tTu8pi8T0TNvTaWm"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 1808,
+      "md5": "c73647e39cd770f6b43f0a3196dde709",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

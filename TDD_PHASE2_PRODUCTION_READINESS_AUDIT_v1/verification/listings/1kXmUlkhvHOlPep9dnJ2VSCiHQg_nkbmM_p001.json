@@ -1,0 +1,65 @@
+{
+  "parent_id": "1kXmUlkhvHOlPep9dnJ2VSCiHQg_nkbmM",
+  "connector_response_request_id": "816717e0-934b-4191-a926-4dfaa892f527",
+  "page": 1,
+  "observed_count": 4,
+  "entries": [
+    {
+      "id": "1HP2m8e0z8Ug7_4_yeJal3zVvj18luRa6",
+      "name": "B2_CAND_CHAR_ADANNA_TURNAROUND_FRONT_V004_2560x1440.png",
+      "mime_type": "image/png",
+      "parents": [
+        "1kXmUlkhvHOlPep9dnJ2VSCiHQg_nkbmM"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 2290525,
+      "md5": "4231e27e25a259e2083ba8878779b99d",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Ug908Xf-JSL18TAFWamzb1C_SkfZgYin",
+      "name": "B2_CAND_CHAR_ADANNA_TURNAROUND_FRONT_V005_2560x1440.png",
+      "mime_type": "image/png",
+      "parents": [
+        "1kXmUlkhvHOlPep9dnJ2VSCiHQg_nkbmM"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 2186990,
+      "md5": "58c8d6445df5072fb163e5ffcca55ada",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "12GOMXfKY2hTenIGj8BwUVcJmjQ6WzwGx",
+      "name": "ENV_CH03-TRV-003_THE_NARROW_PASSAGES_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1kXmUlkhvHOlPep9dnJ2VSCiHQg_nkbmM"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 361993,
+      "md5": "8b02b0087f181b0aa3f9d8c2fdc525d8",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "16tTxehEYQ86VwyivcqGtMiqHR-ci8_Dd",
+      "name": "ENV_CH03-TRV-003_THE_NARROW_PASSAGES_V003.png",
+      "mime_type": "image/png",
+      "parents": [
+        "1kXmUlkhvHOlPep9dnJ2VSCiHQg_nkbmM"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 1726907,
+      "md5": "f9459f7a2e6e98848246c282f0a6b796",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

@@ -1,0 +1,26 @@
+{
+  "parent_id": "1oEzqRhlmwKPlvkXvxjNSBp8_y98WHkEu",
+  "connector_response_request_id": "e6004f23-5ed4-4f5b-8090-f59824df97d8",
+  "page": 1,
+  "observed_count": 1,
+  "entries": [
+    {
+      "id": "1CMW978LfSYtR0SRAgnqKZkk0gNY_rpqF",
+      "name": "REF_ADANNA_MASTER_PORTRAIT_APPROVED_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1oEzqRhlmwKPlvkXvxjNSBp8_y98WHkEu"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 387742,
+      "md5": "827d464b159059a201def413957d9c4d",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

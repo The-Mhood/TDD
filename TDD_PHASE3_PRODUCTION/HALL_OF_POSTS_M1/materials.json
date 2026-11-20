@@ -1,0 +1,80 @@
+{
+  "palette": {
+    "P0_DEEP": "#0F0B0A",
+    "P1_CHAR": "#19100D",
+    "P2_WOOD": "#1E1512",
+    "P3_EARTH_DARK": "#201A18",
+    "P4_LATERITE": "#2C1C17",
+    "P5_WORN_EARTH": "#332622",
+    "P6_PALE": "#645956"
+  },
+  "materials": {
+    "EARTH_FLOOR": {
+      "base": "P5_WORN_EARTH",
+      "roughness": 0.88,
+      "metallic": 0.0,
+      "spec": 0.1
+    },
+    "WET_EARTH_AISLE": {
+      "base": "P3_EARTH_DARK",
+      "roughness": 0.43,
+      "metallic": 0.0,
+      "spec": 0.55
+    },
+    "EARTHEN_WALL": {
+      "base": "P4_LATERITE",
+      "roughness": 0.9,
+      "metallic": 0.0,
+      "spec": 0.04
+    },
+    "EARTHEN_BENCH": {
+      "base": "P5_WORN_EARTH",
+      "roughness": 0.86,
+      "metallic": 0.0,
+      "spec": 0.08
+    },
+    "HARDWOOD_POST": {
+      "base": "P2_WOOD",
+      "roughness": 0.82,
+      "metallic": 0.0,
+      "spec": 0.1
+    },
+    "CARVED_BAND": {
+      "base": "P5_WORN_EARTH",
+      "roughness": 0.76,
+      "metallic": 0.0,
+      "spec": 0.12
+    },
+    "ROOF_BEAM": {
+      "base": "P1_CHAR",
+      "roughness": 0.86,
+      "metallic": 0.0,
+      "spec": 0.06
+    },
+    "THATCH": {
+      "base": "P1_CHAR",
+      "roughness": 0.94,
+      "metallic": 0.0,
+      "spec": 0.02
+    },
+    "FIBRE_LASHING": {
+      "base": "P6_PALE",
+      "roughness": 0.92,
+      "metallic": 0.0,
+      "spec": 0.02
+    },
+    "STOOL_WOOD": {
+      "base": "P3_EARTH_DARK",
+      "roughness": 0.78,
+      "metallic": 0.0,
+      "spec": 0.1
+    },
+    "EXPOSURE_CARD": {
+      "base": "P6_PALE",
+      "roughness": 1.0,
+      "metallic": 0.0,
+      "spec": 0.0,
+      "emission": 0.45
+    }
+  }
+}

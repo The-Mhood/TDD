@@ -1,0 +1,65 @@
+{
+  "parent_id": "1dUo8bxktltXd-ZPYo9uqks7L6fRm3cfT",
+  "connector_response_request_id": "6b28aad0-1475-48cd-803d-f44ff4434d3b",
+  "page": 1,
+  "observed_count": 4,
+  "entries": [
+    {
+      "id": "1t2yjd6aSTF7YZyfktiv61aqrURUU13Nf",
+      "name": "ENTERABLE_INTERIOR_REGISTER.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1dUo8bxktltXd-ZPYo9uqks7L6fRm3cfT"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 13146,
+      "md5": "77d5ee6631433ef1bc170aa9e6aeb1a1",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1WxQeJ7Hnac4gUnOR9EF156ClSTZebpsx",
+      "name": "ENVIRONMENT_DESIGN_REGISTER.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1dUo8bxktltXd-ZPYo9uqks7L6fRm3cfT"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 10213,
+      "md5": "73429f27113924c9428bcc22033aa4d9",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1ZoGt59DRF-f-TijGGPjoBjajYTEYYru7",
+      "name": "LOCATION_MASTER_REGISTER.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1dUo8bxktltXd-ZPYo9uqks7L6fRm3cfT"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 535085,
+      "md5": "bc99e365bce9e2c0818a2cb59973851f",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "16HsBY5FICEdTNl_ZOnYMwEJpNE6w5jd3",
+      "name": "SCENE_AND_MICROLOCATION_MASTER_REGISTER.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1dUo8bxktltXd-ZPYo9uqks7L6fRm3cfT"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 279177,
+      "md5": "43b4d43026402baf4a97482f4ea0aa27",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "PUBLICATION_RECEIPT.md",
+    "new_drive_id": "16KSCt2J_WhSNKaZ1AW5Vd8G3FkG0WNSO",
+    "bytes": 8219,
+    "md5": "f036bf5605b716e786b7c542526eecf8",
+    "sha256": "c33aee328241024fb3b02854ee93f3284f2293ac93c48d990b66f4728cbc7b33",
+    "parent_id": "1JxQwdks0hObYrtMyC4yW6Gqg2xkeN_cM",
+    "upload_success": true,
+    "request_id": "6362fe11-ec1f-456f-b5c5-d5a1e6538249",
+    "independent_download_verified": true,
+    "basis": "Manually transcribed successful exact-name/ID/parent/hash/size/untrashed upload response; no raw API archive.",
+    "full_decode_or_parse_pass": true,
+    "destination_listing_verified": true
+  },
+  {
+    "name": "PUBLICATION_RECEIPT.json",
+    "new_drive_id": "1YEaBYvJLuE7uiX9xSpP17zl74kYpYDyX",
+    "bytes": 36658,
+    "md5": "b3cebdc1c24c4a44ee62653701ea9435",
+    "sha256": "eaaa0251046ee4528a9adab1b9da706f0315fd981619d4e1f9bd019881e38162",
+    "parent_id": "1JxQwdks0hObYrtMyC4yW6Gqg2xkeN_cM",
+    "upload_success": true,
+    "request_id": "112f3459-d605-4a08-80a4-f40d4b1de798",
+    "independent_download_verified": true,
+    "basis": "Manually transcribed successful exact-name/ID/parent/hash/size/untrashed upload response; no raw API archive.",
+    "full_decode_or_parse_pass": true,
+    "destination_listing_verified": true
+  },
+  {
+    "name": "00_START_HERE_FINAL_RELEASE.md",
+    "new_drive_id": "1k-dy6xQzph98UcDnHVNCVCIg8xGUOYiJ",
+    "bytes": 6168,
+    "md5": "d378e51e0bb9847ad2d9b9213d6164a0",
+    "sha256": "839ee2c801b578fd63cef449f0afc99a1fd7070436955a05010de72da5c8d5fc",
+    "parent_id": "1JxQwdks0hObYrtMyC4yW6Gqg2xkeN_cM",
+    "upload_success": true,
+    "request_id": "5e663f51-96a7-4597-be48-ecb1501ceb70",
+    "basis": "Successful upload response manually transcribed; independent new-ID download followed.",
+    "independent_download_verified": true,
+    "full_decode_or_parse_pass": true,
+    "destination_listing_verified": true
+  }
+]

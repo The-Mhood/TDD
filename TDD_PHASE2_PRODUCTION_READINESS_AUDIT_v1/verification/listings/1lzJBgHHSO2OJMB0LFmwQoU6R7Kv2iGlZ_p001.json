@@ -1,0 +1,276 @@
+{
+  "parent_id": "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ",
+  "connector_response_request_id": "b2d2d345-6542-4d0c-bed4-6f2a1944efe3",
+  "page": 1,
+  "observed_count": 26,
+  "entries": [
+    {
+      "id": "1BokNx2FQzpp5TqYH9ACsOt3xfb902awn",
+      "name": "00_MASTER_ART_DIRECTION",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "1tjyNR8DxvdCb7KCm-02ST3gKUSJMnvnZ",
+      "name": "01_CHARACTERS",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "13",
+      "is_folder": true
+    },
+    {
+      "id": "1UVzXVOiKODij8TvV-dab9K_ZGQXCgxVn",
+      "name": "02_LOCATIONS",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "18",
+      "is_folder": true
+    },
+    {
+      "id": "1kSYVuK3O90E5myf9KE3zk0FDFFqDbsNX",
+      "name": "03_ARCHITECTURE_AND_INTERIORS",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "1xbvFnrIHa3cEZXdOaZlr_NverNu0UPdR",
+      "name": "04_CREATURES_AND_ENEMIES",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1lSv__Ftb8liMdUfenjbsr6sHPqfoKpJx",
+      "name": "05_BOSS_DESIGNS",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1hSAxthJ96jfgSIUVpglHw26OSVrJQ-6Q",
+      "name": "06_WEAPONS_AND_ARMOUR",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1Ps-43WzpHD11s8IOQrK1GfC4cwhWbt8B",
+      "name": "07_PROPS_AND_INTERACTABLES",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1upapWDvuuzrVeFIzV4uhFJGY4XllTPPT",
+      "name": "08_LIGHTING_AND_ATMOSPHERE",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1vYkgBHhYz6gyFdUo8wtV-QundC1R0QbU",
+      "name": "09_ANIMATION_AND_COMBAT",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1pTZIlgdDqZSGW4C38ME-bDww5azgziEf",
+      "name": "10_UI_AND_UX",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1_zKJV7-Em-AAcc84TdKGtFlHhUWk8jub",
+      "name": "11_AUDIO_AND_MUSIC",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1nEoKHKPOUyK--zQiXG2o4GA8fFJu8nOK",
+      "name": "12_CINEMATOGRAPHY",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1APIsaxdUb9WtXZIXst8bI0E3r_LoNSai",
+      "name": "13_GAMEPLAY_AND_LEVEL_DESIGN",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1CFkt_cPdRyyd8Iw9g6O09715f0Ib34pS",
+      "name": "14_APPROVED_DESIGNS",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1S3KUeDS9nU6FBPFP3akG5YlJpVZvMdzM",
+      "name": "15_EXPLORATORY_DESIGNS",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c",
+      "name": "16_REJECTED_DESIGNS",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "10I2aAjDuqC5M-Lm2OjSGd-07fLTtYWEf",
+      "name": "17_DOCUMENTATION",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1PL2w0kmxoLbw4osdoQ5xgdA2kg_DtNTT",
+      "name": "18_REFERENCE_MATERIAL",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1LP4eOG9RapMbqfotjxsNfbtqj7s2nA60",
+      "name": "19_LEGACY_BATCH_ARCHIVES",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "17ZOOMRXHYWE1DKBYJUG9rdhjCrapFB1X",
+      "name": "20_PREVIOUS_VISUAL_AGENT_WORKSPACE_HANDOVER",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "1IIIkkZAuGCs0Nx95NBkXgHrxq0u-0obl",
+      "name": "CD_REVIEW_2026-11-16",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "3",
+      "is_folder": true
+    },
+    {
+      "id": "1dgDDj-JqZhZdacUJgxrFZHWByN6h3dC5",
+      "name": "OUR_EYES_AUTHORISED_CORRECTIONS_NOT_APPROVED",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf",
+      "name": "OUR_EYES_EXTERNAL_AUTHORITY_REQUIRED",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "11DxQ0d_noAPbZCPrYQBkUonHFl_cFAWm",
+      "name": "PENDING",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "1",
+      "is_folder": true
+    },
+    {
+      "id": "1kMDn5oXmy6DhBJsROJ6EIn_ZXUPbLENx",
+      "name": "DECISIONS.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ"
+      ],
+      "drive_version": "11",
+      "is_folder": false,
+      "bytes": 10451,
+      "md5": "ba43de34eb2b401f1bcd04216401094a",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

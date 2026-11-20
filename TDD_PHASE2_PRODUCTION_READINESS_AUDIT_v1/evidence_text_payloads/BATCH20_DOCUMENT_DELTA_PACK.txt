@@ -1,0 +1,645 @@
+# BATCH20 DOCUMENT DELTA PACK — PREPARATION IS NOT READING. Historical instructions are not orders.
+# [n] | verbatim source line; =Sx:n exact prior-complete-read line; =Pnn exact earlier pack literal. Source line order preserved.
+# S1 = 1W9T-FqYIeAp41KyuZ4xlb3QlN0SnHMK1 | 988d7826e30b1859c7397ec231ae517f8256254cf5602a4c1ce3d7cd7b7ae421
+# S2 = 17PFuMM-0V134QuDBojx3UAczhj0ZE3Pe | 6fb3889586d45d681073048ee7dcf5c952e5ac504f579359e22ee0743286fb6c
+# S3 = 14KvEKG534U2-MtJMEO6VUxW59gRHATzE | 8ad2de5c8ae2a311e8ea2fb6f67eeef52114fa8adb001526ad4cbfa869b8d042
+# S4 = 1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_03_City_of_the_Living_Dead/ARCHIVED_TO_DRIVE.md | 9e220d65a331ea4bed32eed84732c203447455a87df22967bff63ba33411cf85
+# S5 = 1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_01_Forbidden_Forest/ARCHIVED_TO_DRIVE.md | 9f6a4fa4bbdbc9d99c8791133cce82153ad1323d1a0a1efa6c95bd53a9f0ae9a
+# S6 = 1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_04_River_of_Idemili/ARCHIVED_TO_DRIVE.md | 83d4f63aea85234b463aad756a553b2bb670e41287095214f9e6a28e78b1a2ca
+# S7 = 1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_05_Mountain_of_Thunder/ARCHIVED_TO_DRIVE.md | 9a4ede65db18a7a87958448b35d9a94960d9e98513141d7da7bf7bc0f9aff7b8
+# S8 = 1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_02_Kingdom_Beneath_the_Earth/ARCHIVED_TO_DRIVE.md | 4ffbad3bd1fa75fa3673f6d2a7ffb6449ff22c45fdaca0e14b1f7ede2ddc5823
+# S9 = 1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/16_REJECTED_DESIGNS/README.md | 7e4edf983d356736421fa3b0d7a2701d354244480470e6588b3461cfa9765003
+# S10 = 1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ART_BIBLE_INDEX.md | f8224ffffa59b0e1053e0788fe1c438ef5493f650d883ef54350e7280df98939
+# S11 = 1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/CHARACTER_DESIGN_REGISTER.md | a87e5fdeb381325fe63182445f2f4b2e8239a1bcaa8bb81ca3500c40e9bd6169
+# S12 = 1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/OPEN_ART_DECISIONS.md | f90c84587cd080dc4d52d4a966b1f3b1fdb87cf824dbfe0aea30a0c24b02e49f
+## 1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/16_REJECTED_DESIGNS/README.md | SHA256 b6b860714938c5b5ad165f2406b56c7ba25487f8556636843452becec1b57629
+[1] |# Rejected and superseded designs
+[2] BLANK
+[3] =S9:3
+[4] BLANK
+[5] |- ART_MASTER_OVERVIEW_KEYART_V001.jpg
+[6] |- ART_MASTER_OVERVIEW_KEYART_V002.jpg
+[7] |- ART_VISUAL_IDENTITY_V001.jpg
+[8] |- CHAR_ADANNA_BATTLE_WORN_STATE_V001.jpg
+[9] |- CHAR_ADANNA_EXPLORATION_OUTFIT_V001.jpg
+[10] |- CHAR_ADANNA_EXPLORATION_OUTFIT_V002.jpg
+[11] |- CHAR_ADANNA_FACE_EXPRESSIONS_V001.jpg
+[12] |- CHAR_ADANNA_FACE_EXPRESSIONS_V002.jpg
+[13] |- CHAR_ADANNA_TURNAROUND_INITIAL_APPEARANCE_V001.jpg
+[14] |- CHAR_ADANNA_UPGRADED_ARMOUR_V001.jpg
+[15] |- CHAR_AMADIOHA_RAM_FORM_EXPLORATION_V001.jpg
+[16] |- CHAR_EZEANI_TURNAROUND_V001.jpg
+[17] |- CHAR_HOLLOW_KING_EXPRESSIONS_DETAILS_V001.jpg
+[18] |- CHAR_HOLLOW_KING_EXPRESSIONS_DETAILS_V002.jpg
+[19] |- CHAR_NNEKA_LIVING_MEMORY_V001.jpg
+[20] |- CHAR_NNEKA_TURNAROUND_V001.jpg
+[21] |- CHAR_SUPPORTING_VILLAINS_LIEUTENANT_V001.jpg
+[22] |- NPC_GUARDS_V001.jpg
+[23] |- NPC_GUARDS_V002.jpg
+[24] |- CHAR_SUPPORTING_ROYAL_GUARD_V001.jpg
+[25] |- ENV_FORBIDDEN_FOREST_GREAT_TREE_APPROACH_V001.jpg
+[26] |- ENV_FORBIDDEN_FOREST_THRESHOLD_PATH_V001.jpg
+[27] |- ENV_FORBIDDEN_FOREST_GREAT_TREE_APPROACH_V002.jpg
+[28] |- ENV_FORBIDDEN_FOREST_ROOT_MOTHER_ARENA_V001.jpg
+[29] |- ENV_KINGDOM_BENEATH_IRON_RIVER_CAUSEWAY_V001.jpg
+[30] |- ENV_KINGDOM_BENEATH_SEALED_GATE_V001.jpg
+[31] |- ENV_KINGDOM_BENEATH_SEALED_GATE_V002.jpg
+[32] |- ENV_CITY_LIVING_DEAD_MAIN_AVENUE_V001.jpg
+[33] |- ENV_CITY_LIVING_DEAD_THRONE_HALL_ARENA_V001.jpg
+[34] |- ENV_CITY_LIVING_DEAD_DRY_WATER_HOLE_V001.jpg
+[35] |- ENV_RIVER_IDEMILI_SHRINE_LANDING_V001.jpg
+[36] |- ENV_RIVER_IDEMILI_UNDERWATER_V001.jpg
+[37] |- ENV_MOUNTAIN_THUNDER_SUMMIT_ARENA_V001.jpg
+[38] |- ENV_MOUNTAIN_THUNDER_RIDGE_TRAVERSE_V001.jpg
+## 1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ART_BIBLE_INDEX.md | SHA256 22bdb81d64a01d1270204ce0391a6f9df5f610c80a89d6f8eef5ccf0e5111467
+[1] |# ART BIBLE INDEX — THE DISOBEDIENT DAUGHTER
+[2] |*Nwanyi Na-anụghị Ihe*
+[3] BLANK
+[4] |Last updated: 2026-11-15 · Batch 1 **GENERATED** (in review) · Batch 2 **GENERATED** (22 of 22; 2 approved masters) · Batch 3 **GENERATED** (13 of 13, in review) · Batch 4 **IN PROGRESS** (Forbidden Forest 15 of 15; Kingdom Beneath the Earth 12 of 12; City of the Living Dead 12 of 12; River of Idemili 13 of 13; Mountain of Thunder 12 of 12; Kingdom of Masks 5 of 10; all in review). Chapter 1 to 4 boards are archived on Drive only · Character boards other than masters are archived on Drive only · Archive: Google Drive folder https://drive.google.com/drive/folders/1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ
+[5] BLANK
+[6] =S10:6
+[7] |Only the art director can approve a design.
+[8] BLANK
+[9] |## 1. Generated assets
+[10] BLANK
+[11] =S10:11
+[12] ||---|---|---|---|---|---|---|---|---|---|
+[13] =S10:13
+[14] =S10:14
+[15] =S10:15
+[16] =S10:16
+[17] =S10:17
+[18] =S10:18
+[19] =S10:19
+[20] =S10:20
+[21] =S10:21
+[22] =S10:22
+[23] =S10:23
+[24] =S10:24
+[25] =S10:25
+[26] =S10:26
+[27] =S10:27
+[28] =S10:28
+[29] =S10:29
+[30] =S10:30
+[31] =S10:31
+[32] =S10:32
+[33] =S10:33
+[34] =S10:34
+[35] =S10:35
+[36] =S10:36
+[37] =S10:37
+[38] =S10:38
+[39] =S10:39
+[40] =S10:40
+[41] =S10:41
+[42] =S10:42
+[43] =S10:43
+[44] =S10:44
+[45] =S10:45
+[46] =S10:46
+[47] =S10:47
+[48] =S10:48
+[49] =S10:49
+[50] =S10:50
+[51] =S10:51
+[52] =S10:52
+[53] =S10:53
+[54] =S10:54
+[55] =S10:55
+[56] =S10:56
+[57] =S10:57
+[58] =S10:58
+[59] =S10:59
+[60] =S10:60
+[61] =S10:61
+[62] =S10:62
+[63] =S10:63
+[64] =S10:64
+[65] =S10:65
+[66] =S10:66
+[67] =S10:67
+[68] =S10:68
+[69] =S10:69
+[70] =S10:70
+[71] =S10:71
+[72] =S10:72
+[73] =S10:73
+[74] =S10:74
+[75] =S10:75
+[76] =S10:76
+[77] =S10:77
+[78] =S10:78
+[79] =S10:79
+[80] =S10:80
+[81] =S10:81
+[82] =S10:82
+[83] =S10:83
+[84] =S10:84
+[85] =S10:85
+[86] =S10:86
+[87] =S10:87
+[88] =S10:88
+[89] =S10:89
+[90] =S10:90
+[91] =S10:91
+[92] =S10:92
+[93] =S10:93
+[94] =S10:94
+[95] =S10:95
+[96] =S10:96
+[97] =S10:97
+[98] =S10:98
+[99] =S10:99
+[100] =S10:100
+[101] =S10:101
+[102] =S10:102
+[103] =S10:103
+[104] =S10:104
+[105] =S10:105
+[106] =S10:106
+[107] =S10:107
+[108] =S10:108
+[109] =S10:109
+[110] =S10:110
+[111] =S10:111
+[112] =S10:112
+[113] =S10:113
+[114] =S10:114
+[115] =S10:115
+[116] =S10:116
+[117] =S10:117
+[118] =S10:118
+[119] =S10:119
+[120] =S10:120
+[121] =S10:121
+[122] =S10:122
+[123] =S10:123
+[124] =S10:124
+[125] =S10:125
+[126] =S10:126
+[127] =S10:127
+[128] =S10:128
+[129] =S10:129
+[130] =S10:130
+[131] =S10:131
+[132] =S10:132
+[133] =S10:133
+[134] =S10:134
+[135] =S10:135
+[136] =S10:136
+[137] =S10:137
+[138] =S10:138
+[139] =S10:139
+[140] =S10:140
+[141] || ENV_KINGDOM_MASKS_HALL_OF_FACES_V001 | Kingdom of Masks: the hall of faces | Environment | Ch 6 | Hall filled with hanging blank faces | Stealth interior | V001 | REVIEW REQUIRED | Mother of Masks | Eave light reads as strip lighting |
+[142] =S10:143
+[143] || ENV_KINGDOM_MASKS_STILL_WATER_COURT_V001 | Kingdom of Masks: the court of still water | Environment | Ch 6 | Basins of black water with wrong reflections | Puzzle space | V001 | REVIEW REQUIRED | Establishing | Round conical-roofed buildings; chrome-like discs |
+[144] =S10:154
+[145] =S10:155
+[146] =S10:156
+[147] =S10:157
+[148] =S10:158
+[149] =S10:159
+[150] =S10:160
+[151] BLANK
+[152] =S10:162
+[153] BLANK
+[154] =S10:164
+[155] =S10:165
+[156] BLANK
+[157] =S10:167
+[158] || Planned asset | Status |
+[159] ||---|---|
+[160] =S10:170
+[161] =S10:171
+[162] =S10:172
+[163] =S10:173
+[164] =S10:174
+[165] =S10:175
+[166] BLANK
+[167] |## 2b. Batch 2 outstanding
+[168] || Planned asset | Status |
+[169] ||---|---|
+[170] =S10:180
+[171] =S10:181
+[172] =S10:182
+[173] =S10:183
+[174] BLANK
+[175] |## 3. Coverage tracker
+[176] BLANK
+[177] =S10:187
+[178] ||---|---|---|---|---|
+[179] =S10:189
+[180] =S10:190
+[181] || 3 | NPC population | 13 | 13 | GENERATED, in review |
+[182] || 4 | Location atlas: 93 chapter boards + 19 settlement boards | 113 | 69 | IN PROGRESS |
+[183] || 5 | Architecture and interiors | 26 | 0 | NOT STARTED |
+[184] =S10:194
+[185] =S10:195
+[186] =S10:196
+[187] || 9 | Animation, combat, movement | 16 | 0 | NOT STARTED |
+[188] || 10 | UI and UX | 20 | 0 | NOT STARTED |
+[189] || 11 | Audio, cinematography | 27 | 0 | NOT STARTED |
+[190] || 12 | Gameplay and level design | 20 | 0 | NOT STARTED |
+[191] BLANK
+[192] =S10:202
+## 1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ENVIRONMENT_DESIGN_REGISTER.md | SHA256 c71ad91c989e30fa6c924aaa455ca7737f59b3f75b0ecd3627f70e58493dcf38
+[1] |# ENVIRONMENT DESIGN REGISTER
+[2] =S3:2
+[3] BLANK
+[4] =S3:4
+[5] ||---|---|---|---|---|
+[6] =S3:6
+[7] =S3:7
+[8] =S3:8
+[9] =S3:9
+[10] =S3:10
+[11] || 6 | The Kingdom of Masks | Familiar architecture that will not stay still. Carved faces, mirrors, memory rooms. | 10 | IN PROGRESS: 5 of 10, REVIEW REQUIRED. |
+[12] || 7 | The Gates of the Dead | Dark river, fortress architecture of a dead civilisation, ember and ash palette. | 10 | NOT STARTED |
+[13] =S3:13
+[14] =S3:14
+[15] BLANK
+[16] =S3:16
+[17] BLANK
+[18] |## Decisions since Batch 1
+[19] BLANK
+[20] =S3:20
+[21] =S3:21
+[22] BLANK
+[23] |## Chapter 1 boards (2026-11-15)
+[24] BLANK
+[25] =S3:25
+[26] BLANK
+[27] =S3:27
+[28] BLANK
+[29] |## Update: forest complete, Chapter 2 started
+[30] BLANK
+[31] =S3:31
+[32] BLANK
+[33] |## Update: Chapter 2 complete, Chapter 3 started
+[34] BLANK
+[35] =S3:35
+[36] BLANK
+[37] |## Update: Chapter 3 at 10 of 12
+[38] BLANK
+[39] =S3:39
+[40] BLANK
+[41] |## Update: Chapter 3 complete, Chapter 4 started
+[42] BLANK
+[43] =S3:43
+[44] BLANK
+[45] =S3:45
+[46] BLANK
+[47] |## Update: Chapter 4 at 13 boards
+[48] BLANK
+[49] =S3:49
+[50] BLANK
+[51] |## Update: Chapter 5 started (9 of 12)
+[52] BLANK
+[53] =S3:53
+[54] BLANK
+[55] =S3:55
+[56] BLANK
+[57] |## Update: Chapter 5 complete, Chapter 6 started (5 of 10)
+[58] BLANK
+[59] =S3:59
+[60] BLANK
+[61] =S3:61
+## 1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_04_River_of_Idemili/ARCHIVED_TO_DRIVE.md | SHA256 1e3a27e1d850f95fc5bb47a33c267ed91ac5a6e56cee0ac4f09494c9e990a4c2
+[1] |# Chapter 4 boards archived to Drive
+[2] BLANK
+[3] =S6:3
+[4] BLANK
+[5] |- ENV_RIVER_IDEMILI_CONFLUENCE_V001.jpg
+[6] |- ENV_RIVER_IDEMILI_DEEP_POOL_ARENA_V001.jpg
+[7] |- ENV_RIVER_IDEMILI_DROWNED_VILLAGE_V001.jpg
+[8] |- ENV_RIVER_IDEMILI_ESTABLISHING_V001.jpg
+[9] |- ENV_RIVER_IDEMILI_FISHING_WEIRS_V001.jpg
+[10] |- ENV_RIVER_IDEMILI_NIGHT_RIVER_V001.jpg
+[11] |- ENV_RIVER_IDEMILI_RAFFIA_CHANNELS_V001.jpg
+[12] |- ENV_RIVER_IDEMILI_RAINSTORM_V001.jpg
+[13] |- ENV_RIVER_IDEMILI_RAPIDS_V001.jpg
+[14] |- ENV_RIVER_IDEMILI_RIVER_VILLAGE_V001.jpg
+[15] |- ENV_RIVER_IDEMILI_SHRINE_LANDING_V002.jpg
+[16] |- ENV_RIVER_IDEMILI_SOURCE_SPRING_V001.jpg
+[17] |- ENV_RIVER_IDEMILI_UNDERWATER_V001.jpg
+## 1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/16_REJECTED_DESIGNS/README.md | SHA256 be9dc9849108da2f1f186e5d86cce1f6172a22c223ccb570d0bf7edfda284b89
+[1] |# Rejected and superseded designs
+[2] BLANK
+[3] =S9:3
+[4] BLANK
+[5] |- ART_MASTER_OVERVIEW_KEYART_V001.jpg
+[6] |- ART_MASTER_OVERVIEW_KEYART_V002.jpg
+[7] |- ART_VISUAL_IDENTITY_V001.jpg
+[8] |- CHAR_ADANNA_BATTLE_WORN_STATE_V001.jpg
+[9] |- CHAR_ADANNA_EXPLORATION_OUTFIT_V001.jpg
+[10] |- CHAR_ADANNA_EXPLORATION_OUTFIT_V002.jpg
+[11] |- CHAR_ADANNA_FACE_EXPRESSIONS_V001.jpg
+[12] |- CHAR_ADANNA_FACE_EXPRESSIONS_V002.jpg
+[13] |- CHAR_ADANNA_TURNAROUND_INITIAL_APPEARANCE_V001.jpg
+[14] |- CHAR_ADANNA_UPGRADED_ARMOUR_V001.jpg
+[15] |- CHAR_AMADIOHA_RAM_FORM_EXPLORATION_V001.jpg
+[16] |- CHAR_EZEANI_TURNAROUND_V001.jpg
+[17] |- CHAR_HOLLOW_KING_EXPRESSIONS_DETAILS_V001.jpg
+[18] |- CHAR_HOLLOW_KING_EXPRESSIONS_DETAILS_V002.jpg
+[19] |- CHAR_NNEKA_LIVING_MEMORY_V001.jpg
+[20] |- CHAR_NNEKA_TURNAROUND_V001.jpg
+[21] |- CHAR_SUPPORTING_VILLAINS_LIEUTENANT_V001.jpg
+[22] |- NPC_GUARDS_V001.jpg
+[23] |- NPC_GUARDS_V002.jpg
+[24] |- CHAR_SUPPORTING_ROYAL_GUARD_V001.jpg
+[25] |- ENV_FORBIDDEN_FOREST_GREAT_TREE_APPROACH_V001.jpg
+[26] |- ENV_FORBIDDEN_FOREST_THRESHOLD_PATH_V001.jpg
+[27] |- ENV_FORBIDDEN_FOREST_GREAT_TREE_APPROACH_V002.jpg
+[28] |- ENV_FORBIDDEN_FOREST_ROOT_MOTHER_ARENA_V001.jpg
+[29] |- ENV_KINGDOM_BENEATH_IRON_RIVER_CAUSEWAY_V001.jpg
+[30] |- ENV_KINGDOM_BENEATH_SEALED_GATE_V001.jpg
+[31] |- ENV_KINGDOM_BENEATH_SEALED_GATE_V002.jpg
+[32] |- ENV_CITY_LIVING_DEAD_MAIN_AVENUE_V001.jpg
+[33] |- ENV_CITY_LIVING_DEAD_THRONE_HALL_ARENA_V001.jpg
+[34] |- ENV_CITY_LIVING_DEAD_DRY_WATER_HOLE_V001.jpg
+[35] |- ENV_RIVER_IDEMILI_SHRINE_LANDING_V001.jpg
+[36] |- ENV_RIVER_IDEMILI_UNDERWATER_V001.jpg
+## 1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ART_BIBLE_INDEX.md | SHA256 a09386cabdcb77afc39fc0ecd9fdfe8e32d65ded681e326f26aa9f811cda566a
+[1] |# ART BIBLE INDEX — THE DISOBEDIENT DAUGHTER
+[2] |*Nwanyi Na-anụghị Ihe*
+[3] BLANK
+[4] |Last updated: 2026-11-15 · Batch 1 **GENERATED** (in review) · Batch 2 **GENERATED** (22 of 22; 2 approved masters) · Batch 3 **GENERATED** (13 of 13, in review) · Batch 4 **IN PROGRESS** (Forbidden Forest 15 of 15; Kingdom Beneath the Earth 12 of 12; City of the Living Dead 12 of 12; River of Idemili 13 of 13; Mountain of Thunder 9 of 12; all in review). Chapter 1 to 4 boards are archived on Drive only · Character boards other than masters are archived on Drive only · Archive: Google Drive folder https://drive.google.com/drive/folders/1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ
+[5] BLANK
+[6] =S10:6
+[7] |Only the art director can approve a design.
+[8] BLANK
+[9] |## 1. Generated assets
+[10] BLANK
+[11] =S10:11
+[12] ||---|---|---|---|---|---|---|---|---|---|
+[13] =S10:13
+[14] =S10:14
+[15] =S10:15
+[16] =S10:16
+[17] =S10:17
+[18] =S10:18
+[19] =S10:19
+[20] =S10:20
+[21] =S10:21
+[22] =S10:22
+[23] =S10:23
+[24] =S10:24
+[25] =S10:25
+[26] =S10:26
+[27] =S10:27
+[28] =S10:28
+[29] =S10:29
+[30] =S10:30
+[31] =S10:31
+[32] =S10:32
+[33] =S10:33
+[34] =S10:34
+[35] =S10:35
+[36] =S10:36
+[37] =S10:37
+[38] =S10:38
+[39] =S10:39
+[40] =S10:40
+[41] =S10:41
+[42] =S10:42
+[43] =S10:43
+[44] =S10:44
+[45] =S10:45
+[46] =S10:46
+[47] =S10:47
+[48] =S10:48
+[49] =S10:49
+[50] =S10:50
+[51] =S10:51
+[52] =S10:52
+[53] =S10:53
+[54] =S10:54
+[55] =S10:55
+[56] =S10:56
+[57] =S10:57
+[58] =S10:58
+[59] =S10:59
+[60] =S10:60
+[61] =S10:61
+[62] =S10:62
+[63] =S10:63
+[64] =S10:64
+[65] =S10:65
+[66] =S10:66
+[67] =S10:67
+[68] =S10:68
+[69] =S10:69
+[70] =S10:70
+[71] =S10:71
+[72] =S10:72
+[73] =S10:73
+[74] =S10:74
+[75] =S10:75
+[76] =S10:76
+[77] =S10:77
+[78] =S10:78
+[79] =S10:79
+[80] =S10:80
+[81] =S10:81
+[82] =S10:82
+[83] =S10:83
+[84] =S10:84
+[85] =S10:85
+[86] =S10:86
+[87] =S10:87
+[88] =S10:88
+[89] =S10:89
+[90] =S10:90
+[91] =S10:91
+[92] =S10:92
+[93] =S10:93
+[94] =S10:94
+[95] =S10:95
+[96] =S10:96
+[97] =S10:97
+[98] =S10:98
+[99] =S10:99
+[100] =S10:100
+[101] =S10:101
+[102] =S10:102
+[103] =S10:103
+[104] =S10:104
+[105] =S10:105
+[106] =S10:106
+[107] =S10:107
+[108] =S10:108
+[109] =S10:109
+[110] =S10:110
+[111] =S10:111
+[112] =S10:112
+[113] =S10:113
+[114] =S10:114
+[115] =S10:115
+[116] =S10:116
+[117] =S10:117
+[118] =S10:118
+[119] =S10:119
+[120] =S10:120
+[121] =S10:121
+[122] =S10:122
+[123] =S10:123
+[124] =S10:124
+[125] =S10:125
+[126] =S10:126
+[127] =S10:127
+[128] || ENV_MOUNTAIN_THUNDER_MOUNTAIN_VILLAGE_V001 | Mountain of Thunder: the last village | Environment | Ch 5 | Hill village, terraces, white rams | Chapter hub | V001 | REVIEW REQUIRED | NPC villagers | Round huts in background; ram rule needs decision |
+[129] =S10:129
+[130] =S10:130
+[131] =S10:131
+[132] || ENV_MOUNTAIN_THUNDER_RIDGE_TRAVERSE_V001 | Mountain of Thunder: the ridge | Environment | Ch 5 | Narrow granite ridge with handline in storm | Final approach | V001 | REVIEW REQUIRED | Cut steps | Pinnacle reads East Asian; does not match dome |
+[133] || ENV_MOUNTAIN_THUNDER_SUMMIT_ARENA_V001 | Mountain of Thunder: the summit, boss arena | Environment | Ch 5 | Bare granite dome under rotating storm | Boss arena | V001 | REVIEW REQUIRED | Amadioha's Champion | Reads as game screenshot; redo recommended |
+[134] =S10:154
+[135] =S10:155
+[136] =S10:156
+[137] =S10:157
+[138] =S10:158
+[139] =S10:159
+[140] =S10:160
+[141] BLANK
+[142] =S10:162
+[143] BLANK
+[144] =S10:164
+[145] =S10:165
+[146] BLANK
+[147] =S10:167
+[148] || Planned asset | Status |
+[149] ||---|---|
+[150] =S10:170
+[151] =S10:171
+[152] =S10:172
+[153] =S10:173
+[154] =S10:174
+[155] =S10:175
+[156] BLANK
+[157] |## 2b. Batch 2 outstanding
+[158] || Planned asset | Status |
+[159] ||---|---|
+[160] =S10:180
+[161] =S10:181
+[162] =S10:182
+[163] =S10:183
+[164] BLANK
+[165] |## 3. Coverage tracker
+[166] BLANK
+[167] =S10:187
+[168] ||---|---|---|---|---|
+[169] =S10:189
+[170] =S10:190
+[171] || 3 | NPC population | 13 | 13 | GENERATED, in review |
+[172] || 4 | Location atlas: 93 chapter boards + 19 settlement boards | 113 | 61 | IN PROGRESS |
+[173] || 5 | Architecture and interiors | 26 | 0 | NOT STARTED |
+[174] =S10:194
+[175] =S10:195
+[176] =S10:196
+[177] || 9 | Animation, combat, movement | 16 | 0 | NOT STARTED |
+[178] || 10 | UI and UX | 20 | 0 | NOT STARTED |
+[179] || 11 | Audio, cinematography | 27 | 0 | NOT STARTED |
+[180] || 12 | Gameplay and level design | 20 | 0 | NOT STARTED |
+[181] BLANK
+[182] =S10:202
+## 1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ENVIRONMENT_DESIGN_REGISTER.md | SHA256 b30c899c198776dcd41165654f266a3920b0a5082bff988214b66525ac44a17b
+[1] |# ENVIRONMENT DESIGN REGISTER
+[2] =S3:2
+[3] BLANK
+[4] =S3:4
+[5] ||---|---|---|---|---|
+[6] =S3:6
+[7] =S3:7
+[8] =S3:8
+[9] =S3:9
+[10] || 5 | The Mountain of Thunder | Bare rock above the tree line, cut stairs, cloud plateaus, storm light. | 12 | IN PROGRESS: 9 of 12, REVIEW REQUIRED. |
+[11] || 6 | The Kingdom of Masks | Familiar architecture that will not stay still. Carved faces, mirrors, memory rooms. | 10 | NOT STARTED |
+[12] =P259
+[13] =S3:13
+[14] =S3:14
+[15] BLANK
+[16] =S3:16
+[17] BLANK
+[18] |## Decisions since Batch 1
+[19] BLANK
+[20] =S3:20
+[21] =S3:21
+[22] BLANK
+[23] |## Chapter 1 boards (2026-11-15)
+[24] BLANK
+[25] =S3:25
+[26] BLANK
+[27] =S3:27
+[28] BLANK
+[29] |## Update: forest complete, Chapter 2 started
+[30] BLANK
+[31] =S3:31
+[32] BLANK
+[33] |## Update: Chapter 2 complete, Chapter 3 started
+[34] BLANK
+[35] =S3:35
+[36] BLANK
+[37] |## Update: Chapter 3 at 10 of 12
+[38] BLANK
+[39] =S3:39
+[40] BLANK
+[41] |## Update: Chapter 3 complete, Chapter 4 started
+[42] BLANK
+[43] =S3:43
+[44] BLANK
+[45] =S3:45
+[46] BLANK
+[47] |## Update: Chapter 4 at 13 boards
+[48] BLANK
+[49] =S3:49
+[50] BLANK
+[51] |## Update: Chapter 5 started (9 of 12)
+[52] BLANK
+[53] =S3:53
+[54] BLANK
+[55] |Chapter 5 rules: a West African granite dome, never an alpine peak (no snow, no conifers); the storm never leaves the summit and the summit is visible in every board; nothing is built on the mountain, people only cut the rock or drive iron into it; iron rods with faded red cloth mark the way (red is documented for Amadioha, the rods are fictional); lightning is white only, never coloured. Proposed and awaiting decision (OAD-19): white rams are never enemies or loot on the mountain. The oath ground is invented and needs consultant review. Recurring faults: summit silhouette changes between boards; savanna round huts; East Asian mountain look on the ridge.
+## 1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/OPEN_ART_DECISIONS.md | SHA256 679e19db524317ac33031c2245403a0a0132e8d9d09f31a4feab4b38e53112df
+[1] |# OPEN ART DECISIONS
+[2] |V001 · 2026-11-15
+[3] BLANK
+[4] || ID | Decision needed | Detail | My recommendation |
+[5] ||---|---|---|---|
+[6] =S12:6
+[7] =S12:7
+[8] =S12:8
+[9] =S12:9
+[10] =S12:10
+[11] =S12:11
+[12] =S12:12
+[13] =S12:13
+[14] =S12:14
+[15] =S12:15
+[16] =S12:16
+[17] =S12:17
+[18] =S12:18
+[19] BLANK
+[20] |## Batch 1 review log
+[21] =S12:21
+[22] BLANK
+[23] |**Still open:**
+[24] =S12:24
+[25] =S12:25
+[26] =S12:26
+[27] =S12:27
+[28] =S12:28
+[29] =S12:29
+[30] BLANK
+[31] |## Resolved 2026-11-15
+[32] BLANK
+[33] || ID | Decision | Outcome |
+[34] ||---|---|---|
+[35] =S12:35
+[36] =S12:36
+[37] =S12:37
+[38] =S12:38
+[39] =S12:39
+[40] BLANK
+[41] |## OAD-19 — White rams on the Mountain of Thunder (OPEN)
+[42] |The white ram is documented as Amadioha's symbol. Proposal: on the mountain, rams appear as ambient wildlife and signs of his presence and are never enemies or loot, matching the python rule for Idemili (OAD-14). Awaiting client decision. Raised 2026-11-15.

@@ -1,0 +1,18 @@
+{
+  "source": "web_build/test/replay_frames.json \u2014 actual fixed-step game.js states",
+  "frame_count": 120,
+  "fps": 15,
+  "resolution": [
+    800,
+    450
+  ],
+  "frames": "captures/frames/frame_000.png \u2026 frame_119.png",
+  "hero": "captures/playable_hero_frame.png",
+  "hud": "captures/playable_hud_frame.png",
+  "contact_sheet": "captures/playable_contact_sheet.png",
+  "review_sheet": "captures/PLAYABLE_M1_REVIEW_SHEET.png",
+  "gif": "captures/playable_replay.gif",
+  "mp4": "captures/playable_replay.mp4",
+  "mp4_status": "written",
+  "classification": "frames/video from running gameplay simulation, not Blender render or GLB viewer screenshot"
+}

@@ -1,0 +1,617 @@
+{
+  "worldVersion": "PLAYABLE_ADANNA_FOREST_M1_2026-11-19",
+  "classification": "neutral gameplay/collision proxy; not approved story dimensions or final level art",
+  "source": "Art Bible Forbidden Forest rules, approved Adanna master identity, and source/reference boards listed in source_authority.json",
+  "bounds": {
+    "minX": -18.0,
+    "maxX": 18.0,
+    "minY": -26.0,
+    "maxY": 62.0
+  },
+  "spawn": {
+    "position": {
+      "x": 0.0,
+      "y": -18.0,
+      "z": 0.0
+    },
+    "yaw": 0.0
+  },
+  "terrain": {
+    "amplitude": 0.04,
+    "frequency": 0.13,
+    "phase": 0.0
+  },
+  "character": {
+    "radius": 0.34,
+    "eyeHeight": 1.55,
+    "walkSpeed": 2.8,
+    "runSpeed": 5.6,
+    "groundAcceleration": 9.0,
+    "airAcceleration": 2.5,
+    "gravity": 18.0,
+    "jumpVelocity": 6.4,
+    "turnSpeed": 9.0
+  },
+  "camera": {
+    "distance": 4.4,
+    "lookSpeed": 2.2,
+    "minPitch": 0.08,
+    "maxPitch": 0.62,
+    "collisionPadding": 0.35
+  },
+  "route": {
+    "waypoints": [
+      {
+        "x": 0.0,
+        "y": -18.0,
+        "label": "Threshold"
+      },
+      {
+        "x": 0.0,
+        "y": -8.0,
+        "label": "White-cloth boundary"
+      },
+      {
+        "x": -2.0,
+        "y": 2.0,
+        "label": "Root way"
+      },
+      {
+        "x": 1.0,
+        "y": 12.0,
+        "label": "Stream crossing"
+      },
+      {
+        "x": -1.0,
+        "y": 24.0,
+        "label": "Abandoned shrine"
+      },
+      {
+        "x": 2.0,
+        "y": 36.0,
+        "label": "Duiker run"
+      },
+      {
+        "x": 0.0,
+        "y": 50.0,
+        "label": "Great Root Mother approach"
+      }
+    ],
+    "pathWidth": 3.4
+  },
+  "interactables": [
+    {
+      "id": "boundary_waymarker",
+      "label": "White-cloth boundary waymarker",
+      "x": 0.0,
+      "y": -14.5,
+      "radius": 1.6,
+      "final": false,
+      "message": "Boundary acknowledged. Follow the white cloth and laterite path."
+    },
+    {
+      "id": "great_root_waymarker",
+      "label": "Great Root Mother waymarker",
+      "x": 0.0,
+      "y": 49.0,
+      "radius": 2.2,
+      "final": true,
+      "message": "Route complete: Great Root Mother approach acknowledged."
+    }
+  ],
+  "obstacles": [
+    {
+      "id": "CAMERA_PROBE_TREE",
+      "type": "CAMERA_PROBE",
+      "x": 0.0,
+      "y": -21.0,
+      "radius": 1.0,
+      "height": 8.5,
+      "trunkRadius": 0.78,
+      "canopyRadius": 2.2,
+      "seed": 10
+    },
+    {
+      "id": "BOUNDARY_POST_01",
+      "type": "POST",
+      "x": -2.0,
+      "y": -16.0,
+      "radius": 0.16,
+      "height": 2.2,
+      "trunkRadius": 0.11,
+      "canopyRadius": 0.0,
+      "seed": 100
+    },
+    {
+      "id": "BOUNDARY_POST_02",
+      "type": "POST",
+      "x": 2.0,
+      "y": -16.0,
+      "radius": 0.16,
+      "height": 2.2,
+      "trunkRadius": 0.11,
+      "canopyRadius": 0.0,
+      "seed": 101
+    },
+    {
+      "id": "BOUNDARY_POST_03",
+      "type": "POST",
+      "x": -1.6,
+      "y": 49.0,
+      "radius": 0.16,
+      "height": 2.2,
+      "trunkRadius": 0.11,
+      "canopyRadius": 0.0,
+      "seed": 102
+    },
+    {
+      "id": "BOUNDARY_POST_04",
+      "type": "POST",
+      "x": 1.6,
+      "y": 49.0,
+      "radius": 0.16,
+      "height": 2.2,
+      "trunkRadius": 0.11,
+      "canopyRadius": 0.0,
+      "seed": 103
+    },
+    {
+      "id": "GREAT_ROOT_MOTHER",
+      "type": "GREAT_TREE",
+      "x": 0.0,
+      "y": 58.0,
+      "radius": 3.2,
+      "height": 18.0,
+      "trunkRadius": 2.55,
+      "canopyRadius": 7.0,
+      "seed": 999
+    },
+    {
+      "id": "FOREST_TREE_01",
+      "type": "TREE",
+      "x": -7.972278105674965,
+      "y": 24.784352158347083,
+      "radius": 0.6462286917752034,
+      "height": 9.969985828620395,
+      "trunkRadius": 0.5249703450423371,
+      "canopyRadius": 3.1853002729471482,
+      "seed": 759933
+    },
+    {
+      "id": "FOREST_TREE_02",
+      "type": "TREE",
+      "x": -15.435593292626429,
+      "y": -11.746320479066664,
+      "radius": 0.6944020437104982,
+      "height": 14.44694432235749,
+      "trunkRadius": 0.5046896448918167,
+      "canopyRadius": 2.8050764428234496,
+      "seed": 615710
+    },
+    {
+      "id": "FOREST_TREE_03",
+      "type": "TREE",
+      "x": 5.3781938151225575,
+      "y": -0.6979931914960371,
+      "radius": 0.7623341267689834,
+      "height": 8.920404739747434,
+      "trunkRadius": 0.5738790487570282,
+      "canopyRadius": 2.809027425241694,
+      "seed": 10936
+    },
+    {
+      "id": "FOREST_TREE_04",
+      "type": "TREE",
+      "x": 14.458999568890123,
+      "y": -11.465074346338566,
+      "radius": 0.569636574772931,
+      "height": 9.976589018006166,
+      "trunkRadius": 0.49658197436627677,
+      "canopyRadius": 2.475171287970818,
+      "seed": 278188
+    },
+    {
+      "id": "FOREST_TREE_05",
+      "type": "TREE",
+      "x": -9.844071007492492,
+      "y": 45.128435368767256,
+      "radius": 0.5975849987163536,
+      "height": 12.317187967669486,
+      "trunkRadius": 0.4888595763484585,
+      "canopyRadius": 2.072988190780235,
+      "seed": 396275
+    },
+    {
+      "id": "FOREST_TREE_06",
+      "type": "TREE",
+      "x": 12.234442027330104,
+      "y": 22.01464369815759,
+      "radius": 0.8355320602696186,
+      "height": 8.23640138385538,
+      "trunkRadius": 0.7655908379906385,
+      "canopyRadius": 3.052892531188585,
+      "seed": 246182
+    },
+    {
+      "id": "FOREST_TREE_07",
+      "type": "TREE",
+      "x": 13.081972782824753,
+      "y": 28.134322394633102,
+      "radius": 0.5635466877101185,
+      "height": 10.884215899030224,
+      "trunkRadius": 0.4883948918038179,
+      "canopyRadius": 3.001788566090658,
+      "seed": 205221
+    },
+    {
+      "id": "FOREST_TREE_08",
+      "type": "TREE",
+      "x": -5.254394487336363,
+      "y": 39.43115059037945,
+      "radius": 0.8341134122937799,
+      "height": 9.652983367666517,
+      "trunkRadius": 0.5923778372006134,
+      "canopyRadius": 2.574975873185296,
+      "seed": 43867
+    },
+    {
+      "id": "FOREST_TREE_09",
+      "type": "TREE",
+      "x": -8.95170847631259,
+      "y": -12.792842139934741,
+      "radius": 0.5954767924718589,
+      "height": 9.99071537239691,
+      "trunkRadius": 0.42904937116812736,
+      "canopyRadius": 2.830575429020998,
+      "seed": 836775
+    },
+    {
+      "id": "FOREST_TREE_10",
+      "type": "TREE",
+      "x": -15.64548397206947,
+      "y": 24.27727719807291,
+      "radius": 0.6706102097636866,
+      "height": 13.258741361593497,
+      "trunkRadius": 0.5006087786450841,
+      "canopyRadius": 2.421367517232654,
+      "seed": 672629
+    },
+    {
+      "id": "FOREST_TREE_11",
+      "type": "TREE",
+      "x": 15.064871430469845,
+      "y": 17.517303567872478,
+      "radius": 0.7951481268979554,
+      "height": 13.039129708307083,
+      "trunkRadius": 0.7253177639659348,
+      "canopyRadius": 3.1234719537174547,
+      "seed": 578427
+    },
+    {
+      "id": "FOREST_TREE_12",
+      "type": "TREE",
+      "x": -8.315000014838724,
+      "y": 10.704897319565475,
+      "radius": 0.6688294657254834,
+      "height": 8.44159603707255,
+      "trunkRadius": 0.5120132463389543,
+      "canopyRadius": 3.014270960887823,
+      "seed": 687464
+    },
+    {
+      "id": "FOREST_TREE_13",
+      "type": "TREE",
+      "x": -9.104101822359937,
+      "y": 50.287641049331896,
+      "radius": 0.6212194424940567,
+      "height": 10.159497818185471,
+      "trunkRadius": 0.5258462839203206,
+      "canopyRadius": 2.893135036701606,
+      "seed": 879938
+    },
+    {
+      "id": "FOREST_TREE_14",
+      "type": "TREE",
+      "x": -11.975733687200638,
+      "y": 18.977348108832906,
+      "radius": 0.9241148577167437,
+      "height": 13.220676598343978,
+      "trunkRadius": 0.7206156308306523,
+      "canopyRadius": 3.176571706889658,
+      "seed": 819541
+    },
+    {
+      "id": "FOREST_TREE_15",
+      "type": "TREE",
+      "x": 11.660844178723542,
+      "y": -5.837200376915128,
+      "radius": 0.8009458649668857,
+      "height": 9.900897959582892,
+      "trunkRadius": 0.6654944438246059,
+      "canopyRadius": 2.2983472605782933,
+      "seed": 563892
+    },
+    {
+      "id": "FOREST_TREE_16",
+      "type": "TREE",
+      "x": -10.249899886905022,
+      "y": 29.881333344905848,
+      "radius": 0.9341280599254372,
+      "height": 11.894588741630853,
+      "trunkRadius": 0.7697609877959518,
+      "canopyRadius": 2.9014973124715038,
+      "seed": 521827
+    },
+    {
+      "id": "FOREST_TREE_17",
+      "type": "TREE",
+      "x": -5.198203121679699,
+      "y": 48.15015850018054,
+      "radius": 0.7005838674041527,
+      "height": 11.308413544871824,
+      "trunkRadius": 0.5223252138369173,
+      "canopyRadius": 3.151357080048026,
+      "seed": 553209
+    },
+    {
+      "id": "FOREST_TREE_18",
+      "type": "TREE",
+      "x": 5.198431090889943,
+      "y": 24.359410730919613,
+      "radius": 0.7783957113298342,
+      "height": 12.036283102419322,
+      "trunkRadius": 0.7083819417409569,
+      "canopyRadius": 2.076951107610718,
+      "seed": 272202
+    },
+    {
+      "id": "FOREST_TREE_19",
+      "type": "TREE",
+      "x": 15.7809962359047,
+      "y": 29.64997607683989,
+      "radius": 0.720435535810238,
+      "height": 8.719360732389108,
+      "trunkRadius": 0.5224242455884394,
+      "canopyRadius": 2.404468026829136,
+      "seed": 334269
+    },
+    {
+      "id": "FOREST_TREE_20",
+      "type": "TREE",
+      "x": 10.695987324478601,
+      "y": 19.428659916895228,
+      "radius": 0.6232062237225406,
+      "height": 8.689414108575368,
+      "trunkRadius": 0.501236202850344,
+      "canopyRadius": 2.3717020077905624,
+      "seed": 394529
+    },
+    {
+      "id": "FOREST_TREE_21",
+      "type": "TREE",
+      "x": -7.7783965050098,
+      "y": -1.924015419684027,
+      "radius": 0.5646810405893192,
+      "height": 13.915482849431998,
+      "trunkRadius": 0.5000755599337048,
+      "canopyRadius": 3.135195891324841,
+      "seed": 47501
+    },
+    {
+      "id": "FOREST_TREE_22",
+      "type": "TREE",
+      "x": 9.099849581287856,
+      "y": 15.794046748259124,
+      "radius": 0.6874550323004753,
+      "height": 11.448397435922114,
+      "trunkRadius": 0.6194165798074189,
+      "canopyRadius": 2.3220671328184643,
+      "seed": 484404
+    },
+    {
+      "id": "FOREST_TREE_23",
+      "type": "TREE",
+      "x": 7.308557921570998,
+      "y": 27.576020906306404,
+      "radius": 0.82320323593204,
+      "height": 14.0379706340891,
+      "trunkRadius": 0.6421593037248506,
+      "canopyRadius": 2.602835370609413,
+      "seed": 731405
+    },
+    {
+      "id": "FOREST_TREE_24",
+      "type": "TREE",
+      "x": -15.420674892417768,
+      "y": 34.992478608309874,
+      "radius": 0.5550296307464044,
+      "height": 9.962287382870286,
+      "trunkRadius": 0.43309686549335863,
+      "canopyRadius": 2.0901984334990247,
+      "seed": 352564
+    },
+    {
+      "id": "FOREST_TREE_25",
+      "type": "TREE",
+      "x": -6.235871180796597,
+      "y": 1.2208631996714097,
+      "radius": 0.7077689202487413,
+      "height": 11.689608127932345,
+      "trunkRadius": 0.5238515719006395,
+      "canopyRadius": 3.144089525513605,
+      "seed": 839570
+    },
+    {
+      "id": "FOREST_TREE_26",
+      "type": "TREE",
+      "x": 15.5253754554522,
+      "y": -6.96428797228747,
+      "radius": 0.5703308412364323,
+      "height": 8.304595579897045,
+      "trunkRadius": 0.4045610624121269,
+      "canopyRadius": 2.294449869937872,
+      "seed": 879611
+    },
+    {
+      "id": "FOREST_TREE_27",
+      "type": "TREE",
+      "x": -6.481797673520046,
+      "y": 51.70219002323947,
+      "radius": 0.7171592946567144,
+      "height": 8.291401402755907,
+      "trunkRadius": 0.5749246814681531,
+      "canopyRadius": 2.6155954130803654,
+      "seed": 36516
+    },
+    {
+      "id": "FOREST_TREE_28",
+      "type": "TREE",
+      "x": -8.42817437999959,
+      "y": 47.69886774471575,
+      "radius": 0.6653415195860913,
+      "height": 13.660325494513675,
+      "trunkRadius": 0.5310169151987101,
+      "canopyRadius": 1.8767644975799542,
+      "seed": 706830
+    },
+    {
+      "id": "FOREST_ROCK_01",
+      "type": "ROCK",
+      "x": -2.8528705280499516,
+      "y": 35.503984743946184,
+      "radius": 0.5923286060007067,
+      "height": 0.8121424246994677,
+      "trunkRadius": 0.0,
+      "canopyRadius": 0.0,
+      "seed": 890828
+    },
+    {
+      "id": "FOREST_ROCK_02",
+      "type": "ROCK",
+      "x": 2.6156407762671208,
+      "y": 24.441022265422234,
+      "radius": 0.7275204253958907,
+      "height": 0.9014788617016681,
+      "trunkRadius": 0.0,
+      "canopyRadius": 0.0,
+      "seed": 65244
+    },
+    {
+      "id": "FOREST_ROCK_03",
+      "type": "ROCK",
+      "x": 3.464194359884523,
+      "y": -5.698362846496188,
+      "radius": 0.8224269109988637,
+      "height": 0.8172000270584985,
+      "trunkRadius": 0.0,
+      "canopyRadius": 0.0,
+      "seed": 652316
+    },
+    {
+      "id": "FOREST_ROCK_04",
+      "type": "ROCK",
+      "x": -4.724406225065529,
+      "y": -2.2091918665764396,
+      "radius": 0.832509685248009,
+      "height": 0.5088066626447943,
+      "trunkRadius": 0.0,
+      "canopyRadius": 0.0,
+      "seed": 414879
+    },
+    {
+      "id": "FOREST_ROCK_05",
+      "type": "ROCK",
+      "x": -9.418876012261208,
+      "y": -0.8970464923292596,
+      "radius": 0.4997310694674136,
+      "height": 0.7812696250768217,
+      "trunkRadius": 0.0,
+      "canopyRadius": 0.0,
+      "seed": 836072
+    },
+    {
+      "id": "FOREST_ROCK_06",
+      "type": "ROCK",
+      "x": 13.652237341582424,
+      "y": 42.6884091114081,
+      "radius": 0.7070828608724307,
+      "height": 0.8134012870913756,
+      "trunkRadius": 0.0,
+      "canopyRadius": 0.0,
+      "seed": 817766
+    },
+    {
+      "id": "FOREST_ROCK_07",
+      "type": "ROCK",
+      "x": 5.683913321646003,
+      "y": -5.888579630584779,
+      "radius": 0.6703967722256897,
+      "height": 0.5402810752516268,
+      "trunkRadius": 0.0,
+      "canopyRadius": 0.0,
+      "seed": 174583
+    },
+    {
+      "id": "FOREST_ROCK_08",
+      "type": "ROCK",
+      "x": -6.840195773398412,
+      "y": 17.75313854545503,
+      "radius": 0.7330232488892928,
+      "height": 0.7313020459569413,
+      "trunkRadius": 0.0,
+      "canopyRadius": 0.0,
+      "seed": 11530
+    },
+    {
+      "id": "FOREST_ROCK_09",
+      "type": "ROCK",
+      "x": -1.892147976182562,
+      "y": 39.322749908573876,
+      "radius": 0.7364271270833564,
+      "height": 0.46425658086310445,
+      "trunkRadius": 0.0,
+      "canopyRadius": 0.0,
+      "seed": 576910
+    },
+    {
+      "id": "FOREST_ROCK_10",
+      "type": "ROCK",
+      "x": 12.107873637092961,
+      "y": 13.865986988458872,
+      "radius": 0.5322910775025401,
+      "height": 0.6826035648353111,
+      "trunkRadius": 0.0,
+      "canopyRadius": 0.0,
+      "seed": 179457
+    },
+    {
+      "id": "FOREST_ROCK_11",
+      "type": "ROCK",
+      "x": -3.340413879736847,
+      "y": 50.03051226551522,
+      "radius": 0.48405169619351607,
+      "height": 0.5390160747271681,
+      "trunkRadius": 0.0,
+      "canopyRadius": 0.0,
+      "seed": 46471
+    },
+    {
+      "id": "FOREST_ROCK_12",
+      "type": "ROCK",
+      "x": -12.738733207144508,
+      "y": 29.798684526757135,
+      "radius": 0.524134905452109,
+      "height": 0.6868328306327967,
+      "trunkRadius": 0.0,
+      "canopyRadius": 0.0,
+      "seed": 34550
+    }
+  ],
+  "decorSeed": 7719,
+  "notes": [
+    "Great Root Mother is the Chapter 1 navigation landmark and must remain visible from major clearings.",
+    "White cloth marks the way; boundary posts are tied with white cloth.",
+    "Lowland rainforest: colossal buttress roots, lianas, red laterite soil, constant mist, cool green shade, warm canopy light only.",
+    "No tree ferns; exploratory boards are not final production approval."
+  ]
+}

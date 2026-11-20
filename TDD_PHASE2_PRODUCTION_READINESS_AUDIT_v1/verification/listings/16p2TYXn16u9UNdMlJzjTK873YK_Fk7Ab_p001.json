@@ -1,0 +1,338 @@
+{
+  "parent_id": "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab",
+  "connector_response_request_id": "244738f6-89c0-4df7-b0ed-1091974758fc",
+  "page": 1,
+  "observed_count": 25,
+  "entries": [
+    {
+      "id": "1QFJ_9JSjmgNIiRhncDWfObk_cJsfi5SU",
+      "name": "B2_ADDENDUM_CQ9_BLADE_AUTHORITY.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 6831,
+      "md5": "6f51d57d0fb508543a6cb49dfd055b04",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1U4xF6NUFrVnSEW3ljz5_FBUWOYMOsZYD",
+      "name": "B2_CANDIDATE_REGISTER.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 12582,
+      "md5": "cf73f5aabde6763dc417e95d2e8bd680",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1WlPZ0g2zcQPvdGXna-xGfm6XTSf9MbCB",
+      "name": "B2_CANDIDATE_REGISTER_v2_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 15256,
+      "md5": "9b0f9ac748bb4a8278d73788a47b4125",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1fEhvp7x5KK4j8XxxkGmbXk-KTNXSQU3e",
+      "name": "B2_CANDIDATE_REGISTER_v3_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 18527,
+      "md5": "2eca1ac9f558ee56a861ac625e951302",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Wwsibgrlr8bJevMjkRclaQ-iJ-SFgbE_",
+      "name": "B2_CANDIDATE_REGISTER_v4_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 6765,
+      "md5": "72d8d2b92029f8d84f674cadd4e2a36c",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1hoh64TdMya1jCslKC_xGARuvsDfHlPOo",
+      "name": "B2_CHROME_CORRECTION_ESTABLISHING_V011.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 4416,
+      "md5": "2947cb59b4cbd08f96d2295c48c997fe",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "12WJLRjnQ6IJoMsYigJMQYN7Boy_wEuSo",
+      "name": "B2_ERRATA_VR-008_V007_ARMLET.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 7658,
+      "md5": "3a8f21b41ee9a88bf0842b475b7e2d9e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "11hnYj5qH7LRCD90XUq0M8H3kaBHpLdCN",
+      "name": "B2_PRODUCTION_REGISTER_CH01_SCENES_v01_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 6781,
+      "md5": "513123fcb7f05734c05146e5fced5996",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1w5eDzRwcqRTUwDaifnlwK-i4f56wFRGa",
+      "name": "B2_PRODUCTION_REGISTER_CH01_SCENES_v02_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 7946,
+      "md5": "80a59c1aae97304f1b23073baab4907a",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1epIa9TkphMfiZgNLnySH5vDwkpJXJ-bs",
+      "name": "B2_REGISTER_LEDGER_v10_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 5562,
+      "md5": "08bc3570f94b05846bfbcb40a8ad1483",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1dh3CH91t-C6wUV8XHEMREX_w883AReMG",
+      "name": "B2_REGISTER_LEDGER_v11_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 5140,
+      "md5": "bd8e256985d98ac81c50d41cbab18b42",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1QUoYd7yCFGsD9pPrSm7tRSPccHs-R0So",
+      "name": "B2_REGISTER_LEDGER_v12_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 2951,
+      "md5": "4b7da49faef598775181c874cba42e05",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1sQLIp0vR0a7A1NRslMatte-aMnSdcKz_",
+      "name": "B2_REGISTER_LEDGER_v13_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 3709,
+      "md5": "040c674345b5fca5ca9df50ca17f5f9e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1kyG28U9QT6meBdGpDxN0JDpYt20AdOYZ",
+      "name": "B2_REGISTER_LEDGER_v14_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 2972,
+      "md5": "6b148b7e524b1261be0f84cfdfa19b42",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Ay5cP6XKdVc6YWptNgmK0x4liB-PT-wn",
+      "name": "B2_REGISTER_LEDGER_v15_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 4922,
+      "md5": "dfcedf76aa87b138d298485c1dd4f320",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1vA4D8DM3ihztefYbeywPXOAUZjLx18ri",
+      "name": "B2_REGISTER_LEDGER_v16_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 4240,
+      "md5": "803b6bcfd87ffab7d0f5dc6195677c15",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Q6RvgWZegMMO5md0N8HQvP7gTIRu5EwE",
+      "name": "B2_REGISTER_LEDGER_v17_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 5599,
+      "md5": "514ebc3d18c2f781973d3d9673f705c6",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1CQkT3YpHES7krjjGB93bZqERKwe0zv0j",
+      "name": "B2_REGISTER_LEDGER_v18_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 4520,
+      "md5": "8734bfbbda3fe32298c5c70cf1110c34",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "12PYjx-mGY86qFkpobliG46-DFklLzdga",
+      "name": "B2_REGISTER_LEDGER_v19_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 5113,
+      "md5": "c0dc86e97c0910dab11e244bfa8ee17b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1i1gv_CHPnUj-xpr7Gvx06JLxp_BEHk6l",
+      "name": "B2_REGISTER_LEDGER_v20_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 4540,
+      "md5": "b6bb4f6d55af4bbcafa31bff83a76282",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Cyu8qfaPdbu3lzWq_PaiD7UrFDIDc_jz",
+      "name": "B2_REGISTER_LEDGER_v21_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 4139,
+      "md5": "9870b824f14016d559d93fa882c54f5d",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1WDUWvm66odU4igHjVazyV5JAzAQ6Qx05",
+      "name": "B2_REGISTER_LEDGER_v22_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 3756,
+      "md5": "b54b0c4f29af103dd8fc3ed3d1df0027",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "14t17-fgr9WExEx202HSQxCeoU9gMVLL-",
+      "name": "B2_REGISTER_LEDGER_v23_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 4235,
+      "md5": "4c53220538225d54b8aeb49e8ff38bcd",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1l1tDDWtklqknUP7k7JkzHeVMmJLYocF3",
+      "name": "B2_REGISTER_LEDGER_v24_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 3860,
+      "md5": "1ea995e6542a866d7aa10a26148d7ae1",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1NXUmIb5B4yIXKETU5q3CtsqBW7CC67GC",
+      "name": "B2_REGISTER_LEDGER_v25_2026-11-17.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 4143,
+      "md5": "013c52246b3979c365d67b8335ee9db0",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": "~!!~AAfjczdHMo8PbD8oEdaYFDfRImjrD0erakZUZQiFxQNt2PEu7vlkpkX-Yc0JIylobp6JFO4YXw_UJwSsLyiOwtFX5ct3Duzrk7mcrF87H8gYRMzzX8Y3hf0BlYpTnh5Q_G4epLU_8BXiE7TOfT2iS9ZkdrwVLMWdmU4EhqGzYr5QCwfQSL1Y2bYlcm0za4HTWI7s7zFpM2o_pZqIWofScJAFJhNI0ZnKgvBA0UyS4rDtlUH0M4mIDwck4mcbOq1NJdpAF-MgClpP4Eu5VE9yTJKCKq0BhL_1kPANiECyXIYnBcujVNw1Qmu5EJHAhBM9_CRIH9mimEUNdCMYCAx4tfsxNvD2yJOt6Vq9Oini7bk9-svTcBsvkA7LxsLzFXXTpzGmAUOJrkbQZTj1OwvFFMBvz_oBfCBbZF_qaWFJ3KGiOjUXd0i8oU8Q6X184FJ8iOeTO8nSsedmbm-TGW_aMzeaSvDEksI6kBAICnppBgiArNvILlGqNpe-TlNOXpbsGfNycn6HyRXz",
+  "next_page_token_present": true,
+  "incomplete_search": false,
+  "complete_final_page": false,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

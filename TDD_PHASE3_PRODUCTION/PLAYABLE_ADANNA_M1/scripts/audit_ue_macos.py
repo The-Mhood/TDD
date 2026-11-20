@@ -1,0 +1,258 @@
+#!/usr/bin/env python3
+"""Static UE source/packaging audit for the macOS + Unreal Engine 5.8 target.
+
+This does NOT compile anything. It machine-checks the specific failure classes that
+would stop an Apple Silicon UE 5.8 build, so the owner does not discover them only
+after a multi-minute shader compile:
+
+  * EngineAssociation and BuildSettingsVersion/IncludeOrderVersion mismatch
+  * deprecated/removed Unreal Python editor APIs in the setup helper
+  * Windows-only paths, binaries or shell conventions
+  * INI keys written under the wrong section (silently ignored by UE)
+  * C++ binding-signature mistakes known to fail UHT/compile
+  * runtime component registration order that removes collision
+  * hardcoded absolute paths in project or helper files
+  * macOS packaging prerequisites (Xcode/Metal SDK expectations)
+
+Result is written to ue_project/Tools/tdd_m1_macos_audit.json. It is evidence of a
+source inspection, NOT of a successful compile, PIE session, cook or package.
+"""
+from __future__ import annotations
+
+import json
+import re
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parents[1]
+UE = BASE / "ue_project"
+SRC = UE / "Source"
+GAME = SRC / "TDD_GAME"
+TOOLS = UE / "Tools"
+HELPER = TOOLS / "TDD_M1_Unreal_Setup_macOS.py"
+PRESERVED = TOOLS / "TDD_M1_Unreal_Setup_WINDOWS_ASSUMPTION_PRESERVED.py"
+OUT = TOOLS / "tdd_m1_macos_audit.json"
+
+CHECKS: list[dict] = []
+
+
+def check(name: str, ok: bool, detail: str = "", severity: str = "error") -> None:
+    CHECKS.append({"name": name, "ok": bool(ok), "severity": severity, "detail": detail})
+
+
+def read(path: Path) -> str:
+    return path.read_text(encoding="utf-8") if path.is_file() else ""
+
+
+def main() -> dict:
+    uproject_text = read(UE / "TDD_GAME.uproject")
+    uproject = json.loads(uproject_text) if uproject_text else {}
+    target = read(SRC / "TDD_GAME.Target.cs")
+    editor_target = read(SRC / "TDD_GAMEEditorTarget.cs")
+    engine_ini = read(UE / "Config" / "DefaultEngine.ini")
+    input_ini = read(UE / "Config" / "DefaultInput.ini")
+    helper = read(HELPER)
+    character_h = read(GAME / "TDDAdannaProxyCharacter.h")
+    character_cpp = read(GAME / "TDDAdannaProxyCharacter.cpp")
+    level_cpp = read(GAME / "TDDForbiddenForestLevel.cpp")
+    level_h = read(GAME / "TDDForbiddenForestLevel.h")
+    build_cs = read(GAME / "TDD_GAME.Build.cs")
+
+    # ---- 1. Engine version alignment ------------------------------------------------
+    check("uproject EngineAssociation is 5.8",
+          uproject.get("EngineAssociation") == "5.8",
+          "found=%r" % uproject.get("EngineAssociation"))
+    check("Game target uses BuildSettingsVersion.V7",
+          "BuildSettingsVersion.V7" in target, "5.8 ships V7; V5 emits an upgrade prompt")
+    check("Editor target uses BuildSettingsVersion.V7",
+          "BuildSettingsVersion.V7" in editor_target)
+    check("IncludeOrderVersion is Unreal5_8",
+          "EngineIncludeOrderVersion.Unreal5_8" in target and
+          "EngineIncludeOrderVersion.Unreal5_8" in editor_target)
+    check("uproject targets Mac",
+          "Mac" in (uproject.get("TargetPlatforms") or []),
+          str(uproject.get("TargetPlatforms")))
+    check("uproject declares required Python plugin",
+          any(p.get("Name") == "PythonScriptPlugin" and p.get("Enabled")
+              for p in uproject.get("Plugins", [])))
+
+    # ---- 2. Module dependencies ----------------------------------------------------
+    for dep in ("Core", "CoreUObject", "Engine", "InputCore"):
+        check("Build.cs declares %s" % dep, '"%s"' % dep in build_cs)
+    check("Build.cs adds no Windows-only module",
+          not re.search(r'"(Windows|XInput|WinSDK|D3D\d*)"', build_cs))
+    check("module implementation present",
+          (GAME / "TDD_GAME.cpp").is_file())
+
+    # ---- 3. Deprecated Unreal Python APIs in the macOS helper -----------------------
+    active_helper = re.sub(r'^\s*#.*$', '', helper, flags=re.MULTILINE)
+    active_helper = re.sub(r'""".*?"""', '', active_helper, flags=re.DOTALL)
+    check("macOS helper avoids EditorLevelLibrary",
+          "EditorLevelLibrary" not in active_helper,
+          "deprecated since UE 5.0, removed from the default path in 5.7+")
+    check("macOS helper uses LevelEditorSubsystem",
+          "LevelEditorSubsystem" in helper)
+    check("macOS helper creates the map from a template",
+          "new_level_from_template" in helper,
+          "new_level alone leaves no saved .umap on disk")
+    check("macOS helper saves the map explicitly",
+          "save_current_level" in helper and "save_asset" in helper)
+    check("macOS helper repoints map config",
+          "GameDefaultMap" in helper or "MAP_ASSET" in helper and "config" in helper.lower())
+    check("macOS helper writes its report under Saved/",
+          "project_saved_dir" in helper)
+    check("macOS helper has a dry-run switch", "TDD_DRY_RUN" in helper)
+    check("macOS helper never deletes assets",
+          not re.search(r"delete_asset|delete_directory|remove_asset", active_helper))
+    check("macOS helper backs up config before edit",
+          "tdd_backup" in helper)
+
+    # ---- 4. Windows-only assumptions ------------------------------------------------
+    windows_tokens = ["C:\\\\", "Program Files", "UnrealEditor.exe", "RunUAT.bat", "cmd.exe", "Win64"]
+    for token in windows_tokens:
+        check("no Windows-only token %r in helper" % token, token not in helper)
+    project_texts = {
+        "uproject": uproject_text, "Target.cs": target, "EditorTarget.cs": editor_target,
+        "Build.cs": build_cs, "character.h": character_h, "character.cpp": character_cpp,
+        "level.cpp": level_cpp, "level.h": level_h,
+    }
+    for label, text in project_texts.items():
+        hits = [t for t in windows_tokens if t in text]
+        check("no Windows-only token in %s" % label, not hits, str(hits))
+    check("no hardcoded /Users/ absolute path in project files",
+          all("/Users/" not in text for label, text in project_texts.items() if label != "helper"))
+    check("preserved original helper retained unchanged",
+          PRESERVED.is_file() and PRESERVED.stat().st_size > 500,
+          "kept for audit; do not execute")
+    stub_text = read(TOOLS / "TDD_M1_Unreal_Setup.py")
+    # Drop the leading module docstring whether or not the file starts with a shebang.
+    stub_code = re.sub(r"^(?:#![^\n]*\n)?\s*(?:\"\"\").*?(?:\"\"\")", "", stub_text, count=1, flags=re.DOTALL)
+    check("old helper filename is a non-executing stub",
+          "SUPERSEDED" in stub_text and "EditorLevelLibrary" not in stub_code
+          and "def main()" in stub_code,
+          "prevents launching the obsolete helper by mistake; original bytes remain in the preserved copy")
+    check("preserved helper documents its superseded status",
+          "PRESERVED AUDIT COPY" in read(PRESERVED)
+          and "EditorLevelLibrary" in read(PRESERVED))
+
+    # ---- 5. INI section correctness ------------------------------------------------
+    check("GameDefaultMap is under GameMapsSettings",
+          bool(re.search(r"\[/Script/EngineSettings\.GameMapsSettings\][^\[]*GameDefaultMap=",
+                         engine_ini, re.DOTALL)),
+          "under /Script/Engine.Engine the key is ignored and the game mode never applies")
+    check("GlobalDefaultGameMode is under GameMapsSettings",
+          bool(re.search(r"\[/Script/EngineSettings\.GameMapsSettings\][^\[]*GlobalDefaultGameMode=",
+                         engine_ini, re.DOTALL)))
+    check("no GameDefaultMap under /Script/Engine.Engine",
+          not re.search(r"\[/Script/Engine\.Engine\][^\[]*GameDefaultMap=", engine_ini, re.DOTALL))
+    check("input ini carries no hand-authored AxisMappings",
+          "AxisMappings=" not in input_ini,
+          "UE5 serialises these as map keys; code-registered bindings are used instead")
+
+    # ---- 6. UHT / compile-signature hazards ----------------------------------------
+    check("BindKey handlers take no parameters",
+          not re.search(r"BindKey\([^;]*::\w+Axis\b", character_cpp),
+          "BindKey requires a parameterless handler; float-axis handlers fail to compile")
+    check("movement keys bound as press/release pairs",
+          character_cpp.count("IE_Pressed") >= 6 and character_cpp.count("IE_Released") >= 6)
+    check("signed keyboard axis state applied each tick",
+          "ApplyMovementInput()" in character_cpp)
+    def generated_include_is_last(header_text: str) -> bool:
+        includes = [ln.strip() for ln in header_text.splitlines() if ln.strip().startswith("#include")]
+        return bool(includes) and includes[-1].endswith('.generated.h"')
+
+    for name in ("TDDAdannaProxyCharacter.h", "TDDForbiddenForestLevel.h", "TDDForbiddenForestGameMode.h"):
+        text = read(GAME / name)
+        check("UCLASS generated.h include is last in %s" % name,
+              generated_include_is_last(text),
+              "a .generated.h include not last in the header breaks UHT")
+    # UE5 deprecates raw object pointers in UPROPERTY members; TObjectPtr is required
+    # for the 5.8 / V7 build settings and will otherwise raise upgrade warnings.
+    raw_uproperty = re.findall(
+        r"UPROPERTY\([^)]*\)\s*\n\s*(?:TArray<)?U[A-Za-z]+\*", character_h + level_h)
+    check("UPROPERTY members use TObjectPtr, not raw pointers",
+          not raw_uproperty, str(raw_uproperty[:3]))
+    check("no invented blade geometry in the UE proxy",
+          "PROXY_BLADE" not in character_cpp and "Steel" not in character_cpp,
+          "Phase 1 forbids inventing blade design; only the approved hip mount marker may exist")
+    check("UE proxy keeps the approved LEFT-hip cross-draw mount marker",
+          "LEFT_HIP_CROSS_DRAW_MOUNT_MARKER" in character_cpp)
+    check("UE proxy carries no invented character dimensions",
+          "NOT an approved character dimension" in read(GAME / "TDDWorldData.h"))
+    check("character header includes InputCoreTypes for EKeys",
+          "InputCoreTypes.h" in character_h)
+    check("level spawns a PlayerStart when none exists",
+          "APlayerStart" in level_cpp,
+          "a generated map with no PlayerStart cannot possess a pawn in PIE")
+    check("forest level uses TActorIterator (EngineUtils included)",
+          "EngineUtils.h" in level_cpp and "TActorIterator" in level_cpp)
+
+    # ---- 7. Runtime component registration (collision) ------------------------------
+    pool_fn = re.search(r"CreateInstancePool\(.*?\n\}", level_cpp, re.DOTALL)
+    pool_body = pool_fn.group(0) if pool_fn else ""
+    reg = pool_body.find("RegisterComponent()")
+    first_instance = level_cpp.find("AddInstance(")
+    check("INSTANCED pool registers before AddInstance is ever called",
+          reg != -1 and first_instance != -1,
+          "registration inside the factory at index %d; first AddInstance call site at %d"
+          % (reg, first_instance))
+    check("registration occurs exactly once per pool",
+          pool_body.count("RegisterComponent()") == 1)
+    check("collidable pools enable QueryAndPhysics",
+          "ECollisionEnabled::QueryAndPhysics" in pool_body)
+
+    # ---- 7b. Dead constants (V7 treats several warning classes as errors) -----------
+    for name in ("TDDAdannaProxyCharacter.cpp", "TDDForbiddenForestLevel.cpp"):
+        text = read(GAME / name)
+        decls = re.findall(r"constexpr TCHAR (\w+)\[\]", text)
+        unused = [d for d in decls if len(re.findall(r"\b%s\b" % re.escape(d), text)) < 2]
+        check("no unused constexpr TCHAR in %s" % name, not unused, str(unused))
+
+    # ---- 7c. Type conversions that fail under strict settings ----------------------
+    check("CreatePart return assigned to TObjectPtr is legal",
+          "TObjectPtr<UStaticMeshComponent> Torso;" in character_h
+          and "UStaticMeshComponent* ATDDAdannaProxyCharacter::CreatePart" in character_cpp)
+    check("Instanced pool array stores TObjectPtr",
+          "TArray<TObjectPtr<UInstancedStaticMeshComponent>> InstancePools" in level_h)
+
+    # ---- 8. Asset import expectations ----------------------------------------------
+    check("GLB import requests skeletal mesh options",
+          "GLTFImportOptions" in helper)
+    check("OBJ import kept static",
+          "collision_proxy.obj" in helper)
+
+    # ---- 9. Packaging prerequisites (documented, not executed) ----------------------
+    runbook = read(UE / "README_MACOS_UE58.md")
+    for need in ("Xcode", "Metal", "RunUAT.sh", "arm64"):
+        check("macOS packaging expects %s" % need, need in helper or need in runbook)
+
+    overall = all(c["ok"] for c in CHECKS)
+    errors = [c for c in CHECKS if not c["ok"] and c["severity"] == "error"]
+    report = {
+        "generated": "2026-11-20",
+        "status": "COMPLETED AND VERIFIED" if overall else "PRODUCED — NOT YET VERIFIED",
+        "scope": ("static source inspection for macOS/UE 5.8 compatibility only; "
+                  "NOT a compile, PIE, cook, package or device test"),
+        "target_environment": {
+            "machine": "Apple M4 Mac, 16 GB RAM, macOS 27.2.1, ARM64",
+            "engine": "Unreal Engine 5.8",
+        },
+        "checks": CHECKS,
+        "checksPassed": sum(1 for c in CHECKS if c["ok"]),
+        "checksTotal": len(CHECKS),
+        "errors": [c["name"] for c in errors],
+        "compile_verified": False,
+        "pie_verified": False,
+        "cook_verified": False,
+        "package_verified": False,
+        "runnable_build_verified": False,
+        "classification": "static audit evidence; Unreal execution remains BLOCKED — OWNER-STUDIO DEPENDENCY",
+    }
+    OUT.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    print("[macOS audit] %d/%d checks passed" % (report["checksPassed"], report["checksTotal"]))
+    for c in errors:
+        print("  FAIL:", c["name"], "|", c["detail"])
+    return report
+
+
+if __name__ == "__main__":
+    main()

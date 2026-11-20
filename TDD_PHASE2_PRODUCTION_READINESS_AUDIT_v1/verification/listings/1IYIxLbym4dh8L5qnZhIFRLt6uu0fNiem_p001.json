@@ -1,0 +1,104 @@
+{
+  "parent_id": "1IYIxLbym4dh8L5qnZhIFRLt6uu0fNiem",
+  "connector_response_request_id": "a01e4643-1c8a-4137-8d76-b5724d468448",
+  "page": 1,
+  "observed_count": 7,
+  "entries": [
+    {
+      "id": "1yRNfeyhyRaSSMLUlpKEkfctA7XnKs98j",
+      "name": "CHAR_ADANNA_MASTER_REFERENCE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1IYIxLbym4dh8L5qnZhIFRLt6uu0fNiem"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 585862,
+      "md5": "901a5009ab5ff44a81fb3799c7e6de6d",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1FQ49KcU8m5JIOmPO5QkzxEIi3T2fzkii",
+      "name": "CHAR_AMADIOHA_MASTER_REFERENCE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1IYIxLbym4dh8L5qnZhIFRLt6uu0fNiem"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 594434,
+      "md5": "5006697a3dc1328ceffd836dd988d7fb",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Ukb0ycsFDvbXV7_RGEBIQzNnZLgtblyw",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_HALL_OF_POSTS_V004.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1IYIxLbym4dh8L5qnZhIFRLt6uu0fNiem"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 654031,
+      "md5": "aeb06f6c3b9fcab5c4687859fe528dba",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "12XSaajnr8VFhcRrd3vrrhjW_7JPBCjon",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_MOTHERS_COURTYARD_SAME_COURTYARD_V007.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1IYIxLbym4dh8L5qnZhIFRLt6uu0fNiem"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 952871,
+      "md5": "58a625f4c16aa71cf55f7ee4887a7eda",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1lq2u_HXjlDWuV4mvo7TLsxleV7pWTuDg",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_NNEKAS_HOUSE_INTERIOR_V003.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1IYIxLbym4dh8L5qnZhIFRLt6uu0fNiem"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 652956,
+      "md5": "c54695f08e50442db087f882b0cfb3a4",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1njpYx_Lfies61D6utgvNczfDtCREKNGD",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_NNEKAS_HOUSE_V004.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1IYIxLbym4dh8L5qnZhIFRLt6uu0fNiem"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 580415,
+      "md5": "8eec0c112ea14a8aa1d8328ed10004e7",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1MLUHG6RbY0fe61TqE45OMfHgx9PHB-vG",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_SEALED_QUARTER_V003.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1IYIxLbym4dh8L5qnZhIFRLt6uu0fNiem"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 703560,
+      "md5": "4c67a8fb0068babaef4654d5b01a4154",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

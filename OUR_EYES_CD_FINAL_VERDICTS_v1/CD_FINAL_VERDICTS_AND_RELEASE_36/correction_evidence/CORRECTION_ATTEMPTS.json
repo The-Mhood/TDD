@@ -1,0 +1,185 @@
+[
+  {
+    "source_code": "D03",
+    "source_id": "1MA20ws6ujgQazDb66BgDOHIjrNgfT29x",
+    "source_name": "B2_CAND_CHAR_ADANNA_TURNAROUND_FRONT_V004_2560x1440.png",
+    "source_sha256": "ae7e1bf7711726beb880c014d5f3f4fded33a3dcfb183e09110c10fdd5ffdc67",
+    "output_name": "B2_CAND_CHAR_ADANNA_TURNAROUND_FRONT_V005_2560x1440.png",
+    "output_path": "OUR_EYES_CD_FINAL_VERDICTS_v1/corrections/B2_CAND_CHAR_ADANNA_TURNAROUND_FRONT_V005_2560x1440.png",
+    "output_sha256": "975992bcf794d0c0636579d94d0b09e99683189bc8003811a6f30dba67f3867b",
+    "output_md5": "58c8d6445df5072fb163e5ffcca55ada",
+    "output_bytes": 2186990,
+    "dimensions": [
+      2560,
+      1440
+    ],
+    "method": "Native cord-only antialiased braid strokes plus accurate documentary-margin chrome",
+    "parameters": {
+      "cord_paths": [
+        [
+          [
+            1051.0,
+            399.5
+          ],
+          [
+            1055.0,
+            418.0
+          ],
+          [
+            1060.0,
+            440.0
+          ],
+          [
+            1063.0,
+            458.0
+          ]
+        ],
+        [
+          [
+            1074.5,
+            399.5
+          ],
+          [
+            1071.0,
+            419.0
+          ],
+          [
+            1067.2,
+            439.0
+          ],
+          [
+            1064.4,
+            458.0
+          ]
+        ]
+      ],
+      "cord_patch_box": [
+        1035,
+        385,
+        1100,
+        464
+      ],
+      "chrome_rectangles": [
+        [
+          1950,
+          130,
+          2560,
+          1310
+        ],
+        [
+          0,
+          1311,
+          2560,
+          1440
+        ]
+      ],
+      "source_art_box": [
+        60,
+        130,
+        1930,
+        1310
+      ],
+      "supersampling": 4
+    },
+    "additional_inputs": [],
+    "difference_bbox": [
+      0,
+      130,
+      2560,
+      1440
+    ],
+    "changed_pixels": 1050512,
+    "out_of_mask_changed_pixels": 0,
+    "outside_mask_original_RGB_identical": true,
+    "geometry_resampling_or_warp": false,
+    "allowed_mask_path": "OUR_EYES_CD_FINAL_VERDICTS_v1/correction_evidence/D03_allowed_mask.png",
+    "actual_difference_path": "OUR_EYES_CD_FINAL_VERDICTS_v1/correction_evidence/D03_actual_difference.png",
+    "completion_state": "COMPLETED_AND_VISUALLY_ACCEPTED_LIMITED_STUDY",
+    "cd_visual_decision": "APPROVED WITH DEFINED CONDITIONS",
+    "new_drive_id": "1hQqFawUsv8oM_aX_4JJNqqkBmVoiTmvd",
+    "original_preserved": true,
+    "changed_art_pixels": 472,
+    "art_difference_bbox": [
+      1050,
+      399,
+      1077,
+      459
+    ],
+    "art_outside_cord_mask_RGB_identical": true,
+    "decision_record": "CD_EXECUTION_RESULTS_AND_SCOPE.md",
+    "release_tier": "Internal concept study only; no production/canon/cultural clearance",
+    "upload_success": true,
+    "independent_download_verified": true,
+    "download_open_result": "Pillow decode passed; dimensions and MD5/SHA256/size match exact uploaded derivative"
+  },
+  {
+    "source_code": "E50",
+    "source_id": "1OmXsyhC7HZJrZuLjFqBKNkpAq4lqUWf2",
+    "source_name": "ENV_CH03-TRV-003_THE_NARROW_PASSAGES_V002.jpg",
+    "source_sha256": "9c5fa0e505b61088a27a5cf1162610209c3bc1d644b1ac4a6b3b0c6f35cc7bd3",
+    "output_name": "ENV_CH03-TRV-003_THE_NARROW_PASSAGES_V003.png",
+    "output_path": "OUR_EYES_CD_FINAL_VERDICTS_v1/corrections/ENV_CH03-TRV-003_THE_NARROW_PASSAGES_V003.png",
+    "output_sha256": "765fd1caee6d886dc92f6a513993c735f8ce7ba5bbb63d74e3aa86e7a31f81e8",
+    "output_md5": "f9459f7a2e6e98848246c282f0a6b796",
+    "output_bytes": 1726907,
+    "dimensions": [
+      1672,
+      941
+    ],
+    "method": "Native blank-ash translated clone confined to far-end footprint mask",
+    "parameters": {
+      "polygon": [
+        [
+          708,
+          512
+        ],
+        [
+          821,
+          512
+        ],
+        [
+          833,
+          589
+        ],
+        [
+          797,
+          611
+        ],
+        [
+          716,
+          608
+        ]
+      ],
+      "donor_offset_xy": [
+        100,
+        0
+      ],
+      "feather_radius": 3,
+      "mask_threshold": 2,
+      "wall_repaint": false,
+      "weather_reinterpretation": false
+    },
+    "additional_inputs": [],
+    "difference_bbox": [
+      702,
+      505,
+      839,
+      617
+    ],
+    "changed_pixels": 12803,
+    "out_of_mask_changed_pixels": 0,
+    "outside_mask_original_RGB_identical": true,
+    "geometry_resampling_or_warp": false,
+    "allowed_mask_path": "OUR_EYES_CD_FINAL_VERDICTS_v1/correction_evidence/E50_allowed_mask.png",
+    "actual_difference_path": "OUR_EYES_CD_FINAL_VERDICTS_v1/correction_evidence/E50_actual_difference.png",
+    "completion_state": "COMPLETED_AND_VISUALLY_ACCEPTED_LIMITED_STUDY",
+    "cd_visual_decision": "APPROVED WITH DEFINED CONDITIONS",
+    "new_drive_id": "1p1erIKGaOy4UX3MWCFgJTnIAcX1XSz0e",
+    "original_preserved": true,
+    "decision_record": "CD_EXECUTION_RESULTS_AND_SCOPE.md",
+    "release_tier": "Internal concept study only; no production/canon/cultural clearance",
+    "upload_success": true,
+    "independent_download_verified": true,
+    "download_open_result": "Pillow decode passed; dimensions and MD5/SHA256/size match exact uploaded derivative"
+  }
+]

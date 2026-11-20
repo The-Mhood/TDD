@@ -1,0 +1,13 @@
+[
+  {
+    "source_id": "1eluxeCI2FxkJO6lZ6xf2QdIYqleh61wwfUeQ52bSJfo",
+    "source_drive_version_at_prior_listing": "10",
+    "source_listed_size_not_export_size": 25596,
+    "operation": "google_drive.export_file",
+    "requested_mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "export_returned_bytes": 241492,
+    "snapshot": "_phase2_stage/drive/1eluxeCI2FxkJO6lZ6xf2QdIYqleh61wwfUeQ52bSJfo/Index_and_Decision_Register.export.docx",
+    "sha256": "96435b4f94222aa2c90fe7097c2e15adfaad22f429d93690d8b78f563e13109a",
+    "native_source_not_modified": true
+  }
+]

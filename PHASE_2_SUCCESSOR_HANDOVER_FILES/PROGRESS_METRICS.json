@@ -1,0 +1,27 @@
+{
+  "overall_planning_estimate_percent": 20,
+  "provisional_content_proxy_percent": 18.537590113285273,
+  "proxy_numerator": 360,
+  "proxy_denominator": 1942,
+  "proxy_denominator_calculation": "1399 known SHA256payloads +543 unmatched size/MD5 acquisition groups",
+  "not_exact_overall_effort_or_readiness_percentage": true,
+  "ledger_observations": 364,
+  "visual_observations": 312,
+  "semantic_observations": 52,
+  "distinct_visual_hashes": 311,
+  "distinct_semantic_hashes": 50,
+  "remaining_archive_rasters": 394,
+  "remaining_other_bound_rasters": 26,
+  "unbound_image_groups": 150,
+  "unbound_nonimage_groups": 393,
+  "unbound_groups_by_mime": {
+    "text/markdown": 319,
+    "image/jpeg": 148,
+    "text/x-python": 66,
+    "application/json": 3,
+    "text/plain": 5,
+    "image/png": 2
+  },
+  "all_phase2_complete": false,
+  "no_new_source_inspection_during_handover": true
+}

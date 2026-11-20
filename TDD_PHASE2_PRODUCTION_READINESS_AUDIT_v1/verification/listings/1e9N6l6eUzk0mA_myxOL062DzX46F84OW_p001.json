@@ -1,0 +1,208 @@
+{
+  "parent_id": "1e9N6l6eUzk0mA_myxOL062DzX46F84OW",
+  "connector_response_request_id": "035627e9-76e3-4914-963a-52fa358eb354",
+  "page": 1,
+  "observed_count": 15,
+  "entries": [
+    {
+      "id": "1KoHtkZ_Kg6HZkk9ZNgoTOyJG1WbXKcvP",
+      "name": "NPC_ADULTS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 583791,
+      "md5": "5e5264325440169d82c4bebea7c28e0f",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1B4yd8kF_1a26J1nYIW00a9CpnppXVr7W",
+      "name": "NPC_CHILDREN_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 566257,
+      "md5": "be112789a1aedbc8b5f82fe3d64f2138",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1AJJpN6VkyKJsnlrAiobuzQzevmmEPqq3",
+      "name": "NPC_CRAFTSPEOPLE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 644494,
+      "md5": "42906522b3be174f8c666f1338160c67",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1xN2QByr_FyS9TyonUyTLaYJ-Wy4MAdVQ",
+      "name": "NPC_ELDERLY_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 528003,
+      "md5": "fa1b6dbef3d4af1615c7aedc59b67672",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Fz1OKMpWbf1GWarh_ZrK0qey2IGJzfpE",
+      "name": "NPC_FARMERS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 526073,
+      "md5": "7b069adb419dbe4a640b42a88351f052",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1LG5KvqbMDfLg_3QZ1crg5TU3hewR0GTF",
+      "name": "NPC_FISHERFOLK_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 598489,
+      "md5": "358797d790ed45643233cc58d7e16556",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1fK6kmLG28aVZKSa_BVjB_AJGZymCwbw7",
+      "name": "NPC_GUARDS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 478307,
+      "md5": "3466993bfc381db151da6df0c44f2b14",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1JCkCAXeOVX95arXtI06ihWBtH7Ue9otx",
+      "name": "NPC_GUARDS_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 518342,
+      "md5": "1e1eb7a2961fb15d884c59063f114261",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1xaagiYOz3KAfjveC4WeAkKdqtt5pTu3l",
+      "name": "NPC_GUARDS_V003.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 483690,
+      "md5": "9e3f2469ef65cd1f5918bb485a1eaf5e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1VIkEE2wABBYKAtmxK4j0ExCAFTzS249a",
+      "name": "NPC_PRISONERS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 617378,
+      "md5": "187c3ab1b0e1efce13957eb17a2b2e72",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "16H09mH4bY1-jbRGkGksjfumRZ_I9KeT8",
+      "name": "NPC_REFUGEES_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 542282,
+      "md5": "3e8b704c2d9ff20bf50ecc7fb8f07add",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1g0AXOTWCB1d720dP8zW1D7TcDVeHpmt-",
+      "name": "NPC_SOLDIERS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 568944,
+      "md5": "614248f1332425b25daa131cd130bb94",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1n_WVpKQu4ym5m-v-9YVNJbQMvEXK9TJz",
+      "name": "NPC_TRADERS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 608576,
+      "md5": "a50337eac6aa9a493820987d22ea678b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1o4QhWt8iva7BQloktGGJmxoxvZC93tgo",
+      "name": "NPC_TRAVELLERS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 561891,
+      "md5": "23a685265abd0d5f9cd4acd84795ce9c",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1wE5NKa2klX0GQwoaR9VjVbu5kYT9xvPa",
+      "name": "NPC_YOUNG_ADULTS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1e9N6l6eUzk0mA_myxOL062DzX46F84OW"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 529308,
+      "md5": "f2bb19031724a8432d69cb4e42b2ab75",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

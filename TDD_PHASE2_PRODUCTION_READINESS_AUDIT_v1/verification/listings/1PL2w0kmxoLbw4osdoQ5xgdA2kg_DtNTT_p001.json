@@ -1,0 +1,115 @@
+{
+  "parent_id": "1PL2w0kmxoLbw4osdoQ5xgdA2kg_DtNTT",
+  "connector_response_request_id": "0e9f70eb-fba4-4b9b-a82d-57b780814f84",
+  "page": 1,
+  "observed_count": 9,
+  "entries": [
+    {
+      "id": "1oEzqRhlmwKPlvkXvxjNSBp8_y98WHkEu",
+      "name": "Approved_Reference_Images",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1PL2w0kmxoLbw4osdoQ5xgdA2kg_DtNTT"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1r3I96R5lJvHBotYzf0Ek8Jfno3lC4bKy",
+      "name": "Original_Moodboards",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1PL2w0kmxoLbw4osdoQ5xgdA2kg_DtNTT"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1CA2zjdW4b7vO0dTSgDz6Oi_b-5nwsIuZ",
+      "name": "OUR_EYES_REVIEW_AIDS_27",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1PL2w0kmxoLbw4osdoQ5xgdA2kg_DtNTT"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1rkIaRwJMxA_7rJLstzRTlk1v0jowexLQ",
+      "name": "Reference_Photographs",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1PL2w0kmxoLbw4osdoQ5xgdA2kg_DtNTT"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1qEEDsGMhCy6JBd0hrrMPuZdFBfC8Zll2",
+      "name": "Research",
+      "mime_type": "application/vnd.google-apps.folder",
+      "parents": [
+        "1PL2w0kmxoLbw4osdoQ5xgdA2kg_DtNTT"
+      ],
+      "drive_version": "2",
+      "is_folder": true
+    },
+    {
+      "id": "1lzeHKfDjkKlCKWa-0I1zoCGKSqEVmVlK",
+      "name": "REFERENCE_CONTROL_SOURCE_RENDERS_2026-11-15.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1PL2w0kmxoLbw4osdoQ5xgdA2kg_DtNTT"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 68000429,
+      "md5": "8f6b1f642fedeaaf310361d686abbaec",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1io5chA4qBkN1zKQPTBSp1SgGOL8oEgg_",
+      "name": "REFERENCE_CONTROL_SOURCE_RENDERS_PART2_2026-11-15.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1PL2w0kmxoLbw4osdoQ5xgdA2kg_DtNTT"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 17729612,
+      "md5": "60e180882b5195a1c13c6c91b6f38bfc",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Ylb4VW7v6B_et2I7XunVyu6CD30cntML",
+      "name": "REFERENCE_CONTROL_SOURCE_RENDERS_PART3_2026-11-15.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1PL2w0kmxoLbw4osdoQ5xgdA2kg_DtNTT"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 14175167,
+      "md5": "b11fdb003106e4b131eca888e75f91dd",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1nQLEWNdMJEAbn4Te6xSjkhS4NJR41Trr",
+      "name": "REFERENCE_CONTROL_SOURCE_RENDERS_PART4_2026-11-15.zip",
+      "mime_type": "application/zip",
+      "parents": [
+        "1PL2w0kmxoLbw4osdoQ5xgdA2kg_DtNTT"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 10803226,
+      "md5": "7502e5bb411d3844c56420f25efaacbe",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

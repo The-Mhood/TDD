@@ -1,0 +1,106 @@
+{
+  "production_root": {
+    "id": "1lzJBgHHSO2OJMB0LFmwQoU6R7Kv2iGlZ",
+    "path": "PRODUCTION",
+    "path_is_historical": false
+  },
+  "pending": {
+    "id": "11DxQ0d_noAPbZCPrYQBkUonHFl_cFAWm",
+    "path": "PRODUCTION/PENDING",
+    "path_is_historical": false
+  },
+  "original_container": {
+    "id": "1YUCfczTDGsdcMGz3favvphMabMR9q9PJ",
+    "path": "PRODUCTION/10_DOCUMENTATION/Production_Reports/OUR_EYES_CD_FINAL_VERDICTS_v1/DOCUMENTARY_EVIDENCE_88/ORIGINAL_VA_SUBMISSIONS",
+    "path_is_historical": false,
+    "historical_path": "PRODUCTION/PENDING/ORIGINAL_VA_SUBMISSIONS",
+    "parent_id": "1P-5sX_fz2pkJCo0QnmU9T2zHu8iaqbFk"
+  },
+  "assistant_container": {
+    "id": "16p2TYXn16u9UNdMlJzjTK873YK_Fk7Ab",
+    "path": "PRODUCTION/10_DOCUMENTATION/Production_Reports/OUR_EYES_CD_FINAL_VERDICTS_v1/DOCUMENTARY_EVIDENCE_88/ASSISTANT_VA_SUBMISSIONS",
+    "path_is_historical": false,
+    "historical_path": "PRODUCTION/PENDING/ASSISTANT_VA_SUBMISSIONS",
+    "parent_id": "1P-5sX_fz2pkJCo0QnmU9T2zHu8iaqbFk"
+  },
+  "final_records": {
+    "id": "1JxQwdks0hObYrtMyC4yW6Gqg2xkeN_cM",
+    "path": "PRODUCTION/10_DOCUMENTATION/Production_Reports/OUR_EYES_CD_FINAL_VERDICTS_v1",
+    "path_is_historical": false
+  },
+  "visual_release": {
+    "id": "1QAlhbwuG63DEcHwfcTI-gbLp680cui7Q",
+    "path": "PRODUCTION/14_APPROVED_DESIGNS/OUR_EYES_VISUAL_RELEASE_ONLY_NOT_PRODUCTION",
+    "path_is_historical": false
+  },
+  "rejected": {
+    "id": "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG",
+    "path": "PRODUCTION/16_REJECTED_DESIGNS/OUR_EYES_FINAL_193_REJECTED",
+    "path_is_historical": false
+  },
+  "superseded": {
+    "id": "1nRUYZLog7y1-EWFt0sPQ22n50IEnSb4P",
+    "path": "PRODUCTION/19_LEGACY_BATCH_ARCHIVES/OUR_EYES_FINAL_193_SUPERSEDED",
+    "path_is_historical": false
+  },
+  "documents": {
+    "id": "1P-5sX_fz2pkJCo0QnmU9T2zHu8iaqbFk",
+    "path": "PRODUCTION/10_DOCUMENTATION/Production_Reports/OUR_EYES_CD_FINAL_VERDICTS_v1/DOCUMENTARY_EVIDENCE_88",
+    "path_is_historical": false
+  },
+  "aids": {
+    "id": "1CA2zjdW4b7vO0dTSgDz6Oi_b-5nwsIuZ",
+    "path": "PRODUCTION/18_REFERENCE_MATERIAL/OUR_EYES_REVIEW_AIDS_27",
+    "path_is_historical": false
+  },
+  "corrections": {
+    "id": "1dgDDj-JqZhZdacUJgxrFZHWByN6h3dC5",
+    "path": "PRODUCTION/OUR_EYES_AUTHORISED_CORRECTIONS_NOT_APPROVED",
+    "path_is_historical": false
+  },
+  "external": {
+    "id": "1vGkSF9opiZPRim58f8u8e1LOig3KlvZf",
+    "path": "PRODUCTION/OUR_EYES_EXTERNAL_AUTHORITY_REQUIRED",
+    "path_is_historical": false
+  },
+  "release36": {
+    "id": "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb",
+    "path": "PRODUCTION/10_DOCUMENTATION/Production_Reports/OUR_EYES_CD_FINAL_VERDICTS_v1/CD_FINAL_VERDICTS_AND_RELEASE_36",
+    "path_is_historical": false
+  },
+  "studies": {
+    "id": "11Dq42fI9zCln4ylwdilSMjB4ME8NF3Oe",
+    "path": "PRODUCTION/15_EXPLORATORY_DESIGNS/OUR_EYES_DEFINED_SCOPE_STUDIES",
+    "path_is_historical": false
+  },
+  "package36_release": {
+    "id": "1RBWzDazxAvig6mPQ4Q3t5HYw6c3Lf4c4",
+    "parent_id": "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb",
+    "path": "PRODUCTION/10_DOCUMENTATION/Production_Reports/OUR_EYES_CD_FINAL_VERDICTS_v1/CD_FINAL_VERDICTS_AND_RELEASE_36/01_RELEASE_NOW_DEFINED_SCOPE",
+    "name_and_parent_observation_request_id": "61fbc439-cbc8-4be7-a262-0b2053db7ab8"
+  },
+  "package36_reference": {
+    "id": "1IRAxyBBYsjEcB7DbRk2D3yHjCqAO5Spm",
+    "parent_id": "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb",
+    "path": "PRODUCTION/10_DOCUMENTATION/Production_Reports/OUR_EYES_CD_FINAL_VERDICTS_v1/CD_FINAL_VERDICTS_AND_RELEASE_36/02_REFERENCE_PRESERVED_UNAPPROVED",
+    "name_and_parent_observation_request_id": "61fbc439-cbc8-4be7-a262-0b2053db7ab8"
+  },
+  "package36_external": {
+    "id": "1v308HMpOQKLF__O-oo9V05ZfxBjkCoBY",
+    "parent_id": "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb",
+    "path": "PRODUCTION/10_DOCUMENTATION/Production_Reports/OUR_EYES_CD_FINAL_VERDICTS_v1/CD_FINAL_VERDICTS_AND_RELEASE_36/03_EXTERNAL_AUTHORITY_REQUIRED",
+    "name_and_parent_observation_request_id": "61fbc439-cbc8-4be7-a262-0b2053db7ab8"
+  },
+  "package36_rejected": {
+    "id": "1Ti7k9bJTmIhe0AORZMtYiLzzTqxd4-Eq",
+    "parent_id": "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb",
+    "path": "PRODUCTION/10_DOCUMENTATION/Production_Reports/OUR_EYES_CD_FINAL_VERDICTS_v1/CD_FINAL_VERDICTS_AND_RELEASE_36/04_REJECTED",
+    "name_and_parent_observation_request_id": "61fbc439-cbc8-4be7-a262-0b2053db7ab8"
+  },
+  "package36_replacements": {
+    "id": "1kXmUlkhvHOlPep9dnJ2VSCiHQg_nkbmM",
+    "parent_id": "1_ZCBW8wqDh941tkc60wdXFhOnRX3HEmb",
+    "path": "PRODUCTION/10_DOCUMENTATION/Production_Reports/OUR_EYES_CD_FINAL_VERDICTS_v1/CD_FINAL_VERDICTS_AND_RELEASE_36/05_SUPERSEDED_AND_SELECTED_REPLACEMENTS",
+    "name_and_parent_observation_request_id": "61fbc439-cbc8-4be7-a262-0b2053db7ab8"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "parent_id": "12x6bSBUzssp5ChyJTGhC6vvUmZWnXGoi",
+  "connector_response_request_id": "551cab8b-6c96-4ae6-99a2-b058aa64835e",
+  "page": 1,
+  "observed_count": 3,
+  "entries": [
+    {
+      "id": "1Hq5gIviWZH0T6zkNe-yyYKRczj7-KqdF",
+      "name": "ART_BIBLE_INDEX.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "12x6bSBUzssp5ChyJTGhC6vvUmZWnXGoi"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 84785,
+      "md5": "573e27d391addb01dd7b2baa324c8d92",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "12ySOzNVbIQFM03r5VdOmWqjRPcJrf3uq",
+      "name": "ART_BIBLE_MASTER_INDEX.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "12x6bSBUzssp5ChyJTGhC6vvUmZWnXGoi"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 80973,
+      "md5": "25013af345697eb302470ed13e579894",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1L_uZ15RVN59_qqRAWu5suHmDyE5Sxg2f",
+      "name": "GOOGLE_DRIVE_SYNC_LOG.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "12x6bSBUzssp5ChyJTGhC6vvUmZWnXGoi"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 24985,
+      "md5": "1ef75ddc2c35ad0101aad00ee844ba22",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

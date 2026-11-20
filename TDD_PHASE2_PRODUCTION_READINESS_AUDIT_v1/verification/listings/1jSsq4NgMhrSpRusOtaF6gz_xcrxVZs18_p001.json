@@ -1,0 +1,39 @@
+{
+  "parent_id": "1jSsq4NgMhrSpRusOtaF6gz_xcrxVZs18",
+  "connector_response_request_id": "74237fcd-ac3d-4ae9-b490-f89a71dbe2ee",
+  "page": 1,
+  "observed_count": 2,
+  "entries": [
+    {
+      "id": "1lNDo1toSKegRMNTY5SS9g7sDbZoXn8La",
+      "name": "ARCHIVED_TO_DRIVE.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1jSsq4NgMhrSpRusOtaF6gz_xcrxVZs18"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 851,
+      "md5": "f24b80f625a7de115bf66c1090ee553b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1k09zGaZLK-3O8-eNDFML_1y31vVoTNVR",
+      "name": "ENV_KINGDOM_BENEATH_SEALED_GATE_V003.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1jSsq4NgMhrSpRusOtaF6gz_xcrxVZs18"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 629468,
+      "md5": "8390cfe5ef971860f6eb97104e7a62eb",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

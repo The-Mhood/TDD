@@ -1,0 +1,52 @@
+{
+  "parent_id": "1r3I96R5lJvHBotYzf0Ek8Jfno3lC4bKy",
+  "connector_response_request_id": "151db8a3-e92e-4bcf-80f9-b0b24ab20119",
+  "page": 1,
+  "observed_count": 3,
+  "entries": [
+    {
+      "id": "1YU_5PoER-i6MxLiUno6G2Qh7-sD6ayiQ",
+      "name": "REF_ORIGINAL_MOODBOARD_GAME_ART_BIBLE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1r3I96R5lJvHBotYzf0Ek8Jfno3lC4bKy"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 684359,
+      "md5": "9c735b2c636c50d19d59df15e198044e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1clpz22ZWm8hizXn6pOgPhuok-Qdlvku3",
+      "name": "REF_ORIGINAL_MOODBOARD_WORLD_BIBLE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1r3I96R5lJvHBotYzf0Ek8Jfno3lC4bKy"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 659444,
+      "md5": "eb708538497a475a1af056699b891a93",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1AghCYjiJ6B-pV-JbtHIEPSKoDy1Mi13e",
+      "name": "REF_ORIGINAL_MOODBOARD_WORLDBUILDING_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1r3I96R5lJvHBotYzf0Ek8Jfno3lC4bKy"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 588787,
+      "md5": "74ed7fe4b2cf83032ebd41bda55c0928",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

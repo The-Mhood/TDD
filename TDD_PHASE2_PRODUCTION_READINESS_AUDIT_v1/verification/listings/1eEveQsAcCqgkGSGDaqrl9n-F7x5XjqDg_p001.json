@@ -1,0 +1,52 @@
+{
+  "parent_id": "1eEveQsAcCqgkGSGDaqrl9n-F7x5XjqDg",
+  "connector_response_request_id": "c9fd5c9b-0c92-4031-a190-eee3d96b6093",
+  "page": 1,
+  "observed_count": 3,
+  "entries": [
+    {
+      "id": "1qlj5XYqJwStKsyi8i0_xe1noIR7qCPJh",
+      "name": "CHARACTER_DESIGN_REGISTER.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1eEveQsAcCqgkGSGDaqrl9n-F7x5XjqDg"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 14538,
+      "md5": "902517cfedd744ed1d844911498ffcf2",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1euso_u2wtW0tlCpYAnznr8ojn8x1SaTI",
+      "name": "CHARACTER_NAMES_PROPOSAL.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1eEveQsAcCqgkGSGDaqrl9n-F7x5XjqDg"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 2491,
+      "md5": "e76b9dd322cf33366557bd281b797f50",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "12mCtqgwWny4QrBUyZ2nC0slUq_vrrzMw",
+      "name": "NPC_CLOTHING_AUDIT_REGISTER.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1eEveQsAcCqgkGSGDaqrl9n-F7x5XjqDg"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 13834,
+      "md5": "addb821808d3756de37c94e2ef806e92",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

@@ -1,0 +1,65 @@
+{
+  "parent_id": "1eq2v3UMJOtd7feeG4fU2bkZNxoPk3YyT",
+  "connector_response_request_id": "9da9c9ba-3180-445a-8f2f-fa09d18d22fa",
+  "page": 1,
+  "observed_count": 4,
+  "entries": [
+    {
+      "id": "1zRTQ0olcgTo2Z_aBD6X3YdKUQCjUB-ip",
+      "name": "ENV_CH01-EXP-006_THE_HORNBILL_TREE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1eq2v3UMJOtd7feeG4fU2bkZNxoPk3YyT"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 385878,
+      "md5": "6b817385df9d55afad058afa426a658b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Pm7nXmSKgoukgY5qMXPMqzlyc_5ZHtRy",
+      "name": "ENV_CH01-EXP-007_THE_DUIKER_RUN_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1eq2v3UMJOtd7feeG4fU2bkZNxoPk3YyT"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 429223,
+      "md5": "4c6efacf5044f976c02b72645ad7ee80",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1IT731jkQ4GCYQx49JzFh5diZjFDePE_8",
+      "name": "ENV_CH01-INT-006_THE_LEANING_SHELTER_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1eq2v3UMJOtd7feeG4fU2bkZNxoPk3YyT"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 302709,
+      "md5": "0a04e055e031b242e082ecf96319617d",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1-oJP4Sdm-Hmcun98loBNf1h_YQtyKwtV",
+      "name": "ENV_CH01-SUB-016_THE_OLD_CAMPSITE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1eq2v3UMJOtd7feeG4fU2bkZNxoPk3YyT"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 429895,
+      "md5": "b4bb2a41f8307e85fc40241feddcd8eb",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

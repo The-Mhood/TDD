@@ -1,0 +1,400 @@
+{
+  "generated": "2026-11-20T05:47:48.106Z",
+  "overallPass": true,
+  "classification": "Static/live HTTP delivery, recursive local ES-module resolution, generated asset integrity, capture presence, UE source-file presence and durable-record verification. NOT an automated WebGL rendering test or Unreal compile/cook/package test.",
+  "server": {
+    "command": "node server.mjs",
+    "port": 37577,
+    "host": "0.0.0.0",
+    "requestedFrom": "127.0.0.1 sandbox loopback"
+  },
+  "checks": [
+    {
+      "name": "serves /",
+      "ok": true,
+      "detail": "HTTP 200, text/html; charset=utf-8"
+    },
+    {
+      "name": "index has local module entry",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "index has local stylesheet",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "no external CDN script",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "index has import map",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "import map maps three locally",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "import map maps addons locally",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "serves /main.js",
+      "ok": true,
+      "detail": "HTTP 200, text/javascript; charset=utf-8"
+    },
+    {
+      "name": "no absolute localhost in /main.js",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "serves /vendor/three.module.js",
+      "ok": true,
+      "detail": "HTTP 200, text/javascript; charset=utf-8"
+    },
+    {
+      "name": "no absolute localhost in /vendor/three.module.js",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "serves /vendor/jsm/loaders/GLTFLoader.js",
+      "ok": true,
+      "detail": "HTTP 200, text/javascript; charset=utf-8"
+    },
+    {
+      "name": "no absolute localhost in /vendor/jsm/loaders/GLTFLoader.js",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "serves /game.js",
+      "ok": true,
+      "detail": "HTTP 200, text/javascript; charset=utf-8"
+    },
+    {
+      "name": "no absolute localhost in /game.js",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "serves /vendor/three.core.js",
+      "ok": true,
+      "detail": "HTTP 200, text/javascript; charset=utf-8"
+    },
+    {
+      "name": "no absolute localhost in /vendor/three.core.js",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "serves /vendor/jsm/utils/BufferGeometryUtils.js",
+      "ok": true,
+      "detail": "HTTP 200, text/javascript; charset=utf-8"
+    },
+    {
+      "name": "no absolute localhost in /vendor/jsm/utils/BufferGeometryUtils.js",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "serves /vendor/jsm/utils/SkeletonUtils.js",
+      "ok": true,
+      "detail": "HTTP 200, text/javascript; charset=utf-8"
+    },
+    {
+      "name": "no absolute localhost in /vendor/jsm/utils/SkeletonUtils.js",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "recursive local ES-module graph resolves",
+      "ok": true,
+      "detail": "7 modules"
+    },
+    {
+      "name": "serves /world.json",
+      "ok": true,
+      "detail": "HTTP 200, application/json; charset=utf-8"
+    },
+    {
+      "name": "valid JSON /world.json",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "world has 46 obstacles / 7 waypoints",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "serves /assets/materials.json",
+      "ok": true,
+      "detail": "HTTP 200, application/json; charset=utf-8"
+    },
+    {
+      "name": "valid JSON /assets/materials.json",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "serves /assets/production_manifest.json",
+      "ok": true,
+      "detail": "HTTP 200, application/json; charset=utf-8"
+    },
+    {
+      "name": "valid JSON /assets/production_manifest.json",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "serves /test/integration_report.json",
+      "ok": true,
+      "detail": "HTTP 200, application/json; charset=utf-8"
+    },
+    {
+      "name": "valid JSON /test/integration_report.json",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "simulation integration report passes",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "serves /test/replay_frames.json",
+      "ok": true,
+      "detail": "HTTP 200, application/json; charset=utf-8"
+    },
+    {
+      "name": "valid JSON /test/replay_frames.json",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "replay has 120 frames",
+      "ok": true,
+      "detail": "frames=120"
+    },
+    {
+      "name": "serves /captures/capture_manifest.json",
+      "ok": true,
+      "detail": "HTTP 200, application/json; charset=utf-8"
+    },
+    {
+      "name": "valid JSON /captures/capture_manifest.json",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "capture manifest reports MP4",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "serves /assets/forbidden_forest_m1.glb",
+      "ok": true,
+      "detail": "HTTP 200, model/gltf-binary"
+    },
+    {
+      "name": "GLB magic /assets/forbidden_forest_m1.glb",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "GLB length /assets/forbidden_forest_m1.glb",
+      "ok": true,
+      "detail": "264124 vs 264124"
+    },
+    {
+      "name": "serves /assets/adanna_m1_technical_proxy.glb",
+      "ok": true,
+      "detail": "HTTP 200, model/gltf-binary"
+    },
+    {
+      "name": "GLB magic /assets/adanna_m1_technical_proxy.glb",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "GLB length /assets/adanna_m1_technical_proxy.glb",
+      "ok": true,
+      "detail": "95860 vs 95860"
+    },
+    {
+      "name": "capture exists captures/frames/frame_000.png",
+      "ok": true,
+      "detail": "407235 bytes"
+    },
+    {
+      "name": "capture exists captures/frames/frame_119.png",
+      "ok": true,
+      "detail": "407388 bytes"
+    },
+    {
+      "name": "capture exists captures/playable_hero_frame.png",
+      "ok": true,
+      "detail": "392292 bytes"
+    },
+    {
+      "name": "capture exists captures/playable_hud_frame.png",
+      "ok": true,
+      "detail": "416330 bytes"
+    },
+    {
+      "name": "capture exists captures/playable_contact_sheet.png",
+      "ok": true,
+      "detail": "711494 bytes"
+    },
+    {
+      "name": "capture exists captures/PLAYABLE_M1_REVIEW_SHEET.png",
+      "ok": true,
+      "detail": "1657193 bytes"
+    },
+    {
+      "name": "capture exists captures/playable_replay.gif",
+      "ok": true,
+      "detail": "10234844 bytes"
+    },
+    {
+      "name": "capture exists captures/playable_replay.mp4",
+      "ok": true,
+      "detail": "2006683 bytes"
+    },
+    {
+      "name": "120 replay PNG frames",
+      "ok": true,
+      "detail": "120 frames"
+    },
+    {
+      "name": "UE source file TDD_GAME.uproject",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "UE source file DefaultEngine.ini",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "UE source file TDD_GAME.Target.cs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "UE source file TDD_GAME.Build.cs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "UE source file TDDForbiddenForestGameMode.cpp",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "UE source file TDDForbiddenForestLevel.cpp",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "UE source file TDDAdannaProxyCharacter.cpp",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "UE source file TDDWorldData.h",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "UE source file TDD_GAMEEditorTarget.cs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "UE source file TDD_M1_Unreal_Setup_macOS.py",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "UE source file tdd_m1_macos_audit.json",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "UE source file README_MACOS_UE58.md",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "durable record PLAYABLE_MILESTONE_TRACKER.md",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "durable record PHASE_2_PROGRESS.md",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "durable record PLAYABLE_MILESTONE_REPORT.md",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "durable record UE_SOURCE_STATE.md",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "tracker records incomplete final M1",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "progress records playable integration proof",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "uproject targets UE 5.8",
+      "ok": true,
+      "detail": "5.8"
+    },
+    {
+      "name": "uproject targets Mac",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "target uses BuildSettingsVersion.V7",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "target pinned to Unreal5_8 include order",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "macOS static audit is green",
+      "ok": true,
+      "detail": "69/69"
+    },
+    {
+      "name": "macOS audit does not claim compile",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "moduleCount": 7,
+  "note": "The same world.json and game.js shared simulation are used by the browser entry, Node integration test and CPU replay captures. Browser visual verification is available through the live preview; no browser binary is installed in this sandbox."
+}

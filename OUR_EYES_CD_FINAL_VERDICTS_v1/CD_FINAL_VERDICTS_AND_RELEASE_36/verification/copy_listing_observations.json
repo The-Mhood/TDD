@@ -1,0 +1,95 @@
+[
+  {
+    "folder_key": "release",
+    "folder_id": "1RBWzDazxAvig6mPQ4Q3t5HYw6c3Lf4c4",
+    "connector_response_request_id": "708e77dd-ea19-4d53-bf12-f173df649677",
+    "observed_ids": [
+      "1ltlaigJOtaNs-sJjr0jwApZiWhT3PyMG",
+      "1uCO473-hYNmWcsHU16imkARfF6h79gzp",
+      "1Clz61vqjKFcV7mSX5EMyjb1qnFg8rAjM",
+      "1EuBi0RNpYkqsy9KW65rX8q6NPGl0P4q9",
+      "1vFG-hpej16w4ikMaAxZ1bfmJVscw7skp",
+      "1X5tsb3_KSYPlAzMZEzCqNa6l5bMA-r3M",
+      "10ukVC-rOfhe9txoqIzosArcreKzprcmZ",
+      "1VTtkDNbnxdepMGqLWLDoELD4sDLKJ3fX",
+      "1krucyyjoC1ZGwCeu2XLSmR3LbXOHPOhf",
+      "1N4AnEYjJFjq70E4qQcytXo-jHUaxUSfm",
+      "1_evuFIDG6nFE6IuR3pe3v2h7oz0YE7gA",
+      "1u8_dLZNYXRK5k0cZHUq9Ds8jDPXW8Krq",
+      "1-_IdFS1-ySQ4X_BwGrceiSSsuqSq31yl",
+      "1OY1TO4QdVOKTeBvV-E0ih8heJZK-xuL6",
+      "1X7D9PNnS4q_s0f5ogvPw0LnKcnQzVnmE",
+      "1M1mnXP91wQOW0Wr87tPDAcxd9J0OF9BG",
+      "1FheMKP-cRN7pjqMNbVwpwK-4VVKQ7rZY"
+    ],
+    "observed_total": 17,
+    "next_page_token": null,
+    "incomplete_search": false,
+    "basis": "Manually transcribed complete named listing; no raw API capture."
+  },
+  {
+    "folder_key": "reference",
+    "folder_id": "1IRAxyBBYsjEcB7DbRk2D3yHjCqAO5Spm",
+    "connector_response_request_id": "9414643d-ad30-41d7-8d9e-eeecfcc04341",
+    "observed_ids": [
+      "1Ggh6doQ6IPBqPz4Mvq2NaEj0J8dDI5Qj",
+      "1rsTokmziVOT_vs8lvo_0meFdjelaj-mL",
+      "1GcfptqCp9Qg4z7LA0SEejlwbYqiZozbu",
+      "1hgzdUHVEgeO5AUrW5hfwy0RTvaB0hP17",
+      "1ne1I9N4HyEmEpAKmD1UNVmpMvP6RHEL0",
+      "15Lu7Y6aoRUdyv6QfKXsIf5pJtGx9zi63",
+      "1xo0PkGFH_BjrKpKgqMMx2Cbf0WfTErNP",
+      "1OPxsdTwfNRJ7nCZGRnV-xqIngS7O5LkB"
+    ],
+    "observed_total": 8,
+    "next_page_token": null,
+    "incomplete_search": false,
+    "basis": "Manually transcribed complete named listing; no raw API capture."
+  },
+  {
+    "folder_key": "external",
+    "folder_id": "1v308HMpOQKLF__O-oo9V05ZfxBjkCoBY",
+    "connector_response_request_id": "5faaa6a9-3884-48ed-a54d-599a60c89adb",
+    "observed_ids": [
+      "184RRp01AWkqYGGFUVLAI7yrT2tfcDqsE",
+      "1Dk8uuVjAXVj1GOv1VXmiW-TfFaKYEU_w",
+      "1r63KEc8JczN-UMih1Zsb9hslX03zlxo4",
+      "1upDzPg-CMUNg6alk9VsZrvdlLHKYbAVI",
+      "1QVLe6dh5pA4jXQ_mYQhN5GAS3367dz3k",
+      "1N-o3NotlbzRrLwM1NpAtfk34vXT0lfo0",
+      "1aHbIZPm4H8JAimpdVA8ZPFjyu4m8-B2U"
+    ],
+    "observed_total": 7,
+    "next_page_token": null,
+    "incomplete_search": false,
+    "basis": "Manually transcribed complete named listing; no raw API capture."
+  },
+  {
+    "folder_key": "rejected",
+    "folder_id": "1Ti7k9bJTmIhe0AORZMtYiLzzTqxd4-Eq",
+    "connector_response_request_id": "4ddee291-d021-4ed3-b1ef-84189893c762",
+    "observed_ids": [
+      "1pUpVCU2jXcLpocm45Bmo7oLtDU_1h8Nb",
+      "1hPVGS7pL-fbND1MWJlRbbAWrpTVK7v3v"
+    ],
+    "observed_total": 2,
+    "next_page_token": null,
+    "incomplete_search": false,
+    "basis": "Manually transcribed complete named listing; no raw API capture."
+  },
+  {
+    "folder_key": "replacements",
+    "folder_id": "1kXmUlkhvHOlPep9dnJ2VSCiHQg_nkbmM",
+    "connector_response_request_id": "4202403e-2094-4bd3-bcbf-432a271343c1",
+    "observed_ids": [
+      "1Ug908Xf-JSL18TAFWamzb1C_SkfZgYin",
+      "16tTxehEYQ86VwyivcqGtMiqHR-ci8_Dd",
+      "12GOMXfKY2hTenIGj8BwUVcJmjQ6WzwGx",
+      "1HP2m8e0z8Ug7_4_yeJal3zVvj18luRa6"
+    ],
+    "observed_total": 4,
+    "next_page_token": null,
+    "incomplete_search": false,
+    "basis": "Manually transcribed complete named listing; no raw API capture."
+  }
+]

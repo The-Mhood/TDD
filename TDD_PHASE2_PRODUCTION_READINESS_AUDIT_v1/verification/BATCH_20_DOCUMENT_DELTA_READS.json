@@ -1,0 +1,12 @@
+{
+  "pack_sha256": "adda6f9f4d99204a676288df5aa1009a644c887e198b257717748e66f4af557b",
+  "actual_read_ranges_inclusive": [
+    [
+      1,
+      645
+    ]
+  ],
+  "all_source_documents_complete": true,
+  "documents": 8,
+  "basis": "Actual functions.read_file complete645-line return; literal novel text and exact seed/earlier-pack references followed. Independent source reconstruction verified, no source instructions executed."
+}

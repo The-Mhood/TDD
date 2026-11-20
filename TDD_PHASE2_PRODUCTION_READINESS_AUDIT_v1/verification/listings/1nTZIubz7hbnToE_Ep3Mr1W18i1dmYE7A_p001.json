@@ -1,0 +1,26 @@
+{
+  "parent_id": "1nTZIubz7hbnToE_Ep3Mr1W18i1dmYE7A",
+  "connector_response_request_id": "8e90951f-a412-448c-ae69-bd9a0ba66531",
+  "page": 1,
+  "observed_count": 1,
+  "entries": [
+    {
+      "id": "154MRfGN2DiA9tQaO20boBI9MYpEWm9nt",
+      "name": "ART_MASTER_OVERVIEW_KEYART_V003.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1nTZIubz7hbnToE_Ep3Mr1W18i1dmYE7A"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 526086,
+      "md5": "31b771c6d44d0ae5ce6a06c053988651",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

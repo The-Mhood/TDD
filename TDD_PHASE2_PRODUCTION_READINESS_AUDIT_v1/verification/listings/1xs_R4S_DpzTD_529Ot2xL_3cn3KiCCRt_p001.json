@@ -1,0 +1,143 @@
+{
+  "parent_id": "1xs_R4S_DpzTD_529Ot2xL_3cn3KiCCRt",
+  "connector_response_request_id": "7acb7e64-485f-4ce5-9aa0-2548d7518bbe",
+  "page": 1,
+  "observed_count": 10,
+  "entries": [
+    {
+      "id": "1xhcCJawJkJ77CDfO4uOOCAmT6P26h4NG",
+      "name": "ENV_KINGDOM_MASKS_CARVERS_YARD_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1xs_R4S_DpzTD_529Ot2xL_3cn3KiCCRt"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 665018,
+      "md5": "88c71e2565636c5e74b949910fa74ece",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1_lew5xwi-8lpVZwLMeJt6HLRltkKRYjv",
+      "name": "ENV_KINGDOM_MASKS_ESTABLISHING_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1xs_R4S_DpzTD_529Ot2xL_3cn3KiCCRt"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 670717,
+      "md5": "6841747453595f87e052693e78e3e534",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Sq-MMNdsMnD6unnlOaX1HmZyA2CK1-M9",
+      "name": "ENV_KINGDOM_MASKS_FACELESS_MARKET_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1xs_R4S_DpzTD_529Ot2xL_3cn3KiCCRt"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 714421,
+      "md5": "09ba69591d56a51f0b6bd571e3e2ba7e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1NGGLwaUIL56SlfEbh7Ko5dSp5n6Fe0BJ",
+      "name": "ENV_KINGDOM_MASKS_HALL_OF_FACES_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1xs_R4S_DpzTD_529Ot2xL_3cn3KiCCRt"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 552675,
+      "md5": "be0aedab539ac3c59ba6760fe2aa0746",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1GBRblDnfc6RtaCW2Wk8DqDtbrIhsLW-E",
+      "name": "ENV_KINGDOM_MASKS_MEMORY_ROOM_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1xs_R4S_DpzTD_529Ot2xL_3cn3KiCCRt"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 675883,
+      "md5": "c1c13a881df4696cc38c2ff7feafa769",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1t8kF2-SJOILAOKqNmdMZjbCxktrLcgh4",
+      "name": "ENV_KINGDOM_MASKS_MOTHER_OF_MASKS_ARENA_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1xs_R4S_DpzTD_529Ot2xL_3cn3KiCCRt"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 670896,
+      "md5": "1c620cb18d23f6f74cd5e976911e8482",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "15-Wb06Yx4u0jVR0rtHdYc_LmAyVKb7Ak",
+      "name": "ENV_KINGDOM_MASKS_STILL_WATER_COURT_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1xs_R4S_DpzTD_529Ot2xL_3cn3KiCCRt"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 567241,
+      "md5": "ebac301e34765361c003aa47af0b56be",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1KXcdoM-8BAZCv0gPg-ChYPgxUUVJyj_m",
+      "name": "ENV_KINGDOM_MASKS_THRESHOLD_DOOR_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1xs_R4S_DpzTD_529Ot2xL_3cn3KiCCRt"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 557700,
+      "md5": "b64f778d3ec9383f1d24178b08ca42d9",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1UqvLrIhd7w_HAH55rb5QaburK4zFBOBs",
+      "name": "ENV_KINGDOM_MASKS_UNFINISHED_EDGE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1xs_R4S_DpzTD_529Ot2xL_3cn3KiCCRt"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 500781,
+      "md5": "517dba6b958581f671e9b823b60ddd10",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1_jUmwzCgBXR7bPiRHNlm7lXy36CwChpL",
+      "name": "ENV_KINGDOM_MASKS_WEARING_HOUSE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1xs_R4S_DpzTD_529Ot2xL_3cn3KiCCRt"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 570520,
+      "md5": "c7317c017ea933c7a9929128a5c6991b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

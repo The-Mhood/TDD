@@ -1,0 +1,81 @@
+[
+  {
+    "source_id": "16A5_UCJIltKP4aORoQsDoOhnTszTbinE::01_CHARACTERS/Okwu/CHAR_OKWU_TURNAROUND_V001.jpg",
+    "sha256": "cfee378eaad1aa5642121f7317abae50f52eced89e366a605e6536f2d073f5d9",
+    "amendment": "Clarification: the board TEXT alleges a rear-view staff-hand change. Viewer-left at front and viewer-right at rear do not themselves prove an anatomical change; these can represent the same anatomical right. Treat the historical note as an allegation requiring view/hand reconciliation, not a visually confirmed flip or automatic redesign instruction.",
+    "basis": "Reconciliation of actual already displayed raster with its printed known-issues text and explicit front/rear viewer-versus-anatomical orientation. Original observation retained; this clarification controls interpretation.",
+    "does_not_change_source_approval": true
+  },
+  {
+    "source_id": "1xDa-eLAA_uqiXqM_UFYwsEeg3-tE8DUx::01_CHARACTERS/Idemili/CHAR_IDEMILI_TURNAROUND_V001.jpg",
+    "sha256": "c823014b49e028f3fe5de344412266fd897893efabb0de5843e24d489a185150",
+    "amendment": "Clarification: the board TEXT alleges a rear-view python-head side switch. Front viewer-right and rear viewer-left can both be anatomical left; do not declare a confirmed anatomical flip from viewer-side labels. The exact coil trajectory/head side must be resolved against any later governing design before rig/shoulder contacts, with no silent mirroring.",
+    "basis": "Reconciliation of actual already displayed raster with its printed known-issues text and explicit front/rear viewer-versus-anatomical orientation. Original observation retained; this clarification controls interpretation.",
+    "does_not_change_source_approval": true
+  },
+  {
+    "source_id": "1b2vTn10kpAsmmMaN53yzQ8G4pJZc1wR0",
+    "sha256": "aa2e416879e1f17ced40a488d3650c9d151b9e0021f10e70b67d4d94b829cab2",
+    "amendment": "CORRECTION OF THIS AUDITOR’S RECORDING ERROR: E46 Forgotten Kitchen V003 is COMPLETED_AND_VISUALLY_ACCEPTED_LIMITED_STUDY, not a failed relight. Its disclosed local firewood patch was accepted for internal concept-study use only. Only E53 Canoe Shed V003 and E54 Two-House Landing V003 are failed relights/non-replacements. No source approval is being reopened or changed.",
+    "replaces_observation_text": "Phase1 E46 Forgotten Kitchen V003 whole raster: grey earthen room, cold pot on three stones, hanging dried herbs, newly stacked unlit firewood against back wall left of hearth, mortar/pestle and bowl; bright open left doorway, deep internal doorway. Selected local firewood concept correction, not a relight.",
+    "replaces_limitations_text": "COMPLETED AND VISUALLY ACCEPTED — INTERNAL CONCEPT STUDY ONLY. Preserve selected V003 and its byte-identical retained original/source evidence. No production/canon/cultural or native 3D/light-rig clearance follows. Do not re-review or call this failed; only E53/E54 relight attempts failed.",
+    "basis": "Fresh complete read of CD_EXECUTION_AUTHORITY.md plus exact E46 entry in D_CORRECTION_AND_REPLACEMENT_RECORD.json: output SHA256/MD5/size/new Drive ID join the already visually displayed V003. Previous observation retained as an auditable error; this amendment controls.",
+    "does_not_change_source_approval": true
+  },
+  {
+    "source_id": "1SLxYu-Fez5qGeo1gpZbILWXy_Y_9WHco",
+    "sha256": "6f7d1cf0457417dc69c790ceaac92bb72e3c780432ccb94354d30b855d2fabc9",
+    "amendment": "CORRECTION OF THIS AUDITOR’S VERSION-TIER MIX-UP: B02 CH01-SET-001-ST01_V001.jpg remains REPLACED / SUPERSEDED. The later B03 CH01-SET-001-ST01_V002.jpg limited tier was not granted to this predecessor. Exact-source crosswalk, not visual similarity/version-family wording, controls.",
+    "replaces_limitations_text": "REPLACED / SUPERSEDED — superseded creative evidence only, no independent release. Do NOT transfer the later version’s limited use to this exact ID. B03 / 1Rxo6My76m13XUAEVS00M3-bVzMVIxQgb (CH01-SET-001-ST01_V002.jpg) alone has its own recorded tier: RETAIN AS REFERENCE / REVIEW AID; Lighting/weather reference only; not a locked settlement kit or historical architecture.",
+    "basis": "Exact Phase1 source-ID/SHA256 crosswalk plus fresh full read of CD_EXECUTION_AUTHORITY.md; later state rasters independently displayed in full. Prior observation retained for audit, this correction controls.",
+    "does_not_change_source_approval": true
+  },
+  {
+    "source_id": "1xSJ6QJBwA2eQsatcYgM_hHBrhEAvz_5d",
+    "sha256": "92da348191a0ce5d98ec6290ed558fb4dc2b5a62acce26524bdedf11cb64570e",
+    "amendment": "CORRECTION OF THIS AUDITOR’S VERSION-TIER MIX-UP: B04 CH01-SET-001-ST02_V001.jpg remains REPLACED / SUPERSEDED. The later B05 CH01-SET-001-ST02_V002.jpg limited tier was not granted to this predecessor. Exact-source crosswalk, not visual similarity/version-family wording, controls.",
+    "replaces_limitations_text": "REPLACED / SUPERSEDED — superseded creative evidence only, no independent release. Do NOT transfer the later version’s limited use to this exact ID. B05 / 1hldnXwv2_grB2Q6YWvQFRPdcIs3dR_h3 (CH01-SET-001-ST02_V002.jpg) alone has its own recorded tier: APPROVED WITH DEFINED CONDITIONS; Internal fictional midday layout/composition study; not approved settlement design.",
+    "basis": "Exact Phase1 source-ID/SHA256 crosswalk plus fresh full read of CD_EXECUTION_AUTHORITY.md; later state rasters independently displayed in full. Prior observation retained for audit, this correction controls.",
+    "does_not_change_source_approval": true
+  },
+  {
+    "source_id": "1YJqo7pZRuq1hOHpfsiBp9Amiv8SHGJQp",
+    "sha256": "dea1eba1333b54a35354c37790b23f40df26c38483ea12bc79cff17af76a87ef",
+    "amendment": "CORRECTION OF THIS AUDITOR’S VERSION-TIER MIX-UP: B06 CH01-SET-001-ST03_V001.jpg remains REPLACED / SUPERSEDED. The later B07 CH01-SET-001-ST03_V002.jpg limited tier was not granted to this predecessor. Exact-source crosswalk, not visual similarity/version-family wording, controls.",
+    "replaces_limitations_text": "REPLACED / SUPERSEDED — superseded creative evidence only, no independent release. Do NOT transfer the later version’s limited use to this exact ID. B07 / 1j03tjjtHXt6s5iHJfgJS3M_j17aNmiMg (CH01-SET-001-ST03_V002.jpg) alone has its own recorded tier: RETAIN AS REFERENCE / REVIEW AID; Lighting/weather reference only; not a locked settlement kit or historical architecture.",
+    "basis": "Exact Phase1 source-ID/SHA256 crosswalk plus fresh full read of CD_EXECUTION_AUTHORITY.md; later state rasters independently displayed in full. Prior observation retained for audit, this correction controls.",
+    "does_not_change_source_approval": true
+  },
+  {
+    "source_id": "1IhgfuIFZ5wOj4Wb0KpTrYQcyj57nT9Pz",
+    "sha256": "300484f18b744874505b2b2d83c468ea7cf58abb2c1f5543a70ac110630e9332",
+    "amendment": "CORRECTION OF THIS AUDITOR’S VERSION-TIER MIX-UP: B10 CH01-SET-001-ST04_V003.jpg remains REPLACED / SUPERSEDED. The later B11 CH01-SET-001-ST04_V004.jpg limited tier was not granted to this predecessor. Exact-source crosswalk, not visual similarity/version-family wording, controls.",
+    "replaces_limitations_text": "REPLACED / SUPERSEDED — superseded creative evidence only, no independent release. Do NOT transfer the later version’s limited use to this exact ID. B11 / 1npYn0kJB2FFjTxPyGdACAsCqKk8ZbDPq (CH01-SET-001-ST04_V004.jpg) alone has its own recorded tier: APPROVED WITH DEFINED CONDITIONS; Night concept review at delivered concept scale only. This V003 is actually1264x843; accepted B11 is a DIFFERENT V0041536x1024, not this payload. No resize, ring/niche/speck/branch removal or source change is authorized.",
+    "basis": "Exact Phase1 source-ID/SHA256 crosswalk plus fresh full read of CD_EXECUTION_AUTHORITY.md; later state rasters independently displayed in full. Prior observation retained for audit, this correction controls.",
+    "does_not_change_source_approval": true
+  },
+  {
+    "source_id": "1KyoNo4wBHp6GG_2Ad2MdYew-cKLYHpaz",
+    "sha256": "a39f7716c0129a191f8082c623cd585623eba88c184234d9ab8e33ea6555a611",
+    "amendment": "CORRECTION OF THIS AUDITOR’S VERSION-TIER MIX-UP: B12 CH01-SET-001-ST05_V001.jpg remains REPLACED / SUPERSEDED. The later B13 CH01-SET-001-ST05_V002.jpg limited tier was not granted to this predecessor. Exact-source crosswalk, not visual similarity/version-family wording, controls.",
+    "replaces_limitations_text": "REPLACED / SUPERSEDED — superseded creative evidence only, no independent release. Do NOT transfer the later version’s limited use to this exact ID. B13 / 1X-eO-Svbzo46ozPXbsE-JpT4SEfWMgOw (CH01-SET-001-ST05_V002.jpg) alone has its own recorded tier: RETAIN AS REFERENCE / REVIEW AID; Lighting/weather reference only; not a locked settlement kit or historical architecture.",
+    "basis": "Exact Phase1 source-ID/SHA256 crosswalk plus fresh full read of CD_EXECUTION_AUTHORITY.md; later state rasters independently displayed in full. Prior observation retained for audit, this correction controls.",
+    "does_not_change_source_approval": true
+  },
+  {
+    "source_id": "1cKZa4flUbjidGKo5dHZECfJF9hf75RdW",
+    "sha256": "87e42ed3498911d06301c36aa4f9359a0424d0a1f4e358ba53d45548228f3ad8",
+    "amendment": "CORRECTION OF THIS AUDITOR’S VERSION-TIER MIX-UP: B14 CH01-SET-001-ST06_V001.jpg remains REPLACED / SUPERSEDED. The later B15 CH01-SET-001-ST06_V002.jpg limited tier was not granted to this predecessor. Exact-source crosswalk, not visual similarity/version-family wording, controls.",
+    "replaces_limitations_text": "REPLACED / SUPERSEDED — superseded creative evidence only, no independent release. Do NOT transfer the later version’s limited use to this exact ID. B15 / 1TBXHgJlUmmbMWcMhG9PQn0eS07bdbum9 (CH01-SET-001-ST06_V002.jpg) alone has its own recorded tier: APPROVED WITH DEFINED CONDITIONS; Internal contemporary-context fictional market study only; not ethnography, ritual evidence or cross-asset NPC costume authority.",
+    "basis": "Exact Phase1 source-ID/SHA256 crosswalk plus fresh full read of CD_EXECUTION_AUTHORITY.md; later state rasters independently displayed in full. Prior observation retained for audit, this correction controls.",
+    "does_not_change_source_approval": true
+  },
+  {
+    "source_id": "1sixVQ4I9wsgJbEOSfssCVsXRcrIG3x7R",
+    "sha256": "694684263f47e76e00f4f0978ce1e72ac9de2a839e58b1078be0553f67228216",
+    "amendment": "CORRECTION OF THIS AUDITOR’S VERSION-TIER MIX-UP: B16 CH01-SET-001-ST07_V001.jpg remains REPLACED / SUPERSEDED. The later B17 CH01-SET-001-ST07_V002.jpg limited tier was not granted to this predecessor. Exact-source crosswalk, not visual similarity/version-family wording, controls.",
+    "replaces_limitations_text": "REPLACED / SUPERSEDED — superseded creative evidence only, no independent release. Do NOT transfer the later version’s limited use to this exact ID. B17 / 1_Lw07vpd0aOo0XnI7-xrbWZTWhypg7vU (CH01-SET-001-ST07_V002.jpg) alone has its own recorded tier: APPROVED WITH DEFINED CONDITIONS; Internal contemporary-context fictional ordinary assembly study only; not ethnography, ritual evidence or cross-asset NPC costume authority.",
+    "basis": "Exact Phase1 source-ID/SHA256 crosswalk plus fresh full read of CD_EXECUTION_AUTHORITY.md; later state rasters independently displayed in full. Prior observation retained for audit, this correction controls.",
+    "does_not_change_source_approval": true
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "parent_id": "1pD0zr7c8p1mq_W-U2wmP_UG6x-57yfq0",
+  "connector_response_request_id": "8c2c05a1-c61c-4fb4-ae3f-368b835d5e1e",
+  "page": 1,
+  "observed_count": 1,
+  "entries": [
+    {
+      "id": "12HZ_Eyj8QaNB2PaQcl2tfPxq-5In97Yq",
+      "name": "ARCHIVED_TO_DRIVE.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1pD0zr7c8p1mq_W-U2wmP_UG6x-57yfq0"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 1075,
+      "md5": "5dd854d61392c98a0964940b3588886a",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

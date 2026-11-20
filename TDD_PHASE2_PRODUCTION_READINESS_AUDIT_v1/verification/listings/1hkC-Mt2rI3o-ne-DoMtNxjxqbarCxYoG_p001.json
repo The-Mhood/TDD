@@ -1,0 +1,156 @@
+{
+  "parent_id": "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG",
+  "connector_response_request_id": "7f2180bc-5edb-4ffc-aada-16f93953eabc",
+  "page": 1,
+  "observed_count": 11,
+  "entries": [
+    {
+      "id": "1uUV4ZaZekbL3MfyTfCZDBdLXuj2NFP3s",
+      "name": "B2_CAND_SCENE_CH01-SCN-017_VILLAGE_SQUARE_V002_1672x941.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 652287,
+      "md5": "f5d9e96da8f5b791a652783297bc0d73",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1VTA7bi3rAcf8o_oTXmmqQS3AjIkrt63H",
+      "name": "B2_CAND_SCENE_CH01-SCN-024_AN_EMPTY_HOUSE_V002_1672x941.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 526628,
+      "md5": "544f4e97e0796c3bbf32cd9c5c3201f5",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1CFCPrQct-qvsw662-wOZAngxiXAOMfw3",
+      "name": "ENV_CH03-EXP-001_THE_WALL_TOP_WALK_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 337726,
+      "md5": "bce36fd7b0192e77b6f2de64b4e4be65",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1w0sSsFVxbPKPScXVHAZvj7wBHK7DnYCu",
+      "name": "ENV_CH04-EXP-003_THE_SMALL_ISLANDS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 296529,
+      "md5": "7cf439f3297a14b76deda85efaf44856",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1oMCsvO-dsL01rMpli_e1mwJs5wty-A57",
+      "name": "ENV_CH05-EXP-002_THE_HIDDEN_CAVE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 287823,
+      "md5": "25eab40b09e9785a274353900d5d483f",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "145CTWxRCA0LQtYj3QNTGqFGNVmPLwSgg",
+      "name": "ENV_CH05-INT-002_A_VILLAGE_HOUSE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 357609,
+      "md5": "fd01a4a12b72a45b2f92c6890f2fd1aa",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1y4efClikpBy8l_MgzOJjvSnq7ASYbR1_",
+      "name": "ENV_CH05-LMK-002_THE_ABANDONED_WATCHPOST_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 279698,
+      "md5": "870ae1174e70b77d23973470d7236439",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1FodM5tkMCetTrp3e1ln4T-_Fb9rKGuv3",
+      "name": "ENV_CH05-SET-002_THE_UPPER_HAMLET_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 276360,
+      "md5": "2df390431801009ed46a2fd4d56d3eef",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "17uomx2sn8Jp8p7GZQFqzJz7zlBNOThg7",
+      "name": "ENV_CH05-SUB-003_THE_CLIMBERS_CAMP_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 319527,
+      "md5": "97d405e15e2969515e4a3329c3202975",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1C--Ojw2kN2G_-VmHbac4lMXEDRLJslyb",
+      "name": "ENV_CH06-INT-004_A_ROOM_THAT_EXPECTS_YOU_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 172472,
+      "md5": "705516f8cb143eee9525b70fd354490d",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1TdWrO3lkNCTHPqlrAgjFKkBfeth9wowP",
+      "name": "ENV_CH06-INT-005_THE_FORGOTTEN_ROOM_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1hkC-Mt2rI3o-ne-DoMtNxjxqbarCxYoG"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 258955,
+      "md5": "6eb6eb87b511e9be56bd95f81316295e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

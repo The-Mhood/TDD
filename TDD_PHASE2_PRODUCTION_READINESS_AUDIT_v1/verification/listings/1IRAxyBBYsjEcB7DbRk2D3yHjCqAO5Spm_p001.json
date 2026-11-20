@@ -1,0 +1,117 @@
+{
+  "parent_id": "1IRAxyBBYsjEcB7DbRk2D3yHjCqAO5Spm",
+  "connector_response_request_id": "0b274565-0605-47c4-ac04-0e703f180eb0",
+  "page": 1,
+  "observed_count": 8,
+  "entries": [
+    {
+      "id": "1ne1I9N4HyEmEpAKmD1UNVmpMvP6RHEL0",
+      "name": "B2_CAND_CHAR_ADANNA_TURNAROUND_BACK_V003_2560x1440.png",
+      "mime_type": "image/png",
+      "parents": [
+        "1IRAxyBBYsjEcB7DbRk2D3yHjCqAO5Spm"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 2574938,
+      "md5": "75908260a12da2a1260b105659b7d6ee",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1GcfptqCp9Qg4z7LA0SEejlwbYqiZozbu",
+      "name": "B2_CAND_CHAR_ADANNA_TURNAROUND_LEFT_SIDE_V003_2560x1440.png",
+      "mime_type": "image/png",
+      "parents": [
+        "1IRAxyBBYsjEcB7DbRk2D3yHjCqAO5Spm"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 2444893,
+      "md5": "703d87e2851e179364aed3ebcfae1943",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Ggh6doQ6IPBqPz4Mvq2NaEj0J8dDI5Qj",
+      "name": "B2_CAND_SCENE_CH01-SCN-012_MARKET_STALLS_V002_1672x941.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1IRAxyBBYsjEcB7DbRk2D3yHjCqAO5Spm"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 601280,
+      "md5": "0e14778fc699ba67676bb28d18696852",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1OPxsdTwfNRJ7nCZGRnV-xqIngS7O5LkB",
+      "name": "CH01-SET-001-ST01_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1IRAxyBBYsjEcB7DbRk2D3yHjCqAO5Spm"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 241010,
+      "md5": "9d0b57620ee6bad955ded5e3a8b4befc",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1xo0PkGFH_BjrKpKgqMMx2Cbf0WfTErNP",
+      "name": "CH01-SET-001-ST03_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1IRAxyBBYsjEcB7DbRk2D3yHjCqAO5Spm"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 245080,
+      "md5": "5e5bb058fdd761d859fda2d95cabb68e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "15Lu7Y6aoRUdyv6QfKXsIf5pJtGx9zi63",
+      "name": "CH01-SET-001-ST05_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1IRAxyBBYsjEcB7DbRk2D3yHjCqAO5Spm"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 349340,
+      "md5": "d4312825d677faf65863186c5249c0f0",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1rsTokmziVOT_vs8lvo_0meFdjelaj-mL",
+      "name": "ENV_CH04-EXP-006_THE_CAVE_BEHIND_THE_LOW_FALLS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1IRAxyBBYsjEcB7DbRk2D3yHjCqAO5Spm"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 372877,
+      "md5": "424e44c7737356930c0cf13c097d6c63",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1hgzdUHVEgeO5AUrW5hfwy0RTvaB0hP17",
+      "name": "ENV_CH05-INT-001_THE_HERDERS_SHELTER_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1IRAxyBBYsjEcB7DbRk2D3yHjCqAO5Spm"
+      ],
+      "drive_version": "2",
+      "is_folder": false,
+      "bytes": 417217,
+      "md5": "04caf20e3eea50e47b27d4334f9af1fe",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

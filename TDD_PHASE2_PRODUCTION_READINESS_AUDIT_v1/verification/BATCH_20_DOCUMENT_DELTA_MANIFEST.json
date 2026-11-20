@@ -1,0 +1,5465 @@
+{
+  "prepared_not_read": true,
+  "method": "Exact UTF8 lines, endings retained; no summary/elision; independent expansion from printed pack plus actual complete-read seed bytes.",
+  "seeds": [
+    {
+      "alias": "S1",
+      "source_id": "1W9T-FqYIeAp41KyuZ4xlb3QlN0SnHMK1",
+      "sha256": "988d7826e30b1859c7397ec231ae517f8256254cf5602a4c1ce3d7cd7b7ae421",
+      "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/988d7826e30b1859c7397ec231ae517f8256254cf5602a4c1ce3d7cd7b7ae421/VISUAL_STYLE_GUIDE.md",
+      "scope": "complete document"
+    },
+    {
+      "alias": "S2",
+      "source_id": "17PFuMM-0V134QuDBojx3UAczhj0ZE3Pe",
+      "sha256": "6fb3889586d45d681073048ee7dcf5c952e5ac504f579359e22ee0743286fb6c",
+      "snapshot": "_phase2_stage/archive_payloads/6fb3889586d45d681073048ee7dcf5c952e5ac504f579359e22ee0743286fb6c/CHARACTER_NAMES_PROPOSAL.md",
+      "scope": "complete document"
+    },
+    {
+      "alias": "S3",
+      "source_id": "14KvEKG534U2-MtJMEO6VUxW59gRHATzE",
+      "sha256": "8ad2de5c8ae2a311e8ea2fb6f67eeef52114fa8adb001526ad4cbfa869b8d042",
+      "snapshot": "_phase2_stage/archive_payloads/8ad2de5c8ae2a311e8ea2fb6f67eeef52114fa8adb001526ad4cbfa869b8d042/ENVIRONMENT_DESIGN_REGISTER.md",
+      "scope": "complete document"
+    },
+    {
+      "alias": "S4",
+      "source_id": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_03_City_of_the_Living_Dead/ARCHIVED_TO_DRIVE.md",
+      "sha256": "9e220d65a331ea4bed32eed84732c203447455a87df22967bff63ba33411cf85",
+      "snapshot": "_phase2_stage/archive_payloads/9e220d65a331ea4bed32eed84732c203447455a87df22967bff63ba33411cf85/ARCHIVED_TO_DRIVE.md",
+      "scope": "complete document"
+    },
+    {
+      "alias": "S5",
+      "source_id": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_01_Forbidden_Forest/ARCHIVED_TO_DRIVE.md",
+      "sha256": "9f6a4fa4bbdbc9d99c8791133cce82153ad1323d1a0a1efa6c95bd53a9f0ae9a",
+      "snapshot": "_phase2_stage/archive_payloads/9f6a4fa4bbdbc9d99c8791133cce82153ad1323d1a0a1efa6c95bd53a9f0ae9a/ARCHIVED_TO_DRIVE.md",
+      "scope": "complete document"
+    },
+    {
+      "alias": "S6",
+      "source_id": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_04_River_of_Idemili/ARCHIVED_TO_DRIVE.md",
+      "sha256": "83d4f63aea85234b463aad756a553b2bb670e41287095214f9e6a28e78b1a2ca",
+      "snapshot": "_phase2_stage/archive_payloads/83d4f63aea85234b463aad756a553b2bb670e41287095214f9e6a28e78b1a2ca/ARCHIVED_TO_DRIVE.md",
+      "scope": "complete document"
+    },
+    {
+      "alias": "S7",
+      "source_id": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_05_Mountain_of_Thunder/ARCHIVED_TO_DRIVE.md",
+      "sha256": "9a4ede65db18a7a87958448b35d9a94960d9e98513141d7da7bf7bc0f9aff7b8",
+      "snapshot": "_phase2_stage/archive_payloads/9a4ede65db18a7a87958448b35d9a94960d9e98513141d7da7bf7bc0f9aff7b8/ARCHIVED_TO_DRIVE.md",
+      "scope": "complete document"
+    },
+    {
+      "alias": "S8",
+      "source_id": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_02_Kingdom_Beneath_the_Earth/ARCHIVED_TO_DRIVE.md",
+      "sha256": "4ffbad3bd1fa75fa3673f6d2a7ffb6449ff22c45fdaca0e14b1f7ede2ddc5823",
+      "snapshot": "_phase2_stage/archive_payloads/4ffbad3bd1fa75fa3673f6d2a7ffb6449ff22c45fdaca0e14b1f7ede2ddc5823/ARCHIVED_TO_DRIVE.md",
+      "scope": "complete document"
+    },
+    {
+      "alias": "S9",
+      "source_id": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/16_REJECTED_DESIGNS/README.md",
+      "sha256": "7e4edf983d356736421fa3b0d7a2701d354244480470e6588b3461cfa9765003",
+      "snapshot": "_phase2_stage/archive_payloads/7e4edf983d356736421fa3b0d7a2701d354244480470e6588b3461cfa9765003/README.md",
+      "scope": "complete document"
+    },
+    {
+      "alias": "S10",
+      "source_id": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ART_BIBLE_INDEX.md",
+      "sha256": "f8224ffffa59b0e1053e0788fe1c438ef5493f650d883ef54350e7280df98939",
+      "snapshot": "_phase2_stage/archive_payloads/f8224ffffa59b0e1053e0788fe1c438ef5493f650d883ef54350e7280df98939/ART_BIBLE_INDEX.md",
+      "scope": "complete document"
+    },
+    {
+      "alias": "S11",
+      "source_id": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/CHARACTER_DESIGN_REGISTER.md",
+      "sha256": "a87e5fdeb381325fe63182445f2f4b2e8239a1bcaa8bb81ca3500c40e9bd6169",
+      "snapshot": "_phase2_stage/archive_payloads/a87e5fdeb381325fe63182445f2f4b2e8239a1bcaa8bb81ca3500c40e9bd6169/CHARACTER_DESIGN_REGISTER.md",
+      "scope": "complete document"
+    },
+    {
+      "alias": "S12",
+      "source_id": "1EBTPyEOnfgZsrJNc7va1e43OWUQAAZe3::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/OPEN_ART_DECISIONS.md",
+      "sha256": "f90c84587cd080dc4d52d4a966b1f3b1fdb87cf824dbfe0aea30a0c24b02e49f",
+      "snapshot": "_phase2_stage/archive_payloads/f90c84587cd080dc4d52d4a966b1f3b1fdb87cf824dbfe0aea30a0c24b02e49f/OPEN_ART_DECISIONS.md",
+      "scope": "complete document"
+    }
+  ],
+  "documents": [
+    {
+      "source_id": "1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/16_REJECTED_DESIGNS/README.md",
+      "archive_id": "1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9",
+      "member_path": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/16_REJECTED_DESIGNS/README.md",
+      "sha256": "b6b860714938c5b5ad165f2406b56c7ba25487f8556636843452becec1b57629",
+      "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/b6b860714938c5b5ad165f2406b56c7ba25487f8556636843452becec1b57629/README.md",
+      "bytes": 1718,
+      "lines": 38,
+      "start": 15,
+      "end": 53,
+      "mapping": [
+        {
+          "source_line": 1,
+          "pack_line": 16,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 2,
+          "pack_line": 17,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 3,
+          "pack_line": 18,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S9",
+            "line": 3
+          }
+        },
+        {
+          "source_line": 4,
+          "pack_line": 19,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 5,
+          "pack_line": 20,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 6,
+          "pack_line": 21,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 7,
+          "pack_line": 22,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 8,
+          "pack_line": 23,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 9,
+          "pack_line": 24,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 10,
+          "pack_line": 25,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 11,
+          "pack_line": 26,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 12,
+          "pack_line": 27,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 13,
+          "pack_line": 28,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 14,
+          "pack_line": 29,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 15,
+          "pack_line": 30,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 16,
+          "pack_line": 31,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 17,
+          "pack_line": 32,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 18,
+          "pack_line": 33,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 19,
+          "pack_line": 34,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 20,
+          "pack_line": 35,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 21,
+          "pack_line": 36,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 22,
+          "pack_line": 37,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 23,
+          "pack_line": 38,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 24,
+          "pack_line": 39,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 25,
+          "pack_line": 40,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 26,
+          "pack_line": 41,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 27,
+          "pack_line": 42,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 28,
+          "pack_line": 43,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 29,
+          "pack_line": 44,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 30,
+          "pack_line": 45,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 31,
+          "pack_line": 46,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 32,
+          "pack_line": 47,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 33,
+          "pack_line": 48,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 34,
+          "pack_line": 49,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 35,
+          "pack_line": 50,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 36,
+          "pack_line": 51,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 37,
+          "pack_line": 52,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 38,
+          "pack_line": 53,
+          "kind": "literal",
+          "ending_hex": "0a"
+        }
+      ],
+      "independent_roundtrip_equal": true
+    },
+    {
+      "source_id": "1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ART_BIBLE_INDEX.md",
+      "archive_id": "1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9",
+      "member_path": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ART_BIBLE_INDEX.md",
+      "sha256": "22bdb81d64a01d1270204ce0391a6f9df5f610c80a89d6f8eef5ccf0e5111467",
+      "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/22bdb81d64a01d1270204ce0391a6f9df5f610c80a89d6f8eef5ccf0e5111467/ART_BIBLE_INDEX.md",
+      "bytes": 37949,
+      "lines": 192,
+      "start": 54,
+      "end": 246,
+      "mapping": [
+        {
+          "source_line": 1,
+          "pack_line": 55,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 2,
+          "pack_line": 56,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 3,
+          "pack_line": 57,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 4,
+          "pack_line": 58,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 5,
+          "pack_line": 59,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 6,
+          "pack_line": 60,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 6
+          }
+        },
+        {
+          "source_line": 7,
+          "pack_line": 61,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 8,
+          "pack_line": 62,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 9,
+          "pack_line": 63,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 10,
+          "pack_line": 64,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 11,
+          "pack_line": 65,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 11
+          }
+        },
+        {
+          "source_line": 12,
+          "pack_line": 66,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 13,
+          "pack_line": 67,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 13
+          }
+        },
+        {
+          "source_line": 14,
+          "pack_line": 68,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 14
+          }
+        },
+        {
+          "source_line": 15,
+          "pack_line": 69,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 15
+          }
+        },
+        {
+          "source_line": 16,
+          "pack_line": 70,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 16
+          }
+        },
+        {
+          "source_line": 17,
+          "pack_line": 71,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 17
+          }
+        },
+        {
+          "source_line": 18,
+          "pack_line": 72,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 18
+          }
+        },
+        {
+          "source_line": 19,
+          "pack_line": 73,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 19
+          }
+        },
+        {
+          "source_line": 20,
+          "pack_line": 74,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 20
+          }
+        },
+        {
+          "source_line": 21,
+          "pack_line": 75,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 21
+          }
+        },
+        {
+          "source_line": 22,
+          "pack_line": 76,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 22
+          }
+        },
+        {
+          "source_line": 23,
+          "pack_line": 77,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 23
+          }
+        },
+        {
+          "source_line": 24,
+          "pack_line": 78,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 24
+          }
+        },
+        {
+          "source_line": 25,
+          "pack_line": 79,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 25
+          }
+        },
+        {
+          "source_line": 26,
+          "pack_line": 80,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 26
+          }
+        },
+        {
+          "source_line": 27,
+          "pack_line": 81,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 27
+          }
+        },
+        {
+          "source_line": 28,
+          "pack_line": 82,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 28
+          }
+        },
+        {
+          "source_line": 29,
+          "pack_line": 83,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 29
+          }
+        },
+        {
+          "source_line": 30,
+          "pack_line": 84,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 30
+          }
+        },
+        {
+          "source_line": 31,
+          "pack_line": 85,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 31
+          }
+        },
+        {
+          "source_line": 32,
+          "pack_line": 86,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 32
+          }
+        },
+        {
+          "source_line": 33,
+          "pack_line": 87,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 33
+          }
+        },
+        {
+          "source_line": 34,
+          "pack_line": 88,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 34
+          }
+        },
+        {
+          "source_line": 35,
+          "pack_line": 89,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 35
+          }
+        },
+        {
+          "source_line": 36,
+          "pack_line": 90,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 36
+          }
+        },
+        {
+          "source_line": 37,
+          "pack_line": 91,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 37
+          }
+        },
+        {
+          "source_line": 38,
+          "pack_line": 92,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 38
+          }
+        },
+        {
+          "source_line": 39,
+          "pack_line": 93,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 39
+          }
+        },
+        {
+          "source_line": 40,
+          "pack_line": 94,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 40
+          }
+        },
+        {
+          "source_line": 41,
+          "pack_line": 95,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 41
+          }
+        },
+        {
+          "source_line": 42,
+          "pack_line": 96,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 42
+          }
+        },
+        {
+          "source_line": 43,
+          "pack_line": 97,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 43
+          }
+        },
+        {
+          "source_line": 44,
+          "pack_line": 98,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 44
+          }
+        },
+        {
+          "source_line": 45,
+          "pack_line": 99,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 45
+          }
+        },
+        {
+          "source_line": 46,
+          "pack_line": 100,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 46
+          }
+        },
+        {
+          "source_line": 47,
+          "pack_line": 101,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 47
+          }
+        },
+        {
+          "source_line": 48,
+          "pack_line": 102,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 48
+          }
+        },
+        {
+          "source_line": 49,
+          "pack_line": 103,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 49
+          }
+        },
+        {
+          "source_line": 50,
+          "pack_line": 104,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 50
+          }
+        },
+        {
+          "source_line": 51,
+          "pack_line": 105,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 51
+          }
+        },
+        {
+          "source_line": 52,
+          "pack_line": 106,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 52
+          }
+        },
+        {
+          "source_line": 53,
+          "pack_line": 107,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 53
+          }
+        },
+        {
+          "source_line": 54,
+          "pack_line": 108,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 54
+          }
+        },
+        {
+          "source_line": 55,
+          "pack_line": 109,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 55
+          }
+        },
+        {
+          "source_line": 56,
+          "pack_line": 110,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 56
+          }
+        },
+        {
+          "source_line": 57,
+          "pack_line": 111,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 57
+          }
+        },
+        {
+          "source_line": 58,
+          "pack_line": 112,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 58
+          }
+        },
+        {
+          "source_line": 59,
+          "pack_line": 113,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 59
+          }
+        },
+        {
+          "source_line": 60,
+          "pack_line": 114,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 60
+          }
+        },
+        {
+          "source_line": 61,
+          "pack_line": 115,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 61
+          }
+        },
+        {
+          "source_line": 62,
+          "pack_line": 116,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 62
+          }
+        },
+        {
+          "source_line": 63,
+          "pack_line": 117,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 63
+          }
+        },
+        {
+          "source_line": 64,
+          "pack_line": 118,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 64
+          }
+        },
+        {
+          "source_line": 65,
+          "pack_line": 119,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 65
+          }
+        },
+        {
+          "source_line": 66,
+          "pack_line": 120,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 66
+          }
+        },
+        {
+          "source_line": 67,
+          "pack_line": 121,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 67
+          }
+        },
+        {
+          "source_line": 68,
+          "pack_line": 122,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 68
+          }
+        },
+        {
+          "source_line": 69,
+          "pack_line": 123,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 69
+          }
+        },
+        {
+          "source_line": 70,
+          "pack_line": 124,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 70
+          }
+        },
+        {
+          "source_line": 71,
+          "pack_line": 125,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 71
+          }
+        },
+        {
+          "source_line": 72,
+          "pack_line": 126,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 72
+          }
+        },
+        {
+          "source_line": 73,
+          "pack_line": 127,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 73
+          }
+        },
+        {
+          "source_line": 74,
+          "pack_line": 128,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 74
+          }
+        },
+        {
+          "source_line": 75,
+          "pack_line": 129,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 75
+          }
+        },
+        {
+          "source_line": 76,
+          "pack_line": 130,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 76
+          }
+        },
+        {
+          "source_line": 77,
+          "pack_line": 131,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 77
+          }
+        },
+        {
+          "source_line": 78,
+          "pack_line": 132,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 78
+          }
+        },
+        {
+          "source_line": 79,
+          "pack_line": 133,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 79
+          }
+        },
+        {
+          "source_line": 80,
+          "pack_line": 134,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 80
+          }
+        },
+        {
+          "source_line": 81,
+          "pack_line": 135,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 81
+          }
+        },
+        {
+          "source_line": 82,
+          "pack_line": 136,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 82
+          }
+        },
+        {
+          "source_line": 83,
+          "pack_line": 137,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 83
+          }
+        },
+        {
+          "source_line": 84,
+          "pack_line": 138,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 84
+          }
+        },
+        {
+          "source_line": 85,
+          "pack_line": 139,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 85
+          }
+        },
+        {
+          "source_line": 86,
+          "pack_line": 140,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 86
+          }
+        },
+        {
+          "source_line": 87,
+          "pack_line": 141,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 87
+          }
+        },
+        {
+          "source_line": 88,
+          "pack_line": 142,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 88
+          }
+        },
+        {
+          "source_line": 89,
+          "pack_line": 143,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 89
+          }
+        },
+        {
+          "source_line": 90,
+          "pack_line": 144,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 90
+          }
+        },
+        {
+          "source_line": 91,
+          "pack_line": 145,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 91
+          }
+        },
+        {
+          "source_line": 92,
+          "pack_line": 146,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 92
+          }
+        },
+        {
+          "source_line": 93,
+          "pack_line": 147,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 93
+          }
+        },
+        {
+          "source_line": 94,
+          "pack_line": 148,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 94
+          }
+        },
+        {
+          "source_line": 95,
+          "pack_line": 149,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 95
+          }
+        },
+        {
+          "source_line": 96,
+          "pack_line": 150,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 96
+          }
+        },
+        {
+          "source_line": 97,
+          "pack_line": 151,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 97
+          }
+        },
+        {
+          "source_line": 98,
+          "pack_line": 152,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 98
+          }
+        },
+        {
+          "source_line": 99,
+          "pack_line": 153,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 99
+          }
+        },
+        {
+          "source_line": 100,
+          "pack_line": 154,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 100
+          }
+        },
+        {
+          "source_line": 101,
+          "pack_line": 155,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 101
+          }
+        },
+        {
+          "source_line": 102,
+          "pack_line": 156,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 102
+          }
+        },
+        {
+          "source_line": 103,
+          "pack_line": 157,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 103
+          }
+        },
+        {
+          "source_line": 104,
+          "pack_line": 158,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 104
+          }
+        },
+        {
+          "source_line": 105,
+          "pack_line": 159,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 105
+          }
+        },
+        {
+          "source_line": 106,
+          "pack_line": 160,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 106
+          }
+        },
+        {
+          "source_line": 107,
+          "pack_line": 161,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 107
+          }
+        },
+        {
+          "source_line": 108,
+          "pack_line": 162,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 108
+          }
+        },
+        {
+          "source_line": 109,
+          "pack_line": 163,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 109
+          }
+        },
+        {
+          "source_line": 110,
+          "pack_line": 164,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 110
+          }
+        },
+        {
+          "source_line": 111,
+          "pack_line": 165,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 111
+          }
+        },
+        {
+          "source_line": 112,
+          "pack_line": 166,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 112
+          }
+        },
+        {
+          "source_line": 113,
+          "pack_line": 167,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 113
+          }
+        },
+        {
+          "source_line": 114,
+          "pack_line": 168,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 114
+          }
+        },
+        {
+          "source_line": 115,
+          "pack_line": 169,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 115
+          }
+        },
+        {
+          "source_line": 116,
+          "pack_line": 170,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 116
+          }
+        },
+        {
+          "source_line": 117,
+          "pack_line": 171,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 117
+          }
+        },
+        {
+          "source_line": 118,
+          "pack_line": 172,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 118
+          }
+        },
+        {
+          "source_line": 119,
+          "pack_line": 173,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 119
+          }
+        },
+        {
+          "source_line": 120,
+          "pack_line": 174,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 120
+          }
+        },
+        {
+          "source_line": 121,
+          "pack_line": 175,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 121
+          }
+        },
+        {
+          "source_line": 122,
+          "pack_line": 176,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 122
+          }
+        },
+        {
+          "source_line": 123,
+          "pack_line": 177,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 123
+          }
+        },
+        {
+          "source_line": 124,
+          "pack_line": 178,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 124
+          }
+        },
+        {
+          "source_line": 125,
+          "pack_line": 179,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 125
+          }
+        },
+        {
+          "source_line": 126,
+          "pack_line": 180,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 126
+          }
+        },
+        {
+          "source_line": 127,
+          "pack_line": 181,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 127
+          }
+        },
+        {
+          "source_line": 128,
+          "pack_line": 182,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 128
+          }
+        },
+        {
+          "source_line": 129,
+          "pack_line": 183,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 129
+          }
+        },
+        {
+          "source_line": 130,
+          "pack_line": 184,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 130
+          }
+        },
+        {
+          "source_line": 131,
+          "pack_line": 185,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 131
+          }
+        },
+        {
+          "source_line": 132,
+          "pack_line": 186,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 132
+          }
+        },
+        {
+          "source_line": 133,
+          "pack_line": 187,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 133
+          }
+        },
+        {
+          "source_line": 134,
+          "pack_line": 188,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 134
+          }
+        },
+        {
+          "source_line": 135,
+          "pack_line": 189,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 135
+          }
+        },
+        {
+          "source_line": 136,
+          "pack_line": 190,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 136
+          }
+        },
+        {
+          "source_line": 137,
+          "pack_line": 191,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 137
+          }
+        },
+        {
+          "source_line": 138,
+          "pack_line": 192,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 138
+          }
+        },
+        {
+          "source_line": 139,
+          "pack_line": 193,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 139
+          }
+        },
+        {
+          "source_line": 140,
+          "pack_line": 194,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 140
+          }
+        },
+        {
+          "source_line": 141,
+          "pack_line": 195,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 142,
+          "pack_line": 196,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 143
+          }
+        },
+        {
+          "source_line": 143,
+          "pack_line": 197,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 144,
+          "pack_line": 198,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 154
+          }
+        },
+        {
+          "source_line": 145,
+          "pack_line": 199,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 155
+          }
+        },
+        {
+          "source_line": 146,
+          "pack_line": 200,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 156
+          }
+        },
+        {
+          "source_line": 147,
+          "pack_line": 201,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 157
+          }
+        },
+        {
+          "source_line": 148,
+          "pack_line": 202,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 158
+          }
+        },
+        {
+          "source_line": 149,
+          "pack_line": 203,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 159
+          }
+        },
+        {
+          "source_line": 150,
+          "pack_line": 204,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 160
+          }
+        },
+        {
+          "source_line": 151,
+          "pack_line": 205,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 152,
+          "pack_line": 206,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 162
+          }
+        },
+        {
+          "source_line": 153,
+          "pack_line": 207,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 154,
+          "pack_line": 208,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 164
+          }
+        },
+        {
+          "source_line": 155,
+          "pack_line": 209,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 165
+          }
+        },
+        {
+          "source_line": 156,
+          "pack_line": 210,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 157,
+          "pack_line": 211,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 167
+          }
+        },
+        {
+          "source_line": 158,
+          "pack_line": 212,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 159,
+          "pack_line": 213,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 160,
+          "pack_line": 214,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 170
+          }
+        },
+        {
+          "source_line": 161,
+          "pack_line": 215,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 171
+          }
+        },
+        {
+          "source_line": 162,
+          "pack_line": 216,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 172
+          }
+        },
+        {
+          "source_line": 163,
+          "pack_line": 217,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 173
+          }
+        },
+        {
+          "source_line": 164,
+          "pack_line": 218,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 174
+          }
+        },
+        {
+          "source_line": 165,
+          "pack_line": 219,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 175
+          }
+        },
+        {
+          "source_line": 166,
+          "pack_line": 220,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 167,
+          "pack_line": 221,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 168,
+          "pack_line": 222,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 169,
+          "pack_line": 223,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 170,
+          "pack_line": 224,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 180
+          }
+        },
+        {
+          "source_line": 171,
+          "pack_line": 225,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 181
+          }
+        },
+        {
+          "source_line": 172,
+          "pack_line": 226,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 182
+          }
+        },
+        {
+          "source_line": 173,
+          "pack_line": 227,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 183
+          }
+        },
+        {
+          "source_line": 174,
+          "pack_line": 228,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 175,
+          "pack_line": 229,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 176,
+          "pack_line": 230,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 177,
+          "pack_line": 231,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 187
+          }
+        },
+        {
+          "source_line": 178,
+          "pack_line": 232,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 179,
+          "pack_line": 233,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 189
+          }
+        },
+        {
+          "source_line": 180,
+          "pack_line": 234,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 190
+          }
+        },
+        {
+          "source_line": 181,
+          "pack_line": 235,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 182,
+          "pack_line": 236,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 183,
+          "pack_line": 237,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 184,
+          "pack_line": 238,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 194
+          }
+        },
+        {
+          "source_line": 185,
+          "pack_line": 239,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 195
+          }
+        },
+        {
+          "source_line": 186,
+          "pack_line": 240,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 196
+          }
+        },
+        {
+          "source_line": 187,
+          "pack_line": 241,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 188,
+          "pack_line": 242,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 189,
+          "pack_line": 243,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 190,
+          "pack_line": 244,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 191,
+          "pack_line": 245,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 192,
+          "pack_line": 246,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 202
+          }
+        }
+      ],
+      "independent_roundtrip_equal": true
+    },
+    {
+      "source_id": "1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ENVIRONMENT_DESIGN_REGISTER.md",
+      "archive_id": "1zF1v38UEZP_McEGnhh4YAc8_sPh2KSv9",
+      "member_path": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ENVIRONMENT_DESIGN_REGISTER.md",
+      "sha256": "c71ad91c989e30fa6c924aaa455ca7737f59b3f75b0ecd3627f70e58493dcf38",
+      "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/c71ad91c989e30fa6c924aaa455ca7737f59b3f75b0ecd3627f70e58493dcf38/ENVIRONMENT_DESIGN_REGISTER.md",
+      "bytes": 9067,
+      "lines": 61,
+      "start": 247,
+      "end": 308,
+      "mapping": [
+        {
+          "source_line": 1,
+          "pack_line": 248,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 2,
+          "pack_line": 249,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 2
+          }
+        },
+        {
+          "source_line": 3,
+          "pack_line": 250,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 4,
+          "pack_line": 251,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 4
+          }
+        },
+        {
+          "source_line": 5,
+          "pack_line": 252,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 6,
+          "pack_line": 253,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 6
+          }
+        },
+        {
+          "source_line": 7,
+          "pack_line": 254,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 7
+          }
+        },
+        {
+          "source_line": 8,
+          "pack_line": 255,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 8
+          }
+        },
+        {
+          "source_line": 9,
+          "pack_line": 256,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 9
+          }
+        },
+        {
+          "source_line": 10,
+          "pack_line": 257,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 10
+          }
+        },
+        {
+          "source_line": 11,
+          "pack_line": 258,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 12,
+          "pack_line": 259,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 13,
+          "pack_line": 260,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 13
+          }
+        },
+        {
+          "source_line": 14,
+          "pack_line": 261,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 14
+          }
+        },
+        {
+          "source_line": 15,
+          "pack_line": 262,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 16,
+          "pack_line": 263,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 16
+          }
+        },
+        {
+          "source_line": 17,
+          "pack_line": 264,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 18,
+          "pack_line": 265,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 19,
+          "pack_line": 266,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 20,
+          "pack_line": 267,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 20
+          }
+        },
+        {
+          "source_line": 21,
+          "pack_line": 268,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 21
+          }
+        },
+        {
+          "source_line": 22,
+          "pack_line": 269,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 23,
+          "pack_line": 270,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 24,
+          "pack_line": 271,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 25,
+          "pack_line": 272,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 25
+          }
+        },
+        {
+          "source_line": 26,
+          "pack_line": 273,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 27,
+          "pack_line": 274,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 27
+          }
+        },
+        {
+          "source_line": 28,
+          "pack_line": 275,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 29,
+          "pack_line": 276,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 30,
+          "pack_line": 277,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 31,
+          "pack_line": 278,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 31
+          }
+        },
+        {
+          "source_line": 32,
+          "pack_line": 279,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 33,
+          "pack_line": 280,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 34,
+          "pack_line": 281,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 35,
+          "pack_line": 282,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 35
+          }
+        },
+        {
+          "source_line": 36,
+          "pack_line": 283,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 37,
+          "pack_line": 284,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 38,
+          "pack_line": 285,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 39,
+          "pack_line": 286,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 39
+          }
+        },
+        {
+          "source_line": 40,
+          "pack_line": 287,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 41,
+          "pack_line": 288,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 42,
+          "pack_line": 289,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 43,
+          "pack_line": 290,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 43
+          }
+        },
+        {
+          "source_line": 44,
+          "pack_line": 291,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 45,
+          "pack_line": 292,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 45
+          }
+        },
+        {
+          "source_line": 46,
+          "pack_line": 293,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 47,
+          "pack_line": 294,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 48,
+          "pack_line": 295,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 49,
+          "pack_line": 296,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 49
+          }
+        },
+        {
+          "source_line": 50,
+          "pack_line": 297,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 51,
+          "pack_line": 298,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 52,
+          "pack_line": 299,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 53,
+          "pack_line": 300,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 53
+          }
+        },
+        {
+          "source_line": 54,
+          "pack_line": 301,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 55,
+          "pack_line": 302,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 55
+          }
+        },
+        {
+          "source_line": 56,
+          "pack_line": 303,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 57,
+          "pack_line": 304,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 58,
+          "pack_line": 305,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 59,
+          "pack_line": 306,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 59
+          }
+        },
+        {
+          "source_line": 60,
+          "pack_line": 307,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 61,
+          "pack_line": 308,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 61
+          }
+        }
+      ],
+      "independent_roundtrip_equal": true
+    },
+    {
+      "source_id": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_04_River_of_Idemili/ARCHIVED_TO_DRIVE.md",
+      "archive_id": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+      "member_path": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/02_LOCATIONS/Chapter_04_River_of_Idemili/ARCHIVED_TO_DRIVE.md",
+      "sha256": "1e3a27e1d850f95fc5bb47a33c267ed91ac5a6e56cee0ac4f09494c9e990a4c2",
+      "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/1e3a27e1d850f95fc5bb47a33c267ed91ac5a6e56cee0ac4f09494c9e990a4c2/ARCHIVED_TO_DRIVE.md",
+      "bytes": 871,
+      "lines": 17,
+      "start": 309,
+      "end": 326,
+      "mapping": [
+        {
+          "source_line": 1,
+          "pack_line": 310,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 2,
+          "pack_line": 311,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 3,
+          "pack_line": 312,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S6",
+            "line": 3
+          }
+        },
+        {
+          "source_line": 4,
+          "pack_line": 313,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 5,
+          "pack_line": 314,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 6,
+          "pack_line": 315,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 7,
+          "pack_line": 316,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 8,
+          "pack_line": 317,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 9,
+          "pack_line": 318,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 10,
+          "pack_line": 319,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 11,
+          "pack_line": 320,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 12,
+          "pack_line": 321,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 13,
+          "pack_line": 322,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 14,
+          "pack_line": 323,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 15,
+          "pack_line": 324,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 16,
+          "pack_line": 325,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 17,
+          "pack_line": 326,
+          "kind": "literal",
+          "ending_hex": "0a"
+        }
+      ],
+      "independent_roundtrip_equal": true
+    },
+    {
+      "source_id": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/16_REJECTED_DESIGNS/README.md",
+      "archive_id": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+      "member_path": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/16_REJECTED_DESIGNS/README.md",
+      "sha256": "be9dc9849108da2f1f186e5d86cce1f6172a22c223ccb570d0bf7edfda284b89",
+      "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/be9dc9849108da2f1f186e5d86cce1f6172a22c223ccb570d0bf7edfda284b89/README.md",
+      "bytes": 1626,
+      "lines": 36,
+      "start": 327,
+      "end": 363,
+      "mapping": [
+        {
+          "source_line": 1,
+          "pack_line": 328,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 2,
+          "pack_line": 329,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 3,
+          "pack_line": 330,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S9",
+            "line": 3
+          }
+        },
+        {
+          "source_line": 4,
+          "pack_line": 331,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 5,
+          "pack_line": 332,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 6,
+          "pack_line": 333,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 7,
+          "pack_line": 334,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 8,
+          "pack_line": 335,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 9,
+          "pack_line": 336,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 10,
+          "pack_line": 337,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 11,
+          "pack_line": 338,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 12,
+          "pack_line": 339,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 13,
+          "pack_line": 340,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 14,
+          "pack_line": 341,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 15,
+          "pack_line": 342,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 16,
+          "pack_line": 343,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 17,
+          "pack_line": 344,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 18,
+          "pack_line": 345,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 19,
+          "pack_line": 346,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 20,
+          "pack_line": 347,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 21,
+          "pack_line": 348,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 22,
+          "pack_line": 349,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 23,
+          "pack_line": 350,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 24,
+          "pack_line": 351,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 25,
+          "pack_line": 352,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 26,
+          "pack_line": 353,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 27,
+          "pack_line": 354,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 28,
+          "pack_line": 355,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 29,
+          "pack_line": 356,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 30,
+          "pack_line": 357,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 31,
+          "pack_line": 358,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 32,
+          "pack_line": 359,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 33,
+          "pack_line": 360,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 34,
+          "pack_line": 361,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 35,
+          "pack_line": 362,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 36,
+          "pack_line": 363,
+          "kind": "literal",
+          "ending_hex": "0a"
+        }
+      ],
+      "independent_roundtrip_equal": true
+    },
+    {
+      "source_id": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ART_BIBLE_INDEX.md",
+      "archive_id": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+      "member_path": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ART_BIBLE_INDEX.md",
+      "sha256": "a09386cabdcb77afc39fc0ecd9fdfe8e32d65ded681e326f26aa9f811cda566a",
+      "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/a09386cabdcb77afc39fc0ecd9fdfe8e32d65ded681e326f26aa9f811cda566a/ART_BIBLE_INDEX.md",
+      "bytes": 35570,
+      "lines": 182,
+      "start": 364,
+      "end": 546,
+      "mapping": [
+        {
+          "source_line": 1,
+          "pack_line": 365,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 2,
+          "pack_line": 366,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 3,
+          "pack_line": 367,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 4,
+          "pack_line": 368,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 5,
+          "pack_line": 369,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 6,
+          "pack_line": 370,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 6
+          }
+        },
+        {
+          "source_line": 7,
+          "pack_line": 371,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 8,
+          "pack_line": 372,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 9,
+          "pack_line": 373,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 10,
+          "pack_line": 374,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 11,
+          "pack_line": 375,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 11
+          }
+        },
+        {
+          "source_line": 12,
+          "pack_line": 376,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 13,
+          "pack_line": 377,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 13
+          }
+        },
+        {
+          "source_line": 14,
+          "pack_line": 378,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 14
+          }
+        },
+        {
+          "source_line": 15,
+          "pack_line": 379,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 15
+          }
+        },
+        {
+          "source_line": 16,
+          "pack_line": 380,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 16
+          }
+        },
+        {
+          "source_line": 17,
+          "pack_line": 381,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 17
+          }
+        },
+        {
+          "source_line": 18,
+          "pack_line": 382,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 18
+          }
+        },
+        {
+          "source_line": 19,
+          "pack_line": 383,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 19
+          }
+        },
+        {
+          "source_line": 20,
+          "pack_line": 384,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 20
+          }
+        },
+        {
+          "source_line": 21,
+          "pack_line": 385,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 21
+          }
+        },
+        {
+          "source_line": 22,
+          "pack_line": 386,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 22
+          }
+        },
+        {
+          "source_line": 23,
+          "pack_line": 387,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 23
+          }
+        },
+        {
+          "source_line": 24,
+          "pack_line": 388,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 24
+          }
+        },
+        {
+          "source_line": 25,
+          "pack_line": 389,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 25
+          }
+        },
+        {
+          "source_line": 26,
+          "pack_line": 390,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 26
+          }
+        },
+        {
+          "source_line": 27,
+          "pack_line": 391,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 27
+          }
+        },
+        {
+          "source_line": 28,
+          "pack_line": 392,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 28
+          }
+        },
+        {
+          "source_line": 29,
+          "pack_line": 393,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 29
+          }
+        },
+        {
+          "source_line": 30,
+          "pack_line": 394,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 30
+          }
+        },
+        {
+          "source_line": 31,
+          "pack_line": 395,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 31
+          }
+        },
+        {
+          "source_line": 32,
+          "pack_line": 396,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 32
+          }
+        },
+        {
+          "source_line": 33,
+          "pack_line": 397,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 33
+          }
+        },
+        {
+          "source_line": 34,
+          "pack_line": 398,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 34
+          }
+        },
+        {
+          "source_line": 35,
+          "pack_line": 399,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 35
+          }
+        },
+        {
+          "source_line": 36,
+          "pack_line": 400,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 36
+          }
+        },
+        {
+          "source_line": 37,
+          "pack_line": 401,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 37
+          }
+        },
+        {
+          "source_line": 38,
+          "pack_line": 402,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 38
+          }
+        },
+        {
+          "source_line": 39,
+          "pack_line": 403,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 39
+          }
+        },
+        {
+          "source_line": 40,
+          "pack_line": 404,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 40
+          }
+        },
+        {
+          "source_line": 41,
+          "pack_line": 405,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 41
+          }
+        },
+        {
+          "source_line": 42,
+          "pack_line": 406,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 42
+          }
+        },
+        {
+          "source_line": 43,
+          "pack_line": 407,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 43
+          }
+        },
+        {
+          "source_line": 44,
+          "pack_line": 408,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 44
+          }
+        },
+        {
+          "source_line": 45,
+          "pack_line": 409,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 45
+          }
+        },
+        {
+          "source_line": 46,
+          "pack_line": 410,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 46
+          }
+        },
+        {
+          "source_line": 47,
+          "pack_line": 411,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 47
+          }
+        },
+        {
+          "source_line": 48,
+          "pack_line": 412,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 48
+          }
+        },
+        {
+          "source_line": 49,
+          "pack_line": 413,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 49
+          }
+        },
+        {
+          "source_line": 50,
+          "pack_line": 414,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 50
+          }
+        },
+        {
+          "source_line": 51,
+          "pack_line": 415,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 51
+          }
+        },
+        {
+          "source_line": 52,
+          "pack_line": 416,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 52
+          }
+        },
+        {
+          "source_line": 53,
+          "pack_line": 417,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 53
+          }
+        },
+        {
+          "source_line": 54,
+          "pack_line": 418,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 54
+          }
+        },
+        {
+          "source_line": 55,
+          "pack_line": 419,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 55
+          }
+        },
+        {
+          "source_line": 56,
+          "pack_line": 420,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 56
+          }
+        },
+        {
+          "source_line": 57,
+          "pack_line": 421,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 57
+          }
+        },
+        {
+          "source_line": 58,
+          "pack_line": 422,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 58
+          }
+        },
+        {
+          "source_line": 59,
+          "pack_line": 423,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 59
+          }
+        },
+        {
+          "source_line": 60,
+          "pack_line": 424,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 60
+          }
+        },
+        {
+          "source_line": 61,
+          "pack_line": 425,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 61
+          }
+        },
+        {
+          "source_line": 62,
+          "pack_line": 426,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 62
+          }
+        },
+        {
+          "source_line": 63,
+          "pack_line": 427,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 63
+          }
+        },
+        {
+          "source_line": 64,
+          "pack_line": 428,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 64
+          }
+        },
+        {
+          "source_line": 65,
+          "pack_line": 429,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 65
+          }
+        },
+        {
+          "source_line": 66,
+          "pack_line": 430,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 66
+          }
+        },
+        {
+          "source_line": 67,
+          "pack_line": 431,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 67
+          }
+        },
+        {
+          "source_line": 68,
+          "pack_line": 432,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 68
+          }
+        },
+        {
+          "source_line": 69,
+          "pack_line": 433,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 69
+          }
+        },
+        {
+          "source_line": 70,
+          "pack_line": 434,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 70
+          }
+        },
+        {
+          "source_line": 71,
+          "pack_line": 435,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 71
+          }
+        },
+        {
+          "source_line": 72,
+          "pack_line": 436,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 72
+          }
+        },
+        {
+          "source_line": 73,
+          "pack_line": 437,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 73
+          }
+        },
+        {
+          "source_line": 74,
+          "pack_line": 438,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 74
+          }
+        },
+        {
+          "source_line": 75,
+          "pack_line": 439,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 75
+          }
+        },
+        {
+          "source_line": 76,
+          "pack_line": 440,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 76
+          }
+        },
+        {
+          "source_line": 77,
+          "pack_line": 441,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 77
+          }
+        },
+        {
+          "source_line": 78,
+          "pack_line": 442,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 78
+          }
+        },
+        {
+          "source_line": 79,
+          "pack_line": 443,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 79
+          }
+        },
+        {
+          "source_line": 80,
+          "pack_line": 444,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 80
+          }
+        },
+        {
+          "source_line": 81,
+          "pack_line": 445,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 81
+          }
+        },
+        {
+          "source_line": 82,
+          "pack_line": 446,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 82
+          }
+        },
+        {
+          "source_line": 83,
+          "pack_line": 447,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 83
+          }
+        },
+        {
+          "source_line": 84,
+          "pack_line": 448,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 84
+          }
+        },
+        {
+          "source_line": 85,
+          "pack_line": 449,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 85
+          }
+        },
+        {
+          "source_line": 86,
+          "pack_line": 450,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 86
+          }
+        },
+        {
+          "source_line": 87,
+          "pack_line": 451,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 87
+          }
+        },
+        {
+          "source_line": 88,
+          "pack_line": 452,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 88
+          }
+        },
+        {
+          "source_line": 89,
+          "pack_line": 453,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 89
+          }
+        },
+        {
+          "source_line": 90,
+          "pack_line": 454,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 90
+          }
+        },
+        {
+          "source_line": 91,
+          "pack_line": 455,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 91
+          }
+        },
+        {
+          "source_line": 92,
+          "pack_line": 456,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 92
+          }
+        },
+        {
+          "source_line": 93,
+          "pack_line": 457,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 93
+          }
+        },
+        {
+          "source_line": 94,
+          "pack_line": 458,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 94
+          }
+        },
+        {
+          "source_line": 95,
+          "pack_line": 459,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 95
+          }
+        },
+        {
+          "source_line": 96,
+          "pack_line": 460,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 96
+          }
+        },
+        {
+          "source_line": 97,
+          "pack_line": 461,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 97
+          }
+        },
+        {
+          "source_line": 98,
+          "pack_line": 462,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 98
+          }
+        },
+        {
+          "source_line": 99,
+          "pack_line": 463,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 99
+          }
+        },
+        {
+          "source_line": 100,
+          "pack_line": 464,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 100
+          }
+        },
+        {
+          "source_line": 101,
+          "pack_line": 465,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 101
+          }
+        },
+        {
+          "source_line": 102,
+          "pack_line": 466,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 102
+          }
+        },
+        {
+          "source_line": 103,
+          "pack_line": 467,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 103
+          }
+        },
+        {
+          "source_line": 104,
+          "pack_line": 468,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 104
+          }
+        },
+        {
+          "source_line": 105,
+          "pack_line": 469,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 105
+          }
+        },
+        {
+          "source_line": 106,
+          "pack_line": 470,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 106
+          }
+        },
+        {
+          "source_line": 107,
+          "pack_line": 471,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 107
+          }
+        },
+        {
+          "source_line": 108,
+          "pack_line": 472,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 108
+          }
+        },
+        {
+          "source_line": 109,
+          "pack_line": 473,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 109
+          }
+        },
+        {
+          "source_line": 110,
+          "pack_line": 474,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 110
+          }
+        },
+        {
+          "source_line": 111,
+          "pack_line": 475,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 111
+          }
+        },
+        {
+          "source_line": 112,
+          "pack_line": 476,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 112
+          }
+        },
+        {
+          "source_line": 113,
+          "pack_line": 477,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 113
+          }
+        },
+        {
+          "source_line": 114,
+          "pack_line": 478,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 114
+          }
+        },
+        {
+          "source_line": 115,
+          "pack_line": 479,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 115
+          }
+        },
+        {
+          "source_line": 116,
+          "pack_line": 480,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 116
+          }
+        },
+        {
+          "source_line": 117,
+          "pack_line": 481,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 117
+          }
+        },
+        {
+          "source_line": 118,
+          "pack_line": 482,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 118
+          }
+        },
+        {
+          "source_line": 119,
+          "pack_line": 483,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 119
+          }
+        },
+        {
+          "source_line": 120,
+          "pack_line": 484,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 120
+          }
+        },
+        {
+          "source_line": 121,
+          "pack_line": 485,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 121
+          }
+        },
+        {
+          "source_line": 122,
+          "pack_line": 486,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 122
+          }
+        },
+        {
+          "source_line": 123,
+          "pack_line": 487,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 123
+          }
+        },
+        {
+          "source_line": 124,
+          "pack_line": 488,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 124
+          }
+        },
+        {
+          "source_line": 125,
+          "pack_line": 489,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 125
+          }
+        },
+        {
+          "source_line": 126,
+          "pack_line": 490,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 126
+          }
+        },
+        {
+          "source_line": 127,
+          "pack_line": 491,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 127
+          }
+        },
+        {
+          "source_line": 128,
+          "pack_line": 492,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 129,
+          "pack_line": 493,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 129
+          }
+        },
+        {
+          "source_line": 130,
+          "pack_line": 494,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 130
+          }
+        },
+        {
+          "source_line": 131,
+          "pack_line": 495,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 131
+          }
+        },
+        {
+          "source_line": 132,
+          "pack_line": 496,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 133,
+          "pack_line": 497,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 134,
+          "pack_line": 498,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 154
+          }
+        },
+        {
+          "source_line": 135,
+          "pack_line": 499,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 155
+          }
+        },
+        {
+          "source_line": 136,
+          "pack_line": 500,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 156
+          }
+        },
+        {
+          "source_line": 137,
+          "pack_line": 501,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 157
+          }
+        },
+        {
+          "source_line": 138,
+          "pack_line": 502,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 158
+          }
+        },
+        {
+          "source_line": 139,
+          "pack_line": 503,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 159
+          }
+        },
+        {
+          "source_line": 140,
+          "pack_line": 504,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 160
+          }
+        },
+        {
+          "source_line": 141,
+          "pack_line": 505,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 142,
+          "pack_line": 506,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 162
+          }
+        },
+        {
+          "source_line": 143,
+          "pack_line": 507,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 144,
+          "pack_line": 508,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 164
+          }
+        },
+        {
+          "source_line": 145,
+          "pack_line": 509,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 165
+          }
+        },
+        {
+          "source_line": 146,
+          "pack_line": 510,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 147,
+          "pack_line": 511,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 167
+          }
+        },
+        {
+          "source_line": 148,
+          "pack_line": 512,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 149,
+          "pack_line": 513,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 150,
+          "pack_line": 514,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 170
+          }
+        },
+        {
+          "source_line": 151,
+          "pack_line": 515,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 171
+          }
+        },
+        {
+          "source_line": 152,
+          "pack_line": 516,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 172
+          }
+        },
+        {
+          "source_line": 153,
+          "pack_line": 517,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 173
+          }
+        },
+        {
+          "source_line": 154,
+          "pack_line": 518,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 174
+          }
+        },
+        {
+          "source_line": 155,
+          "pack_line": 519,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 175
+          }
+        },
+        {
+          "source_line": 156,
+          "pack_line": 520,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 157,
+          "pack_line": 521,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 158,
+          "pack_line": 522,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 159,
+          "pack_line": 523,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 160,
+          "pack_line": 524,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 180
+          }
+        },
+        {
+          "source_line": 161,
+          "pack_line": 525,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 181
+          }
+        },
+        {
+          "source_line": 162,
+          "pack_line": 526,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 182
+          }
+        },
+        {
+          "source_line": 163,
+          "pack_line": 527,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 183
+          }
+        },
+        {
+          "source_line": 164,
+          "pack_line": 528,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 165,
+          "pack_line": 529,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 166,
+          "pack_line": 530,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 167,
+          "pack_line": 531,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 187
+          }
+        },
+        {
+          "source_line": 168,
+          "pack_line": 532,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 169,
+          "pack_line": 533,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 189
+          }
+        },
+        {
+          "source_line": 170,
+          "pack_line": 534,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 190
+          }
+        },
+        {
+          "source_line": 171,
+          "pack_line": 535,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 172,
+          "pack_line": 536,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 173,
+          "pack_line": 537,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 174,
+          "pack_line": 538,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 194
+          }
+        },
+        {
+          "source_line": 175,
+          "pack_line": 539,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 195
+          }
+        },
+        {
+          "source_line": 176,
+          "pack_line": 540,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 196
+          }
+        },
+        {
+          "source_line": 177,
+          "pack_line": 541,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 178,
+          "pack_line": 542,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 179,
+          "pack_line": 543,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 180,
+          "pack_line": 544,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 181,
+          "pack_line": 545,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 182,
+          "pack_line": 546,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S10",
+            "line": 202
+          }
+        }
+      ],
+      "independent_roundtrip_equal": true
+    },
+    {
+      "source_id": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ENVIRONMENT_DESIGN_REGISTER.md",
+      "archive_id": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+      "member_path": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/ENVIRONMENT_DESIGN_REGISTER.md",
+      "sha256": "b30c899c198776dcd41165654f266a3920b0a5082bff988214b66525ac44a17b",
+      "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/b30c899c198776dcd41165654f266a3920b0a5082bff988214b66525ac44a17b/ENVIRONMENT_DESIGN_REGISTER.md",
+      "bytes": 7920,
+      "lines": 55,
+      "start": 547,
+      "end": 602,
+      "mapping": [
+        {
+          "source_line": 1,
+          "pack_line": 548,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 2,
+          "pack_line": 549,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 2
+          }
+        },
+        {
+          "source_line": 3,
+          "pack_line": 550,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 4,
+          "pack_line": 551,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 4
+          }
+        },
+        {
+          "source_line": 5,
+          "pack_line": 552,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 6,
+          "pack_line": 553,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 6
+          }
+        },
+        {
+          "source_line": 7,
+          "pack_line": 554,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 7
+          }
+        },
+        {
+          "source_line": 8,
+          "pack_line": 555,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 8
+          }
+        },
+        {
+          "source_line": 9,
+          "pack_line": 556,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 9
+          }
+        },
+        {
+          "source_line": 10,
+          "pack_line": 557,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 11,
+          "pack_line": 558,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 12,
+          "pack_line": 559,
+          "kind": "repeat",
+          "ref": {
+            "kind": "pack",
+            "pack_line": 259
+          }
+        },
+        {
+          "source_line": 13,
+          "pack_line": 560,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 13
+          }
+        },
+        {
+          "source_line": 14,
+          "pack_line": 561,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 14
+          }
+        },
+        {
+          "source_line": 15,
+          "pack_line": 562,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 16,
+          "pack_line": 563,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 16
+          }
+        },
+        {
+          "source_line": 17,
+          "pack_line": 564,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 18,
+          "pack_line": 565,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 19,
+          "pack_line": 566,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 20,
+          "pack_line": 567,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 20
+          }
+        },
+        {
+          "source_line": 21,
+          "pack_line": 568,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 21
+          }
+        },
+        {
+          "source_line": 22,
+          "pack_line": 569,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 23,
+          "pack_line": 570,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 24,
+          "pack_line": 571,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 25,
+          "pack_line": 572,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 25
+          }
+        },
+        {
+          "source_line": 26,
+          "pack_line": 573,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 27,
+          "pack_line": 574,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 27
+          }
+        },
+        {
+          "source_line": 28,
+          "pack_line": 575,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 29,
+          "pack_line": 576,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 30,
+          "pack_line": 577,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 31,
+          "pack_line": 578,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 31
+          }
+        },
+        {
+          "source_line": 32,
+          "pack_line": 579,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 33,
+          "pack_line": 580,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 34,
+          "pack_line": 581,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 35,
+          "pack_line": 582,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 35
+          }
+        },
+        {
+          "source_line": 36,
+          "pack_line": 583,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 37,
+          "pack_line": 584,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 38,
+          "pack_line": 585,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 39,
+          "pack_line": 586,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 39
+          }
+        },
+        {
+          "source_line": 40,
+          "pack_line": 587,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 41,
+          "pack_line": 588,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 42,
+          "pack_line": 589,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 43,
+          "pack_line": 590,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 43
+          }
+        },
+        {
+          "source_line": 44,
+          "pack_line": 591,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 45,
+          "pack_line": 592,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 45
+          }
+        },
+        {
+          "source_line": 46,
+          "pack_line": 593,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 47,
+          "pack_line": 594,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 48,
+          "pack_line": 595,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 49,
+          "pack_line": 596,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 49
+          }
+        },
+        {
+          "source_line": 50,
+          "pack_line": 597,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 51,
+          "pack_line": 598,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 52,
+          "pack_line": 599,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 53,
+          "pack_line": 600,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S3",
+            "line": 53
+          }
+        },
+        {
+          "source_line": 54,
+          "pack_line": 601,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 55,
+          "pack_line": 602,
+          "kind": "literal",
+          "ending_hex": "0a"
+        }
+      ],
+      "independent_roundtrip_equal": true
+    },
+    {
+      "source_id": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT::THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/OPEN_ART_DECISIONS.md",
+      "archive_id": "1CQhFiErPdOAXmvGNWSPBFBwXhN3AXsIT",
+      "member_path": "THE_DISOBEDIENT_DAUGHTER_ART_BIBLE/OPEN_ART_DECISIONS.md",
+      "sha256": "679e19db524317ac33031c2245403a0a0132e8d9d09f31a4feab4b38e53112df",
+      "snapshot": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/679e19db524317ac33031c2245403a0a0132e8d9d09f31a4feab4b38e53112df/OPEN_ART_DECISIONS.md",
+      "bytes": 4157,
+      "lines": 42,
+      "start": 603,
+      "end": 645,
+      "mapping": [
+        {
+          "source_line": 1,
+          "pack_line": 604,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 2,
+          "pack_line": 605,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 3,
+          "pack_line": 606,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 4,
+          "pack_line": 607,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 5,
+          "pack_line": 608,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 6,
+          "pack_line": 609,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 6
+          }
+        },
+        {
+          "source_line": 7,
+          "pack_line": 610,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 7
+          }
+        },
+        {
+          "source_line": 8,
+          "pack_line": 611,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 8
+          }
+        },
+        {
+          "source_line": 9,
+          "pack_line": 612,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 9
+          }
+        },
+        {
+          "source_line": 10,
+          "pack_line": 613,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 10
+          }
+        },
+        {
+          "source_line": 11,
+          "pack_line": 614,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 11
+          }
+        },
+        {
+          "source_line": 12,
+          "pack_line": 615,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 12
+          }
+        },
+        {
+          "source_line": 13,
+          "pack_line": 616,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 13
+          }
+        },
+        {
+          "source_line": 14,
+          "pack_line": 617,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 14
+          }
+        },
+        {
+          "source_line": 15,
+          "pack_line": 618,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 15
+          }
+        },
+        {
+          "source_line": 16,
+          "pack_line": 619,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 16
+          }
+        },
+        {
+          "source_line": 17,
+          "pack_line": 620,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 17
+          }
+        },
+        {
+          "source_line": 18,
+          "pack_line": 621,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 18
+          }
+        },
+        {
+          "source_line": 19,
+          "pack_line": 622,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 20,
+          "pack_line": 623,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 21,
+          "pack_line": 624,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 21
+          }
+        },
+        {
+          "source_line": 22,
+          "pack_line": 625,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 23,
+          "pack_line": 626,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 24,
+          "pack_line": 627,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 24
+          }
+        },
+        {
+          "source_line": 25,
+          "pack_line": 628,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 25
+          }
+        },
+        {
+          "source_line": 26,
+          "pack_line": 629,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 26
+          }
+        },
+        {
+          "source_line": 27,
+          "pack_line": 630,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 27
+          }
+        },
+        {
+          "source_line": 28,
+          "pack_line": 631,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 28
+          }
+        },
+        {
+          "source_line": 29,
+          "pack_line": 632,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 29
+          }
+        },
+        {
+          "source_line": 30,
+          "pack_line": 633,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 31,
+          "pack_line": 634,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 32,
+          "pack_line": 635,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 33,
+          "pack_line": 636,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 34,
+          "pack_line": 637,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 35,
+          "pack_line": 638,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 35
+          }
+        },
+        {
+          "source_line": 36,
+          "pack_line": 639,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 36
+          }
+        },
+        {
+          "source_line": 37,
+          "pack_line": 640,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 37
+          }
+        },
+        {
+          "source_line": 38,
+          "pack_line": 641,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 38
+          }
+        },
+        {
+          "source_line": 39,
+          "pack_line": 642,
+          "kind": "repeat",
+          "ref": {
+            "kind": "seed",
+            "alias": "S12",
+            "line": 39
+          }
+        },
+        {
+          "source_line": 40,
+          "pack_line": 643,
+          "kind": "blank",
+          "utf8_hex": "0a"
+        },
+        {
+          "source_line": 41,
+          "pack_line": 644,
+          "kind": "literal",
+          "ending_hex": "0a"
+        },
+        {
+          "source_line": 42,
+          "pack_line": 645,
+          "kind": "literal",
+          "ending_hex": "0a"
+        }
+      ],
+      "independent_roundtrip_equal": true
+    }
+  ],
+  "pack_path": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/evidence_text_payloads/BATCH20_DOCUMENT_DELTA_PACK.txt",
+  "pack_lines": 645,
+  "pack_bytes": 20588,
+  "pack_sha256": "adda6f9f4d99204a676288df5aa1009a644c887e198b257717748e66f4af557b"
+}

@@ -1,0 +1,18 @@
+{
+  "package_path": "TDD_PHASE2_PRODUCTION_READINESS_AUDIT_v1/deliverables/TDD_PHASE2_AUDIT_WORKING_PACKAGE_BATCH20.zip",
+  "bytes": 3291617,
+  "sha256": "31b80638570c947aaa316b8a9e86dd914deb74712ccfe59e830e234645c259ee",
+  "zip_member_count": 291,
+  "crc_and_manifest_payload_hashes_verified": true,
+  "report": "TDD_PHASE2_A_TO_J_WORKING_AUDIT.html",
+  "batch_report": "BATCH_20_PROGRESS_AND_FINDINGS.md",
+  "completed_batch": "20",
+  "new_distinct_inspections": 79,
+  "new_visual": 62,
+  "new_semantic": 17,
+  "all_actual_files_inspected": false,
+  "production_readiness_certified": false,
+  "remote_published": false,
+  "raw_source_artwork_backup_included": false,
+  "phase2_remote_writes": 0
+}

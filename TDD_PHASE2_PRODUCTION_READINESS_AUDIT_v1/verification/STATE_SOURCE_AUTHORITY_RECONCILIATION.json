@@ -1,0 +1,233 @@
+[
+  {
+    "predecessor": {
+      "code": "B02",
+      "source_id": "1SLxYu-Fez5qGeo1gpZbILWXy_Y_9WHco",
+      "name": "CH01-SET-001-ST01_V001.jpg",
+      "source_md5": "6bc96ac39e58b88de89798bef2e3a163",
+      "source_sha256": "6f7d1cf0457417dc69c790ceaac92bb72e3c780432ccb94354d30b855d2fabc9",
+      "final_verdict": "REPLACED / SUPERSEDED",
+      "permitted_use": "Superseded creative evidence only; no independent release.",
+      "final_parent_id": "1nRUYZLog7y1-EWFt0sPQ22n50IEnSb4P",
+      "direction": "Preserve unmodified; follow successor exact verdict rather than promoting this earlier file.",
+      "required_role": "None for archival retention.",
+      "authority_question": "None for archival retention.",
+      "missing_input": "None for archival retention.",
+      "objective_closure_test": "Exact original retained with traceable successor; successor permission remains separately stated."
+    },
+    "later_distinct_source": {
+      "code": "B03",
+      "source_id": "1Rxo6My76m13XUAEVS00M3-bVzMVIxQgb",
+      "name": "CH01-SET-001-ST01_V002.jpg",
+      "source_md5": "9d0b57620ee6bad955ded5e3a8b4befc",
+      "source_sha256": "22f072b5e8936bf64dc99cc85d347c4d92690fed11af82b3569d01224a593923",
+      "final_verdict": "RETAIN AS REFERENCE / REVIEW AID",
+      "permitted_use": "Lighting/weather reference only; not a locked settlement kit or historical architecture.",
+      "final_parent_id": "1CA2zjdW4b7vO0dTSgDz6Oi_b-5nwsIuZ",
+      "direction": "Keep unchanged; no new series regeneration or universal camera lock. Common landmarks must govern any later separately authorised series.",
+      "required_role": "None for the permitted use; CD restriction is final.",
+      "authority_question": "None for the permitted use.",
+      "missing_input": "None for the permitted use.",
+      "objective_closure_test": "Use only within the defined scope; original bytes and identity must remain unchanged."
+    },
+    "approval_inherited": false
+  },
+  {
+    "predecessor": {
+      "code": "B04",
+      "source_id": "1xSJ6QJBwA2eQsatcYgM_hHBrhEAvz_5d",
+      "name": "CH01-SET-001-ST02_V001.jpg",
+      "source_md5": "07497ed4f825d7b58e5e87b0660e298d",
+      "source_sha256": "92da348191a0ce5d98ec6290ed558fb4dc2b5a62acce26524bdedf11cb64570e",
+      "final_verdict": "REPLACED / SUPERSEDED",
+      "permitted_use": "Superseded creative evidence only; no independent release.",
+      "final_parent_id": "1nRUYZLog7y1-EWFt0sPQ22n50IEnSb4P",
+      "direction": "Preserve unmodified; follow successor exact verdict rather than promoting this earlier file.",
+      "required_role": "None for archival retention.",
+      "authority_question": "None for archival retention.",
+      "missing_input": "None for archival retention.",
+      "objective_closure_test": "Exact original retained with traceable successor; successor permission remains separately stated."
+    },
+    "later_distinct_source": {
+      "code": "B05",
+      "source_id": "1hldnXwv2_grB2Q6YWvQFRPdcIs3dR_h3",
+      "name": "CH01-SET-001-ST02_V002.jpg",
+      "source_md5": "821dd5b39fcbf60e9caf40ff8059e865",
+      "source_sha256": "017c02a12b5d3010f591204b464017ca1893e48a7b3568f5bffebb1be3d5d7d7",
+      "final_verdict": "APPROVED WITH DEFINED CONDITIONS",
+      "permitted_use": "Internal fictional midday layout/composition study; not approved settlement design.",
+      "final_parent_id": "11Dq42fI9zCln4ylwdilSMjB4ME8NF3Oe",
+      "direction": "Preserve central doorway/hall, enclosing wall, square and forest/farm-horizon anchors if later series work is separately commissioned; no work commissioned now.",
+      "required_role": "None for the permitted use; CD restriction is final.",
+      "authority_question": "None for the permitted use.",
+      "missing_input": "None for the permitted use.",
+      "objective_closure_test": "Use only within the defined scope; original bytes and identity must remain unchanged."
+    },
+    "approval_inherited": false
+  },
+  {
+    "predecessor": {
+      "code": "B06",
+      "source_id": "1YJqo7pZRuq1hOHpfsiBp9Amiv8SHGJQp",
+      "name": "CH01-SET-001-ST03_V001.jpg",
+      "source_md5": "cb43f0277f450bd8cc83e8039d2d8260",
+      "source_sha256": "dea1eba1333b54a35354c37790b23f40df26c38483ea12bc79cff17af76a87ef",
+      "final_verdict": "REPLACED / SUPERSEDED",
+      "permitted_use": "Superseded creative evidence only; no independent release.",
+      "final_parent_id": "1nRUYZLog7y1-EWFt0sPQ22n50IEnSb4P",
+      "direction": "Preserve unmodified; follow successor exact verdict rather than promoting this earlier file.",
+      "required_role": "None for archival retention.",
+      "authority_question": "None for archival retention.",
+      "missing_input": "None for archival retention.",
+      "objective_closure_test": "Exact original retained with traceable successor; successor permission remains separately stated."
+    },
+    "later_distinct_source": {
+      "code": "B07",
+      "source_id": "1j03tjjtHXt6s5iHJfgJS3M_j17aNmiMg",
+      "name": "CH01-SET-001-ST03_V002.jpg",
+      "source_md5": "5e5bb058fdd761d859fda2d95cabb68e",
+      "source_sha256": "5601f89c4d8707daae6ee80eea5e1d97cff533809776fb1b0624574e140dfcb7",
+      "final_verdict": "RETAIN AS REFERENCE / REVIEW AID",
+      "permitted_use": "Lighting/weather reference only; not a locked settlement kit or historical architecture.",
+      "final_parent_id": "1CA2zjdW4b7vO0dTSgDz6Oi_b-5nwsIuZ",
+      "direction": "Keep unchanged; no new series regeneration or universal camera lock. Common landmarks must govern any later separately authorised series.",
+      "required_role": "None for the permitted use; CD restriction is final.",
+      "authority_question": "None for the permitted use.",
+      "missing_input": "None for the permitted use.",
+      "objective_closure_test": "Use only within the defined scope; original bytes and identity must remain unchanged."
+    },
+    "approval_inherited": false
+  },
+  {
+    "predecessor": {
+      "code": "B10",
+      "source_id": "1IhgfuIFZ5wOj4Wb0KpTrYQcyj57nT9Pz",
+      "name": "CH01-SET-001-ST04_V003.jpg",
+      "source_md5": "109c6ea79bedd7d2d629aca2dda22a05",
+      "source_sha256": "300484f18b744874505b2b2d83c468ea7cf58abb2c1f5543a70ac110630e9332",
+      "final_verdict": "REPLACED / SUPERSEDED",
+      "permitted_use": "Superseded creative evidence only; no independent release.",
+      "final_parent_id": "1nRUYZLog7y1-EWFt0sPQ22n50IEnSb4P",
+      "direction": "Preserve unmodified; follow successor exact verdict rather than promoting this earlier file.",
+      "required_role": "None for archival retention.",
+      "authority_question": "None for archival retention.",
+      "missing_input": "None for archival retention.",
+      "objective_closure_test": "Exact original retained with traceable successor; successor permission remains separately stated."
+    },
+    "later_distinct_source": {
+      "code": "B11",
+      "source_id": "1npYn0kJB2FFjTxPyGdACAsCqKk8ZbDPq",
+      "name": "CH01-SET-001-ST04_V004.jpg",
+      "source_md5": "766ce2bfed229421627323b8c7ba3c70",
+      "source_sha256": "2e2eba64a5e19747b1349d933515cb1777ac2f7e75a85246c09f98375d665a3b",
+      "final_verdict": "APPROVED WITH DEFINED CONDITIONS",
+      "permitted_use": "Night concept review at delivered concept scale only.",
+      "final_parent_id": "11Dq42fI9zCln4ylwdilSMjB4ME8NF3Oe",
+      "direction": "No further ring/niche/speck/branch removals. B09 ring identity remains historically unknown; do not call it sacred or a hearth.",
+      "required_role": "None for the permitted use; CD restriction is final.",
+      "authority_question": "None for the permitted use.",
+      "missing_input": "None for the permitted use.",
+      "objective_closure_test": "Use only within the defined scope; original bytes and identity must remain unchanged."
+    },
+    "approval_inherited": false
+  },
+  {
+    "predecessor": {
+      "code": "B12",
+      "source_id": "1KyoNo4wBHp6GG_2Ad2MdYew-cKLYHpaz",
+      "name": "CH01-SET-001-ST05_V001.jpg",
+      "source_md5": "21e3d3c81b72e698e34de772a690bf16",
+      "source_sha256": "a39f7716c0129a191f8082c623cd585623eba88c184234d9ab8e33ea6555a611",
+      "final_verdict": "REPLACED / SUPERSEDED",
+      "permitted_use": "Superseded creative evidence only; no independent release.",
+      "final_parent_id": "1nRUYZLog7y1-EWFt0sPQ22n50IEnSb4P",
+      "direction": "Preserve unmodified; follow successor exact verdict rather than promoting this earlier file.",
+      "required_role": "None for archival retention.",
+      "authority_question": "None for archival retention.",
+      "missing_input": "None for archival retention.",
+      "objective_closure_test": "Exact original retained with traceable successor; successor permission remains separately stated."
+    },
+    "later_distinct_source": {
+      "code": "B13",
+      "source_id": "1X-eO-Svbzo46ozPXbsE-JpT4SEfWMgOw",
+      "name": "CH01-SET-001-ST05_V002.jpg",
+      "source_md5": "d4312825d677faf65863186c5249c0f0",
+      "source_sha256": "4e21d61db1974b95a2453dc0c00ecd13a27cfcf6e105ff218a43e24323cba925",
+      "final_verdict": "RETAIN AS REFERENCE / REVIEW AID",
+      "permitted_use": "Lighting/weather reference only; not a locked settlement kit or historical architecture.",
+      "final_parent_id": "1CA2zjdW4b7vO0dTSgDz6Oi_b-5nwsIuZ",
+      "direction": "Keep unchanged; no new series regeneration or universal camera lock. Common landmarks must govern any later separately authorised series.",
+      "required_role": "None for the permitted use; CD restriction is final.",
+      "authority_question": "None for the permitted use.",
+      "missing_input": "None for the permitted use.",
+      "objective_closure_test": "Use only within the defined scope; original bytes and identity must remain unchanged."
+    },
+    "approval_inherited": false
+  },
+  {
+    "predecessor": {
+      "code": "B14",
+      "source_id": "1cKZa4flUbjidGKo5dHZECfJF9hf75RdW",
+      "name": "CH01-SET-001-ST06_V001.jpg",
+      "source_md5": "8728ea412a71967e07656de28b59710d",
+      "source_sha256": "87e42ed3498911d06301c36aa4f9359a0424d0a1f4e358ba53d45548228f3ad8",
+      "final_verdict": "REPLACED / SUPERSEDED",
+      "permitted_use": "Superseded creative evidence only; no independent release.",
+      "final_parent_id": "1nRUYZLog7y1-EWFt0sPQ22n50IEnSb4P",
+      "direction": "Preserve unmodified; follow successor exact verdict rather than promoting this earlier file.",
+      "required_role": "None for archival retention.",
+      "authority_question": "None for archival retention.",
+      "missing_input": "None for archival retention.",
+      "objective_closure_test": "Exact original retained with traceable successor; successor permission remains separately stated."
+    },
+    "later_distinct_source": {
+      "code": "B15",
+      "source_id": "1TBXHgJlUmmbMWcMhG9PQn0eS07bdbum9",
+      "name": "CH01-SET-001-ST06_V002.jpg",
+      "source_md5": "1bea08e784023a5a0c526bf3eca050f1",
+      "source_sha256": "a4c915f241ad0bbf1cf46812961f5ba80c416d04c006947e30410ca93081186e",
+      "final_verdict": "APPROVED WITH DEFINED CONDITIONS",
+      "permitted_use": "Internal contemporary-context fictional market study only; not ethnography, ritual evidence or cross-asset NPC costume authority.",
+      "final_parent_id": "11Dq42fI9zCln4ylwdilSMjB4ME8NF3Oe",
+      "direction": "No raster change authorised. Preserve the exact original and stated limitations.",
+      "required_role": "None for the permitted use; CD restriction is final.",
+      "authority_question": "None for the permitted use.",
+      "missing_input": "None for the permitted use.",
+      "objective_closure_test": "Use only within the defined scope; original bytes and identity must remain unchanged."
+    },
+    "approval_inherited": false
+  },
+  {
+    "predecessor": {
+      "code": "B16",
+      "source_id": "1sixVQ4I9wsgJbEOSfssCVsXRcrIG3x7R",
+      "name": "CH01-SET-001-ST07_V001.jpg",
+      "source_md5": "5502ac4ae09d35f3734bd206bab25a65",
+      "source_sha256": "694684263f47e76e00f4f0978ce1e72ac9de2a839e58b1078be0553f67228216",
+      "final_verdict": "REPLACED / SUPERSEDED",
+      "permitted_use": "Superseded creative evidence only; no independent release.",
+      "final_parent_id": "1nRUYZLog7y1-EWFt0sPQ22n50IEnSb4P",
+      "direction": "Preserve unmodified; follow successor exact verdict rather than promoting this earlier file.",
+      "required_role": "None for archival retention.",
+      "authority_question": "None for archival retention.",
+      "missing_input": "None for archival retention.",
+      "objective_closure_test": "Exact original retained with traceable successor; successor permission remains separately stated."
+    },
+    "later_distinct_source": {
+      "code": "B17",
+      "source_id": "1_Lw07vpd0aOo0XnI7-xrbWZTWhypg7vU",
+      "name": "CH01-SET-001-ST07_V002.jpg",
+      "source_md5": "ca1ce79791caba1536354836f554abce",
+      "source_sha256": "15863690c940e0a67d502b4106a3101370714c732e11855718cd7bb2b66c7495",
+      "final_verdict": "APPROVED WITH DEFINED CONDITIONS",
+      "permitted_use": "Internal contemporary-context fictional ordinary assembly study only; not ethnography, ritual evidence or cross-asset NPC costume authority.",
+      "final_parent_id": "11Dq42fI9zCln4ylwdilSMjB4ME8NF3Oe",
+      "direction": "No raster change authorised. Preserve the exact original and stated limitations.",
+      "required_role": "None for the permitted use; CD restriction is final.",
+      "authority_question": "None for the permitted use.",
+      "missing_input": "None for the permitted use.",
+      "objective_closure_test": "Use only within the defined scope; original bytes and identity must remain unchanged."
+    },
+    "approval_inherited": false
+  }
+]

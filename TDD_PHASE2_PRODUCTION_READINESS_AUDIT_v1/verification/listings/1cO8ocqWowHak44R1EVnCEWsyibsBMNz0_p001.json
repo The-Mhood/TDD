@@ -1,0 +1,26 @@
+{
+  "parent_id": "1cO8ocqWowHak44R1EVnCEWsyibsBMNz0",
+  "connector_response_request_id": "a3c46797-8a61-475f-80f2-26a12f8825e4",
+  "page": 1,
+  "observed_count": 1,
+  "entries": [
+    {
+      "id": "1_q994-mv36oDSYKG1FHzdGoqVvY_tKO4",
+      "name": "CHAR_EZEANI_MASTER_REFERENCE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1cO8ocqWowHak44R1EVnCEWsyibsBMNz0"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 576287,
+      "md5": "7962b0ebb1fa657a8b396fa2d4421fd3",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

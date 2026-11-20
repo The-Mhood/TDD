@@ -1,0 +1,52 @@
+{
+  "parent_id": "1sUbBCY3B5lbKS5K2FguLeLpq-vkSdaek",
+  "connector_response_request_id": "083fa8dc-74ca-4db0-8c5f-6b592fafed2c",
+  "page": 1,
+  "observed_count": 3,
+  "entries": [
+    {
+      "id": "187-TsUZoSnSvh36gKBynr42em2zXbNXr",
+      "name": "Fantasy RPG Worldbuilding Moodboard.png",
+      "mime_type": "image/png",
+      "parents": [
+        "1sUbBCY3B5lbKS5K2FguLeLpq-vkSdaek"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 3120868,
+      "md5": "2202dd33741c01def6e2e42756726ef3",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1I9qSuURVxBZXRiikC2Ghli3HUb17ueXy",
+      "name": "The Disobedient Daughter_ Game Art Bible-2.png",
+      "mime_type": "image/png",
+      "parents": [
+        "1sUbBCY3B5lbKS5K2FguLeLpq-vkSdaek"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 3239480,
+      "md5": "1455e2365ce3bec73e13d78e49107acd",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Zpb9FnDoURwpfzwQUb8O2PXhpd4sR_SR",
+      "name": "The Disobedient Daughter_ World Bible-1.png",
+      "mime_type": "image/png",
+      "parents": [
+        "1sUbBCY3B5lbKS5K2FguLeLpq-vkSdaek"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 3219424,
+      "md5": "2da2270193fd5f48bf25346bf18217c5",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

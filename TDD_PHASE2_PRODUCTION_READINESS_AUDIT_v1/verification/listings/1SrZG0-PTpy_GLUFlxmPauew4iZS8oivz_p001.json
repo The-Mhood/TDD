@@ -1,0 +1,195 @@
+{
+  "parent_id": "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz",
+  "connector_response_request_id": "a16d7805-2ee3-412d-b614-b72bff25b890",
+  "page": 1,
+  "observed_count": 14,
+  "entries": [
+    {
+      "id": "1SPdFdqg894eN6S-oezSpX5sChT0ED57L",
+      "name": "ARCHIVED_TO_DRIVE.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 1497,
+      "md5": "e0f9ed8ccac335d14640b6c42b798f35",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1wXBVO-_bEgD68C2ga6sse8PWw9ZUC4r2",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_ESTABLISHING_V005.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 786106,
+      "md5": "6f32d454bb7b6f15ce31e3bffa136385",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1lC-pLXYjRIHJh-GAEjE5YGFE2yiH2cIH",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_FOLDED_STAIR_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 591473,
+      "md5": "ac656082237505fc8768899b3d7ba97c",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Y4Ru8BlX8_03z7lx3Rw-xf9_mi6wdqMv",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_GATHERING_GROUND_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 771052,
+      "md5": "7ac5ad156c5a6ae5e7a0d1bb5237a457",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1oL8oTW1NHt_vxKot11zUsyTpnliPItY5",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_HALL_OF_POSTS_V003.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 672385,
+      "md5": "b599accda25f13215f10f865b64cccc4",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1vYSF9WnyA8XkInaYgHrGMbu7ct7bHbtv",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_MOTHERS_COURTYARD_ALT_A_RETURNING_STAIR_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 768352,
+      "md5": "125de5288663903c0c2d4da728a55807",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1WrdsouUFzv-qAK8fpuQY5gtKZOSo4rpT",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_MOTHERS_COURTYARD_ALT_B_SAME_COURTYARD_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 808811,
+      "md5": "ca3b2277b023f7f157aa7badf6553fa5",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1bKnQz6WRHwUOlRlfI6qYFWkQ8LKzE2Td",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_MOTHERS_COURTYARD_ALT_B_SAME_COURTYARD_V006.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 994762,
+      "md5": "24a8366e81f735d695ce90225710a955",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1eM-dkvyYg-zfsbJGcMRKPmqD_DKuN65F",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_MOTHERS_COURTYARD_ALT_C_HOUSE_DEEPER_THAN_GROUND_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 692270,
+      "md5": "d15d3a4b2d5c08eb9fe9f22b06efcce4",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1x3aMw8ekR9zovjAkzDhZDJINwMSgsNaE",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_NNEKAS_HOUSE_INTERIOR_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 674496,
+      "md5": "21cc2df6d0b838bbdd8be03f498c3b81",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1znJyZF0x1Dvtz1ujoofSo-0a278jHy6r",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_NNEKAS_HOUSE_V003.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 584853,
+      "md5": "5cb61935e809e1bf788f03b30f4b8713",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1VoUgmnE3iB_QLfZT3nK8Dm-hAk6CC4H_",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_ROAD_OF_GENERATIONS_V004.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 721679,
+      "md5": "e7eb187b7a3e315cd6b66b4807537621",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1pn9s2gTBgQkYrjf8pFSlzIWgmbqZlyHR",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_SEALED_QUARTER_V002.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 731902,
+      "md5": "f5e439504694153c81f94fb0653082de",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1dWS7xkQtpj2jsMcyJ-_pXqbw5Ao_VI7l",
+      "name": "ENV_LAST_DAUGHTER_ANCESTRAL_REALM_WALL_OF_HOUSES_V003.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1SrZG0-PTpy_GLUFlxmPauew4iZS8oivz"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 664200,
+      "md5": "1ee728c2bae54ae5284959ca5e747943",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

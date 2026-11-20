@@ -1,0 +1,195 @@
+{
+  "parent_id": "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c",
+  "connector_response_request_id": "0893a42d-0273-4f5d-b521-a392771a22e7",
+  "page": 5,
+  "observed_count": 14,
+  "entries": [
+    {
+      "id": "1VskVXp7BqLr4-Cuq_SA3MKrqzpWiMICe",
+      "name": "SCENE_CH01-SCN-014_WATER_COLLECTION_POINT_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 323811,
+      "md5": "c8e03647d4a9fa94d9ad3a5e4827711b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1s739rsPw_0-HGHde_LTC6z9nRDQZAcwr",
+      "name": "SCENE_CH01-SCN-015_FISHING_STREAM_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 356764,
+      "md5": "00ab229521d6baca5909abcb4b98d1a8",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1QoMsiuArr361ybgtbjMze-nQsV2QKIu3",
+      "name": "SCENE_CH01-SCN-017_VILLAGE_SQUARE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 324019,
+      "md5": "1fe9c7596a0095aa401f0a4331d5ff02",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1Ks5vbF9fI5Qw8srG6n7urQgDFZf3yWW-",
+      "name": "SCENE_CH01-SCN-019_GATE_GUARD_SHELTER_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 269314,
+      "md5": "f52fa7bb43854375861088131838a86b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1eBIAOfXIlPUkwBpdii-qzFpQ2qrBOloX",
+      "name": "SCENE_CH01-SCN-021_BACK_LANES_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 208313,
+      "md5": "bd879654efcc89c4c6ca0052c6fbe238",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1e20zBSR2Y_VAn_UD4SZlkFfHds1ojnYf",
+      "name": "SCENE_CH01-SCN-022_STREETS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 347661,
+      "md5": "1859d10c8f9806c6c04670fd500ec2a2",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1xNbY0uk7p3kS8FKUmY-fNVvvioNvRWdM",
+      "name": "SCENE_CH01-SCN-024_AN_EMPTY_HOUSE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 248023,
+      "md5": "8a7ce2efb6e01019ec3963ac03b26d3b",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1mSUsBfNR-VHjDj_z9Fh0FqGutR4TVq7f",
+      "name": "SCENE_CH01-SCN-025_ANIMAL_PENS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 374080,
+      "md5": "83d4283a0d40596314ecea4688307f54",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1AotRXSgMuB3n-aRA_03M2FKIiZxMMkOs",
+      "name": "SCENE_CH01-SCN-027_POTTERS_YARD_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 409500,
+      "md5": "e0a3e922601663310f3ba27379a811f4",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1XjQtVk-tdCHrZCzQtnrITm88P2B6lAzr",
+      "name": "SCENE_CH01-SCN-028_WEAVERS_HOUSE_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 328343,
+      "md5": "fffd9c452d3860ed7030c65e442a486f",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1sPwqckTC4NXLUGsEBKcSldte9y6Cche5",
+      "name": "SCENE_CH01-SCN-030_PALACE_COURTYARD_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 352718,
+      "md5": "983ffca2b1630a2775d02f480696891e",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1VOnaxVDTk7hCZR1rRXOYvpBw5MdoU06M",
+      "name": "SCENE_CH01-SCN-032_WELLS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 396402,
+      "md5": "eecadd0326e1580fa9f46f593a0b6a9c",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1f1X79D6kRBPbfF01B2UIa_u7Ej7YBLZt",
+      "name": "SCENE_CH01-SCN-033_GATES_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "4",
+      "is_folder": false,
+      "bytes": 324480,
+      "md5": "535f15d2e911de33b80a29f217506680",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "1t5tSko_cEvQKt2-mXMx0erTgq-3LV7rK",
+      "name": "SCENE_CH01-SCN-034_ROADS_V001.jpg",
+      "mime_type": "image/jpeg",
+      "parents": [
+        "1x5T4V3R-hnuUNCIFBIb1TBIezjlT0Q6c"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 310406,
+      "md5": "a0d3924af1ddc18f018d9570fbaf4181",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}

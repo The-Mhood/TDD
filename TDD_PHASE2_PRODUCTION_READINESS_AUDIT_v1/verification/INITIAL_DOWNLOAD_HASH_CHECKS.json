@@ -1,0 +1,110 @@
+[
+  {
+    "source_id": "1CZGp5G_tM5ph_xSff63Tj0-qrklklz-p",
+    "local_path": "google_drive/ART_COLOUR_PALETTE_V001.jpg",
+    "bytes": 288658,
+    "md5": "5ea4212e56671fb61abe222f0fb56dd7",
+    "sha256": "8bb5e41a7a74e8046e367e40222ed71d31e2d5006f10e4b3096deb1245d37518",
+    "metadata_hash_match": true,
+    "full_visual_or_semantic_inspection": false
+  },
+  {
+    "source_id": "1jepQVvOy_J9qFgHw4vxr9wrp9wYSqSlj",
+    "local_path": "google_drive/CHAR_AMADIOHA_MASTER_REFERENCE_V001.jpg",
+    "bytes": 594434,
+    "md5": "5006697a3dc1328ceffd836dd988d7fb",
+    "sha256": "78104039fd1f6c3264307f68d2ed68d5862b1cdabdf34f0ca189fe2937daeee6",
+    "metadata_hash_match": true,
+    "full_visual_or_semantic_inspection": false
+  },
+  {
+    "source_id": "1oddffinYV3HI3U0ujwQrA3-XXWKtqUik",
+    "local_path": "google_drive/CHAR_AMADIOHA_MASTER_REFERENCE_V001.jpg",
+    "bytes": 594434,
+    "md5": "5006697a3dc1328ceffd836dd988d7fb",
+    "sha256": "78104039fd1f6c3264307f68d2ed68d5862b1cdabdf34f0ca189fe2937daeee6",
+    "metadata_hash_match": true,
+    "full_visual_or_semantic_inspection": false
+  },
+  {
+    "source_id": "1oSCTuIEbuQr7N9r_3dHb0hOAhXvk8HZ3",
+    "local_path": "google_drive/ART_MASTER_OVERVIEW_KEYART_V003.jpg",
+    "bytes": 526086,
+    "md5": "31b771c6d44d0ae5ce6a06c053988651",
+    "sha256": "116cf3d3102c2cb513b60d04523ca598764c1d133c283dd70008f6517e3846d2",
+    "metadata_hash_match": true,
+    "full_visual_or_semantic_inspection": false
+  },
+  {
+    "source_id": "1k08XH8VjNJAnSoMNU4YvBPtBEUdYD20y",
+    "local_path": "google_drive/CHAR_ADANNA_MASTER_REFERENCE_V001.jpg",
+    "bytes": 585862,
+    "md5": "901a5009ab5ff44a81fb3799c7e6de6d",
+    "sha256": "06d2b02dc3b8bcc3f35534cfbb3d76c2090ce57b7791a1ead883937a0875ce4c",
+    "metadata_hash_match": true,
+    "full_visual_or_semantic_inspection": false
+  },
+  {
+    "source_id": "1FY3hw3602iB-1405RgUIO3ih2USmck_Y",
+    "local_path": "google_drive/CHAR_ADANNA_MASTER_REFERENCE_V001.jpg",
+    "bytes": 585862,
+    "md5": "901a5009ab5ff44a81fb3799c7e6de6d",
+    "sha256": "06d2b02dc3b8bcc3f35534cfbb3d76c2090ce57b7791a1ead883937a0875ce4c",
+    "metadata_hash_match": true,
+    "full_visual_or_semantic_inspection": false
+  },
+  {
+    "source_id": "10iGp0YznYy4czsiktStUTIZompsXAyTm",
+    "local_path": "google_drive/ART_MATERIAL_LANGUAGE_V001.jpg",
+    "bytes": 816498,
+    "md5": "4b52140f9393bc179ab748716e79b611",
+    "sha256": "9a91f26c560425d6270801ff9c4a0a6fd0454d885fda5eb564c2feac9253a3d2",
+    "metadata_hash_match": true,
+    "full_visual_or_semantic_inspection": false
+  },
+  {
+    "source_id": "1d7aB_ASW8rEr2sSxjqeKwURRiewWwE_n",
+    "local_path": "google_drive/ART_VISUAL_IDENTITY_V002.jpg",
+    "bytes": 668675,
+    "md5": "13368e1f07c9762c6cb9b5d9e37d6988",
+    "sha256": "42729dc506adee0c13c61c358a2213e5d310874501b74c2aa96988a03006b5cf",
+    "metadata_hash_match": true,
+    "full_visual_or_semantic_inspection": false
+  },
+  {
+    "source_id": "1Ylb4VW7v6B_et2I7XunVyu6CD30cntML",
+    "local_path": "google_drive/REFERENCE_CONTROL_SOURCE_RENDERS_PART3_2026-11-15.zip",
+    "bytes": 14175167,
+    "md5": "b11fdb003106e4b131eca888e75f91dd",
+    "sha256": "f87f1de5bfd1c5784b02a4489af766babd9b82bb1aa1f222d8e96293ca46fceb",
+    "metadata_hash_match": true,
+    "full_visual_or_semantic_inspection": false
+  },
+  {
+    "source_id": "1io5chA4qBkN1zKQPTBSp1SgGOL8oEgg_",
+    "local_path": "google_drive/REFERENCE_CONTROL_SOURCE_RENDERS_PART2_2026-11-15.zip",
+    "bytes": 17729612,
+    "md5": "60e180882b5195a1c13c6c91b6f38bfc",
+    "sha256": "dcdfa6c82eacf8bad46cd831796781bf3d1729df4f3218062ad422da9f300bd3",
+    "metadata_hash_match": true,
+    "full_visual_or_semantic_inspection": false
+  },
+  {
+    "source_id": "1nQLEWNdMJEAbn4Te6xSjkhS4NJR41Trr",
+    "local_path": "google_drive/REFERENCE_CONTROL_SOURCE_RENDERS_PART4_2026-11-15.zip",
+    "bytes": 10803226,
+    "md5": "7502e5bb411d3844c56420f25efaacbe",
+    "sha256": "c478de6b49a8bad1e246a27ef0ec4d43de6d2f7028fb706e9bbe15d1b373c0c4",
+    "metadata_hash_match": true,
+    "full_visual_or_semantic_inspection": false
+  },
+  {
+    "source_id": "1lzeHKfDjkKlCKWa-0I1zoCGKSqEVmVlK",
+    "local_path": "google_drive/REFERENCE_CONTROL_SOURCE_RENDERS_2026-11-15.zip",
+    "bytes": 68000429,
+    "md5": "8f6b1f642fedeaaf310361d686abbaec",
+    "sha256": "a79521282d3c5732379344ce273d36e9b42470b7b98d21c54a35b6af659be02b",
+    "metadata_hash_match": true,
+    "full_visual_or_semantic_inspection": false
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "parent_id": "1YBqalsLXSjDibsJ2ccXcvPK_q5b1G0ZE",
+  "connector_response_request_id": "85ca208a-7e81-4c03-a361-729591ca8ac0",
+  "page": 1,
+  "observed_count": 2,
+  "entries": [
+    {
+      "id": "1naNn0D7jAXOVc01Xvnl4YYEvS_zwcTjH",
+      "name": "CHARACTER_DESIGN_REGISTER.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1YBqalsLXSjDibsJ2ccXcvPK_q5b1G0ZE"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 12917,
+      "md5": "ffb671f2b24a558e5d419a837f7f9ec8",
+      "content_inspection_state": "NOT YET INSPECTED"
+    },
+    {
+      "id": "17PFuMM-0V134QuDBojx3UAczhj0ZE3Pe",
+      "name": "CHARACTER_NAMES_PROPOSAL.md",
+      "mime_type": "text/markdown",
+      "parents": [
+        "1YBqalsLXSjDibsJ2ccXcvPK_q5b1G0ZE"
+      ],
+      "drive_version": "3",
+      "is_folder": false,
+      "bytes": 2491,
+      "md5": "e76b9dd322cf33366557bd281b797f50",
+      "content_inspection_state": "NOT YET INSPECTED"
+    }
+  ],
+  "next_page_token": null,
+  "next_page_token_present": false,
+  "incomplete_search": false,
+  "complete_final_page": true,
+  "basis": "Manually transcribed successful current connector list_files result; fields shown were equal-checked, not a raw API capture. Content is not claimed inspected by enumeration."
+}
