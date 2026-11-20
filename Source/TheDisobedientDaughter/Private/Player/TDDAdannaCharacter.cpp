@@ -8,6 +8,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "InputCoreTypes.h"
 #include "Engine/SkeletalMesh.h"
+#include "Traversal/TDDTraversalComponent.h"
 #include "Player/TDDCharacterStateComponent.h"
 
 ATDDAdannaCharacter::ATDDAdannaCharacter()
@@ -31,6 +32,7 @@ ATDDAdannaCharacter::ATDDAdannaCharacter()
 
     StateComponent = CreateDefaultSubobject<UTDDCharacterStateComponent>(TEXT("TDDState"));
     CombatComponent = CreateDefaultSubobject<UTDDCombatComponent>(TEXT("TDDCombat"));
+    TraversalComponent = CreateDefaultSubobject<UTDDTraversalComponent>(TEXT("TDDTraversal"));
 
     CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
     CameraBoom->SetupAttachment(GetCapsuleComponent());
@@ -72,6 +74,7 @@ void ATDDAdannaCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
     PlayerInputComponent->BindAction(TEXT("Guard"), IE_Released, this, &ATDDAdannaCharacter::GuardReleased);
     PlayerInputComponent->BindAction(TEXT("Sprint"), IE_Pressed, this, &ATDDAdannaCharacter::SprintPressed);
     PlayerInputComponent->BindAction(TEXT("Sprint"), IE_Released, this, &ATDDAdannaCharacter::SprintReleased);
+    PlayerInputComponent->BindAction(TEXT("Traverse"), IE_Pressed, this, &ATDDAdannaCharacter::TraversePressed);
 }
 
 void ATDDAdannaCharacter::MoveForward(const float Value)
@@ -144,6 +147,14 @@ void ATDDAdannaCharacter::SprintReleased()
 {
     bSprintRequested = false;
     UpdateLocomotionIntent();
+}
+
+void ATDDAdannaCharacter::TraversePressed()
+{
+    if (TraversalComponent != nullptr)
+    {
+        TraversalComponent->TryTraverse();
+    }
 }
 
 void ATDDAdannaCharacter::UpdateLocomotionIntent()

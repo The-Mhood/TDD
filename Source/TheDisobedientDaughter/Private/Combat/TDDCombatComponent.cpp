@@ -6,6 +6,9 @@
 #include "Core/TDDDamageMath.h"
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/PlayerController.h"
 #include "Player/TDDCharacterStateComponent.h"
 
 namespace
@@ -159,6 +162,14 @@ bool UTDDCombatComponent::ReceiveAttack(const float InHealthDamage, const float 
     {
         return false;
     }
+    if (const UTDDBossPhaseComponent* BossPhases = GetOwner()
+            ? GetOwner()->FindComponentByClass<UTDDBossPhaseComponent>() : nullptr)
+    {
+        if (BossPhases->IsCurrentPhaseInvulnerable())
+        {
+            return false;
+        }
+    }
 
     const float Now = GetWorld() ? GetWorld()->GetTimeSeconds() : 0.0f;
     const float GuardAge = bGuarding ? FMath::Max(0.0f, Now - GuardStartedAt) : -1.0f;
@@ -225,6 +236,14 @@ void UTDDCombatComponent::ApplyOutcome(const TDD::Combat::FTDDDamageOutcome& Out
         if (Outcome.bEnteredDead)
         {
             State->ForceState(StateDead);
+            if (ACharacter* DeadCharacter = Cast<ACharacter>(GetOwner()))
+            {
+                DeadCharacter->GetCharacterMovement()->DisableMovement();
+                if (APlayerController* PlayerController = Cast<APlayerController>(DeadCharacter->GetController()))
+                {
+                    DeadCharacter->DisableInput(PlayerController);
+                }
+            }
         }
         else if (Outcome.bEnteredStagger)
         {

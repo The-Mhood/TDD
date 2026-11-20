@@ -121,6 +121,9 @@ public:
     UFUNCTION(BlueprintCallable, Category="TDD|Boss")
     FName GetCurrentPhase() const { return CurrentPhase; }
 
+    UFUNCTION(BlueprintCallable, Category="TDD|Boss")
+    bool IsCurrentPhaseInvulnerable() const;
+
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="TDD|Boss")
     TObjectPtr<UTDDBossPhaseGraphAsset> PhaseGraph;
 

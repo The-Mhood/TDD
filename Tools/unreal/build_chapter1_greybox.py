@@ -59,7 +59,26 @@ def main():
     center_y = (bounds["minY"] + bounds["maxY"]) * 0.5
     half_x = (bounds["maxX"] - bounds["minX"]) * 0.5
     half_y = (bounds["maxY"] - bounds["minY"]) * 0.5
-    spawn_mesh(cube, "GBX_Ground", (center_x, center_y, -0.25), (half_x, half_y, 0.25))
+
+    # Split the floor around a 4 m stream/channel depression so both a
+    # controlled-drop route and a real lower landing floor exist in PIE.
+    pit_start, pit_end, pit_half_width, pit_drop = 16.0, 20.0, 5.0, 1.0
+    before_center_y = (bounds["minY"] + pit_start) * 0.5
+    before_half_y = (pit_start - bounds["minY"]) * 0.5
+    after_center_y = (pit_end + bounds["maxY"]) * 0.5
+    after_half_y = (bounds["maxY"] - pit_end) * 0.5
+    spawn_mesh(cube, "GBX_Ground_BeforeStream", (center_x, before_center_y, -0.25),
+               (half_x, before_half_y, 0.25))
+    spawn_mesh(cube, "GBX_Ground_AfterStream", (center_x, after_center_y, -0.25),
+               (half_x, after_half_y, 0.25))
+    pit_center_y = (pit_start + pit_end) * 0.5
+    side_half_x = (half_x - pit_half_width) * 0.5
+    spawn_mesh(cube, "GBX_Ground_StreamLeft", (bounds["minX"] + side_half_x, pit_center_y, -0.25),
+               (side_half_x, (pit_end - pit_start) * 0.5, 0.25))
+    spawn_mesh(cube, "GBX_Ground_StreamRight", (bounds["maxX"] - side_half_x, pit_center_y, -0.25),
+               (side_half_x, (pit_end - pit_start) * 0.5, 0.25))
+    spawn_mesh(cube, "GBX_DropPitFloor", (0.0, pit_center_y, -pit_drop - 0.25),
+               (pit_half_width, (pit_end - pit_start) * 0.5, 0.25))
 
     # Greybox route strips are flat, connected, and follow the authored route.
     width = route["pathWidth"]
@@ -67,9 +86,14 @@ def main():
         dx, dy = b["x"] - a["x"], b["y"] - a["y"]
         length = math.hypot(dx, dy)
         yaw = math.degrees(math.atan2(dy, dx))
-        spawn_mesh(cube, "GBX_Route_%02d_%s" % (index + 1, b["label"].replace(" ", "_")),
-                   ((a["x"] + b["x"]) * 0.5, (a["y"] + b["y"]) * 0.5, 0.02),
-                   (length * 0.5, width * 0.5, 0.02), unreal.Rotator(0.0, yaw, 0.0))
+        strip = spawn_mesh(cube, "GBX_Route_%02d_%s" % (index + 1, b["label"].replace(" ", "_")),
+                           ((a["x"] + b["x"]) * 0.5, (a["y"] + b["y"]) * 0.5, 0.02),
+                           (length * 0.5, width * 0.5, 0.02), unreal.Rotator(0.0, yaw, 0.0))
+        strip.static_mesh_component.set_collision_enabled(unreal.CollisionEnabled.NO_COLLISION)
+
+    # Dedicated interaction fixtures: a 70 cm vault wall, then a 1 m stream
+    # drop with a real collision floor. These are greybox tests, not final art.
+    spawn_mesh(cube, "GBX_TraversalVault", (0.0, -4.2, 0.35), (2.0, 0.18, 0.35))
 
     # Authored obstacle data converted to neutral, collision-enabled primitives.
     for obstacle in data.get("obstacles", []):
@@ -99,14 +123,19 @@ def main():
                                   (marker["x"], marker["y"], 0.5),
                                   (marker["radius"] * 2.0, marker["radius"] * 2.0, marker["radius"] * 2.0))
         marker_actor.tags = ["TDD_Greybox", "TDD_Interactable"]
+        marker_actor.static_mesh_component.set_collision_enabled(unreal.CollisionEnabled.NO_COLLISION)
 
+    first_dx = points[1]["x"] - points[0]["x"]
+    first_dy = points[1]["y"] - points[0]["y"]
+    route_yaw = math.degrees(math.atan2(first_dy, first_dx))
     player_start = unreal.EditorLevelLibrary.spawn_actor_from_class(
         unreal.PlayerStart, unreal.Vector(data["spawn"]["position"]["x"] * 100,
-        data["spawn"]["position"]["y"] * 100, 100), unreal.Rotator(0, data["spawn"]["yaw"], 0))
+        data["spawn"]["position"]["y"] * 100, 100), unreal.Rotator(0, route_yaw, 0))
     require(player_start is not None, "Could not create PlayerStart")
     player_start.set_actor_label("GBX_PlayerStart", mark_dirty=True)
 
     enemy_class = unreal.load_class(None, "/Script/TheDisobedientDaughter.TDDTrainingEnemy")
+    enemy = None
     if enemy_class:
         enemy = unreal.EditorLevelLibrary.spawn_actor_from_class(
             enemy_class, unreal.Vector(0, 1200, 100), unreal.Rotator(0, 180, 0))
@@ -114,6 +143,24 @@ def main():
         enemy.set_actor_label("GBX_TrainingEnemy", mark_dirty=True)
     else:
         unreal.log_warning("TDDTrainingEnemy class unavailable; build the project module and rerun.")
+
+    boss_class = unreal.load_class(None, "/Script/TheDisobedientDaughter.TDDTrainingBoss")
+    phase_component_class = unreal.load_class(None, "/Script/TheDisobedientDaughter.TDDBossPhaseComponent")
+    phase_asset = unreal.EditorAssetLibrary.load_asset(
+        "/Game/Bosses/GreatRootMother/DA_GreatRootMother_Phases")
+    boss = None
+    boss_graph_assigned = False
+    if boss_class:
+        boss = unreal.EditorLevelLibrary.spawn_actor_from_class(
+            boss_class, unreal.Vector(0, 4900, 100), unreal.Rotator(0, -90, 0))
+        require(boss is not None, "Could not spawn greybox boss")
+        boss.set_actor_label("GBX_GreatRootMother_PhaseTest", mark_dirty=True)
+        phase_component = boss.get_component_by_class(phase_component_class) if phase_component_class else None
+        if phase_component and phase_asset:
+            phase_component.set_editor_property("phase_graph", phase_asset)
+            boss_graph_assigned = True
+    else:
+        unreal.log_warning("TDDTrainingBoss unavailable; build the project module and rerun.")
 
     game_mode_bp = unreal.EditorAssetLibrary.load_asset(
         "/Game/Characters/Adanna/TechnicalProxy/BP_TDDGameMode_TechnicalProxy")
@@ -138,7 +185,11 @@ def main():
         "obstacles": len(data.get("obstacles", [])),
         "interactables": len(data.get("interactables", [])),
         "player_start": True,
-        "training_enemy_spawned": bool(enemy_class),
+        "traversal_vault_fixture": True,
+        "controlled_drop_fixture_m": pit_drop,
+        "training_enemy_spawned": enemy is not None,
+        "training_boss_spawned": boss is not None,
+        "boss_phase_asset_assigned": boss_graph_assigned,
         "classification": "neutral greybox, not final art or approved level design",
     }
     out = REPO / "Saved/BuildEvidence/W1D2/greybox-build-report.json"

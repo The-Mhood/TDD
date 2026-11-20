@@ -4,6 +4,7 @@
 #include "AI/TDDTrainingEnemy.h"
 #include "Combat/TDDCombatComponent.h"
 #include "Player/TDDCharacterStateComponent.h"
+#include "Traversal/TDDTraversalComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -44,6 +45,7 @@ bool FTDDM1PlayableCharacterDefaultsTest::RunTest(const FString& Parameters)
 
     TestNotNull(TEXT("Adanna has one project state authority"), Character->GetStateComponent());
     TestNotNull(TEXT("Adanna has actor-facing combat integration"), Character->GetCombatComponent());
+    TestNotNull(TEXT("Adanna has runtime traversal component"), Character->GetTraversalComponent());
     if (Character->GetStateComponent() != nullptr)
     {
         TestEqual(TEXT("Default player state is Idle"), Character->GetStateComponent()->GetCurrentState(),

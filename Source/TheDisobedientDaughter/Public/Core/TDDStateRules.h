@@ -144,7 +144,7 @@ inline std::uint16_t InterruptionMask(const ETDDPlayerState S, const bool bAirDo
     case P::Stagger:
         return 0;                     // Dead only = forced
     case P::Traversal:
-        return Detail::Bit(P::Locomotion) | Detail::Bit(P::Land); // E3 requested abort inside AbortWindow
+        return Detail::Bit(P::Locomotion) | Detail::Bit(P::Airborne) | Detail::Bit(P::Land); // E3 abort plus CMC takeoff/landing
     case P::Interaction:
         return Detail::Bit(P::Locomotion) | Detail::Bit(P::Sprint) | Detail::Bit(P::Idle); // cancel-on-move
     case P::Cinematic:

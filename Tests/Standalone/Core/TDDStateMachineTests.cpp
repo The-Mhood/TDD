@@ -36,8 +36,8 @@ int main()
     // ---- AC-22: all 196 pairs — declared legal or refused, state unchanged on refusal ----
     {
         const std::int32_t ExpectedLegal = CountLegalPairs(/*bAirDodgeEnabled*/ false);
-        Check(ExpectedLegal == 79, "matrix: 79 legal pairs (air-dodge off, including land/guard-release events)");
-        Check(CountLegalPairs(/*bAirDodgeEnabled*/ true) == 80, "matrix: 80 legal pairs (air-dodge on)");
+        Check(ExpectedLegal == 80, "matrix: 80 legal pairs (air-dodge off, including takeoff/landing/guard-release events)");
+        Check(CountLegalPairs(/*bAirDodgeEnabled*/ true) == 81, "matrix: 81 legal pairs (air-dodge on)");
 
         std::int32_t LegalSeen = 0;
         std::int32_t IllegalSeen = 0;
@@ -84,7 +84,7 @@ int main()
                 }
             }
         }
-        Check(LegalSeen == 79 && IllegalSeen == 117, "matrix: 79 legal / 117 refused (no silent permits)");
+        Check(LegalSeen == 80 && IllegalSeen == 116, "matrix: 80 legal / 116 refused (no silent permits)");
     }
 
     // ---- AC-23: state semantics ----
@@ -128,6 +128,12 @@ int main()
         Check(M.RequestState(P::Land, "CMC landed") == ETDDRefusalReason::Accepted
               && M.Current() == P::Land,
               "semantics: physics landing transitions Airborne -> Land");
+
+        FTDDPureStateMachine Traversal;
+        Traversal.SetStateForTest(P::Traversal);
+        Check(Traversal.RequestState(P::Airborne, "traversal takeoff") == ETDDRefusalReason::Accepted
+              && Traversal.Current() == P::Airborne,
+              "semantics: traversal launch enters CMC-driven Airborne state");
 
         FTDDPureStateMachine Guard;
         Guard.SetStateForTest(P::Block);
@@ -211,7 +217,7 @@ int main()
         M2.SetStateForTest(P::Traversal);
         M2.Tick(0.2f);
         Check(M2.RequestState(P::Sprint, "Damaged") == ETDDRefusalReason::NotInInterruptionMask,
-              "E3: only Locomotion/Land are legal abort targets (mask)");
+              "E3: Sprint remains disallowed as a requested traversal abort target");
     }
 
     // (j) Dead is terminal: nothing transitions out (196-pair diagonal + explicit)

@@ -26,8 +26,9 @@ def main():
     length = sum(math.hypot(b["x"] - a["x"], b["y"] - a["y"])
                  for a, b in zip(points, points[1:]))
     source = BUILDER.read_text(encoding="utf-8")
-    for token in ("MAP_PACKAGE", "PlayerStart", "TDDTrainingEnemy", "save_current_level",
-                  "EditorStartupMap", "GameDefaultMap"):
+    for token in ("MAP_PACKAGE", "PlayerStart", "TDDTrainingEnemy", "TDDTrainingBoss",
+                  "GBX_TraversalVault", "GBX_DropPitFloor", "CollisionEnabled.NO_COLLISION",
+                  "save_current_level", "EditorStartupMap", "GameDefaultMap"):
         assert token in source, f"greybox editor script missing integration hook {token}"
     report = {
         "source_preflight": "PASS",

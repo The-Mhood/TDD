@@ -141,6 +141,22 @@ void UTDDBossPhaseComponent::NotifyBossEvent(const FName EventName)
     }
 }
 
+bool UTDDBossPhaseComponent::IsCurrentPhaseInvulnerable() const
+{
+    if (PhaseGraph == nullptr || CurrentPhase.IsNone())
+    {
+        return false;
+    }
+    for (const FTDDBossPhaseData& Phase : PhaseGraph->Phases)
+    {
+        if (Phase.PhaseName == CurrentPhase)
+        {
+            return Phase.bInvulnerable;
+        }
+    }
+    return false;
+}
+
 void UTDDBossPhaseComponent::EvaluateTransitions()
 {
     if (!bGraphValid || CurrentPhase.IsNone())

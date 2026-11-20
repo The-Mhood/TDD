@@ -8,6 +8,7 @@ class UCameraComponent;
 class USpringArmComponent;
 class UTDDCharacterStateComponent;
 class UTDDCombatComponent;
+class UTDDTraversalComponent;
 class USkeletalMesh;
 
 /**
@@ -29,6 +30,7 @@ public:
     UCameraComponent* GetFollowCamera() const { return FollowCamera; }
     UTDDCharacterStateComponent* GetStateComponent() const { return StateComponent; }
     UTDDCombatComponent* GetCombatComponent() const { return CombatComponent; }
+    UTDDTraversalComponent* GetTraversalComponent() const { return TraversalComponent; }
 
 protected:
     virtual void BeginPlay() override;
@@ -44,6 +46,7 @@ private:
     void GuardReleased();
     void SprintPressed();
     void SprintReleased();
+    void TraversePressed();
     void UpdateLocomotionIntent();
 
     float ForwardInput = 0.0f;
@@ -61,6 +64,9 @@ private:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="TDD", meta=(AllowPrivateAccess="true"))
     TObjectPtr<UTDDCombatComponent> CombatComponent;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="TDD", meta=(AllowPrivateAccess="true"))
+    TObjectPtr<UTDDTraversalComponent> TraversalComponent;
 
     /** Assign the imported, approved/labelled skeletal asset on an editor child. */
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="TDD|Character")
