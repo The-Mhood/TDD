@@ -26,11 +26,15 @@ def tex(name):
 parts = []
 def P(name, mat, w): p = Part(name, mat, w); parts.append(p); return p
 skin = "skin_guard_v1"; S = 1.14  # shoulder breadth factor vs Adanna profile
-ellipsoid(P("head_generic", skin, blend(1.50, 1.58, "spine", "head")), (0, 0, 1.66), (0.092, 0.103, 0.115), 24, 18)
+_ghead = P("head_generic", skin, blend(1.50, 1.58, "spine", "head"))
+ellipsoid(_ghead, (0, 0, 1.66), (0.092, 0.103, 0.115), 24, 18)
+limb(_ghead, (0, 0, 1.42), (0, 0, 1.62), 0.050, 0.044, 14)  # neck (visual fix: head floated)
 ellipsoid(P("torso_upper", skin, blend(1.22, 1.40, "pelvis", "spine")), (0, 0, 1.37), (0.175*S, 0.12, 0.165), 24, 14)
 ellipsoid(P("pelvis_lower", skin, blend(1.02, 1.20, "pelvis", "spine")), (0, 0, 1.07), (0.175*S, 0.125, 0.155), 24, 14)
 for side, sx in (("L", -1), ("R", 1)):
-    limb(P(f"upperarm.{side}", skin, f"upperarm.{side}"), (sx*0.235*S, 0, 1.45), (sx*0.325*S, 0, 1.185), 0.058, 0.049, 18)
+    _ua = P(f"upperarm.{side}", skin, f"upperarm.{side}")
+    limb(_ua, (sx*0.235*S, 0, 1.45), (sx*0.325*S, 0, 1.185), 0.058, 0.049, 18)
+    ellipsoid(_ua, (sx*0.235*S, 0, 1.45), (0.068, 0.068, 0.068), 14, 10)  # shoulder volume (visual fix: arms detached)
     limb(P(f"forearm_hand.{side}", skin, f"forearm.{side}"), (sx*0.325*S, 0, 1.185), (sx*0.365*S, 0, 0.945), 0.046, 0.034, 18)
     limb(P(f"thigh.{side}", skin, f"thigh.{side}"), (sx*0.108, 0, 0.95), (sx*0.118, 0, 0.525), 0.080, 0.058, 18)
     limb(P(f"shin_sandal.{side}", skin, f"shin.{side}"), (sx*0.118, 0, 0.525), (sx*0.118, 0, 0.07), 0.056, 0.038, 18)
@@ -38,8 +42,9 @@ for side, sx in (("L", -1), ("R", 1)):
 # costume: one-shoulder wrap (covers anatomical LEFT shoulder/torso), skirt, sash, armband R
 ellipsoid(P("wrap_oneshoulder_indigo", "cloth_indigo_plain_v1", blend(1.24, 1.40, "pelvis", "spine")), (-0.03, 0, 1.35), (0.185*S, 0.135, 0.155), 24, 12)
 ellipsoid(P("skirt_wrap_indigo", "cloth_indigo_plain_v1", "pelvis"), (0, 0, 0.90), (0.195*S, 0.15, 0.25), 24, 12)
-torus(P("waist_sash_plain", "cloth_sash_undyed_v1", "pelvis"), (0, 0, 1.06), 0.175, 0.028, 24, 10, squash_z=0.55)
-torus(P("armband_plain_bronze_R", "bronze_plain_v1", "upperarm.R"), (0.275*S, 0, 1.36), 0.062, 0.012, 20, 10, axis='x')
+torus(P("waist_sash_plain", "cloth_sash_undyed_v1", "pelvis"), (0, 0, 1.06), 0.205, 0.030, 24, 10, squash_z=0.55)
+# visual fix: ring around the vertical arm (default Z axis), not axis='x' strip
+torus(P("armband_plain_bronze_R", "bronze_plain_v1", "upperarm.R"), (0.275*S, 0, 1.36), 0.062, 0.012, 20, 10)
 for side, sx in (("L", -1), ("R", 1)):  # sandal soles
     ellipsoid(P(f"sandal_sole.{side}", "leather_baldric_v1", f"shin.{side}"), (sx*0.118, 0.048, 0.012), (0.048, 0.112, 0.010), 12, 6)
 

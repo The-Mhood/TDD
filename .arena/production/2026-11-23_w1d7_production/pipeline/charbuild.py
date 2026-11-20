@@ -72,6 +72,7 @@ def torus(p, c, R, r, nu=20, nv=10, axis='z', squash_z=1.0):
             s=2*math.pi*j/nv
             x=cx+(R+r*math.cos(s))*math.cos(t); y=cy+(R+r*math.cos(s))*math.sin(t); z=cz+r*math.sin(s)*squash_z
             if axis=='x': x,y,z = cx+r*math.sin(s), cy+(R+r*math.cos(s))*math.cos(t), cz+(R+r*math.cos(s))*math.sin(t)
+            if axis=='y': x,y,z = cx+(R+r*math.cos(s))*math.cos(t), cy+r*math.sin(s), cz+(R+r*math.cos(s))*math.sin(t)
             row.append(p.add((x,y,z),(i/nu,j/nv)))
         grid.append(row)
     for i in range(nu):

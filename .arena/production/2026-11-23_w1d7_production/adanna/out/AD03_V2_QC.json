@@ -4,8 +4,8 @@
   "tier": "refined production-intent model - NOT final character",
   "reference": "AD-02 SELECT A composite (frozen 2026-11-22); master = identity authority",
   "parts": 29,
-  "verts": 4346,
-  "tris": 8548,
+  "verts": 4404,
+  "tris": 8660,
   "joints": [
     "pelvis",
     "spine",

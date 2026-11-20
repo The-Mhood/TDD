@@ -32,8 +32,10 @@ parts = []
 def P(name, mat, w): p = Part(name, mat, w); parts.append(p); return p
 
 skin = "skin_base_v1"
-# head/neck blend
-ellipsoid(P("head", skin, blend(None, 1.50, 1.58, "spine", "head")), (0, 0, 1.655), (0.088, 0.10, 0.112), 24, 18)
+# head + neck volume (W1D7 visual fix: head floated on torso with no neck)
+_head = P("head", skin, blend(None, 1.50, 1.58, "spine", "head"))
+ellipsoid(_head, (0, 0, 1.655), (0.088, 0.10, 0.112), 24, 18)
+limb(_head, (0, 0, 1.40), (0, 0, 1.60), 0.048, 0.042, 14)
 ellipsoid(P("neck_torso_upper", skin, blend(None, 1.22, 1.40, "pelvis", "spine")), (0, 0, 1.37), (0.155, 0.112, 0.165), 24, 14)
 ellipsoid(P("pelvis_lower", skin, blend(None, 1.02, 1.20, "pelvis", "spine")), (0, 0, 1.07), (0.16, 0.118, 0.155), 24, 14)
 for side, sx in (("L", -1), ("R", 1)):
@@ -52,14 +54,19 @@ ellipsoid(P("wrap_top_indigo", "cloth_indigo_plain_v1", blend(None, 1.24, 1.40, 
 ellipsoid(P("skirt_wrap_indigo", "cloth_indigo_plain_v1", "pelvis"), (0, 0, 0.92), (0.182, 0.142, 0.235), 24, 12)
 strap(P("baldric_L_to_R", "leather_baldric_v1", "spine"), (-0.128, 0.122, 1.465), (0.148, 0.112, 1.125), 0.034, 0.012)
 for i, z in enumerate((1.40, 1.362, 1.324)):
-    torus(P(f"armlet_coil{i+1}_L_plain", "bronze_armlet_plain_v1", "upperarm.L"), (-0.238, 0, z), 0.056, 0.0105, 20, 10, axis='x')
-torus(P("pendant_spiral_FICTIONAL", "pendant_spiral_FICTIONAL_v1", "spine"), (0, 0.142, 1.30), 0.027, 0.0075, 20, 10, axis='x')
+    # W1D7 visual fix: coils ring AROUND the (vertical) upper arm -> default
+    # Z-axis torus. axis='x' rendered them as vertical strips (see inspection).
+    torus(P(f"armlet_coil{i+1}_L_plain", "bronze_armlet_plain_v1", "upperarm.L"), (-0.238, 0, z), 0.056, 0.0105, 20, 10)
+# W1D7 visual fix: pendant faces forward (+Y) -> ring in XZ plane (axis='y');
+# axis='x' showed the ring edge-on from the front / full circle from the side.
+torus(P("pendant_spiral_FICTIONAL", "pendant_spiral_FICTIONAL_v1", "spine"), (0, 0.142, 1.30), 0.027, 0.0075, 20, 10, axis='y')
 _cord = P("pendant_cord_master", "leather_baldric_v1", "spine")
 limb(_cord, (-0.068, 0.10, 1.465), (0, 0.142, 1.328), 0.0055, 0.0055, 8)
 limb(_cord, (0.068, 0.10, 1.465), (0, 0.142, 1.328), 0.0055, 0.0055, 8)
 ellipsoid(P("hair_knot", "hair_v1", "head"), (0, -0.028, 1.795), (0.052, 0.052, 0.048), 14, 10)
 for i, (x, z) in enumerate(((-0.048, 1.615), (-0.062, 1.575), (0.048, 1.615))):
-    limb(P(f"braid{i+1}", "hair_v1", "head"), (x, -0.075, 1.715), (x*1.2, -0.098, z), 0.015, 0.011, 10)
+    # W1D7 visual fix: braids read as rigid bars; thinner, seated on the head.
+    limb(P(f"braid{i+1}", "hair_v1", "head"), (x, -0.062, 1.715), (x*1.15, -0.082, z), 0.010, 0.0075, 10)
 for i in range(5):
     mat = "bronze_armlet_plain_v1" if i < 3 else "coral_bead_v1"
     ellipsoid(P(f"temple_bead_{i+1}_{'bronze' if i<3 else 'coral'}_L", mat, "head"), (-0.086, -0.042+i*0.0115, 1.698-i*0.0035), (0.0085,)*3, 8, 6)

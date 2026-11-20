@@ -167,13 +167,20 @@ scene = bpy.context.scene
 scene.render.engine = "BLENDER_WORKBENCH"
 scene.display.shading.light = "STUDIO"
 scene.display.shading.show_cavity = True
+# v1.3: shade from the embedded base-colour textures; MATERIAL mode rendered
+# textured cloth as flat grey in the qualification previews (inspection D5).
+scene.display.shading.color_type = "TEXTURE"
 scene.render.resolution_x = 640; scene.render.resolution_y = 800
 scene.render.film_transparent = False
 cam_data = bpy.data.cameras.new("QC_CAM"); cam = bpy.data.objects.new("QC_CAM", cam_data)
 scene.collection.objects.link(cam); scene.camera = cam
 sun_data = bpy.data.lights.new("QC_SUN", "SUN"); sun = bpy.data.objects.new("QC_SUN", sun_data)
 sun.rotation_euler = (math.radians(50), 0, math.radians(30)); scene.collection.objects.link(sun)
-VIEWS = {"front": (0, -3.2, 1.0), "three_quarter": (2.0, -2.6, 1.15), "side": (3.2, 0, 1.0), "back": (0, 3.2, 1.0)}
+# v1.3: view labels corrected. The characters face +Y in Blender (glTF->Blender
+# conversion of the shipped GLBs; proven by the qualification renders, where
+# the file named *_back.png shows the chest, baldric and pendant). v1.0-1.2
+# filmed the back and labelled it "front". Cameras now match their labels.
+VIEWS = {"front": (0, 3.2, 1.0), "three_quarter": (2.0, 2.6, 1.15), "side": (3.2, 0, 1.0), "back": (0, -3.2, 1.0)}
 target = Vector((0, 0, 0.92))
 for label, loc in VIEWS.items():
     cam.location = loc
