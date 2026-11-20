@@ -6,8 +6,8 @@
 #
 #   Tools/engine/windows_ci.sh [BRANCH]     (default: origin/arena/553fb02d-tdd)
 #
-# Steps: pure suites (if g++ present in a dev shell) -> UBT build (Win64
-# Development) -> headless automation -> evidence bundle -> ledger row ->
+# Steps: pure suites (if g++ present in a dev shell) -> UBT builds (Win64 Editor
+# Development + Game Shipping) -> headless automation -> evidence bundle -> ledger row ->
 # one-line status. Trigger: run manually, or wire as a push hook on the PC
 # (git config core.hooksPath / a scheduled task running this every 30 min).
 #
@@ -70,6 +70,10 @@ if [ ! -f "$BUILD_SH" ]; then
   exit 2
 fi
 "$BUILD_SH" "$PROJECT_NAMEEditor" Win64 Development -project="$REPO/TheDisobedientDaughter.uproject" -waitmutex >"$EVIDENCE/02-build-win64.log" 2>&1 || { echo "BUILD FAILED (see 02-build-win64.log)"; rc=1; }
+
+# 3b. Compile the actual Win64 Shipping game target as a separate release gate.
+# This validates compilation only; it is not a cook/package claim.
+"$BUILD_SH" "$PROJECT_NAME" Win64 Shipping -project="$REPO/TheDisobedientDaughter.uproject" -waitmutex >"$EVIDENCE/02b-build-win64-shipping.log" 2>&1 || { echo "SHIPPING BUILD FAILED (see 02b-build-win64-shipping.log)"; rc=1; }
 
 # 4. automation headless
 EDITOR_CMD="$UE_ROOT/Engine/Binaries/Win64/UnrealEditor-Cmd.exe"

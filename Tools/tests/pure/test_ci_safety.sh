@@ -8,7 +8,7 @@ if printf '%s\n' "$active" | grep -Eq 'git[^\n]*(checkout|reset[[:space:]]+--har
   echo "FAIL: Windows CI contains a branch-switch or destructive reset command" >&2
   exit 1
 fi
-for required in 'git -C "$REPO" fetch origin "$BRANCH"' 'local_sha=' 'remote_sha=' 'MINGW*|MSYS*|CYGWIN*'; do
+for required in 'git -C "$REPO" fetch origin "$BRANCH"' 'local_sha=' 'remote_sha=' 'MINGW*|MSYS*|CYGWIN*' '"$BUILD_SH" "$PROJECT_NAME" Win64 Shipping' '02b-build-win64-shipping.log'; do
   if ! grep -Fq "$required" "$CI"; then
     echo "FAIL: Windows CI safety guard missing: $required" >&2
     exit 1

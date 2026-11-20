@@ -1,0 +1,1 @@
+NOT EXECUTED — Windows CI must run in the Windows reference-PC shell (MINGW/MSYS/CYGWIN); host is Linux. No checkout or build attempted.

@@ -1,0 +1,7 @@
+PASS python syntax: builder compiles without importing bpy
+PASS source checks: open gate, doorway shells, open yard, palace portal/hall, manifest status
+NOT EXECUTED: bpy/Blender geometry generation; UE import/build/PIE
+c64ece5a30ffcda2222cbc94d23e3d3f8e5a2260 .arena/production/2026-11-20_w1d3_ch01_greybox/build_ch01_greybox.py
+0f9266c9ac7108cd2edae4d25b404bf9e1864a31 .arena/production/2026-11-20_w1d3_ch01_greybox/render_plan.py
+ac6602af0980d79289cee7df363b172b51d19464 .arena/production/2026-11-20_w1d3_ch01_greybox/CH01_GREYBOX_PLAN.png
+2aeceb0256e24d72ebdd115fee1f7bd42a03ea5c .arena/production/2026-11-20_w1d3_ch01_greybox/CH01_GREYBOX_PLAN_DESIGN_D506.png

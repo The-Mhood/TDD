@@ -1,0 +1,3 @@
+Design renderer output vs original Design PNG: MATCH
+D4 patched renderer output size: (1350, 1350)
+D4 output vs preserved Design schematic: DIFFER_AS_EXPECTED_OPEN_GATE_PATCH
