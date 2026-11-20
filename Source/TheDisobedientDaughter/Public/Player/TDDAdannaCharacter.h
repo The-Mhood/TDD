@@ -34,7 +34,14 @@ public:
 
 protected:
     virtual void BeginPlay() override;
+    virtual void Tick(float DeltaTime) override;
     virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+
+    /** Clamp the controller pitch to the third-person camera range. */
+    void ClampCameraPitch();
+
+    float GetMinCameraPitchDeg() const { return MinCameraPitchDeg; }
+    float GetMaxCameraPitchDeg() const { return MaxCameraPitchDeg; }
 
 private:
     void MoveForward(float Value);
@@ -53,6 +60,11 @@ private:
     float ForwardInput = 0.0f;
     float RightInput = 0.0f;
     bool bSprintRequested = false;
+
+    // Third-person camera pitch range (degrees). The spring arm follows the
+    // controller rotation, so clamping the control pitch bounds the camera.
+    static constexpr float MinCameraPitchDeg = -55.0f;
+    static constexpr float MaxCameraPitchDeg = 25.0f;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<USpringArmComponent> CameraBoom;

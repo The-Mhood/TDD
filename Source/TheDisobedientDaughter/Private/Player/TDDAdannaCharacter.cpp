@@ -14,7 +14,7 @@
 
 ATDDAdannaCharacter::ATDDAdannaCharacter()
 {
-    PrimaryActorTick.bCanEverTick = false;
+    PrimaryActorTick.bCanEverTick = true;
 
     bUseControllerRotationPitch = false;
     bUseControllerRotationRoll = false;
@@ -56,6 +56,27 @@ void ATDDAdannaCharacter::BeginPlay()
         {
             GetMesh()->SetSkeletalMesh(ImportedMesh);
         }
+    }
+}
+
+void ATDDAdannaCharacter::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+    ClampCameraPitch();
+}
+
+void ATDDAdannaCharacter::ClampCameraPitch()
+{
+    AController* ControllerRef = GetController();
+    if (ControllerRef == nullptr)
+    {
+        return;
+    }
+    const FRotator Control = ControllerRef->GetControlRotation();
+    const float Clamped = FMath::Clamp(Control.Pitch, MinCameraPitchDeg, MaxCameraPitchDeg);
+    if (!FMath::IsNearlyEqual(Clamped, Control.Pitch, 0.01f))
+    {
+        ControllerRef->SetControlRotation(FRotator(Clamped, Control.Yaw, 0.0f));
     }
 }
 
