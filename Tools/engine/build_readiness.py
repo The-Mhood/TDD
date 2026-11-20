@@ -385,6 +385,48 @@ def main():
                             f"{rel} before its reflected use (keep the underlying type and "
                             f"existing behaviour; do not remove reflection)")
 
+    # ---- UHT UENUM scope-placement guard -------------------------------
+    # UHT only allows UENUM in GLOBAL scope: "Invalid use of keyword UENUM.
+    # It may only appear in Global scopes." Flag any UENUM( that appears
+    # inside a class/struct body or inside a namespace block.
+    if src.is_dir():
+        for hdr in sorted(src.rglob("*.h")):
+            try:
+                htext = hdr.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            rel = hdr.relative_to(root)
+            # Brace positions that open a class/struct body (skipping enum
+            # class/struct and forward declarations, which end with ';').
+            class_brace_positions = set()
+            for m in re.finditer(r"\b(class|struct)\s+[^;{]*\{", htext):
+                if re.search(r"enum\s*$", htext[:m.start()]):
+                    continue
+                class_brace_positions.add(htext.index("{", m.end() - 1))
+            namespace_brace_positions = set()
+            for m in re.finditer(r"\bnamespace\s+(?:[\w:]+\s*)?\{", htext):
+                namespace_brace_positions.add(htext.index("{", m.end() - 1))
+            # Char scan with a brace stack: an entry is True when the brace
+            # opens a class/struct or namespace body.
+            stack = []
+            for i, ch in enumerate(htext):
+                if ch == "{":
+                    stack.append(i in class_brace_positions or i in namespace_brace_positions)
+                elif ch == "}":
+                    if stack:
+                        stack.pop()
+                elif htext.startswith("UENUM", i) and (
+                        i == 0 or not (htext[i - 1].isalnum() or htext[i - 1] == "_")):
+                    in_invalid_scope = any(stack)
+                    if in_invalid_scope:
+                        line = htext[:i].count("\n") + 1
+                        block(
+                            f"{rel}:{line}: UHT error class — UENUM used outside global scope "
+                            f"(inside a class/struct/namespace body)",
+                            f"move the UENUM-annotated enum declaration to GLOBAL scope in {rel} "
+                            f"(before the UCLASS/USTRUCT that uses it); keep the enum name, "
+                            f"underlying type, values and behaviour")
+
     # ---- targets
     target_files = sorted(src.glob("*.Target.cs")) if src.is_dir() else []
     if not target_files:

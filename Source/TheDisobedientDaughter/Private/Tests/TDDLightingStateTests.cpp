@@ -33,9 +33,9 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
     }
 
     // Dusk: sun preset applied exactly.
-    Switcher->ApplyState(ATDDLightingStateSwitcher::ETDDLightingState::Dusk);
+    Switcher->ApplyState(ETDDLightingState::Dusk);
     TestTrue(TEXT("Dusk is the current state"),
-             Switcher->GetCurrentState() == ATDDLightingStateSwitcher::ETDDLightingState::Dusk);
+             Switcher->GetCurrentState() == ETDDLightingState::Dusk);
     TestTrue(TEXT("Dusk sun intensity matches the preset"),
              FMath::IsNearlyEqual(Switcher->GetSunLight()->Intensity, Switcher->DuskPreset.SunIntensity, 0.001f));
     TestTrue(TEXT("Dusk sun colour matches the preset"),
@@ -49,15 +49,15 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
              FMath::IsNearlyEqual(Switcher->GetFireLight()->Intensity, 0.0f, 0.001f));
 
     // Night: firelight on at the preset intensity.
-    Switcher->ApplyState(ATDDLightingStateSwitcher::ETDDLightingState::Night);
+    Switcher->ApplyState(ETDDLightingState::Night);
     TestTrue(TEXT("Night is the current state"),
-             Switcher->GetCurrentState() == ATDDLightingStateSwitcher::ETDDLightingState::Night);
+             Switcher->GetCurrentState() == ETDDLightingState::Night);
     TestTrue(TEXT("Night firelight is on at the preset intensity"),
              FMath::IsNearlyEqual(Switcher->GetFireLight()->Intensity,
                                   Switcher->NightPreset.FireIntensity, 0.001f));
 
     // Back to dawn: firelight off again.
-    Switcher->ApplyState(ATDDLightingStateSwitcher::ETDDLightingState::Dawn);
+    Switcher->ApplyState(ETDDLightingState::Dawn);
     TestTrue(TEXT("Dawn firelight is off"),
              FMath::IsNearlyEqual(Switcher->GetFireLight()->Intensity,
                                   Switcher->DawnPreset.FireIntensity, 0.001f));

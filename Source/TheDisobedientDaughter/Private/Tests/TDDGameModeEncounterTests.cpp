@@ -48,7 +48,7 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
 
     GameMode->EvaluateEncounter(0.016f);
     TestTrue(TEXT("Encounter activates once a player exists"),
-             GameMode->GetEncounterState() == ATDDGameMode::ETDDEncounterState::Active);
+             GameMode->GetEncounterState() == ETDDEncounterState::Active);
 
     // Victory path: defeat the only rostered enemy.
     if (Enemy != nullptr)
@@ -62,12 +62,12 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
     }
     GameMode->EvaluateEncounter(0.016f);
     TestTrue(TEXT("Defeating every rostered enemy yields victory"),
-             GameMode->GetEncounterState() == ATDDGameMode::ETDDEncounterState::Victory);
+             GameMode->GetEncounterState() == ETDDEncounterState::Victory);
 
     // Manual restart restores the encounter.
     GameMode->RestartEncounter();
     TestTrue(TEXT("Restart returns the encounter to active"),
-             GameMode->GetEncounterState() == ATDDGameMode::ETDDEncounterState::Active);
+             GameMode->GetEncounterState() == ETDDEncounterState::Active);
     TestEqual(TEXT("Restart restores the enemy to the roster"), GameMode->GetEncounterEnemiesRemaining(), 1);
     if (Enemy != nullptr)
     {
@@ -88,17 +88,17 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
     }
     GameMode->EvaluateEncounter(0.016f);
     TestTrue(TEXT("Player death yields defeat"),
-             GameMode->GetEncounterState() == ATDDGameMode::ETDDEncounterState::Defeat);
+             GameMode->GetEncounterState() == ETDDEncounterState::Defeat);
 
     const float Step = 0.02f;
     int32 Steps = 0;
-    while (Steps < 500 && GameMode->GetEncounterState() == ATDDGameMode::ETDDEncounterState::Defeat)
+    while (Steps < 500 && GameMode->GetEncounterState() == ETDDEncounterState::Defeat)
     {
         GameMode->EvaluateEncounter(Step);
         ++Steps;
     }
     TestTrue(TEXT("Defeat auto-restarts after the configured delay"),
-             GameMode->GetEncounterState() == ATDDGameMode::ETDDEncounterState::Active);
+             GameMode->GetEncounterState() == ETDDEncounterState::Active);
 
     return true;
 }

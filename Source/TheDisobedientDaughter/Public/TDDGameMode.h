@@ -10,6 +10,20 @@ class APlayerController;
 class ATDDTrainingEnemy;
 
 /**
+ * Encounter state machine. Declared at GLOBAL scope with UENUM so UHT can
+ * reflect the type for the EncounterState UPROPERTY below (UENUM may only
+ * appear in global scopes); underlying type unchanged (uint8).
+ */
+UENUM(BlueprintType)
+enum class ETDDEncounterState : uint8
+{
+    NotStarted,
+    Active,
+    Victory,
+    Defeat
+};
+
+/**
  * Canonical game mode: first playable player controller and pawn, plus the
  * greybox encounter flow (active -> victory/defeat -> restart) that makes the
  * M1 candidate repeatedly playable.
@@ -27,19 +41,6 @@ class THEDISOBEDIENTDAUGHTER_API ATDDGameMode : public AGameModeBase
 
 public:
     ATDDGameMode();
-
-    /**
-     * Encounter state machine. UENUM so UHT can reflect the type for the
-     * EncounterState UPROPERTY below; underlying type unchanged (uint8).
-     */
-    UENUM(BlueprintType)
-    enum class ETDDEncounterState : uint8
-    {
-        NotStarted,
-        Active,
-        Victory,
-        Defeat
-    };
 
     virtual void BeginPlay() override;
     virtual void PostLogin(APlayerController* NewPlayer) override;

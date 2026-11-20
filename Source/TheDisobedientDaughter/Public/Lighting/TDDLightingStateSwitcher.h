@@ -4,6 +4,20 @@
 #include "GameFramework/Actor.h"
 #include "TDDLightingStateSwitcher.generated.h"
 
+/**
+ * Lighting state machine. Declared at GLOBAL scope with UENUM so UHT can
+ * reflect the type for the CurrentState UPROPERTY and the ApplyState
+ * UFUNCTION parameter (UENUM may only appear in global scopes); underlying
+ * type unchanged (uint8).
+ */
+UENUM(BlueprintType)
+enum class ETDDLightingState : uint8
+{
+    Dawn,
+    Dusk,
+    Night
+};
+
 /** One provisional CH01 lighting state preset (W1 D13 keys ST01/ST03/ST04). */
 USTRUCT(BlueprintType)
 struct FTDDLightingPreset
@@ -47,18 +61,6 @@ class THEDISOBEDIENTDAUGHTER_API ATDDLightingStateSwitcher : public AActor
 
 public:
     ATDDLightingStateSwitcher();
-
-    /**
-     * Lighting state machine. UENUM so UHT can reflect the type for the
-     * CurrentState UPROPERTY and the ApplyState UFUNCTION parameter.
-     */
-    UENUM(BlueprintType)
-    enum class ETDDLightingState : uint8
-    {
-        Dawn,
-        Dusk,
-        Night
-    };
 
     /** Apply a state to every owned light component. */
     UFUNCTION(BlueprintCallable, Category="TDD|Lighting")
