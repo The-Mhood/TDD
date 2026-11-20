@@ -1,0 +1,13 @@
+# ADANNA reference checksums — filed 2026-11-21 (W1 D5). Plates are NOT duplicated into git (size); they live in the shared Drive; this file + Drive IDs + contact sheet identify them exactly.
+# name -> sha256 (computed 2026-11-21) -> Drive ID(s) (exact name match; sizes equal; same-file duplicates suspected but not independently re-verified byte-wise)
+CHAR_ADANNA_MASTER_REFERENCE_V001.jpg 06d2b02dc3b8bcc3f35534cfbb3d76c2090ce57b7791a1ead883937a0875ce4c  local master copy (Drive twin(s) not located in name search)  585862 B
+REF_ADANNA_MASTER_PORTRAIT_APPROVED_V001.jpg 32419659dd256324afc0dc7a08ad22ad4de4a5d3ee038690e259a352253c287a  local copy of approved master portrait  387742 B
+B2_CAND_CHAR_ADANNA_TURNAROUND_FRONT_V003_2560x1440.png fe7c747f255886a63c461d2ef0e453c69828527e7b8caa5cb8ffc861f0d96714 1nNFdXOcJYpojq1PYmRsOuZTn5wBRBIq8  2288349 B
+B2_CAND_CHAR_ADANNA_TURNAROUND_FRONT_V004_2560x1440.png ae7e1bf7711726beb880c014d5f3f4fded33a3dcfb183e09110c10fdd5ffdc67 1HP2m8e0z8Ug7_4_yeJal3zVvj18luRa6 ; 1MA20ws6ujgQazDb66BgDOHIjrNgfT29x  2290525 B each (dup)
+B2_CAND_CHAR_ADANNA_TURNAROUND_FRONT_V005_2560x1440.png 975992bcf794d0c0636579d94d0b09e99683189bc8003811a6f30dba67f3867b 1Ug908Xf-JSL18TAFWamzb1C_SkfZgYin ; 1hQqFawUsv8oM_aX_4JJNqqkBmVoiTmvd  2186990 B each (dup; internal study only)
+B2_CAND_CHAR_ADANNA_TURNAROUND_THREE_QUARTER_V003_2560x1440.png d7713add4c7304468e3afb1f27d52c103dac85e400085fcc9f17c47c40fb1def 1nYt7Tvoyn7Q5179ITrgJhCjY5gb4MmyY  2431960 B
+B2_CAND_CHAR_ADANNA_TURNAROUND_THREE_QUARTER_V004_2560x1440.png dd5d2b13d9ee4313db267e964d9f85b54509d45a0471fef69b79ab2481fce176 1JWX8z0UcLpqUXouXMJzSyWvMsVxTjxPI  2436291 B
+B2_CAND_CHAR_ADANNA_TURNAROUND_THREE_QUARTER_V005_2560x1440.png 01f67c844cd81412990fe3c097eccdfd581381ce142d53618d6ebe78ec4ff596 10f6Xgh0PSv3fkDYADSz1sGKFIC6kd3np  2364961 B (internal study only)
+B2_CAND_CHAR_ADANNA_TURNAROUND_BACK_V003_2560x1440.png 8917617dca0cdc168569dbf4478776612fcb1ffd445e3231c6ace59955cab679 1ne1I9N4HyEmEpAKmD1UNVmpMvP6RHEL0 ; 11MmHTZ-CawZrvknG21bsgqqKXJ-7x2nP  2574938 B each (dup)
+B2_CAND_CHAR_ADANNA_TURNAROUND_LEFT_SIDE_V003_2560x1440.png 0c512e1863297411fc850c03eebec84fcc34f0d024529daf14b116ddb98b14e4 1GcfptqCp9Qg4z7LA0SEejlwbYqiZozbu ; 14uOMGJYXucAHpfCByFi8TW_i1ZxriKMy  2444893 B each (dup)
+# Legacy preserved, out of scope for selection (as returned by Drive search 2026-11-21): adanna_turnaround.jpg (1nh6PpVLQbjlwr4yQHJ5gm1MTVuCaC6JA, 211138 B) ; adanna_turnaround_v002.jpg (11hvHouHbhVTbwPp256IH6wj6YDgbEffT, 219702 B) ; amadioha_turnaround.jpg (1j0KXSpLPXhfqUUd6jn4GhjEqzVZJ5KgH, 291133 B) ; B18/B19/B20/B21 reference-vs-candidate notes ; V002-rejected 8-plate set.

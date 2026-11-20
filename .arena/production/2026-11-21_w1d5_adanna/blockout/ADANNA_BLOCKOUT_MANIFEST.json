@@ -1,0 +1,14 @@
+{
+  "asset": "ADANNA_BLOCKOUT_PLACEHOLDER_m.obj",
+  "status": "PLACEHOLDER - NOT production",
+  "units": "meters",
+  "origin": "ground centre",
+  "up": "+Z",
+  "forward": "+Y",
+  "height_m": 1.8,
+  "faces": 564,
+  "vertices": 462,
+  "material": "M_ADANNA_PLACEHOLDER (flat grey)",
+  "ue_import": "UE 5.8.4 OBJ; scale to cm on import (x100) per FP-07; verify capsule r/h per TD",
+  "replaced_by": "ADANNA_base_LOD0 after AD-02 CD selection + AD-03"
+}
