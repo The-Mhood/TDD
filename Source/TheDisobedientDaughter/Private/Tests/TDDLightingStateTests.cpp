@@ -2,7 +2,7 @@
 
 #include "Misc/AutomationTest.h"
 #include "Components/DirectionalLightComponent.h"
-#include "Components/HemisphericalLightComponent.h"
+#include "Components/SkyLightComponent.h"
 #include "Components/PointLightComponent.h"
 #include "Lighting/TDDLightingStateSwitcher.h"
 
@@ -44,7 +44,9 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
              FMath::IsNearlyEqual(Switcher->GetSunLight()->GetRelativeRotation().Pitch,
                                   Switcher->DuskPreset.SunElevationDeg, 0.01f));
     TestTrue(TEXT("Dusk ambient sky matches the preset"),
-             Switcher->GetAmbientLight()->SkyColor.Equals(Switcher->DuskPreset.AmbientSky, 0.001f));
+             Switcher->GetAmbientLight()->UpperHemisphereColor.Equals(Switcher->DuskPreset.AmbientSky, 0.001f));
+    TestTrue(TEXT("Dusk ambient ground matches the preset"),
+             Switcher->GetAmbientLight()->LowerHemisphereColor.Equals(Switcher->DuskPreset.AmbientGround, 0.001f));
     TestTrue(TEXT("Dusk firelight is off"),
              FMath::IsNearlyEqual(Switcher->GetFireLight()->Intensity, 0.0f, 0.001f));
 

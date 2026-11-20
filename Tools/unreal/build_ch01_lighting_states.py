@@ -88,22 +88,22 @@ def main():
     directional.set_editor_property("rotation", unreal.Rotator(
         elevation * 57.2957795, azimuth * 57.2957795, 0.0))
 
-    # Ambient via hemispherical light (sky/ground).
+    # Ambient via sky light (upper/lower hemisphere sky/ground colours).
     hemi = None
     for actor in unreal.GameplayStatics.get_all_actors_with_tag(world, "TDD_LightingState"):
-        comp = actor.get_component_by_class(unreal.HemisphericalLightComponent)
+        comp = actor.get_component_by_class(unreal.SkyLightComponent)
         if comp is not None:
             hemi = comp
             break
     if hemi is None:
         hemi_actor = unreal.EditorLevelLibrary.spawn_actor_from_class(
-            unreal.HemisphericalLightActor, unreal.Vector(0.0, 0.0, 300.0), unreal.Rotator(0.0, 0.0, 0.0))
-        require(hemi_actor is not None, "Could not spawn hemispherical light")
+            unreal.SkyLight, unreal.Vector(0.0, 0.0, 300.0), unreal.Rotator(0.0, 0.0, 0.0))
+        require(hemi_actor is not None, "Could not spawn sky light")
         hemi_actor.set_actor_label("TDD_LightingState_Ambient", mark_dirty=True)
-        hemi = hemi_actor.hemispherical_light_component
+        hemi = hemi_actor.sky_light_component
     hemi.set_editor_property("intensity", 0.4)
-    hemi.set_editor_property("sky_color", col(s["ambient_sky"]))
-    hemi.set_editor_property("ground_color", col(s["ambient_ground"]))
+    hemi.set_editor_property("upper_hemisphere_color", col(s["ambient_sky"]))
+    hemi.set_editor_property("lower_hemisphere_color", col(s["ambient_ground"]))
 
     # Firelight (night cooking fire only — matches the approved VFX direction).
     fire = None

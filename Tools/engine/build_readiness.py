@@ -427,6 +427,35 @@ def main():
                             f"(before the UCLASS/USTRUCT that uses it); keep the enum name, "
                             f"underlying type, values and behaviour")
 
+    # ---- UE 5.8 removed-engine-class guard ------------------------------
+    # Engine class names change between UE versions; a class that no longer
+    # exists fails UHT with "Unable to find 'class' with name 'X'". Track
+    # verified removals and block their use in project sources, pointing at
+    # the supported replacement.
+    REMOVED_UE58_CLASSES = {
+        # Hemispherical light component removed in the UE 5.8 light refactor
+        # (ULightComponent -> UDirectionalLightComponent / ULocalLightComponent
+        # -> UPointLightComponent, URectLightComponent). Ambient sky/ground
+        # behaviour is provided by USkyLightComponent (upper/lower hemisphere).
+        "UHemisphericalLightComponent": "USkyLightComponent",
+    }
+    if src.is_dir():
+        for hdr in sorted(src.rglob("*.h")) + sorted(src.rglob("*.cpp")):
+            try:
+                htext = hdr.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            rel = hdr.relative_to(root)
+            for legacy, replacement in REMOVED_UE58_CLASSES.items():
+                for m in re.finditer(r"\b" + re.escape(legacy) + r"\b", htext):
+                    line = htext[:m.start()].count("\n") + 1
+                    block(
+                        f"{rel}:{line}: UHT error class — engine class '{legacy}' does not "
+                        f"exist in UE 5.8 (not a reflected class)",
+                        f"replace '{legacy}' with the supported UE 5.8 class '{replacement}' "
+                        f"in {rel} (update the include, the member/getter types and the "
+                        f"sky/ground property calls to preserve the intended behaviour)")
+
     # ---- targets
     target_files = sorted(src.glob("*.Target.cs")) if src.is_dir() else []
     if not target_files:

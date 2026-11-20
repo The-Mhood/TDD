@@ -4,6 +4,10 @@
 #include "GameFramework/Actor.h"
 #include "TDDLightingStateSwitcher.generated.h"
 
+class UDirectionalLightComponent;
+class USkyLightComponent;
+class UPointLightComponent;
+
 /**
  * Lighting state machine. Declared at GLOBAL scope with UENUM so UHT can
  * reflect the type for the CurrentState UPROPERTY and the ApplyState
@@ -69,7 +73,7 @@ public:
     ETDDLightingState GetCurrentState() const { return CurrentState; }
 
     UDirectionalLightComponent* GetSunLight() const { return SunLight; }
-    UHemisphericalLightComponent* GetAmbientLight() const { return AmbientLight; }
+    USkyLightComponent* GetAmbientLight() const { return AmbientLight; }
     UPointLightComponent* GetFireLight() const { return FireLight; }
 
 protected:
@@ -81,7 +85,7 @@ private:
     TObjectPtr<UDirectionalLightComponent> SunLight;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="TDD|Lighting", meta=(AllowPrivateAccess="true"))
-    TObjectPtr<UHemisphericalLightComponent> AmbientLight;
+    TObjectPtr<USkyLightComponent> AmbientLight;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="TDD|Lighting", meta=(AllowPrivateAccess="true"))
     TObjectPtr<UPointLightComponent> FireLight;

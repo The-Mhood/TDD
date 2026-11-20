@@ -1,15 +1,15 @@
 #include "Lighting/TDDLightingStateSwitcher.h"
 
 #include "Components/DirectionalLightComponent.h"
-#include "Components/HemisphericalLightComponent.h"
 #include "Components/PointLightComponent.h"
+#include "Components/SkyLightComponent.h"
 
 ATDDLightingStateSwitcher::ATDDLightingStateSwitcher()
 {
     PrimaryActorTick.bCanEverTick = true;
 
     SunLight = CreateDefaultSubobject<UDirectionalLightComponent>(TEXT("SunLight"));
-    AmbientLight = CreateDefaultSubobject<UHemisphericalLightComponent>(TEXT("AmbientLight"));
+    AmbientLight = CreateDefaultSubobject<USkyLightComponent>(TEXT("AmbientLight"));
     FireLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("FireLight"));
 
     ApplyState(ETDDLightingState::Dawn);
@@ -60,8 +60,10 @@ void ATDDLightingStateSwitcher::ApplyState(ETDDLightingState State)
     }
     if (AmbientLight != nullptr)
     {
-        AmbientLight->SetSkyColor(Preset->AmbientSky);
-        AmbientLight->SetGroundColor(Preset->AmbientGround);
+        // Sky/ground ambient model: USkyLightComponent upper/lower hemisphere
+        // colors replace the removed hemispherical light's sky/ground colors.
+        AmbientLight->SetUpperHemisphereColor(Preset->AmbientSky);
+        AmbientLight->SetLowerHemisphereColor(Preset->AmbientGround);
     }
     if (FireLight != nullptr)
     {
