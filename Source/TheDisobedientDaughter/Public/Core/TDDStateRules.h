@@ -127,7 +127,9 @@ inline std::uint16_t InterruptionMask(const ETDDPlayerState S, const bool bAirDo
              | Detail::Bit(P::Traversal) | Detail::Bit(P::Interaction))
              & ~Detail::Bit(S);
     case P::Airborne:
-        return bAirDodgeEnabled ? Detail::Bit(P::Dodge) : 0;
+        // Landing is a physics event, not a timed recovery; it must be able to
+        // enter Land while preserving the optional air-dodge request.
+        return Detail::Bit(P::Land) | (bAirDodgeEnabled ? Detail::Bit(P::Dodge) : 0);
     case P::Land:
         return Detail::Bit(P::Dodge); // after landing frame, fall speed < threshold (data)
     case P::Dodge:
@@ -135,7 +137,8 @@ inline std::uint16_t InterruptionMask(const ETDDPlayerState S, const bool bAirDo
     case P::Attack:
         return Detail::Bit(P::Dodge) | Detail::Bit(P::Parry); // + damage if declared interruptible (pipeline path)
     case P::Block:
-        return Detail::Bit(P::Parry); // guard break -> Stagger is forced
+        return Detail::Bit(P::Parry) | Detail::Bit(P::Idle) | Detail::Bit(P::Locomotion)
+             | Detail::Bit(P::Sprint); // guard release; guard break -> Stagger is forced
     case P::Parry:
         return 0;
     case P::Stagger:

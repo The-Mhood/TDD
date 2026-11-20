@@ -36,8 +36,8 @@ int main()
     // ---- AC-22: all 196 pairs — declared legal or refused, state unchanged on refusal ----
     {
         const std::int32_t ExpectedLegal = CountLegalPairs(/*bAirDodgeEnabled*/ false);
-        Check(ExpectedLegal == 75, "matrix: 75 legal pairs (air-dodge off)");
-        Check(CountLegalPairs(/*bAirDodgeEnabled*/ true) == 76, "matrix: 76 legal pairs (air-dodge on)");
+        Check(ExpectedLegal == 79, "matrix: 79 legal pairs (air-dodge off, including land/guard-release events)");
+        Check(CountLegalPairs(/*bAirDodgeEnabled*/ true) == 80, "matrix: 80 legal pairs (air-dodge on)");
 
         std::int32_t LegalSeen = 0;
         std::int32_t IllegalSeen = 0;
@@ -84,7 +84,7 @@ int main()
                 }
             }
         }
-        Check(LegalSeen == 75 && IllegalSeen == 121, "matrix: 75 legal / 121 refused (no silent permits)");
+        Check(LegalSeen == 79 && IllegalSeen == 117, "matrix: 79 legal / 117 refused (no silent permits)");
     }
 
     // ---- AC-23: state semantics ----
@@ -121,7 +121,23 @@ int main()
               "semantics: forced Stagger still enters Dodge");
     }
 
-    // (d) recovery ends the state at its declared time (data, not code paths)
+    // (d) physics/event transitions must permit actual grounded and guard-release states.
+    {
+        FTDDPureStateMachine M;
+        M.SetStateForTest(P::Airborne);
+        Check(M.RequestState(P::Land, "CMC landed") == ETDDRefusalReason::Accepted
+              && M.Current() == P::Land,
+              "semantics: physics landing transitions Airborne -> Land");
+
+        FTDDPureStateMachine Guard;
+        Guard.SetStateForTest(P::Block);
+        Guard.Tick(0.09f);
+        Check(Guard.RequestState(P::Locomotion, "guard released") == ETDDRefusalReason::Accepted
+              && Guard.Current() == P::Locomotion,
+              "semantics: guard release exits Block to locomotion");
+    }
+
+    // (e) recovery ends the state at its declared time (data, not code paths)
     {
         FTDDPureStateMachine M;
         M.SetStateForTest(P::Land);

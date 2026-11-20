@@ -176,6 +176,25 @@ int main()
         Check(Timed.Roster().size() == 1 && Timed.Roster()[0].Id == 91
               && Timed.ActiveHolders() == 0,
               "token: reset clears policy state but preserves roster identity");
+
+        // Roster synchronization in the Unreal world subsystem must preserve
+        // absolute world-time cooldown progression; it must not fast-forward a
+        // long-standing enemy merely because another enemy registered.
+        FTDDTokenPolicySettings SyncSettings;
+        SyncSettings.MaxConcurrentAttackers = 2;
+        SyncSettings.TokenTTL = 1.0f;
+        SyncSettings.PerEnemyCooldown = 10.0f;
+        FTDDAttackTokenPolicy Synced(SyncSettings);
+        FTDDEnemyCandidate First; First.Id = 10;
+        Synced.SetRoster({ First });
+        Check(Synced.GrantNext(100.0f) == 10, "token: roster-sync test initial grant");
+        Check(Synced.GrantNext(101.0f) == -1, "token: roster-sync test holder at TTL boundary");
+        std::vector<FTDDEnemyCandidate> Expanded = Synced.Roster();
+        FTDDEnemyCandidate Second; Second.Id = 11;
+        Expanded.push_back(Second);
+        Synced.SetRoster(Expanded);
+        Check(Synced.GrantNext(102.1f) == 11,
+              "token: adding an enemy does not fast-forward the existing enemy cooldown");
     }
 
     // ---- TDD-Unit.AI.PhaseSelectorWeights / ADR-0107 ----

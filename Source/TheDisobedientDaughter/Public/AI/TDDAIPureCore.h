@@ -55,7 +55,8 @@ public:
         Roster_ = Roster;
         GrantCounts_.assign(Roster_.size(), 0);
         LastGranteeIdx_ = -1;
-        LastTick_ = 0.0f;
+        // Now is an absolute world-time clock. Keep LastTick_ across roster
+        // membership updates so existing cooldowns are not fast-forwarded.
     }
 
     /**
