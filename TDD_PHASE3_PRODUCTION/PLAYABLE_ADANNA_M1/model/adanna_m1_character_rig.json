@@ -1,0 +1,283 @@
+{
+  "classification": "RIGGED TECHNICAL GAMEPLAY PROXY \u2014 NOT FINAL CHARACTER",
+  "glb": "adanna_m1_technical_proxy.glb",
+  "obj": "adanna_m1_technical_proxy.obj",
+  "joint_count": 21,
+  "joints": [
+    {
+      "index": 0,
+      "name": "Adanna_Root",
+      "parent": null,
+      "translation": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 1,
+      "name": "Hips",
+      "parent": "Adanna_Root",
+      "translation": [
+        0.0,
+        0.0,
+        0.96
+      ]
+    },
+    {
+      "index": 2,
+      "name": "Spine",
+      "parent": "Hips",
+      "translation": [
+        0.0,
+        0.0,
+        0.28
+      ]
+    },
+    {
+      "index": 3,
+      "name": "Chest",
+      "parent": "Spine",
+      "translation": [
+        0.0,
+        0.0,
+        0.28
+      ]
+    },
+    {
+      "index": 4,
+      "name": "Neck",
+      "parent": "Chest",
+      "translation": [
+        0.0,
+        0.0,
+        0.12
+      ]
+    },
+    {
+      "index": 5,
+      "name": "Head",
+      "parent": "Neck",
+      "translation": [
+        0.0,
+        0.0,
+        0.1
+      ]
+    },
+    {
+      "index": 6,
+      "name": "HairKnot",
+      "parent": "Head",
+      "translation": [
+        0.0,
+        -0.03,
+        0.16
+      ]
+    },
+    {
+      "index": 7,
+      "name": "LeftShoulder",
+      "parent": "Chest",
+      "translation": [
+        -0.19,
+        0.0,
+        0.02
+      ]
+    },
+    {
+      "index": 8,
+      "name": "LeftUpperArm",
+      "parent": "LeftShoulder",
+      "translation": [
+        -0.1,
+        0.0,
+        -0.06
+      ]
+    },
+    {
+      "index": 9,
+      "name": "LeftForearm",
+      "parent": "LeftUpperArm",
+      "translation": [
+        0.0,
+        0.0,
+        -0.31
+      ]
+    },
+    {
+      "index": 10,
+      "name": "LeftHand",
+      "parent": "LeftForearm",
+      "translation": [
+        0.0,
+        0.0,
+        -0.28
+      ]
+    },
+    {
+      "index": 11,
+      "name": "RightShoulder",
+      "parent": "Chest",
+      "translation": [
+        0.19,
+        0.0,
+        0.02
+      ]
+    },
+    {
+      "index": 12,
+      "name": "RightUpperArm",
+      "parent": "RightShoulder",
+      "translation": [
+        0.1,
+        0.0,
+        -0.06
+      ]
+    },
+    {
+      "index": 13,
+      "name": "RightForearm",
+      "parent": "RightUpperArm",
+      "translation": [
+        0.0,
+        0.0,
+        -0.31
+      ]
+    },
+    {
+      "index": 14,
+      "name": "RightHand",
+      "parent": "RightForearm",
+      "translation": [
+        0.0,
+        0.0,
+        -0.28
+      ]
+    },
+    {
+      "index": 15,
+      "name": "LeftUpperLeg",
+      "parent": "Hips",
+      "translation": [
+        -0.11,
+        0.0,
+        -0.08
+      ]
+    },
+    {
+      "index": 16,
+      "name": "LeftLowerLeg",
+      "parent": "LeftUpperLeg",
+      "translation": [
+        0.0,
+        0.0,
+        -0.43
+      ]
+    },
+    {
+      "index": 17,
+      "name": "LeftFoot",
+      "parent": "LeftLowerLeg",
+      "translation": [
+        0.0,
+        0.08,
+        -0.4
+      ]
+    },
+    {
+      "index": 18,
+      "name": "RightUpperLeg",
+      "parent": "Hips",
+      "translation": [
+        0.11,
+        0.0,
+        -0.08
+      ]
+    },
+    {
+      "index": 19,
+      "name": "RightLowerLeg",
+      "parent": "RightUpperLeg",
+      "translation": [
+        0.0,
+        0.0,
+        -0.43
+      ]
+    },
+    {
+      "index": 20,
+      "name": "RightFoot",
+      "parent": "RightLowerLeg",
+      "translation": [
+        0.0,
+        0.08,
+        -0.4
+      ]
+    }
+  ],
+  "animation_clips": [
+    "idle",
+    "walk",
+    "run",
+    "jump",
+    "land"
+  ],
+  "vertex_count": 870,
+  "triangle_count": 1584,
+  "skin_weights": "single-bone rigid weights; proxy only, not final deformation",
+  "source": {
+    "drive_id": "1FY3hw3602iB-1405RgUIO3ih2USmck_Y",
+    "sha256": "06d2b02dc3b8bcc3f35534cfbb3d76c2090ce57b7791a1ead883937a0875ce4c",
+    "status": "APPROVED 2026-11-15; master identity reference",
+    "art_bible_register": "CHARACTER_DESIGN_REGISTER.md: master reference APPROVED; 7.5 heads, athletic fighter, identity locks retained"
+  },
+  "restrictions": [
+    "no blade",
+    "no unapproved V003 BACK/LEFT_SIDE",
+    "no V013 item-5 claim",
+    "no invented dimensions/canon/costume",
+    "no final topology/UVs/PBR/groom"
+  ],
+  "colors": {
+    "SKIN": [
+      67,
+      45,
+      39
+    ],
+    "SKIN_LIT": [
+      87,
+      61,
+      54
+    ],
+    "HAIR": [
+      18,
+      18,
+      21
+    ],
+    "INDIGO": [
+      37,
+      45,
+      80
+    ],
+    "LEATHER": [
+      64,
+      42,
+      31
+    ],
+    "BRONZE": [
+      154,
+      112,
+      57
+    ],
+    "CORAL": [
+      176,
+      74,
+      51
+    ],
+    "SCAR": [
+      52,
+      35,
+      30
+    ]
+  }
+}

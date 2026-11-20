@@ -1,0 +1,176 @@
+{
+  "generated": "2026-11-19",
+  "overallPass": true,
+  "status": "COMPLETED AND VERIFIED",
+  "scope": "local GLB binary/accessor, UV atlas, import manifest, owner request, setup helper and collision OBJ validation only; NOT Unreal import/compile/PIE/cook/package",
+  "checks": [
+    {
+      "name": "GLB magic/version/total length",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "GLB buffer length valid",
+      "ok": true,
+      "detail": "declared=479354 binary=479356"
+    },
+    {
+      "name": "TEXCOORD_0 present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "COLOR_0 removed to avoid atlas double tint",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "POSITION/TEXCOORD_0 counts match",
+      "ok": true,
+      "detail": "4752/4752/4752"
+    },
+    {
+      "name": "UVs finite and inside 0..1",
+      "ok": true,
+      "detail": "min=[0.019999999552965164, 0.03999999910593033] max=[0.9800000190734863, 0.9599999785423279]"
+    },
+    {
+      "name": "all 8 atlas material patches covered",
+      "ok": true,
+      "detail": "[0, 1, 2, 3, 4, 5, 6, 7]"
+    },
+    {
+      "name": "face-corner vertex count",
+      "ok": true,
+      "detail": "4752"
+    },
+    {
+      "name": "indices cover new vertices",
+      "ok": true,
+      "detail": "min=0 max=4751"
+    },
+    {
+      "name": "joint indices below 21",
+      "ok": true,
+      "detail": "20"
+    },
+    {
+      "name": "skin weights approximately normalised",
+      "ok": true,
+      "detail": "min=1.00000 max=1.00000"
+    },
+    {
+      "name": "material has baseColorTexture",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "texture source/sampler valid",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "image is embedded bufferView, no URI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "embedded image has PNG magic",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "animations preserved",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "21-joint skin preserved",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "source GLB preserved",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "atlas dimensions",
+      "ok": true,
+      "detail": "(512, 256)"
+    },
+    {
+      "name": "layout dimensions",
+      "ok": true,
+      "detail": "(1200, 900)"
+    },
+    {
+      "name": "capture copies exist",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "face material ids recorded",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "collision OBJ reopens in Trimesh",
+      "ok": true,
+      "detail": "386v/768f"
+    },
+    {
+      "name": "collision bounds match neutral capsule",
+      "ok": true,
+      "detail": "[0.68, 0.68, 1.76]"
+    },
+    {
+      "name": "collision feet origin at Z=0",
+      "ok": true,
+      "detail": "0.0"
+    },
+    {
+      "name": "import manifest valid",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "UE integration not overclaimed",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "owner request file exists",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "macOS UE setup helper exists",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "superseded setup helper preserved",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "macOS runbook exists",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "all parts inside 2 m humanoid envelope",
+      "ok": true,
+      "detail": "outside=[]"
+    },
+    {
+      "name": "spiral pendant sits on the chest",
+      "ok": true,
+      "detail": "mean=[-0.0, 0.115, 1.43]"
+    }
+  ],
+  "checksPassed": 33,
+  "checksTotal": 33,
+  "classification": "PROVISIONAL \u2014 AWAITING CREATIVE APPROVAL; BLOCKED \u2014 OWNER-STUDIO DEPENDENCY for UE execution"
+}

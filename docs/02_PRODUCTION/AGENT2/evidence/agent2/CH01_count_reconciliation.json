@@ -1,0 +1,220 @@
+{
+  "meta": {
+    "tool": "Tools/world/count_reconciliation.py",
+    "purpose": "Prove the register's six counts are distinct quantities and reconcile.",
+    "register_source": {
+      "document": "LOCATION_MASTER_REGISTER.md",
+      "version": "2.9",
+      "drive_file_id": "1E-PPUQh-Ck-4JhJNFFHTAY6CiBPbmxv5",
+      "dated": "2026-11-15",
+      "section": "Counts (kept separate, never mixed)",
+      "read_on": "2026-11-16"
+    },
+    "companion_source": {
+      "document": "SCENE_AND_MICROLOCATION_MASTER_REGISTER.md",
+      "version": "1.9",
+      "drive_file_id": "1EYQl5eMZx8PGElDSPHojKcEVWGvU2-UW"
+    },
+    "column_semantics": {
+      "major_environments": "One per chapter (the ENV entry). Counted as a location entry.",
+      "other_locations_not_interiors": "SUB + SET + LMK + TRV + EXP + BOS. Excludes interiors by definition.",
+      "interiors_location_entries": "INT entries. 'Interiors that appear only as scenes are counted as scenes, not as locations.'",
+      "scenes_and_microlocations": "SCN entries. A scene is not a location.",
+      "not_main_or_secondary_story": "Subset of the scenes column: scenes whose category is neither MAIN STORY nor SECONDARY STORY.",
+      "environment_state_references": "ES_* references. Explicitly 'not locations'."
+    },
+    "entity_kinds": {
+      "MAJOR_ENVIRONMENT": {
+        "id_pattern": "CHxx-ENV-001",
+        "is_location_entry": true,
+        "is_scene": false,
+        "is_state": false,
+        "description": "One per chapter. The chapter's exterior world.",
+        "contains": "every other location in the chapter",
+        "double_count_risk": "none: unique per chapter"
+      },
+      "LOCATION": {
+        "id_pattern": "CHxx-(SUB|SET|LMK|TRV|EXP|BOS)-nnn",
+        "is_location_entry": true,
+        "is_scene": false,
+        "is_state": false,
+        "description": "A named place the player can be at: sub-location, settlement, landmark, traversal area, exploration area, boss arena.",
+        "contains": "scenes (optional), environment states (optional)",
+        "double_count_risk": "An interior listed as a location AND described by a scene with the same name is one place. The register counts the scene, not the location, when the interior exists only as a scene."
+      },
+      "INTERIOR": {
+        "id_pattern": "CHxx-INT-nnn",
+        "is_location_entry": true,
+        "is_scene": false,
+        "is_state": false,
+        "description": "An interior that has its own location entry.",
+        "contains": "scenes (optional), environment states (optional)",
+        "double_count_risk": "HIGHEST. The register states that interiors appearing only as scenes are counted as scenes. Never add INT count to SCN count and call the result 'places'."
+      },
+      "SCENE": {
+        "id_pattern": "CHxx-SCN-nnn",
+        "is_location_entry": false,
+        "is_scene": true,
+        "is_state": false,
+        "description": "A staged moment or micro-location with its own board, category, access level and NPC content. Includes EXTERIOR MICRO-LOCATION scenes.",
+        "contains": "nothing; belongs to exactly one parent location",
+        "double_count_risk": "Micro-locations are scenes. Do not add them again."
+      },
+      "ENVIRONMENT_STATE": {
+        "id_pattern": "CHxx-<LOC>-STnn",
+        "is_location_entry": false,
+        "is_scene": false,
+        "is_state": true,
+        "description": "A time, weather or supernatural variant of one location (night, rain, market day, supernatural). Belongs to a location.",
+        "contains": "nothing",
+        "double_count_risk": "A state is a multiplier on one place, not a place. 40 state refs do not mean 40 more locations."
+      }
+    },
+    "containment_rules": [
+      "A scene has exactly one parent location.",
+      "A location has zero or more scenes.",
+      "An environment state has exactly one parent location and is not a location.",
+      "Environment state ids never collide with location ids.",
+      "A location entry's chapter prefix matches its major environment's chapter.",
+      "Location entries = major_environments + other_locations + interiors. Scenes and states are excluded from that sum by definition."
+    ],
+    "ingestion_status": "Chapter 1 parsed for locations (partial) and scenes (complete). Chapters 2-8 arithmetic-checked on published numbers only."
+  },
+  "published_totals": {
+    "major_environments": 8,
+    "other_locations_not_interiors": 142,
+    "interiors_location_entries": 46,
+    "scenes_and_microlocations": 135,
+    "not_main_or_secondary_story": 122,
+    "environment_state_references": 40
+  },
+  "derived_totals": {
+    "location_entries": {
+      "value": 196,
+      "derivation": "major_environments 8 + other_locations_not_interiors 142 + interiors_location_entries 46",
+      "note": "Corrects the earlier figure of 191 in canon_index.json v2.0.0, which was arithmetically wrong. 8+142+46 = 196."
+    },
+    "main_or_secondary_story_scenes": {
+      "value": 13,
+      "derivation": "scenes_and_microlocations 135 - not_main_or_secondary_story 122",
+      "note": "Independently corroborated by the scene register v1.9 category counts: MAIN STORY 4 + SECONDARY STORY 9 = 13."
+    }
+  },
+  "register_self_consistency": {
+    "problems": []
+  },
+  "derived_consistency": {
+    "problems": []
+  },
+  "chapter": {
+    "chapter": "CH01",
+    "parsed_locations": 13,
+    "parsed_locations_by_category": {
+      "BOS": 1,
+      "ENV": 1,
+      "EXP": 1,
+      "INT": 3,
+      "LMK": 1,
+      "SET": 1,
+      "SUB": 4,
+      "TRV": 1
+    },
+    "parsed_scenes": 46,
+    "parsed_scenes_by_category": {
+      "AMBIENT NPC SCENE": 14,
+      "ATMOSPHERIC SCENE": 7,
+      "ENTERABLE INTERIOR": 4,
+      "ENVIRONMENTAL STORYTELLING": 4,
+      "EXPLORATION SCENE": 2,
+      "EXTERIOR MICRO-LOCATION": 6,
+      "SECONDARY STORY SCENE": 1,
+      "WORLD ACTIVITY SCENE": 8
+    },
+    "parsed_scenes_not_main_or_secondary": 45,
+    "published": {
+      "major_environments": 1,
+      "other_locations_not_interiors": 40,
+      "interiors_location_entries": 16,
+      "scenes_and_microlocations": 46,
+      "not_main_or_secondary_story": 45,
+      "environment_state_references": 14
+    },
+    "comparisons": {
+      "scenes_and_microlocations": {
+        "parsed": 46,
+        "published": 46,
+        "complete_capture": true
+      },
+      "not_main_or_secondary_story": {
+        "parsed": 45,
+        "published": 45,
+        "complete_capture": true
+      },
+      "interiors_location_entries": {
+        "parsed": 3,
+        "published": 16,
+        "complete_capture": false
+      },
+      "other_locations_not_interiors": {
+        "parsed": 9,
+        "published": 40,
+        "complete_capture": false
+      },
+      "major_environments": {
+        "parsed": 1,
+        "published": 1,
+        "complete_capture": true
+      },
+      "scenes_with_missing_parent": {
+        "parsed": 40,
+        "complete_capture": false,
+        "ids": [
+          "CH01-SCN-001",
+          "CH01-SCN-002",
+          "CH01-SCN-003",
+          "CH01-SCN-004",
+          "CH01-SCN-005",
+          "CH01-SCN-006",
+          "CH01-SCN-007",
+          "CH01-SCN-008",
+          "CH01-SCN-009",
+          "CH01-SCN-010",
+          "CH01-SCN-011",
+          "CH01-SCN-012",
+          "CH01-SCN-013",
+          "CH01-SCN-014",
+          "CH01-SCN-015",
+          "CH01-SCN-016",
+          "CH01-SCN-018",
+          "CH01-SCN-019",
+          "CH01-SCN-020",
+          "CH01-SCN-021",
+          "CH01-SCN-022",
+          "CH01-SCN-023",
+          "CH01-SCN-024",
+          "CH01-SCN-025",
+          "CH01-SCN-026",
+          "CH01-SCN-027",
+          "CH01-SCN-028",
+          "CH01-SCN-030",
+          "CH01-SCN-031",
+          "CH01-SCN-033",
+          "CH01-SCN-034",
+          "CH01-SCN-036",
+          "CH01-SCN-037",
+          "CH01-SCN-038",
+          "CH01-SCN-039",
+          "CH01-SCN-040",
+          "CH01-SCN-041",
+          "CH01-SCN-042",
+          "CH01-SCN-043",
+          "CH01-SCN-045"
+        ],
+        "note": "Expected non-zero while the location fixture is a partial capture. Classified as INGESTION GAP, not a register defect."
+      }
+    },
+    "problems": []
+  },
+  "result": "PASS",
+  "problems": []
+}

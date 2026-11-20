@@ -1,0 +1,149 @@
+{
+  "milestone": "M1 \u2014 First playable character: Adanna gameplay proxy in Forbidden Forest blockout",
+  "date": "2026-11-19",
+  "classification": "real-time gameplay integration milestone; NOT final commercial character, final environment, canon approval, or verified UE package",
+  "preserved": {
+    "hall_of_posts_m1": "TDD_PHASE3_PRODUCTION/HALL_OF_POSTS_M1/ unchanged",
+    "phase1_authority": "retained; see source_authority.json"
+  },
+  "recovered_state": {
+    "existing_unreal_project": false,
+    "existing_engine_version": null,
+    "existing_playable_build": false,
+    "existing_native_character_assets": false,
+    "existing_native_animations_rigs_gameplay": false,
+    "usable_authority": "approved Adanna master reference, Art Bible forest rules, scene/location registers, exploratory/reference boards, Hall of Posts M1 pipeline"
+  },
+  "geometry": {
+    "forest_vertices": 8008,
+    "forest_triangles": 13238,
+    "forest_nodes": [
+      "FOREST_GROUND",
+      "LATERITE_PATH",
+      "TREE_TRUNKS",
+      "BUTTRESS_ROOTS",
+      "CANOPY",
+      "TREE_BRANCHES",
+      "ROCKS",
+      "VEGETATION",
+      "BOUNDARY_POSTS",
+      "WHITE_CLOTH",
+      "INTERACTION_RINGS",
+      "GREAT_ROOT_MOTHER"
+    ],
+    "character": {
+      "vertex_count": 870,
+      "triangle_count": 1584,
+      "joint_count": 21,
+      "animation_clips": [
+        "idle",
+        "walk",
+        "run",
+        "jump",
+        "land"
+      ],
+      "skin_rgb": [
+        67,
+        45,
+        39
+      ],
+      "parts": 41
+    },
+    "obstacles": 46,
+    "interactables": 2,
+    "route_waypoints": 7
+  },
+  "outputs": {
+    "ue_source_scaffold": "ue_project/",
+    "ue_source_state_readme": "ue_project/UE_SOURCE_STATE.md",
+    "web_playable_build": "web_build/index.html",
+    "web_server": "web_build/server.mjs",
+    "world": "web_build/world.json",
+    "forest_glb": "model/forbidden_forest_m1.glb",
+    "forest_obj": "model/forbidden_forest_m1.obj",
+    "character_glb": "model/adanna_m1_technical_proxy.glb",
+    "character_obj": "model/adanna_m1_technical_proxy.obj",
+    "character_rig": "model/adanna_m1_character_rig.json",
+    "modules": "model/modules/",
+    "integration_report": "web_build/test/integration_report.json",
+    "live_build_report": "web_build/test/live_build_report.json",
+    "captures": "web_build/captures/",
+    "capture_manifest": "web_build/captures/capture_manifest.json",
+    "milestone_tracker": "../../PLAYABLE_MILESTONE_TRACKER.md",
+    "owner_request": "../../OWNER_STUDIO_UNREAL_REQUEST.md",
+    "ue_setup_helper_macos": "ue_project/Tools/TDD_M1_Unreal_Setup_macOS.py",
+    "ue_setup_helper_superseded": "ue_project/Tools/TDD_M1_Unreal_Setup_WINDOWS_ASSUMPTION_PRESERVED.py",
+    "macos_runbook": "ue_project/README_MACOS_UE58.md",
+    "macos_static_audit": "ue_project/Tools/tdd_m1_macos_audit.json",
+    "adanna_uv_glb": "model/adanna_m1_technical_proxy_uv.glb",
+    "adanna_uv_atlas": "model/adanna_m1_uv_atlas.png",
+    "adanna_uv_layout": "model/adanna_m1_uv_layout.png",
+    "adanna_collision_proxy": "model/adanna_m1_collision_proxy.obj",
+    "adanna_ue_import_manifest": "model/adanna_m1_ue_import_manifest.json",
+    "adanna_uv_validation": "model/adanna_m1_uv_validation.json"
+  },
+  "unreal": {
+    "project_source_state_created": true,
+    "source_state_classification": "new provisional runtime-procedural source scaffold; NO recovered existing Unreal project or version",
+    "engine_association": "5.8 (owner-verified installed engine); BuildSettingsVersion.V7; EngineIncludeOrderVersion.Unreal5_8",
+    "owner_target_environment": {
+      "machine": "Apple M4 Mac",
+      "memory": "16 GB",
+      "os": "macOS 27.2.1",
+      "architecture": "ARM64 / Apple Silicon",
+      "engine": "Unreal Engine 5.8",
+      "status": "supplied by owner; no Windows target assumed"
+    },
+    "toolchain_requirement": "Xcode 26.0 minimum, 26.1.1 recommended; Xcode 26.4 incompatible with UE 5.8; macOS SDK via xcrun; Metal 1.2 class GPU",
+    "macos_runbook": "ue_project/README_MACOS_UE58.md",
+    "static_compatibility_audit": "ue_project/Tools/tdd_m1_macos_audit.json",
+    "owner_setup_helper_macos": "ue_project/Tools/TDD_M1_Unreal_Setup_macOS.py",
+    "superseded_helper_preserved": "ue_project/Tools/TDD_M1_Unreal_Setup_WINDOWS_ASSUMPTION_PRESERVED.py",
+    "source_files_verified": true,
+    "native_uasset_umap_import_verified": false,
+    "compile_verified": false,
+    "real_time_ue_test_verified": false,
+    "package_verified": false,
+    "precise_blocker": "Owner macOS/UE 5.8 environment is known, but this sandbox has no Unreal binary and no access to the Mac. Compile/PIE/cook/package must be executed and recorded by the owner."
+  },
+  "web_build": {
+    "directly_launchable": true,
+    "engine": "Three.js 0.187.0 vendored locally, including three.core.js; no external CDN dependency",
+    "shared_simulation": "web_build/game.js used by browser, Node integration test and CPU replay captures",
+    "live_server": "node server.mjs, bound to 0.0.0.0 for Arena live preview",
+    "verification": "80/80 static/live HTTP, local ES-module, asset, capture, UE source-file and durable-record checks passed; WebGL rendering not automated",
+    "automated_webgl_render_verified": false,
+    "captures_verified": true
+  },
+  "adanna_uv_material_collision_handoff": {
+    "status": "COMPLETED AND VERIFIED",
+    "classification": "PROVISIONAL \u2014 AWAITING CREATIVE APPROVAL; UE import remains BLOCKED \u2014 OWNER-STUDIO DEPENDENCY",
+    "local_validation": "33/33 local UV/material/collision checks passed",
+    "scope": "technical UV0/material-atlas/collision import preparation; NOT final character, final textures, final dimensions, native UE asset, compile, PIE, cook or package",
+    "source_glb_preserved": "model/adanna_m1_technical_proxy.glb",
+    "owner_request": "../../OWNER_STUDIO_UNREAL_REQUEST.md",
+    "ue_setup_helper_macos": "ue_project/Tools/TDD_M1_Unreal_Setup_macOS.py",
+    "ue_setup_helper_superseded": "ue_project/Tools/TDD_M1_Unreal_Setup_WINDOWS_ASSUMPTION_PRESERVED.py",
+    "macos_runbook": "ue_project/README_MACOS_UE58.md",
+    "macos_static_audit": "ue_project/Tools/tdd_m1_macos_audit.json"
+  },
+  "status_classification": {
+    "targeted_production_state_recovery": "COMPLETED AND VERIFIED",
+    "hall_of_posts_m1_preserved": "COMPLETED AND VERIFIED",
+    "shared_simulation_and_replay_captures": "COMPLETED AND VERIFIED",
+    "browser_static_live_delivery": "COMPLETED AND VERIFIED",
+    "browser_gameplay_implementation": "TECHNICALLY DEMONSTRATED \u2014 NOT INTEGRATED",
+    "adanna_uv_material_collision_handoff": "COMPLETED AND VERIFIED",
+    "ue_source_scaffold": "PRODUCED \u2014 NOT YET VERIFIED",
+    "ue_project_owned_umap": "BLOCKED \u2014 OWNER-STUDIO DEPENDENCY",
+    "ue_compile_pie_cook_package": "BLOCKED \u2014 OWNER-STUDIO DEPENDENCY",
+    "final_adanna_and_forbidden_forest": "BLOCKED \u2014 CREATIVE APPROVAL",
+    "m3_m4_gameplay": "NOT STARTED"
+  },
+  "approval_dependencies": [
+    "CD/Research authority for final Adanna turnaround, dimensions, hair/groom, costume technical interpretation and facial rig.",
+    "CD film/game canon and consultant review for final Forbidden Forest geography, cultural details and landmark use.",
+    "Unreal Engine version/installation and owner-studio hardware profile for verified UE import, compile, cook and package."
+  ],
+  "next_milestone": "M2: replace proxy with approved game-ready Adanna and production forest kit; then UE compile/cook/package on owner hardware."
+}

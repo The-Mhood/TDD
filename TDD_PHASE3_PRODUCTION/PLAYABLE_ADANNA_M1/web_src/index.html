@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Disobedient Daughter — Playable Adanna M1</title>
+<link rel="stylesheet" href="./styles.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three.module.js",
+    "three/addons/": "./vendor/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+<canvas id="viewport" aria-label="Playable Forbidden Forest real-time viewport"></canvas>
+<div id="loading">
+  <div class="loading-title">THE DISOBEDIENT DAUGHTER</div>
+  <div class="loading-sub">LOADING PLAYABLE ADANNA M1 · FORBIDDEN FOREST BLOCKOUT</div>
+  <div class="loading-bar"><i></i></div>
+  <div id="loading-detail">Reading world and GLB assets…</div>
+</div>
+<div id="hud" hidden>
+  <header>
+    <div class="brand">THE DISOBEDIENT DAUGHTER · PLAYABLE ADANNA M1</div>
+    <div class="sub">REAL-TIME INTEGRATION · FORBIDDEN FOREST BLOCKOUT · RIGGED TECHNICAL PROXY</div>
+  </header>
+  <section class="state-panel">
+    <div class="row"><span>STATE</span><b id="state">IDLE</b></div>
+    <div class="row"><span>SPEED</span><b id="speed">0.00 m/s</b></div>
+    <div class="row"><span>GROUNDED</span><b id="grounded">YES</b></div>
+    <div class="row"><span>CAMERA</span><b id="camera">4.40 m / CLEAR</b></div>
+    <div class="row"><span>ROUTE</span><b id="route">0%</b></div>
+    <div class="row"><span>J / L / INT</span><b id="counters">0 / 0 / 0</b></div>
+  </section>
+  <section id="interaction" class="interaction" hidden></section>
+  <section class="phase" id="phase">CLICK TO CAPTURE MOUSE · DRAG ALSO LOOKS</section>
+  <footer>
+    <div class="objective"><b>OBJECTIVE</b> <span id="objective">Follow the white cloth to the Great Root Mother</span></div>
+    <div class="controls">WASD / Arrows move · Shift run · Space jump · E interact · mouse look · Esc release pointer</div>
+    <div class="classification">Approved-source technical proxy · NOT final character · Unreal compile/cook/package NOT verified in sandbox</div>
+  </footer>
+</div>
+<div id="error" hidden></div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

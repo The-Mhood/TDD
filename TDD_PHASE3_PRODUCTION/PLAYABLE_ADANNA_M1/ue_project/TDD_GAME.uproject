@@ -1,0 +1,21 @@
+{
+  "FileVersion": 3,
+  "EngineAssociation": "5.8",
+  "Category": "Games",
+  "Description": "TDD Playable Adanna M1 - runtime procedural Forbidden Forest source scaffold. Target environment: Apple Silicon macOS, Unreal Engine 5.8. Source only; compile/PIE/cook/package not yet executed on owner hardware.",
+  "Modules": [
+    {
+      "Name": "TDD_GAME",
+      "Type": "Runtime",
+      "LoadingPhase": "Default",
+      "AdditionalDependencies": ["Engine"]
+    }
+  ],
+  "Plugins": [
+    {
+      "Name": "PythonScriptPlugin",
+      "Enabled": true
+    }
+  ],
+  "TargetPlatforms": ["Mac"]
+}

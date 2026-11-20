@@ -27,3 +27,6 @@ CrashReportClient/
 # OS/editor temporary files
 .DS_Store
 Thumbs.db
+
+# Takeover investigation archive (local only, re-clonable from The-Mhood/chat-gpt)
+.pm-archive/
