@@ -25,3 +25,9 @@ find output -name '.DS_Store' -delete; find output -name '*.blend1' -delete
 git add output && git commit -m "W1 D8 sculpt milestone 1 outputs: Adanna V3 + Guard V2" && git push origin arena/6e649a9b-tdd
 ```
 New outputs land in `output/ADANNA_AD03_V3/` and `output/GUARD_CLASS_V2/`; the qualified V2/V1 folders stay as-is. Design re-inspects the 8 Blender previews on arrival; PM: hold integration on V3/V2 FBX until that visual pass, V2/V1 FBX remain the qualified builds meanwhile.
+
+## ADDENDUM 2026-11-25 — forearm.L zero-deformation failure (Mac finisher) + fix
+**Root cause (source weights, not Blender, not the test):** Adanna V3's limb segments reused the torso `blend()` (influence rises with height). On descending limbs this inverts ownership: `forearm.L` held 16 verts >0.5 weight at max 0.054 m leverage (hand = 100% upperarm), so rotating the bone moved nothing (finisher bbox delta 0.0 — the test was right). Shins identical (21 verts / 0.052 m). **Guard V2 unaffected** (rigid per-bone weights; forearm 280 verts / 0.406 m — verified).
+**Fix:** `prox_blend()` in `build_adanna_v3.py` — segment bone owns the limb, proximal joint fades in only near the joint. Skeleton/bone names/scale unchanged; Blender finisher and its pose test **unchanged** (no weakening).
+**Regression test:** `pipeline/test_joint_influence.py` (per-joint >0.5-weight vertex count + limb leverage ≥0.15 m). Proven: FAIL (exit 2, exact failure signature) on the pre-fix GLB from `07ba79f`; PASS on fixed Adanna V3 and Guard V2. Also wired into `run_all.sh` as a pre-Blender gate (`*_JOINT_INFLUENCE.json`).
+**Re-qualification:** Adanna V3 rebuilt (sha `41ab1bac…`): deformation PASS, budget PASS 1.837 m / 13,668 tris; Guard unchanged (`d4d5b060…`). Mac rerun required for .blend/FBX/previews.

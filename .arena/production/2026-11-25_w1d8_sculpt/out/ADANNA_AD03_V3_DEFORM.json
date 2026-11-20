@@ -17,19 +17,19 @@
     },
     "elbow_bend_L": {
       "finite": true,
-      "max_vertex_disp_m": 0.031,
+      "max_vertex_disp_m": 0.552,
       "height_m": 1.837,
       "pass": true
     },
     "forearm_twist_R": {
       "finite": true,
-      "max_vertex_disp_m": 0.025,
+      "max_vertex_disp_m": 0.102,
       "height_m": 1.837,
       "pass": true
     },
     "hip_knee_bend_R": {
       "finite": true,
-      "max_vertex_disp_m": 0.991,
+      "max_vertex_disp_m": 0.459,
       "height_m": 1.837,
       "pass": true
     },
@@ -47,8 +47,8 @@
     },
     "combined": {
       "finite": true,
-      "max_vertex_disp_m": 1.026,
-      "height_m": 1.837,
+      "max_vertex_disp_m": 1.175,
+      "height_m": 1.952,
       "pass": true
     }
   },

@@ -45,6 +45,13 @@ if command -v shasum >/dev/null; then
     echo "Recovery: git fetch && git checkout arena/6e649a9b-tdd && git pull, then re-run."; exit 4; }
 fi
 
+# ---- 2b. Source-level joint-influence regression gate (catches dead bones) --
+if command -v python3 >/dev/null; then
+  echo "=== joint-influence regression test ==="
+  (cd "$D7/pipeline" && python3 test_joint_influence.py "$D8/out/ADANNA_AD03_V3.glb" > "$OUT/ADANNA_AD03_V3_JOINT_INFLUENCE.json")
+  (cd "$D7/pipeline" && python3 test_joint_influence.py "$D8/out/GUARD_CLASS_V2.glb"  > "$OUT/GUARD_CLASS_V2_JOINT_INFLUENCE.json")
+fi
+
 # ---- 3. Finish both characters ----------------------------------------------
 run_char() {
   local name="$1" glb="$2"

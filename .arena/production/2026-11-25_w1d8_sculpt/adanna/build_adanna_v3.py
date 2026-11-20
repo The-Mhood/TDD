@@ -25,6 +25,16 @@ OUT = os.path.join(HERE, "..", "out"); os.makedirs(OUT, exist_ok=True)
 
 def blend(zlo, zhi, low, high):
     return lambda x, y, zz: {low: 1-max(0.0, min(1.0, (zz-zlo)/(zhi-zlo))), high: max(0.0, min(1.0, (zz-zlo)/(zhi-zlo)))}
+def prox_blend(z_joint, prox, main, amt=0.45, span=0.14):
+    """Descending-limb weights: `main` bone owns the segment; `prox` (the joint
+    above) fades in only within `span` below the joint, up to `amt`.
+    REGRESSION GUARD (2026-11-25): V3's first build reused blend() here, which
+    inverted influence (forearm owned 16 verts / 0.054 m leverage -> Blender
+    pose test delta 0.0). Never use blend() on limb segments."""
+    def fn(x, y, zz):
+        t = max(0.0, min(1.0, (zz-(z_joint-span))/span)) * amt if zz < z_joint else amt
+        return {prox: t, main: 1-t}
+    return fn
 def tex(name):
     im = Image.open(os.path.join(ROOT, name)).convert("RGB").resize((512, 512))
     b = io.BytesIO(); im.save(b, "PNG"); return b.getvalue()
@@ -47,15 +57,15 @@ for sx in (-1, 1):
 ellipsoid(P("neck_torso_upper", skin, blend(1.22, 1.40, "pelvis", "spine")), (0, 0, 1.37), (0.155, 0.112, 0.165), 28, 16)
 ellipsoid(P("pelvis_lower", skin, blend(1.02, 1.20, "pelvis", "spine")), (0, 0, 1.07), (0.160, 0.118, 0.155), 28, 16)
 for side, sx in (("L", -1), ("R", 1)):
-    ua = P(f"upperarm.{side}", skin, blend(1.38, 1.52, "spine", f"upperarm.{side}"))
+    ua = P(f"upperarm.{side}", skin, prox_blend(1.45, "spine", f"upperarm.{side}", amt=0.30, span=0.12))
     limb(ua, (sx*0.205, 0, 1.45), (sx*0.295, 0, 1.185), 0.050, 0.043, 20, rings_n=6)
     ellipsoid(ua, (sx*0.205, 0, 1.45), (0.056, 0.056, 0.056), 16, 12)
-    fa = P(f"forearm_hand.{side}", skin, blend(1.10, 1.26, f"upperarm.{side}", f"forearm.{side}"))
+    fa = P(f"forearm_hand.{side}", skin, prox_blend(1.185, f"upperarm.{side}", f"forearm.{side}", amt=0.45, span=0.14))
     limb(fa, (sx*0.295, 0, 1.185), (sx*0.335, 0, 0.945), 0.040, 0.030, 20, rings_n=6)
     hand(fa, (sx*0.337, 0, 0.945), sx)
-    th = P(f"thigh.{side}", skin, blend(0.82, 1.00, "pelvis", f"thigh.{side}"))
+    th = P(f"thigh.{side}", skin, prox_blend(0.95, "pelvis", f"thigh.{side}", amt=0.40, span=0.16))
     limb(th, (sx*0.098, 0, 0.95), (sx*0.108, 0, 0.525), 0.072, 0.052, 20, rings_n=6)
-    sh = P(f"shin_foot.{side}", skin, blend(0.44, 0.60, f"thigh.{side}", f"shin.{side}"))
+    sh = P(f"shin_foot.{side}", skin, prox_blend(0.525, f"thigh.{side}", f"shin.{side}", amt=0.45, span=0.14))
     limb(sh, (sx*0.108, 0, 0.525), (sx*0.108, 0, 0.07), 0.050, 0.034, 20, rings_n=6)
     ellipsoid(sh, (sx*0.108, 0.048, 0.032), (0.042, 0.105, 0.028), 14, 10)
     toes(sh, (sx*0.108, 0.048, 0.030))
