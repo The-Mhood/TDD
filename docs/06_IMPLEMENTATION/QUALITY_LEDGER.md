@@ -15,6 +15,7 @@ The agent sandbox has g++ and Python, but no Unreal Engine installation or owner
 |---|---|---|---|---:|---|---|---|
 | 2026-11-20 | W1 D1 sandbox verification | Linux sandbox / g++ 12.2 | `0f39cbb` | 6/6; 887 assertions | NOT EXECUTED — Unreal unavailable | PARTIAL | `evidence/20261120T-W1D1/` |
 | 2026-11-20 | W1 D2 integration-start verification | Linux sandbox / g++ 12.2 | `f7ce9ef` | 6/6; 884 assertions | NOT EXECUTED — Mac/Windows runners returned exit 2 on Linux; static readiness only | PARTIAL | `evidence/20261120T-W1D2/` |
+| 2026-11-20 | W1 D8 pure-core + character-asset verification | Linux sandbox / g++ 12.2 + Blender 4.2.23 headless | `ab45856` | 6/6; 883 assertions | NOT EXECUTED — UE runtime absent; V3/V2 FBX independently verified in Blender (skeleton/materials/scale/deformation PASS) | PARTIAL | `evidence/20261120T-W1D8/`; `W1D7_CHARACTER_INTEGRATION_MANIFEST.md`; `VERIFY_INTEGRATION.json` |
 
 This row verifies pure-core behavior only. It does **not** certify M1/M2/M3 milestone exit, a playable Unreal build, or the Chapter 1 release candidate.
 
