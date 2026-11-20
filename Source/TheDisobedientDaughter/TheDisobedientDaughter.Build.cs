@@ -10,7 +10,8 @@ public class TheDisobedientDaughter : ModuleRules
         {
             "Core",
             "CoreUObject",
-            "Engine"
+            "Engine",
+            "AIModule"
         });
     }
 }
