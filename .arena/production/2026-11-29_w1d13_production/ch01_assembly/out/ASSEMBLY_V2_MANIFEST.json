@@ -1,0 +1,9 @@
+{
+  "asset": "CH01_COMPOUND_ASSEMBLED_V2",
+  "status": "PROVISIONAL production assembly - not canon",
+  "verts": 712,
+  "tris_est": 1058,
+  "footprint_m": "13.4 x 10.6 compound; house 5x4, ridge 3.9",
+  "modules": "Env Kit V2 (roof/veranda/corner/courtyard) + W1 D7 (wall/gate/stall), unchanged module files",
+  "collision": "use module bounds proxies from kit manifests (PM/TD confirm)"
+}
