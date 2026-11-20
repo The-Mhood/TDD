@@ -11,7 +11,7 @@
       }
     ],
     "armatures": 1,
-    "triangles": 8548,
+    "triangles": 8660,
     "weight_sum_min": 1.0,
     "weight_sum_max": 1.0,
     "unweighted_verts": 0,
@@ -23,7 +23,7 @@
       ],
       "y": [
         -0.142,
-        0.176
+        0.153
       ],
       "z": [
         0.004,
@@ -49,8 +49,8 @@
       "scale_length": 1.0
     },
     "pose_test_bbox_delta_m": {
-      "forearm.L": 0.062,
-      "upperarm.R": 0.306,
+      "forearm.L": 0.086,
+      "upperarm.R": 0.329,
       "shin.L": 0.341,
       "head": 0.031
     },
