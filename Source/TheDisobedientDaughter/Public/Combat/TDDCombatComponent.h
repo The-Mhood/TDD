@@ -4,7 +4,14 @@
 #include "Components/ActorComponent.h"
 #include "TDDCombatComponent.generated.h"
 
-namespace TDD::Combat { struct FTDDDamageOutcome; }
+namespace TDD
+{
+namespace Combat
+{
+struct FTDDDamageOutcome;
+}
+}
+
 class UTDDCharacterStateComponent;
 
 /** Minimal actor-facing combat surface: one light strike, guard/parry, health and posture. */

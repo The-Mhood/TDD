@@ -68,8 +68,8 @@ def main():
         length = math.hypot(dx, dy)
         yaw = math.degrees(math.atan2(dy, dx))
         spawn_mesh(cube, "GBX_Route_%02d_%s" % (index + 1, b["label"].replace(" ", "_")),
-                   ((a["x"] + b["x"]) * 0.5, (a["y"] + b["y"]) * 0.5, 0.08),
-                   (length * 0.5, width * 0.5, 0.08), unreal.Rotator(0.0, yaw, 0.0))
+                   ((a["x"] + b["x"]) * 0.5, (a["y"] + b["y"]) * 0.5, 0.02),
+                   (length * 0.5, width * 0.5, 0.02), unreal.Rotator(0.0, yaw, 0.0))
 
     # Authored obstacle data converted to neutral, collision-enabled primitives.
     for obstacle in data.get("obstacles", []):

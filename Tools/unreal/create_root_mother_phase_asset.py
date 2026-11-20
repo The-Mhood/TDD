@@ -12,7 +12,7 @@ DEST = "/Game/Bosses/GreatRootMother/DA_GreatRootMother_Phases"
 
 
 def phase(name, transitions=None, music="", camera="", abilities=None, arena=None, invulnerable=False):
-    value = unreal.FTDDBossPhaseData()
+    value = unreal.TDDBossPhaseData()
     value.set_editor_property("phase_name", unreal.Name(name))
     value.set_editor_property("transitions", transitions or [])
     value.set_editor_property("music_state", unreal.Name(music) if music else unreal.Name())
@@ -24,7 +24,7 @@ def phase(name, transitions=None, music="", camera="", abilities=None, arena=Non
 
 
 def transition(kind, threshold, target, event=""):
-    value = unreal.FTDDBossPhaseTransitionData()
+    value = unreal.TDDBossPhaseTransitionData()
     value.set_editor_property("kind", kind)
     value.set_editor_property("threshold", threshold)
     value.set_editor_property("target_phase", unreal.Name(target))
@@ -44,8 +44,8 @@ def main():
         "DA_GreatRootMother_Phases", "/Game/Bosses/GreatRootMother", asset_class, factory)
     require(asset is not None, "Failed to create boss phase data asset")
 
-    health_kind = unreal.ETDDBossTransition.HEALTH_PCT
-    poise_kind = unreal.ETDDBossTransition.POISE_BREAK
+    health_kind = unreal.TDDBossTransition.HEALTH_PCT
+    poise_kind = unreal.TDDBossTransition.POISE_BREAK
     elapsed_kind = unreal.ETDDBossTransition.ELAPSED_SEC
     root = phase("Roots", [transition(health_kind, 0.55, "Bloom"),
                             transition(elapsed_kind, 100.0, "Bloom")],
