@@ -1,0 +1,60 @@
+{
+  "kit": "CH01-ENV-KIT",
+  "version": "2.0",
+  "date": "2026-11-28",
+  "status": "PROVISIONAL production kit - not canon, not final",
+  "units": "metres, Z-up OBJ (Unreal import: rotate to Z-up convention as with W1 D7 modules)",
+  "materials_shared_with": "W1 D7 settlement.mtl (identical names for wall/thatch/timber/foundation)",
+  "modules": [
+    {
+      "file": "KIT_WALL_CORNER_3M.obj",
+      "verts": 48,
+      "tris_est": 72,
+      "bounds_m": [
+        3.0,
+        3.0,
+        2.0
+      ],
+      "collision_proxy": "single box = bounds (PM/TD confirm in-engine)"
+    },
+    {
+      "file": "KIT_ROOF_HOUSE_5X4.obj",
+      "verts": 30,
+      "tris_est": 42,
+      "bounds_m": [
+        5.7,
+        4.78,
+        1.82
+      ],
+      "collision_proxy": "single box = bounds (PM/TD confirm in-engine)"
+    },
+    {
+      "file": "KIT_VERANDA_5M.obj",
+      "verts": 52,
+      "tris_est": 74,
+      "bounds_m": [
+        5.3,
+        2.3,
+        2.5
+      ],
+      "collision_proxy": "single box = bounds (PM/TD confirm in-engine)"
+    },
+    {
+      "file": "KIT_COURTYARD_SET.obj",
+      "verts": 160,
+      "tris_est": 240,
+      "bounds_m": [
+        2.56,
+        1.65,
+        0.6
+      ],
+      "collision_proxy": "single box = bounds (PM/TD confirm in-engine)"
+    }
+  ],
+  "prior_modules_reused": [
+    "KIT_COMPOUND_WALL_3M",
+    "KIT_GATE_2M",
+    "KIT_STALL_2x2 (W1 D7, unchanged)"
+  ],
+  "plaster_note": "production finish = smooth maintained clay plaster (compound reference is authority; detail study reads too cracked)"
+}

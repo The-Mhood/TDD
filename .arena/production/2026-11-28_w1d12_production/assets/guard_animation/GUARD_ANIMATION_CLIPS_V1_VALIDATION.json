@@ -1,0 +1,11 @@
+{
+  "clips": [
+    "idle",
+    "patrol_walk",
+    "alert",
+    "hit_react",
+    "defeat"
+  ],
+  "keyframe_poses_tested": 18,
+  "verdict": "PASS"
+}

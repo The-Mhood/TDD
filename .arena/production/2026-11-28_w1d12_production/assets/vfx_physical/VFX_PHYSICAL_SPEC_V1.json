@@ -1,0 +1,38 @@
+{
+  "package": "VFX-PHYSICAL",
+  "version": "1.0",
+  "date": "2026-11-28",
+  "direction": "physical only (approved W1 D11); no supernatural/ability effects",
+  "effects": [
+    {
+      "name": "footstep_dust",
+      "sprite": "sprites/VFX_DUST_PUFF_FLIPBOOK_8F.png",
+      "type": "subUV flipbook 8f @12fps",
+      "colour": "dry earth tan (176,138,96)",
+      "unreal": "Niagara sprite renderer, soft particles, spawn on footstep events"
+    },
+    {
+      "name": "mud_wall_impact",
+      "sprites": "sprites/VFX_MUD_DEBRIS_V1..V4.png",
+      "type": "burst sprites + dust puff reuse",
+      "colour": "clay brown (112,74,46)",
+      "unreal": "burst 12-20 sprites, gravity -3, life 0.4-0.8s + dust flipbook at contact"
+    },
+    {
+      "name": "rain_on_thatch",
+      "sprite": "sprites/VFX_RAIN_STREAK_TILE.png",
+      "type": "looping streak tile",
+      "unreal": "GPU rain volume; splash = dust flipbook desaturated/shortened at eaves (TD tune)"
+    },
+    {
+      "name": "cooking_fire_ambience",
+      "sprites": [
+        "sprites/VFX_EMBER_SET.png",
+        "sprites/VFX_SMOKE_PUFF.png"
+      ],
+      "type": "ember points + smoke puffs",
+      "unreal": "ember rate 6/s rise 0.4 m/s; smoke rate 2/s, growth 2x, life 3s; point light flicker 8 Hz (TD)"
+    }
+  ],
+  "acceptance": "sprites are source art; final look requires Niagara assembly + in-engine check by TD/PM (not claimed here)"
+}

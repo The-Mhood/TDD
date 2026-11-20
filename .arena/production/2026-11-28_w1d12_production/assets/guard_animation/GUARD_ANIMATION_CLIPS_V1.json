@@ -1,0 +1,466 @@
+{
+  "skeleton": "HUMAN_BASE_PROPOSED (11 joints)",
+  "convention": "joint->[axis, angle_rad], as pipeline/test_deformation.py",
+  "clips": {
+    "idle": {
+      "loop": true,
+      "fps": 30,
+      "keys": [
+        {
+          "t": 0.0,
+          "pose": {
+            "spine": [
+              "x",
+              0.02
+            ],
+            "head": [
+              "x",
+              0.03
+            ]
+          }
+        },
+        {
+          "t": 1.2,
+          "pose": {
+            "spine": [
+              "x",
+              0.045
+            ],
+            "head": [
+              "x",
+              0.05
+            ],
+            "upperarm.L": [
+              "z",
+              -0.06
+            ],
+            "upperarm.R": [
+              "z",
+              0.06
+            ]
+          }
+        },
+        {
+          "t": 2.4,
+          "pose": {
+            "spine": [
+              "x",
+              0.02
+            ],
+            "head": [
+              "x",
+              0.03
+            ]
+          }
+        }
+      ]
+    },
+    "patrol_walk": {
+      "loop": true,
+      "fps": 30,
+      "keys": [
+        {
+          "t": 0.0,
+          "pose": {
+            "thigh.L": [
+              "x",
+              -0.55
+            ],
+            "shin.L": [
+              "x",
+              0.25
+            ],
+            "thigh.R": [
+              "x",
+              0.45
+            ],
+            "upperarm.L": [
+              "x",
+              0.35
+            ],
+            "upperarm.R": [
+              "x",
+              -0.35
+            ],
+            "head": [
+              "y",
+              0.18
+            ]
+          }
+        },
+        {
+          "t": 0.4,
+          "pose": {
+            "thigh.L": [
+              "x",
+              0.0
+            ],
+            "shin.L": [
+              "x",
+              0.55
+            ],
+            "thigh.R": [
+              "x",
+              0.0
+            ],
+            "shin.R": [
+              "x",
+              0.1
+            ],
+            "upperarm.L": [
+              "x",
+              0.0
+            ],
+            "upperarm.R": [
+              "x",
+              0.0
+            ],
+            "head": [
+              "y",
+              0.18
+            ]
+          }
+        },
+        {
+          "t": 0.8,
+          "pose": {
+            "thigh.R": [
+              "x",
+              -0.55
+            ],
+            "shin.R": [
+              "x",
+              0.25
+            ],
+            "thigh.L": [
+              "x",
+              0.45
+            ],
+            "upperarm.R": [
+              "x",
+              0.35
+            ],
+            "upperarm.L": [
+              "x",
+              -0.35
+            ],
+            "head": [
+              "y",
+              0.18
+            ]
+          }
+        },
+        {
+          "t": 1.2,
+          "pose": {
+            "thigh.R": [
+              "x",
+              0.0
+            ],
+            "shin.R": [
+              "x",
+              0.55
+            ],
+            "thigh.L": [
+              "x",
+              0.0
+            ],
+            "shin.L": [
+              "x",
+              0.1
+            ],
+            "upperarm.R": [
+              "x",
+              0.0
+            ],
+            "upperarm.L": [
+              "x",
+              0.0
+            ],
+            "head": [
+              "y",
+              0.18
+            ]
+          }
+        },
+        {
+          "t": 1.6,
+          "pose": {
+            "thigh.L": [
+              "x",
+              -0.55
+            ],
+            "shin.L": [
+              "x",
+              0.25
+            ],
+            "thigh.R": [
+              "x",
+              0.45
+            ],
+            "upperarm.L": [
+              "x",
+              0.35
+            ],
+            "upperarm.R": [
+              "x",
+              -0.35
+            ],
+            "head": [
+              "y",
+              0.18
+            ]
+          }
+        }
+      ]
+    },
+    "alert": {
+      "loop": false,
+      "fps": 30,
+      "keys": [
+        {
+          "t": 0.0,
+          "pose": {}
+        },
+        {
+          "t": 0.25,
+          "pose": {
+            "spine": [
+              "x",
+              0.14
+            ],
+            "head": [
+              "x",
+              -0.06
+            ],
+            "upperarm.L": [
+              "z",
+              -0.85
+            ],
+            "forearm.L": [
+              "z",
+              -0.7
+            ],
+            "upperarm.R": [
+              "z",
+              0.85
+            ],
+            "forearm.R": [
+              "z",
+              1.4
+            ],
+            "thigh.L": [
+              "x",
+              -0.22
+            ],
+            "shin.L": [
+              "x",
+              0.3
+            ],
+            "thigh.R": [
+              "x",
+              0.18
+            ],
+            "shin.R": [
+              "x",
+              0.25
+            ]
+          }
+        },
+        {
+          "t": 1.0,
+          "pose": {
+            "spine": [
+              "x",
+              0.14
+            ],
+            "head": [
+              "x",
+              -0.06
+            ],
+            "upperarm.L": [
+              "z",
+              -0.85
+            ],
+            "forearm.L": [
+              "z",
+              -0.7
+            ],
+            "upperarm.R": [
+              "z",
+              0.85
+            ],
+            "forearm.R": [
+              "z",
+              1.4
+            ],
+            "thigh.L": [
+              "x",
+              -0.22
+            ],
+            "shin.L": [
+              "x",
+              0.3
+            ],
+            "thigh.R": [
+              "x",
+              0.18
+            ],
+            "shin.R": [
+              "x",
+              0.25
+            ]
+          }
+        }
+      ]
+    },
+    "hit_react": {
+      "loop": false,
+      "fps": 30,
+      "keys": [
+        {
+          "t": 0.0,
+          "pose": {}
+        },
+        {
+          "t": 0.18,
+          "pose": {
+            "spine": [
+              "x",
+              -0.32
+            ],
+            "head": [
+              "x",
+              -0.35
+            ],
+            "upperarm.R": [
+              "z",
+              1.5
+            ],
+            "forearm.R": [
+              "z",
+              0.5
+            ],
+            "upperarm.L": [
+              "z",
+              -0.5
+            ],
+            "thigh.R": [
+              "x",
+              0.3
+            ],
+            "shin.R": [
+              "x",
+              0.2
+            ]
+          }
+        },
+        {
+          "t": 0.6,
+          "pose": {
+            "spine": [
+              "x",
+              -0.1
+            ],
+            "head": [
+              "x",
+              -0.1
+            ],
+            "upperarm.R": [
+              "z",
+              0.6
+            ],
+            "thigh.R": [
+              "x",
+              0.1
+            ]
+          }
+        },
+        {
+          "t": 1.0,
+          "pose": {}
+        }
+      ]
+    },
+    "defeat": {
+      "loop": false,
+      "fps": 30,
+      "keys": [
+        {
+          "t": 0.0,
+          "pose": {}
+        },
+        {
+          "t": 0.5,
+          "pose": {
+            "spine": [
+              "x",
+              0.25
+            ],
+            "thigh.L": [
+              "x",
+              -0.5
+            ],
+            "shin.L": [
+              "x",
+              0.9
+            ],
+            "thigh.R": [
+              "x",
+              -0.3
+            ],
+            "shin.R": [
+              "x",
+              0.7
+            ]
+          }
+        },
+        {
+          "t": 1.1,
+          "pose": {
+            "spine": [
+              "x",
+              0.62
+            ],
+            "head": [
+              "x",
+              0.45
+            ],
+            "thigh.L": [
+              "x",
+              -1.35
+            ],
+            "shin.L": [
+              "x",
+              1.45
+            ],
+            "thigh.R": [
+              "x",
+              -1.2
+            ],
+            "shin.R": [
+              "x",
+              1.4
+            ],
+            "upperarm.L": [
+              "z",
+              -0.4
+            ],
+            "forearm.L": [
+              "z",
+              -0.3
+            ],
+            "upperarm.R": [
+              "z",
+              0.45
+            ],
+            "forearm.R": [
+              "z",
+              0.35
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
