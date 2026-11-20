@@ -5,7 +5,6 @@
 #include "Combat/TDDCombatComponent.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
-#include "Engine/WorldContext.h"
 #include "EngineUtils.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/PlayerController.h"

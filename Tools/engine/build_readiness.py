@@ -505,6 +505,16 @@ def main():
          "C++ error class — UWorld::CreateWorld argument order in UE 5.8.4",
          "call CreateWorld(EWorldType::Type, bool, FName, UPackage*, ...) — "
          "the world type comes first, the world name is the third argument"),
+        # FWorldContext is declared in Engine/Engine.h (UEngine.h); there is
+        # no Engine/WorldContext.h header in UE 5.8.4. Including it fails
+        # with "fatal error: 'Engine/WorldContext.h' file not found" — the
+        # demonstrated owner-Mac compile failure of the encounter fixture.
+        (r"#include\s+\"Engine/WorldContext\.h\"",
+         "C++ error class — no Engine/WorldContext.h header in UE 5.8.4 "
+         "(FWorldContext is declared in Engine/Engine.h)",
+         "include \"Engine/Engine.h\" — FWorldContext, GEngine, and the "
+         "CreateNewWorldContext/SetCurrentWorld/DestroyWorldContext APIs "
+         "are all declared there"),
     ]
     if src.is_dir():
         for hdr in sorted(src.rglob("*.h")) + sorted(src.rglob("*.cpp")):
