@@ -1,0 +1,11 @@
+{
+  "asset": "GUARD_CLASS_V3",
+  "milestone": "sculpt 2 (one-shoulder wrap/elliptical/sash/face soften)",
+  "supersedes": "GUARD_CLASS_V2 (milestone-1 qualified, recoverable)",
+  "tier": "sculpt-refined production-intent - NOT final",
+  "parts": 23,
+  "verts": 5184,
+  "tris": 10020,
+  "skeleton": "HUMAN_BASE_PROPOSED unchanged",
+  "weapons_emblems_markings": "NONE"
+}

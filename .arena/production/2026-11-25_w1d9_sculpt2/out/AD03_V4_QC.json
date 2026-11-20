@@ -1,0 +1,19 @@
+{
+  "asset": "ADANNA_AD03_V4",
+  "milestone": "sculpt 2 (elliptical garments/waist overlap/face soften/hems)",
+  "supersedes": "ADANNA_AD03_V3 (milestone-1 qualified, recoverable)",
+  "tier": "sculpt-refined production-intent - NOT final character",
+  "parts": 36,
+  "verts": 6472,
+  "tris": 12520,
+  "skeleton": "HUMAN_BASE_PROPOSED unchanged (11 joints, same names)",
+  "changes": [
+    "face: nose/brow/lips/ears/eyes/jaw",
+    "hands: palm+fingers+thumb",
+    "feet: toes",
+    "joints: spheres removed, 6-ring limb profiles",
+    "garments: folded lathe wrap+skirt with hems (no ellipsoid shells)",
+    "pendant: 2-ring spiral"
+  ],
+  "blade_scabbard": "NONE (CQ-9)"
+}

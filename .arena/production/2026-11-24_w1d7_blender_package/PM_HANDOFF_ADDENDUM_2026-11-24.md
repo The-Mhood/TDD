@@ -12,3 +12,6 @@ For PM/owner: the only outstanding infrastructure action from W1 D7 is now a pac
 
 ## UPDATE — Sculpt milestone 1 qualified (2026-11-25)
 Adanna AD-03 V3 + Guard Class V2 both passed their sculpt-milestone visual gates (Mac commits `38a0377`, `4fb1c6d`; Design inspections filed in `2026-11-25_w1d8_sculpt/SCULPT_MILESTONE_1_REPORT.md`). **PM: integrate `output/ADANNA_AD03_V3/ADANNA_AD03_V3.fbx` and `output/GUARD_CLASS_V2/GUARD_CLASS_V2.fbx`** (shared 11-joint skeleton, unchanged names/scale). V2/V1 qualified builds remain in their folders as fallback.
+
+## UPDATE — Sculpt milestone 2 built, awaiting Mac qualification (2026-11-25)
+Adanna AD-03 V4 + Guard Class V3 (elliptical garments, waist overlap, hem lips, softened faces; Guard genuine one-shoulder wrap + 72 mm sash) are built and pass all source-level checks — see `2026-11-25_w1d9_sculpt2/SCULPT_MILESTONE_2_REPORT.md`. `run_all.sh` + `INPUT_CHECKSUMS.sha256` now point at the M2 GLBs. **PM: keep integrating the milestone-1 FBX pair (V3/V2) — do not switch to M2 until the Mac run passes and Design closes the M2 gate in the report.** Milestone-1 outputs remain the fallback.

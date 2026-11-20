@@ -92,24 +92,27 @@ def box(p, cx,cy,cz, sx,sy,sz):
     e=p.add((x0,y0,z1),(0,0)); f=p.add((x1,y0,z1),(1,0)); g=p.add((x1,y1,z1),(1,1)); h=p.add((x0,y1,z1),(0,1))
     p.quad(a,b,f,e); p.quad(b,c,g,f); p.quad(c,d,h,g); p.quad(d,a,e,h); p.quad(e,f,g,h); p.quad(d,c,b,a)
 
-def lathe(p, profile, nu=24, fold_amp=0.0, fold_n=7, cap_top=True, cap_bot=True):
-    """Garment/body lathe around Z axis. profile = [(radius, z), ...] bottom->top.
-    fold_amp adds cloth-like radial folds. Open surface; add hems separately."""
+def lathe(p, profile, nu=24, fold_amp=0.0, fold_n=7, cap_top=True, cap_bot=True, slant=0.0):
+    """Garment/body lathe around Z axis. profile items: (radius, z) or
+    (rx, ry, z) for elliptical plans (milestone 2). slant: top edge rises by
+    slant*cos(theta) (one-shoulder construction)."""
     rows = []
-    for (r, z) in profile:
+    for item in profile:
+        if len(item) == 2: rx = ry = item[0]; z = item[1]
+        else: rx, ry, z = item
         row = []
         for i in range(nu):
             t = 2*math.pi*i/nu
-            rr = r * (1 + fold_amp*math.sin(fold_n*t + z*3.0))
-            row.append(p.add((rr*math.cos(t), rr*math.sin(t), z), (i/nu, z)))
+            f = 1 + fold_amp*math.sin(fold_n*t + z*3.0)
+            row.append(p.add((rx*f*math.cos(t), ry*f*math.sin(t), z + slant*math.cos(t)), (i/nu, z)))
         rows.append(row)
     for ra, rb in zip(rows, rows[1:]):
         for i in range(nu): p.quad(ra[i], ra[(i+1) % nu], rb[(i+1) % nu], rb[i])
     if cap_bot:
-        c = p.add((0, 0, profile[0][1]), (0.5, 0))
+        c = p.add((0, 0, profile[0][-1]), (0.5, 0))
         for i in range(nu): p.tri(c, rows[0][(i+1) % nu], rows[0][i])
     if cap_top:
-        c = p.add((0, 0, profile[-1][1]), (0.5, 1))
+        c = p.add((0, 0, profile[-1][-1]), (0.5, 1))
         for i in range(nu): p.tri(c, rows[-1][i], rows[-1][(i+1) % nu])
 
 def hand(p, cx, side):
