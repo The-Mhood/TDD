@@ -8,4 +8,4 @@ For PM/owner: the only outstanding infrastructure action from W1 D7 is now a pac
 
 ## UPDATE — Mac qualification evidence (2026-11-24)
 - Mac runs completed (Blender 4.2.23 LTS): first run `6999ea7`, corrected rerun `a341f33` — `.blend` + FBX + QC JSONs + deformation re-checks + 8 previews committed in `output/`. Visual gate: **Adanna PASS**; **Guard conditional** (sash fix rebuilt, one rerun outstanding) — see `VISUAL_GATE_CLOSURE_2026-11-24.md`.
-- PM can integrate NOW: `output/ADANNA_AD03_V2/ADANNA_AD03_V2.fbx` and the current Guard FBX; Guard FBX refreshes with the sash rerun (geometry-only change, same skeleton/materials).
+- PM can integrate NOW: `output/ADANNA_AD03_V2/ADANNA_AD03_V2.fbx` and `output/GUARD_CLASS_V1/GUARD_CLASS_V1.fbx` — **both visually gate-passed** (sash rerun `3fd912a` closed the Guard; same skeleton/materials throughout). Remaining character work is the sculpt phase (D7–D10), which iterates on these `.blend` files without changing rig or scale.
