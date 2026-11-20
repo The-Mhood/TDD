@@ -1,0 +1,2 @@
+# PM HANDOFF - Campaign (2026-12-03)
+Integration-ready, no Design blockers: (1) CIVILIAN_CLIPS_V1 validated on all 6 NPC GLBs; (2) populated compound LOW/MED/HIGH static assemblies - pick a density, slots/facings in POPULATED_MANIFEST; animated population = GLBs + clips in Unreal; (3) dressing kit OBJ, material library, lighting spec; (4) character asset spec (skeleton contract + budgets + gates). Full A-E audit: VISUAL_PRODUCTION_COMPLETION_REPORT.md. Only asks of PM: density pick when ready; enemy class list whenever story has it. Independent of your build track.
