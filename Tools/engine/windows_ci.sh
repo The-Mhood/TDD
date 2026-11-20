@@ -21,23 +21,44 @@ EVIDENCE="$REPO/Saved/BuildEvidence/$UTC"
 UE_ROOT="${UE_ROOT:-C:/Program Files/Epic Games/UE_5.8}"
 PROJECT_NAME="TheDisobedientDaughter"
 
+case "$(uname -s)" in
+  MINGW*|MSYS*|CYGWIN*) ;;
+  *) echo "NOT EXECUTED — Windows CI must run in the Windows reference-PC shell (MINGW/MSYS/CYGWIN); host is $(uname -s). No checkout or build attempted."; exit 2 ;;
+esac
+
 mkdir -p "$EVIDENCE"
 rc=0
 
 echo "=== TDD Windows CI $UTC ==="
 echo "commit: $(git -C "$REPO" rev-parse --short HEAD)  branch: $(git -C "$REPO" rev-parse --abbrev-ref HEAD)"
 
-# 1. sync integration line
+# 1. verify the checked-out integration branch without changing user state.
+# Never checkout/reset --hard inside a CI helper: it can silently destroy local work.
+current_branch="$(git -C "$REPO" rev-parse --abbrev-ref HEAD 2>/dev/null || echo unknown)"
+if [ "$current_branch" != "$BRANCH" ]; then
+  echo "NOT EXECUTED — checked out branch is '$current_branch'; expected '$BRANCH'. No branch switch was attempted."
+  exit 2
+fi
+if [ -n "$(git -C "$REPO" status --porcelain 2>/dev/null)" ]; then
+  echo "NOT EXECUTED — working tree is not clean; refusing to build an ambiguous source state."
+  exit 2
+fi
 if ! git -C "$REPO" fetch origin "$BRANCH" >>"$EVIDENCE/00-sync.log" 2>&1; then
   echo "NOT EXECUTED — git fetch failed (see 00-sync.log)"
   exit 2
 fi
-git -C "$REPO" checkout -q "$BRANCH" 2>>"$EVIDENCE/00-sync.log" || true
-git -C "$REPO" reset --hard "origin/$BRANCH" >>"$EVIDENCE/00-sync.log" 2>&1
+local_sha="$(git -C "$REPO" rev-parse HEAD)"
+remote_sha="$(git -C "$REPO" rev-parse "refs/remotes/origin/$BRANCH" 2>/dev/null || echo missing)"
+if [ "$local_sha" != "$remote_sha" ]; then
+  echo "NOT EXECUTED — local HEAD $local_sha differs from origin/$BRANCH $remote_sha. Update the workspace explicitly, then rerun."
+  exit 2
+fi
 
 # 2. pure core (needs a C++ toolchain in the dev shell; optional on the PC)
 if command -v g++ >/dev/null 2>&1; then
   bash "$REPO/Tools/tests/pure/run_pure.sh" --evidence-dir "$EVIDENCE" >"$EVIDENCE/10-pure-results.txt" 2>&1 || rc=1
+  bash "$REPO/Tools/tests/pure/test_runner_contract.sh" >"$EVIDENCE/11-runner-contract.txt" 2>&1 || rc=1
+  bash "$REPO/Tools/tests/pure/test_ci_safety.sh" >"$EVIDENCE/12-windows-ci-safety.txt" 2>&1 || rc=1
 else
   echo "TDD_RESULT TDD-Pure.SKIP reason=no_gpp_on_pc (pure suites run agent-side)" > "$EVIDENCE/10-pure-results.txt"
 fi

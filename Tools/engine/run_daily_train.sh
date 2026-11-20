@@ -44,6 +44,13 @@ else
   say "  FAILED — pure runner contract; see 11-runner-contract.txt"
   rc_total=1
 fi
+if bash "$REPO/Tools/tests/pure/test_ci_safety.sh" > "$EVIDENCE/12-windows-ci-safety.txt" 2>&1; then
+  say "  ok — Windows CI branch-safety contract"
+  sed 's/^/  /' "$EVIDENCE/12-windows-ci-safety.txt"
+else
+  say "  FAILED — Windows CI branch-safety contract"
+  rc_total=1
+fi
 say
 
 # ---------- 2. full UE build + automation -----------------------------------
