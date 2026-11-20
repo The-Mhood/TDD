@@ -14,6 +14,7 @@ The agent sandbox has g++ and Python, but no Unreal Engine installation or owner
 | UTC | Train | Platform | Commit under test | Pure suites | UE automation/build | Status | Evidence |
 |---|---|---|---|---:|---|---|---|
 | 2026-11-20 | W1 D1 sandbox verification | Linux sandbox / g++ 12.2 | `0f39cbb` | 6/6; 887 assertions | NOT EXECUTED — Unreal unavailable | PARTIAL | `evidence/20261120T-W1D1/` |
+| 2026-11-20 | W1 D2 integration-start verification | Linux sandbox / g++ 12.2 | `f7ce9ef` | 6/6; 884 assertions | NOT EXECUTED — Mac/Windows runners returned exit 2 on Linux; static readiness only | PARTIAL | `evidence/20261120T-W1D2/` |
 
 This row verifies pure-core behavior only. It does **not** certify M1/M2/M3 milestone exit, a playable Unreal build, or the Chapter 1 release candidate.
 
