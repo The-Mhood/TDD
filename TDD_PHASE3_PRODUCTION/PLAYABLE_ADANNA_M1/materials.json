@@ -1,0 +1,155 @@
+{
+  "approved_master_palette": {
+    "ABYSS": "#06080D",
+    "GRAPHITE": "#121215",
+    "BROWN_BLACK": "#241916",
+    "COOL_CHARCOAL": "#283338",
+    "WARM_GREY": "#403D3E",
+    "MIST_BLUE": "#44525C",
+    "PALE_STEEL": "#677A85"
+  },
+  "realtime_palette": {
+    "FOREST_DARK": "#1D2A21",
+    "CANOPY": "#3B432F",
+    "CANOPY_LIT": "#596443",
+    "LATERITE": "#76523A",
+    "LATERITE_PATH": "#8A5A38",
+    "BARK": "#5E4930",
+    "BARK_DARK": "#35291F",
+    "ROCK": "#4B4A42",
+    "VEGETATION": "#435A3A",
+    "MIST": "#767156",
+    "CLOTH": "#DCD6C5",
+    "BRONZE": "#9A7039",
+    "CORAL": "#B04A33",
+    "INDIGO": "#252D50",
+    "SKIN": "#433027",
+    "LEATHER": "#402A1F"
+  },
+  "source_samples": {
+    "forest_establishing": {
+      "laterite_median": [
+        47,
+        42,
+        30
+      ],
+      "canopy_median": [
+        39,
+        47,
+        49
+      ],
+      "mist_median": [
+        71,
+        83,
+        91
+      ]
+    },
+    "duiker_run": {
+      "laterite_median": [
+        96,
+        68,
+        43
+      ],
+      "canopy_median": [
+        59,
+        55,
+        39
+      ],
+      "trunk_median": [
+        94,
+        73,
+        48
+      ]
+    },
+    "horn_bill_tree": {
+      "ivory_light_median": [
+        224,
+        217,
+        201
+      ],
+      "bark_median": [
+        85,
+        76,
+        61
+      ]
+    },
+    "note": "Medians are source samples, not approved colour specifications; render values are lifted for real-time readability."
+  },
+  "material_intent": {
+    "FOREST_GROUND": {
+      "base": "FOREST_DARK",
+      "roughness": 0.94,
+      "metallic": 0.0,
+      "spec": 0.03
+    },
+    "LATERITE_PATH": {
+      "base": "LATERITE_PATH",
+      "roughness": 0.88,
+      "metallic": 0.0,
+      "spec": 0.05
+    },
+    "TREE_BARK": {
+      "base": "BARK",
+      "roughness": 0.9,
+      "metallic": 0.0,
+      "spec": 0.04
+    },
+    "TREE_ROOT": {
+      "base": "BARK_DARK",
+      "roughness": 0.94,
+      "metallic": 0.0,
+      "spec": 0.02
+    },
+    "CANOPY": {
+      "base": "CANOPY",
+      "roughness": 0.96,
+      "metallic": 0.0,
+      "spec": 0.02
+    },
+    "BRANCH": {
+      "base": "BARK_DARK",
+      "roughness": 0.92,
+      "metallic": 0.0,
+      "spec": 0.02
+    },
+    "ROCK": {
+      "base": "ROCK",
+      "roughness": 0.92,
+      "metallic": 0.0,
+      "spec": 0.05
+    },
+    "VEGETATION": {
+      "base": "VEGETATION",
+      "roughness": 0.95,
+      "metallic": 0.0,
+      "spec": 0.02
+    },
+    "CLOTH": {
+      "base": "CLOTH",
+      "roughness": 0.92,
+      "metallic": 0.0,
+      "spec": 0.02
+    },
+    "WAYMARKER": {
+      "base": "CLOTH",
+      "roughness": 0.8,
+      "metallic": 0.0,
+      "spec": 0.1,
+      "emission": 0.12
+    },
+    "GREAT_ROOT": {
+      "base": "BARK",
+      "roughness": 0.9,
+      "metallic": 0.0,
+      "spec": 0.04
+    },
+    "INTERACTABLE": {
+      "base": "BRONZE",
+      "roughness": 0.55,
+      "metallic": 0.15,
+      "spec": 0.2,
+      "emission": 0.18
+    }
+  },
+  "note": "Palette-derived PBR intent only; no calibrated texture maps, final groom, facial rig or production topology is claimed."
+}

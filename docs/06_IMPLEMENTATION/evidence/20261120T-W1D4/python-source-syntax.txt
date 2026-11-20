@@ -1,0 +1,4 @@
+PASS syntax .arena/production/2026-11-20_w1d3_ch01_greybox/build_ch01_greybox.py
+PASS syntax .arena/production/2026-11-20_w1d3_ch01_greybox/render_plan.py
+PASS syntax Tools/unreal/build_chapter1_greybox.py
+PASS syntax Tools/unreal/import_adanna_proxy.py

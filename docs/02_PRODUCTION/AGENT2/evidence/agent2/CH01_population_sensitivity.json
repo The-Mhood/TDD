@@ -1,0 +1,767 @@
+{
+  "meta": {
+    "tool": "Tools/world/sensitivity.py",
+    "chapter": "CH01",
+    "status": "PROVISIONAL - sensitivity of a derived estimate, not a measurement",
+    "register_source": "SCENE_AND_MICROLOCATION_MASTER_REGISTER v1.9",
+    "policy_source": "Tools/world/data/population_policy.json",
+    "caveat": "Variation ranges are engineering hypotheses about plausible policy error. They are NOT observed values. No simulation has run. This report covers Chapter 1 only and does NOT extrapolate to Chapters 2-8, whose categories are not ingested.",
+    "reading_guide": {
+      "facts": "Values read from the register. Traceable to a scene id.",
+      "assumptions": "Values invented by the policy. No register basis.",
+      "elasticity": "Percent change in total cost per percent change in the parameter. 0 means the total does not depend on it."
+    },
+    "fixture": "scene_register_ch01_v19_verbatim.md"
+  },
+  "capture_status": {
+    "scenes": "COMPLETE - 46 of 46 Chapter 1 scenes captured",
+    "locations": "PARTIAL - 13 of 57 Chapter 1 location entries captured",
+    "warning": "This report covers scenes only. It says nothing about the 41 uncaptured location entries, and it must not be read as covering the full chapter's world content."
+  },
+  "facts": {
+    "scenes_with_register_npc_data": 29,
+    "scenes_with_register_prose_unresolved": 6,
+    "scenes_without_any_capture": 11,
+    "scenes_total": 46,
+    "coverage_ratio": 0.63,
+    "prose_capture_ratio": 0.761,
+    "detail": [
+      {
+        "scene_id": "CH01-SCN-001",
+        "name": "Woman Cooking Outside Her Door",
+        "category": "AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "tier": "CROWD"
+      },
+      {
+        "scene_id": "CH01-SCN-002",
+        "name": "The Evening Meal",
+        "category": "AMBIENT NPC SCENE",
+        "npcs_from_register": 8,
+        "tier": "CROWD"
+      },
+      {
+        "scene_id": "CH01-SCN-003",
+        "name": "Children's Corner",
+        "category": "AMBIENT NPC SCENE",
+        "npcs_from_register": 4,
+        "tier": "CROWD"
+      },
+      {
+        "scene_id": "CH01-SCN-004",
+        "name": "Sweeping the Compound",
+        "category": "AMBIENT NPC SCENE",
+        "npcs_from_register": 1,
+        "tier": "CROWD"
+      },
+      {
+        "scene_id": "CH01-SCN-006",
+        "name": "The Compound Store",
+        "category": "ENTERABLE INTERIOR",
+        "npcs_from_register": 0,
+        "tier": "SCRIPTED"
+      },
+      {
+        "scene_id": "CH01-SCN-007",
+        "name": "Sleeping Corner",
+        "category": "ENTERABLE INTERIOR",
+        "npcs_from_register": 0,
+        "tier": "SCRIPTED"
+      },
+      {
+        "scene_id": "CH01-SCN-008",
+        "name": "Repairing the Roof",
+        "category": "WORLD ACTIVITY SCENE",
+        "npcs_from_register": 2,
+        "tier": "SCRIPTED"
+      },
+      {
+        "scene_id": "CH01-SCN-009",
+        "name": "Elder Resting on the Veranda",
+        "category": "AMBIENT NPC SCENE",
+        "npcs_from_register": 1,
+        "tier": "CROWD"
+      },
+      {
+        "scene_id": "CH01-SCN-010",
+        "name": "The Blacksmith at Work",
+        "category": "WORLD ACTIVITY SCENE",
+        "npcs_from_register": 2,
+        "tier": "SCRIPTED"
+      },
+      {
+        "scene_id": "CH01-SCN-011",
+        "name": "A Trader Arranging Goods",
+        "category": "AMBIENT NPC SCENE",
+        "npcs_from_register": 1,
+        "tier": "CROWD"
+      },
+      {
+        "scene_id": "CH01-SCN-012",
+        "name": "Closing the Stall at Night",
+        "category": "AMBIENT NPC SCENE",
+        "npcs_from_register": 1,
+        "tier": "CROWD"
+      },
+      {
+        "scene_id": "CH01-SCN-013",
+        "name": "Behind the Stalls",
+        "category": "EXTERIOR MICRO-LOCATION",
+        "npcs_from_register": 1,
+        "tier": "NONE"
+      },
+      {
+        "scene_id": "CH01-SCN-016",
+        "name": "Sorting the Harvest",
+        "category": "WORLD ACTIVITY SCENE",
+        "npcs_from_register": 4,
+        "tier": "SCRIPTED"
+      },
+      {
+        "scene_id": "CH01-SCN-018",
+        "name": "Preparing for a Gathering",
+        "category": "WORLD ACTIVITY SCENE",
+        "npcs_from_register": 12,
+        "tier": "SCRIPTED"
+      },
+      {
+        "scene_id": "CH01-SCN-019",
+        "name": "A Guard on a Quiet Shift",
+        "category": "AMBIENT NPC SCENE",
+        "npcs_from_register": 1,
+        "tier": "CROWD"
+      },
+      {
+        "scene_id": "CH01-SCN-022",
+        "name": "The Gap Between Two Houses",
+        "category": "EXTERIOR MICRO-LOCATION",
+        "npcs_from_register": 0,
+        "tier": "NONE"
+      },
+      {
+        "scene_id": "CH01-SCN-024",
+        "name": "The House No One Lives In",
+        "category": "ENVIRONMENTAL STORYTELLING",
+        "npcs_from_register": 0,
+        "tier": "NONE"
+      },
+      {
+        "scene_id": "CH01-SCN-025",
+        "name": "Goats at Dusk",
+        "category": "ATMOSPHERIC SCENE",
+        "npcs_from_register": 1,
+        "tier": "SCRIPTED"
+      },
+      {
+        "scene_id": "CH01-SCN-028",
+        "name": "At the Loom",
+        "category": "WORLD ACTIVITY SCENE",
+        "npcs_from_register": 2,
+        "tier": "SCRIPTED"
+      },
+      {
+        "scene_id": "CH01-SCN-029",
+        "name": "A Patient Waiting",
+        "category": "AMBIENT NPC SCENE",
+        "npcs_from_register": 2,
+        "tier": "CROWD"
+      },
+      {
+        "scene_id": "CH01-SCN-030",
+        "name": "Servants Crossing the Court",
+        "category": "AMBIENT NPC SCENE",
+        "npcs_from_register": 3,
+        "tier": "CROWD"
+      },
+      {
+        "scene_id": "CH01-SCN-031",
+        "name": "The Palace Kitchen at Work",
+        "category": "WORLD ACTIVITY SCENE",
+        "npcs_from_register": 3,
+        "tier": "SCRIPTED"
+      },
+      {
+        "scene_id": "CH01-SCN-032",
+        "name": "The Well at Noon",
+        "category": "ATMOSPHERIC SCENE",
+        "npcs_from_register": 0,
+        "tier": "SCRIPTED"
+      },
+      {
+        "scene_id": "CH01-SCN-033",
+        "name": "The Gate at Night",
+        "category": "ATMOSPHERIC SCENE",
+        "npcs_from_register": 1,
+        "tier": "SCRIPTED"
+      },
+      {
+        "scene_id": "CH01-SCN-036",
+        "name": "The Cold Hearth",
+        "category": "ENVIRONMENTAL STORYTELLING",
+        "npcs_from_register": 0,
+        "tier": "NONE"
+      },
+      {
+        "scene_id": "CH01-SCN-037",
+        "name": "The Hunter at His Fire",
+        "category": "AMBIENT NPC SCENE",
+        "npcs_from_register": 1,
+        "tier": "CROWD"
+      },
+      {
+        "scene_id": "CH01-SCN-044",
+        "name": "Bowls at the Foot of a Tree",
+        "category": "ENVIRONMENTAL STORYTELLING",
+        "npcs_from_register": 0,
+        "tier": "NONE"
+      },
+      {
+        "scene_id": "CH01-SCN-045",
+        "name": "Rain in the Empty Courtyard",
+        "category": "ATMOSPHERIC SCENE",
+        "npcs_from_register": 0,
+        "tier": "SCRIPTED"
+      },
+      {
+        "scene_id": "CH01-SCN-046",
+        "name": "Nneka Memory 1: They Were Saying the Child's Name",
+        "category": "SECONDARY STORY SCENE",
+        "npcs_from_register": 0,
+        "tier": "NAMED"
+      }
+    ],
+    "unresolved_detail": [
+      {
+        "scene_id": "CH01-SCN-005",
+        "tier": "SCRIPTED",
+        "npcs_band": [
+          0,
+          1
+        ],
+        "basis": "conditional presence (0 when absent)",
+        "counted_as": 0,
+        "why_not_a_point_value": "the register states a bound, not a head-count"
+      },
+      {
+        "scene_id": "CH01-SCN-014",
+        "tier": "CROWD",
+        "npcs_band": [
+          null,
+          null
+        ],
+        "basis": "collective without a number; no bound stated",
+        "counted_as": 0,
+        "why_not_a_point_value": "the register states no number at all"
+      },
+      {
+        "scene_id": "CH01-SCN-017",
+        "tier": "CROWD",
+        "npcs_band": [
+          6,
+          10
+        ],
+        "basis": "stated range (X to Y)",
+        "counted_as": 0,
+        "why_not_a_point_value": "the register states a bound, not a head-count"
+      },
+      {
+        "scene_id": "CH01-SCN-020",
+        "tier": "CROWD",
+        "npcs_band": [
+          4,
+          5
+        ],
+        "basis": "stated alternative (X or Y)",
+        "counted_as": 0,
+        "why_not_a_point_value": "the register states a bound, not a head-count"
+      },
+      {
+        "scene_id": "CH01-SCN-021",
+        "tier": "NONE",
+        "npcs_band": [
+          0,
+          1
+        ],
+        "basis": "conditional presence, singular person named (0 to 1)",
+        "counted_as": 0,
+        "why_not_a_point_value": "the register states a bound, not a head-count"
+      },
+      {
+        "scene_id": "CH01-SCN-034",
+        "tier": "NONE",
+        "npcs_band": [
+          0,
+          1
+        ],
+        "basis": "conditional presence, singular person named (0 to 1)",
+        "counted_as": 0,
+        "why_not_a_point_value": "the register states a bound, not a head-count"
+      }
+    ],
+    "banded_and_open": [
+      "CH01-SCN-014"
+    ],
+    "uncaptured_detail": [
+      {
+        "scene_id": "CH01-SCN-015",
+        "tier": "SCRIPTED",
+        "category": "WORLD ACTIVITY SCENE",
+        "count_independent": true
+      },
+      {
+        "scene_id": "CH01-SCN-023",
+        "tier": "NONE",
+        "category": "EXTERIOR MICRO-LOCATION",
+        "count_independent": true
+      },
+      {
+        "scene_id": "CH01-SCN-026",
+        "tier": "NONE",
+        "category": "EXTERIOR MICRO-LOCATION",
+        "count_independent": true
+      },
+      {
+        "scene_id": "CH01-SCN-027",
+        "tier": "SCRIPTED",
+        "category": "WORLD ACTIVITY SCENE",
+        "count_independent": true
+      },
+      {
+        "scene_id": "CH01-SCN-035",
+        "tier": "SCRIPTED",
+        "category": "ATMOSPHERIC SCENE",
+        "count_independent": true
+      },
+      {
+        "scene_id": "CH01-SCN-038",
+        "tier": "SCRIPTED",
+        "category": "ENTERABLE INTERIOR",
+        "count_independent": true
+      },
+      {
+        "scene_id": "CH01-SCN-039",
+        "tier": "SCRIPTED",
+        "category": "ATMOSPHERIC SCENE",
+        "count_independent": true
+      },
+      {
+        "scene_id": "CH01-SCN-040",
+        "tier": "NONE",
+        "category": "EXPLORATION SCENE",
+        "count_independent": true
+      },
+      {
+        "scene_id": "CH01-SCN-041",
+        "tier": "NONE",
+        "category": "ENVIRONMENTAL STORYTELLING",
+        "count_independent": true
+      },
+      {
+        "scene_id": "CH01-SCN-042",
+        "tier": "SCRIPTED",
+        "category": "ATMOSPHERIC SCENE",
+        "count_independent": true
+      },
+      {
+        "scene_id": "CH01-SCN-043",
+        "tier": "NONE",
+        "category": "EXPLORATION SCENE",
+        "count_independent": true
+      }
+    ],
+    "_note": "`scenes_with_register_npc_data` counts RESOLVED point values only. Scenes whose prose was read but states a range or condition are listed under `unresolved_detail` with their quoted bounds."
+  },
+  "assumptions": {
+    "cost_units": {
+      "NAMED": 4.0,
+      "CROWD": 1.0,
+      "SCRIPTED": 0.3,
+      "BACKGROUND": 0.05,
+      "NONE": 0.0
+    },
+    "crowd_concurrency_ratio": {
+      "AMBIENT NPC SCENE": 0.75,
+      "ATMOSPHERIC SCENE": 1.0,
+      "WORLD ACTIVITY SCENE": 1.0
+    },
+    "expected_npcs_defaults": {
+      "AMBIENT NPC SCENE": 2,
+      "WORLD ACTIVITY SCENE": 1,
+      "ATMOSPHERIC SCENE": 1,
+      "ENVIRONMENTAL STORYTELLING": 0,
+      "ENTERABLE INTERIOR": 1,
+      "EXTERIOR MICRO-LOCATION": 0,
+      "EXPLORATION SCENE": 0,
+      "SECONDARY STORY SCENE": 0,
+      "MAIN STORY SCENE": 0,
+      "INCIDENTAL SCENE": 1
+    },
+    "access_multipliers": {
+      "_note": "Independent cost multiplier applied after tier cost. Derived from the access level's streaming/collision/tick policy in Docs/WORLD_ARCHITECTURE.md section 4.",
+      "FULLY ENTERABLE": 1.0,
+      "PARTIALLY ENTERABLE": 0.6,
+      "VISUALLY ACCESSIBLE": 0.2,
+      "BACKGROUND ENVIRONMENT": 0.05,
+      "OPEN EXTERIOR": 1.0,
+      "_default": 1.0
+    },
+    "_note": "Every value here is an engineering assumption with no register basis. None of it is measured."
+  },
+  "assumption_dependence": {
+    "cost_from_register_scenes": 28.68,
+    "cost_from_unresolved_register_scenes": 0.3,
+    "cost_from_policy_default_scenes": 1.39,
+    "share_of_cost_from_policy_defaults": 0.046,
+    "share_of_cost_from_unresolved_register": 0.01,
+    "scenes_on_policy_default": 11,
+    "scenes_with_unresolved_register_prose": 6,
+    "scenes_with_register_data": 29,
+    "band_cost_units_low": 38.38,
+    "band_cost_units_high": 42.37,
+    "band_is_complete": false,
+    "_note": "Cost on an UNRESOLVED scene is what the model bills when it cannot read a count: for a CROWD scene that is 0, which understates. The band figures below replace those zeros with the register's own stated bounds and are the honest floor for the chapter."
+  },
+  "baseline": {
+    "total_cost_units": 30.38,
+    "simulated_npcs": 42,
+    "crowd_peak": 22
+  },
+  "sensitivity": {
+    "crowd_concurrency_ratio": {
+      "baseline": 0.75,
+      "points": [
+        {
+          "parameter": "crowd_concurrency_ratio",
+          "value": 0.25,
+          "total_cost_units": 20.38,
+          "simulated_npcs": 32,
+          "crowd_peak": 12,
+          "delta_vs_baseline": -10.0,
+          "pct_vs_baseline": -32.92
+        },
+        {
+          "parameter": "crowd_concurrency_ratio",
+          "value": 0.5,
+          "total_cost_units": 24.38,
+          "simulated_npcs": 36,
+          "crowd_peak": 16,
+          "delta_vs_baseline": -6.0,
+          "pct_vs_baseline": -19.75
+        },
+        {
+          "parameter": "crowd_concurrency_ratio",
+          "value": 0.75,
+          "total_cost_units": 30.38,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "crowd_concurrency_ratio",
+          "value": 1.0,
+          "total_cost_units": 33.38,
+          "simulated_npcs": 45,
+          "crowd_peak": 25,
+          "delta_vs_baseline": 3.0,
+          "pct_vs_baseline": 9.87
+        }
+      ],
+      "elasticity": 0.554,
+      "quantization": {
+        "is_quantized": false,
+        "flat_intervals": [],
+        "cause": "crowd actors are rounded to whole numbers per scene, so small changes in the depicted count can leave the simulated count unchanged",
+        "consequence": "the reported elasticity is a local slope and does not describe the whole sweep"
+      },
+      "interpretation": "How many of the depicted crowd must be simulated at the same time."
+    },
+    "expected_npcs_for_policy_defaults": {
+      "baseline": 2,
+      "points": [
+        {
+          "parameter": "expected_npcs_crowd",
+          "value": 1,
+          "total_cost_units": 30.38,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "expected_npcs_crowd",
+          "value": 2,
+          "total_cost_units": 30.38,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "expected_npcs_crowd",
+          "value": 3,
+          "total_cost_units": 30.38,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "expected_npcs_crowd",
+          "value": 4,
+          "total_cost_units": 30.38,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "expected_npcs_crowd",
+          "value": 5,
+          "total_cost_units": 30.38,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        }
+      ],
+      "elasticity": 0.0,
+      "quantization": {
+        "is_quantized": true,
+        "flat_intervals": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "cause": "crowd actors are rounded to whole numbers per scene, so small changes in the depicted count can leave the simulated count unchanged",
+        "consequence": "the reported elasticity is a local slope and does not describe the whole sweep"
+      },
+      "interpretation": "How many people an ambient scene depicts, for the 12 crowd scenes with no captured detail block."
+    },
+    "expected_npcs_for_scripted": {
+      "baseline": 1,
+      "points": [
+        {
+          "parameter": "expected_npcs_scripted",
+          "value": 0,
+          "total_cost_units": 30.38,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "expected_npcs_scripted",
+          "value": 1,
+          "total_cost_units": 30.38,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "expected_npcs_scripted",
+          "value": 2,
+          "total_cost_units": 30.38,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "expected_npcs_scripted",
+          "value": 4,
+          "total_cost_units": 30.38,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        }
+      ],
+      "elasticity": 0.0,
+      "interpretation": "EXPECTED TO BE INERT. Scripted scenes are billed as a flat per-scene cost, so their NPC count cannot move the total. Included to demonstrate the model's structure, not to vary the result."
+    },
+    "crowd_cost_unit": {
+      "baseline": 1.0,
+      "points": [
+        {
+          "parameter": "cost_unit_crowd",
+          "value": 0.5,
+          "total_cost_units": 19.78,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": -10.6,
+          "pct_vs_baseline": -34.89
+        },
+        {
+          "parameter": "cost_unit_crowd",
+          "value": 1.0,
+          "total_cost_units": 30.38,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": 0.0,
+          "pct_vs_baseline": 0.0
+        },
+        {
+          "parameter": "cost_unit_crowd",
+          "value": 1.5,
+          "total_cost_units": 40.97,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": 10.59,
+          "pct_vs_baseline": 34.86
+        },
+        {
+          "parameter": "cost_unit_crowd",
+          "value": 2.0,
+          "total_cost_units": 51.57,
+          "simulated_npcs": 42,
+          "crowd_peak": 22,
+          "delta_vs_baseline": 21.19,
+          "pct_vs_baseline": 69.75
+        }
+      ],
+      "elasticity": 1.071,
+      "interpretation": "The cost assigned to one simulated crowd actor. Pure assumption: no capture exists."
+    }
+  },
+  "scenarios": [
+    {
+      "scenario": "LOW-DENSITY",
+      "expected_npcs_default": 1,
+      "crowd_concurrency_ratio": 0.5,
+      "total_cost_units": 24.38,
+      "band_cost_units_low": 29.38,
+      "band_cost_units_high": 32.38,
+      "band_is_complete": false,
+      "simulated_npcs": 36,
+      "crowd_peak": 16,
+      "delta_vs_baseline": -6.0,
+      "pct_vs_baseline": -19.75,
+      "still_within_chapter_ceiling": true,
+      "note": "Every ambient scene depicts one person; half are simulated at once."
+    },
+    {
+      "scenario": "LOW-COUNT",
+      "expected_npcs_default": 1,
+      "crowd_concurrency_ratio": 0.75,
+      "total_cost_units": 30.38,
+      "band_cost_units_low": 38.38,
+      "band_cost_units_high": 42.37,
+      "band_is_complete": false,
+      "simulated_npcs": 42,
+      "crowd_peak": 22,
+      "delta_vs_baseline": 0.0,
+      "pct_vs_baseline": 0.0,
+      "still_within_chapter_ceiling": true,
+      "note": "One person per ambient scene, baseline concurrency."
+    },
+    {
+      "scenario": "BASELINE",
+      "expected_npcs_default": 2,
+      "crowd_concurrency_ratio": 0.75,
+      "total_cost_units": 30.38,
+      "band_cost_units_low": 38.38,
+      "band_cost_units_high": 42.37,
+      "band_is_complete": false,
+      "simulated_npcs": 42,
+      "crowd_peak": 22,
+      "delta_vs_baseline": 0.0,
+      "pct_vs_baseline": 0.0,
+      "still_within_chapter_ceiling": true,
+      "note": "Current policy defaults."
+    },
+    {
+      "scenario": "HIGH-COUNT",
+      "expected_npcs_default": 3,
+      "crowd_concurrency_ratio": 0.75,
+      "total_cost_units": 30.38,
+      "band_cost_units_low": 38.38,
+      "band_cost_units_high": 42.37,
+      "band_is_complete": false,
+      "simulated_npcs": 42,
+      "crowd_peak": 22,
+      "delta_vs_baseline": 0.0,
+      "pct_vs_baseline": 0.0,
+      "still_within_chapter_ceiling": true,
+      "note": "Ambient scenes depict three people."
+    },
+    {
+      "scenario": "HIGH-DENSITY",
+      "expected_npcs_default": 4,
+      "crowd_concurrency_ratio": 1.0,
+      "total_cost_units": 33.38,
+      "band_cost_units_low": 43.37,
+      "band_cost_units_high": 48.37,
+      "band_is_complete": false,
+      "simulated_npcs": 45,
+      "crowd_peak": 25,
+      "delta_vs_baseline": 3.0,
+      "pct_vs_baseline": 9.87,
+      "still_within_chapter_ceiling": true,
+      "note": "Four people per ambient scene, all simulated simultaneously."
+    }
+  ],
+  "ceiling": {
+    "chapter_ceiling": 60.0,
+    "lowest_scenario_cost": 29.38,
+    "highest_scenario_cost": 48.37,
+    "highest_scenario_name": "HIGH-DENSITY",
+    "headroom_at_worst_case": 11.63,
+    "headroom_basis": "upper endpoint of the worst scenario (conservative population-capacity planning)",
+    "point_headroom_at_worst_scenario": 26.62,
+    "point_headroom_basis": "point estimate of the worst scenario; UNDERSTATES because unresolved scenes are billed at zero",
+    "all_scenarios_within_ceiling": true,
+    "is_a_floor_not_a_ceiling": true
+  },
+  "conclusion": {
+    "estimate_is_mostly_assumption": false,
+    "only_crowd_scenes_are_sensitive": true,
+    "all_crowd_scenes_now_have_register_prose": true,
+    "summary": "Every Chapter 1 scene whose tier can respond to an NPC count now has register prose: 29 scenes resolve to an exact head-count and 6 state a range, alternative or condition that cannot be reduced to one integer. 11 scenes remain uncaptured, but all of them are SCRIPTED or NONE tier, whose cost is a flat per-scene or zero figure and does not depend on the count. The chapter total is therefore no longer sensitive to the ambient-scene NPC default. What still moves it is the crowd concurrency ratio and the crowd cost unit, both pure assumptions, plus the register's own unresolved bounds (38.38-42.37 cost units, band OPEN). Worst scenario, HIGH-DENSITY, reaches 33.38 cost units and is still a projection, not a measurement."
+  },
+  "comparison": {
+    "before": {
+      "fixture": "scene_register_ch01_full.md",
+      "total_cost_units": 36.58,
+      "simulated_npcs": 49,
+      "crowd_peak": 29,
+      "scenes_resolved": 5,
+      "scenes_unresolved": 0,
+      "scenes_uncaptured": 41,
+      "band_cost_units_low": 36.58,
+      "band_cost_units_high": 36.58,
+      "band_is_complete": true,
+      "worst_scenario": 58.97
+    },
+    "after": {
+      "fixture": "scene_register_ch01_v19_verbatim.md",
+      "total_cost_units": 30.38,
+      "simulated_npcs": 42,
+      "crowd_peak": 22,
+      "scenes_resolved": 29,
+      "scenes_unresolved": 6,
+      "scenes_uncaptured": 11,
+      "band_cost_units_low": 38.38,
+      "band_cost_units_high": 42.37,
+      "band_is_complete": false,
+      "worst_scenario": 33.38
+    },
+    "delta_total_cost_units": -6.2,
+    "delta_simulated_npcs": -7,
+    "_note": "`before` is recomputed live from the preserved abridged fixture. Both are projections; neither is a measurement."
+  }
+}

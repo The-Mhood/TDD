@@ -1,0 +1,21 @@
+Attempt: PYTHONPATH=/tmp/tdd-bpy python3 -c "import bpy; print(bpy.app.version_string)"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ImportError: libXrender.so.1: cannot open shared object file: No such file or directory
+exit=1
+
+Missing ELF dependencies reported by ldd /tmp/tdd-bpy/bpy/__init__.so:
+	libGL.so.1 => not found
+	libICE.so.6 => not found
+	libSM.so.6 => not found
+	libXfixes.so.3 => not found
+	libXi.so.6 => not found
+	libXrender.so.1 => not found
+	libxkbcommon.so.0 => not found
+
+Editor executable checks:
+UnrealEditor=NOT_FOUND
+UnrealEditor-Cmd=NOT_FOUND
+blender=NOT_FOUND
+
+Host=Linux 6.1.158+ x86_64

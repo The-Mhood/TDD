@@ -1,0 +1,51 @@
+{
+  "test": "L0.Repository.TextIntegrity",
+  "suite": "Tools/ci/l0_checks.py",
+  "engine": "n/a (host-side)",
+  "dateUtc": "2026-11-16T18:44:01+00:00",
+  "result": "PASS",
+  "checksRun": 8,
+  "checksFailed": 0,
+  "checks": [
+    {
+      "name": "no_forbidden_binaries",
+      "result": "PASS",
+      "problems": []
+    },
+    {
+      "name": "required_docs",
+      "result": "PASS",
+      "problems": []
+    },
+    {
+      "name": "doc_links",
+      "result": "PASS",
+      "problems": []
+    },
+    {
+      "name": "json_parses",
+      "result": "PASS",
+      "problems": []
+    },
+    {
+      "name": "uproject",
+      "result": "PASS",
+      "problems": []
+    },
+    {
+      "name": "stage_gates",
+      "result": "PASS",
+      "problems": []
+    },
+    {
+      "name": "status_vocabulary",
+      "result": "PASS",
+      "problems": []
+    },
+    {
+      "name": "evidence_claims",
+      "result": "PASS",
+      "problems": []
+    }
+  ]
+}

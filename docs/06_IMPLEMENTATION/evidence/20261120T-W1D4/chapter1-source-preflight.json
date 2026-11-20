@@ -1,0 +1,10 @@
+{
+  "source_preflight": "PASS",
+  "waypoint_count": 7,
+  "route_length_m": 69.315,
+  "path_width_m": 3.4,
+  "obstacle_count": 46,
+  "interactable_count": 2,
+  "unreal_map_created": false,
+  "note": "Offline source-data validation only; editor map generation and PIE remain unexecuted."
+}

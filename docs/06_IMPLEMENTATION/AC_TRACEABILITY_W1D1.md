@@ -1,0 +1,18 @@
+# W1 D1 Acceptance-Criteria Traceability
+
+**Snapshot:** 2026-11-20 UTC  
+**Purpose:** trace this day's code and evidence to the governing criteria without overstating milestone completion. `Sandbox verified` means only the explicitly listed host-side test ran; `Not run` means no result exists.
+
+| Workstream / requirement | Implementation / verification | Result today | Acceptance boundary / outstanding evidence |
+|---|---|---|---|
+| WS1 — movement/state pure rules | `Public/Core/TDDStateRules.h`, `TDDInputBuffer.h`, `TDDGaitMath.h`, `TDDTraversalFallback.h`; `TDDStateMachineTests`, `TDDMovementCoreTests`, `TDDDodgeDistanceMathTests` | Sandbox verified: 665/665 + 48/48 + 18/18 assertions | Supports state/input/gait/fallback contracts, including state semantics under M1 AC-22/23 and M2 fallback design. Does not exit M1 AC-01…31 or M2 E1–E7: CMC, camera, physics, root motion, floor traces, runtime parity and three cold runs remain untested. |
+| WS2 — combat/damage deterministic core | `Public/Core/TDDSeededRandom.h`, `TDDDamageMath.h`, `TDDCombatTiming.h`; `TDDCombatMathTests` | Sandbox verified: 39/39 assertions | Supporting M3 taxonomy/timing/determinism evidence only. Full combat loop, hit dedup, feedback, animation, frame cost and training-room run remain pending. `FTDDDamageRequest` is not declared frozen by the M1 specification Appendix A proposal. |
+| WS3 — AI policy + boss phase graph | `Public/AI/TDDAIPureCore.h`; `TDDAIPureCoreTests` | Sandbox verified: 108/108 assertions; multi-translation-unit header link check passed | Pure token cap/TTL/cooldown/fairness and data-driven phase selection/validation tested. Unreal StateTree, perception, subsystem integration, simultaneous-attacker functional test, and boss runtime remain pending. |
+| WS4 — Adanna import-prep audit | `Tools/tools/audit_adanna_glb.py` against the technical proxy GLB | Static audit: 22 nodes, 1 skin, 5 required clips; no required names missing | Proxy remains provisional and not creatively approved. Native UE import, retargeting/deformation, compile/PIE/cook/package are explicitly not verified. |
+| WS5 — Chapter 1 route/layout data | `Public/Core/TDDChapterRoute.h`; `TDDChapterRouteTests` | Sandbox verified: 9/9 assertions against the seven-waypoint M1 route fixture | Structural bounds/corridor/spawn/label checks only. Not a project-owned UMAP; no World Partition streaming, traversal gauntlet, navigation bake, PCG, final level, or cultural review evidence. |
+| WS6 — repeatable verification pipeline | `Tools/tests/pure/run_pure.sh`, runner-contract regression, daily train, ledger updater, Windows CI wrapper, GLB validator | Six pure suites (884 assertions) plus `TDD-Tool.PureRunnerContract` pass; all 9 GLBs structurally validate and both Adanna manifest-listed GLBs have verified SHA-256 | Linux sandbox pass is partial evidence. Owner Mac daily train and reference-PC Windows CI have not run. Evidence: `pure-run-final.txt`, `runner-contract.txt`, `asset-validation-final.jsonl`, `asset-validation-summary.json`. |
+| WS7 — quality and defect reporting | `QUALITY_LEDGER.md`, `DEFECT_REGISTER.md`, this traceability sheet | Baseline records created; scoped status `PARTIAL` | Daily owner-platform train must append actual results; this snapshot is not a milestone gate decision. |
+
+## Consolidated host test result
+
+`TDD-Pure.TDDAIPureCoreTests` 108/108; `TDD-Pure.TDDChapterRouteTests` 9/9; `TDD-Pure.TDDCombatMathTests` 39/39; `TDD-Pure.TDDMovementCoreTests` 48/48; `TDD-Pure.TDDStateMachineTests` 665/665; `TDD-Pure.TDDDodgeDistanceMathTests` 18/18. **6 suites, 887 assertions, all passed.** Full output is preserved in `evidence/20261120T-W1D1/pure-run-final.txt`. (This is separate from the runner-contract TDD_RESULT.)

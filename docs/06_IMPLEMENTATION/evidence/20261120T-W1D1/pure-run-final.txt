@@ -1,0 +1,7 @@
+# W1 D1 pure verification commit=0f39cbb utc=2026-11-20T10:32:11Z
+TDD_RESULT TDD-Pure.TDDAIPureCoreTests PASS 108/108 assertions passed
+TDD_RESULT TDD-Pure.TDDChapterRouteTests PASS 9/9 assertions passed
+TDD_RESULT TDD-Pure.TDDCombatMathTests PASS 39/39 assertions passed
+TDD_RESULT TDD-Pure.TDDMovementCoreTests PASS 48/48 assertions passed
+TDD_RESULT TDD-Pure.TDDStateMachineTests PASS 665/665 assertions passed
+TDD_RESULT TDD-Pure.TDDDodgeDistanceMathTests PASS 18/18 assertions passed
