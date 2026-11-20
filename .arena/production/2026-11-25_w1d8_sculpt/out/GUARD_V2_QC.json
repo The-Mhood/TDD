@@ -1,0 +1,11 @@
+{
+  "asset": "GUARD_CLASS_V2",
+  "milestone": "sculpt 1",
+  "supersedes": "GUARD_CLASS_V1 (qualified, recoverable)",
+  "tier": "sculpt-refined production-intent - NOT final",
+  "parts": 23,
+  "verts": 5556,
+  "tris": 10752,
+  "skeleton": "HUMAN_BASE_PROPOSED unchanged",
+  "weapons_emblems_markings": "NONE"
+}

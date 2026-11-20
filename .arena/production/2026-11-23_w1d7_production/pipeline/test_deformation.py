@@ -4,7 +4,7 @@ charbuild.py, applies joint rotations (shoulder raise, elbow bend, wrist via
 forearm twist, hip/knee bend, neck turn, torso twist), linear-blend-skins all
 vertices in pure Python, and asserts: finite output, max displacement sane,
 height stays plausible, blended joints show no rigid-fold spike (max per-vertex
-displacement < 1.1 m limb-length bound). Usage: test_deformation.py file.glb -> JSON, exit 0 pass.
+displacement < 1.25 m limb-length bound (arm+fingers reach ~0.72 m; chord at 109 deg ~1.17 m)). Usage: test_deformation.py file.glb -> JSON, exit 0 pass.
 This is a smoke test, NOT a substitute for Blender deformation review.
 """
 import json, math, struct, sys
@@ -87,7 +87,7 @@ def run(path):
         out, maxd = skin(pose)
         finite = all(all(math.isfinite(c) for c in p) for p in out)
         ys = [p[1] for p in out]
-        passed = finite and maxd < 1.1 and (max(ys)-min(ys)) > 1.2
+        passed = finite and maxd < 1.25 and (max(ys)-min(ys)) > 1.2
         ok = ok and passed
         results[pname] = {"finite": finite, "max_vertex_disp_m": round(maxd, 3), "height_m": round(max(ys)-min(ys), 3), "pass": passed}
     print(json.dumps({"file": path, "verts_skinned": len(verts), "joints": len(joints), "poses": results, "verdict": "PASS" if ok else "FAIL"}, indent=2))

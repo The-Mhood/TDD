@@ -1,0 +1,19 @@
+{
+  "asset": "ADANNA_AD03_V3",
+  "milestone": "sculpt 1 (face/hands/feet/joints/garments)",
+  "supersedes": "ADANNA_AD03_V2 (qualified version recoverable in W1 D7 outputs)",
+  "tier": "sculpt-refined production-intent - NOT final character",
+  "parts": 36,
+  "verts": 7004,
+  "tris": 13668,
+  "skeleton": "HUMAN_BASE_PROPOSED unchanged (11 joints, same names)",
+  "changes": [
+    "face: nose/brow/lips/ears/eyes/jaw",
+    "hands: palm+fingers+thumb",
+    "feet: toes",
+    "joints: spheres removed, 6-ring limb profiles",
+    "garments: folded lathe wrap+skirt with hems (no ellipsoid shells)",
+    "pendant: 2-ring spiral"
+  ],
+  "blade_scabbard": "NONE (CQ-9)"
+}

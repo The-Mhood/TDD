@@ -92,6 +92,38 @@ def box(p, cx,cy,cz, sx,sy,sz):
     e=p.add((x0,y0,z1),(0,0)); f=p.add((x1,y0,z1),(1,0)); g=p.add((x1,y1,z1),(1,1)); h=p.add((x0,y1,z1),(0,1))
     p.quad(a,b,f,e); p.quad(b,c,g,f); p.quad(c,d,h,g); p.quad(d,a,e,h); p.quad(e,f,g,h); p.quad(d,c,b,a)
 
+def lathe(p, profile, nu=24, fold_amp=0.0, fold_n=7, cap_top=True, cap_bot=True):
+    """Garment/body lathe around Z axis. profile = [(radius, z), ...] bottom->top.
+    fold_amp adds cloth-like radial folds. Open surface; add hems separately."""
+    rows = []
+    for (r, z) in profile:
+        row = []
+        for i in range(nu):
+            t = 2*math.pi*i/nu
+            rr = r * (1 + fold_amp*math.sin(fold_n*t + z*3.0))
+            row.append(p.add((rr*math.cos(t), rr*math.sin(t), z), (i/nu, z)))
+        rows.append(row)
+    for ra, rb in zip(rows, rows[1:]):
+        for i in range(nu): p.quad(ra[i], ra[(i+1) % nu], rb[(i+1) % nu], rb[i])
+    if cap_bot:
+        c = p.add((0, 0, profile[0][1]), (0.5, 0))
+        for i in range(nu): p.tri(c, rows[0][(i+1) % nu], rows[0][i])
+    if cap_top:
+        c = p.add((0, 0, profile[-1][1]), (0.5, 1))
+        for i in range(nu): p.tri(c, rows[-1][i], rows[-1][(i+1) % nu])
+
+def hand(p, cx, side):
+    """Palm + 4 fingers + thumb at wrist point cx (hanging hand, sculpt milestone)."""
+    box(p, cx[0], cx[1], cx[2]-0.045, 0.055, 0.022, 0.085)
+    for i in range(4):
+        fx = cx[0] + side*(i-1.5)*0.013
+        limb(p, (fx, cx[1], cx[2]-0.085), (fx, cx[1]+0.002, cx[2]-0.145), 0.0058, 0.0045, 8, rings_n=2)
+    limb(p, (cx[0]+side*0.030, cx[1]+0.008, cx[2]-0.055), (cx[0]+side*0.048, cx[1]+0.014, cx[2]-0.105), 0.006, 0.0045, 8, rings_n=2)
+
+def toes(p, cx):
+    for i in range(3):
+        ellipsoid(p, (cx[0]+(i-1)*0.020, cx[1]+0.105, cx[2]), (0.0095, 0.014, 0.008), 8, 6)
+
 def compute_normals(part):
     n=[[0.0,0.0,0.0] for _ in part.v]
     for f in part.f:
