@@ -12,10 +12,18 @@
  * and applies each state's preset atomically (W1 D13 keys ST01/ST03/ST04).
  *
  * Test seam: a real switcher actor spawned in a created Game world. All
- * assertions observe the public component interface (light components'
- * intensity/colour/rotation); no class-default mutation, no const-cast and
- * no private preset access. The golden values below mirror the preset
- * contract declared in FTDDLightingPreset.
+ * assertions observe the public component interface; no class-default
+ * mutation, no const-cast and no private preset access. The golden values
+ * below mirror the preset contract declared in FTDDLightingPreset.
+ *
+ * UE 5.8.4 API notes (verified against the 5.8.4 docs/engine source):
+ *  - ULightComponent::LightColor is FColor (no Equals(Tolerance)); the
+ *    engine's own read path is FLinearColor(LightColor), which round-trips
+ *    the stored sRGB bytes to linear. Comparisons use that conversion with
+ *    a tolerance covering 8-bit quantization (~1/255).
+ *  - USkyLightComponent has LowerHemisphereColor (FLinearColor) for the
+ *    ground; the sky/upper colour is the inherited LightColor. There is no
+ *    upper-hemisphere colour member exists in 5.8.4.
  */
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(
     FTDDM1LightingStateSwitcherTest,
@@ -24,6 +32,10 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(
 
 namespace
 {
+// Quantization-tolerant colour comparison: FColor stores 8-bit sRGB bytes,
+// so a round-trip through FLinearColor(LightColor) is exact to ~1/255.
+const float ColorTolerance = 0.01f;
+
 struct FPresetGoldenValues
 {
     float SunIntensity;
@@ -63,10 +75,10 @@ bool VerifyPresetApplied(ATDDLightingStateSwitcher* Switcher, const FPresetGolde
     }
     bool Ok = true;
     Ok &= FMath::IsNearlyEqual(Sun->Intensity, Golden.SunIntensity, 0.001f);
-    Ok &= Sun->LightColor.Equals(Golden.SunColor, 0.001f);
+    Ok &= FLinearColor(Sun->LightColor).Equals(Golden.SunColor, ColorTolerance);
     Ok &= FMath::IsNearlyEqual(Sun->GetRelativeRotation().Pitch, Golden.SunElevationDeg, 0.01f);
     Ok &= FMath::IsNearlyEqual(Sun->GetRelativeRotation().Yaw, Golden.SunAzimuthDeg, 0.01f);
-    Ok &= Ambient->UpperHemisphereColor.Equals(Golden.AmbientSky, 0.001f);
+    Ok &= FLinearColor(Ambient->LightColor).Equals(Golden.AmbientSky, ColorTolerance);
     Ok &= Ambient->LowerHemisphereColor.Equals(Golden.AmbientGround, 0.001f);
     Ok &= FMath::IsNearlyEqual(Fire->Intensity, Golden.FireIntensity, 0.001f);
     return Ok;

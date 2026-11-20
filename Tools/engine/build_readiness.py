@@ -456,6 +456,54 @@ def main():
                         f"in {rel} (update the include, the member/getter types and the "
                         f"sky/ground property calls to preserve the intended behaviour)")
 
+    # ---- UE 5.8.4 invalid-member / invalid-API guards --------------------
+    # Members and API patterns that do not exist in UE 5.8.4 and fail the
+    # C++ build. Verified against the UE 5.8.4 docs and engine source.
+    INVALID_UE58_MEMBERS = {
+        # USkyLightComponent in 5.8.4 has LowerHemisphereColor (FLinearColor);
+        # the sky/upper colour is the inherited LightColor (FColor). There is
+        # no UpperHemisphereColor member.
+        "UpperHemisphereColor":
+            "use LightColor for the sky/upper colour (FColor) and "
+            "LowerHemisphereColor for the ground colour (FLinearColor)",
+    }
+    INVALID_UE58_PATTERNS = [
+        # ULightComponent::LightColor is FColor in 5.8.4; FColor has no
+        # Equals(Tolerance). Compare via FLinearColor(LightColor).Equals(...)
+        # (the engine's own read path) or per-channel FMath::IsNearlyEqual.
+        (r"\bLightColor\s*\.\s*Equals\s*\(",
+         "UHT/C++ error class — FColor has no Equals(Tolerance) in UE 5.8.4 "
+         "(ULightComponent::LightColor is FColor)",
+         "compare via FLinearColor(LightColor).Equals(...) with a "
+         "quantization-tolerant tolerance, or per-channel FMath::IsNearlyEqual"),
+        # UWorld in 5.8.4 has no public assignable GameMode: the instance
+        # member AuthorityGameMode is protected (set via UWorld::SetGameMode
+        # through a GameInstance); public read is GetAuthGameMode().
+        (r"\b\w*[Ww]orld\s*->\s*GameMode\s*=",
+         "C++ error class — UWorld has no public assignable GameMode in UE 5.8.4",
+         "drive the GameMode instance directly in tests, or set it through "
+         "UWorld::SetGameMode(FURL) with a GameInstance; read via "
+         "GetAuthGameMode()"),
+    ]
+    if src.is_dir():
+        for hdr in sorted(src.rglob("*.h")) + sorted(src.rglob("*.cpp")):
+            try:
+                htext = hdr.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            rel = hdr.relative_to(root)
+            for member, hint in INVALID_UE58_MEMBERS.items():
+                for m in re.finditer(r"\b" + re.escape(member) + r"\b", htext):
+                    line = htext[:m.start()].count("\n") + 1
+                    block(
+                        f"{rel}:{line}: C++ error class — engine member '{member}' does not "
+                        f"exist in UE 5.8.4",
+                        f"replace '{member}' in {rel}: {hint}")
+            for pattern, message, fix in INVALID_UE58_PATTERNS:
+                for m in re.finditer(pattern, htext):
+                    line = htext[:m.start()].count("\n") + 1
+                    block(f"{rel}:{line}: {message}", fix)
+
     # ---- targets
     target_files = sorted(src.glob("*.Target.cs")) if src.is_dir() else []
     if not target_files:

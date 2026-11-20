@@ -28,8 +28,12 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
         return false;
     }
 
+    // UE 5.8.4: UWorld has no public assignable GameMode property (the
+    // instance member AuthorityGameMode is protected and is set through
+    // UWorld::SetGameMode(FURL) via a GameInstance). The test creates and
+    // drives the ATDDGameMode instance directly, which is the supported
+    // seam for exercising the encounter flow.
     ATDDGameMode* GameMode = NewObject<ATDDGameMode>(World);
-    World->GameMode = GameMode;
     GameMode->BeginPlay();
 
     ATDDTrainingEnemy* Enemy = World->SpawnActor<ATDDTrainingEnemy>(FVector(0.0f, 600.0f, 100.0f), FRotator::ZeroRotator);

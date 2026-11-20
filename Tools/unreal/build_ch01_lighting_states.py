@@ -84,11 +84,15 @@ def main():
     elevation = math.radians(s["sun_elevation_deg"])
     azimuth = math.radians(s["sun_azimuth_deg"])
     directional.set_editor_property("intensity", s["sun_intensity"])
-    directional.set_editor_property("light_color", col(s["sun_colour"]))
+    # UE 5.8.4: LightColor is FColor; use the set_light_color setter, which
+    # takes a LinearColor (matches the C++ SetLightColor(FLinearColor, bSRGB)
+    # contract used by the switcher).
+    directional.set_light_color(col(s["sun_colour"]))
     directional.set_editor_property("rotation", unreal.Rotator(
         elevation * 57.2957795, azimuth * 57.2957795, 0.0))
 
-    # Ambient via sky light (upper/lower hemisphere sky/ground colours).
+    # Ambient via sky light: sky/upper colour is LightColor, ground colour is
+    # LowerHemisphereColor (UE 5.8.4 has no UpperHemisphereColor member).
     hemi = None
     for actor in unreal.GameplayStatics.get_all_actors_with_tag(world, "TDD_LightingState"):
         comp = actor.get_component_by_class(unreal.SkyLightComponent)
@@ -102,8 +106,8 @@ def main():
         hemi_actor.set_actor_label("TDD_LightingState_Ambient", mark_dirty=True)
         hemi = hemi_actor.sky_light_component
     hemi.set_editor_property("intensity", 0.4)
-    hemi.set_editor_property("upper_hemisphere_color", col(s["ambient_sky"]))
-    hemi.set_editor_property("lower_hemisphere_color", col(s["ambient_ground"]))
+    hemi.set_light_color(col(s["ambient_sky"]))
+    hemi.set_lower_hemisphere_color(col(s["ambient_ground"]))
 
     # Firelight (night cooking fire only — matches the approved VFX direction).
     fire = None

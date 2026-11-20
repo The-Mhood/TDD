@@ -55,14 +55,20 @@ void ATDDLightingStateSwitcher::ApplyState(ETDDLightingState State)
     if (SunLight != nullptr)
     {
         SunLight->SetIntensity(Preset->SunIntensity);
-        SunLight->SetLightColor(Preset->SunColor);
+        // UE 5.8.4: ULightComponent::LightColor is FColor; SetLightColor takes
+        // (FLinearColor, bSRGB). Preset values are authored linear, so
+        // bSRGB=false stores them via the engine's sRGB byte encoding; the
+        // engine's own read path FLinearColor(LightColor) round-trips them.
+        SunLight->SetLightColor(Preset->SunColor, /*bSRGB=*/false);
         SunLight->SetRelativeRotation(FRotator(Preset->SunElevationDeg, Preset->SunAzimuthDeg, 0.0f));
     }
     if (AmbientLight != nullptr)
     {
-        // Sky/ground ambient model: USkyLightComponent upper/lower hemisphere
-        // colors replace the removed hemispherical light's sky/ground colors.
-        AmbientLight->SetUpperHemisphereColor(Preset->AmbientSky);
+        // UE 5.8.4 sky light ambient model: the sky/upper colour is the
+        // inherited LightColor (FColor); the ground colour is
+        // LowerHemisphereColor (FLinearColor). There is no
+        // upper-hemisphere colour member exists in 5.8.4.
+        AmbientLight->SetLightColor(Preset->AmbientSky, /*bSRGB=*/false);
         AmbientLight->SetLowerHemisphereColor(Preset->AmbientGround);
     }
     if (FireLight != nullptr)
