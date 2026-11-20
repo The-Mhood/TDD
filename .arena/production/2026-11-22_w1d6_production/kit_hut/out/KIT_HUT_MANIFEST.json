@@ -1,0 +1,39 @@
+{
+  "kit": "KIT-HUT",
+  "version": "0.1",
+  "date": "2026-11-22",
+  "status": "PROVISIONAL - not production-ready, not canon",
+  "target_sheet": "CH01-SUBJ-001_FAMILY_HOUSE_TARGET_SHEET.jpg (VERIFIED target, CD kit sign-off pending)",
+  "modules": [
+    {
+      "file": "KIT_HUT_WALL_3M.obj",
+      "verts": 16,
+      "faces": 12,
+      "tris_est": 24
+    },
+    {
+      "file": "KIT_HUT_WALL_DOOR_3M.obj",
+      "verts": 40,
+      "faces": 30,
+      "tris_est": 60
+    },
+    {
+      "file": "KIT_HUT_CORNER.obj",
+      "verts": 40,
+      "faces": 30,
+      "tris_est": 60
+    },
+    {
+      "file": "KIT_HUT_ROOF_HIP_4x3.obj",
+      "verts": 38,
+      "faces": 28,
+      "tris_est": 54
+    },
+    {
+      "file": "KIT_HUT_DOORFRAME.obj",
+      "verts": 32,
+      "faces": 24,
+      "tris_est": 48
+    }
+  ]
+}
