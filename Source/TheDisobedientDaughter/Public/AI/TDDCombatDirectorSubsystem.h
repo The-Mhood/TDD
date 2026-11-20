@@ -31,5 +31,5 @@ private:
     UPROPERTY(Transient)
     TArray<TWeakObjectPtr<UTDDCombatComponent>> RegisteredEnemies;
 
-    TDD::AI::FTDDAttackTokenPolicy Policy;
+    TDD::AI::FTDDAttackTokenPolicy Policy = TDD::AI::FTDDAttackTokenPolicy(TDD::AI::FTDDTokenPolicySettings{});
 };

@@ -203,6 +203,78 @@ def main():
                         f"{rel}: uses {re.search(pattern, text).group(0)} but does not include \"{header}\"",
                         f"add #include \"{header}\" to {rel}; the class is defined there in UE 5.8.4")
 
+    # ---- UHT-generated-constructor member guard ---------------------------
+    # UHT emits a default constructor for every UCLASS in the .gen.cpp (with
+    # only `: Super()` in its mem-init list). A data member whose type has NO
+    # usable default constructor must therefore be initialized by a default
+    # member initializer (NSDMI) at its declaration. A mem-init list in the
+    # user constructor is NOT sufficient: the UHT-generated constructor has no
+    # such entry and fails to compile. "Usable default constructor" = a ctor
+    # callable with zero arguments (empty parameter list, or every parameter
+    # defaulted); a deleted ctor does not count.
+    def _class_bodies(text):
+        """Yield (class_name, body) for each class/struct definition in text."""
+        for m in re.finditer(r"\b(?:class|struct)\s+(?:\w+\s+)?(\w+)\s*(?::[^;{]*)?\{", text):
+            name = m.group(1)
+            i = m.end() - 1
+            depth = 0
+            for j in range(i, len(text)):
+                if text[j] == "{":
+                    depth += 1
+                elif text[j] == "}":
+                    depth -= 1
+                    if depth == 0:
+                        break
+            yield name, text[i:j]
+
+    # Map of project-defined types -> has a usable default constructor.
+    type_default_ctor = {}
+    if src.is_dir():
+        for hdr in sorted(src.rglob("*.h")):
+            try:
+                htext = hdr.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            for name, body in _class_bodies(htext):
+                has_user_ctor = False
+                zero_callable = False
+                for cm in re.finditer(r"\b" + re.escape(name) + r"\s*\(([^)]*)\)([^;{]*)", body):
+                    params = cm.group(1).strip()
+                    tail = cm.group(2)
+                    if "= delete" in tail:
+                        continue
+                    has_user_ctor = True
+                    if params == "" or all("=" in p for p in params.split(",")):
+                        zero_callable = True
+                # A type with no user-declared ctor has an implicit default ctor.
+                type_default_ctor[name] = (not has_user_ctor) or zero_callable
+
+    if src.is_dir():
+        for hdr in sorted(src.rglob("*.h")):
+            try:
+                htext = hdr.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            rel = hdr.relative_to(root)
+            for cname, body in _class_bodies(htext):
+                if "GENERATED_BODY" not in body:
+                    continue
+                for m in re.finditer(
+                        r"^\s*(?:UPROPERTY(?:\([^)]*\))?\s*)?"
+                        r"([A-Za-z_][\w:<>,*&\s]*?)\s+([A-Za-z_]\w*)\s*(\[[^\]]*\])?\s*(=[^;]*)?;",
+                        body, re.M):
+                    member_type, member_name, _arr, init = (m.group(1), m.group(2), m.group(3), m.group(4))
+                    if init or "(" in body[m.start():m.end()]:
+                        continue
+                    base = member_type.split("::")[-1].split("<")[0].strip().strip("*&")
+                    if base in type_default_ctor and not type_default_ctor[base]:
+                        block(
+                            f"{rel}: UCLASS {cname} member '{member_name}' of type {base} has no "
+                            f"usable default constructor and no default member initializer",
+                            f"initialize it at the declaration, e.g. '{base} {member_name} = {base}(...)'; "
+                            f"a mem-init list in the user constructor is not enough because UHT "
+                            f"also generates a default constructor")
+
     # ---- targets
     target_files = sorted(src.glob("*.Target.cs")) if src.is_dir() else []
     if not target_files:
