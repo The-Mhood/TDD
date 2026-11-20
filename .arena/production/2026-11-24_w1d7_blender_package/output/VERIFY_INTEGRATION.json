@@ -1,0 +1,127 @@
+{
+  "verdict": "PASS",
+  "characters": [
+    {
+      "character": "ADANNA_AD03_V3",
+      "fbx_path": "/home/user/TDD/.arena/production/2026-11-24_w1d7_blender_package/output/ADANNA_AD03_V3/ADANNA_AD03_V3.fbx",
+      "skinned_mesh_objects": 36,
+      "helper_objects": [],
+      "armatures": 1,
+      "bones": 11,
+      "bone_names": [
+        "forearm.L",
+        "forearm.R",
+        "head",
+        "pelvis",
+        "shin.L",
+        "shin.R",
+        "spine",
+        "thigh.L",
+        "thigh.R",
+        "upperarm.L",
+        "upperarm.R"
+      ],
+      "bone_hierarchy": {
+        "pelvis": "(root)",
+        "spine": "pelvis",
+        "head": "spine",
+        "upperarm.L": "spine",
+        "forearm.L": "upperarm.L",
+        "upperarm.R": "spine",
+        "forearm.R": "upperarm.R",
+        "thigh.L": "pelvis",
+        "shin.L": "thigh.L",
+        "thigh.R": "pelvis",
+        "shin.R": "thigh.R"
+      },
+      "triangles": 13680,
+      "verts": 7028,
+      "material_slots": {
+        "bronze_armlet_plain_v1": 6,
+        "leather_baldric_v1": 2,
+        "hair_v1": 4,
+        "skin_base_v1": 15,
+        "eye_dark_v1": 2,
+        "lips_v1": 1,
+        "scar_marker_v1": 1,
+        "pendant_spiral_FICTIONAL_v1": 1,
+        "cloth_indigo_plain_v1": 2,
+        "coral_bead_v1": 2
+      },
+      "texture_count": 0,
+      "textures": [],
+      "scene_units_system": "METRIC",
+      "scene_units_scale_length": 1.0,
+      "armature_location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "armature_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "height_m": 1.8374
+    },
+    {
+      "character": "GUARD_CLASS_V2",
+      "fbx_path": "/home/user/TDD/.arena/production/2026-11-24_w1d7_blender_package/output/GUARD_CLASS_V2/GUARD_CLASS_V2.fbx",
+      "skinned_mesh_objects": 23,
+      "helper_objects": [],
+      "armatures": 1,
+      "bones": 11,
+      "bone_names": [
+        "forearm.L",
+        "forearm.R",
+        "head",
+        "pelvis",
+        "shin.L",
+        "shin.R",
+        "spine",
+        "thigh.L",
+        "thigh.R",
+        "upperarm.L",
+        "upperarm.R"
+      ],
+      "bone_hierarchy": {
+        "pelvis": "(root)",
+        "spine": "pelvis",
+        "head": "spine",
+        "upperarm.L": "spine",
+        "forearm.L": "upperarm.L",
+        "upperarm.R": "spine",
+        "forearm.R": "upperarm.R",
+        "thigh.L": "pelvis",
+        "shin.L": "thigh.L",
+        "thigh.R": "pelvis",
+        "shin.R": "thigh.R"
+      },
+      "triangles": 10752,
+      "verts": 5556,
+      "material_slots": {
+        "bronze_plain_v1": 1,
+        "skin_guard_v1": 15,
+        "eye_dark_v1": 2,
+        "leather_baldric_v1": 2,
+        "cloth_indigo_plain_v1": 2,
+        "cloth_sash_undyed_v1": 1
+      },
+      "texture_count": 0,
+      "textures": [],
+      "scene_units_system": "METRIC",
+      "scene_units_scale_length": 1.0,
+      "armature_location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "armature_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "height_m": 1.7716
+    }
+  ]
+}
