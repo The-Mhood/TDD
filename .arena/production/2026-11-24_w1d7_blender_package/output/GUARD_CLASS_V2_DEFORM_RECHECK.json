@@ -1,0 +1,56 @@
+{
+  "file": "/Users/mhoodpc/TDD/.arena/production/2026-11-25_w1d8_sculpt/out/GUARD_CLASS_V2.glb",
+  "verts_skinned": 5556,
+  "joints": 11,
+  "poses": {
+    "rest": {
+      "finite": true,
+      "max_vertex_disp_m": 0.0,
+      "height_m": 1.772,
+      "pass": true
+    },
+    "shoulder_raise_L": {
+      "finite": true,
+      "max_vertex_disp_m": 1.123,
+      "height_m": 1.891,
+      "pass": true
+    },
+    "elbow_bend_L": {
+      "finite": true,
+      "max_vertex_disp_m": 0.582,
+      "height_m": 1.772,
+      "pass": true
+    },
+    "forearm_twist_R": {
+      "finite": true,
+      "max_vertex_disp_m": 0.193,
+      "height_m": 1.772,
+      "pass": true
+    },
+    "hip_knee_bend_R": {
+      "finite": true,
+      "max_vertex_disp_m": 0.466,
+      "height_m": 1.772,
+      "pass": true
+    },
+    "neck_turn": {
+      "finite": true,
+      "max_vertex_disp_m": 0.082,
+      "height_m": 1.772,
+      "pass": true
+    },
+    "torso_twist": {
+      "finite": true,
+      "max_vertex_disp_m": 0.256,
+      "height_m": 1.772,
+      "pass": true
+    },
+    "combined": {
+      "finite": true,
+      "max_vertex_disp_m": 1.174,
+      "height_m": 1.958,
+      "pass": true
+    }
+  },
+  "verdict": "PASS"
+}

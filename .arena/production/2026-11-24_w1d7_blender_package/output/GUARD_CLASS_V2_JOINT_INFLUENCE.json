@@ -1,0 +1,51 @@
+{
+  "file": "/Users/mhoodpc/TDD/.arena/production/2026-11-25_w1d8_sculpt/out/GUARD_CLASS_V2.glb",
+  "joints": {
+    "pelvis": {
+      "verts_gt_0.5": 1099,
+      "max_leverage_m": 0.408
+    },
+    "spine": {
+      "verts_gt_0.5": 514,
+      "max_leverage_m": 0.348
+    },
+    "head": {
+      "verts_gt_0.5": 1222,
+      "max_leverage_m": 0.254
+    },
+    "upperarm.L": {
+      "verts_gt_0.5": 320,
+      "max_leverage_m": 0.322
+    },
+    "forearm.L": {
+      "verts_gt_0.5": 280,
+      "max_leverage_m": 0.406
+    },
+    "upperarm.R": {
+      "verts_gt_0.5": 520,
+      "max_leverage_m": 0.322
+    },
+    "forearm.R": {
+      "verts_gt_0.5": 280,
+      "max_leverage_m": 0.406
+    },
+    "thigh.L": {
+      "verts_gt_0.5": 142,
+      "max_leverage_m": 0.43
+    },
+    "shin.L": {
+      "verts_gt_0.5": 504,
+      "max_leverage_m": 0.533
+    },
+    "thigh.R": {
+      "verts_gt_0.5": 142,
+      "max_leverage_m": 0.43
+    },
+    "shin.R": {
+      "verts_gt_0.5": 504,
+      "max_leverage_m": 0.533
+    }
+  },
+  "verdict": "PASS",
+  "failures": []
+}
