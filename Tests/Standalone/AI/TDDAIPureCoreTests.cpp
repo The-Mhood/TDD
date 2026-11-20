@@ -26,6 +26,18 @@ namespace
 {
 using namespace TDD::AI;
 
+bool HasError(const FTDDGraphValidation& V, const std::string& Needle)
+{
+    for (const std::string& E : V.Errors)
+    {
+        if (E.find(Needle) != std::string::npos)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 std::vector<std::int32_t> RunTokenSim(const FTDDTokenPolicySettings& S, const int Frames)
 {
     FTDDAttackTokenPolicy P(S);
@@ -196,7 +208,27 @@ int main()
         FTDDPhaseDefinition Trap;
         Trap.PhaseName = "Trap"; // no transitions, not terminal
         Bad.Phases.push_back(Trap);
-        Check(ValidateBossGraph(Bad).Errors.size() == 2, "graph: dead-end + unreachable detected");
+        const FTDDGraphValidation DeadEnd = ValidateBossGraph(Bad);
+        Check(HasError(DeadEnd, "dead end") && HasError(DeadEnd, "unreachable"),
+              "graph: dead-end + unreachable detected");
+
+        // A closed non-terminal cycle has edges, but no route to any ending.
+        FTDDBossPhaseGraph Cycle;
+        FTDDPhaseDefinition C1; C1.PhaseName = "LoopA";
+        FTDDPhaseTransition C1T; C1T.Kind = ETDDTransitionKind::Event;
+        C1T.EventName = "a"; C1T.TargetPhase = "LoopB";
+        C1.Transitions.push_back(C1T);
+        FTDDPhaseDefinition C2; C2.PhaseName = "LoopB";
+        FTDDPhaseTransition C2T; C2T.Kind = ETDDTransitionKind::Event;
+        C2T.EventName = "b"; C2T.TargetPhase = "LoopA";
+        C2.Transitions.push_back(C2T);
+        FTDDPhaseDefinition CEnd; CEnd.PhaseName = "Defeat";
+        Cycle.Phases = { C1, C2, CEnd };
+        Cycle.EntryPhase = "LoopA";
+        Cycle.DefeatPhase = "Defeat";
+        Cycle.TerminalPhases = { "Defeat" };
+        Check(HasError(ValidateBossGraph(Cycle), "no path to a terminal"),
+              "graph: closed cycle that cannot terminate is rejected");
 
         // validation catches a missing target
         FTDDBossPhaseGraph Bad2 = G;
@@ -252,6 +284,11 @@ int main()
         FTDDWeightedChoice W2; W2.Name = "B"; W2.Weight = 3.0f; C.push_back(W2);
         FTDDWeightedChoice W3; W3.Name = "C"; W3.Weight = 6.0f; C.push_back(W3);
         Check(PickWeighted(C, 42) == PickWeighted(C, 42), "weights: same seed -> same pick");
+        Check(PickWeighted({}, 42) == -1, "weights: empty choice set returns no index");
+        std::vector<FTDDWeightedChoice> ZeroWeights(2);
+        ZeroWeights[0].Weight = 0.0f;
+        ZeroWeights[1].Weight = -1.0f;
+        Check(PickWeighted(ZeroWeights, 42) == -1, "weights: non-positive total returns no index");
         std::int32_t Counts[3] = { 0, 0, 0 };
         const std::int32_t N = 30000;
         for (std::int32_t I = 0; I < N; ++I)

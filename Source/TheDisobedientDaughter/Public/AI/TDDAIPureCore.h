@@ -314,9 +314,41 @@ inline FTDDGraphValidation ValidateBossGraph(const FTDDBossPhaseGraph& G)
             V.AddError("terminal phase '" + T + "' not defined");
         }
     }
-    // transition targets exist
+    if (G.DefeatPhase.empty())
+    {
+        V.AddError("DefeatPhase empty");
+    }
+    else if (FindPhase(G, G.DefeatPhase) == nullptr)
+    {
+        V.AddError("DefeatPhase '" + G.DefeatPhase + "' not defined");
+    }
+    else if (!IsTerminal(G, G.DefeatPhase))
+    {
+        V.AddError("DefeatPhase must be declared terminal");
+    }
+    // Phase names and terminal declarations must be unambiguous.
+    for (size_t I = 0; I < G.Phases.size(); ++I)
+    {
+        if (G.Phases[I].PhaseName.empty())
+        {
+            V.AddError("phase name empty");
+        }
+        for (size_t J = 0; J < I; ++J)
+        {
+            if (G.Phases[I].PhaseName == G.Phases[J].PhaseName)
+            {
+                V.AddError("duplicate phase '" + G.Phases[I].PhaseName + "'");
+                break;
+            }
+        }
+    }
+    // transition targets exist; terminal phases cannot contain exit edges.
     for (const FTDDPhaseDefinition& P : G.Phases)
     {
+        if (IsTerminal(G, P.PhaseName) && !P.Transitions.empty())
+        {
+            V.AddError("terminal phase '" + P.PhaseName + "' must not declare transitions");
+        }
         for (const FTDDPhaseTransition& T : P.Transitions)
         {
             if (FindPhase(G, T.TargetPhase) == nullptr)
@@ -352,6 +384,51 @@ inline FTDDGraphValidation ValidateBossGraph(const FTDDBossPhaseGraph& G)
             }
         }
     }
+    // Reverse reachability: every phase must have a path to some declared
+    // terminal, so a closed non-terminal cycle cannot trap the encounter.
+    std::vector<std::string> CanReachTerminal;
+    for (const std::string& T : G.TerminalPhases)
+    {
+        if (FindPhase(G, T) != nullptr)
+        {
+            CanReachTerminal.push_back(T);
+        }
+    }
+    bool bAdded = true;
+    while (bAdded)
+    {
+        bAdded = false;
+        for (const FTDDPhaseDefinition& P : G.Phases)
+        {
+            bool bCanReach = false;
+            for (const std::string& N : CanReachTerminal)
+            {
+                if (P.PhaseName == N)
+                {
+                    bCanReach = true;
+                    break;
+                }
+            }
+            if (!bCanReach)
+            {
+                for (const FTDDPhaseTransition& T : P.Transitions)
+                {
+                    for (const std::string& N : CanReachTerminal)
+                    {
+                        if (T.TargetPhase == N)
+                        {
+                            CanReachTerminal.push_back(P.PhaseName);
+                            bAdded = true;
+                            bCanReach = true;
+                            break;
+                        }
+                    }
+                    if (bCanReach) break;
+                }
+            }
+        }
+    }
+
     for (const FTDDPhaseDefinition& P : G.Phases)
     {
         bool bReachable = false;
@@ -367,13 +444,22 @@ inline FTDDGraphValidation ValidateBossGraph(const FTDDBossPhaseGraph& G)
         {
             V.AddError("phase '" + P.PhaseName + "' unreachable from entry");
         }
-        // dead end: non-terminal with no transitions
-        if (!bReachable || !IsTerminal(G, P.PhaseName))
+        if (P.Transitions.empty() && !IsTerminal(G, P.PhaseName))
         {
-            if (P.Transitions.empty() && !IsTerminal(G, P.PhaseName))
+            V.AddError("phase '" + P.PhaseName + "' is a dead end but not terminal");
+        }
+        bool bCanReachTerminal = false;
+        for (const std::string& N : CanReachTerminal)
+        {
+            if (P.PhaseName == N)
             {
-                V.AddError("phase '" + P.PhaseName + "' is a dead end but not terminal");
+                bCanReachTerminal = true;
+                break;
             }
+        }
+        if (!IsTerminal(G, P.PhaseName) && !bCanReachTerminal)
+        {
+            V.AddError("phase '" + P.PhaseName + "' has no path to a terminal (closed cycle)");
         }
     }
     return V;
@@ -403,7 +489,7 @@ inline std::int32_t PickWeighted(const std::vector<FTDDWeightedChoice>& Choices,
     }
     if (Total <= 0.0f || Choices.empty())
     {
-        return 0;
+        return -1;
     }
     const float R = static_cast<float>(V % 1000000ULL) / 1000000.0f * Total;
     float Acc = 0.0f;
