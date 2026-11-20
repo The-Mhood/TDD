@@ -69,6 +69,6 @@ private:
     TObjectPtr<UTDDTraversalComponent> TraversalComponent;
 
     /** Assign the imported, approved/labelled skeletal asset on an editor child. */
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="TDD|Character")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="TDD|Character", meta=(AllowPrivateAccess="true"))
     TSoftObjectPtr<USkeletalMesh> CharacterMeshAsset;
 };

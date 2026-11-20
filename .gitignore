@@ -33,3 +33,7 @@ Thumbs.db
 
 # Blender bpy runtime (1.3 GB — re-creatable via pip)
 .tools/bpy_install/
+
+# Python bytecode
+__pycache__/
+*.pyc

@@ -55,8 +55,10 @@ say
 
 # ---------- 2. full UE build + automation -----------------------------------
 say "2. Mac build + automation (mac_build.sh)"
+MAC_RESULT="failed"
 if bash "$REPO/Tools/engine/mac_build.sh" --test-filter "TDD" > "$EVIDENCE/20-mac-build-train.log" 2>&1; then
   say "  ok — build + automation green (see 20-mac-build-train.log)"
+  MAC_RESULT="ok"
 else
   say "  FAILED — see 20-mac-build-train.log (tail follows)"
   tail -25 "$EVIDENCE/20-mac-build-train.log" | sed 's/^/      /'
@@ -64,13 +66,30 @@ else
 fi
 say
 
+# ---------- 2b. ledger-status regression contract ---------------------------
+# The ledger must never mark GREEN on a failed build / failed automation /
+# missing results / incomplete verification. Re-run the regression suite each
+# train so the status logic stays honest.
+say "2b. ledger-status regression contract"
+if bash "$REPO/Tools/tests/ledger/run_ledger_tests.sh" --evidence-dir "$EVIDENCE" > "$EVIDENCE/22-ledger-status-contract.txt" 2>&1; then
+  say "  ok — ledger status logic regression green"
+  grep '^TDD_RESULT' "$EVIDENCE/22-ledger-status-contract.txt" | sed 's/^/  /'
+else
+  say "  FAILED — ledger status logic regression red (see 22-ledger-status-contract.txt)"
+  rc_total=1
+fi
+say
+
 # ---------- 3. ledger --------------------------------------------------------
+# Pass the actual mac_build.sh result so the ledger status agrees with the
+# build/automation outcome, not a guess from log scraping alone.
 say "3. quality ledger"
 python3 "$REPO/Tools/engine/ledger_update.py" \
   --evidence-dir "$EVIDENCE" \
   --platform mac \
   --train daily \
   --commit "$(git -C "$REPO" rev-parse HEAD 2>/dev/null || echo unknown)" \
+  --mac-build-result "$MAC_RESULT" \
   --ledger "$REPO/docs/06_IMPLEMENTATION/QUALITY_LEDGER.md" \
   > "$EVIDENCE/30-ledger-row.txt" 2>&1 \
   && { say "  ok — ledger row appended"; cat "$EVIDENCE/30-ledger-row.txt" | sed 's/^/  /'; } \
@@ -80,9 +99,11 @@ say
 # ---------- 4. one-line status ------------------------------------------------
 pure_summary="$(grep -c '^TDD_RESULT .* PASS' "$EVIDENCE/10-pure-results.txt" 2>/dev/null || echo 0)/$(grep -c '^TDD_RESULT' "$EVIDENCE/10-pure-results.txt" 2>/dev/null || echo 0) pure"
 mac_counts="$(tail -20 "$EVIDENCE/20-mac-build-train.log" | grep -oE 'passed=[0-9]+ failed=[0-9]+' | tail -1 || echo 'passed=? failed=?')"
+# Ledger status must agree with the mac_build.sh result and the overall exit.
+# mac=ok + all other steps green => PASS/GREEN; anything else => FAIL/RED.
 status="PASS"
 [ "$rc_total" -ne 0 ] && status="FAIL"
 say "4. status line (post to Issue #1):"
-say "  TRAIN $UTC $(git -C "$REPO" rev-parse --short HEAD 2>/dev/null) $status ${pure_summary:-0/0} ${mac_counts:-mac=?} evidence=Saved/BuildEvidence/$UTC"
+say "  TRAIN $UTC $(git -C "$REPO" rev-parse --short HEAD 2>/dev/null) $status mac=$MAC_RESULT ${pure_summary:-0/0} ${mac_counts:-mac=?} evidence=Saved/BuildEvidence/$UTC"
 say
 exit "$rc_total"
