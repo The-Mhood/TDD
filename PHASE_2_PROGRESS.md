@@ -53,7 +53,7 @@ geometry contradicting Phase 1 restrictions; a broken pendant transform that dis
 
 New artefacts: `ue_project/Tools/TDD_M1_Unreal_Setup_macOS.py` (original preserved as
 `..._WINDOWS_ASSUMPTION_PRESERVED.py`), `ue_project/README_MACOS_UE58.md`,
-`scripts/audit_ue_macos.py` → `ue_project/Tools/tdd_m1_macos_audit.json` (69/69 static checks).
+`scripts/audit_ue_macos.py` → `ue_project/Tools/tdd_m1_macos_audit.json` (79/79 static checks).
 
 Status: static compatibility **COMPLETED AND VERIFIED**; compile/`.umap`/import/PIE/cook/
 package/launch remain **BLOCKED — OWNER-STUDIO DEPENDENCY**.

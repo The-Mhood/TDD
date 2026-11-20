@@ -61,7 +61,7 @@ Toolchain requirement: Xcode 26.0 minimum, 26.1.1 recommended; **Xcode 26.4 is n
 | UE source scaffold, Config, Targets, Build.cs and C++ classes | **PRODUCED — NOT YET VERIFIED** |
 | `TDDWorldData.h` generated from shared `world.json` | **COMPLETED AND VERIFIED** |
 | `Tools/TDD_M1_Unreal_Setup_macOS.py` owner-side map/import helper | **PRODUCED — NOT YET VERIFIED** |
-| macOS/UE 5.8 static compatibility audit (69 checks) | **COMPLETED AND VERIFIED** (static inspection only) |
+| macOS/UE 5.8 static compatibility audit (79 checks) | **COMPLETED AND VERIFIED** (static inspection only) |
 | Browser/Node shared gameplay and replay captures | **TECHNICALLY DEMONSTRATED — NOT INTEGRATED** |
 | Adanna UV/material/collision import handoff | **PROVISIONAL — AWAITING CREATIVE APPROVAL** |
 | Project-owned `.umap`, import, compile, PIE, cook, package and runnable build | **BLOCKED — OWNER-STUDIO DEPENDENCY** |

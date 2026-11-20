@@ -1,6 +1,7 @@
 # macOS / UE 5.8 execution runbook — TDD_GAME
 
-**Owner environment:** Apple M4 Mac, 16 GB RAM, macOS 27.2.1, ARM64, Unreal Engine 5.8.
+**Owner environment:** Apple M4 Mac, 16 GB RAM, macOS 27.2.1 (26B131), ARM64,
+Unreal Engine 5.8.4 (CL 58902052), Xcode 27.2 (27B52).
 **Status of every step below: not yet executed.** Nothing here has been run on the owner's
 machine. This file is the procedure, not evidence. Status stays
 **BLOCKED — OWNER-STUDIO DEPENDENCY** until each command's real output is recorded.
@@ -25,31 +26,55 @@ mkdir -p "$TDD_UE/Saved/TDD_M1/Evidence"
 
 ## 0. Verify the engine and the toolchain (do this first, always)
 
-```bash
-# Engine version + build
-cat "$UE_ROOT/Engine/Build/Build.version"
-
-# Toolchain: Xcode and the command-line tools
-xcode-select -p
-xcodebuild -version
-clang --version
-xcrun --sdk macosx --show-sdk-version
-sw_vers
-
-# Hardware truth, in the same session you will build in
-sysctl -n machdep.cpu.brand_string hw.memsize hw.optional.arm64
-```
-
-Record the output of all of the above. **UE 5.8 requires Xcode 26.0 minimum (26.1.1
-recommended) and Xcode 26.4 is not compatible with Unreal Engine.** If `xcodebuild -version`
-reports 26.4 or newer, install 26.1.1 side by side and select it:
+Run the gate. It is read-only: it installs nothing, downloads nothing, downgrades nothing.
 
 ```bash
-sudo xcode-select -s /Applications/Xcode_26.1.1.app/Contents/Developer
+./Tools/verify_toolchain.sh            # verdicts for CAP-1..CAP-4
+./Tools/verify_toolchain.sh --build    # then: the real editor compile (only proof of CAP-1)
 ```
 
-Metal: UE 5.8 needs a Metal 1.2 class GPU. M4 satisfies this. Confirm the renderer after first
-launch with `rhi.Metal` in the log, or run the editor with `-metaldump` support info.
+Status: **PRODUCED — NOT YET VERIFIED**. It has been exercised against stubbed hosts in the
+sandbox (all five verdict branches) but has never run on macOS.
+
+### The owner's toolchain, and what is actually confirmed
+
+Target: UE **5.8.4** (CL 58902052), Xcode **27.2** (27B52), macOS **27.2.1** (26B131), M4, 16 GB.
+
+| Capability | Verdict | Basis |
+|---|---|---|
+| CAP-1 native C++ editor compile | **GO** | Xcode 27 compiles and links UE 5.8 game binaries; only the final `.app` step broke. Our module is four engine modules, no lambdas, no shadowing-prone captures. |
+| CAP-2 open project, launch editor, generate M1 map | **GO** | UE 5.8's `Apple_SDK.json` `MaxVersion` accepts Xcode 27 (5.7 was capped at 26.9 and is not affected here). |
+| CAP-3 PIE | **GO** | No engine/runtime bound in any report of the failure class. |
+| CAP-4 cook + package + launch | **GO on 5.8.4** | Epic closed UE-396802 as Fixed for 5.8.4 and confirmed the Mac fix in the Mac bug thread. |
+
+**Do not downgrade Xcode.** The old "avoid Xcode 27" advice applied to 5.8.0–5.8.3, where the
+`.app` finalize step failed on any C++ project. On 5.8.4 that defect is fixed.
+
+**Prerequisite that is easy to miss:** install the Metal toolchain, or shaders will not compile.
+
+```bash
+xcodebuild -downloadComponent MetalToolchain
+```
+
+### What is not confirmed, stated plainly
+
+- Epic's *published* 5.8.4 release-note line names only **iOS** `.app` finalize ("Bad file
+  descriptor" with macOS 27). The **Mac** game target is covered by Epic staff statements in the
+  Mac bug thread, not by that release-note text. The gate checks the shipped binary for the fix
+  marker and reports CONDITIONAL if it is absent.
+- No public report yet shows a **5.8.4 + Xcode 27.2 + macOS 27.2.1** Mac package end to end.
+  Every measurement in that failure class predates 5.8.4 or used Xcode 26.6.
+- Engine still publishes Xcode **26.1.1** as recommended and lists no macOS 27 in its matrix.
+  Accepted by the SDK gate is not the same as tested by Epic.
+
+### Fallbacks, in order, if CAP-4 fails
+
+1. Confirm the engine really is 5.8.4 (`Build.version` `PatchVersion`), not 5.8.3.
+2. Check for iCloud/Finder xattrs. A checkout under `~/Documents` fails codesign **even on 5.8.4**.
+3. If the log says `Failed to finalize the .app with Xcode` with a `Touch UBT generated tiles`
+   pre-action failure, the stdin defect is present in that build:
+   `./Tools/verify_toolchain.sh --emit-workaround ~/xcode27-stdin-shim`, then re-run the package
+   command it prints. Keep `-package`; `-archive` alone copies the bare `Binaries/Mac/*.app`.
 
 ---
 

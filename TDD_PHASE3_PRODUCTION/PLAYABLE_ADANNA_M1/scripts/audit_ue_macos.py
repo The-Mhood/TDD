@@ -13,6 +13,7 @@ after a multi-minute shader compile:
   * runtime component registration order that removes collision
   * hardcoded absolute paths in project or helper files
   * macOS packaging prerequisites (Xcode/Metal SDK expectations)
+  * the owner-facing toolchain gate (Tools/verify_toolchain.sh) is real, not a stub
 
 Result is written to ue_project/Tools/tdd_m1_macos_audit.json. It is evidence of a
 source inspection, NOT of a successful compile, PIE session, cook or package.
@@ -224,6 +225,36 @@ def main() -> dict:
     runbook = read(UE / "README_MACOS_UE58.md")
     for need in ("Xcode", "Metal", "RunUAT.sh", "arm64"):
         check("macOS packaging expects %s" % need, need in helper or need in runbook)
+
+    # ---- 10. Toolchain gate (verify_toolchain.sh) ------------------------------------
+    # Machine-checks that the owner-facing gate exists, is executable, is valid bash
+    # AND is not a placeholder: it must actually branch on the 5.8.4 boundary, on the
+    # Apple SDK MaxVersion bound and on the finalize-fix marker.
+    vt = TOOLS / "verify_toolchain.sh"
+    check("toolchain gate script exists", vt.is_file(), str(vt))
+    vt_text = read(vt) if vt.is_file() else ""
+    check("toolchain gate is executable", vt.is_file() and bool(vt.stat().st_mode & 0o111))
+    check("toolchain gate declares PRODUCED - NOT YET VERIFIED status",
+          "PRODUCED - NOT YET VERIFIED" in vt_text)
+    # Must not *execute* elevated commands. A mention inside printed advice is fine;
+    # a line that runs sudo is not.
+    runs_sudo = any(re.match(r"^\s*sudo\s", ln) for ln in vt_text.splitlines())
+    check("toolchain gate never executes sudo", not runs_sudo)
+    for probe, label in (("PatchVersion", "engine patch gate"),
+                         ("MaxVersion", "Apple SDK MaxVersion gate"),
+                         ("RedirectStandardInput", "finalize-fix marker"),
+                         ("emit-workaround", "stdin shim fallback"),
+                         ("-package", "Mac package flag")):
+        check("toolchain gate probes %s" % label, probe in vt_text)
+    import subprocess
+    syntax_ok = False
+    if vt.is_file():
+        try:
+            syntax_ok = subprocess.run(["bash", "-n", str(vt)],
+                                       capture_output=True, timeout=30).returncode == 0
+        except Exception:
+            syntax_ok = False
+    check("toolchain gate passes bash -n", syntax_ok)
 
     overall = all(c["ok"] for c in CHECKS)
     errors = [c for c in CHECKS if not c["ok"] and c["severity"] == "error"]

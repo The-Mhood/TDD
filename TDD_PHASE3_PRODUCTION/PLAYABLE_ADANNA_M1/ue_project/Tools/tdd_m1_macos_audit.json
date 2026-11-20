@@ -420,10 +420,70 @@
       "ok": true,
       "severity": "error",
       "detail": ""
+    },
+    {
+      "name": "toolchain gate script exists",
+      "ok": true,
+      "severity": "error",
+      "detail": "/home/user/TDD/TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/Tools/verify_toolchain.sh"
+    },
+    {
+      "name": "toolchain gate is executable",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate declares PRODUCED - NOT YET VERIFIED status",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate never executes sudo",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate probes engine patch gate",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate probes Apple SDK MaxVersion gate",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate probes finalize-fix marker",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate probes stdin shim fallback",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate probes Mac package flag",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate passes bash -n",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
     }
   ],
-  "checksPassed": 69,
-  "checksTotal": 69,
+  "checksPassed": 79,
+  "checksTotal": 79,
   "errors": [],
   "compile_verified": false,
   "pie_verified": false,

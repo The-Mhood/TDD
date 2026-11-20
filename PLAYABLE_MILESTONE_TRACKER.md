@@ -44,7 +44,7 @@ Still unexecuted: compile, project-owned `.umap`, import, PIE, cook, package, la
 | Area | Required | Delivered now | Status / precise gap |
 | --- | --- | --- | --- |
 | Existing Unreal project/version recovery | Recover current UE project/version and playable project state | Targeted recovery found no `.uproject`, `.uasset`, `.umap`, playable build, native character/rig/animation/gameplay system, forest 3D asset/layout or package. The **owner's installed engine is UE 5.8 on M4 macOS**, supplied directly, so no engine version is outstanding | Recovery completed. Existing project state: none. Engine/target environment: known. |
-| Working Unreal project state / verified continuation | UE source state or verified continuation | Source state retargeted to macOS/UE 5.8: `.uproject` (`EngineAssociation` 5.8, Mac, Python plugin), Targets (`BuildSettingsVersion.V7`, `Unreal5_8`), Build.cs, game mode, runtime forest level, proxy character, generated `TDDWorldData.h`; 69/69 static compatibility audit | **Source only, statically audited.** No compile, PIE, cook, package or launch. Owner must run `ue_project/README_MACOS_UE58.md`. |
+| Working Unreal project state / verified continuation | UE source state or verified continuation | Source state retargeted to macOS/UE 5.8: `.uproject` (`EngineAssociation` 5.8, Mac, Python plugin), Targets (`BuildSettingsVersion.V7`, `Unreal5_8`), Build.cs, game mode, runtime forest level, proxy character, generated `TDDWorldData.h`; 79/79 static compatibility audit | **Source only, statically audited.** No compile, PIE, cook, package or launch. Owner must run `ue_project/README_MACOS_UE58.md`. |
 | Approved Adanna identity/proportions | Approved identity/proportions; no invented design/canon | Approved master reference used only for recorded identity locks and sampled skin palette; no unapproved turnaround, dimensions, costume or canon invented | Approved detail retained; final turnaround/dimensions/groom/costume technical interpretation still require CD/Research authority. |
 | Production-quality 3D Adanna | Production topology, UVs, materials, hair/clothing, optimisation | Labelled technical proxy: `model/adanna_m1_technical_proxy.glb` (1 skin, 21 joints, 5 clips, 870 vertices / 1,584 triangles), OBJ, rig JSON, rigid-part markers for approved identity features | **Not met as production character.** No final sculpt, retopology, UVs, calibrated PBR maps, groom, facial rig or commercial mesh. |
 | Functional skeleton / animation | Walking, running, turning, jumping, landing | Shared `game.js` simulation drives `idle/walk/run/jump/land`; browser GLB contains 21-joint skin and clips; rigid-part UE source proxy uses procedural limb motion | Technical function proven in browser/Node simulation; no final imported UE SkeletalMesh/Animation Blueprint. |
@@ -92,7 +92,7 @@ first owner build:
 10. **Engine/build-settings mismatch.** `EngineAssociation: 5.4` with `BuildSettingsVersion.V5`
     and `Unreal5_4` include order against a 5.8 install. Now `5.8` / `V7` / `Unreal5_8`.
 
-New verification: `scripts/audit_ue_macos.py` → **69/69** static compatibility checks
+New verification: `scripts/audit_ue_macos.py` → **79/79** static compatibility checks
 (`ue_project/Tools/tdd_m1_macos_audit.json`). This is source inspection, **not** a compile.
 
 ## Current work cycle — Adanna technical import handoff

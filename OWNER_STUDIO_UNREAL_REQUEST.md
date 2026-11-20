@@ -83,7 +83,7 @@ paths, logs and recordings only.
   repoints the map config, imports the three labelled technical files, writes a JSON report.
   Never overwrites existing assets. Has a dry-run switch.
 - `ue_project/README_MACOS_UE58.md` — the full command sequence.
-- `ue_project/Tools/tdd_m1_macos_audit.json` — 69/69 static compatibility checks.
+- `ue_project/Tools/tdd_m1_macos_audit.json` — 79/79 static compatibility checks.
 - `model/adanna_m1_technical_proxy_uv.glb` — 33/33 local validation checks.
 
 None of the above proves a compile, a PIE session, a cook, a package or a launch. Those remain
