@@ -1,0 +1,17 @@
+{
+  "assets": {
+    "NPC_CIVILIAN_M1.glb": "PASS",
+    "NPC_CIVILIAN_F1.glb": "PASS",
+    "NPC_CIVILIAN_YOUTH_M.glb": "PASS",
+    "NPC_CIVILIAN_ELDER_M.glb": "PASS",
+    "NPC_CIVILIAN_ELDER_F.glb": "PASS",
+    "NPC_CIVILIAN_F1_EARTHRED.glb": "PASS"
+  },
+  "keyframe_poses_tested_per_asset": 8,
+  "clips": [
+    "civilian_idle",
+    "civilian_walk"
+  ],
+  "verdict": "PASS",
+  "tier": "source-level validation only - NOT Blender qualification, NOT Unreal animation integration"
+}

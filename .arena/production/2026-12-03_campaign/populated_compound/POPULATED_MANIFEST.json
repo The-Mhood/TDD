@@ -1,0 +1,64 @@
+{
+  "base": "CH01_COMPOUND_ASSEMBLED_V2 (provisional)",
+  "type": "STATIC bind-pose scale/composition check - NOT animated population, NOT canon",
+  "densities": {
+    "LOW_4": {
+      "assembly": "CH01_POPULATED_LOW_4",
+      "npcs": 4,
+      "slots": [
+        "A_veranda_edge",
+        "B_courtyard_west",
+        "D_gate_inside",
+        "F_wall_shade_north"
+      ],
+      "verts": 15428,
+      "tris_est": 29590,
+      "min_pairwise_clearance_m": 3.34,
+      "all_inside_wall_ring": true,
+      "gate_path_strip_clear": true,
+      "validation": "PASS",
+      "note": ""
+    },
+    "MEDIUM_6": {
+      "assembly": "CH01_POPULATED_MEDIUM_6",
+      "npcs": 6,
+      "slots": [
+        "A_veranda_edge",
+        "B_courtyard_west",
+        "C_courtyard_east",
+        "D_gate_inside",
+        "E_stall_front",
+        "F_wall_shade_north"
+      ],
+      "verts": 23260,
+      "tris_est": 44702,
+      "min_pairwise_clearance_m": 2.21,
+      "all_inside_wall_ring": true,
+      "gate_path_strip_clear": true,
+      "validation": "PASS",
+      "note": ""
+    },
+    "HIGH_8": {
+      "assembly": "CH01_POPULATED_HIGH_8",
+      "npcs": 8,
+      "slots": [
+        "A_veranda_edge",
+        "B_courtyard_west",
+        "C_courtyard_east",
+        "D_gate_inside",
+        "E_stall_front",
+        "F_wall_shade_north",
+        "G_veranda_west",
+        "H_courtyard_south"
+      ],
+      "verts": 30776,
+      "tris_est": 59250,
+      "min_pairwise_clearance_m": 2.06,
+      "all_inside_wall_ring": true,
+      "gate_path_strip_clear": true,
+      "validation": "PASS",
+      "note": "extra slots G/H are Design-proposed, PM-confirm"
+    }
+  },
+  "pm_coordination": "Density choice + slot/facing approval remains PM's; all three alternatives delivered per owner directive W1 campaign so PM picks without a Design round-trip. Animated population = skinned GLBs + CIVILIAN_CLIPS_V1 in Unreal (TD step)."
+}

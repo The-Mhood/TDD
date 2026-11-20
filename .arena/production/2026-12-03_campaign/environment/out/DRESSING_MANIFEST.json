@@ -1,0 +1,15 @@
+{
+  "asset": "KIT_COURTYARD_DRESSING",
+  "tier": "production asset - NOT qualified, NOT Unreal-integrated",
+  "verts": 472,
+  "tris": 908,
+  "contents": [
+    "pot_large",
+    "pot_small",
+    "basket_woven",
+    "firewood_log_x3",
+    "hearth_stone_x3"
+  ],
+  "origin": "cluster at origin - split per-prop on import (TD) or request split OBJs",
+  "status": "PROVISIONAL - everyday props from approved compound refs only"
+}

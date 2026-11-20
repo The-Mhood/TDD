@@ -1,0 +1,191 @@
+{
+  "skeleton": "HUMAN_BASE_PROPOSED (11 joints)",
+  "convention": "joint->[axis, angle_rad], as pipeline/test_deformation.py",
+  "derivation": "idle = validated Adanna idle unchanged; walk = validated walk at 0.65 amplitude (civilian amble); no new poses invented",
+  "clips": {
+    "civilian_idle": {
+      "loop": true,
+      "fps": 30,
+      "keys": [
+        {
+          "t": 0.0,
+          "pose": {
+            "spine": [
+              "x",
+              0.02
+            ],
+            "head": [
+              "x",
+              0.03
+            ]
+          }
+        },
+        {
+          "t": 1.2,
+          "pose": {
+            "spine": [
+              "x",
+              0.045
+            ],
+            "head": [
+              "x",
+              0.05
+            ],
+            "upperarm.L": [
+              "z",
+              -0.06
+            ],
+            "upperarm.R": [
+              "z",
+              0.06
+            ]
+          }
+        },
+        {
+          "t": 2.4,
+          "pose": {
+            "spine": [
+              "x",
+              0.02
+            ],
+            "head": [
+              "x",
+              0.03
+            ]
+          }
+        }
+      ]
+    },
+    "civilian_walk": {
+      "loop": true,
+      "fps": 30,
+      "keys": [
+        {
+          "t": 0.0,
+          "pose": {
+            "thigh.L": [
+              "x",
+              -0.26
+            ],
+            "shin.L": [
+              "x",
+              0.13
+            ],
+            "thigh.R": [
+              "x",
+              0.208
+            ],
+            "upperarm.L": [
+              "x",
+              0.1625
+            ],
+            "upperarm.R": [
+              "x",
+              -0.1625
+            ]
+          }
+        },
+        {
+          "t": 0.35,
+          "pose": {
+            "thigh.L": [
+              "x",
+              0.0
+            ],
+            "shin.L": [
+              "x",
+              0.26
+            ],
+            "thigh.R": [
+              "x",
+              0.0
+            ],
+            "upperarm.L": [
+              "x",
+              0.0
+            ],
+            "upperarm.R": [
+              "x",
+              0.0
+            ]
+          }
+        },
+        {
+          "t": 0.7,
+          "pose": {
+            "thigh.R": [
+              "x",
+              -0.26
+            ],
+            "shin.R": [
+              "x",
+              0.13
+            ],
+            "thigh.L": [
+              "x",
+              0.208
+            ],
+            "upperarm.R": [
+              "x",
+              0.1625
+            ],
+            "upperarm.L": [
+              "x",
+              -0.1625
+            ]
+          }
+        },
+        {
+          "t": 1.05,
+          "pose": {
+            "thigh.R": [
+              "x",
+              0.0
+            ],
+            "shin.R": [
+              "x",
+              0.26
+            ],
+            "thigh.L": [
+              "x",
+              0.0
+            ],
+            "upperarm.R": [
+              "x",
+              0.0
+            ],
+            "upperarm.L": [
+              "x",
+              0.0
+            ]
+          }
+        },
+        {
+          "t": 1.4,
+          "pose": {
+            "thigh.L": [
+              "x",
+              -0.26
+            ],
+            "shin.L": [
+              "x",
+              0.13
+            ],
+            "thigh.R": [
+              "x",
+              0.208
+            ],
+            "upperarm.L": [
+              "x",
+              0.1625
+            ],
+            "upperarm.R": [
+              "x",
+              -0.1625
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

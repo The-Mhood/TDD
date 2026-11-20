@@ -1,0 +1,26 @@
+{
+  "spec": "CH01_LIGHTING_STATES_V1",
+  "tier": "production spec for TD - values are creative lighting decisions (approved keys), not measured data",
+  "states": {
+    "ST01_DAWN": {
+      "key": "low warm sun through trees, cool mist fill",
+      "ref": "2026-11-29_w1d13_production/ch01_states/ST01_DAWN.jpg"
+    },
+    "ST02_DAY": {
+      "key": "approved Kit V1 reference (neutral day)",
+      "ref": "2026-11-27_w1d11_roadmap_visuals/environment_kit/ENV_KIT_V1_CH01_FAMILY_COMPOUND_REFERENCE_V1.jpg"
+    },
+    "ST03_DUSK": {
+      "key": "low amber, long shadows",
+      "ref": "ST03_DUSK.jpg"
+    },
+    "ST04_NIGHT": {
+      "key": "dark ambient, single cooking-fire source",
+      "ref": "ST04_NIGHT.jpg"
+    }
+  },
+  "excluded": {
+    "ST05_MARKET": "populated market undesigned",
+    "ST06_RITUAL/ST07_FESTIVAL": "pending cultural review - EXCLUDED"
+  }
+}

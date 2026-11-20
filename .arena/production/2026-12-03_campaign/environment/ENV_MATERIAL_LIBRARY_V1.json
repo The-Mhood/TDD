@@ -1,0 +1,85 @@
+{
+  "library": "CH01_ENV_MATERIAL_LIBRARY_V1",
+  "tier": "production spec - not Unreal-integrated",
+  "textured_surfaces": [
+    {
+      "name": "Indigo cloth (BC)",
+      "map": "T_ADANNA_IndigoCloth_BC_2048.png",
+      "tiling": "per ADANNA_TEXSET manifest"
+    },
+    {
+      "name": "Aged bronze (BC)",
+      "map": "T_ADANNA_Bronze_BC_2048.png",
+      "tiling": "per ADANNA_TEXSET manifest"
+    },
+    {
+      "name": "Veget-tanned leather (BC)",
+      "map": "T_ADANNA_VegetLeather_BC_2048.png",
+      "tiling": "per ADANNA_TEXSET manifest"
+    },
+    {
+      "name": "Leather worn (BC)",
+      "map": "T_ADANNA_VegetLeather_BC_worn_2048.png",
+      "tiling": "per ADANNA_TEXSET manifest"
+    }
+  ],
+  "flat_surfaces": [
+    {
+      "name": "Laterite mud wall",
+      "rgb": [
+        146,
+        92,
+        62
+      ]
+    },
+    {
+      "name": "Thatch",
+      "rgb": [
+        168,
+        142,
+        96
+      ]
+    },
+    {
+      "name": "Undyed cloth",
+      "rgb": [
+        168,
+        145,
+        112
+      ]
+    },
+    {
+      "name": "Earth-red dye",
+      "rgb": [
+        115,
+        51,
+        31
+      ]
+    },
+    {
+      "name": "Faded indigo",
+      "rgb": [
+        56,
+        66,
+        107
+      ]
+    },
+    {
+      "name": "Clay pot",
+      "rgb": [
+        107,
+        64,
+        41
+      ]
+    },
+    {
+      "name": "Hearth stone",
+      "rgb": [
+        82,
+        77,
+        71
+      ]
+    }
+  ],
+  "roughness_notes": "cloth/leather use paired _R maps in texture set; mud/thatch/pot/stone flat kit materials pending TD PBR pass - no values invented beyond kit colours"
+}

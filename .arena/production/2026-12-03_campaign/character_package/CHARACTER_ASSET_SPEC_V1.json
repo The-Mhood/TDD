@@ -1,0 +1,39 @@
+{
+  "spec": "CHARACTER_ASSET_SPEC_V1",
+  "tier": "reusable production spec",
+  "skeleton": {
+    "name": "HUMAN_BASE_PROPOSED",
+    "joints": 11,
+    "names": [
+      "pelvis",
+      "spine",
+      "head",
+      "upperarm.L/R",
+      "forearm.L/R",
+      "thigh.L/R",
+      "shin.L/R"
+    ],
+    "scale": "metres, bind heights pelvis 0.98 / spine 1.28 / head 1.52",
+    "rule": "never rename/reorder - all clips + retargeting depend on it"
+  },
+  "budgets_observed": {
+    "hero": "12-13k tris (Adanna V5 12,736)",
+    "guard": "10,020 tris (V3)",
+    "npc": "6.9-7.6k tris",
+    "note": "budgets are observed production values, not owner-approved caps; facial-likeness tri decision remains owner's (#14)"
+  },
+  "naming": "CHARACTER_VARIANT_vN.glb/.obj + _QC.json + _DEFORM.json; previews <name>_{front,back,side,three_quarter}.png",
+  "validation_gates": [
+    "test_joint_influence.py PASS (no dead bones - use prox_blend, never blend() on limb segments)",
+    "test_deformation.py PASS",
+    "previews visually inspected",
+    "GLB SHA-256 recorded in manifest"
+  ],
+  "materials_family": [
+    "skin_*",
+    "cloth_indigo_plain_v1 / cloth_indigo_faded_v1 / cloth_undyed_v1 / cloth_earthred_v1",
+    "leather_plain_v1",
+    "eye_dark_v1"
+  ],
+  "tiers": "production (source-validated) -> Blender-qualified (owner-Mac only) -> Unreal-integrated (PM/TD only). Never conflate."
+}
