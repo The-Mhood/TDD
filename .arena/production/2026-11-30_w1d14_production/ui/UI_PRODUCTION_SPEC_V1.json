@@ -1,0 +1,20 @@
+{
+  "package": "UI-VISUAL-LANGUAGE", "version": "1.0", "date": "2026-11-30",
+  "status": "concept reference + production spec (not Unreal-integrated)",
+  "board": "UI_VISUAL_LANGUAGE_BOARD_V1.jpg",
+  "palette": {
+    "panel_indigo": "#232338", "panel_weave_grey": "#3A3A44",
+    "bronze_line_aged": "#8C6A48", "bronze_note": "AGED bronze, dull - the board renders bright; desaturate/value-down in production, never gold",
+    "bone_text": "#E8E0D0", "background_charcoal_brown": "#17100E",
+    "accent_coral_sparing": "#B4503E"
+  },
+  "rules": [
+    "Panels: dark indigo, thin double bronze border line, subtle plain-weave texture at low opacity",
+    "Buttons: square/circle, bronze rim, flat indigo fill; no glow, no gradients beyond 8% value shift",
+    "Health/resource: segmented bronze-and-indigo strip (segments = readability, not ornament)",
+    "Icons: plain geometric placeholders (diamond/circle/square) until gameplay defines meanings - NO invented symbols or pseudo-script",
+    "Spiral: single fictional accent mark only (from Adanna pendant fiction); never used as a cultural symbol or pattern repeat",
+    "Typography: none specified here - no letterforms invented; TD/UX to select a licensed legible font later"
+  ],
+  "prohibited": ["gold foil", "glowing runes", "nsibidi or any real script/signs as decoration", "tribal pattern fills"]
+}
