@@ -58,9 +58,9 @@ implementation, tests/gates, milestone enabled. Stages run in parallel where dep
 
 | Field | Detail |
 |---|---|
-| **Complete** | First real UE build + automation run; UHT/UBT errors triaged and fixed |
-| **Owner** | Owner (Mac, UE 5.8.4) executes; PM prepared the path |
-| **Depends on** | Owner Mac + UE 5.8.4; committed tree (`ab45856`) |
+| **Complete** | **DONE — first genuine owner-Mac engine verification PASS at `712ee22`** (2026-11-20T17:49:09Z). Unreal Mac build PASS; 4/4 TDD automation tests PASS (0 failures); runner + Windows CI safety + ledger regression contracts PASS; ledger GREEN. Evidence: `Saved/BuildEvidence/20261120T174909Z` (owner machine). UHT/UBT blockers D-W1D8-001/002/003/004 fixed and re-verified on the Mac. **Stage A blocker CLOSED.** |
+| **Owner** | Owner (Mac, UE 5.8.4) executed `Tools/engine/run_daily_train.sh` at `712ee22`; PM prepared the path |
+| **Depends on** | Owner Mac + UE 5.8.4; committed tree (`712ee22`) |
 | **Design deliverable** | None — this is engineering verification |
 | **PM coordination** | Verified all owner-run scripts are syntax-clean and one-command; committed the tree; gives owner the exact invocation: `Tools/engine/run_daily_train.sh` (~60 min) |
 | **Implementation** | UE module already in tree; first compile surfaces any UHT/UBT errors → fix, re-commit, re-run |
