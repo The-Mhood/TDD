@@ -570,6 +570,47 @@ def main():
                         f"public state; do not expose protected/private implementation "
                         f"details solely for testing")
 
+    # ---- Test-world registration guard --------------------------------
+    # A world returned by UWorld::CreateWorld is not playable until it is
+    # registered with the engine and initialized for play. TActorIterator
+    # enumeration and actor BeginPlay dispatch both depend on that
+    # registration: without GEngine->CreateNewWorldContext/SetCurrentWorld
+    # and InitializeActorsForPlay the iterator yields no actors, spawned
+    # actors never receive BeginPlay (combat health never initialises), and
+    # world-context lookups fail with "WorldContext requested with invalid
+    # context object." — the demonstrated TDD.M1.GameMode.EncounterFlow
+    # runtime failure (roster 1 -> 0, all 8 assertions false). Guard test
+    # TUs that enumerate a created world with TActorIterator.
+    if src.is_dir():
+        for cpp in sorted(src.rglob("*.cpp")):
+            rel = str(cpp.relative_to(root))
+            if "/Tests/" not in rel and not rel.endswith("Tests.cpp"):
+                continue
+            try:
+                htext = cpp.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            if "UWorld::CreateWorld" not in htext or "TActorIterator" not in htext:
+                continue
+            missing = []
+            if "CreateNewWorldContext" not in htext:
+                missing.append("GEngine->CreateNewWorldContext(...)")
+            if "SetCurrentWorld" not in htext:
+                missing.append("WorldContext.SetCurrentWorld(World)")
+            if "InitializeActorsForPlay" not in htext:
+                missing.append("World->InitializeActorsForPlay(...)")
+            if missing:
+                line = htext[:htext.index("UWorld::CreateWorld")].count("\n") + 1
+                block(
+                    f"{rel}:{line}: test world not registered with the engine — a UWorld::CreateWorld "
+                    f"world enumerated with TActorIterator must also register the engine world "
+                    f"context and initialize the world for play (missing: {', '.join(missing)})",
+                    f"follow the canonical test-world fixture: FWorldContext& WorldContext = "
+                    f"GEngine->CreateNewWorldContext(EWorldType::Game); WorldContext.SetCurrentWorld(World); "
+                    f"World->InitializeActorsForPlay(FURL()); then "
+                    f"World->GetWorldSettings()->NotifyBeginPlay() (no GameMode) so spawned actors "
+                    f"receive BeginPlay")
+
     # ---- UE 5.8.4 sky-light SetLightColor arity guard ------------------\
     # USkyLightComponent::SetLightColor takes a single FLinearColor argument
     # in 5.8.4 (it shadows the base ULightComponent two-arg

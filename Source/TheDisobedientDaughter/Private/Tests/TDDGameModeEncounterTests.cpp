@@ -3,7 +3,10 @@
 #include "Misc/AutomationTest.h"
 #include "AI/TDDTrainingEnemy.h"
 #include "Combat/TDDCombatComponent.h"
+#include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "Engine/WorldContext.h"
+#include "EngineUtils.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/PlayerController.h"
 #include "Player/TDDAdannaCharacter.h"
@@ -27,6 +30,25 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
     if (World == nullptr)
     {
         return false;
+    }
+
+    // A world from UWorld::CreateWorld is not playable until it is
+    // registered with the engine and initialized for play. Without the
+    // engine world context the world has no playable level: TActorIterator
+    // enumeration yields no actors, spawned actors never receive BeginPlay
+    // (so combat health is never initialised), and world-context lookups
+    // fail with "WorldContext requested with invalid context object.".
+    // This mirrors the canonical test-world fixture pattern.
+    FWorldContext& WorldContext = GEngine->CreateNewWorldContext(EWorldType::Game);
+    WorldContext.SetCurrentWorld(World);
+    World->InitializeActorsForPlay(FURL());
+    if (IsValid(World->GetWorldSettings()))
+    {
+        // The world has no GameMode, so begin-play dispatch is performed
+        // manually; this also marks the world as begun so the actors spawned
+        // below receive BeginPlay when they are spawned.
+        World->GetWorldSettings()->NotifyBeginPlay();
+        World->GetWorldSettings()->NotifyMatchStarted();
     }
 
     // UE 5.8.4: UWorld has no public assignable GameMode property (the
@@ -108,6 +130,16 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
     }
     TestTrue(TEXT("Defeat auto-restarts after the configured delay"),
              GameMode->GetEncounterState() == ETDDEncounterState::Active);
+
+    // Teardown: release the engine context and destroy the test world so
+    // repeated runs do not leak worlds.
+    World->BeginTearingDown();
+    for (TActorIterator<AActor> It(World); It; ++It)
+    {
+        It->Destroy();
+    }
+    GEngine->DestroyWorldContext(World);
+    World->DestroyWorld(false);
 
     return true;
 }
