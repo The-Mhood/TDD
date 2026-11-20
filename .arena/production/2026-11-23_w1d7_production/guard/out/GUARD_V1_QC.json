@@ -1,0 +1,11 @@
+{
+  "asset": "GUARD_CLASS_V1",
+  "source_visual": "RG_V003_GUARD_CLASS_TARGET.jpg (verified 2026-11-22)",
+  "tier": "production-intent base model - NOT final",
+  "parts": 17,
+  "verts": 2898,
+  "tris": 5728,
+  "skeleton": "HUMAN_BASE_PROPOSED (shared with AD-03)",
+  "weapons_emblems_markings": "NONE",
+  "proportions": "shoulder breadth x1.14 vs Adanna V2 profile (class readability)"
+}

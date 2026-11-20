@@ -1,0 +1,30 @@
+{
+  "kit": "CH01-SETTLEMENT",
+  "version": "0.1",
+  "date": "2026-11-23",
+  "status": "PROVISIONAL - not production-ready, not canon",
+  "modules": [
+    {
+      "file": "KIT_COMPOUND_WALL_3M.obj",
+      "verts": 24,
+      "faces": 18,
+      "tris_est": 36,
+      "collision_proxy": "single box = module bounds (PM/TD confirm)"
+    },
+    {
+      "file": "KIT_GATE_2M.obj",
+      "verts": 48,
+      "faces": 36,
+      "tris_est": 72,
+      "collision_proxy": "single box = module bounds (PM/TD confirm)"
+    },
+    {
+      "file": "KIT_STALL_2x2.obj",
+      "verts": 54,
+      "faces": 40,
+      "tris_est": 78,
+      "collision_proxy": "single box = module bounds (PM/TD confirm)"
+    }
+  ],
+  "assembly": "CH01_COMPOUND_ASSEMBLED_V1.obj = KIT-HUT house + 6 wall segments + gate (see assemble_compound.py)"
+}

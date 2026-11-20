@@ -13,7 +13,7 @@
 # Units: metres internally; export scale x100 handled at FBX export for Unreal cm.
 import bpy, math, sys, json
 
-STATUS = "AWAITING_CD_SELECT"   # CD flips this via the decision record; see below.
+STATUS = "CD_SELECTED"   # AD-02 SELECT A issued 2026-11-22 (DECISION_AD02_SELECT_A_2026-11-22.md)
 argv = sys.argv[sys.argv.index("--")+1:] if "--" in sys.argv else []
 FORCE = "--force-placeholder" in argv
 

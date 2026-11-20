@@ -1,0 +1,8 @@
+newmtl foundation_laterite_rubble
+Kd 0.45 0.26 0.16
+newmtl wall_laterite_mud
+Kd 0.58 0.33 0.20
+newmtl thatch_ata_bundles
+Kd 0.62 0.48 0.26
+newmtl timber_lintel_plain
+Kd 0.30 0.20 0.12

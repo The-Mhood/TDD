@@ -1,0 +1,39 @@
+{
+  "asset": "ADANNA_AD03_V2",
+  "supersedes": "ADANNA_AD03_V1 (history retained)",
+  "tier": "refined production-intent model - NOT final character",
+  "reference": "AD-02 SELECT A composite (frozen 2026-11-22); master = identity authority",
+  "parts": 29,
+  "verts": 4346,
+  "tris": 8548,
+  "joints": [
+    "pelvis",
+    "spine",
+    "head",
+    "upperarm.L",
+    "forearm.L",
+    "upperarm.R",
+    "forearm.R",
+    "thigh.L",
+    "shin.L",
+    "thigh.R",
+    "shin.R"
+  ],
+  "weights": "blended LBS (<=4 influences) at neck/shoulder/elbow/waist/hip/knee",
+  "textures_embedded_512": [
+    "bronze_armlet_plain_v1",
+    "cloth_indigo_plain_v1",
+    "leather_baldric_v1",
+    "pendant_spiral_FICTIONAL_v1"
+  ],
+  "blade_scabbard": "NONE (CQ-9)",
+  "identity_locks": [
+    "scar_L marker",
+    "armlet 3 plain coils L",
+    "pendant FICTIONAL + master cord",
+    "3B+2C temple beads L",
+    "baldric L->R",
+    "high knot + 3 braids",
+    "plain indigo"
+  ]
+}
