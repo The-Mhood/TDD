@@ -14,6 +14,16 @@
 #   7. Writes <NAME>_BLENDER_QC.json next to the outputs.
 #
 # Invoked ONLY via run_all.sh (which passes --input/--name/--outdir after "--").
+# v1.1 (2026-11-24): object classification fix. Blender 4.2's glTF importer
+# creates an "Icosphere" bone-shape HELPER mesh (imp/gltf2_blender_node.py
+# armature_display(): primitive_ico_sphere_add -> hidden "glTF_not_exported"
+# collection, assigned as pose_bone.custom_shape). It is NOT character geometry
+# and must never be skin-validated. Meshes are now classified:
+#   SKINNED  (has Armature modifier)  -> strict weight validation, unchanged
+#   HELPER   (in glTF_not_exported collection, or a bone custom-shape target)
+#            -> recorded in QC, excluded from validation/deformation/FBX
+#   OTHER    (anything else unskinned) -> hard FAIL (a rigid accessory would
+#            need a deliberate bone-parent attachment, never silent weights)
 import bpy, json, math, os, sys
 from mathutils import Vector
 
@@ -37,13 +47,32 @@ def fail(msg):
 # --- clean scene + import -------------------------------------------------
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=SRC)
-meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
 arms = [o for o in bpy.context.scene.objects if o.type == "ARMATURE"]
-qc["checks"]["mesh_objects"] = len(meshes)
-qc["checks"]["armatures"] = len(arms)
-if not meshes or not arms:
-    fail("import produced no mesh/armature")
+if not arms:
+    fail("import produced no armature")
 arm = arms[0]; arm.name = "HUMAN_BASE_PROPOSED"
+# --- classification (see header v1.1 note) --------------------------------
+shape_targets = {pb.custom_shape.name for pb in arm.pose.bones if pb.custom_shape}
+meshes, helpers, other = [], [], []
+for o in bpy.context.scene.objects:
+    if o.type != "MESH":
+        continue
+    in_special = any(c.name == "glTF_not_exported" for c in o.users_collection)
+    if in_special or o.name in shape_targets:
+        helpers.append(o)
+    elif any(m.type == "ARMATURE" for m in o.modifiers):
+        meshes.append(o)
+    else:
+        other.append(o)
+qc["checks"]["skinned_mesh_objects"] = len(meshes)
+qc["checks"]["helper_objects"] = [{"name": o.name,
+                                    "reason": "glTF importer bone custom-shape helper (glTF_not_exported)"} for o in helpers]
+qc["checks"]["armatures"] = len(arms)
+if other:
+    fail("unclassified unskinned mesh object(s): " + ", ".join(o.name for o in other) +
+         " — rigid accessories require an explicit bone-parent decision; refusing silent handling")
+if not meshes:
+    fail("import produced no skinned mesh")
 
 # --- geometry / rig validation -------------------------------------------
 total_tris = 0; wmin, wmax = 1e9, -1.0; unweighted = 0
@@ -104,7 +133,10 @@ bpy.ops.object.mode_set(mode="OBJECT")
 blend_path = os.path.join(OUT, f"{NAME}.blend")
 bpy.ops.wm.save_as_mainfile(filepath=blend_path)
 fbx_path = os.path.join(OUT, f"{NAME}.fbx")
-bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.select_all(action="DESELECT")
+arm.select_set(True)
+for o in meshes:  # skinned meshes only — helpers never enter the FBX
+    o.select_set(True)
 bpy.ops.export_scene.fbx(filepath=fbx_path, use_selection=True, global_scale=1.0,
                          apply_unit_scale=True, add_leaf_bones=False, bake_anim=False,
                          path_mode="COPY", use_mesh_modifiers=True)

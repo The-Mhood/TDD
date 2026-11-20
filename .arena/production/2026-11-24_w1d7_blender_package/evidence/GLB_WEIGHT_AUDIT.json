@@ -1,0 +1,202 @@
+{
+  "ADANNA_AD03_V2": {
+    "meshes": 29,
+    "verts": 4346,
+    "unweighted_verts": 0,
+    "all_deforming_meshes_weighted": true,
+    "per_mesh": {
+      "head": {
+        "verts": 410,
+        "unweighted": 0
+      },
+      "neck_torso_upper": {
+        "verts": 314,
+        "unweighted": 0
+      },
+      "pelvis_lower": {
+        "verts": 314,
+        "unweighted": 0
+      },
+      "upperarm.L": {
+        "verts": 202,
+        "unweighted": 0
+      },
+      "forearm_hand.L": {
+        "verts": 160,
+        "unweighted": 0
+      },
+      "thigh.L": {
+        "verts": 160,
+        "unweighted": 0
+      },
+      "shin_foot.L": {
+        "verts": 160,
+        "unweighted": 0
+      },
+      "upperarm.R": {
+        "verts": 202,
+        "unweighted": 0
+      },
+      "forearm_hand.R": {
+        "verts": 160,
+        "unweighted": 0
+      },
+      "thigh.R": {
+        "verts": 160,
+        "unweighted": 0
+      },
+      "shin_foot.R": {
+        "verts": 160,
+        "unweighted": 0
+      },
+      "wrap_top_indigo": {
+        "verts": 266,
+        "unweighted": 0
+      },
+      "skirt_wrap_indigo": {
+        "verts": 266,
+        "unweighted": 0
+      },
+      "baldric_L_to_R": {
+        "verts": 8,
+        "unweighted": 0
+      },
+      "armlet_coil1_L_plain": {
+        "verts": 200,
+        "unweighted": 0
+      },
+      "armlet_coil2_L_plain": {
+        "verts": 200,
+        "unweighted": 0
+      },
+      "armlet_coil3_L_plain": {
+        "verts": 200,
+        "unweighted": 0
+      },
+      "pendant_spiral_FICTIONAL": {
+        "verts": 200,
+        "unweighted": 0
+      },
+      "pendant_cord_master": {
+        "verts": 68,
+        "unweighted": 0
+      },
+      "hair_knot": {
+        "verts": 128,
+        "unweighted": 0
+      },
+      "braid1": {
+        "verts": 42,
+        "unweighted": 0
+      },
+      "braid2": {
+        "verts": 42,
+        "unweighted": 0
+      },
+      "braid3": {
+        "verts": 42,
+        "unweighted": 0
+      },
+      "temple_bead_1_bronze_L": {
+        "verts": 42,
+        "unweighted": 0
+      },
+      "temple_bead_2_bronze_L": {
+        "verts": 42,
+        "unweighted": 0
+      },
+      "temple_bead_3_bronze_L": {
+        "verts": 42,
+        "unweighted": 0
+      },
+      "temple_bead_4_coral_L": {
+        "verts": 42,
+        "unweighted": 0
+      },
+      "temple_bead_5_coral_L": {
+        "verts": 42,
+        "unweighted": 0
+      },
+      "LOCK_scar_L_marker": {
+        "verts": 72,
+        "unweighted": 0
+      }
+    }
+  },
+  "GUARD_CLASS_V1": {
+    "meshes": 17,
+    "verts": 2898,
+    "unweighted_verts": 0,
+    "all_deforming_meshes_weighted": true,
+    "per_mesh": {
+      "head_generic": {
+        "verts": 410,
+        "unweighted": 0
+      },
+      "torso_upper": {
+        "verts": 314,
+        "unweighted": 0
+      },
+      "pelvis_lower": {
+        "verts": 314,
+        "unweighted": 0
+      },
+      "upperarm.L": {
+        "verts": 74,
+        "unweighted": 0
+      },
+      "forearm_hand.L": {
+        "verts": 74,
+        "unweighted": 0
+      },
+      "thigh.L": {
+        "verts": 74,
+        "unweighted": 0
+      },
+      "shin_sandal.L": {
+        "verts": 160,
+        "unweighted": 0
+      },
+      "upperarm.R": {
+        "verts": 74,
+        "unweighted": 0
+      },
+      "forearm_hand.R": {
+        "verts": 74,
+        "unweighted": 0
+      },
+      "thigh.R": {
+        "verts": 74,
+        "unweighted": 0
+      },
+      "shin_sandal.R": {
+        "verts": 160,
+        "unweighted": 0
+      },
+      "wrap_oneshoulder_indigo": {
+        "verts": 266,
+        "unweighted": 0
+      },
+      "skirt_wrap_indigo": {
+        "verts": 266,
+        "unweighted": 0
+      },
+      "waist_sash_plain": {
+        "verts": 240,
+        "unweighted": 0
+      },
+      "armband_plain_bronze_R": {
+        "verts": 200,
+        "unweighted": 0
+      },
+      "sandal_sole.L": {
+        "verts": 62,
+        "unweighted": 0
+      },
+      "sandal_sole.R": {
+        "verts": 62,
+        "unweighted": 0
+      }
+    }
+  }
+}

@@ -72,6 +72,7 @@ Visual (2 minutes, human): open the 8 PNGs. Check: character upright, ~head-to-f
 | `Blender 4.x required` (exit 3) | Install 4.2 LTS alongside; point `BLENDER=` at the 4.2 binary if a newer default exists |
 | `missing input: …` (exit 4) | Wrong/shallow checkout: `git fetch && git checkout arena/6e649a9b-tdd && git pull`, re-run |
 | `input checksum mismatch` (exit 4) | Same as above — do not edit the GLBs; the package is qualified against the hashed files |
+| `FINISHER FAIL: Icosphere: no vertex groups` | **Fixed in finisher v1.1** (that object is Blender's own bone-shape helper — see `ROOT_CAUSE_ICOSPHERE.md`). `git pull` this package and re-run `./run_all.sh` |
 | `FINISHER FAIL: …` + QC JSON written | Read the one-line `error` in `output/<NAME>/<NAME>_BLENDER_QC.json`, send that file + the terminal log to Design; do not edit scripts. Design fixes script-side (you will get a one-commit update, then re-run) |
 | Previews look wrong (flat/exploded) | Send the 4 PNGs of that character to Design with the QC JSON; do not attempt manual repair |
 | Partial run (one character done) | Just re-run `./run_all.sh` — it is idempotent and overwrites its own outputs |
