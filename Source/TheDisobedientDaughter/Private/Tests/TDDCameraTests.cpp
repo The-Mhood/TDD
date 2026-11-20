@@ -34,7 +34,8 @@ constexpr float MaxCameraPitchDeg = 25.0f;
 
 bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
 {
-    UWorld* World = UWorld::CreateWorld(TEXT("TDDCameraPitchClamp"), EWorldType::Game, GetTransientPackage());
+    UWorld* World = UWorld::CreateWorld(EWorldType::Game, /*bInformEngineOfWorld=*/false,
+        TEXT("TDDCameraPitchClamp"), GetTransientPackage());
     TestNotNull(TEXT("Camera test world created"), World);
     if (World == nullptr)
     {

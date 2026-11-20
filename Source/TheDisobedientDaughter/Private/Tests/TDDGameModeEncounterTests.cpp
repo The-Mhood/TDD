@@ -21,7 +21,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(
 
 bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
 {
-    UWorld* World = UWorld::CreateWorld(TEXT("TDDEncounterFlow"), EWorldType::Game, GetTransientPackage());
+    UWorld* World = UWorld::CreateWorld(EWorldType::Game, /*bInformEngineOfWorld=*/false,
+        TEXT("TDDEncounterFlow"), GetTransientPackage());
     TestNotNull(TEXT("Encounter test world created"), World);
     if (World == nullptr)
     {

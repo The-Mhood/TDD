@@ -85,8 +85,9 @@ def main():
     azimuth = math.radians(s["sun_azimuth_deg"])
     directional.set_editor_property("intensity", s["sun_intensity"])
     # UE 5.8.4: LightColor is FColor; use the set_light_color setter, which
-    # takes a LinearColor (matches the C++ SetLightColor(FLinearColor, bSRGB)
-    # contract used by the switcher).
+    # takes a LinearColor. (The C++ switcher uses the base two-arg
+    # SetLightColor(FLinearColor, bSRGB) for the sun light; the sky light's
+    # SetLightColor takes a single FLinearColor.)
     directional.set_light_color(col(s["sun_colour"]))
     directional.set_editor_property("rotation", unreal.Rotator(
         elevation * 57.2957795, azimuth * 57.2957795, 0.0))

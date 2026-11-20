@@ -8,6 +8,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "InputCoreTypes.h"
 #include "Engine/SkeletalMesh.h"
+#include "Kismet/GameplayStatics.h"
 #include "Traversal/TDDTraversalComponent.h"
 #include "Player/TDDCharacterStateComponent.h"
 #include "TDDGameMode.h"
@@ -102,7 +103,16 @@ void ATDDAdannaCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 void ATDDAdannaCharacter::RestartPressed()
 {
-    if (ATDDGameMode* GameMode = GetGameMode<ATDDGameMode>())
+    // UE 5.8.4: AActor has no templated game-mode accessor member. The
+    // supported access path is UGameplayStatics::GetGameMode(WorldContext)
+    // (which reads UWorld::GetAuthGameMode()) followed by a cast; the world
+    // pointer is checked first so a null context stays null-safe.
+    UWorld* World = GetWorld();
+    if (World == nullptr)
+    {
+        return;
+    }
+    if (ATDDGameMode* GameMode = Cast<ATDDGameMode>(UGameplayStatics::GetGameMode(World)))
     {
         GameMode->RestartEncounter();
     }

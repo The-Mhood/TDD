@@ -3,6 +3,7 @@
 #include "AI/TDDTrainingEnemy.h"
 #include "Combat/TDDCombatComponent.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/PlayerStart.h"
 #include "Kismet/GameplayStatics.h"
@@ -12,7 +13,10 @@
 
 namespace
 {
-constexpr int32 StateIdle = static_cast<int32>(TDD::State::ETDDPlayerState::Idle);
+// Unique to this translation unit: a plain anonymous-namespace identifier
+// collides with the same name in TDDCombatComponent.cpp under Unreal's
+// Unity compilation (merged translation units), so it is qualified here.
+constexpr int32 TDDGameModeStateIdle = static_cast<int32>(TDD::State::ETDDPlayerState::Idle);
 }
 
 ATDDGameMode::ATDDGameMode()
@@ -52,10 +56,11 @@ void ATDDGameMode::CollectEncounterActors()
     {
         return;
     }
-    TArray<ATDDTrainingEnemy*> Found;
-    World->GetAllActorsOfClass<ATDDTrainingEnemy>(Found);
-    for (ATDDTrainingEnemy* Enemy : Found)
+    // UE 5.8.4: UWorld has no GetAllActorsOfClass member; the supported
+    // actor-query mechanism is TActorIterator (EngineUtils.h).
+    for (TActorIterator<ATDDTrainingEnemy> It(World); It; ++It)
     {
+        ATDDTrainingEnemy* Enemy = *It;
         if (Enemy == nullptr)
         {
             continue;
@@ -172,18 +177,24 @@ void ATDDGameMode::ResetPlayerForRestart()
     UTDDCharacterStateComponent* State = PlayerPawn->FindComponentByClass<UTDDCharacterStateComponent>();
     if (State != nullptr)
     {
-        State->ForceState(StateIdle);
+        State->ForceState(TDDGameModeStateIdle);
     }
     // Return the pawn to the level's PlayerStart so restarts are repeatable.
-    TArray<APlayerStart*> Starts;
+    // UE 5.8.4: UWorld has no GetAllActorsOfClass member; the supported
+    // actor-query mechanism is TActorIterator (EngineUtils.h).
+    APlayerStart* FirstStart = nullptr;
     if (World != nullptr)
     {
-        World->GetAllActorsOfClass<APlayerStart>(Starts);
+        for (TActorIterator<APlayerStart> It(World); It; ++It)
+        {
+            FirstStart = *It;
+            break;
+        }
     }
-    if (!Starts.IsEmpty())
+    if (FirstStart != nullptr)
     {
-        PlayerPawn->SetActorLocation(Starts[0]->GetActorLocation());
-        PlayerPawn->SetActorRotation(Starts[0]->GetActorRotation());
+        PlayerPawn->SetActorLocation(FirstStart->GetActorLocation());
+        PlayerPawn->SetActorRotation(FirstStart->GetActorRotation());
     }
 }
 
@@ -204,7 +215,7 @@ void ATDDGameMode::ResetEnemiesForRestart()
         UTDDCharacterStateComponent* State = Enemy->FindComponentByClass<UTDDCharacterStateComponent>();
         if (State != nullptr)
         {
-            State->ForceState(StateIdle);
+            State->ForceState(TDDGameModeStateIdle);
         }
         if (I < EncounterSpawnLocations.Num())
         {

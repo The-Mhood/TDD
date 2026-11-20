@@ -484,6 +484,27 @@ def main():
          "drive the GameMode instance directly in tests, or set it through "
          "UWorld::SetGameMode(FURL) with a GameInstance; read via "
          "GetAuthGameMode()"),
+        # UWorld has no GetAllActorsOfClass member in 5.8.4; the actor query
+        # is the static UGameplayStatics::GetAllActorsOfClass or the
+        # TActorIterator. A member call (->GetAllActorsOfClass<...>) fails.
+        (r"->\s*GetAllActorsOfClass\s*<",
+         "C++ error class — UWorld has no GetAllActorsOfClass member in UE 5.8.4",
+         "use TActorIterator<T>(World) (include EngineUtils.h) or the static "
+         "UGameplayStatics::GetAllActorsOfClass(WorldContext, Class, OutActors)"),
+        # AActor has no templated GetGameMode<T>() member in 5.8.4; the
+        # supported access path is UGameplayStatics::GetGameMode(WorldContext)
+        # (which reads UWorld::GetAuthGameMode()) followed by a cast.
+        (r"\bGetGameMode\s*<",
+         "C++ error class — AActor has no templated GetGameMode<T>() member in UE 5.8.4",
+         "use UGameplayStatics::GetGameMode(GetWorld()) and Cast<T>(...), "
+         "or GetWorld()->GetAuthGameMode<T>()"),
+        # UWorld::CreateWorld takes (EWorldType, bool, FName, UPackage*, ...);
+        # passing the world name first (a TEXT() FName as the first argument)
+        # fails to compile against the 5.8.4 signature.
+        (r"CreateWorld\s*\(\s*TEXT\s*\(",
+         "C++ error class — UWorld::CreateWorld argument order in UE 5.8.4",
+         "call CreateWorld(EWorldType::Type, bool, FName, UPackage*, ...) — "
+         "the world type comes first, the world name is the third argument"),
     ]
     if src.is_dir():
         for hdr in sorted(src.rglob("*.h")) + sorted(src.rglob("*.cpp")):
@@ -548,6 +569,78 @@ def main():
                         f"(World->Tick(...); UWorld::Tick is public in UE 5.8.4) or assert on "
                         f"public state; do not expose protected/private implementation "
                         f"details solely for testing")
+
+    # ---- UE 5.8.4 sky-light SetLightColor arity guard ------------------\
+    # USkyLightComponent::SetLightColor takes a single FLinearColor argument
+    # in 5.8.4 (it shadows the base ULightComponent two-arg
+    # SetLightColor(FLinearColor, bSRGB) that directional/point lights use).
+    # A two-argument call on a sky light fails to compile. Guard the
+    # demonstrated failure pattern: a two-arg SetLightColor call on the
+    # sky-light receiver (the sun light's two-arg base call stays valid).
+    if src.is_dir():
+        for cpp in sorted(src.rglob("*.cpp")):
+            try:
+                htext = cpp.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            rel = str(cpp.relative_to(root))
+            for m in re.finditer(r"(AmbientLight|[A-Za-z_]\w*SkyLight\w*)\s*->\s*SetLightColor\s*\(([^)]*)\)", htext):
+                receiver, args = m.group(1), m.group(2)
+                if "," in args:
+                    line = htext[:m.start()].count("\n") + 1
+                    block(
+                        f"{rel}:{line}: C++ error class — USkyLightComponent::SetLightColor takes "
+                        f"one FLinearColor argument in UE 5.8.4 (receiver '{receiver}' called with "
+                        f"{len(args.split(','))} arguments)",
+                        f"call {receiver}->SetLightColor(FLinearColor) with a single argument; the "
+                        f"two-arg SetLightColor(FLinearColor, bSRGB) is the base ULightComponent "
+                        f"signature used by directional/point lights, not the sky light")
+
+    # ---- Unity-build symbol-collision guard ----------------------------\
+    # Unreal's Unity compilation merges translation units; an identifier
+    # declared in an anonymous namespace in two different .cpp files becomes
+    # a redefinition error in the merged TU (e.g. StateIdle declared in both
+    # TDDGameMode.cpp and TDDCombatComponent.cpp). Scan every .cpp for
+    # file-scope declarations inside anonymous namespaces (and file-scope
+    # statics) and block any identifier declared in more than one file.
+    if src.is_dir():
+        def _anon_namespace_bodies(text):
+            for m in re.finditer(r"namespace\s*\{", text):
+                start = m.end() - 1
+                depth = 0
+                for j in range(start, len(text)):
+                    if text[j] == "{":
+                        depth += 1
+                    elif text[j] == "}":
+                        depth -= 1
+                        if depth == 0:
+                            break
+                yield text[start:j]
+
+        decl_files = {}
+        for cpp in sorted(src.rglob("*.cpp")):
+            try:
+                htext = cpp.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            rel = str(cpp.relative_to(root))
+            names = set()
+            for block_text in _anon_namespace_bodies(htext):
+                for d in re.finditer(
+                        r"(?:const|constexpr|static|inline|struct|enum|using|typedef)\s+"
+                        r"[^\n;{}=]*?(\w+)\s*(?:=|;|\{|\()", block_text):
+                    names.add(d.group(1))
+            for n in names:
+                decl_files.setdefault(n, set()).add(rel)
+        for name, files in sorted(decl_files.items()):
+            if len(files) > 1:
+                block(
+                    f"Unity-build symbol collision — identifier '{name}' is declared in an "
+                    f"anonymous namespace in {sorted(files)}",
+                    f"rename the identifier in one of the files to a genuinely unique name "
+                    f"(e.g. prefixed with the owning class/file); Unreal's Unity compilation "
+                    f"merges these translation units and the duplicate declaration is a "
+                    f"redefinition error")
 
     # ---- targets
     target_files = sorted(src.glob("*.Target.cs")) if src.is_dir() else []

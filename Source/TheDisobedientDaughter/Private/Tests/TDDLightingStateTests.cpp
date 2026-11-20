@@ -87,7 +87,8 @@ bool VerifyPresetApplied(ATDDLightingStateSwitcher* Switcher, const FPresetGolde
 
 bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
 {
-    UWorld* World = UWorld::CreateWorld(TEXT("TDDLightingState"), EWorldType::Game, GetTransientPackage());
+    UWorld* World = UWorld::CreateWorld(EWorldType::Game, /*bInformEngineOfWorld=*/false,
+        TEXT("TDDLightingState"), GetTransientPackage());
     TestNotNull(TEXT("Lighting test world created"), World);
     if (World == nullptr)
     {

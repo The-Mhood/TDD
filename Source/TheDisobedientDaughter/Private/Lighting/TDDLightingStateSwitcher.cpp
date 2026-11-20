@@ -68,7 +68,10 @@ void ATDDLightingStateSwitcher::ApplyState(ETDDLightingState State)
         // inherited LightColor (FColor); the ground colour is
         // LowerHemisphereColor (FLinearColor). There is no
         // upper-hemisphere colour member exists in 5.8.4.
-        AmbientLight->SetLightColor(Preset->AmbientSky, /*bSRGB=*/false);
+        // USkyLightComponent::SetLightColor takes a single FLinearColor
+        // argument in 5.8.4 (it shadows the base ULightComponent
+        // SetLightColor(FLinearColor, bSRGB) used by the sun light above).
+        AmbientLight->SetLightColor(Preset->AmbientSky);
         AmbientLight->SetLowerHemisphereColor(Preset->AmbientGround);
     }
     if (FireLight != nullptr)
