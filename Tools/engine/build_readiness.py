@@ -37,6 +37,39 @@ COMPONENT_INCLUDE_RULES = [
     (r"\bUCharacterMovementComponent\b", "GameFramework/CharacterMovementComponent.h"),
 ]
 
+# Engine-subsystem header guard: UE subsystem headers live under Subsystems/*.h.
+# In UE 5.8 both UWorldSubsystem and UTickableWorldSubsystem are defined in
+# Subsystems/WorldSubsystem.h; the separate Subsystems/TickableWorldSubsystem.h
+# header of the UE 5.0-5.6 era no longer exists, so including it is a fatal
+# 'file not found' compile error (the UE 5.8.4 API docs list both classes under
+# Subsystems/WorldSubsystem.h). This guard catches removed/invalid engine
+# header paths before UBT so the owner's Mac build is not wasted.
+# Maps a header that no longer exists in UE 5.8.4 to its replacement.
+REMOVED_ENGINE_HEADERS = {
+    "Subsystems/TickableWorldSubsystem.h": "Subsystems/WorldSubsystem.h",
+}
+
+# Subsystem headers verified to exist in UE 5.8.4 under
+# Engine/Source/Runtime/Engine/Public/Subsystems/ (per the official UE 5.8 API
+# documentation). Headers outside this set are flagged for verification
+# rather than assumed valid or invalid.
+KNOWN_ENGINE_SUBSYSTEM_HEADERS = (
+    "Subsystems/EngineSubsystem.h",
+    "Subsystems/GameInstanceSubsystem.h",
+    "Subsystems/WorldSubsystem.h",
+    "Subsystems/LocalPlayerSubsystem.h",
+)
+
+# Subsystem base class -> the header that defines it in UE 5.8.4. A file using
+# the base class (as a base, or in code) must include that header.
+SUBSYSTEM_BASE_INCLUDE_RULES = [
+    (r"\bUTickableWorldSubsystem\b", "Subsystems/WorldSubsystem.h"),
+    (r"\bUWorldSubsystem\b", "Subsystems/WorldSubsystem.h"),
+    (r"\bUEngineSubsystem\b", "Subsystems/EngineSubsystem.h"),
+    (r"\bUGameInstanceSubsystem\b", "Subsystems/GameInstanceSubsystem.h"),
+    (r"\bULocalPlayerSubsystem\b", "Subsystems/LocalPlayerSubsystem.h"),
+]
+
 
 def main():
     ap = argparse.ArgumentParser()
@@ -140,6 +173,35 @@ def main():
                         f'#include \"{header}\"',
                         f"add #include \"{header}\" to {rel}; a missing include "
                         f"causes an incomplete-type compile error")
+
+    # ---- engine subsystem header guard ------------------------------------
+    # Scan every .h and .cpp in the project for UE engine subsystem header
+    # includes. (1) A header that no longer exists in UE 5.8.4 is a hard
+    # blocker with its replacement. (2) A subsystem base class used in a file
+    # requires that file to include the header defining the class. (3) A
+    # Subsystems/*.h include outside the verified set is flagged for
+    # verification against the installed engine source.
+    if src.is_dir():
+        for header_file in sorted(list(src.rglob("*.h")) + list(src.rglob("*.cpp"))):
+            try:
+                text = header_file.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            rel = header_file.relative_to(root)
+            for inc in re.findall(r'#include\s+"((?:[^"\\]|\\.)*Subsystems/[^"\\]+\.h)"', text):
+                if inc in REMOVED_ENGINE_HEADERS:
+                    block(f"{rel}: #include \"{inc}\" no longer exists in UE 5.8.4",
+                          f"use #include \"{REMOVED_ENGINE_HEADERS[inc]}\" instead; "
+                          f"in UE 5.8 UTickableWorldSubsystem is defined in WorldSubsystem.h")
+                elif inc not in KNOWN_ENGINE_SUBSYSTEM_HEADERS:
+                    warn(f"{rel}: #include \"{inc}\" is not a verified UE 5.8.4 subsystem header",
+                         "confirm the header exists under Engine/Source/Runtime/Engine/Public/Subsystems/ "
+                         "in the installed engine before building")
+            for pattern, header in SUBSYSTEM_BASE_INCLUDE_RULES:
+                if re.search(pattern, text) and f'"{header}"' not in text:
+                    block(
+                        f"{rel}: uses {re.search(pattern, text).group(0)} but does not include \"{header}\"",
+                        f"add #include \"{header}\" to {rel}; the class is defined there in UE 5.8.4")
 
     # ---- targets
     target_files = sorted(src.glob("*.Target.cs")) if src.is_dir() else []
