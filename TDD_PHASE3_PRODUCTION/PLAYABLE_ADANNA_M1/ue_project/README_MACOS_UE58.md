@@ -90,13 +90,34 @@ print("Modules:", [m["Name"] for m in d["Modules"]])
 print("Plugins:", d.get("Plugins"))
 print("TargetPlatforms:", d.get("TargetPlatforms"))
 PY
+# UBT loads ONLY files named *.Target.cs. There must be exactly two, and nothing else
+# in Source/ may declare TargetRules - a differently-named copy is never read.
+ls -1 "$TDD_UE/Source/"*.Target.cs
+grep -rn "TargetRules" "$TDD_UE/Source/" --include=*.cs | grep -v "\.Target\.cs:"
 grep -n "BuildSettingsVersion\|IncludeOrderVersion" \
-  "$TDD_UE/Source/TDD_GAME.Target.cs" "$TDD_UE/Source/TDD_GAMEEditorTarget.cs"
+  "$TDD_UE/Source/TDD_GAME.Target.cs" "$TDD_UE/Source/TDD_GAMEEditor.Target.cs"
 ```
 
-Expect `EngineAssociation: 5.8`, `BuildSettingsVersion.V7`, `EngineIncludeOrderVersion.Unreal5_8`.
-These three must agree with the installed engine; a mismatch produces the
-"outdated BuildSettingsVersion" prompt or a stale include-order build.
+Expect exactly `TDD_GAME.Target.cs` and `TDD_GAMEEditor.Target.cs`, the second grep empty,
+`EngineAssociation: 5.8`, and **the same** `BuildSettingsVersion.V7` /
+`EngineIncludeOrderVersion.Unreal5_8` in both targets.
+
+`DefaultBuildSettings` is part of the shared build environment. This project is built
+against the Launcher engine, so its modules link against the engine's precompiled
+`UnrealEditor`. If a target asks for a different `BuildSettingsVersion`, UBT stops before
+compiling anything:
+
+```
+TDD_GAMEEditor modifies the values of properties: [ UndefinedIdentifierWarningLevel: Off != Error,
+UnreachableCodeWarningLevel: Off != Error, ReturnTypeWarningLevel: Off != Error,
+DanglingWarningLevel: Off != Error ]. This is not allowed, as TDD_GAMEEditor has build
+products in common with UnrealEditor.
+```
+
+Do not reach for `BuildEnvironment = TargetBuildEnvironment.Unique` to silence that: an
+installed engine rejects it ("Targets with a unique build environment cannot be built with
+an installed engine"). Do not set `bOverrideBuildEnvironment` either - it only forces a
+divergence through. The correct fix is that both targets agree.
 
 ---
 
@@ -118,7 +139,9 @@ grep -Ei "error:|warning: .*deprecat|Result: Failed" \
   "$TDD_UE/Saved/TDD_M1/Evidence/01_compile.log" | head -40
 ```
 
-For a clean rebuild (delete only build artefacts, never `Content/` or `Source/`):
+If a target-rule file changed since the last attempt, clear the cached makefile so UBT
+does not reuse the old environment check. Delete only build artefacts, never `Content/`
+or `Source/`:
 
 ```bash
 rm -rf "$TDD_UE/Binaries" "$TDD_UE/Intermediate"

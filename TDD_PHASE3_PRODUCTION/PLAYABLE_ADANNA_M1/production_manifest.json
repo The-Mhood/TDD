@@ -111,7 +111,7 @@
     "engine": "Three.js 0.187.0 vendored locally, including three.core.js; no external CDN dependency",
     "shared_simulation": "web_build/game.js used by browser, Node integration test and CPU replay captures",
     "live_server": "node server.mjs, bound to 0.0.0.0 for Arena live preview",
-    "verification": "77/77 static/live HTTP, local ES-module, asset, capture, UE source-file and durable-record checks passed; WebGL rendering not automated",
+    "verification": "80/80 static/live HTTP, local ES-module, asset, capture, UE source-file and durable-record checks passed; WebGL rendering not automated",
     "automated_webgl_render_verified": false,
     "captures_verified": true
   },

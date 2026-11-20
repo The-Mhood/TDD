@@ -41,7 +41,15 @@
 
 ## Target environment
 
-**Owner baseline:** Apple M4 Mac, 16 GB RAM, macOS 27.2.1, ARM64, Unreal Engine 5.8. `EngineAssociation` is `5.8`; both targets use `BuildSettingsVersion.V7` and `EngineIncludeOrderVersion.Unreal5_8`. No Windows target is assumed and no Windows-only tokens remain in the project files.
+**Owner baseline:** Apple M4 Mac, 16 GB RAM, macOS 27.2.1, ARM64, Unreal Engine 5.8. `EngineAssociation` is `5.8`; both loadable targets (`Source/TDD_GAME.Target.cs`,
+`Source/TDD_GAMEEditor.Target.cs`) use `BuildSettingsVersion.V7` and
+`EngineIncludeOrderVersion.Unreal5_8`. No Windows target is assumed and no Windows-only tokens
+remain in the project files.
+
+Only `Source/*.Target.cs` is loadable. A second editor-target copy named
+`TDD_GAMEEditorTarget.cs` existed and was never read by UBT; it held `V5`/`Unreal5_4` while the
+audit reported V7, and it caused the first compile to fail before any C++ was built. It has been
+deleted; `scripts/audit_ue_macos.py` now fails on any `TargetRules` file not named `*.Target.cs`.
 
 Toolchain requirement: Xcode 26.0 minimum, 26.1.1 recommended; **Xcode 26.4 is not compatible with Unreal Engine**. Metal 1.2 class GPU required and satisfied by M4.
 

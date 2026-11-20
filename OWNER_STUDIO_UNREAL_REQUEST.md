@@ -78,7 +78,10 @@ paths, logs and recordings only.
 ## 4. What is already prepared, so you are not starting from zero
 
 - `ue_project/TDD_GAME.uproject` — `EngineAssociation: 5.8`, Mac target, Python plugin enabled.
-- `Source/*.Target.cs` — `BuildSettingsVersion.V7`, `EngineIncludeOrderVersion.Unreal5_8`.
+- `Source/*.Target.cs` — `BuildSettingsVersion.V7`, `EngineIncludeOrderVersion.Unreal5_8`, and
+  **the same** `BuildSettingsVersion` in both files. That value is part of UBT's shared build
+  environment; because this project links against the Launcher engine's precompiled
+  `UnrealEditor`, a mismatch stops the build before compilation.
 - `ue_project/Tools/TDD_M1_Unreal_Setup_macOS.py` — creates and saves the project-owned map,
   repoints the map config, imports the three labelled technical files, writes a JSON report.
   Never overwrites existing assets. Has a dry-run switch.

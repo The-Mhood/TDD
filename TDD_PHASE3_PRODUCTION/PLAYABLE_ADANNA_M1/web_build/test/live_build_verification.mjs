@@ -231,7 +231,7 @@ async function main() {
       path.join(webRoot, '..', 'ue_project', 'Source', 'TDD_GAME', 'TDDForbiddenForestLevel.cpp'),
       path.join(webRoot, '..', 'ue_project', 'Source', 'TDD_GAME', 'TDDAdannaProxyCharacter.cpp'),
       path.join(webRoot, '..', 'ue_project', 'Source', 'TDD_GAME', 'TDDWorldData.h'),
-      path.join(webRoot, '..', 'ue_project', 'Source', 'TDD_GAMEEditorTarget.cs'),
+      path.join(webRoot, '..', 'ue_project', 'Source', 'TDD_GAMEEditor.Target.cs'),
       path.join(webRoot, '..', 'ue_project', 'Tools', 'TDD_M1_Unreal_Setup_macOS.py'),
       path.join(webRoot, '..', 'ue_project', 'Tools', 'tdd_m1_macos_audit.json'),
       path.join(webRoot, '..', 'ue_project', 'README_MACOS_UE58.md'),
@@ -264,6 +264,26 @@ async function main() {
     const targetCs = await fsp.readFile(path.join(webRoot, '..', 'ue_project', 'Source', 'TDD_GAME.Target.cs'), 'utf8');
     check('target uses BuildSettingsVersion.V7', targetCs.includes('BuildSettingsVersion.V7'));
     check('target pinned to Unreal5_8 include order', targetCs.includes('EngineIncludeOrderVersion.Unreal5_8'));
+
+    // UBT loads only Source/*.Target.cs. A rules file named otherwise is never read, so
+    // asserting against it certifies settings that do not exist. That mistake let a
+    // V5/Unreal5_4 editor target pass a green audit and fail the owner's first compile.
+    const srcDir = path.join(webRoot, '..', 'ue_project', 'Source');
+    const srcEntries = await fsp.readdir(srcDir);
+    const csRules = [];
+    for (const name of srcEntries.filter((n) => n.endsWith('.cs'))) {
+      const body = await fsp.readFile(path.join(srcDir, name), 'utf8');
+      if (/TargetRules/.test(body)) csRules.push(name);
+    }
+    check('every TargetRules file is loadable by UBT (*.Target.cs)',
+      csRules.every((n) => n.endsWith('.Target.cs')), csRules.join(','));
+    const editorCs = await fsp.readFile(path.join(srcDir, 'TDD_GAMEEditor.Target.cs'), 'utf8');
+    const settingsOf = (t) => (t.match(/DefaultBuildSettings\s*=\s*([^;]+);/) || [])[1];
+    check('game and editor targets share one BuildSettingsVersion (UBT shared environment)',
+      settingsOf(targetCs) !== undefined && settingsOf(targetCs) === settingsOf(editorCs),
+      `game=${settingsOf(targetCs)} editor=${settingsOf(editorCs)}`);
+    check('editor target pinned to Unreal5_8 include order',
+      editorCs.includes('EngineIncludeOrderVersion.Unreal5_8'));
     const audit = JSON.parse(await fsp.readFile(path.join(webRoot, '..', 'ue_project', 'Tools', 'tdd_m1_macos_audit.json'), 'utf8'));
     check('macOS static audit is green', audit.checksPassed === audit.checksTotal && audit.checksTotal >= 65,
       `${audit.checksPassed}/${audit.checksTotal}`);

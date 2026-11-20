@@ -39,9 +39,19 @@ The production handover's first playable target was advanced under `TDD_PHASE3_P
 Owner environment is now known and recorded: **Apple M4 Mac, 16 GB RAM, macOS 27.2.1, ARM64,
 Unreal Engine 5.8**. The project was retargeted and inspected rather than assumed compatible.
 
-Retargeted: `EngineAssociation` 5.4 → **5.8**; `BuildSettingsVersion.V5` → **V7**;
-`EngineIncludeOrderVersion.Unreal5_4` → **Unreal5_8**; `TargetPlatforms` Windows/Linux → **Mac**;
+Retargeted: `EngineAssociation` 5.4 → **5.8**; `TargetPlatforms` Windows/Linux → **Mac**;
 `PythonScriptPlugin` enabled for the owner-side helper.
+
+**Correction (2026-11-19, after the first owner-machine compile).** The earlier claim that
+`BuildSettingsVersion`/`IncludeOrderVersion` had been retargeted was **false**. The edit landed in
+`Source/TDD_GAMEEditorTarget.cs`, which UBT never loads: the launcher engine loads only
+`Source/*.Target.cs`, and the live `TDD_GAMEEditor.Target.cs` still said `V5`/`Unreal5_4`. The
+audit read the dead file too, so 79 green checks certified settings that were not in force. UBT
+stopped before any C++ with `TDD_GAMEEditor modifies the values of properties: [... Off != Error
+...] ... build products in common with UnrealEditor`. Fixed by setting both live targets to
+`V7`/`Unreal5_8`, deleting the dead file, and re-pointing the audit and the live verifier at
+`TDD_GAMEEditor.Target.cs`; the audit now rejects any unloadable `TargetRules` file. No compile has
+been executed.
 
 Ten defects found and repaired (details in root `PLAYABLE_MILESTONE_TRACKER.md`): map/game-mode
 keys in a section UE ignores; removed `EditorLevelLibrary` API and non-saving `new_level` in the

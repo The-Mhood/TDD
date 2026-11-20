@@ -48,7 +48,10 @@ def main() -> dict:
     uproject_text = read(UE / "TDD_GAME.uproject")
     uproject = json.loads(uproject_text) if uproject_text else {}
     target = read(SRC / "TDD_GAME.Target.cs")
-    editor_target = read(SRC / "TDD_GAMEEditorTarget.cs")
+    # UBT loads only files matching "*.Target.cs". "TDD_GAMEEditorTarget.cs" does not
+    # match that pattern, so it is dead code that UBT never reads - reading it here
+    # previously certified V7/Unreal5_8 while the live editor target said V5/Unreal5_4.
+    editor_target = read(SRC / "TDD_GAMEEditor.Target.cs")
     engine_ini = read(UE / "Config" / "DefaultEngine.ini")
     input_ini = read(UE / "Config" / "DefaultInput.ini")
     helper = read(HELPER)
@@ -62,19 +65,102 @@ def main() -> dict:
     check("uproject EngineAssociation is 5.8",
           uproject.get("EngineAssociation") == "5.8",
           "found=%r" % uproject.get("EngineAssociation"))
+    def target_files() -> list:
+        return sorted(SRC.glob("*.Target.cs"))
+
+    def setting(text: str, key: str) -> str:
+        m = re.search(r"\b%s\s*=\s*([^;]+);" % key, text)
+        return m.group(1).strip() if m else ""
+
+    def strip_comments(text: str) -> str:
+        return re.sub(r"//[^\n]*", "", text)
+
+    loadable = target_files()
+    check("UBT target files present (*.Target.cs)",
+          [f.name for f in loadable] == ["TDD_GAME.Target.cs", "TDD_GAMEEditor.Target.cs"],
+          str([f.name for f in loadable]))
+
+    # A file declaring TargetRules that UBT will NEVER load. This is the defect that
+    # stopped the owner's first compile: the audit was green against it while the live
+    # target still held V5/Unreal5_4.
+    orphans = [f.name for f in SRC.glob("*.cs")
+               if "TargetRules" in read(f) and not f.name.endswith(".Target.cs")]
+    check("no unloadable TargetRules file (must end in .Target.cs)", not orphans, str(orphans))
+
+    game_settings = setting(strip_comments(target), "DefaultBuildSettings")
+    editor_settings = setting(strip_comments(editor_target), "DefaultBuildSettings")
     check("Game target uses BuildSettingsVersion.V7",
-          "BuildSettingsVersion.V7" in target, "5.8 ships V7; V5 emits an upgrade prompt")
+          game_settings == "BuildSettingsVersion.V7",
+          "found=%r; 5.8 ships V7, and V6/V7 are what raise the four warning levels to Error"
+          % game_settings)
     check("Editor target uses BuildSettingsVersion.V7",
-          "BuildSettingsVersion.V7" in editor_target)
-    check("IncludeOrderVersion is Unreal5_8",
-          "EngineIncludeOrderVersion.Unreal5_8" in target and
-          "EngineIncludeOrderVersion.Unreal5_8" in editor_target)
+          editor_settings == "BuildSettingsVersion.V7",
+          "found=%r" % editor_settings)
+    # The exact cause of the owner's failure: a shared-environment property differing
+    # between the two targets is rejected before any C++ is compiled.
+    check("both targets share one BuildSettingsVersion (UBT shared environment)",
+          game_settings == editor_settings and game_settings != "",
+          "game=%r editor=%r" % (game_settings, editor_settings))
+    check("build settings are not force-overridden",
+          "bOverrideBuildEnvironment" not in target + editor_target,
+          "bOverrideBuildEnvironment only masks a divergence")
+    check("no Unique build environment (installed-engine builds reject it)",
+          "TargetBuildEnvironment.Unique" not in target + editor_target,
+          "Unique is source-build only and fails on a Launcher engine")
+    check("IncludeOrderVersion is Unreal5_8 in both targets",
+          setting(strip_comments(target), "IncludeOrderVersion") == "EngineIncludeOrderVersion.Unreal5_8" and
+          setting(strip_comments(editor_target), "IncludeOrderVersion") == "EngineIncludeOrderVersion.Unreal5_8",
+          "game=%r editor=%r" % (setting(strip_comments(target), "IncludeOrderVersion"),
+                                 setting(strip_comments(editor_target), "IncludeOrderVersion")))
+    check("no legacy include order left anywhere",
+          not re.search(r"EngineIncludeOrderVersion\.Unreal5_[0-7]\b",
+                        strip_comments(target) + strip_comments(editor_target)))
     check("uproject targets Mac",
           "Mac" in (uproject.get("TargetPlatforms") or []),
           str(uproject.get("TargetPlatforms")))
     check("uproject declares required Python plugin",
           any(p.get("Name") == "PythonScriptPlugin" and p.get("Enabled")
               for p in uproject.get("Plugins", [])))
+
+    # ---- 1b. C# target-rule structural sanity ---------------------------------------
+    # No C# compiler exists in this environment, so validate the structure that UBT's
+    # Roslyn compile would reject: unbalanced braces/parens/quotes, a class/ctor name
+    # mismatch, a duplicate class across the rules assembly (both *.Target.cs files are
+    # compiled together), and a wrong TargetType.
+    def cs_sanity(fname: str, text: str, expect_type: str) -> None:
+        code = strip_comments(text)
+        check("%s braces balance" % fname,
+              code.count("{") == code.count("}"), "%d open / %d close" % (code.count("{"), code.count("}")))
+        check("%s parentheses balance" % fname,
+              code.count("(") == code.count(")"))
+        check("%s double quotes balance" % fname,
+              code.count('"') % 2 == 0)
+        m = re.search(r"public class (\w+)\s*:\s*TargetRules", code)
+        check("%s declares one TargetRules class" % fname, bool(m))
+        if m:
+            cls = m.group(1)
+            check("%s constructor name matches class" % fname,
+                  re.search(r"public %s\s*\(\s*TargetInfo" % re.escape(cls), code) is not None)
+            check("%s calls base(Target)" % fname, "base(Target)" in code)
+            cs_classes.append(cls)
+        check("%s sets Type = TargetType.%s" % (fname, expect_type),
+              re.search(r"Type\s*=\s*TargetType\.%s\s*;" % expect_type, code) is not None)
+        check("%s names the TDD_GAME module" % fname,
+              re.search(r'ExtraModuleNames\.Add\("TDD_GAME"\)\s*;', code) is not None)
+        check("%s ends with a closing brace" % fname, code.rstrip().endswith("}"))
+
+    cs_classes: list = []
+    cs_sanity("TDD_GAME.Target.cs", target, "Game")
+    cs_sanity("TDD_GAMEEditor.Target.cs", editor_target, "Editor")
+    check("target class names are unique across the rules assembly",
+          len(cs_classes) == len(set(cs_classes)), str(cs_classes))
+
+    # Documentation must not point the owner at a file UBT never loads.
+    runbook_now = read(UE / "README_MACOS_UE58.md")
+    check("runbook does not cite the unloadable TDD_GAMEEditorTarget.cs",
+          "TDD_GAMEEditorTarget.cs" not in runbook_now)
+    check("runbook names the real editor target file",
+          "TDD_GAMEEditor.Target.cs" in runbook_now)
 
     # ---- 2. Module dependencies ----------------------------------------------------
     for dep in ("Core", "CoreUObject", "Engine", "InputCore"):
@@ -112,7 +198,7 @@ def main() -> dict:
     for token in windows_tokens:
         check("no Windows-only token %r in helper" % token, token not in helper)
     project_texts = {
-        "uproject": uproject_text, "Target.cs": target, "EditorTarget.cs": editor_target,
+        "uproject": uproject_text, "Target.cs": target, "TDD_GAMEEditor.Target.cs": editor_target,
         "Build.cs": build_cs, "character.h": character_h, "character.cpp": character_cpp,
         "level.cpp": level_cpp, "level.h": level_h,
     }

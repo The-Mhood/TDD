@@ -1,10 +1,10 @@
 {
-  "generated": "2026-11-20T06:43:05.846Z",
+  "generated": "2026-11-20T06:59:13.371Z",
   "overallPass": true,
   "classification": "Static/live HTTP delivery, recursive local ES-module resolution, generated asset integrity, capture presence, UE source-file presence and durable-record verification. NOT an automated WebGL rendering test or Unreal compile/cook/package test.",
   "server": {
     "command": "node server.mjs",
-    "port": 44987,
+    "port": 44101,
     "host": "0.0.0.0",
     "requestedFrom": "127.0.0.1 sandbox loopback"
   },
@@ -315,7 +315,7 @@
       "detail": ""
     },
     {
-      "name": "UE source file TDD_GAMEEditorTarget.cs",
+      "name": "UE source file TDD_GAMEEditor.Target.cs",
       "ok": true,
       "detail": ""
     },
@@ -385,9 +385,24 @@
       "detail": ""
     },
     {
+      "name": "every TargetRules file is loadable by UBT (*.Target.cs)",
+      "ok": true,
+      "detail": "TDD_GAME.Target.cs,TDD_GAMEEditor.Target.cs"
+    },
+    {
+      "name": "game and editor targets share one BuildSettingsVersion (UBT shared environment)",
+      "ok": true,
+      "detail": "game=BuildSettingsVersion.V7 editor=BuildSettingsVersion.V7"
+    },
+    {
+      "name": "editor target pinned to Unreal5_8 include order",
+      "ok": true,
+      "detail": ""
+    },
+    {
       "name": "macOS static audit is green",
       "ok": true,
-      "detail": "79/79"
+      "detail": "106/106"
     },
     {
       "name": "macOS audit does not claim compile",
