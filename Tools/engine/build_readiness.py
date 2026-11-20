@@ -307,6 +307,10 @@ def main():
             for m in re.finditer(r"(?m)^\s*(public|private|protected)\s*:", htext):
                 events.append((m.start(), "access", m.group(1)))
             for m in re.finditer(r"\b(class|struct)\s+[^;{]*\{", htext):
+                # Skip `enum class`/`enum struct` declarations: the keyword is
+                # not opening a type body, so it must not flip access tracking.
+                if re.search(r"enum\s*$", htext[:m.start()]):
+                    continue
                 events.append((m.start(), "open", m.group(1)))
             for m in re.finditer(r"\b(UPROPERTY|UFUNCTION)\s*\(", htext):
                 end = htext.find(";", m.end())
