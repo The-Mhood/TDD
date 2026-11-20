@@ -214,6 +214,15 @@ void UTDDCombatComponent::ReceiveSuccessfulParry()
     }
 }
 
+void UTDDCombatComponent::ResetForRestart()
+{
+    Health = MaxHealth;
+    Posture = 0.0f;
+    GuardStartedAt = -1.0f;
+    bGuarding = false;
+    bGuardReleasePending = false;
+}
+
 void UTDDCombatComponent::ApplyOutcome(const TDD::Combat::FTDDDamageOutcome& Outcome)
 {
     if (Outcome.Classification == TDD::Combat::ETDDDamageClassification::None)

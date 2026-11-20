@@ -10,6 +10,7 @@
 #include "Engine/SkeletalMesh.h"
 #include "Traversal/TDDTraversalComponent.h"
 #include "Player/TDDCharacterStateComponent.h"
+#include "TDDGameMode.h"
 
 ATDDAdannaCharacter::ATDDAdannaCharacter()
 {
@@ -75,6 +76,15 @@ void ATDDAdannaCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
     PlayerInputComponent->BindAction(TEXT("Sprint"), IE_Pressed, this, &ATDDAdannaCharacter::SprintPressed);
     PlayerInputComponent->BindAction(TEXT("Sprint"), IE_Released, this, &ATDDAdannaCharacter::SprintReleased);
     PlayerInputComponent->BindAction(TEXT("Traverse"), IE_Pressed, this, &ATDDAdannaCharacter::TraversePressed);
+    PlayerInputComponent->BindAction(TEXT("Restart"), IE_Pressed, this, &ATDDAdannaCharacter::RestartPressed);
+}
+
+void ATDDAdannaCharacter::RestartPressed()
+{
+    if (ATDDGameMode* GameMode = GetGameMode<ATDDGameMode>())
+    {
+        GameMode->RestartEncounter();
+    }
 }
 
 void ATDDAdannaCharacter::MoveForward(const float Value)

@@ -47,6 +47,7 @@ private:
     void SprintPressed();
     void SprintReleased();
     void TraversePressed();
+    void RestartPressed();
     void UpdateLocomotionIntent();
 
     float ForwardInput = 0.0f;

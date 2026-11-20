@@ -44,6 +44,10 @@ public:
 
     void ReceiveSuccessfulParry();
 
+    /** Restore full health/posture and clear guard state (encounter restart). */
+    UFUNCTION(BlueprintCallable, Category="TDD|Combat")
+    void ResetForRestart();
+
 protected:
     virtual void BeginPlay() override;
     virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
