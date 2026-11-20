@@ -82,7 +82,7 @@ void UTDDCombatBrainComponent::TickComponent(const float DeltaTime, const ELevel
     FVector ToTarget = Player->GetActorLocation() - Character->GetActorLocation();
     ToTarget.Z = 0.0f;
     const float Distance = ToTarget.Size();
-    if (Distance <= UE_SMALL_NUMBER)
+    if (FMath::IsNearlyZero(Distance))
     {
         return;
     }
