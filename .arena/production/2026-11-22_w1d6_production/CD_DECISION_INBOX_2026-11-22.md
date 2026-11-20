@@ -1,5 +1,5 @@
-# CD DECISION INBOX — 2026-11-22 (W1 D6) — THREE DELEGATED RULINGS PENDING; DESIGN IS NOT BLOCKED ON ANYTHING ELSE
-**To: CD (delegated decisions per owner). Evidence complete on branch `arena/6e649a9b-tdd` (pushed 5af7383). No ruling issued by Design; no owner escalation needed; each ruling is one page.**
+# CD DECISION INBOX — 2026-11-22 (W1 D6) — SUPERSEDED IN PART, RETAINED FOR RECORD
+**UPDATE (owner autonomous-production directive, 2026-11-22):** Items 1 (AD-02) and 3 (RG) have been **decided by Design under delegated authority** — see `DECISION_AD02_SELECT_A_2026-11-22.md` (SELECT A) and `DECISION_RG_GUARD_V003_2026-11-22.md` in this folder. Item 4 (KIT-HUT) is proceeding as provisional production under the same authority. Item 2 (FP-10 register ratification) remains open as a register action; it blocks nothing. This inbox is preserved as the evidence trail and remains counter-rulable by CD/owner.
 
 ## 1. AD-02 — ADANNA reference selection (recommended: A)
 Evidence: `.arena/production/2026-11-21_w1d5_adanna/AD02_EXACT_VERSION_REVIEW_2026-11-21.md` + contact sheet + checksums (in this folder).

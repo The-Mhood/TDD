@@ -13,10 +13,11 @@ Branch `arena/6e649a9b-tdd`. Tiers: C=concept · RC=reviewed candidate · PR=pro
 - PM asks (unchanged): minimum gameplay anim set ruling; capsule dims. Blade/scabbard: **none, deferred CQ-9, non-blocking.**
 
 ## CH01 KIT-HUT (new geometry this turn)
-- `kit_hut/build_kit_hut.py` → `kit_hut/out/`: WALL_3M (24 tris), WALL_DOOR_3M (60), CORNER (60), ROOF_HIP_4x3 (54), DOORFRAME (48) + `kit_hut.mtl` + `KIT_HUT_MANIFEST.json`. **All 5 budget_checker PASS** (0 degenerate, 0 NaN). Provisional greybox-replacement modules; CD kit sign-off + TD/PM dims before Unreal import. Target: `.arena/production/2026-11-21_w1d5_ch01/CH01-SUBJ-001_FAMILY_HOUSE_TARGET_SHEET.jpg`.
+- `kit_hut/build_kit_hut.py` → `kit_hut/out/`: WALL_3M (24 tris), WALL_DOOR_3M (60), CORNER (60), ROOF_HIP_4x3 (54), DOORFRAME (48) + `kit_hut.mtl` + `KIT_HUT_MANIFEST.json`. **All 5 budget_checker PASS** (0 degenerate, 0 NaN).
+- **NEW `kit_hut/out/CH01_HUT_ASSEMBLED_V1.obj`** — full assembled house (158 verts, height 4.105 m incl. roof), budget PASS. Provisional; TD/PM dimension sign-off before Unreal import. Target: `.arena/production/2026-11-21_w1d5_ch01/CH01-SUBJ-001_FAMILY_HOUSE_TARGET_SHEET.jpg`.
 
 ## Royal Guard
-No new assets. CD REVISE/V003 ruling + PM anim/AI answers pending (see inbox §3; coordination pack W1 D4). Unnamed guard-class, unarmed.
+- **NEW `rg/RG_V003_GUARD_CLASS_TARGET.jpg`** (owner-selected, verified vs correction order — `rg/VERIFIED_RG_V003_2026-11-22.md`). Unnamed guard-class, unarmed, no disc/coral mark. 3D route: HUMAN_BASE body + costume meshes. PM anim/AI minimums still requested (not blocking visual lane).
 
 ## PM actions requested
 1. Provide/confirm Blender 4.2+ runner (workstation or `blender:4.x` container) — this unblocks AD-03 FBX, greybox build, and kit build in one move.

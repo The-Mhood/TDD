@@ -1,0 +1,27 @@
+{
+  "asset": "ADANNA_AD03_V1",
+  "tier": "production-intent base mesh - NOT final sculpt, NOT production-ready",
+  "reference": "AD-02 SELECT A composite (DECISION_AD02_SELECT_A_2026-11-22)",
+  "parts": 29,
+  "verts": 1806,
+  "tris_obj": 3492,
+  "joints": [
+    "pelvis",
+    "spine",
+    "head",
+    "upperarm.L",
+    "forearm.L",
+    "upperarm.R",
+    "forearm.R",
+    "thigh.L",
+    "shin.L",
+    "thigh.R",
+    "shin.R"
+  ],
+  "blade_scabbard": "NONE (CQ-9)",
+  "files": [
+    "ADANNA_AD03_V1.obj",
+    "ADANNA_AD03_V1.mtl",
+    "ADANNA_AD03_V1.glb"
+  ]
+}
