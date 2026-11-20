@@ -4,8 +4,8 @@
   "supersedes": "ADANNA_AD03_V2 (qualified version recoverable in W1 D7 outputs)",
   "tier": "sculpt-refined production-intent - NOT final character",
   "parts": 36,
-  "verts": 7004,
-  "tris": 13668,
+  "verts": 7028,
+  "tris": 13680,
   "skeleton": "HUMAN_BASE_PROPOSED unchanged (11 joints, same names)",
   "changes": [
     "face: nose/brow/lips/ears/eyes/jaw",

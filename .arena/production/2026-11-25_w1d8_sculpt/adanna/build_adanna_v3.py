@@ -78,15 +78,34 @@ torus(wrap, (0, 0, 1.498), 0.130, 0.007, 28, 8)   # upper hem
 skirt = P("skirt_wrap_indigo", "cloth_indigo_plain_v1", "pelvis")
 lathe(skirt, [(0.205, 0.660), (0.196, 0.80), (0.182, 0.95), (0.172, 1.10), (0.176, 1.16)], 28, fold_amp=0.030, fold_n=9, cap_top=False, cap_bot=False)
 torus(skirt, (0, 0, 0.668), 0.204, 0.009, 28, 8)  # skirt hem
-strap(P("baldric_L_to_R", "leather_baldric_v1", "spine"), (-0.128, 0.128, 1.465), (0.148, 0.118, 1.125), 0.036, 0.014)
+# Baldric follows the garment surface (sculpt-gate fix: flat strap at fixed y
+# was buried inside the circular wrap lathe; pendant likewise). Surface =
+# wrap/skirt lathe radius profile; +6 mm stand-off.
+import math as _m
+_prof = [(1.125, 0.174), (1.205, 0.148), (1.30, 0.163), (1.38, 0.168), (1.46, 0.155), (1.505, 0.128)]
+def _surf_y(x, z):
+    pr = _prof
+    if z <= pr[0][0]: r = pr[0][1]
+    elif z >= pr[-1][0]: r = pr[-1][1]
+    else:
+        for (z0, r0), (z1, r1) in zip(pr, pr[1:]):
+            if z0 <= z <= z1: r = r0 + (r1-r0)*(z-z0)/(z1-z0); break
+    return _m.sqrt(max(r*r - x*x, 0.0004)) + 0.006
+_bal = P("baldric_L_to_R", "leather_baldric_v1", "spine")
+_pts = []
+for _i in range(5):
+    _t = _i/4; _x = -0.128 + 0.276*_t; _z = 1.465 - 0.340*_t
+    _pts.append((_x, _surf_y(_x, _z), _z))
+for _a, _b in zip(_pts, _pts[1:]):
+    strap(_bal, _a, _b, 0.036, 0.010)
 for i, z in enumerate((1.40, 1.362, 1.324)):
     torus(P(f"armlet_coil{i+1}_L_plain", "bronze_armlet_plain_v1", "upperarm.L"), (-0.238, 0, z), 0.056, 0.0105, 20, 10)
 pend = P("pendant_spiral_FICTIONAL", "pendant_spiral_FICTIONAL_v1", "spine")
-torus(pend, (0, 0.146, 1.302), 0.027, 0.0075, 20, 10, axis='y')
-torus(pend, (0, 0.148, 1.300), 0.016, 0.006, 16, 8, axis='y')   # inner spiral turn
+torus(pend, (0, 0.175, 1.302), 0.027, 0.0075, 20, 10, axis='y')
+torus(pend, (0, 0.177, 1.300), 0.016, 0.006, 16, 8, axis='y')   # inner spiral turn
 _cord = P("pendant_cord_master", "leather_baldric_v1", "spine")
-limb(_cord, (-0.068, 0.10, 1.465), (0, 0.146, 1.330), 0.0055, 0.0055, 8)
-limb(_cord, (0.068, 0.10, 1.465), (0, 0.146, 1.330), 0.0055, 0.0055, 8)
+limb(_cord, (-0.068, 0.145, 1.465), (0, 0.173, 1.330), 0.0055, 0.0055, 8)
+limb(_cord, (0.068, 0.145, 1.465), (0, 0.173, 1.330), 0.0055, 0.0055, 8)
 ellipsoid(P("hair_knot", "hair_v1", "head"), (0, -0.028, 1.795), (0.052, 0.052, 0.048), 16, 12)
 for i, (x, z) in enumerate(((-0.048, 1.615), (-0.062, 1.575), (0.048, 1.615))):
     limb(P(f"braid{i+1}", "hair_v1", "head"), (x, -0.062, 1.715), (x*1.15, -0.082, z), 0.010, 0.0075, 10)
