@@ -1,0 +1,56 @@
+{
+  "file": ".arena/production/2026-11-23_w1d7_production/adanna/out/ADANNA_AD03_V2.glb",
+  "verts_skinned": 4404,
+  "joints": 11,
+  "poses": {
+    "rest": {
+      "finite": true,
+      "max_vertex_disp_m": 0.0,
+      "height_m": 1.837,
+      "pass": true
+    },
+    "shoulder_raise_L": {
+      "finite": true,
+      "max_vertex_disp_m": 0.851,
+      "height_m": 1.837,
+      "pass": true
+    },
+    "elbow_bend_L": {
+      "finite": true,
+      "max_vertex_disp_m": 0.344,
+      "height_m": 1.837,
+      "pass": true
+    },
+    "forearm_twist_R": {
+      "finite": true,
+      "max_vertex_disp_m": 0.073,
+      "height_m": 1.837,
+      "pass": true
+    },
+    "hip_knee_bend_R": {
+      "finite": true,
+      "max_vertex_disp_m": 0.503,
+      "height_m": 1.837,
+      "pass": true
+    },
+    "neck_turn": {
+      "finite": true,
+      "max_vertex_disp_m": 0.08,
+      "height_m": 1.837,
+      "pass": true
+    },
+    "torso_twist": {
+      "finite": true,
+      "max_vertex_disp_m": 0.198,
+      "height_m": 1.837,
+      "pass": true
+    },
+    "combined": {
+      "finite": true,
+      "max_vertex_disp_m": 0.902,
+      "height_m": 1.837,
+      "pass": true
+    }
+  },
+  "verdict": "PASS"
+}

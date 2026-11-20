@@ -1,0 +1,16 @@
+{
+  "ADANNA_AD03_V2": {
+    "meshes": 29,
+    "verts": 4404,
+    "unweighted_verts": 0,
+    "all_deforming_meshes_weighted": true,
+    "note": "post D11 sash fix rebuild (Guard only changed)"
+  },
+  "GUARD_CLASS_V1": {
+    "meshes": 17,
+    "verts": 3190,
+    "unweighted_verts": 0,
+    "all_deforming_meshes_weighted": true,
+    "note": "post D11 sash fix rebuild (Guard only changed)"
+  }
+}
