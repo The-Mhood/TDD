@@ -1,0 +1,56 @@
+{
+  "file": "out/NPC_CIVILIAN_ELDER_M.glb",
+  "verts_skinned": 3600,
+  "joints": 11,
+  "poses": {
+    "rest": {
+      "finite": true,
+      "max_vertex_disp_m": 0.0,
+      "height_m": 1.759,
+      "pass": true
+    },
+    "shoulder_raise_L": {
+      "finite": true,
+      "max_vertex_disp_m": 1.078,
+      "height_m": 1.791,
+      "pass": true
+    },
+    "elbow_bend_L": {
+      "finite": true,
+      "max_vertex_disp_m": 0.548,
+      "height_m": 1.759,
+      "pass": true
+    },
+    "forearm_twist_R": {
+      "finite": true,
+      "max_vertex_disp_m": 0.076,
+      "height_m": 1.759,
+      "pass": true
+    },
+    "hip_knee_bend_R": {
+      "finite": true,
+      "max_vertex_disp_m": 0.457,
+      "height_m": 1.759,
+      "pass": true
+    },
+    "neck_turn": {
+      "finite": true,
+      "max_vertex_disp_m": 0.077,
+      "height_m": 1.759,
+      "pass": true
+    },
+    "torso_twist": {
+      "finite": true,
+      "max_vertex_disp_m": 0.199,
+      "height_m": 1.759,
+      "pass": true
+    },
+    "combined": {
+      "finite": true,
+      "max_vertex_disp_m": 1.18,
+      "height_m": 1.951,
+      "pass": true
+    }
+  },
+  "verdict": "PASS"
+}

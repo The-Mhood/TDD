@@ -1,0 +1,8 @@
+{"package":"NPC_CIVILIAN_VARIANTS_V1","date":"2026-12-02","tier":"production assets - NOT Blender-qualified, NOT Unreal-integrated",
+ "assets":[
+  {"name":"NPC_CIVILIAN_YOUTH_M","tris":6992,"glb_sha256":"0227014572fb76e321004ffb96e101ab57b1e46ba188e1f687bc213786c53e06","actor_scale":0.85},
+  {"name":"NPC_CIVILIAN_ELDER_M","tris":6992,"glb_sha256":"13e232740cecae8a3c5e96291bf87a46cddf12fea8fd03c286034187d7d923ab","actor_scale":1.0},
+  {"name":"NPC_CIVILIAN_ELDER_F","tris":7556,"glb_sha256":"66c07dff3f49f4b1025f190885fdbfe6d8f4d65ff238b124f7a8488f12bb566d","actor_scale":1.0},
+  {"name":"NPC_CIVILIAN_F1_EARTHRED","tris":7556,"glb_sha256":"763fc30688438b7e286d01a0e20c269bf798ab7f3e3504520ff4fa72b5d48eb9","actor_scale":1.0}],
+ "validation":"joint-influence PASS + deformation PASS all four (evidence *_DEFORM.json in out/); previews inspected; youth hand-anchor defect found and fixed pre-commit",
+ "skeleton":"HUMAN_BASE_PROPOSED (11 joints) unchanged - existing validated clips retarget"}

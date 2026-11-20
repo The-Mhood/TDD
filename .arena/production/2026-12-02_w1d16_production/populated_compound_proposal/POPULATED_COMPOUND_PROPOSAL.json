@@ -1,0 +1,21 @@
+{
+  "title": "CH01 Compound V2 - Populated Assembly Proposal",
+  "date": "2026-12-02", "status": "DRAFT FOR PM COORDINATION - NOT a production assembly, NOT committed placement",
+  "base_assembly": "2026-11-29_w1d13_production/ch01_assembly/out/CH01_COMPOUND_ASSEMBLED_V2.obj (PROVISIONAL, 1,058 tris, 13.4x10.6 m)",
+  "available_npcs": ["NPC_CIVILIAN_M1","NPC_CIVILIAN_F1","NPC_CIVILIAN_YOUTH_M (actor scale 0.85)","NPC_CIVILIAN_ELDER_M","NPC_CIVILIAN_ELDER_F","NPC_CIVILIAN_F1_EARTHRED"],
+  "candidate_anchor_slots": [
+    {"slot":"A_veranda_edge","xy":[-1.2,-1.3],"near":"house veranda south face","note":"clear of veranda posts; verify door swing/path"},
+    {"slot":"B_courtyard_west","xy":[1.6,0.6],"near":"courtyard set west side","note":"keep 1.2 m clear of courtyard props"},
+    {"slot":"C_courtyard_east","xy":[3.6,1.8],"near":"courtyard set east side","note":"pair slot with B for scale check only"},
+    {"slot":"D_gate_inside","xy":[1.4,-3.4],"near":"inside south gate","note":"MUST NOT block gate path - PM gameplay call"},
+    {"slot":"E_stall_front","xy":[3.6,-3.2],"near":"stall front","note":"stall is a module, not a designed market state (ST05 excluded)"},
+    {"slot":"F_wall_shade_north","xy":[-4.6,4.4],"near":"north wall interior","note":"background depth slot"}
+  ],
+  "density_options_for_PM_decision": {
+    "LOW_4": ["A_veranda_edge","B_courtyard_west","D_gate_inside","F_wall_shade_north"],
+    "MEDIUM_6": ["A_veranda_edge","B_courtyard_west","C_courtyard_east","D_gate_inside","E_stall_front","F_wall_shade_north"],
+    "HIGH_8": "MEDIUM_6 + 2 additional slots TBD by PM (Design will not invent further anchors without path/nav data)"
+  },
+  "pm_decisions_required": ["density option","exact slot approval/rejection per slot","facing/idle-clip assignment per slot (validated clips exist: Adanna movement V1 / Guard clips are hero sets - NPC idle reuse is a PM/TD retarget call)","nav/collision clearance confirmation","whether populated assembly is a visual scale-check only or gameplay population"],
+  "design_commitment": "On PM decision, Design delivers populated OBJ/GLB + manifest within one batch; no placement is final until then."
+}

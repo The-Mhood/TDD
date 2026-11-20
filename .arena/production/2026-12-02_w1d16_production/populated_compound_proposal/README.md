@@ -1,0 +1,3 @@
+# Populated CH01 Compound — Coordination Proposal (2026-12-02)
+**Status: DRAFT for PM coordination. No populated assembly has been built or committed.**
+Base = CH01_COMPOUND_ASSEMBLED_V2 (provisional). Six candidate anchor slots and three density options (4/6/8) are proposed in `POPULATED_COMPOUND_PROPOSAL.json`, derived from the V2 layout (veranda, courtyard set, gate, stall, north wall). Exact placement, density, facing, idle assignment and path clearance are PM/TD decisions (gameplay paths + nav data sit with PM). Design builds the populated assembly in the next batch once PM picks an option. No story roles are assigned to any NPC — slots are scale/presence checks only.

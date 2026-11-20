@@ -1,0 +1,11 @@
+{
+  "asset": "NPC_CIVILIAN_YOUTH_M",
+  "tier": "production asset - NOT qualified, NOT Unreal-integrated",
+  "parts": 17,
+  "verts": 3600,
+  "tris": 6992,
+  "skeleton": "HUMAN_BASE_PROPOSED unchanged (11 joints)",
+  "recommended_actor_scale": 0.85,
+  "variant": "youth: slim build, small plain waist wrapper, bare feet; height via actor scale 0.85 (skeleton unchanged)",
+  "source_reference": "NPC_CIVILIAN_CLOTHING_REFERENCE_V1 (approved 2026-11-30)"
+}

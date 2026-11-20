@@ -1,0 +1,11 @@
+{
+  "asset": "NPC_CIVILIAN_F1_EARTHRED",
+  "tier": "production asset - NOT qualified, NOT Unreal-integrated",
+  "parts": 21,
+  "verts": 3916,
+  "tris": 7556,
+  "skeleton": "HUMAN_BASE_PROPOSED unchanged (11 joints)",
+  "recommended_actor_scale": 1.0,
+  "variant": "earth-red dye variant of F1: chest wrapper+skirt in documented-level earth-red dye read, head-tie, sandals",
+  "source_reference": "NPC_CIVILIAN_CLOTHING_REFERENCE_V1 (approved 2026-11-30)"
+}
