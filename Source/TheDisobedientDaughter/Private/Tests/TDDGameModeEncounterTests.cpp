@@ -33,8 +33,12 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
     // UWorld::SetGameMode(FURL) via a GameInstance). The test creates and
     // drives the ATDDGameMode instance directly, which is the supported
     // seam for exercising the encounter flow.
+    //
+    // AActor::BeginPlay is protected, so it is not called directly; the
+    // production ATDDGameMode::BeginPlay only collects the encounter roster,
+    // which the test performs explicitly below via the public
+    // CollectEncounterActors() seam.
     ATDDGameMode* GameMode = NewObject<ATDDGameMode>(World);
-    GameMode->BeginPlay();
 
     ATDDTrainingEnemy* Enemy = World->SpawnActor<ATDDTrainingEnemy>(FVector(0.0f, 600.0f, 100.0f), FRotator::ZeroRotator);
     TestNotNull(TEXT("Training enemy spawned in the test world"), Enemy);

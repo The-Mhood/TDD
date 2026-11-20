@@ -128,10 +128,14 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
              Switcher->GetCurrentState() == ETDDLightingState::Night);
     TestTrue(TEXT("Night preset applied"), VerifyPresetApplied(Switcher, NightGolden));
 
-    // Cooking-fire flicker: Tick modulates the night firelight around the
-    // base intensity (0.85 + 0.15*sin(12t)) without changing the preset.
+    // Cooking-fire flicker: the switcher's Tick modulates the night firelight
+    // around the base intensity (0.85 + 0.15*sin(12t)) without changing the
+    // preset. The switcher declares PrimaryActorTick.bCanEverTick, so the
+    // genuine UE 5.8.4 mechanism to advance its lifecycle is the world tick
+    // (UWorld::Tick is public; the engine calls it every frame) — the
+    // switcher's protected Tick runs as part of it.
     const float NightFireBase = NightGolden.FireIntensity;
-    Switcher->Tick(0.05f);
+    World->Tick(LEVELTICK_All, 0.05f);
     const float FlickeredIntensity = Switcher->GetFireLight()->Intensity;
     TestTrue(TEXT("Night firelight flickers (changed from base)"),
              !FMath::IsNearlyEqual(FlickeredIntensity, NightFireBase, 0.001f));
@@ -140,7 +144,7 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
              FlickeredIntensity <= 1.0f * NightFireBase + 0.001f);
     for (int32 Step = 0; Step < 20; ++Step)
     {
-        Switcher->Tick(0.05f);
+        World->Tick(LEVELTICK_All, 0.05f);
         const float Intensity = Switcher->GetFireLight()->Intensity;
         if (!(Intensity >= 0.85f * NightFireBase - 0.001f &&
               Intensity <= 1.0f * NightFireBase + 0.001f))

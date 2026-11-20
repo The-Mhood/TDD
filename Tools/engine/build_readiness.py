@@ -504,6 +504,51 @@ def main():
                     line = htext[:m.start()].count("\n") + 1
                     block(f"{rel}:{line}: {message}", fix)
 
+    # ---- protected-member call guard (tests) --------------------------\
+    # C++ error class: AActor/ActorComponent lifecycle members (Tick,
+    # BeginPlay) and project-protected accessors (camera clamp helpers) are
+    # protected in UE and in project classes. Calling them directly from a
+    # test fails compilation with an access-control error. Tests must drive
+    # the actor lifecycle through the genuine public mechanism (the world
+    # tick: UWorld::Tick is public and calls each actor's protected Tick) and
+    # assert on public state — never expose protected/private implementation
+    # details solely for testing. Scans test translation units only; a
+    # production .cpp that overrides or calls Super:: is unaffected.
+    # Each rule: (regex with a receiver capture, member name, allowed receivers).
+    PROTECTED_TEST_CALL_RULES = [
+        # AActor::Tick is protected. UWorld::Tick is public, so a world
+        # receiver is the supported way to advance the actor lifecycle.
+        (r"([A-Za-z_]\w*)\s*->\s*Tick\s*\(", "Tick", {"World"}),
+        # AActor::BeginPlay is protected; no public receiver exists.
+        (r"([A-Za-z_]\w*)\s*->\s*BeginPlay\s*\(", "BeginPlay", set()),
+        # ATDDAdannaCharacter camera-clamp helpers are protected.
+        (r"([A-Za-z_]\w*)\s*->\s*ClampCameraPitch\s*\(", "ClampCameraPitch", set()),
+        (r"([A-Za-z_]\w*)\s*->\s*GetMinCameraPitchDeg\s*\(", "GetMinCameraPitchDeg", set()),
+        (r"([A-Za-z_]\w*)\s*->\s*GetMaxCameraPitchDeg\s*\(", "GetMaxCameraPitchDeg", set()),
+    ]
+    if src.is_dir():
+        for cpp in sorted(src.rglob("*.cpp")):
+            rel = str(cpp.relative_to(root))
+            if "/Tests/" not in rel and not rel.endswith("Tests.cpp"):
+                continue
+            try:
+                htext = cpp.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            for pattern, member, allowed_receivers in PROTECTED_TEST_CALL_RULES:
+                for m in re.finditer(pattern, htext):
+                    receiver = m.group(1)
+                    if receiver in allowed_receivers:
+                        continue
+                    line = htext[:m.start()].count("\n") + 1
+                    block(
+                        f"{rel}:{line}: C++ error class — protected member '{member}' called "
+                        f"directly from a test (receiver '{receiver}')",
+                        f"drive the actor lifecycle through the public world tick "
+                        f"(World->Tick(...); UWorld::Tick is public in UE 5.8.4) or assert on "
+                        f"public state; do not expose protected/private implementation "
+                        f"details solely for testing")
+
     # ---- targets
     target_files = sorted(src.glob("*.Target.cs")) if src.is_dir() else []
     if not target_files:
