@@ -58,7 +58,18 @@ void ATDDGameMode::CollectEncounterActors()
     }
     // UE 5.8.4: UWorld has no GetAllActorsOfClass member; the supported
     // actor-query mechanism is TActorIterator (EngineUtils.h).
-    for (TActorIterator<ATDDTrainingEnemy> It(World); It; ++It)
+    //
+    // The flags are explicit: TActorIterator's default
+    // (EActorIteratorFlags::OnlyActiveLevels | SkipPendingKill) gates
+    // enumeration on the actor's level being visible/in the world's active
+    // level collection, which silently yields an EMPTY result on worlds
+    // whose level is not in that state (e.g. a UWorld::CreateWorld test
+    // world) — the demonstrated 5.8.4 failure where the roster collected
+    // zero placed enemies. The roster intent is every ATDDTrainingEnemy in
+    // the world, so AllActors is used; on a real playable world the
+    // persistent level is always visible, so the found set is identical.
+    for (TActorIterator<ATDDTrainingEnemy> It(World, ATDDTrainingEnemy::StaticClass(),
+        EActorIteratorFlags::AllActors); It; ++It)
     {
         ATDDTrainingEnemy* Enemy = *It;
         if (Enemy == nullptr)
@@ -182,10 +193,14 @@ void ATDDGameMode::ResetPlayerForRestart()
     // Return the pawn to the level's PlayerStart so restarts are repeatable.
     // UE 5.8.4: UWorld has no GetAllActorsOfClass member; the supported
     // actor-query mechanism is TActorIterator (EngineUtils.h).
+    // AllActors flags: see CollectEncounterActors — the default
+    // OnlyActiveLevels gating can silently yield an empty result on worlds
+    // whose level is not in the active level collection state.
     APlayerStart* FirstStart = nullptr;
     if (World != nullptr)
     {
-        for (TActorIterator<APlayerStart> It(World); It; ++It)
+        for (TActorIterator<APlayerStart> It(World, APlayerStart::StaticClass(),
+            EActorIteratorFlags::AllActors); It; ++It)
         {
             FirstStart = *It;
             break;

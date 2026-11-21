@@ -621,6 +621,44 @@ def main():
                     f"World->GetWorldSettings()->NotifyBeginPlay() (no GameMode) so spawned actors "
                     f"receive BeginPlay")
 
+    # ---- TActorIterator explicit-flags guard ---------------------------
+    # TActorIterator's default flags (EActorIteratorFlags::OnlyActiveLevels
+    # | SkipPendingKill) gate enumeration on the actor's level being
+    # visible/in the world's active level collection. On worlds whose level
+    # is not in that state (e.g. a UWorld::CreateWorld test world) the
+    # iteration silently yields ZERO actors — the demonstrated 5.8.4
+    # EncounterFlow failure (roster 1 -> 0, all assertions false).
+    # Production actor queries must therefore pass explicit flags matching
+    # their intent (AllActors for "every actor in the world"). Guard
+    # production TUs only; test TUs may construct default-flag iterators
+    # for diagnostics.
+    if src.is_dir():
+        for cpp in sorted(src.rglob("*.cpp")):
+            rel = str(cpp.relative_to(root))
+            if "/Tests/" in rel or rel.endswith("Tests.cpp"):
+                continue
+            try:
+                htext = cpp.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            for m in re.finditer(r"TActorIterator<[^>]*>\s+\w+\s*\(", htext):
+                # Scan to the end of the statement (semicolon) to capture the
+                # full constructor argument list; the args may contain nested
+                # parentheses (e.g. T::StaticClass()) and span multiple lines.
+                semi = htext.find(";", m.end())
+                if semi == -1:
+                    semi = len(htext)
+                stmt = htext[m.start():semi]
+                if "EActorIteratorFlags" not in stmt:
+                    line = htext[:m.start()].count("\n") + 1
+                    block(
+                        f"{rel}:{line}: silent-empty-iteration risk — TActorIterator constructed without explicit "
+                        f"EActorIteratorFlags (the default OnlyActiveLevels flags can yield zero actors on worlds "
+                        f"whose level is not in the active level collection, UE 5.8.4)",
+                        f"pass explicit flags matching the intent, e.g. "
+                        f"TActorIterator<T>(World, T::StaticClass(), EActorIteratorFlags::AllActors) for "
+                        f"'every actor in the world'")
+
     # ---- UE 5.8.4 sky-light SetLightColor arity guard ------------------\
     # USkyLightComponent::SetLightColor takes a single FLinearColor argument
     # in 5.8.4 (it shadows the base ULightComponent two-arg

@@ -8,6 +8,7 @@
 #include "EngineUtils.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/PlayerController.h"
+#include "GameFramework/PlayerStart.h"
 #include "Player/TDDAdannaCharacter.h"
 #include "TDDGameMode.h"
 
@@ -73,7 +74,51 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
         PC->Possess(Player);
     }
 
+    APlayerStart* PlayerStart = World->SpawnActor<APlayerStart>(FVector(100.0f, 0.0f, 100.0f), FRotator::ZeroRotator);
+    TestNotNull(TEXT("Player start placed in the test world"), PlayerStart);
+
+    // TEMPORARY DIAGNOSTICS (D-W1D8-015): establish why the roster was
+    // empty on the 5.8.4 trains — spawn success, world/level membership,
+    // actor validity, iterator visibility under default vs AllActors flags,
+    // and world/GameMode/player world identity. Remove once confirmed.
+    if (Enemy != nullptr)
+    {
+        UE_LOG(LogTemp, Log,
+            TEXT("TDD-DIAG: enemy valid=%d isEnemy=%d worldMatch=%d levelNonNull=%d levelIsPersistent=%d"),
+            Enemy->IsValid(), Enemy->IsA<ATDDTrainingEnemy>(),
+            Enemy->GetWorld() == World, Enemy->GetLevel() != nullptr,
+            Enemy->GetLevel() == World->GetPersistentLevel());
+    }
+    UE_LOG(LogTemp, Log,
+        TEXT("TDD-DIAG: world actorsInitialized=%d persistentLevel=%d levels=%d persistentVisible=%d"),
+        World->IsActorsInitialized(), World->GetPersistentLevel() != nullptr,
+        World->GetLevels().Num(),
+        World->GetPersistentLevel() != nullptr && World->GetPersistentLevel()->bIsVisible);
+    UE_LOG(LogTemp, Log,
+        TEXT("TDD-DIAG: gameModeWorldMatch=%d playerWorldMatch=%d pcWorldMatch=%d"),
+        GameMode->GetWorld() == World,
+        Player != nullptr && Player->GetWorld() == World,
+        PC != nullptr && PC->GetWorld() == World);
+    {
+        int32 DefaultFlagsCount = 0;
+        for (TActorIterator<ATDDTrainingEnemy> It(World); It; ++It)
+        {
+            ++DefaultFlagsCount;
+        }
+        int32 AllActorsCount = 0;
+        for (TActorIterator<ATDDTrainingEnemy> It(World, ATDDTrainingEnemy::StaticClass(),
+            EActorIteratorFlags::AllActors); It; ++It)
+        {
+            ++AllActorsCount;
+        }
+        UE_LOG(LogTemp, Log,
+            TEXT("TDD-DIAG: iterator enemy count defaultFlags=%d allActors=%d"),
+            DefaultFlagsCount, AllActorsCount);
+    }
+
     GameMode->CollectEncounterActors();
+    UE_LOG(LogTemp, Log, TEXT("TDD-DIAG: roster remaining after collect=%d"),
+        GameMode->GetEncounterEnemiesRemaining());
     TestEqual(TEXT("Encounter roster collects the placed enemy"), GameMode->GetEncounterEnemiesRemaining(), 1);
 
     GameMode->EvaluateEncounter(0.016f);
@@ -105,6 +150,12 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
         TestTrue(TEXT("Restart restores the enemy's health"),
                  EnemyCombat != nullptr && !EnemyCombat->IsDead());
     }
+
+    // The PlayerStart query (ResetPlayerForRestart) must find the placed
+    // start and reposition the pawn — covers the second AllActors iterator.
+    TestTrue(TEXT("Restart repositions the player to the level PlayerStart"),
+             PlayerStart != nullptr && Player != nullptr &&
+             FVector::Dist(Player->GetActorLocation(), PlayerStart->GetActorLocation()) < 1.0f);
 
     // Defeat path: the player dies, and the configured delay auto-restarts.
     if (Player != nullptr)
