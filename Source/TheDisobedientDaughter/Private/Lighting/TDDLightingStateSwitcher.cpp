@@ -2,12 +2,17 @@
 
 #include "Components/DirectionalLightComponent.h"
 #include "Components/PointLightComponent.h"
+#include "Components/SceneComponent.h"
 #include "Components/SkyLightComponent.h"
 
 ATDDLightingStateSwitcher::ATDDLightingStateSwitcher()
 {
     PrimaryActorTick.bCanEverTick = true;
 
+    // Explicit root: the switcher owns only light components, which attach
+    // to the root. Without an explicit root the engine logs a missing
+    // RootComponent warning at spawn — the actor genuinely has no root.
+    RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
     SunLight = CreateDefaultSubobject<UDirectionalLightComponent>(TEXT("SunLight"));
     AmbientLight = CreateDefaultSubobject<USkyLightComponent>(TEXT("AmbientLight"));
     FireLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("FireLight"));

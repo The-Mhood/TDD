@@ -4,7 +4,9 @@
 #include "Components/DirectionalLightComponent.h"
 #include "Components/PointLightComponent.h"
 #include "Components/SkyLightComponent.h"
+#include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
 #include "Lighting/TDDLightingStateSwitcher.h"
 
 /**
@@ -95,10 +97,40 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
         return false;
     }
 
+    // Register the test world with the engine using the proven world-context
+    // fixture (D-W1D8-018): UWorld::CreateWorld with bInformEngineOfWorld=false
+    // leaves the world unregistered, so UWorld::Tick crashes in
+    // UEngine::GetWorldContextFromWorldChecked() — the demonstrated failure of
+    // the manual tick sequence below.
+    FWorldContext& WorldContext = GEngine->CreateNewWorldContext(EWorldType::Game);
+    WorldContext.SetCurrentWorld(World);
+    World->InitializeActorsForPlay(FURL());
+    if (IsValid(World->GetWorldSettings()))
+    {
+        // Mark the world as begun so the spawned switcher receives BeginPlay.
+        World->GetWorldSettings()->NotifyBeginPlay();
+        World->GetWorldSettings()->NotifyMatchStarted();
+    }
+
+    // The engine world context must exist and resolve to the exact test world.
+    FWorldContext* Context = GEngine->GetWorldContextFromWorld(World);
+    TestTrue(TEXT("Test world has a registered engine world context"), Context != nullptr);
+    TestTrue(TEXT("World context resolves to the exact test world"),
+             Context != nullptr && Context->World() == World);
+
     ATDDLightingStateSwitcher* Switcher = World->SpawnActor<ATDDLightingStateSwitcher>();
     TestNotNull(TEXT("Lighting switcher spawned"), Switcher);
     if (Switcher == nullptr)
     {
+        // Teardown must still run: end play, destroy the world's actors and
+        // the world, and release the engine world context.
+        World->BeginTearingDown();
+        for (TActorIterator<AActor> It(World, AActor::StaticClass(), EActorIteratorFlags::AllActors); It; ++It)
+        {
+            It->Destroy();
+        }
+        GEngine->DestroyWorldContext(World);
+        World->DestroyWorld(false);
         return false;
     }
 
@@ -143,6 +175,7 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
     TestTrue(TEXT("Night firelight stays within the flicker envelope"),
              FlickeredIntensity >= 0.85f * NightFireBase - 0.001f &&
              FlickeredIntensity <= 1.0f * NightFireBase + 0.001f);
+    bool AllStepsInEnvelope = true;
     for (int32 Step = 0; Step < 20; ++Step)
     {
         World->Tick(LEVELTICK_All, 0.05f);
@@ -150,17 +183,29 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
         if (!(Intensity >= 0.85f * NightFireBase - 0.001f &&
               Intensity <= 1.0f * NightFireBase + 0.001f))
         {
-            TestTrue(TEXT("Night firelight stays within the flicker envelope over time"), false);
-            return false;
+            AllStepsInEnvelope = false;
+            break;
         }
     }
-    TestTrue(TEXT("Night firelight stays within the flicker envelope over time"), true);
+    TestTrue(TEXT("Night firelight stays within the flicker envelope over time"), AllStepsInEnvelope);
 
     // Back to dawn: firelight off again and dawn preset reapplied.
     Switcher->ApplyState(ETDDLightingState::Dawn);
     TestTrue(TEXT("Dawn is the current state again"),
              Switcher->GetCurrentState() == ETDDLightingState::Dawn);
     TestTrue(TEXT("Dawn preset reapplied"), VerifyPresetApplied(Switcher, DawnGolden));
+
+    // Teardown: end play, destroy the world's actors and the world, then
+    // release the engine world context (order matches the proven encounter
+    // fixture). The assertion macros record failures without aborting, so
+    // this always runs.
+    World->BeginTearingDown();
+    for (TActorIterator<AActor> It(World, AActor::StaticClass(), EActorIteratorFlags::AllActors); It; ++It)
+    {
+        It->Destroy();
+    }
+    GEngine->DestroyWorldContext(World);
+    World->DestroyWorld(false);
 
     return true;
 }
