@@ -1,0 +1,37 @@
+{
+  "package": "CH01_DRESSING_SPLIT_V1.1",
+  "tier": "production assets - NOT qualified, NOT Unreal-integrated",
+  "supersedes_for_import": "KIT_COURTYARD_DRESSING cluster (kept as rollback)",
+  "props": [
+    {
+      "asset": "PROP_POT_LARGE",
+      "verts": 102,
+      "tris": 200,
+      "origin": "ground centre of prop"
+    },
+    {
+      "asset": "PROP_POT_SMALL",
+      "verts": 74,
+      "tris": 144,
+      "origin": "ground centre of prop"
+    },
+    {
+      "asset": "PROP_BASKET_WOVEN",
+      "verts": 56,
+      "tris": 108,
+      "origin": "ground centre of prop"
+    },
+    {
+      "asset": "PROP_FIREWOOD_STACK",
+      "verts": 24,
+      "tris": 36,
+      "origin": "ground centre of prop"
+    },
+    {
+      "asset": "PROP_HEARTH_STONES",
+      "verts": 216,
+      "tris": 420,
+      "origin": "ground centre of prop"
+    }
+  ]
+}
