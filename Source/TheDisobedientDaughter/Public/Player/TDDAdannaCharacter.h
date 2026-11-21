@@ -32,6 +32,25 @@ public:
     UTDDCombatComponent* GetCombatComponent() const { return CombatComponent; }
     UTDDTraversalComponent* GetTraversalComponent() const { return TraversalComponent; }
 
+    /**
+     * TEMPORARY DIAGNOSTICS (D-W1D8-024 root-cause trace, to be removed once
+     * the root cause is fixed): exposes the runtime call trace of
+     * FaceRotation/ClampCameraPitch so the failing negative-pitch tick can be
+     * correlated with the engine's own control-rotation writes. Not part of
+     * the production contract.
+     */
+    struct FDTDCameraClampTrace
+    {
+        int32 FaceRotationCalls = 0;
+        int32 ClampCalls = 0;
+        float LastFaceInputPitch = 0.0f;
+        float LastFaceClampedPitch = 0.0f;
+        float LastClampInputPitch = 0.0f;
+        float LastClampOutputPitch = 0.0f;
+        bool LastClampWrote = false;
+    };
+    static FDTDCameraClampTrace CameraClampTrace;
+
 protected:
     virtual void BeginPlay() override;
     virtual void Tick(float DeltaTime) override;

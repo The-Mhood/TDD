@@ -37,6 +37,22 @@ namespace
 // production clamp contract on ATDDAdannaCharacter (private static constexpr).
 constexpr float MinCameraPitchDeg = -55.0f;
 constexpr float MaxCameraPitchDeg = 25.0f;
+
+// TEMPORARY DIAGNOSTIC (D-W1D8-024): dump the production clamp trace so the
+// owner-Mac run can correlate the failing negative-pitch tick with the
+// engine's own control-rotation writes. Removed once the root cause is fixed.
+void DumpCameraClampTrace(const FString& Label)
+{
+    const ATDDAdannaCharacter::FDTDCameraClampTrace& Trace =
+        ATDDAdannaCharacter::CameraClampTrace;
+    UE_LOG(LogTemp, Log,
+        TEXT("TDD-CAM-TRACE[%s] faceCalls=%d clampCalls=%d lastFaceInput=%.2f "
+             "lastFaceClamped=%.2f lastClampInput=%.2f lastClampOutput=%.2f lastClampWrote=%d"),
+        *Label, Trace.FaceRotationCalls, Trace.ClampCalls,
+        Trace.LastFaceInputPitch, Trace.LastFaceClampedPitch,
+        Trace.LastClampInputPitch, Trace.LastClampOutputPitch,
+        Trace.LastClampWrote ? 1 : 0);
+}
 }
 
 bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
@@ -89,6 +105,7 @@ bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
         World->Tick(LEVELTICK_All, 0.016f);
         UE_LOG(LogTemp, Log, TEXT("TDD-CAM: post-tick control=(%.2f,%.2f,%.2f)"),
             PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll);
+        DumpCameraClampTrace(TEXT("after-upper"));
         TestTrue(TEXT("Over-the-head pitch is clamped to the maximum"),
                  FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MaxCameraPitchDeg, 0.01f));
 
@@ -100,6 +117,7 @@ bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
         World->Tick(LEVELTICK_All, 0.016f);
         UE_LOG(LogTemp, Log, TEXT("TDD-CAM: post-tick control=(%.2f,%.2f,%.2f)"),
             PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll);
+        DumpCameraClampTrace(TEXT("after-lower"));
         TestTrue(TEXT("Below-the-feet pitch is clamped to the minimum"),
                  FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MinCameraPitchDeg, 0.01f));
 
@@ -111,6 +129,7 @@ bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
         World->Tick(LEVELTICK_All, 0.016f);
         UE_LOG(LogTemp, Log, TEXT("TDD-CAM: post-tick control=(%.2f,%.2f,%.2f)"),
             PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll);
+        DumpCameraClampTrace(TEXT("after-inrange"));
         TestTrue(TEXT("In-range pitch and yaw are preserved"),
                  FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, 10.0f, 0.01f) &&
                  FMath::IsNearlyEqual(PC->GetControlRotation().Yaw, 45.0f, 0.01f));
@@ -123,6 +142,7 @@ bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
         World->Tick(LEVELTICK_All, 0.016f);
         UE_LOG(LogTemp, Log, TEXT("TDD-CAM: post-tick control=(%.2f,%.2f,%.2f)"),
             PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll);
+        DumpCameraClampTrace(TEXT("after-lower-bound"));
         TestTrue(TEXT("Exact lower-bound pitch is preserved"),
                  FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MinCameraPitchDeg, 0.01f));
 
@@ -134,6 +154,7 @@ bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
         World->Tick(LEVELTICK_All, 0.016f);
         UE_LOG(LogTemp, Log, TEXT("TDD-CAM: post-tick control=(%.2f,%.2f,%.2f)"),
             PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll);
+        DumpCameraClampTrace(TEXT("after-upper-bound"));
         TestTrue(TEXT("Exact upper-bound pitch is preserved"),
                  FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MaxCameraPitchDeg, 0.01f));
     }
