@@ -228,13 +228,17 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
              Switcher->GetCurrentState() == ETDDLightingState::Dawn);
     TestTrue(TEXT("Dawn preset reapplied"), VerifyPresetApplied(Switcher, DawnGolden, TEXT("Dawn reapplied")));
 
-    // Teardown: end play first (CleanupWorld warns "missing call to EndPlay"
-    // when a begun world is cleaned up), then destroy the world's actors and
-    // the world, and release the engine world context (order matches the
-    // proven encounter fixture). The assertion macros record failures
-    // without aborting, so this always runs.
-    World->EndPlay(EEndPlayReason::Destroyed);
-    World->BeginTearingDown();
+    // Teardown: UWorld::EndPlay performs the begin/end-play handshake itself
+    // (verified in the engine source: it calls BeginTearingDown internally,
+    // so calling BeginTearingDown again after EndPlay logs "BeginTearingDown
+    // called twice"), routes EndPlay to the world's actors and clears the
+    // begun-play state so CleanupWorld does not warn "missing call to
+    // EndPlay". Then destroy the world's actors and the world, and release
+    // the engine world context (order matches the proven encounter fixture).
+    // The assertion macros record failures without aborting, so this always
+    // runs.
+    TestTrue(TEXT("World EndPlay completes the teardown handshake"),
+             World->EndPlay(EEndPlayReason::Destroyed));
     for (TActorIterator<AActor> It(World, AActor::StaticClass(), EActorIteratorFlags::AllActors); It; ++It)
     {
         It->Destroy();

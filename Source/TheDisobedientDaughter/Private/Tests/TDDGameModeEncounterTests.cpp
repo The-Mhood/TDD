@@ -155,14 +155,18 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
                  GameMode->GetEncounterState() == ETDDEncounterState::Active);
     }
 
-    // Teardown: release the engine context and destroy the test world so
+    // Teardown: UWorld::EndPlay performs the begin/end-play handshake (verified
+    // in the engine source: it calls BeginTearingDown internally and clears
+    // the begun-play state, so CleanupWorld no longer warns "missing call to
+    // EndPlay"), then release the engine context and destroy the test world so
     // repeated runs do not leak worlds. The iterator passes explicit
     // AllActors flags (D-W1D8-015): the default OnlyActiveLevels gating
     // yields no actors on this created world, so the default flags would
     // skip every spawned actor. The assertion macros record failures
     // without aborting, so this teardown always runs even when an
     // assertion above failed.
-    World->BeginTearingDown();
+    TestTrue(TEXT("World EndPlay completes the teardown handshake"),
+             World->EndPlay(EEndPlayReason::Destroyed));
     for (TActorIterator<AActor> It(World, AActor::StaticClass(), EActorIteratorFlags::AllActors); It; ++It)
     {
         It->Destroy();

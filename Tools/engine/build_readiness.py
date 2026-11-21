@@ -548,6 +548,18 @@ def main():
         (r"EEndPlayReason\s*::\s*Destroy(?!ed)",
          "C++ error class — EEndPlayReason has no Destroy enumerator in UE 5.8.4",
          "use EEndPlayReason::Destroyed — the destruction end-play reason"),
+        # UWorld::EndPlay calls BeginTearingDown internally (verified in the
+        # engine source: World.cpp EndPlay — "if (!bIsTearingDown)
+        # BeginTearingDown();"). Calling BeginTearingDown again right after
+        # EndPlay logs "BeginTearingDown called twice for <world>!" — the
+        # demonstrated owner-Mac lifecycle warning of the D-W1D8-023 teardown
+        # fix. The correct teardown is EndPlay alone.
+        (r"EndPlay\s*\([^)]*\)\s*;\s*\n\s*[A-Za-z_]\w*\s*->\s*BeginTearingDown\s*\(\)",
+         "UE lifecycle error class — UWorld::EndPlay already calls BeginTearingDown internally",
+         "call World->EndPlay(EEndPlayReason::Destroyed) alone for teardown; it routes "
+         "EndPlay to the world's actors, clears the begun-play state (removing the "
+         "CleanupWorld 'missing call to EndPlay' warning) and calls BeginTearingDown "
+         "itself — an explicit BeginTearingDown after it logs 'BeginTearingDown called twice'"),
     ]
     if src.is_dir():
         for hdr in sorted(src.rglob("*.h")) + sorted(src.rglob("*.cpp")):
@@ -691,6 +703,34 @@ def main():
                         f"pass explicit flags matching the intent, e.g. "
                         f"TActorIterator<T>(World, T::StaticClass(), EActorIteratorFlags::AllActors) for "
                         f"'every actor in the world'")
+
+    # ---- test teardown EndPlay guard ---------------------------------\
+    # A test world that has begun play (NotifyBeginPlay) must be ended with
+    # UWorld::EndPlay before it is destroyed: CleanupWorld warns "missing call
+    # to EndPlay" while the world's begun-play state is still set, and
+    # BeginTearingDown alone never clears it. Guard test TUs that tear a
+    # world down with BeginTearingDown but never call EndPlay.
+    if src.is_dir():
+        for cpp in sorted(src.rglob("*.cpp")):
+            rel = str(cpp.relative_to(root))
+            if "/Tests/" not in rel and not rel.endswith("Tests.cpp"):
+                continue
+            try:
+                htext = cpp.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            if "->BeginTearingDown()" not in htext:
+                continue
+            if re.search(r"->\s*EndPlay\s*\(", htext):
+                continue
+            line = htext[:htext.index("->BeginTearingDown()")].count("\n") + 1
+            block(
+                f"{rel}:{line}: UE lifecycle error class — test teardown calls BeginTearingDown "
+                f"without EndPlay",
+                f"call World->EndPlay(EEndPlayReason::Destroyed) before destroying a begun "
+                f"test world: UWorld::EndPlay calls BeginTearingDown internally, routes EndPlay "
+                f"to the world's actors and clears the begun-play state, removing the "
+                f"CleanupWorld 'missing call to EndPlay' warning")
 
     # ---- UE 5.8.4 sky-light SetLightColor arity guard ------------------\
     # USkyLightComponent::SetLightColor takes a single FLinearColor argument
