@@ -1,0 +1,2 @@
+# PM HANDOFF - Batches A+B (2026-12-04)
+Accepted concept references (not integrated): ST02_DAY (dedicated day key - lighting spec updated), civilian animation board (matches CIVILIAN_CLIPS_V1 poses), populated compound composition ref (LOW density mood/scale; assemblies + manifest remain the placement authority), UI menu layout ref (visual only, no button semantics). Full accept/reject log in BATCH_A_LOG.md / BATCH_B_LOG.md. No action required from PM.

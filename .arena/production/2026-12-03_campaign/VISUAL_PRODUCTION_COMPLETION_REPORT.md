@@ -32,5 +32,8 @@ All GLB/OBJ packages above, animation clip JSONs (hero/guard/civilian), populate
 ## E. Deferred creative additions (later phase, excluded by design)
 ST06 ritual / ST07 festival (cultural review required first); ceremonial dress/regalia/masks; weapons (CQ-9 deferred); new locations/architecture beyond the approved CH01 compound family; supernatural/ability VFX; invented UI functionality, iconography and typography.
 
+## Autonomous batches A+B (2026-12-04)
+Added: dedicated ST02_DAY key (state set now self-contained), CIVILIAN_ANIMATION_REFERENCE_V1 (accepted attempt 4; 3 rejections preserved in `_rejected/` with reasons), POPULATED_COMPOUND_COMPOSITION_REFERENCE_V1, UI_MENU_LAYOUT_REFERENCE_V1. Totals for campaign+A+B visual boards: required 6, accepted 6, rejected attempts retained 3, outstanding 0 within unblocked scope.
+
 ## Standing caveats
 Environment work is PROVISIONAL, not canon; internal approvals are production approvals under delegated authority — canon/promotion remains owner-reserved. Source-level validation ≠ Blender qualification ≠ Unreal integration.
