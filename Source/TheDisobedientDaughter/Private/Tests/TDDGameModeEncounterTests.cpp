@@ -85,7 +85,7 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
     {
         UE_LOG(LogTemp, Log,
             TEXT("TDD-DIAG: enemy valid=%d isEnemy=%d worldMatch=%d levelNonNull=%d levelIsPersistent=%d"),
-            Enemy->IsValid(), Enemy->IsA<ATDDTrainingEnemy>(),
+            IsValid(Enemy), Enemy->IsA<ATDDTrainingEnemy>(),
             Enemy->GetWorld() == World, Enemy->GetLevel() != nullptr,
             Enemy->GetLevel() == World->GetLevel(0));
     }

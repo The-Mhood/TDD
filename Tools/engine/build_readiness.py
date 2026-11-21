@@ -522,6 +522,15 @@ def main():
          "C++ error class — UWorld has no IsActorsInitialized member in UE 5.8.4",
          "use AreActorsInitialized() (UWorld's public actors-initialized "
          "lifecycle accessor)"),
+        # IsValid is a free function of the CoreUObject module (declared in
+        # UObject/Object.h as bool IsValid(const UObject* Test)), not a
+        # member of UObject/AActor. A member call (->IsValid()) fails to
+        # compile. Demonstrated by the owner-Mac compile failure of the
+        # D-W1D8-016 diagnostics.
+        (r"([A-Za-z_]\w*)\s*->\s*IsValid\s*\(",
+         "C++ error class — IsValid is not a UObject member in UE 5.8.4",
+         "use the free function IsValid(Object) declared in "
+         "UObject/Object.h, not a member call"),
         # UWorld has no GetPersistentLevel member in 5.8.4 (FLevelCollection
         # does, but UWorld exposes its persistent level through the public
         # GetLevel(0)/GetLevels() accessors; the PersistentLevel member itself
