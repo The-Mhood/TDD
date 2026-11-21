@@ -1,0 +1,3 @@
+# Populated Compound - FINAL FACING PASS (2026-12-08)
+Decision status: PM had not recorded a density choice. Per owner directive 2026-12-08, Design records an **interim decision: MEDIUM_6** (the proposal's balanced option; LOW/HIGH remain delivered alternatives) and proceeds - **PM to ratify or override**; no layout or story change made.
+Deliverable: `2026-12-03_campaign/populated_compound/CH01_POPULATED_MEDIUM_6.obj` with facings A 180deg, B 90deg, C 270deg, D 180deg, E 90deg, F 90deg (plan: FACING_PLAN_MEDIUM_6.jpg). Clearance validated >=2.21 m (LOW/MED manifest), gate strip clear. Animated population in Unreal = skinned GLBs + CIVILIAN_CLIPS_V1 (Engineering).

@@ -127,7 +127,12 @@ def evaluated_bbox():
     return (min(xs), max(xs), min(ys), max(ys), min(zs), max(zs))
 
 bpy.context.view_layer.objects.active = arm
-bpy.ops.object.mode_set(mode="POSE")
+arm.select_set(True)
+# BACKGROUND-MODE FIX (2026-12-08): bpy.ops.object.mode_set(mode="POSE") polls
+# fail in `blender -b` ("context is incorrect") because background mode has no
+# viewport area to satisfy the operator poll. Pose-bone rotations do NOT
+# require POSE mode: pose_bones are data, the evaluated depsgraph applies
+# them. We therefore pose via data only and never call mode_set.
 rest_bb = evaluated_bbox()
 tests = {"forearm.L": ("FORWARD", 1.4), "upperarm.R": ("FORWARD", 1.2),
          "shin.L": ("BACKWARD", 1.2), "head": ("YAW", 0.5)}
@@ -148,19 +153,21 @@ for bone_name, (kind, ang) in tests.items():
     bpy.context.view_layer.update()
     if delta < 0.005: fail(f"pose test: {bone_name} did not deform mesh (delta {delta})")
 qc["checks"]["pose_test_bbox_delta_m"] = moved
-bpy.ops.object.mode_set(mode="OBJECT")
+# (no mode_set return to OBJECT mode - see background-mode fix above)
 
 # --- save .blend + export FBX ----------------------------------------------
 blend_path = os.path.join(OUT, f"{NAME}.blend")
 bpy.ops.wm.save_as_mainfile(filepath=blend_path)
 fbx_path = os.path.join(OUT, f"{NAME}.fbx")
-bpy.ops.object.select_all(action="DESELECT")
-arm.select_set(True)
-for o in meshes:  # skinned meshes only — helpers never enter the FBX
-    o.select_set(True)
-bpy.ops.export_scene.fbx(filepath=fbx_path, use_selection=True, global_scale=1.0,
-                         apply_unit_scale=True, add_leaf_bones=False, bake_anim=False,
-                         path_mode="COPY", use_mesh_modifiers=True)
+# Selection + export under temp_override so operator polls pass headless.
+with bpy.context.temp_override(active_object=arm, selected_objects=[arm]+meshes):
+    bpy.ops.object.select_all(action="DESELECT")
+    arm.select_set(True)
+    for o in meshes:  # skinned meshes only — helpers never enter the FBX
+        o.select_set(True)
+    bpy.ops.export_scene.fbx(filepath=fbx_path, use_selection=True, global_scale=1.0,
+                             apply_unit_scale=True, add_leaf_bones=False, bake_anim=False,
+                             path_mode="COPY", use_mesh_modifiers=True)
 
 # --- previews (Workbench: fast, deterministic, no path tracing) ------------
 scene = bpy.context.scene
