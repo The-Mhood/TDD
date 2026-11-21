@@ -66,23 +66,52 @@ const FPresetGoldenValues NightGolden =
     FLinearColor(0.06f, 0.08f, 0.14f), FLinearColor(0.04f, 0.04f, 0.05f), 8.0f
 };
 
-bool VerifyPresetApplied(ATDDLightingStateSwitcher* Switcher, const FPresetGoldenValues& Golden)
+bool VerifyPresetApplied(ATDDLightingStateSwitcher* Switcher, const FPresetGoldenValues& Golden, const FString& Context)
 {
     UDirectionalLightComponent* Sun = Switcher->GetSunLight();
     USkyLightComponent* Ambient = Switcher->GetAmbientLight();
     UPointLightComponent* Fire = Switcher->GetFireLight();
     if (Sun == nullptr || Ambient == nullptr || Fire == nullptr)
     {
+        UE_LOG(LogTemp, Error, TEXT("TDD lighting preset %s: a light component is missing"), *Context);
         return false;
     }
+    // Report actual vs expected for every property so a failure pinpoints the
+    // exact cause instead of only the aggregate Boolean.
     bool Ok = true;
-    Ok &= FMath::IsNearlyEqual(Sun->Intensity, Golden.SunIntensity, 0.001f);
-    Ok &= FLinearColor(Sun->LightColor).Equals(Golden.SunColor, ColorTolerance);
-    Ok &= FMath::IsNearlyEqual(Sun->GetRelativeRotation().Pitch, Golden.SunElevationDeg, 0.01f);
-    Ok &= FMath::IsNearlyEqual(Sun->GetRelativeRotation().Yaw, Golden.SunAzimuthDeg, 0.01f);
-    Ok &= FLinearColor(Ambient->LightColor).Equals(Golden.AmbientSky, ColorTolerance);
-    Ok &= Ambient->LowerHemisphereColor.Equals(Golden.AmbientGround, 0.001f);
-    Ok &= FMath::IsNearlyEqual(Fire->Intensity, Golden.FireIntensity, 0.001f);
+    const auto Report = [&Ok, &Context](bool Result, const FString& Property, const FString& Actual, const FString& Expected)
+    {
+        Ok = Ok && Result;
+        if (!Result)
+        {
+            UE_LOG(LogTemp, Error, TEXT("TDD lighting preset %s: %s mismatch (actual %s, expected %s)"),
+                *Context, *Property, *Actual, *Expected);
+        }
+    };
+
+    const FLinearColor SunColorActual = FLinearColor(Sun->LightColor);
+    Report(FMath::IsNearlyEqual(Sun->Intensity, Golden.SunIntensity, 0.001f), TEXT("SunIntensity"),
+        FString::Printf(TEXT("%.4f"), Sun->Intensity),
+        FString::Printf(TEXT("%.4f"), Golden.SunIntensity));
+    Report(SunColorActual.Equals(Golden.SunColor, ColorTolerance), TEXT("SunColor"),
+        FString::Printf(TEXT("%.4f,%.4f,%.4f"), SunColorActual.R, SunColorActual.G, SunColorActual.B),
+        FString::Printf(TEXT("%.4f,%.4f,%.4f"), Golden.SunColor.R, Golden.SunColor.G, Golden.SunColor.B));
+    Report(FMath::IsNearlyEqual(Sun->GetRelativeRotation().Pitch, Golden.SunElevationDeg, 0.01f), TEXT("SunPitchDeg"),
+        FString::Printf(TEXT("%.4f"), Sun->GetRelativeRotation().Pitch),
+        FString::Printf(TEXT("%.4f"), Golden.SunElevationDeg));
+    Report(FMath::IsNearlyEqual(Sun->GetRelativeRotation().Yaw, Golden.SunAzimuthDeg, 0.01f), TEXT("SunAzimuthDeg"),
+        FString::Printf(TEXT("%.4f"), Sun->GetRelativeRotation().Yaw),
+        FString::Printf(TEXT("%.4f"), Golden.SunAzimuthDeg));
+    const FLinearColor AmbientSkyActual = FLinearColor(Ambient->LightColor);
+    Report(AmbientSkyActual.Equals(Golden.AmbientSky, ColorTolerance), TEXT("AmbientSkyColor"),
+        FString::Printf(TEXT("%.4f,%.4f,%.4f"), AmbientSkyActual.R, AmbientSkyActual.G, AmbientSkyActual.B),
+        FString::Printf(TEXT("%.4f,%.4f,%.4f"), Golden.AmbientSky.R, Golden.AmbientSky.G, Golden.AmbientSky.B));
+    Report(Ambient->LowerHemisphereColor.Equals(Golden.AmbientGround, 0.001f), TEXT("AmbientGroundColor"),
+        FString::Printf(TEXT("%.4f,%.4f,%.4f"), Ambient->LowerHemisphereColor.R, Ambient->LowerHemisphereColor.G, Ambient->LowerHemisphereColor.B),
+        FString::Printf(TEXT("%.4f,%.4f,%.4f"), Golden.AmbientGround.R, Golden.AmbientGround.G, Golden.AmbientGround.B));
+    Report(FMath::IsNearlyEqual(Fire->Intensity, Golden.FireIntensity, 0.001f), TEXT("FireIntensity"),
+        FString::Printf(TEXT("%.4f"), Fire->Intensity),
+        FString::Printf(TEXT("%.4f"), Golden.FireIntensity));
     return Ok;
 }
 }
@@ -145,13 +174,13 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
     // Initial state: dawn applied at construction.
     TestTrue(TEXT("Initial state is Dawn"),
              Switcher->GetCurrentState() == ETDDLightingState::Dawn);
-    TestTrue(TEXT("Dawn preset applied at construction"), VerifyPresetApplied(Switcher, DawnGolden));
+    TestTrue(TEXT("Dawn preset applied at construction"), VerifyPresetApplied(Switcher, DawnGolden, TEXT("Dawn at construction")));
 
     // Dusk: sun + ambient preset applied exactly, cooking fire off.
     Switcher->ApplyState(ETDDLightingState::Dusk);
     TestTrue(TEXT("Dusk is the current state"),
              Switcher->GetCurrentState() == ETDDLightingState::Dusk);
-    TestTrue(TEXT("Dusk preset applied"), VerifyPresetApplied(Switcher, DuskGolden));
+    TestTrue(TEXT("Dusk preset applied"), VerifyPresetApplied(Switcher, DuskGolden, TEXT("Dusk")));
     TestTrue(TEXT("Dusk firelight is off"),
              FMath::IsNearlyEqual(Switcher->GetFireLight()->Intensity, 0.0f, 0.001f));
 
@@ -159,7 +188,7 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
     Switcher->ApplyState(ETDDLightingState::Night);
     TestTrue(TEXT("Night is the current state"),
              Switcher->GetCurrentState() == ETDDLightingState::Night);
-    TestTrue(TEXT("Night preset applied"), VerifyPresetApplied(Switcher, NightGolden));
+    TestTrue(TEXT("Night preset applied"), VerifyPresetApplied(Switcher, NightGolden, TEXT("Night")));
 
     // Cooking-fire flicker: the switcher's Tick modulates the night firelight
     // around the base intensity (0.85 + 0.15*sin(12t)) without changing the
@@ -193,7 +222,7 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
     Switcher->ApplyState(ETDDLightingState::Dawn);
     TestTrue(TEXT("Dawn is the current state again"),
              Switcher->GetCurrentState() == ETDDLightingState::Dawn);
-    TestTrue(TEXT("Dawn preset reapplied"), VerifyPresetApplied(Switcher, DawnGolden));
+    TestTrue(TEXT("Dawn preset reapplied"), VerifyPresetApplied(Switcher, DawnGolden, TEXT("Dawn reapplied")));
 
     // Teardown: end play, destroy the world's actors and the world, then
     // release the engine world context (order matches the proven encounter

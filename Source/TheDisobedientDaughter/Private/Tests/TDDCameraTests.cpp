@@ -1,7 +1,9 @@
 #if WITH_DEV_AUTOMATION_TESTS
 
 #include "Misc/AutomationTest.h"
+#include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/PlayerController.h"
 #include "Player/TDDAdannaCharacter.h"
@@ -18,6 +20,11 @@
  * public; the engine calls it every frame) — the clamp runs inside it.
  * The declared range is mirrored here from the production contract rather
  * than read from protected accessors, so production encapsulation is intact.
+ *
+ * The test world is registered with the engine (D-W1D8-020): UWorld::Tick
+ * reaches UWorld::IsInSeamlessTravel -> UEngine::SeamlessTravelHandlerForWorld
+ * -> UEngine::GetWorldContextFromWorldChecked, which crashes without a
+ * registered engine world context.
  */
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(
     FTDDM1CameraPitchClampTest,
@@ -42,40 +49,66 @@ bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
         return false;
     }
 
+    // Register the test world with the engine using the proven world-context
+    // fixture: UWorld::CreateWorld with bInformEngineOfWorld=false leaves the
+    // world unregistered, so UWorld::Tick crashes in
+    // UEngine::GetWorldContextFromWorldChecked() via IsInSeamlessTravel.
+    FWorldContext& WorldContext = GEngine->CreateNewWorldContext(EWorldType::Game);
+    WorldContext.SetCurrentWorld(World);
+    World->InitializeActorsForPlay(FURL());
+    if (IsValid(World->GetWorldSettings()))
+    {
+        // Mark the world as begun so the spawned actors receive BeginPlay.
+        World->GetWorldSettings()->NotifyBeginPlay();
+        World->GetWorldSettings()->NotifyMatchStarted();
+    }
+
+    // The engine world context must exist and resolve to the exact test world.
+    FWorldContext* Context = GEngine->GetWorldContextFromWorld(World);
+    TestTrue(TEXT("Test world has a registered engine world context"), Context != nullptr);
+    TestTrue(TEXT("World context resolves to the exact test world"),
+             Context != nullptr && Context->World() == World);
+
     ATDDAdannaCharacter* Player = World->SpawnActor<ATDDAdannaCharacter>(FVector::ZeroVector, FRotator::ZeroRotator);
     TestNotNull(TEXT("Player character spawned in the test world"), Player);
-    if (Player == nullptr)
-    {
-        return false;
-    }
     APlayerController* PC = World->SpawnActor<APlayerController>();
     TestNotNull(TEXT("Player controller spawned in the test world"), PC);
-    if (PC == nullptr)
-    {
-        return false;
-    }
-    PC->Possess(Player);
 
     TestTrue(TEXT("Camera pitch range is declared"), MaxCameraPitchDeg > MinCameraPitchDeg);
 
-    // Beyond the upper bound -> the character's Tick clamps to the maximum.
-    PC->SetControlRotation(FRotator(90.0f, 0.0f, 0.0f));
-    World->Tick(LEVELTICK_All, 0.016f);
-    TestTrue(TEXT("Over-the-head pitch is clamped to the maximum"),
-             FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MaxCameraPitchDeg, 0.01f));
+    if (Player != nullptr && PC != nullptr)
+    {
+        PC->Possess(Player);
 
-    // Below the lower bound -> clamped to the minimum.
-    PC->SetControlRotation(FRotator(-90.0f, 0.0f, 0.0f));
-    World->Tick(LEVELTICK_All, 0.016f);
-    TestTrue(TEXT("Below-the-feet pitch is clamped to the minimum"),
-             FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MinCameraPitchDeg, 0.01f));
+        // Beyond the upper bound -> the character's Tick clamps to the maximum.
+        PC->SetControlRotation(FRotator(90.0f, 0.0f, 0.0f));
+        World->Tick(LEVELTICK_All, 0.016f);
+        TestTrue(TEXT("Over-the-head pitch is clamped to the maximum"),
+                 FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MaxCameraPitchDeg, 0.01f));
 
-    // Within the range -> untouched.
-    PC->SetControlRotation(FRotator(10.0f, 45.0f, 0.0f));
-    World->Tick(LEVELTICK_All, 0.016f);
-    TestTrue(TEXT("In-range pitch and yaw are preserved"),
-             FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, 10.0f, 0.01f) &&
-             FMath::IsNearlyEqual(PC->GetControlRotation().Yaw, 45.0f, 0.01f));
+        // Below the lower bound -> clamped to the minimum.
+        PC->SetControlRotation(FRotator(-90.0f, 0.0f, 0.0f));
+        World->Tick(LEVELTICK_All, 0.016f);
+        TestTrue(TEXT("Below-the-feet pitch is clamped to the minimum"),
+                 FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MinCameraPitchDeg, 0.01f));
+
+        // Within the range -> untouched.
+        PC->SetControlRotation(FRotator(10.0f, 45.0f, 0.0f));
+        World->Tick(LEVELTICK_All, 0.016f);
+        TestTrue(TEXT("In-range pitch and yaw are preserved"),
+                 FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, 10.0f, 0.01f) &&
+                 FMath::IsNearlyEqual(PC->GetControlRotation().Yaw, 45.0f, 0.01f));
+    }
+
+    // Teardown: end play, destroy the world's actors and the world, then
+    // release the engine world context (order matches the proven fixture).
+    World->BeginTearingDown();
+    for (TActorIterator<AActor> It(World, AActor::StaticClass(), EActorIteratorFlags::AllActors); It; ++It)
+    {
+        It->Destroy();
+    }
+    GEngine->DestroyWorldContext(World);
+    World->DestroyWorld(false);
 
     return true;
 }
