@@ -1,0 +1,83 @@
+{
+  "generated": "2026-12-06",
+  "method": "repo file audit + VISUAL_GAP_ANALYSIS_2026-11-20 denominators + production since 2026-11-20; undefined scopes flagged, never invented",
+  "chapters_env_candidates": {
+    "CH01": {
+      "scene_art_files": 75,
+      "note": "file count from repo art folders; unique-subject/approval status per gap analysis 2026-11-20 (exists != approved)"
+    },
+    "CH02": {
+      "scene_art_files": 16,
+      "note": "file count from repo art folders; unique-subject/approval status per gap analysis 2026-11-20 (exists != approved)"
+    },
+    "CH03": {
+      "scene_art_files": 17,
+      "note": "file count from repo art folders; unique-subject/approval status per gap analysis 2026-11-20 (exists != approved)"
+    },
+    "CH04": {
+      "scene_art_files": 10,
+      "note": "file count from repo art folders; unique-subject/approval status per gap analysis 2026-11-20 (exists != approved)"
+    },
+    "CH05": {
+      "scene_art_files": 6,
+      "note": "file count from repo art folders; unique-subject/approval status per gap analysis 2026-11-20 (exists != approved)"
+    },
+    "CH06": {
+      "scene_art_files": 2,
+      "note": "file count from repo art folders; unique-subject/approval status per gap analysis 2026-11-20 (exists != approved)"
+    },
+    "CH07": {
+      "scene_art_files": 0,
+      "note": "file count from repo art folders; unique-subject/approval status per gap analysis 2026-11-20 (exists != approved)"
+    },
+    "CH08": {
+      "scene_art_files": 0,
+      "note": "file count from repo art folders; unique-subject/approval status per gap analysis 2026-11-20 (exists != approved)"
+    }
+  },
+  "characters": {
+    "produced_assets": [
+      "ADANNA_AD03_V5 (production, Mac qual pending)",
+      "GUARD_CLASS_V3 (production, Mac qual pending)",
+      "NPC_CIVILIAN x6 (production, source-validated)",
+      "M1 fallback pair Adanna V3/Guard V2 (Blender-qualified)"
+    ],
+    "accepted_concepts": [
+      "Adanna definitive concept set",
+      "Adanna master portrait (approved, pre-existing)"
+    ],
+    "awaiting_owner": [
+      "facial likeness tier decision"
+    ],
+    "not_started": [
+      "all named supporting cast 3D (identities unapproved in register - Story decision)",
+      "enemy classes beyond Guard (PM/story list)"
+    ]
+  },
+  "animation": {
+    "adanna_clips": 6,
+    "guard_clips": 5,
+    "civilian_clips": 2,
+    "validation": "source-level only"
+  },
+  "environment_production": {
+    "ch01_kit_modules": "Env Kit V2 (4) + W1D7 modules (4) + dressing kit (1 cluster)",
+    "assemblies": "compound V2 + populated LOW/MED/HIGH (static)",
+    "states": "ST01-ST04 accepted provisional keys; ST05 Rain/ST06 Market day/ST07 Gathering PENDING keys (2026-12-06, definition conflict flagged to PM)",
+    "ch02_08": "candidate scene art only, 0 production assets, approvals pending per gap analysis"
+  },
+  "vfx": {
+    "physical_sprites": 8,
+    "spec": "Niagara params (TD assembly)"
+  },
+  "ui_cinematic": {
+    "boards": [
+      "UI visual language + spec",
+      "HUD layout ref",
+      "menu layout ref",
+      "cinematic atmosphere key",
+      "camera composition board"
+    ],
+    "integrated": 0
+  }
+}
