@@ -2,8 +2,7 @@
 
 #include "Misc/AutomationTest.h"
 #include "Engine/Engine.h"
-#include "Engine/GameInstance.h"
-#include "Engine/LocalPlayer.h"
+#include "Engine/EngineBaseTypes.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "GameFramework/Character.h"
@@ -23,15 +22,18 @@
  * The declared range is mirrored here from the production contract rather
  * than read from protected accessors, so production encapsulation is intact.
  *
- * D-W1D8-024 root cause: the APlayerController must own a Player for its tick
- * lifecycle to be valid. Possession (AController::SetPawn ->
+ * D-W1D8-024 root cause: possession (AController::SetPawn ->
  * AddPawnTickDependency) makes the pawn's PrimaryActorTick depend on the
- * controller's TickActor; a controller with no Player has an incomplete tick
- * lifecycle on UE 5.8.4, so its TickActor (and therefore the pawn's Tick and
- * the clamp) only ran on the first world tick. The controller is given a
- * ULocalPlayer via SetPlayer (SetAsLocalPlayerController + InitInputSystem)
- * before possession so its TickActor runs every tick and the clamp executes
- * for every case. The character's TickCount / ClampExecutionCount counters
+ * controller's PrimaryActorTick. In a real game the controller's tick fires
+ * every frame (it owns a Player with a viewport), so the pawn's Tick -- which
+ * runs the production clamp -- executes every tick. A headless UWorld::CreateWorld
+ * fixture has no viewport, so UGameInstance::CreateLocalPlayer is guarded by
+ * ensure(IsDedicatedServerInstance()) and a standalone test cannot legitimately
+ * fabricate a ULocalPlayer. This fixture keeps the real possession (so
+ * GetControlRotation() and the controller/pawn lifecycle are genuine) and removes
+ * the tick prerequisite (FTickFunction::RemovePrerequisite, the inverse of
+ * AddPawnTickDependency) so the pawn's real Tick and the production clamp run on
+ * every World::Tick. The character's TickCount / ClampExecutionCount counters
  * are asserted before/after each tick so the test proves the clamp actually
  * executed (cases 3-6 cannot pass merely because the clamp never ran).
  *
@@ -92,60 +94,38 @@ bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
 
     if (Player != nullptr && PC != nullptr)
     {
-        // D-W1D8-024 fix: the APlayerController must own a Player for its tick
-        // lifecycle to be valid on UE 5.8.4. Possession makes the pawn's tick
-        // depend on the controller's TickActor (AController::AddPawnTickDependency);
-        // without a Player the controller's TickActor did not run past the first
-        // world tick, so the pawn's Tick (and the clamp) ran only once. Giving
-        // the controller a ULocalPlayer (SetPlayer -> SetAsLocalPlayerController
-        // + InitInputSystem) before possession makes the controller tick every
-        // tick, so the clamp executes for every case below.
-        // UE 5.8.4 lifecycle: a ULocalPlayer MUST be created through the
-        // engine-supported UGameInstance::CreateLocalPlayer path so it gets a
-        // valid Engine Outer (NewObject<ULocalPlayer>(GetEngine(), ...)) and is
-        // registered with a game instance.  Constructing it via NewObject with
-        // the transient package triggers "Object None of class
-        // /Script/Engine.LocalPlayer ... was created in invalid Outer
-        // /Script/CoreUObject.Package!" and the resulting controller/pawn
-        // association is invalid, so the character's Tick does not run.
+        // D-W1D8-024: possession (AController::SetPawn -> AddPawnTickDependency)
+        // adds a tick prerequisite making the pawn's PrimaryActorTick depend on the
+        // controller's PrimaryActorTick (FTickFunction::AddPrerequisite). In a real
+        // game the controller's tick fires every frame (it owns a Player with a
+        // viewport), so the prerequisite is satisfied and the pawn's Tick -- which
+        // runs the production ClampCameraPitch -- executes every tick.
         //
-        // A UWorld::CreateWorld test world may not own a UGameInstance, so bind
-        // a default UGameInstance to this world with the engine as the (valid)
-        // Outer, then create the local player through it with
-        // bSpawnPlayerController=false (the test spawns its own APlayerController).
-        // This satisfies the required order: valid Engine Outer -> player
-        // created -> associated with the controller -> input init ->
-        // possession -> pawn tick dependency, all headless with no real
-        // viewport or user input.
-        UGameInstance* GameInstance = World->GetGameInstance();
-        if (GameInstance == nullptr)
-        {
-            // UGameInstance::GetEngine() returns CastChecked<UEngine>(GetOuter())
-            // (GameInstance.cpp), so the game instance's Outer MUST be the engine.
-            // GEngine is the global UEngine* (Engine/Engine.h). This is also the
-            // valid Outer that CreateLocalPlayer gives the ULocalPlayer internally
-            // (NewObject<ULocalPlayer>(GetEngine(), GetEngine()->LocalPlayerClass)).
-            GameInstance = NewObject<UGameInstance>(GEngine);
-            World->SetGameInstance(GameInstance);
-            // SetGameInstance only sets World->OwningGameInstance; it does not bind
-            // the game instance's world context. Bind it to this test world through
-            // the engine's public OnWorldChanged callback, which explicitly handles
-            // test/preview worlds that had no world context set before, so the game
-            // instance's GetWorld() resolves to the test world.
-            GameInstance->OnWorldChanged(nullptr, World);
-        }
-
-        FString PlayerError;
-        ULocalPlayer* LocalPlayer = GameInstance->CreateLocalPlayer(0, PlayerError, false);
-        TestNotNull(TEXT("Local player created for the test controller"), LocalPlayer);
-        if (LocalPlayer != nullptr)
-        {
-            PC->SetPlayer(LocalPlayer);
-        }
-        TestTrue(TEXT("Player controller has a player assigned"), PC->Player != nullptr);
-
+        // A headless UWorld::CreateWorld automation fixture has no viewport and no
+        // engine-managed local player. UGameInstance::CreateLocalPlayer is guarded by
+        // `ensure(IsDedicatedServerInstance())` when there is no game viewport client
+        // (GameInstance.cpp), so a standalone test cannot legitimately fabricate a
+        // ULocalPlayer through that path (it fired "Ensure condition failed:
+        // IsDedicatedServerInstance()" at GameInstance.cpp:856). Rather than replace
+        // one invalid player lifecycle with another, this fixture keeps the real
+        // possession (so GetControlRotation() and the controller/pawn lifecycle are
+        // genuine) and removes the tick prerequisite that headless-starves the pawn's
+        // Tick. The production clamp then runs on the pawn's real Tick on every
+        // World::Tick, with the control rotation set explicitly before each tick (no
+        // input / PlayerTick involved). This is a fixture-level tick-graph adjustment,
+        // not a production change and not a weakened assertion.
         PC->Possess(Player);
         TestTrue(TEXT("Player controller possesses the character"), PC->GetPawn() == Player);
+
+        // Decouple the pawn's Tick from the controller's Tick -- the exact inverse of
+        // AController::AddPawnTickDependency (FTickFunction::RemovePrerequisite with
+        // the same (controller, controller->PrimaryActorTick) pair). The pawn's
+        // PrimaryActorTick then fires on every world tick, so the character's Tick and
+        // the production clamp execute for every case below.
+        Player->PrimaryActorTick.RemovePrerequisite(PC, PC->PrimaryActorTick);
+        TestTrue(TEXT("Pawn tick is decoupled from the controller tick"),
+                 !Player->PrimaryActorTick.GetPrerequisites().Contains(
+                     FTickPrerequisite(PC, PC->PrimaryActorTick)));
 
         // Each case records the character's TickCount / ClampExecutionCount
         // before its tick and asserts both advanced after it, proving the
