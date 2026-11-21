@@ -120,8 +120,19 @@ bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
         UGameInstance* GameInstance = World->GetGameInstance();
         if (GameInstance == nullptr)
         {
-            GameInstance = NewObject<UGameInstance>(GetEngine());
+            // UGameInstance::GetEngine() returns CastChecked<UEngine>(GetOuter())
+            // (GameInstance.cpp), so the game instance's Outer MUST be the engine.
+            // GEngine is the global UEngine* (Engine/Engine.h). This is also the
+            // valid Outer that CreateLocalPlayer gives the ULocalPlayer internally
+            // (NewObject<ULocalPlayer>(GetEngine(), GetEngine()->LocalPlayerClass)).
+            GameInstance = NewObject<UGameInstance>(GEngine);
             World->SetGameInstance(GameInstance);
+            // SetGameInstance only sets World->OwningGameInstance; it does not bind
+            // the game instance's world context. Bind it to this test world through
+            // the engine's public OnWorldChanged callback, which explicitly handles
+            // test/preview worlds that had no world context set before, so the game
+            // instance's GetWorld() resolves to the test world.
+            GameInstance->OnWorldChanged(nullptr, World);
         }
 
         FString PlayerError;
