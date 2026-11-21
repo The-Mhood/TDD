@@ -1,0 +1,2 @@
+# Integration Readiness Review (2026-12-05)
+Automated inventory + consistency review of every production GLB (hashes in the JSON sibling). Findings R1-R5 recorded there; headline: naming/materials/skeleton are consistent family-wide; known non-defects are documented (dressing cluster origin, static populated merges, youth actor-scale). **This review is Design-side readiness only — it is not Blender qualification and not Unreal integration.**

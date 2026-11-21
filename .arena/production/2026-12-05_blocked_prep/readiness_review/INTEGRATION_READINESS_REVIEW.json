@@ -1,0 +1,137 @@
+{
+  "date": "2026-12-05",
+  "scope": "all production GLBs",
+  "assets": [
+    {
+      "file": "2026-11-22_w1d6_production/adanna/out/ADANNA_AD03_V1.glb",
+      "sha256": "33b4adddc5869e5db2c46646d6349379ec7db7924d29eb04785cd1229d1b42da",
+      "bytes": 152668,
+      "qc_present": false
+    },
+    {
+      "file": "2026-11-23_w1d7_production/adanna/out/ADANNA_AD03_V2.glb",
+      "sha256": "90ebc86473ad33b8d651fe65a82979ac5579c738d00bd13293f884e97aae7f94",
+      "bytes": 952620,
+      "qc_present": false
+    },
+    {
+      "file": "2026-11-23_w1d7_production/guard/out/GUARD_CLASS_V1.glb",
+      "sha256": "a316149080fd8774c217edb9bdd1e774278d0da426adb54cd9750bdd2fa82edc",
+      "bytes": 732596,
+      "qc_present": false
+    },
+    {
+      "file": "2026-11-25_w1d8_sculpt/out/ADANNA_AD03_V3.glb",
+      "sha256": "697f365f895fdf4f12b641650057db0b944d035112b399fc238815febb65f0ca",
+      "bytes": 1167920,
+      "qc_present": false
+    },
+    {
+      "file": "2026-11-25_w1d8_sculpt/out/GUARD_CLASS_V2.glb",
+      "sha256": "d4d5b06029c7ae58087623ac77b6a224ff81eb736f6927ea7f465bc0e8827004",
+      "bytes": 925356,
+      "qc_present": false
+    },
+    {
+      "file": "2026-11-25_w1d9_sculpt2/out/ADANNA_AD03_V4.glb",
+      "sha256": "1b077d44e6ae1682016df2943890400dd96eeb4a9efae674ed0ce3e153faf892",
+      "bytes": 1122904,
+      "qc_present": false
+    },
+    {
+      "file": "2026-11-25_w1d9_sculpt2/out/ADANNA_AD03_V4.glb",
+      "sha256": "1b077d44e6ae1682016df2943890400dd96eeb4a9efae674ed0ce3e153faf892",
+      "bytes": 1122904,
+      "qc_present": false
+    },
+    {
+      "file": "2026-11-25_w1d9_sculpt2/out/GUARD_CLASS_V3.glb",
+      "sha256": "70bd81fe1f247bed350540939218038dc768bc59a30221ffb84b1718c791264a",
+      "bytes": 895780,
+      "qc_present": false
+    },
+    {
+      "file": "2026-11-25_w1d9_sculpt2/out/GUARD_CLASS_V3.glb",
+      "sha256": "70bd81fe1f247bed350540939218038dc768bc59a30221ffb84b1718c791264a",
+      "bytes": 895780,
+      "qc_present": false
+    },
+    {
+      "file": "2026-11-26_w1d10_definitive_adanna/out/ADANNA_AD03_V5.glb",
+      "sha256": "7d8ff32070b42b113ad5a1da36b2d537e5e83dfa6b3ef557bdada174fff2d0f6",
+      "bytes": 1138228,
+      "qc_present": false
+    },
+    {
+      "file": "2026-11-26_w1d10_definitive_adanna/out/ADANNA_AD03_V5.glb",
+      "sha256": "7d8ff32070b42b113ad5a1da36b2d537e5e83dfa6b3ef557bdada174fff2d0f6",
+      "bytes": 1138228,
+      "qc_present": false
+    },
+    {
+      "file": "2026-12-01_w1d15_production/npc_civilian_builds/out/NPC_CIVILIAN_F1.glb",
+      "sha256": "b34d75563cf487860d08b3737230d64e8d8445106da4ad8c3e9048a8f2d7325b",
+      "bytes": 464036,
+      "qc_present": true
+    },
+    {
+      "file": "2026-12-01_w1d15_production/npc_civilian_builds/out/NPC_CIVILIAN_M1.glb",
+      "sha256": "414b2353c4021256602f0c378dbdeb8b68ea7854af8322bd33ce89aeb3e53ba6",
+      "bytes": 435132,
+      "qc_present": true
+    },
+    {
+      "file": "2026-12-02_w1d16_production/npc_variants/out/NPC_CIVILIAN_ELDER_F.glb",
+      "sha256": "66c07dff3f49f4b1025f190885fdbfe6d8f4d65ff238b124f7a8488f12bb566d",
+      "bytes": 464416,
+      "qc_present": true
+    },
+    {
+      "file": "2026-12-02_w1d16_production/npc_variants/out/NPC_CIVILIAN_ELDER_M.glb",
+      "sha256": "13e232740cecae8a3c5e96291bf87a46cddf12fea8fd03c286034187d7d923ab",
+      "bytes": 435464,
+      "qc_present": true
+    },
+    {
+      "file": "2026-12-02_w1d16_production/npc_variants/out/NPC_CIVILIAN_F1_EARTHRED.glb",
+      "sha256": "763fc30688438b7e286d01a0e20c269bf798ab7f3e3504520ff4fa72b5d48eb9",
+      "bytes": 464344,
+      "qc_present": true
+    },
+    {
+      "file": "2026-12-02_w1d16_production/npc_variants/out/NPC_CIVILIAN_YOUTH_M.glb",
+      "sha256": "0227014572fb76e321004ffb96e101ab57b1e46ba188e1f687bc213786c53e06",
+      "bytes": 435504,
+      "qc_present": true
+    }
+  ],
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "info",
+      "finding": "Dressing kit is a single cluster OBJ at origin - TD must split per-prop on import, or request split OBJs (noted in its manifest)."
+    },
+    {
+      "id": "R2",
+      "severity": "info",
+      "finding": "Populated compound assemblies are STATIC bind-pose merges for scale/clearance; animated population must use skinned GLBs + clips in Unreal."
+    },
+    {
+      "id": "R3",
+      "severity": "action-owner",
+      "finding": "Youth NPC height relies on 0.85 actor scale in-engine; skeleton unchanged by design."
+    },
+    {
+      "id": "R4",
+      "severity": "info",
+      "finding": "Material names consistent across NPC/hero family (skin_*, cloth_*_v1, leather_plain_v1, eye_dark_v1); env kits share env_kit_v2.mtl names."
+    },
+    {
+      "id": "R5",
+      "severity": "action-mac",
+      "finding": "No GLB in this review is Blender-qualified except the milestone-1 fallback pair in the blender package output/; V5/V3/NPCs remain production tier."
+    }
+  ],
+  "naming_check": "all production GLBs follow <NAME>_vN/<NAME> convention with _QC.json siblings where builder emits them",
+  "verdict": "integration-ready at production tier; qualification and Unreal integration remain separate, unclaimed"
+}
