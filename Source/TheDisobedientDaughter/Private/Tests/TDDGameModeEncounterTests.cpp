@@ -53,16 +53,20 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
 
     // UE 5.8.4: UWorld has no public assignable GameMode property (the
     // instance member AuthorityGameMode is protected and is set through
-    // UWorld::SetGameMode(FURL) via a GameInstance). The test creates and
-    // drives the ATDDGameMode instance directly, which is the supported
-    // seam for exercising the encounter flow.
+    // UWorld::SetGameMode(FURL) via a GameInstance). The GameMode is
+    // therefore spawned as a real world actor via UWorld::SpawnActor (the
+    // templated zero-argument overload SpawnActor(const FActorSpawnParameters&)
+    // is valid). NewObject would only set the outer and never spawn the
+    // actor: BeginPlay would not fire, roster collection would see no
+    // world, and GameMode->GetWorld() would not be the test world — the
+    // demonstrated D-W1D8-017 failure (gameModeWorldMatch=0).
     //
-    // AActor::BeginPlay is protected, so it is not called directly; the
-    // production ATDDGameMode::BeginPlay only collects the encounter roster,
-    // which the test performs explicitly below via the public
-    // CollectEncounterActors() seam.
-    ATDDGameMode* GameMode = NewObject<ATDDGameMode>(World);
-
+    // Spawn order matters: ATDDGameMode::BeginPlay collects the encounter
+    // roster from the world, and an actor spawned into a world that has
+    // already begun play receives BeginPlay at spawn time. The enemy,
+    // player, controller and PlayerStart are therefore placed first and the
+    // GameMode is spawned last, so its BeginPlay sees the complete actor
+    // set. AActor::BeginPlay is protected, so it is not called directly.
     ATDDTrainingEnemy* Enemy = World->SpawnActor<ATDDTrainingEnemy>(FVector(0.0f, 600.0f, 100.0f), FRotator::ZeroRotator);
     TestNotNull(TEXT("Training enemy spawned in the test world"), Enemy);
     ATDDAdannaCharacter* Player = World->SpawnActor<ATDDAdannaCharacter>(FVector(0.0f, -600.0f, 100.0f), FRotator::ZeroRotator);
@@ -73,118 +77,93 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
     {
         PC->Possess(Player);
     }
-
+    TestTrue(TEXT("Player controller possesses the player before evaluation"),
+             PC != nullptr && Player != nullptr && PC->GetPawn() == Player);
     APlayerStart* PlayerStart = World->SpawnActor<APlayerStart>(FVector(100.0f, 0.0f, 100.0f), FRotator::ZeroRotator);
     TestNotNull(TEXT("Player start placed in the test world"), PlayerStart);
 
-    // TEMPORARY DIAGNOSTICS (D-W1D8-015): establish why the roster was
-    // empty on the 5.8.4 trains — spawn success, world/level membership,
-    // actor validity, iterator visibility under default vs AllActors flags,
-    // and world/GameMode/player world identity. Remove once confirmed.
-    if (Enemy != nullptr)
+    // Spawn the GameMode last: its BeginPlay runs at spawn and collects
+    // the encounter roster from the fully populated world.
+    ATDDGameMode* GameMode = World->SpawnActor<ATDDGameMode>();
+    TestNotNull(TEXT("GameMode spawned into the test world"), GameMode);
+    TestTrue(TEXT("Spawned GameMode belongs to the test world"),
+             GameMode != nullptr && GameMode->GetWorld() == World);
+
+    if (GameMode != nullptr)
     {
-        UE_LOG(LogTemp, Log,
-            TEXT("TDD-DIAG: enemy valid=%d isEnemy=%d worldMatch=%d levelNonNull=%d levelIsPersistent=%d"),
-            IsValid(Enemy), Enemy->IsA<ATDDTrainingEnemy>(),
-            Enemy->GetWorld() == World, Enemy->GetLevel() != nullptr,
-            Enemy->GetLevel() == World->GetLevel(0));
-    }
-    UE_LOG(LogTemp, Log,
-        TEXT("TDD-DIAG: world actorsInitialized=%d persistentLevel=%d levels=%d persistentVisible=%d"),
-        World->AreActorsInitialized(), World->GetLevel(0) != nullptr,
-        World->GetLevels().Num(),
-        World->GetLevel(0) != nullptr && World->GetLevel(0)->bIsVisible);
-    UE_LOG(LogTemp, Log,
-        TEXT("TDD-DIAG: gameModeWorldMatch=%d playerWorldMatch=%d pcWorldMatch=%d"),
-        GameMode->GetWorld() == World,
-        Player != nullptr && Player->GetWorld() == World,
-        PC != nullptr && PC->GetWorld() == World);
-    {
-        int32 DefaultFlagsCount = 0;
-        for (TActorIterator<ATDDTrainingEnemy> It(World); It; ++It)
+        GameMode->CollectEncounterActors();
+        TestEqual(TEXT("Encounter roster collects the placed enemy"), GameMode->GetEncounterEnemiesRemaining(), 1);
+
+        GameMode->EvaluateEncounter(0.016f);
+        TestTrue(TEXT("Encounter activates once a player exists"),
+                 GameMode->GetEncounterState() == ETDDEncounterState::Active);
+
+        // Victory path: defeat the only rostered enemy.
+        if (Enemy != nullptr)
         {
-            ++DefaultFlagsCount;
+            UTDDCombatComponent* EnemyCombat = Enemy->GetCombatComponent();
+            TestNotNull(TEXT("Training enemy has a combat component"), EnemyCombat);
+            if (EnemyCombat != nullptr)
+            {
+                EnemyCombat->ReceiveAttack(EnemyCombat->GetHealth() + 10.0f, 0.0f, false, nullptr);
+            }
         }
-        int32 AllActorsCount = 0;
-        for (TActorIterator<ATDDTrainingEnemy> It(World, ATDDTrainingEnemy::StaticClass(),
-            EActorIteratorFlags::AllActors); It; ++It)
+        GameMode->EvaluateEncounter(0.016f);
+        TestTrue(TEXT("Defeating every rostered enemy yields victory"),
+                 GameMode->GetEncounterState() == ETDDEncounterState::Victory);
+
+        // Manual restart restores the encounter.
+        GameMode->RestartEncounter();
+        TestTrue(TEXT("Restart returns the encounter to active"),
+                 GameMode->GetEncounterState() == ETDDEncounterState::Active);
+        TestEqual(TEXT("Restart restores the enemy to the roster"), GameMode->GetEncounterEnemiesRemaining(), 1);
+        if (Enemy != nullptr)
         {
-            ++AllActorsCount;
+            UTDDCombatComponent* EnemyCombat = Enemy->GetCombatComponent();
+            TestTrue(TEXT("Restart restores the enemy's health"),
+                     EnemyCombat != nullptr && !EnemyCombat->IsDead());
         }
-        UE_LOG(LogTemp, Log,
-            TEXT("TDD-DIAG: iterator enemy count defaultFlags=%d allActors=%d"),
-            DefaultFlagsCount, AllActorsCount);
-    }
 
-    GameMode->CollectEncounterActors();
-    UE_LOG(LogTemp, Log, TEXT("TDD-DIAG: roster remaining after collect=%d"),
-        GameMode->GetEncounterEnemiesRemaining());
-    TestEqual(TEXT("Encounter roster collects the placed enemy"), GameMode->GetEncounterEnemiesRemaining(), 1);
+        // The PlayerStart query (ResetPlayerForRestart) must find the placed
+        // start and reposition the pawn — covers the second AllActors iterator.
+        TestTrue(TEXT("Restart repositions the player to the level PlayerStart"),
+                 PlayerStart != nullptr && Player != nullptr &&
+                 FVector::Dist(Player->GetActorLocation(), PlayerStart->GetActorLocation()) < 1.0f);
 
-    GameMode->EvaluateEncounter(0.016f);
-    TestTrue(TEXT("Encounter activates once a player exists"),
-             GameMode->GetEncounterState() == ETDDEncounterState::Active);
-
-    // Victory path: defeat the only rostered enemy.
-    if (Enemy != nullptr)
-    {
-        UTDDCombatComponent* EnemyCombat = Enemy->GetCombatComponent();
-        TestNotNull(TEXT("Training enemy has a combat component"), EnemyCombat);
-        if (EnemyCombat != nullptr)
+        // Defeat path: the player dies, and the configured delay auto-restarts.
+        if (Player != nullptr)
         {
-            EnemyCombat->ReceiveAttack(EnemyCombat->GetHealth() + 10.0f, 0.0f, false, nullptr);
+            UTDDCombatComponent* PlayerCombat = Player->GetCombatComponent();
+            TestNotNull(TEXT("Player has a combat component"), PlayerCombat);
+            if (PlayerCombat != nullptr)
+            {
+                PlayerCombat->ReceiveAttack(PlayerCombat->GetHealth() + 10.0f, 0.0f, false, nullptr);
+            }
         }
-    }
-    GameMode->EvaluateEncounter(0.016f);
-    TestTrue(TEXT("Defeating every rostered enemy yields victory"),
-             GameMode->GetEncounterState() == ETDDEncounterState::Victory);
+        GameMode->EvaluateEncounter(0.016f);
+        TestTrue(TEXT("Player death yields defeat"),
+                 GameMode->GetEncounterState() == ETDDEncounterState::Defeat);
 
-    // Manual restart restores the encounter.
-    GameMode->RestartEncounter();
-    TestTrue(TEXT("Restart returns the encounter to active"),
-             GameMode->GetEncounterState() == ETDDEncounterState::Active);
-    TestEqual(TEXT("Restart restores the enemy to the roster"), GameMode->GetEncounterEnemiesRemaining(), 1);
-    if (Enemy != nullptr)
-    {
-        UTDDCombatComponent* EnemyCombat = Enemy->GetCombatComponent();
-        TestTrue(TEXT("Restart restores the enemy's health"),
-                 EnemyCombat != nullptr && !EnemyCombat->IsDead());
-    }
-
-    // The PlayerStart query (ResetPlayerForRestart) must find the placed
-    // start and reposition the pawn — covers the second AllActors iterator.
-    TestTrue(TEXT("Restart repositions the player to the level PlayerStart"),
-             PlayerStart != nullptr && Player != nullptr &&
-             FVector::Dist(Player->GetActorLocation(), PlayerStart->GetActorLocation()) < 1.0f);
-
-    // Defeat path: the player dies, and the configured delay auto-restarts.
-    if (Player != nullptr)
-    {
-        UTDDCombatComponent* PlayerCombat = Player->GetCombatComponent();
-        TestNotNull(TEXT("Player has a combat component"), PlayerCombat);
-        if (PlayerCombat != nullptr)
+        const float Step = 0.02f;
+        int32 Steps = 0;
+        while (Steps < 500 && GameMode->GetEncounterState() == ETDDEncounterState::Defeat)
         {
-            PlayerCombat->ReceiveAttack(PlayerCombat->GetHealth() + 10.0f, 0.0f, false, nullptr);
+            GameMode->EvaluateEncounter(Step);
+            ++Steps;
         }
+        TestTrue(TEXT("Defeat auto-restarts after the configured delay"),
+                 GameMode->GetEncounterState() == ETDDEncounterState::Active);
     }
-    GameMode->EvaluateEncounter(0.016f);
-    TestTrue(TEXT("Player death yields defeat"),
-             GameMode->GetEncounterState() == ETDDEncounterState::Defeat);
-
-    const float Step = 0.02f;
-    int32 Steps = 0;
-    while (Steps < 500 && GameMode->GetEncounterState() == ETDDEncounterState::Defeat)
-    {
-        GameMode->EvaluateEncounter(Step);
-        ++Steps;
-    }
-    TestTrue(TEXT("Defeat auto-restarts after the configured delay"),
-             GameMode->GetEncounterState() == ETDDEncounterState::Active);
 
     // Teardown: release the engine context and destroy the test world so
-    // repeated runs do not leak worlds.
+    // repeated runs do not leak worlds. The iterator passes explicit
+    // AllActors flags (D-W1D8-015): the default OnlyActiveLevels gating
+    // yields no actors on this created world, so the default flags would
+    // skip every spawned actor. The assertion macros record failures
+    // without aborting, so this teardown always runs even when an
+    // assertion above failed.
     World->BeginTearingDown();
-    for (TActorIterator<AActor> It(World); It; ++It)
+    for (TActorIterator<AActor> It(World, AActor::StaticClass(), EActorIteratorFlags::AllActors); It; ++It)
     {
         It->Destroy();
     }
