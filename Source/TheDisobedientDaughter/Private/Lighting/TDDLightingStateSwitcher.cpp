@@ -62,7 +62,11 @@ void ATDDLightingStateSwitcher::Tick(float DeltaSeconds)
     if (CurrentState == ETDDLightingState::Night && FireLight != nullptr && NightPreset.FireIntensity > 0.0f)
     {
         FireFlickerTime += DeltaSeconds;
-        const float Flicker = 0.85f + 0.15f * FMath::Sin(FireFlickerTime * 12.0f);
+        // Modulate within the documented [0.85, 1.0] envelope around the base
+        // intensity: 0.925 + 0.075*sin spans exactly [0.85, 1.0]. (The
+        // previous 0.85 + 0.15*sin spanned [0.70, 1.0], dipping below the
+        // documented envelope on every negative sine half-cycle.)
+        const float Flicker = 0.925f + 0.075f * FMath::Sin(FireFlickerTime * 12.0f);
         FireLight->SetIntensity(NightPreset.FireIntensity * Flicker);
     }
 }

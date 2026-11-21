@@ -79,29 +79,48 @@ bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
     if (Player != nullptr && PC != nullptr)
     {
         PC->Possess(Player);
+        TestTrue(TEXT("Player controller possesses the character"), PC->GetPawn() == Player);
 
         // Beyond the upper bound -> the character's Tick clamps to the maximum.
         PC->SetControlRotation(FRotator(90.0f, 0.0f, 0.0f));
+        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: pre-tick control=(%.2f,%.2f,%.2f) pawn=%d ctrl=%d"),
+            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll,
+            PC->GetPawn() != nullptr, Player->GetController() == PC);
         World->Tick(LEVELTICK_All, 0.016f);
+        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: post-tick control=(%.2f,%.2f,%.2f)"),
+            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll);
         TestTrue(TEXT("Over-the-head pitch is clamped to the maximum"),
                  FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MaxCameraPitchDeg, 0.01f));
 
         // Below the lower bound -> clamped to the minimum.
         PC->SetControlRotation(FRotator(-90.0f, 0.0f, 0.0f));
+        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: pre-tick control=(%.2f,%.2f,%.2f) pawn=%d ctrl=%d"),
+            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll,
+            PC->GetPawn() != nullptr, Player->GetController() == PC);
         World->Tick(LEVELTICK_All, 0.016f);
+        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: post-tick control=(%.2f,%.2f,%.2f)"),
+            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll);
         TestTrue(TEXT("Below-the-feet pitch is clamped to the minimum"),
                  FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MinCameraPitchDeg, 0.01f));
 
         // Within the range -> untouched.
         PC->SetControlRotation(FRotator(10.0f, 45.0f, 0.0f));
+        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: pre-tick control=(%.2f,%.2f,%.2f) pawn=%d ctrl=%d"),
+            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll,
+            PC->GetPawn() != nullptr, Player->GetController() == PC);
         World->Tick(LEVELTICK_All, 0.016f);
+        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: post-tick control=(%.2f,%.2f,%.2f)"),
+            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll);
         TestTrue(TEXT("In-range pitch and yaw are preserved"),
                  FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, 10.0f, 0.01f) &&
                  FMath::IsNearlyEqual(PC->GetControlRotation().Yaw, 45.0f, 0.01f));
     }
 
-    // Teardown: end play, destroy the world's actors and the world, then
-    // release the engine world context (order matches the proven fixture).
+    // Teardown: end play first (CleanupWorld warns "missing call to EndPlay"
+    // when a begun world is cleaned up), then destroy the world's actors and
+    // the world, and release the engine world context (order matches the
+    // proven fixture).
+    World->EndPlay(EEndPlayReason::Destroy);
     World->BeginTearingDown();
     for (TActorIterator<AActor> It(World, AActor::StaticClass(), EActorIteratorFlags::AllActors); It; ++It)
     {

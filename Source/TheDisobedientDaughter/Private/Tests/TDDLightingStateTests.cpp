@@ -99,7 +99,10 @@ bool VerifyPresetApplied(ATDDLightingStateSwitcher* Switcher, const FPresetGolde
     Report(FMath::IsNearlyEqual(Sun->GetRelativeRotation().Pitch, Golden.SunElevationDeg, 0.01f), TEXT("SunPitchDeg"),
         FString::Printf(TEXT("%.4f"), Sun->GetRelativeRotation().Pitch),
         FString::Printf(TEXT("%.4f"), Golden.SunElevationDeg));
-    Report(FMath::IsNearlyEqual(Sun->GetRelativeRotation().Yaw, Golden.SunAzimuthDeg, 0.01f), TEXT("SunAzimuthDeg"),
+    // Azimuth is a circular angle: compare via the shortest angular distance
+    // (a stored yaw of -160 is the same angle as the preset's 200).
+    Report(FMath::Abs(FMath::FindDeltaAngleDegrees(Golden.SunAzimuthDeg, Sun->GetRelativeRotation().Yaw)) <= 0.01f,
+        TEXT("SunAzimuthDeg"),
         FString::Printf(TEXT("%.4f"), Sun->GetRelativeRotation().Yaw),
         FString::Printf(TEXT("%.4f"), Golden.SunAzimuthDeg));
     const FLinearColor AmbientSkyActual = FLinearColor(Ambient->LightColor);
@@ -191,11 +194,12 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
     TestTrue(TEXT("Night preset applied"), VerifyPresetApplied(Switcher, NightGolden, TEXT("Night")));
 
     // Cooking-fire flicker: the switcher's Tick modulates the night firelight
-    // around the base intensity (0.85 + 0.15*sin(12t)) without changing the
-    // preset. The switcher declares PrimaryActorTick.bCanEverTick, so the
-    // genuine UE 5.8.4 mechanism to advance its lifecycle is the world tick
-    // (UWorld::Tick is public; the engine calls it every frame) — the
-    // switcher's protected Tick runs as part of it.
+    // around the base intensity (0.925 + 0.075*sin(12t), spanning the
+    // documented 0.85–1.0 envelope) without changing the preset. The switcher
+    // declares PrimaryActorTick.bCanEverTick, so the genuine UE 5.8.4
+    // mechanism to advance its lifecycle is the world tick (UWorld::Tick is
+    // public; the engine calls it every frame) — the switcher's protected
+    // Tick runs as part of it.
     const float NightFireBase = NightGolden.FireIntensity;
     World->Tick(LEVELTICK_All, 0.05f);
     const float FlickeredIntensity = Switcher->GetFireLight()->Intensity;
@@ -224,10 +228,12 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
              Switcher->GetCurrentState() == ETDDLightingState::Dawn);
     TestTrue(TEXT("Dawn preset reapplied"), VerifyPresetApplied(Switcher, DawnGolden, TEXT("Dawn reapplied")));
 
-    // Teardown: end play, destroy the world's actors and the world, then
-    // release the engine world context (order matches the proven encounter
-    // fixture). The assertion macros record failures without aborting, so
-    // this always runs.
+    // Teardown: end play first (CleanupWorld warns "missing call to EndPlay"
+    // when a begun world is cleaned up), then destroy the world's actors and
+    // the world, and release the engine world context (order matches the
+    // proven encounter fixture). The assertion macros record failures
+    // without aborting, so this always runs.
+    World->EndPlay(EEndPlayReason::Destroy);
     World->BeginTearingDown();
     for (TActorIterator<AActor> It(World, AActor::StaticClass(), EActorIteratorFlags::AllActors); It; ++It)
     {
