@@ -2,6 +2,7 @@
 
 #include "Misc/AutomationTest.h"
 #include "Engine/Engine.h"
+#include "Engine/GameInstance.h"
 #include "Engine/LocalPlayer.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -99,7 +100,32 @@ bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
         // the controller a ULocalPlayer (SetPlayer -> SetAsLocalPlayerController
         // + InitInputSystem) before possession makes the controller tick every
         // tick, so the clamp executes for every case below.
-        ULocalPlayer* LocalPlayer = NewObject<ULocalPlayer>(GetTransientPackage());
+        // UE 5.8.4 lifecycle: a ULocalPlayer MUST be created through the
+        // engine-supported UGameInstance::CreateLocalPlayer path so it gets a
+        // valid Engine Outer (NewObject<ULocalPlayer>(GetEngine(), ...)) and is
+        // registered with a game instance.  Constructing it via NewObject with
+        // the transient package triggers "Object None of class
+        // /Script/Engine.LocalPlayer ... was created in invalid Outer
+        // /Script/CoreUObject.Package!" and the resulting controller/pawn
+        // association is invalid, so the character's Tick does not run.
+        //
+        // A UWorld::CreateWorld test world may not own a UGameInstance, so bind
+        // a default UGameInstance to this world with the engine as the (valid)
+        // Outer, then create the local player through it with
+        // bSpawnPlayerController=false (the test spawns its own APlayerController).
+        // This satisfies the required order: valid Engine Outer -> player
+        // created -> associated with the controller -> input init ->
+        // possession -> pawn tick dependency, all headless with no real
+        // viewport or user input.
+        UGameInstance* GameInstance = World->GetGameInstance();
+        if (GameInstance == nullptr)
+        {
+            GameInstance = NewObject<UGameInstance>(GetEngine());
+            World->SetGameInstance(GameInstance);
+        }
+
+        FString PlayerError;
+        ULocalPlayer* LocalPlayer = GameInstance->CreateLocalPlayer(0, PlayerError, false);
         TestNotNull(TEXT("Local player created for the test controller"), LocalPlayer);
         if (LocalPlayer != nullptr)
         {
