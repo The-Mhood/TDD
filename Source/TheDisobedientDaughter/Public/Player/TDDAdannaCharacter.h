@@ -33,38 +33,19 @@ public:
     UTDDTraversalComponent* GetTraversalComponent() const { return TraversalComponent; }
 
     /**
-     * TEMPORARY DIAGNOSTICS (D-W1D8-024 root-cause trace, to be removed once
-     * the root cause is fixed): exposes the runtime call trace of
-     * FaceRotation/ClampCameraPitch so the failing negative-pitch tick can be
-     * correlated with the engine's own control-rotation writes. Not part of
-     * the production contract.
+     * D-W1D8-024 regression counters: the number of Tick executions and the
+     * number of ClampCameraPitch executions on this character. These are the
+     * production execution counters the camera automation test asserts on to
+     * prove the clamp actually runs for each out-of-range input (rather than
+     * the test passing because the clamp never executed).
      */
-    struct FDTDCameraClampTrace
-    {
-        int32 FaceRotationCalls = 0;
-        int32 ClampCalls = 0;
-        float LastFaceInputPitch = 0.0f;
-        float LastFaceClampedPitch = 0.0f;
-        float LastClampInputPitch = 0.0f;
-        float LastClampOutputPitch = 0.0f;
-        bool LastClampWrote = false;
-    };
-    static FDTDCameraClampTrace CameraClampTrace;
+    int32 GetTickCount() const { return TickCount; }
+    int32 GetClampExecutionCount() const { return ClampExecutionCount; }
 
 protected:
     virtual void BeginPlay() override;
     virtual void Tick(float DeltaTime) override;
     virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
-
-    /**
-     * Re-assert the camera pitch clamp after the engine's per-tick
-     * control-rotation write. APlayerController::UpdateRotation writes the
-     * control rotation (the camera-processed view rotation) and then calls
-     * FaceRotation on the pawn; clamping here makes the clamp the last
-     * control-rotation write of the tick so it survives the engine's
-     * per-tick re-derivation of the control rotation (UE 5.8.4).
-     */
-    virtual void FaceRotation(FRotator NewControlRotation, float DeltaTime) override;
 
     /** Clamp the controller pitch to the third-person camera range. */
     void ClampCameraPitch();
@@ -89,6 +70,10 @@ private:
     float ForwardInput = 0.0f;
     float RightInput = 0.0f;
     bool bSprintRequested = false;
+
+    // D-W1D8-024 regression counters (see public getters).
+    int32 TickCount = 0;
+    int32 ClampExecutionCount = 0;
 
     // Third-person camera pitch range (degrees). The spring arm follows the
     // controller rotation, so clamping the control pitch bounds the camera.

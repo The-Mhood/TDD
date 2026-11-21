@@ -13,10 +13,6 @@
 #include "Player/TDDCharacterStateComponent.h"
 #include "TDDGameMode.h"
 
-// TEMPORARY DIAGNOSTICS (D-W1D8-024): runtime call trace for the camera
-// pitch clamp. Removed once the root cause is fixed.
-ATDDAdannaCharacter::FDTDCameraClampTrace ATDDAdannaCharacter::CameraClampTrace;
-
 ATDDAdannaCharacter::ATDDAdannaCharacter()
 {
     PrimaryActorTick.bCanEverTick = true;
@@ -66,71 +62,25 @@ void ATDDAdannaCharacter::BeginPlay()
 
 void ATDDAdannaCharacter::Tick(float DeltaTime)
 {
+    ++TickCount;
     Super::Tick(DeltaTime);
     ClampCameraPitch();
 }
 
-void ATDDAdannaCharacter::FaceRotation(FRotator NewControlRotation, float DeltaTime)
-{
-    ++CameraClampTrace.FaceRotationCalls;
-    CameraClampTrace.LastFaceInputPitch = NewControlRotation.Pitch;
-
-    Super::FaceRotation(NewControlRotation, DeltaTime);
-
-    // TEMPORARY DIAGNOSTIC (D-W1D8-024): record the control-rotation pitch
-    // the engine passed in, before this override re-asserts the clamp.
-    const float PreClampPitch = GetController() != nullptr
-        ? GetController()->GetControlRotation().Pitch
-        : NewControlRotation.Pitch;
-
-    // The engine's APlayerController::UpdateRotation writes the control
-    // rotation (the camera-processed view rotation) and then calls
-    // FaceRotation on the pawn. Re-assert the pitch clamp here so the clamp
-    // is the last control-rotation write of the tick: the engine re-derives
-    // the control rotation every world tick, and in UE 5.8.4 that
-    // re-derivation restores the unclamped pitch, which the Tick-only clamp
-    // could not survive.
-    ClampCameraPitch();
-
-    CameraClampTrace.LastFaceClampedPitch = GetController() != nullptr
-        ? GetController()->GetControlRotation().Pitch
-        : PreClampPitch;
-    UE_LOG(LogTemp, Log,
-        TEXT("TDD-CAM-FACE call=%d inputPitch=%.2f preClamp=%.2f postClamp=%.2f"),
-        CameraClampTrace.FaceRotationCalls, NewControlRotation.Pitch,
-        PreClampPitch, CameraClampTrace.LastFaceClampedPitch);
-}
-
 void ATDDAdannaCharacter::ClampCameraPitch()
 {
-    ++CameraClampTrace.ClampCalls;
+    ++ClampExecutionCount;
     AController* ControllerRef = GetController();
     if (ControllerRef == nullptr)
     {
-        CameraClampTrace.LastClampInputPitch = 0.0f;
-        CameraClampTrace.LastClampOutputPitch = 0.0f;
-        CameraClampTrace.LastClampWrote = false;
-        UE_LOG(LogTemp, Log, TEXT("TDD-CAM-CLAMP call=%d NO CONTROLLER"),
-            CameraClampTrace.ClampCalls);
         return;
     }
     const FRotator Control = ControllerRef->GetControlRotation();
-    CameraClampTrace.LastClampInputPitch = Control.Pitch;
     const float Clamped = FMath::Clamp(Control.Pitch, MinCameraPitchDeg, MaxCameraPitchDeg);
     if (!FMath::IsNearlyEqual(Clamped, Control.Pitch, 0.01f))
     {
         ControllerRef->SetControlRotation(FRotator(Clamped, Control.Yaw, 0.0f));
-        CameraClampTrace.LastClampWrote = true;
     }
-    else
-    {
-        CameraClampTrace.LastClampWrote = false;
-    }
-    CameraClampTrace.LastClampOutputPitch = ControllerRef->GetControlRotation().Pitch;
-    UE_LOG(LogTemp, Log,
-        TEXT("TDD-CAM-CLAMP call=%d input=%.2f clamped=%.2f wrote=%d output=%.2f"),
-        CameraClampTrace.ClampCalls, Control.Pitch, Clamped,
-        CameraClampTrace.LastClampWrote ? 1 : 0, CameraClampTrace.LastClampOutputPitch);
 }
 
 void ATDDAdannaCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

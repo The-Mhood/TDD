@@ -2,6 +2,7 @@
 
 #include "Misc/AutomationTest.h"
 #include "Engine/Engine.h"
+#include "Engine/LocalPlayer.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "GameFramework/Character.h"
@@ -21,6 +22,18 @@
  * The declared range is mirrored here from the production contract rather
  * than read from protected accessors, so production encapsulation is intact.
  *
+ * D-W1D8-024 root cause: the APlayerController must own a Player for its tick
+ * lifecycle to be valid. Possession (AController::SetPawn ->
+ * AddPawnTickDependency) makes the pawn's PrimaryActorTick depend on the
+ * controller's TickActor; a controller with no Player has an incomplete tick
+ * lifecycle on UE 5.8.4, so its TickActor (and therefore the pawn's Tick and
+ * the clamp) only ran on the first world tick. The controller is given a
+ * ULocalPlayer via SetPlayer (SetAsLocalPlayerController + InitInputSystem)
+ * before possession so its TickActor runs every tick and the clamp executes
+ * for every case. The character's TickCount / ClampExecutionCount counters
+ * are asserted before/after each tick so the test proves the clamp actually
+ * executed (cases 3-6 cannot pass merely because the clamp never ran).
+ *
  * The test world is registered with the engine (D-W1D8-020): UWorld::Tick
  * reaches UWorld::IsInSeamlessTravel -> UEngine::SeamlessTravelHandlerForWorld
  * -> UEngine::GetWorldContextFromWorldChecked, which crashes without a
@@ -37,22 +50,6 @@ namespace
 // production clamp contract on ATDDAdannaCharacter (private static constexpr).
 constexpr float MinCameraPitchDeg = -55.0f;
 constexpr float MaxCameraPitchDeg = 25.0f;
-
-// TEMPORARY DIAGNOSTIC (D-W1D8-024): dump the production clamp trace so the
-// owner-Mac run can correlate the failing negative-pitch tick with the
-// engine's own control-rotation writes. Removed once the root cause is fixed.
-void DumpCameraClampTrace(const FString& Label)
-{
-    const ATDDAdannaCharacter::FDTDCameraClampTrace& Trace =
-        ATDDAdannaCharacter::CameraClampTrace;
-    UE_LOG(LogTemp, Log,
-        TEXT("TDD-CAM-TRACE[%s] faceCalls=%d clampCalls=%d lastFaceInput=%.2f "
-             "lastFaceClamped=%.2f lastClampInput=%.2f lastClampOutput=%.2f lastClampWrote=%d"),
-        *Label, Trace.FaceRotationCalls, Trace.ClampCalls,
-        Trace.LastFaceInputPitch, Trace.LastFaceClampedPitch,
-        Trace.LastClampInputPitch, Trace.LastClampOutputPitch,
-        Trace.LastClampWrote ? 1 : 0);
-}
 }
 
 bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
@@ -94,69 +91,100 @@ bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
 
     if (Player != nullptr && PC != nullptr)
     {
+        // D-W1D8-024 fix: the APlayerController must own a Player for its tick
+        // lifecycle to be valid on UE 5.8.4. Possession makes the pawn's tick
+        // depend on the controller's TickActor (AController::AddPawnTickDependency);
+        // without a Player the controller's TickActor did not run past the first
+        // world tick, so the pawn's Tick (and the clamp) ran only once. Giving
+        // the controller a ULocalPlayer (SetPlayer -> SetAsLocalPlayerController
+        // + InitInputSystem) before possession makes the controller tick every
+        // tick, so the clamp executes for every case below.
+        ULocalPlayer* LocalPlayer = NewObject<ULocalPlayer>(GetTransientPackage());
+        TestNotNull(TEXT("Local player created for the test controller"), LocalPlayer);
+        if (LocalPlayer != nullptr)
+        {
+            PC->SetPlayer(LocalPlayer);
+        }
+        TestTrue(TEXT("Player controller has a player assigned"), PC->Player != nullptr);
+
         PC->Possess(Player);
         TestTrue(TEXT("Player controller possesses the character"), PC->GetPawn() == Player);
 
+        // Each case records the character's TickCount / ClampExecutionCount
+        // before its tick and asserts both advanced after it, proving the
+        // character ticked and the clamp executed for that case (so in-range
+        // and boundary cases cannot pass merely because the clamp never ran).
+
         // Beyond the upper bound -> the character's Tick clamps to the maximum.
-        PC->SetControlRotation(FRotator(90.0f, 0.0f, 0.0f));
-        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: pre-tick control=(%.2f,%.2f,%.2f) pawn=%d ctrl=%d"),
-            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll,
-            PC->GetPawn() != nullptr, Player->GetController() == PC);
-        World->Tick(LEVELTICK_All, 0.016f);
-        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: post-tick control=(%.2f,%.2f,%.2f)"),
-            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll);
-        DumpCameraClampTrace(TEXT("after-upper"));
-        TestTrue(TEXT("Over-the-head pitch is clamped to the maximum"),
-                 FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MaxCameraPitchDeg, 0.01f));
+        {
+            const int32 TickBefore = Player->GetTickCount();
+            const int32 ClampBefore = Player->GetClampExecutionCount();
+            PC->SetControlRotation(FRotator(90.0f, 0.0f, 0.0f));
+            World->Tick(LEVELTICK_All, 0.016f);
+            TestTrue(TEXT("Over-the-head: character ticked"),
+                     Player->GetTickCount() > TickBefore);
+            TestTrue(TEXT("Over-the-head: clamp executed"),
+                     Player->GetClampExecutionCount() > ClampBefore);
+            TestTrue(TEXT("Over-the-head pitch is clamped to the maximum"),
+                     FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MaxCameraPitchDeg, 0.01f));
+        }
 
         // Below the lower bound -> clamped to the minimum.
-        PC->SetControlRotation(FRotator(-90.0f, 0.0f, 0.0f));
-        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: pre-tick control=(%.2f,%.2f,%.2f) pawn=%d ctrl=%d"),
-            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll,
-            PC->GetPawn() != nullptr, Player->GetController() == PC);
-        World->Tick(LEVELTICK_All, 0.016f);
-        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: post-tick control=(%.2f,%.2f,%.2f)"),
-            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll);
-        DumpCameraClampTrace(TEXT("after-lower"));
-        TestTrue(TEXT("Below-the-feet pitch is clamped to the minimum"),
-                 FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MinCameraPitchDeg, 0.01f));
+        {
+            const int32 TickBefore = Player->GetTickCount();
+            const int32 ClampBefore = Player->GetClampExecutionCount();
+            PC->SetControlRotation(FRotator(-90.0f, 0.0f, 0.0f));
+            World->Tick(LEVELTICK_All, 0.016f);
+            TestTrue(TEXT("Below-the-feet: character ticked"),
+                     Player->GetTickCount() > TickBefore);
+            TestTrue(TEXT("Below-the-feet: clamp executed"),
+                     Player->GetClampExecutionCount() > ClampBefore);
+            TestTrue(TEXT("Below-the-feet pitch is clamped to the minimum"),
+                     FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MinCameraPitchDeg, 0.01f));
+        }
 
-        // Within the range -> untouched.
-        PC->SetControlRotation(FRotator(10.0f, 45.0f, 0.0f));
-        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: pre-tick control=(%.2f,%.2f,%.2f) pawn=%d ctrl=%d"),
-            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll,
-            PC->GetPawn() != nullptr, Player->GetController() == PC);
-        World->Tick(LEVELTICK_All, 0.016f);
-        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: post-tick control=(%.2f,%.2f,%.2f)"),
-            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll);
-        DumpCameraClampTrace(TEXT("after-inrange"));
-        TestTrue(TEXT("In-range pitch and yaw are preserved"),
-                 FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, 10.0f, 0.01f) &&
-                 FMath::IsNearlyEqual(PC->GetControlRotation().Yaw, 45.0f, 0.01f));
+        // Within the range -> untouched (clamp still executes, value unchanged).
+        {
+            const int32 TickBefore = Player->GetTickCount();
+            const int32 ClampBefore = Player->GetClampExecutionCount();
+            PC->SetControlRotation(FRotator(10.0f, 45.0f, 0.0f));
+            World->Tick(LEVELTICK_All, 0.016f);
+            TestTrue(TEXT("In-range: character ticked"),
+                     Player->GetTickCount() > TickBefore);
+            TestTrue(TEXT("In-range: clamp executed"),
+                     Player->GetClampExecutionCount() > ClampBefore);
+            TestTrue(TEXT("In-range pitch and yaw are preserved"),
+                     FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, 10.0f, 0.01f) &&
+                     FMath::IsNearlyEqual(PC->GetControlRotation().Yaw, 45.0f, 0.01f));
+        }
 
-        // Exact lower boundary -> preserved, never over-clamped.
-        PC->SetControlRotation(FRotator(MinCameraPitchDeg, 0.0f, 0.0f));
-        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: pre-tick control=(%.2f,%.2f,%.2f) pawn=%d ctrl=%d"),
-            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll,
-            PC->GetPawn() != nullptr, Player->GetController() == PC);
-        World->Tick(LEVELTICK_All, 0.016f);
-        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: post-tick control=(%.2f,%.2f,%.2f)"),
-            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll);
-        DumpCameraClampTrace(TEXT("after-lower-bound"));
-        TestTrue(TEXT("Exact lower-bound pitch is preserved"),
-                 FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MinCameraPitchDeg, 0.01f));
+        // Exact lower boundary -> preserved, never over-clamped (clamp executes).
+        {
+            const int32 TickBefore = Player->GetTickCount();
+            const int32 ClampBefore = Player->GetClampExecutionCount();
+            PC->SetControlRotation(FRotator(MinCameraPitchDeg, 0.0f, 0.0f));
+            World->Tick(LEVELTICK_All, 0.016f);
+            TestTrue(TEXT("Lower-bound: character ticked"),
+                     Player->GetTickCount() > TickBefore);
+            TestTrue(TEXT("Lower-bound: clamp executed"),
+                     Player->GetClampExecutionCount() > ClampBefore);
+            TestTrue(TEXT("Exact lower-bound pitch is preserved"),
+                     FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MinCameraPitchDeg, 0.01f));
+        }
 
-        // Exact upper boundary -> preserved, never over-clamped.
-        PC->SetControlRotation(FRotator(MaxCameraPitchDeg, 0.0f, 0.0f));
-        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: pre-tick control=(%.2f,%.2f,%.2f) pawn=%d ctrl=%d"),
-            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll,
-            PC->GetPawn() != nullptr, Player->GetController() == PC);
-        World->Tick(LEVELTICK_All, 0.016f);
-        UE_LOG(LogTemp, Log, TEXT("TDD-CAM: post-tick control=(%.2f,%.2f,%.2f)"),
-            PC->GetControlRotation().Pitch, PC->GetControlRotation().Yaw, PC->GetControlRotation().Roll);
-        DumpCameraClampTrace(TEXT("after-upper-bound"));
-        TestTrue(TEXT("Exact upper-bound pitch is preserved"),
-                 FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MaxCameraPitchDeg, 0.01f));
+        // Exact upper boundary -> preserved, never over-clamped (clamp executes).
+        {
+            const int32 TickBefore = Player->GetTickCount();
+            const int32 ClampBefore = Player->GetClampExecutionCount();
+            PC->SetControlRotation(FRotator(MaxCameraPitchDeg, 0.0f, 0.0f));
+            World->Tick(LEVELTICK_All, 0.016f);
+            TestTrue(TEXT("Upper-bound: character ticked"),
+                     Player->GetTickCount() > TickBefore);
+            TestTrue(TEXT("Upper-bound: clamp executed"),
+                     Player->GetClampExecutionCount() > ClampBefore);
+            TestTrue(TEXT("Exact upper-bound pitch is preserved"),
+                     FMath::IsNearlyEqual(PC->GetControlRotation().Pitch, MaxCameraPitchDeg, 0.01f));
+        }
     }
 
     // Teardown: UWorld::EndPlay performs the begin/end-play handshake itself
