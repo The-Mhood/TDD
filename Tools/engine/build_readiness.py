@@ -515,6 +515,22 @@ def main():
          "include \"Engine/Engine.h\" — FWorldContext, GEngine, and the "
          "CreateNewWorldContext/SetCurrentWorld/DestroyWorldContext APIs "
          "are all declared there"),
+        # UWorld has no IsActorsInitialized member in 5.8.4; the lifecycle
+        # accessor is AreActorsInitialized(). Demonstrated by the
+        # owner-Mac compile failure of the D-W1D8-015 diagnostics.
+        (r"([A-Za-z_]\w*)\s*->\s*IsActorsInitialized\s*\(",
+         "C++ error class — UWorld has no IsActorsInitialized member in UE 5.8.4",
+         "use AreActorsInitialized() (UWorld's public actors-initialized "
+         "lifecycle accessor)"),
+        # UWorld has no GetPersistentLevel member in 5.8.4 (FLevelCollection
+        # does, but UWorld exposes its persistent level through the public
+        # GetLevel(0)/GetLevels() accessors; the PersistentLevel member itself
+        # is private). Demonstrated by the owner-Mac compile failure of the
+        # D-W1D8-015 diagnostics.
+        (r"([A-Za-z_]\w*)\s*->\s*GetPersistentLevel\s*\(",
+         "C++ error class — UWorld has no GetPersistentLevel member in UE 5.8.4",
+         "use GetLevel(0) (index 0 is the persistent level by construction) "
+         "or GetLevels() — both public UWorld accessors"),
     ]
     if src.is_dir():
         for hdr in sorted(src.rglob("*.h")) + sorted(src.rglob("*.cpp")):

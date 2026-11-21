@@ -87,13 +87,13 @@ bool FTDDM1GameModeEncounterFlowTest::RunTest(const FString& Parameters)
             TEXT("TDD-DIAG: enemy valid=%d isEnemy=%d worldMatch=%d levelNonNull=%d levelIsPersistent=%d"),
             Enemy->IsValid(), Enemy->IsA<ATDDTrainingEnemy>(),
             Enemy->GetWorld() == World, Enemy->GetLevel() != nullptr,
-            Enemy->GetLevel() == World->GetPersistentLevel());
+            Enemy->GetLevel() == World->GetLevel(0));
     }
     UE_LOG(LogTemp, Log,
         TEXT("TDD-DIAG: world actorsInitialized=%d persistentLevel=%d levels=%d persistentVisible=%d"),
-        World->IsActorsInitialized(), World->GetPersistentLevel() != nullptr,
+        World->AreActorsInitialized(), World->GetLevel(0) != nullptr,
         World->GetLevels().Num(),
-        World->GetPersistentLevel() != nullptr && World->GetPersistentLevel()->bIsVisible);
+        World->GetLevel(0) != nullptr && World->GetLevel(0)->bIsVisible);
     UE_LOG(LogTemp, Log,
         TEXT("TDD-DIAG: gameModeWorldMatch=%d playerWorldMatch=%d pcWorldMatch=%d"),
         GameMode->GetWorld() == World,
