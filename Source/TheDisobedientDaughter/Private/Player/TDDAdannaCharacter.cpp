@@ -66,6 +66,19 @@ void ATDDAdannaCharacter::Tick(float DeltaTime)
     ClampCameraPitch();
 }
 
+void ATDDAdannaCharacter::FaceRotation(FRotator NewControlRotation, float DeltaTime)
+{
+    Super::FaceRotation(NewControlRotation, DeltaTime);
+    // The engine's APlayerController::UpdateRotation writes the control
+    // rotation (the camera-processed view rotation) and then calls
+    // FaceRotation on the pawn. Re-assert the pitch clamp here so the clamp
+    // is the last control-rotation write of the tick: the engine re-derives
+    // the control rotation every world tick, and in UE 5.8.4 that
+    // re-derivation restores the unclamped pitch, which the Tick-only clamp
+    // could not survive.
+    ClampCameraPitch();
+}
+
 void ATDDAdannaCharacter::ClampCameraPitch()
 {
     AController* ControllerRef = GetController();

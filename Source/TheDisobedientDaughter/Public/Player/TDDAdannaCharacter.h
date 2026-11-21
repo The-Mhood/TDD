@@ -37,6 +37,16 @@ protected:
     virtual void Tick(float DeltaTime) override;
     virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
+    /**
+     * Re-assert the camera pitch clamp after the engine's per-tick
+     * control-rotation write. APlayerController::UpdateRotation writes the
+     * control rotation (the camera-processed view rotation) and then calls
+     * FaceRotation on the pawn; clamping here makes the clamp the last
+     * control-rotation write of the tick so it survives the engine's
+     * per-tick re-derivation of the control rotation (UE 5.8.4).
+     */
+    virtual void FaceRotation(FRotator NewControlRotation, float DeltaTime) override;
+
     /** Clamp the controller pitch to the third-person camera range. */
     void ClampCameraPitch();
 
