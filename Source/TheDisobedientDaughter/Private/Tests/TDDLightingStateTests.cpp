@@ -233,7 +233,7 @@ bool FTDDM1LightingStateSwitcherTest::RunTest(const FString& Parameters)
     // the world, and release the engine world context (order matches the
     // proven encounter fixture). The assertion macros record failures
     // without aborting, so this always runs.
-    World->EndPlay(EEndPlayReason::Destroy);
+    World->EndPlay(EEndPlayReason::Destroyed);
     World->BeginTearingDown();
     for (TActorIterator<AActor> It(World, AActor::StaticClass(), EActorIteratorFlags::AllActors); It; ++It)
     {

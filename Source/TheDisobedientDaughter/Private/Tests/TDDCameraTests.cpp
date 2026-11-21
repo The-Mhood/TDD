@@ -120,7 +120,7 @@ bool FTDDM1CameraPitchClampTest::RunTest(const FString& Parameters)
     // when a begun world is cleaned up), then destroy the world's actors and
     // the world, and release the engine world context (order matches the
     // proven fixture).
-    World->EndPlay(EEndPlayReason::Destroy);
+    World->EndPlay(EEndPlayReason::Destroyed);
     World->BeginTearingDown();
     for (TActorIterator<AActor> It(World, AActor::StaticClass(), EActorIteratorFlags::AllActors); It; ++It)
     {

@@ -540,6 +540,14 @@ def main():
          "C++ error class — UWorld has no GetPersistentLevel member in UE 5.8.4",
          "use GetLevel(0) (index 0 is the persistent level by construction) "
          "or GetLevels() — both public UWorld accessors"),
+        # EEndPlayReason has no Destroy enumerator in 5.8.4; the
+        # destruction end-play reason is Destroyed (the engine's own actors
+        # compare against EEndPlayReason::Destroyed). A bare ::Destroy token
+        # fails to compile. Demonstrated by the owner-Mac compile failure of
+        # the D-W1D8-023 teardown fix.
+        (r"EEndPlayReason\s*::\s*Destroy(?!ed)",
+         "C++ error class — EEndPlayReason has no Destroy enumerator in UE 5.8.4",
+         "use EEndPlayReason::Destroyed — the destruction end-play reason"),
     ]
     if src.is_dir():
         for hdr in sorted(src.rglob("*.h")) + sorted(src.rglob("*.cpp")):
