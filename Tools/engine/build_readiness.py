@@ -1310,6 +1310,32 @@ def main():
             block(f"{tname}: ExtraModuleNames omits {missing}",
                   "add every module of that type to the matching target's ExtraModuleNames")
 
+    # ---- renderer / lighting visibility guard -------------------------
+    # The Forbidden Forest (TDDForbiddenForestLevel) and Adanna's technical proxy
+    # (ATDDAdannaProxyCharacter) are built at runtime from Engine Basic Shapes using
+    # the LIT ForestBasicShapeMaterial / ProxyBasicShapeMaterial. Disabling static
+    # lighting (r.AllowStaticLighting=False) means the world's static lights do not
+    # illuminate those lit primitives, so every instance renders BLACK and the world
+    # + character appear fully invisible in PIE while the HUD (screen-space) and
+    # collision (physics) still work. This was the root cause of the M1 PIE
+    # visibility failure. Guard the project's DefaultEngine.ini against it.
+    engine_ini = root / "Config" / "DefaultEngine.ini"
+    if engine_ini.is_file():
+        try:
+            ini_text = engine_ini.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            ini_text = ""
+        for m in re.finditer(r"(?m)^\s*r\.AllowStaticLighting\s*=\s*(True|False|0|1)\s*$", ini_text):
+            value = m.group(1)
+            if value in ("False", "0"):
+                line = ini_text[:m.start()].count("\n") + 1
+                block(
+                    f"Config/DefaultEngine.ini:{line}: r.AllowStaticLighting=False makes the "
+                    f"lit procedural Forbidden Forest + Adanna proxy render black (invisible) in PIE",
+                    "set r.AllowStaticLighting=True: the world's geometry uses LIT engine "
+                    "BasicShapes materials and needs static lighting to be illuminated; with it "
+                    "disabled the HUD and collision still work but the world and character are black")
+
     # ---- config and ignores
     if not (root / "Config" / "DefaultEngine.ini").is_file():
         warn("Config/DefaultEngine.ini missing", "the project will boot with engine defaults; add the ini baseline")
