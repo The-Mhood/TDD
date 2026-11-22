@@ -219,6 +219,40 @@ def main():
                         f"{rel}: uses {re.search(pattern, text).group(0)} but does not include \"{header}\"",
                         f"add #include \"{header}\" to {rel}; the class is defined there in UE 5.8.4")
 
+    # ---- UTickableWorldSubsystem GetStatId guard ------------------------
+    # UTickableWorldSubsystem declares GetStatId() as a pure virtual in UE 5.8.
+    # Any custom subsystem inheriting it MUST override GetStatId() (returning a
+    # TStatId, normally via RETURN_QUICK_DECLARE_CYCLE_STAT) or the subsystem
+    # aborts at runtime with "Pure virtual not implemented:
+    # UTickableWorldSubsystem::GetStatId". Scan every header for a class that
+    # inherits UTickableWorldSubsystem and require GetStatId in the header or
+    # its paired .cpp.
+    if src.is_dir():
+        for hdr in sorted(src.rglob("*.h")):
+            try:
+                htext = hdr.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            if not re.search(r"\bclass\s+\w+\s*:\s*(?:public\s+)?UTickableWorldSubsystem\b", htext):
+                continue
+            rel_h = hdr.relative_to(root)
+            # GetStatId may be declared in the header or defined in the paired cpp.
+            paired_cpp = hdr.with_suffix(".cpp")
+            has_statid = "GetStatId" in htext
+            if not has_statid and paired_cpp.is_file():
+                try:
+                    paired_text = paired_cpp.read_text(encoding="utf-8", errors="replace")
+                    has_statid = "GetStatId" in paired_text
+                except OSError:
+                    pass
+            if not has_statid:
+                block(
+                    f"{rel_h}: class inherits UTickableWorldSubsystem but does not "
+                    f"override GetStatId()",
+                    "add 'virtual TStatId GetStatId() const override;' to the class and "
+                    "define it with RETURN_QUICK_DECLARE_CYCLE_STAT(<Class>, STATGROUP_Tickables); "
+                    "UTickableWorldSubsystem::GetStatId is a pure virtual in UE 5.8")
+
     # ---- UHT-generated-constructor member guard ---------------------------
     # UHT emits a default constructor for every UCLASS in the .gen.cpp (with
     # only `: Super()` in its mem-init list). A data member whose type has NO

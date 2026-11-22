@@ -21,6 +21,13 @@ public:
     virtual void Initialize(FSubsystemCollectionBase& Collection) override;
     virtual void Tick(float DeltaSeconds) override;
 
+    // FTickableGameObject implementation. UTickableWorldSubsystem declares
+    // GetStatId() as a pure virtual in UE 5.8: it must be overridden or the
+    // subsystem aborts at runtime with "Pure virtual not implemented:
+    // UTickableWorldSubsystem::GetStatId". The returned TStatId is the cycle
+    // stat that identifies this subsystem in the profiler/stats system.
+    virtual TStatId GetStatId() const override;
+
     /** Advance the world clock by one market day. */
     UFUNCTION(BlueprintCallable, Category = "TDD|Calendar")
     void AdvanceDay();
