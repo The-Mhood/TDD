@@ -1,7 +1,7 @@
 # Phase 1 — Mac Build Recovery Plan & Execution Model
 
 **Document ID:** TDD-IMPL-PHASE1-003 · **Date:** 2026-11-22
-**Branch:** `arena/553fb02d-tdd` · **Commit (fix):** pending push of this plan
+**Branch:** `arena/553fb02d-tdd` · **Commit (fix):** `995caf9` — "W1 Phase-1 C++ repair: complete UE 5.8 Mac build fix (3 rounds)" (465 files; branch was reset to base `5e3d1da` before this commit, so the complete repaired Phase-1 project is recorded as one commit on top of base; supersedes the earlier `4cd49c3`/`a6c389c` history, both of which failed the owner build)
 **Subject:** Root-cause the third consecutive Phase-1 build-invocation failure,
 deliver a validated corrected command, and set the operating model so the owner
 is never asked to discover avoidable command-line errors through manual runs.
