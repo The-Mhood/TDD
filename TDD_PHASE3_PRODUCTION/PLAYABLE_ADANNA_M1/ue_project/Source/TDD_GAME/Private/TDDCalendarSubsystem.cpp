@@ -34,8 +34,12 @@ void UTDDCalendarSubsystem::Tick(float DeltaSeconds)
 TStatId UTDDCalendarSubsystem::GetStatId() const
 {
     // Cycle-stat declaration for the profiler/stats system. RETURN_QUICK_DECLARE_CYCLE_STAT
-    // both declares and returns the TStatId that identifies this tickable subsystem.
-    return RETURN_QUICK_DECLARE_CYCLE_STAT(UTDDCalendarSubsystem, STATGROUP_Tickables);
+    // both declares and returns the TStatId that identifies this tickable subsystem —
+    // it expands to a `return` statement, so it must NOT be prefixed with another `return`.
+    RETURN_QUICK_DECLARE_CYCLE_STAT(
+        UTDDCalendarSubsystem,
+        STATGROUP_Tickables
+    );
 }
 
 void UTDDCalendarSubsystem::AdvanceDay()

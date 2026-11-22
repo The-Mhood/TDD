@@ -253,6 +253,25 @@ def main():
                     "define it with RETURN_QUICK_DECLARE_CYCLE_STAT(<Class>, STATGROUP_Tickables); "
                     "UTickableWorldSubsystem::GetStatId is a pure virtual in UE 5.8")
 
+    # ---- RETURN_QUICK_DECLARE_CYCLE_STAT misuse guard --------------------
+    # RETURN_QUICK_DECLARE_CYCLE_STAT(...) already expands to a `return`
+    # statement, so prefixing it with `return` yields `return return ...` and
+    # fails to compile ("expected expression"). Flag any `return
+    # RETURN_QUICK_DECLARE_CYCLE_STAT` occurrence in project sources.
+    if src.is_dir():
+        for sf in sorted(list(src.rglob("*.cpp")) + list(src.rglob("*.h"))):
+            try:
+                stext = sf.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            if re.search(r"\breturn\s+RETURN_QUICK_DECLARE_CYCLE_STAT\b", stext):
+                rel_s = sf.relative_to(root)
+                block(
+                    f"{rel_s}: 'return RETURN_QUICK_DECLARE_CYCLE_STAT(...)' misuse — "
+                    f"the macro already expands to a return statement",
+                    "remove the leading 'return': call RETURN_QUICK_DECLARE_CYCLE_STAT(...) "
+                    "directly without a preceding 'return' keyword")
+
     # ---- UHT-generated-constructor member guard ---------------------------
     # UHT emits a default constructor for every UCLASS in the .gen.cpp (with
     # only `: Super()` in its mem-init list). A data member whose type has NO
