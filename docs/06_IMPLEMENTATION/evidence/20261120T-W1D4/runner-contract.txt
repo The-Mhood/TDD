@@ -1,0 +1,1 @@
+TDD_RESULT TDD-Tool.PureRunnerContract PASS failure_propagation=6 evidence_arg=validated

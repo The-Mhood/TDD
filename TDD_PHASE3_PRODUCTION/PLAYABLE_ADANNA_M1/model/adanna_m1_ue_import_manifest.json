@@ -1,0 +1,279 @@
+{
+  "name": "Adanna M1 technical UE import handoff",
+  "date": "2026-11-19",
+  "status": "COMPLETED AND VERIFIED",
+  "classification": "PROVISIONAL \u2014 AWAITING CREATIVE APPROVAL",
+  "scope": "labelled technical preparation for eventual UE import; NOT a final character, final texture set, UE asset, compile, PIE, cook or package",
+  "source_authority": {
+    "approved_master": {
+      "name": "CHAR_ADANNA_MASTER_REFERENCE_V001.jpg",
+      "drive_id": "1FY3hw3602iB-1405RgUIO3ih2USmck_Y",
+      "status": "APPROVED 2026-11-15; master identity reference",
+      "role": "approved Adanna identity locks and palette",
+      "path": "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/references/CHAR_ADANNA_MASTER_REFERENCE_V001.jpg",
+      "sha256": "06d2b02dc3b8bcc3f35534cfbb3d76c2090ce57b7791a1ead883937a0875ce4c",
+      "bytes": 585862
+    },
+    "phase1_restrictions": [
+      "Adanna V003 BACK/LEFT_SIDE are PRESERVE/UNAPPROVED; no new version, mirror, armlet move, blade insertion, pose/geometry/likeness/costume/baldric change.",
+      "V013 item-5 NOT DONE; waiver is internal exploratory only.",
+      "H3/VR-011 Landing and Field of Cloth retain D9/RQ-01 no visual release.",
+      "Six visual-release-only passes are not production-authoritative designs.",
+      "Rejected/superseded artwork, failed corrections, and limited internal studies are not production authority."
+    ]
+  },
+  "files": {
+    "preserved_source_glb": "model/adanna_m1_technical_proxy.glb",
+    "uv_glb": "model/adanna_m1_technical_proxy_uv.glb",
+    "uv_atlas": "model/adanna_m1_uv_atlas.png",
+    "uv_layout": "model/adanna_m1_uv_layout.png",
+    "collision_proxy_obj": "model/adanna_m1_collision_proxy.obj",
+    "owner_request": "../../OWNER_STUDIO_UNREAL_REQUEST.md",
+    "ue_setup_script_macos": "ue_project/Tools/TDD_M1_Unreal_Setup_macOS.py",
+    "ue_setup_script_superseded": "ue_project/Tools/TDD_M1_Unreal_Setup_WINDOWS_ASSUMPTION_PRESERVED.py",
+    "macos_runbook": "ue_project/README_MACOS_UE58.md",
+    "macos_static_audit": "ue_project/Tools/tdd_m1_macos_audit.json",
+    "validation_report": "model/adanna_m1_uv_validation.json"
+  },
+  "sha256": {
+    "preserved_source_glb": "e697b38fccd5effc389a2629367ce980aef956657a7130dcbe307add76e6f5a3",
+    "uv_glb": "17a108f389875f84dbea6e900b4d2829135c9536cb361d25c9c2d53b3876ec8d",
+    "uv_atlas": "e88428ec177fccbb00c4f54871c287de566bfbb868ebfca4e9cc6024c9d7f465",
+    "uv_layout": "f87e18d9cd944e1db0df8f90e157c9608e4482b662172df30235d511cf38a6bd",
+    "collision_proxy_obj": "003e0ca315c7e4542f940328490a69f12f794223866d82418bafda72ad53b12a"
+  },
+  "scale_and_coordinates": {
+    "source_units": "neutral gameplay metres; glTF coordinates are Z-up",
+    "ue_import_scale": 100.0,
+    "ue_unit": "centimetres",
+    "axis_conversion_status": "PRODUCED \u2014 NOT YET VERIFIED; verify owner UE importer orientation",
+    "approved_dimensions_status": "BLOCKED \u2014 CREATIVE APPROVAL"
+  },
+  "uv": {
+    "channel": "TEXCOORD_0",
+    "method": "face-corner dominant-axis planar projection into an 8-slot atlas",
+    "vertex_count": 4752,
+    "triangle_count": 1584,
+    "uv_min": [
+      0.019999999552965164,
+      0.03999999910593033
+    ],
+    "uv_max": [
+      0.9800000190734863,
+      0.9599999785423279
+    ],
+    "status": "COMPLETED AND VERIFIED",
+    "note": "Technical UV0 only; final production requires seam-aware unwrap, UV validation and calibrated texture maps."
+  },
+  "material_slots": [
+    {
+      "id": 0,
+      "key": "SKIN",
+      "label": "Deep brown skin / provisional",
+      "base_color_rgb": [
+        67,
+        45,
+        39
+      ],
+      "roughness_intent": 0.86,
+      "metallic_intent": 0.0,
+      "uv_rect": [
+        0.0,
+        0.0,
+        0.25,
+        0.5
+      ],
+      "status": "PROVISIONAL \u2014 AWAITING CREATIVE APPROVAL"
+    },
+    {
+      "id": 1,
+      "key": "SKIN_LIT",
+      "label": "Lit skin / limb read / provisional",
+      "base_color_rgb": [
+        87,
+        61,
+        54
+      ],
+      "roughness_intent": 0.86,
+      "metallic_intent": 0.0,
+      "uv_rect": [
+        0.25,
+        0.0,
+        0.25,
+        0.5
+      ],
+      "status": "PROVISIONAL \u2014 AWAITING CREATIVE APPROVAL"
+    },
+    {
+      "id": 2,
+      "key": "HAIR",
+      "label": "Thin braids / high knot / provisional",
+      "base_color_rgb": [
+        18,
+        18,
+        21
+      ],
+      "roughness_intent": 0.78,
+      "metallic_intent": 0.0,
+      "uv_rect": [
+        0.5,
+        0.0,
+        0.25,
+        0.5
+      ],
+      "status": "PROVISIONAL \u2014 AWAITING CREATIVE APPROVAL"
+    },
+    {
+      "id": 3,
+      "key": "INDIGO",
+      "label": "Hand-woven indigo / provisional",
+      "base_color_rgb": [
+        37,
+        45,
+        80
+      ],
+      "roughness_intent": 0.92,
+      "metallic_intent": 0.0,
+      "uv_rect": [
+        0.75,
+        0.0,
+        0.25,
+        0.5
+      ],
+      "status": "PROVISIONAL \u2014 AWAITING CREATIVE APPROVAL"
+    },
+    {
+      "id": 4,
+      "key": "LEATHER",
+      "label": "Vegetable-tanned leather / provisional",
+      "base_color_rgb": [
+        64,
+        42,
+        31
+      ],
+      "roughness_intent": 0.88,
+      "metallic_intent": 0.0,
+      "uv_rect": [
+        0.0,
+        0.5,
+        0.25,
+        0.5
+      ],
+      "status": "PROVISIONAL \u2014 AWAITING CREATIVE APPROVAL"
+    },
+    {
+      "id": 5,
+      "key": "BRONZE",
+      "label": "Aged cast bronze / provisional",
+      "base_color_rgb": [
+        154,
+        112,
+        57
+      ],
+      "roughness_intent": 0.64,
+      "metallic_intent": 0.55,
+      "uv_rect": [
+        0.25,
+        0.5,
+        0.25,
+        0.5
+      ],
+      "status": "PROVISIONAL \u2014 AWAITING CREATIVE APPROVAL"
+    },
+    {
+      "id": 6,
+      "key": "CORAL",
+      "label": "Coral beads / provisional",
+      "base_color_rgb": [
+        176,
+        74,
+        51
+      ],
+      "roughness_intent": 0.56,
+      "metallic_intent": 0.0,
+      "uv_rect": [
+        0.5,
+        0.5,
+        0.25,
+        0.5
+      ],
+      "status": "PROVISIONAL \u2014 AWAITING CREATIVE APPROVAL"
+    },
+    {
+      "id": 7,
+      "key": "SCAR",
+      "label": "Left cheekbone scar / provisional",
+      "base_color_rgb": [
+        52,
+        35,
+        30
+      ],
+      "roughness_intent": 0.9,
+      "metallic_intent": 0.0,
+      "uv_rect": [
+        0.75,
+        0.5,
+        0.25,
+        0.5
+      ],
+      "status": "PROVISIONAL \u2014 AWAITING CREATIVE APPROVAL"
+    }
+  ],
+  "skeleton": {
+    "joint_count_from_existing_rig": 21,
+    "animation_clips": [
+      "idle",
+      "walk",
+      "run",
+      "jump",
+      "land"
+    ],
+    "native_ue_skeletal_mesh": false,
+    "native_ue_animation_assets": false,
+    "status": "TECHNICALLY DEMONSTRATED \u2014 NOT INTEGRATED"
+  },
+  "collision": {
+    "file": "model/adanna_m1_collision_proxy.obj",
+    "radius_m": 0.34,
+    "height_m": 1.7600000000000002,
+    "half_height_m": 0.88,
+    "vertices": 386,
+    "faces": 768,
+    "status": "PROVISIONAL \u2014 AWAITING CREATIVE APPROVAL",
+    "note": "Neutral gameplay capsule derived from world.json radius and UE source collision height; not approved character dimensions."
+  },
+  "unreal_integration": {
+    "project": "ue_project/TDD_GAME.uproject",
+    "engine_association": "5.8 (owner-verified installed engine)",
+    "compile_verified": false,
+    "pie_verified": false,
+    "cook_verified": false,
+    "package_verified": false,
+    "project_owned_umap": false,
+    "native_uasset_import": false,
+    "status": "BLOCKED \u2014 OWNER-STUDIO DEPENDENCY",
+    "precise_blocker": "Unreal Engine installation/version and owner-studio hardware profile are absent from this sandbox; UE import/compile/package cannot be verified here."
+  },
+  "creative_approval_dependencies": [
+    "Final Adanna turnaround, dimensions and proportions.",
+    "Final hair/groom authority.",
+    "Final costume authority.",
+    "Final facial design authority.",
+    "Final calibrated materials/textures and seam-aware production UVs."
+  ],
+  "status_classification": {
+    "technical_uv_glb_and_atlas": "COMPLETED AND VERIFIED",
+    "neutral_collision_proxy": "PROVISIONAL \u2014 AWAITING CREATIVE APPROVAL",
+    "browser_and_node_gameplay": "TECHNICALLY DEMONSTRATED \u2014 NOT INTEGRATED",
+    "ue_compile_pie_cook_package": "BLOCKED \u2014 OWNER-STUDIO DEPENDENCY",
+    "final_character_and_forest": "BLOCKED \u2014 CREATIVE APPROVAL",
+    "m3_m4_gameplay": "NOT STARTED",
+    "local_validation": "COMPLETED AND VERIFIED"
+  },
+  "local_validation": {
+    "report": "model/adanna_m1_uv_validation.json",
+    "checks_passed": 33,
+    "checks_total": 33,
+    "scope": "local file/GLB validation only; UE integration remains blocked"
+  }
+}

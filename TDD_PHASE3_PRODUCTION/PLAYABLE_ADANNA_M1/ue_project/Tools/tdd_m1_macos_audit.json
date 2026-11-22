@@ -1,0 +1,704 @@
+{
+  "generated": "2026-11-20",
+  "status": "COMPLETED AND VERIFIED",
+  "scope": "static source inspection for macOS/UE 5.8 compatibility only; NOT a compile, PIE, cook, package or device test",
+  "target_environment": {
+    "machine": "Apple M4 Mac, 16 GB RAM, macOS 27.2.1, ARM64",
+    "engine": "Unreal Engine 5.8"
+  },
+  "checks": [
+    {
+      "name": "uproject EngineAssociation is 5.8",
+      "ok": true,
+      "severity": "error",
+      "detail": "found='5.8'"
+    },
+    {
+      "name": "UBT target files present (*.Target.cs)",
+      "ok": true,
+      "severity": "error",
+      "detail": "['TDD_GAME.Target.cs', 'TDD_GAMEEditor.Target.cs']"
+    },
+    {
+      "name": "no unloadable TargetRules file (must end in .Target.cs)",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "Game target uses BuildSettingsVersion.V7",
+      "ok": true,
+      "severity": "error",
+      "detail": "found='BuildSettingsVersion.V7'; 5.8 ships V7, and V6/V7 are what raise the four warning levels to Error"
+    },
+    {
+      "name": "Editor target uses BuildSettingsVersion.V7",
+      "ok": true,
+      "severity": "error",
+      "detail": "found='BuildSettingsVersion.V7'"
+    },
+    {
+      "name": "both targets share one BuildSettingsVersion (UBT shared environment)",
+      "ok": true,
+      "severity": "error",
+      "detail": "game='BuildSettingsVersion.V7' editor='BuildSettingsVersion.V7'"
+    },
+    {
+      "name": "build settings are not force-overridden",
+      "ok": true,
+      "severity": "error",
+      "detail": "bOverrideBuildEnvironment only masks a divergence"
+    },
+    {
+      "name": "no Unique build environment (installed-engine builds reject it)",
+      "ok": true,
+      "severity": "error",
+      "detail": "Unique is source-build only and fails on a Launcher engine"
+    },
+    {
+      "name": "IncludeOrderVersion is Unreal5_8 in both targets",
+      "ok": true,
+      "severity": "error",
+      "detail": "game='EngineIncludeOrderVersion.Unreal5_8' editor='EngineIncludeOrderVersion.Unreal5_8'"
+    },
+    {
+      "name": "no legacy include order left anywhere",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "uproject targets Mac",
+      "ok": true,
+      "severity": "error",
+      "detail": "['Mac']"
+    },
+    {
+      "name": "uproject declares required Python plugin",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAME.Target.cs braces balance",
+      "ok": true,
+      "severity": "error",
+      "detail": "2 open / 2 close"
+    },
+    {
+      "name": "TDD_GAME.Target.cs parentheses balance",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAME.Target.cs double quotes balance",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAME.Target.cs declares one TargetRules class",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAME.Target.cs constructor name matches class",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAME.Target.cs calls base(Target)",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAME.Target.cs sets Type = TargetType.Game",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAME.Target.cs names the TDD_GAME module",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAME.Target.cs ends with a closing brace",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAMEEditor.Target.cs braces balance",
+      "ok": true,
+      "severity": "error",
+      "detail": "2 open / 2 close"
+    },
+    {
+      "name": "TDD_GAMEEditor.Target.cs parentheses balance",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAMEEditor.Target.cs double quotes balance",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAMEEditor.Target.cs declares one TargetRules class",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAMEEditor.Target.cs constructor name matches class",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAMEEditor.Target.cs calls base(Target)",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAMEEditor.Target.cs sets Type = TargetType.Editor",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAMEEditor.Target.cs names the TDD_GAME module",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "TDD_GAMEEditor.Target.cs ends with a closing brace",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "target class names are unique across the rules assembly",
+      "ok": true,
+      "severity": "error",
+      "detail": "['TDD_GAMETarget', 'TDD_GAMEEditorTarget']"
+    },
+    {
+      "name": "runbook does not cite the unloadable TDD_GAMEEditorTarget.cs",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "runbook names the real editor target file",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no for-loop with an unreachable increment (V7 makes it -Werror)",
+      "ok": true,
+      "severity": "error",
+      "detail": "{}"
+    },
+    {
+      "name": "project sources suppress no Clang warnings",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "module keeps warnings fatal (no bWarningsAsErrors = false)",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "actor presence tests exist where expected",
+      "ok": true,
+      "severity": "error",
+      "detail": "['TDDAdannaProxyCharacter.cpp', 'TDDForbiddenForestGameMode.cpp', 'TDDForbiddenForestLevel.cpp', 'TDDOmegaValleyGameMode.cpp']"
+    },
+    {
+      "name": "TDDAdannaProxyCharacter.cpp:190 presence test uses the iterator bool",
+      "ok": true,
+      "severity": "error",
+      "detail": "TActorIterator<ATDDForbiddenForestLevel> It("
+    },
+    {
+      "name": "TDDForbiddenForestGameMode.cpp:18 presence test uses the iterator bool",
+      "ok": true,
+      "severity": "error",
+      "detail": "static_cast<bool>(TActorIterator<ATDDForbiddenForestLevel>("
+    },
+    {
+      "name": "TDDForbiddenForestLevel.cpp:200 presence test uses the iterator bool",
+      "ok": true,
+      "severity": "error",
+      "detail": "const bool bHasPlayerStart = static_cast<bool>(TActorIterator<APlayerStart>("
+    },
+    {
+      "name": "TDDOmegaValleyGameMode.cpp:36 presence test uses the iterator bool",
+      "ok": true,
+      "severity": "error",
+      "detail": "TActorIterator<ATDDOmegaValleyLevel> ValleyIt("
+    },
+    {
+      "name": "Build.cs declares Core",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "Build.cs declares CoreUObject",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "Build.cs declares Engine",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "Build.cs declares InputCore",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "Build.cs adds no Windows-only module",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "module implementation present",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper avoids EditorLevelLibrary",
+      "ok": true,
+      "severity": "error",
+      "detail": "deprecated since UE 5.0, removed from the default path in 5.7+"
+    },
+    {
+      "name": "macOS helper uses LevelEditorSubsystem",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper creates the map from a template",
+      "ok": true,
+      "severity": "error",
+      "detail": "new_level alone leaves no saved .umap on disk"
+    },
+    {
+      "name": "macOS helper saves the map explicitly",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper repoints map config",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper writes its report under Saved/",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper has a dry-run switch",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper never deletes assets",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS helper backs up config before edit",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token 'C:\\\\\\\\' in helper",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token 'Program Files' in helper",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token 'UnrealEditor.exe' in helper",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token 'RunUAT.bat' in helper",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token 'cmd.exe' in helper",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token 'Win64' in helper",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no Windows-only token in uproject",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in Target.cs",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in TDD_GAMEEditor.Target.cs",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in Build.cs",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in character.h",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in character.cpp",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in level.cpp",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no Windows-only token in level.h",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no hardcoded /Users/ absolute path in project files",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "preserved original helper retained unchanged",
+      "ok": true,
+      "severity": "error",
+      "detail": "kept for audit; do not execute"
+    },
+    {
+      "name": "old helper filename is a non-executing stub",
+      "ok": true,
+      "severity": "error",
+      "detail": "prevents launching the obsolete helper by mistake; original bytes remain in the preserved copy"
+    },
+    {
+      "name": "preserved helper documents its superseded status",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "GameDefaultMap is under GameMapsSettings",
+      "ok": true,
+      "severity": "error",
+      "detail": "under /Script/Engine.Engine the key is ignored and the game mode never applies"
+    },
+    {
+      "name": "GlobalDefaultGameMode is under GameMapsSettings",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no GameDefaultMap under /Script/Engine.Engine",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "input ini carries no hand-authored AxisMappings",
+      "ok": true,
+      "severity": "error",
+      "detail": "UE5 serialises these as map keys; code-registered bindings are used instead"
+    },
+    {
+      "name": "BindKey handlers take no parameters",
+      "ok": true,
+      "severity": "error",
+      "detail": "BindKey requires a parameterless handler; float-axis handlers fail to compile"
+    },
+    {
+      "name": "movement keys bound as press/release pairs",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "signed keyboard axis state applied each tick",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "UCLASS generated.h include is last in TDDAdannaProxyCharacter.h",
+      "ok": true,
+      "severity": "error",
+      "detail": "a .generated.h include not last in the header breaks UHT"
+    },
+    {
+      "name": "UCLASS generated.h include is last in TDDForbiddenForestLevel.h",
+      "ok": true,
+      "severity": "error",
+      "detail": "a .generated.h include not last in the header breaks UHT"
+    },
+    {
+      "name": "UCLASS generated.h include is last in TDDForbiddenForestGameMode.h",
+      "ok": true,
+      "severity": "error",
+      "detail": "a .generated.h include not last in the header breaks UHT"
+    },
+    {
+      "name": "UPROPERTY members use TObjectPtr, not raw pointers",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no invented blade geometry in the UE proxy",
+      "ok": true,
+      "severity": "error",
+      "detail": "Phase 1 forbids inventing blade design; only the approved hip mount marker may exist"
+    },
+    {
+      "name": "UE proxy keeps the approved LEFT-hip cross-draw mount marker",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "UE proxy carries no invented character dimensions",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "character header includes InputCoreTypes for EKeys",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "level spawns a PlayerStart when none exists",
+      "ok": true,
+      "severity": "error",
+      "detail": "a generated map with no PlayerStart cannot possess a pawn in PIE"
+    },
+    {
+      "name": "forest level uses TActorIterator (EngineUtils included)",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "INSTANCED pool registers before AddInstance is ever called",
+      "ok": true,
+      "severity": "error",
+      "detail": "registration inside the factory at index 1652; first AddInstance call site at 5043"
+    },
+    {
+      "name": "registration occurs exactly once per pool",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "collidable pools enable QueryAndPhysics",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "no unused constexpr TCHAR in TDDAdannaProxyCharacter.cpp",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "no unused constexpr TCHAR in TDDForbiddenForestLevel.cpp",
+      "ok": true,
+      "severity": "error",
+      "detail": "[]"
+    },
+    {
+      "name": "CreatePart return assigned to TObjectPtr is legal",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "Instanced pool array stores TObjectPtr",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "GLB import requests skeletal mesh options",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "OBJ import kept static",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS packaging expects Xcode",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS packaging expects Metal",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS packaging expects RunUAT.sh",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "macOS packaging expects arm64",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate script exists",
+      "ok": true,
+      "severity": "error",
+      "detail": "/home/user/TDD/TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/Tools/verify_toolchain.sh"
+    },
+    {
+      "name": "toolchain gate is executable",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate declares PRODUCED - NOT YET VERIFIED status",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate never executes sudo",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate probes engine patch gate",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate probes Apple SDK MaxVersion gate",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate probes finalize-fix marker",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate probes stdin shim fallback",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate probes Mac package flag",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    },
+    {
+      "name": "toolchain gate passes bash -n",
+      "ok": true,
+      "severity": "error",
+      "detail": ""
+    }
+  ],
+  "checksPassed": 114,
+  "checksTotal": 114,
+  "errors": [],
+  "compile_verified": false,
+  "pie_verified": false,
+  "cook_verified": false,
+  "package_verified": false,
+  "runnable_build_verified": false,
+  "classification": "static audit evidence; Unreal execution remains BLOCKED \u2014 OWNER-STUDIO DEPENDENCY"
+}

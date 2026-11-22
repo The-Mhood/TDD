@@ -1,0 +1,5 @@
+note     descriptor TheDisobedientDaughter.uproject parses
+note     TheDisobedientDaughter.Target.cs: build settings BuildSettingsVersion.V7, include order unset, modules ['TheDisobedientDaughter']
+note     TheDisobedientDaughterEditor.Target.cs: build settings BuildSettingsVersion.V7, include order unset, modules ['TheDisobedientDaughter']
+
+  0 blocker(s), 0 warning(s). Static check only: nothing was built.

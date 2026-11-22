@@ -1,0 +1,13 @@
+{
+  "asset": "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/model/adanna_m1_technical_proxy.glb",
+  "classification": "technical proxy; provisional; not creative-approved",
+  "ok": true,
+  "node_count": 22,
+  "skin_count": 1,
+  "animation_count": 5,
+  "missing_required_nodes": [],
+  "missing_required_animations": [],
+  "native_ue_import_verified": false,
+  "compile_pie_cook_package_verified": false,
+  "scope": "static GLB skeleton/clip names only"
+}

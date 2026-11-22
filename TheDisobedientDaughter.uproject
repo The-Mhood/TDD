@@ -1,0 +1,17 @@
+{
+  "FileVersion": 3,
+  "EngineAssociation": "5.8",
+  "Category": "Games",
+  "Description": "THE DISOBEDIENT DAUGHTER — single-player narrative action project.",
+  "Modules": [
+    {
+      "Name": "TheDisobedientDaughter",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ],
+  "TargetPlatforms": [
+    "Mac",
+    "Windows"
+  ]
+}

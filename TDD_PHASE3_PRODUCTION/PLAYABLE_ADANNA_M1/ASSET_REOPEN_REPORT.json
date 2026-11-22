@@ -1,0 +1,58 @@
+{
+  "forest_glb_nodes": [
+    "FOREST_GROUND",
+    "LATERITE_PATH",
+    "TREE_TRUNKS",
+    "BUTTRESS_ROOTS",
+    "CANOPY",
+    "TREE_BRANCHES",
+    "ROCKS",
+    "VEGETATION",
+    "BOUNDARY_POSTS",
+    "WHITE_CLOTH",
+    "INTERACTION_RINGS",
+    "GREAT_ROOT_MOTHER"
+  ],
+  "forest_glb_vertices": 8008,
+  "forest_glb_triangles": 13238,
+  "forest_obj_vertices": 7284,
+  "forest_obj_triangles": 13238,
+  "adanna_glb_skins": 1,
+  "adanna_glb_joints": 21,
+  "adanna_glb_animations": [
+    "idle",
+    "walk",
+    "run",
+    "jump",
+    "land"
+  ],
+  "adanna_glb_nodes": 22,
+  "adanna_obj_vertices": 866,
+  "adanna_obj_triangles": 1584,
+  "modules": {
+    "FOREST_TREE_MODULE": {
+      "path": "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/model/modules/FOREST_TREE_MODULE.glb",
+      "triangles": 146
+    },
+    "FOREST_ROCK_MODULE": {
+      "path": "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/model/modules/FOREST_ROCK_MODULE.glb",
+      "triangles": 80
+    },
+    "FOREST_BOUNDARY_POST_MODULE": {
+      "path": "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/model/modules/FOREST_BOUNDARY_POST_MODULE.glb",
+      "triangles": 282
+    },
+    "FOREST_FERN_MODULE": {
+      "path": "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/model/modules/FOREST_FERN_MODULE.glb",
+      "triangles": 60
+    },
+    "FOREST_WAYMARKER_MODULE": {
+      "path": "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/model/modules/FOREST_WAYMARKER_MODULE.glb",
+      "triangles": 240
+    },
+    "FOREST_GREAT_TREE_MODULE": {
+      "path": "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/model/modules/FOREST_GREAT_TREE_MODULE.glb",
+      "triangles": 368
+    }
+  }
+}

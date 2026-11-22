@@ -1,0 +1,1 @@
+TDD_RESULT TDD-Tool.WindowsCISafety PASS non_destructive_sync=verified windows_host_gate=present

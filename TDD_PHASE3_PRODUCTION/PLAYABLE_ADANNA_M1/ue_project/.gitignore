@@ -1,0 +1,22 @@
+# Unreal Engine build artifacts — never commit these
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+
+# Unreal Editor local files
+.vscode/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output
+*.exe
+*.pdb
+*.dll
+*.dylib
+
+# IDE
+.idea/

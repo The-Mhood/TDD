@@ -1,0 +1,71 @@
+{
+  "classification": "targeted game-production state recovery; not a Phase 2 re-audit",
+  "sources": {
+    "adanna_master": {
+      "name": "CHAR_ADANNA_MASTER_REFERENCE_V001.jpg",
+      "drive_id": "1FY3hw3602iB-1405RgUIO3ih2USmck_Y",
+      "status": "APPROVED 2026-11-15; master identity reference",
+      "role": "approved Adanna identity locks and palette",
+      "path": "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/references/CHAR_ADANNA_MASTER_REFERENCE_V001.jpg",
+      "sha256": "06d2b02dc3b8bcc3f35534cfbb3d76c2090ce57b7791a1ead883937a0875ce4c",
+      "bytes": 585862
+    },
+    "game_art_bible_moodboard": {
+      "name": "REF_ORIGINAL_MOODBOARD_GAME_ART_BIBLE_V001.jpg",
+      "drive_id": "1YU_5PoER-i6MxLiUno6G2Qh7-sD6ayiQ",
+      "status": "reference moodboard; not standalone production approval",
+      "role": "game art-bible visual direction and palette context",
+      "path": "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/references/REF_ORIGINAL_MOODBOARD_GAME_ART_BIBLE_V001.jpg",
+      "sha256": "4b8139d37b2246730b4176ae9c5a32ee48211f6924e2a2c84b909f9d9ed22a38",
+      "bytes": 684359
+    },
+    "forest_establishing": {
+      "name": "forest_establishing.jpg",
+      "drive_id": "154fUiArdD9lhQeRA3VjQCTOg0xH01lvp",
+      "status": "reference; not standalone production approval",
+      "role": "Forbidden Forest establishing reference",
+      "path": "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/references/forest_establishing.jpg",
+      "sha256": "d97a345c09ae0f42e69c50a05552ae13bf13b7ab4d40eece1bd758cad9d5b3c9",
+      "bytes": 612101
+    },
+    "horn_bill_tree": {
+      "name": "ENV_CH01-EXP-006_THE_HORNBILL_TREE_V001.jpg",
+      "drive_id": "1zRTQ0olcgTo2Z_aBD6X3YdKUQCjUB-ip",
+      "status": "EXPLORATORY; not production approval",
+      "role": "buttress-root / canopy reference",
+      "path": "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/references/ENV_CH01-EXP-006_THE_HORNBILL_TREE_V001.jpg",
+      "sha256": "5626b8d2c8f7e798751e104d0fec69a9e8bc07532b8238462febc967cc9a9252",
+      "bytes": 385878
+    },
+    "duiker_run": {
+      "name": "ENV_CH01-EXP-007_THE_DUIKER_RUN_V001.jpg",
+      "drive_id": "1Pm7nXmSKgoukgY5qMXPMqzlyc_5ZHtRy",
+      "status": "EXPLORATORY; not production approval",
+      "role": "laterite path and enclosed route reference",
+      "path": "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/references/ENV_CH01-EXP-007_THE_DUIKER_RUN_V001.jpg",
+      "sha256": "10c0f56f347a193e499df4eaf12a3957d51cf96a089c8ecf44944ab96d1539d5",
+      "bytes": 429223
+    }
+  },
+  "phase1_restrictions": [
+    "Adanna V003 BACK/LEFT_SIDE are PRESERVE/UNAPPROVED; no new version, mirror, armlet move, blade insertion, pose/geometry/likeness/costume/baldric change.",
+    "V013 item-5 NOT DONE; waiver is internal exploratory only.",
+    "H3/VR-011 Landing and Field of Cloth retain D9/RQ-01 no visual release.",
+    "Six visual-release-only passes are not production-authoritative designs.",
+    "Rejected/superseded artwork, failed corrections, and limited internal studies are not production authority."
+  ],
+  "recovered_engine_state": {
+    "uproject_found": false,
+    "uasset_found": false,
+    "umap_found": false,
+    "unreal_engine_binary_found": false,
+    "unreal_version_found": false,
+    "playable_project_found": false,
+    "packaged_build_found": false,
+    "native_character_model_found": false,
+    "native_animation_found": false,
+    "native_rig_found": false,
+    "gameplay_system_found": false
+  },
+  "precise_blocker": "Unreal Engine installation/version and owner-studio hardware profile are absent from this sandbox; UE import/compile/package cannot be verified here."
+}

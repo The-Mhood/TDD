@@ -1,0 +1,30 @@
+# W1 D5 — delegated Adanna asset review and execution boundary
+
+Date: 2026-11-20 (UTC)
+Branch: `arena/553fb02d-tdd`
+Status: active; review/evidence record only. This is not a production reference approval, asset import, or Blender/Unreal execution report.
+
+## Delegated review authority and evidence consulted
+
+The owner delegated the CD selection/correction between Adanna V003 and V004 after review, and directed that the decision not be returned to the owner except for a genuine identity/cultural conflict. I searched and read the available Google Drive records during this pass, including:
+
+- `F45_B2_RESEARCH_VERDICTS_ADANNA_V003_2026-11-17.md` (Drive ID `1b6L2cRq97P2l0UnnWHJMkHCr6ZYiAPpr`; extracted text identifies underlying report ID `13AXeI5-Cy7mvuvor4V86Y0Plv2midqqx`). Research recorded PASS WITH QUALIFICATIONS for five V003 plates, explicitly left BACK chirality OPEN, and did not approve any plate. It notes unverified scar position and unresolved baldric repaint/calls.
+- `E23_B2_COMPARE_ADANNA_TURNAROUND_V003_alignment.md` (Drive ID `1k5knH47J0st-LZAQQUhrF5gvaRCh0TL9`) and its independent picture-review record `RR11_B2_COMPARE_ADANNA_TURNAROUND_V003_alignment.md` (Drive ID `14FMZvNsO_e_qWXrmrCgn5eTx49q9yAol`). They describe V003 as exploratory/not approved and record the asserted anatomical baldric route, left armlet/temple beads, unresolved approval, and open blade/scabbard question. The research report additionally records an open back-view chirality disagreement; the numerical measurement was not independently reproduced here.
+- Two `RR11_B2_CAND_CHAR_ADANNA_TURNAROUND_FRONT_V004_2560x1440.md` picture-review records were found. The first read identifies its image as exploratory/not approved canon, review required, V004 supersedes V003, and says only the pendant cord and three-quarter arm were touched. The second is a corresponding three-quarter plate review and repeats the non-approved status. These are descriptions of individual images, not a complete four-view identity/cultural adjudication.
+- `C02_REVIEW_SUMMARY_ADANNA_TURNAROUND_V001_FOR_OUR_EYES.md` (Drive ID `15SevsbrVuqWdKESHhV09UutsBLcGb4lq`) is explicitly not a verdict or approval and cautions against reading earlier generations as canon.
+
+Searches for a V004 Research verdict, V004 comparison, and a CD decision did not find a review/decision record in the connected Drive index. Search absence is not proof no record exists elsewhere. To coordinate directly without returning the decision to the owner, I posted role-specific questions in Google Drive comment threads on 2026-11-20 UTC: Research chirality reconciliation on the V003 verdict (`doco.5t6BxFzXi7NNapGaZcCTEA`), and Design baldric/back-view reconciliation on the V004 three-quarter review (`doco.ee807bYhe-6x9ia2mxv_Cg`). Both are awaiting replies; no reply/coordination outcome is claimed. A complete V004 review is still unavailable in the records inspected.
+
+## Decision: do not freeze V003 or V004 as production canon yet
+
+I am exercising the delegated authority by making a bounded production decision: **neither candidate is approved/frozen as a complete production reference on the evidence accessible in this review.** This is not a request for the owner to choose. V003 has an explicit unresolved back chirality conflict and no approval. V004's inspected review notes say exploratory/not approved and cover individual plates; the claim that V004 supersedes V003 does not resolve or evidence approval of the full identity set. There is no documented complete V004 Research verdict or Design/Research reconciliation to support changing the production reference. A filename/version label, a partial correction, and PASS WITH QUALIFICATIONS are not approval.
+
+Accordingly, do not derive a final 3D identity from either set as if canon. The character builder and gameplay integration may continue against existing explicitly provisional technical proxy scope; they must retain the locked approved-master identity requirements already supplied by the owner. Do not invent blade/scabbard geometry. This review does not reopen or weaken those locks.
+
+The smallest evidence that could change this bounded decision is a complete, readable V004 four-view set with Design and Research reconciliation of the V003 back chirality / V004 deltas, explicit CD ruling on baldric and other open calls, and a recorded approval status against the approved master. If that comparison reveals a genuine unresolved identity or cultural conflict, escalate only that specific conflict; otherwise CD authority remains delegated. This is a record of the current decision and evidence boundary, not a new roadmap or production completion claim.
+
+## Execution boundary
+
+The Linux sandbox still has no discoverable official Blender or Unreal Editor. `bpy` is not accepted as a Blender application substitute. No builder/Blender geometry, `.blend` or FBX export, native UE import, map generation, UE compile, automation, PIE, host build, Windows Development build, or Windows Shipping build was run in this pass. Existing skeletal GLB technical proxy at `TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/model/adanna_m1_technical_proxy.glb` passes the repository's static naming/presence audit (22 named nodes, one skin, five named clips, one material, no texture/images); the audit itself explicitly marks native UE import and compile/PIE/cook/package unverified. It is not the requested final Adanna model and not an approved creative asset.
+
+Required to proceed with the actual production steps: authorized access to the owner-approved reference register/full-resolution files and an authorized Blender 4.2+ workstation with the project/assets, plus UE 5.8.4 Editor and build access. The existing Blender builder needs to be run there, its `.blend`/FBX/manifest and geometry validated, then imported into UE, map opened/generated, automation and PIE performed, and screenshots/logs captured. Windows x64 Development and Shipping remain separate Windows-host runs. No remote machine access, permission, or workstation session is available in this environment; no claim of execution is made.
