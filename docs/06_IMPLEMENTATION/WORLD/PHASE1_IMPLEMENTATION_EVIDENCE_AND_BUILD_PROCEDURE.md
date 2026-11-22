@@ -1,9 +1,9 @@
 # TDD Phase 1 — Ọmà-valley Core: Implementation Evidence & Build Procedure
 
 **Document ID:** TDD-IMPL-PHASE1-002 · **Version:** 1.0 · **Date:** 2026-11-22
-**Author:** PM / Engineering. **Status:** **IMPLEMENTATION AUTHORED** — logic core **TESTED in-sandbox**; UE C++ **IMPLEMENTED_UNVERIFIED** (not compiled; owner Mac is the sole build/runtime authority).
+**Author:** PM / Engineering. **Status:** **BUILD VERIFIED — B1 CLEARED** — logic core **TESTED in-sandbox**; UE C++ **owner-Mac UE 5.8 Mac ARM64 Development build SUCCEEDED** at commit `995caf9` (`build_phase1_diagnostic.sh` exited 0; executable `Binaries/Mac/TDD_GAME` produced). **Runtime/PIE (B2) and launch-map (B3) remain OPEN.** Owner Mac is the sole build/runtime authority.
 **Companion:** `PHASE1_IMPLEMENTATION_AUDIT_AND_ARCHITECTURE.md` (TDD-IMPL-PHASE1-001).
-**Acceptance gate:** integrated build launchable/playable on owner Mac — NOT "assets authored."
+**Acceptance gate:** integrated build launchable/playable on owner Mac — NOT "assets authored." Build gate (B1) **passed 2026-11-22**; runtime gate (B2/B3) pending.
 
 ---
 
@@ -13,13 +13,13 @@
 |---|---|---|
 | World logic core (`TDDWorldLogic.h`) — calendar, market-day, population density, route/distance, weather | **IMPLEMENTED & TESTED** | `Tools/tests/pure/run_pure.sh` → `TDDWorldLogicTests` **52/52 assertions PASS**, compiled with `g++ -std=c++20` in-sandbox. No UE required. |
 | Full pure suite (regression) | **GREEN** | 7 suites, **947/947 assertions**, exit 0. Existing suites unaffected. |
-| UE subsystems (location registry, population, calendar, market, weather) | **IMPLEMENTED_UNVERIFIED** | Authored C++ against UE 5.8 API; **not compiled** (no UE in sandbox). Owner-Mac compile required. |
-| UE actors (population, named NPC, market stall, settlement zone) | **IMPLEMENTED_UNVERIFIED** | As above. |
-| `ATDDOmegaValleyLevel` + `ATDDOmegaValleyGameMode` | **IMPLEMENTED_UNVERIFIED** | As above. |
+| UE subsystems (location registry, population, calendar, market, weather) | **BUILD-VERIFIED (B1)** | Authored C++ against UE 5.8 API; **owner-Mac UE 5.8 Mac ARM64 Development build SUCCEEDED** at `995caf9` (C++ compile + link PASS). Runtime behaviour pending PIE (B2). |
+| UE actors (population, named NPC, market stall, settlement zone) | **BUILD-VERIFIED (B1)** | Compiled+linked in the same owner-Mac build. Runtime behaviour pending PIE (B2). |
+| `ATDDOmegaValleyLevel` + `ATDDOmegaValleyGameMode` | **BUILD-VERIFIED (B1)** | Compiled+linked in the same owner-Mac build. PIE launch pending (B3). |
 | Generated data header (`TDDOmegaValleyData.h`) | **GENERATED & VALIDATED** | `generate_omega_valley_data.py` runs clean; emits valid C++ from `omega_valley.json`. |
 | World subsystem registration | **CONFIGURED** | `DefaultEngine.ini` `[/Script/Engine.Engine] WorldSubsystems=...` added. |
 
-**Honest statement:** the logic that governs the world (calendar, market cycle, population density, weather consequences, travel distances) is **real, compiled and tested** in-sandbox. The UE rendering/subsystem layer is **authored but not compiled** — it becomes verified only when the owner builds and plays it. Nothing planned or stubbed is reported as complete.
+**Honest statement:** the logic that governs the world (calendar, market cycle, population density, weather consequences, travel distances) is **real, compiled and tested** in-sandbox. The UE rendering/subsystem layer is now **compiled, linked, and built into a runnable executable** on the owner Mac (B1 CLEARED at `995caf9`, 2026-11-22). What remains unverified is **runtime behaviour** — the subsystems initializing, the population/market/calendar/weather systems executing, and a PIE session (B2/B3). Nothing planned or stubbed is reported as complete.
 
 ## 2. What was implemented (actual files)
 
