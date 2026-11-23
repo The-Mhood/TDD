@@ -1,0 +1,35 @@
+{
+  "package": "FORBIDDEN_FOREST_KIT_V1",
+  "status": "PROVISIONAL production kit (source boards REVIEW REQUIRED - not canon)",
+  "modules": [
+    {
+      "asset": "FOREST_TREE_BUTTRESS_L",
+      "verts": 504,
+      "tris": 968
+    },
+    {
+      "asset": "FOREST_ROOT_ARCH",
+      "verts": 126,
+      "tris": 240
+    },
+    {
+      "asset": "FOREST_ROCK_SET",
+      "verts": 216,
+      "tris": 420
+    },
+    {
+      "asset": "FOREST_GROUND_PATH_10M",
+      "verts": 16,
+      "tris": 24
+    },
+    {
+      "asset": "ROUTE_MARKER_WHITECLOTH",
+      "verts": 16,
+      "tris": 24
+    }
+  ],
+  "pivot": "ground centre each module",
+  "collision": "tree: cylinder r0.9 h7; arch: two posts r0.2; rocks: bounds spheres; ground: none (landscape); marker: none (visual route cue)",
+  "botany": "West African rainforest read (buttress roots, lianas as TA dressing); no temperate/tree-fern forms per board defect notes",
+  "white_cloth_note": "route marker per NIGHT_PATH board cloth marker; NOT a ritual/sacred claim - ordinary route presentation, PM/Story confirm gameplay meaning"
+}
