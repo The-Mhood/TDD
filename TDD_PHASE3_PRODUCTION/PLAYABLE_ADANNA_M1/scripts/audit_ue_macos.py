@@ -243,7 +243,8 @@ def main() -> dict:
     iterator_files = [n for n, t in src_texts.items() if "TActorIterator" in t]
     check("actor presence tests exist where expected",
           set(iterator_files) == {"TDDForbiddenForestLevel.cpp", "TDDForbiddenForestGameMode.cpp",
-                                  "TDDAdannaProxyCharacter.cpp", "TDDOmegaValleyGameMode.cpp"},
+                                  "TDDAdannaProxyCharacter.cpp", "ATDDAdannaCharacter.cpp",
+                                  "TDDOmegaValleyGameMode.cpp"},
           str(sorted(iterator_files)))
     for name in iterator_files:
         text = "\n".join(l for l in src_texts[name].splitlines()
@@ -299,6 +300,18 @@ def main() -> dict:
           not re.search(r"delete_asset|delete_directory|remove_asset", active_helper))
     check("macOS helper backs up config before edit",
           "tdd_backup" in helper)
+    # The legacy GLTFImportOptions object only exposes generate_lightmap_u_vs and
+    # import_scale (no import_animations/import_materials/import_textures), and assigning
+    # it as AssetImportTask.options against an Interchange factory is a type mismatch that
+    # drops the skin, so a skinned GLB imports as a Static Mesh. The supported UE 5.8 path is
+    # the Interchange pipeline with force_all_mesh_as_type = IFMT_SKELETAL_MESH.
+    check("macOS helper avoids broken GLTFImportOptions import",
+          "GLTFImportOptions" not in active_helper,
+          "GLTFImportOptions has no import_animations/materials/textures props and "
+          "mismatches the Interchange factory; use InterchangeGenericAssetsPipeline")
+    check("macOS helper forces skeletal mesh via Interchange",
+          "force_all_mesh_as_type" in helper and "IFMT_SKELETAL_MESH" in helper,
+          "skinned GLB must be forced to Skeletal Mesh via the Interchange pipeline")
 
     # ---- 4. Windows-only assumptions ------------------------------------------------
     windows_tokens = ["C:\\\\", "Program Files", "UnrealEditor.exe", "RunUAT.bat", "cmd.exe", "Win64"]

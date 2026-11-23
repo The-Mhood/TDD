@@ -21,9 +21,14 @@ It is retained unchanged for audit. Known defects in it:
      first.
   4. Writes its report relative to __file__; inside a packaged editor session that can
      be a read-only or relocated path. Fixed by resolving Saved/ from unreal.Paths.
-  5. Imports the GLB with one generic AssetImportTask and no Interchange options, so a
-     skinned GLB can arrive as a static mesh with no skeleton or animations. Fixed with
-     an explicit skeletal-mesh import plus an OBJ static-mesh import.
+  5. Imports the GLB with one generic AssetImportTask and a legacy GLTFImportOptions
+     object whose properties (import_animations/import_materials/import_textures) do not
+     exist on GLTFImportOptions and whose type mismatches the Interchange factory, so a
+     skinned GLB imported as a Static Mesh with no skeleton or animations. Fixed by
+     importing through the Interchange framework with an
+     InterchangeGenericAssetsPipeline whose common_meshes_properties.force_all_mesh_as_type
+     is IFMT_SKELETAL_MESH, which forces skinned GLBs to import as Skeletal Meshes (with
+     their animations); static modules import with the default pipeline.
   6. Gives no way to detect a missing Python/Interchange plugin, and no console check.
   7. Path strings in the earlier file went up four directories, past the repository
      root. Paths here are resolved from the project file, which is what Unreal reports.
@@ -307,7 +312,88 @@ def handoff_files(model_dir: Path) -> list[dict]:
             "kind": "static",
             "note": "neutral capsule collision reference, not approved dimensions",
         },
+        {
+            "path": model_dir / "modules" / "FOREST_TREE_MODULE.glb",
+            "kind": "static",
+            "note": "reusable forest tree module",
+        },
+        {
+            "path": model_dir / "modules" / "FOREST_FERN_MODULE.glb",
+            "kind": "static",
+            "note": "reusable forest fern module",
+        },
+        {
+            "path": model_dir / "modules" / "FOREST_ROCK_MODULE.glb",
+            "kind": "static",
+            "note": "reusable forest rock module",
+        },
+        {
+            "path": model_dir / "modules" / "FOREST_GREAT_TREE_MODULE.glb",
+            "kind": "static",
+            "note": "Great Root Mother tree module",
+        },
+        {
+            "path": model_dir / "modules" / "FOREST_WAYMARKER_MODULE.glb",
+            "kind": "static",
+            "note": "white cloth waymarker module",
+        },
+        {
+            "path": model_dir / "modules" / "FOREST_BOUNDARY_POST_MODULE.glb",
+            "kind": "static",
+            "note": "forest boundary post module",
+        },
     ]
+
+
+def _make_interchange_pipeline(force_skeletal: bool):
+    """Build (and save) an Interchange generic assets pipeline.
+
+    UE 5.8 imports glTF through the Interchange framework. The legacy
+    `unreal.GLTFImportOptions` object only exposes `generate_lightmap_u_vs` and
+    `import_scale` — it has NO `import_animations`/`import_materials`/`import_textures`
+    properties, and assigning it as `AssetImportTask.options` against an Interchange
+    factory is a type mismatch that silently drops the skin, so a skinned GLB imports as
+    a Static Mesh. The supported path is an `InterchangeGenericAssetsPipeline` with
+    `common_meshes_properties.force_all_mesh_as_type = IFMT_SKELETAL_MESH`, which forces
+    skinned meshes to import as Skeletal Meshes (animations follow automatically).
+    """
+    pipeline = unreal.InterchangeGenericAssetsPipeline()
+    if force_skeletal:
+        pipeline.common_meshes_properties.force_all_mesh_as_type = (
+            unreal.InterchangeForceMeshType.IFMT_SKELETAL_MESH)
+    # Persist the pipeline so it has a SoftObjectPath for override_pipelines.
+    try:
+        unreal.EditorAssetSubsystem.save_loaded_asset(pipeline)
+    except Exception as exc:  # pragma: no cover - editor-only branch
+        warn("could not save Interchange pipeline (%s); using in-memory path" % exc)
+    return pipeline
+
+
+def _interchange_import(source_path: str, destination_path: str, force_skeletal: bool) -> list[str]:
+    """Import one file through the Interchange pipeline. Returns imported asset paths."""
+    interchange_manager = unreal.InterchangeManager.get_interchange_manager_scripted()
+    source_data = interchange_manager.create_source_data(source_path)
+    pipeline = _make_interchange_pipeline(force_skeletal)
+
+    parameters = unreal.ImportAssetParameters()
+    parameters.is_automated = True
+    try:
+        pipeline_path = pipeline.get_path_name()
+    except Exception:
+        pipeline_path = ""
+    if pipeline_path:
+        parameters.override_pipelines.append(unreal.SoftObjectPath(pipeline_path))
+
+    interchange_manager.import_asset(destination_path, source_data, parameters)
+
+    # Enumerate what landed in the destination so the report is verifiable.
+    imported: list[str] = []
+    try:
+        for item in unreal.EditorAssetLibrary.find_assets(destination_path):
+            imported.append(item.get_asset_path())
+    except Exception:
+        pass
+    return imported
 
 
 def import_assets(report: dict, paths: dict) -> None:
@@ -332,41 +418,13 @@ def import_assets(report: dict, paths: dict) -> None:
             continue
         try:
             unreal.EditorAssetLibrary.make_directory(IMPORT_DESTINATION)
-            task = unreal.AssetImportTask()
-            task.set_editor_property("filename", str(item["path"]))
-            task.set_editor_property("destination_path", IMPORT_DESTINATION)
-            task.set_editor_property("automated", True)
-            task.set_editor_property("replace_existing", False)
-            task.set_editor_property("save", True)
-            options = unreal.GLTFImportOptions() if item["kind"] == "skeletal" else None
-            if options is not None:
-                # Import the skinned GLB as a Skeletal Mesh with its animations, not as a
-                # static mesh. Property names differ across UE versions; set defensively.
-                for prop, value in (
-                    ("import_animations", True),
-                    ("import_materials", True),
-                    ("import_textures", True),
-                ):
-                    try:
-                        options.set_editor_property(prop, value)
-                    except Exception:
-                        pass
-                try:
-                    task.set_editor_property("options", options)
-                except Exception as exc:
-                    entry["options_note"] = str(exc)
-            if options is not None:
-                # Interchange path for glTF; falls back to the legacy glTF importer.
-                task.set_editor_property("factory", unreal.InterchangeGenericAssetsPipelineFactory()) \
-                    if hasattr(unreal, "InterchangeGenericAssetsPipelineFactory") else None
-            unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
-            imported = []
-            try:
-                imported = [str(p) for p in task.get_editor_property("imported_object_paths")]
-            except Exception:
-                pass
+            imported = _interchange_import(
+                str(item["path"]), IMPORT_DESTINATION, force_skeletal=(item["kind"] == "skeletal"))
             entry["imported_object_paths"] = imported
             entry["status"] = "COMPLETED AND VERIFIED" if imported else "PRODUCED - NOT YET VERIFIED"
+            if item["kind"] == "skeletal" and not imported:
+                warn("skeletal import produced no assets for %s; check the Interchange "
+                     "glTF translator is enabled" % item["path"].name)
         except Exception as exc:
             entry.update({"status": "PRODUCED - NOT YET VERIFIED", "error": str(exc)})
             warn("import failed for %s: %s" % (item["path"].name, exc))

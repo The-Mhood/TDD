@@ -227,7 +227,13 @@
       "name": "actor presence tests exist where expected",
       "ok": true,
       "severity": "error",
-      "detail": "['TDDAdannaProxyCharacter.cpp', 'TDDForbiddenForestGameMode.cpp', 'TDDForbiddenForestLevel.cpp', 'TDDOmegaValleyGameMode.cpp']"
+      "detail": "['ATDDAdannaCharacter.cpp', 'TDDAdannaProxyCharacter.cpp', 'TDDForbiddenForestGameMode.cpp', 'TDDForbiddenForestLevel.cpp', 'TDDOmegaValleyGameMode.cpp']"
+    },
+    {
+      "name": "ATDDAdannaCharacter.cpp:127 presence test uses the iterator bool",
+      "ok": true,
+      "severity": "error",
+      "detail": "TActorIterator<ATDDForbiddenForestLevel> It("
     },
     {
       "name": "TDDAdannaProxyCharacter.cpp:190 presence test uses the iterator bool",
@@ -342,6 +348,18 @@
       "ok": true,
       "severity": "error",
       "detail": ""
+    },
+    {
+      "name": "macOS helper avoids broken GLTFImportOptions import",
+      "ok": true,
+      "severity": "error",
+      "detail": "GLTFImportOptions has no import_animations/materials/textures props and mismatches the Interchange factory; use InterchangeGenericAssetsPipeline"
+    },
+    {
+      "name": "macOS helper forces skeletal mesh via Interchange",
+      "ok": true,
+      "severity": "error",
+      "detail": "skinned GLB must be forced to Skeletal Mesh via the Interchange pipeline"
     },
     {
       "name": "no Windows-only token 'C:\\\\\\\\' in helper",
@@ -692,8 +710,8 @@
       "detail": ""
     }
   ],
-  "checksPassed": 114,
-  "checksTotal": 114,
+  "checksPassed": 117,
+  "checksTotal": 117,
   "errors": [],
   "compile_verified": false,
   "pie_verified": false,

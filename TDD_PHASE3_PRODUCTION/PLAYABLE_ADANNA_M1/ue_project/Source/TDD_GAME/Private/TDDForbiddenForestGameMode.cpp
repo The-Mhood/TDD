@@ -1,13 +1,13 @@
 #include "TDDForbiddenForestGameMode.h"
 
-#include "TDDAdannaProxyCharacter.h"
+#include "ATDDAdannaCharacter.h"
 #include "TDDForbiddenForestLevel.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 
 ATDDForbiddenForestGameMode::ATDDForbiddenForestGameMode()
 {
-    DefaultPawnClass = ATDDAdannaProxyCharacter::StaticClass();
+    DefaultPawnClass = ATDDAdannaCharacter::StaticClass();
 }
 
 void ATDDForbiddenForestGameMode::StartPlay()
