@@ -47,6 +47,11 @@ COMPONENT_INCLUDE_RULES = [
 # Maps a header that no longer exists in UE 5.8.4 to its replacement.
 REMOVED_ENGINE_HEADERS = {
     "Subsystems/TickableWorldSubsystem.h": "Subsystems/WorldSubsystem.h",
+    # USkeletalMeshComponent is declared in Components/SkeletalMeshComponent.h;
+    # there is no Engine/SkeletalMeshComponent.h header in UE 5.8.4 (the
+    # demonstrated owner-Mac compile failure: 'Engine/SkeletalMeshComponent.h'
+    # file not found).
+    "Engine/SkeletalMeshComponent.h": "Components/SkeletalMeshComponent.h",
 }
 
 # Subsystem headers verified to exist in UE 5.8.4 under
@@ -1270,6 +1275,77 @@ def main():
                         f"derive from UTickableWorldSubsystem instead (defined in "
                         f"Subsystems/WorldSubsystem.h in UE 5.8) if this subsystem genuinely needs "
                         f"per-frame ticking; do not add a fake lifecycle method")
+
+    # ---- TSoftObjectPtr raw-string assignment guard -------------------
+    # TSoftObjectPtr<U*> has no assignment operator from a TEXT() string
+    # literal in UE 5.8 ('no viable overloaded ='). The UE 5.8-compatible
+    # pattern is an explicit FSoftObjectPath construction:
+    #   Member = FSoftObjectPath(TEXT("/Game/.../Asset"));
+    # Scan headers for TSoftObjectPtr member names, then block any
+    # 'Member = TEXT(' assignment in the paired .cpp (and any local
+    # 'TSoftObjectPtr<...> Var = TEXT(...)' declaration).
+    if src.is_dir():
+        soft_members = set()
+        for hdr in sorted(src.rglob("*.h")):
+            try:
+                htext = hdr.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            for m in re.finditer(r"TSoftObjectPtr<[^>]+>\s+(\w+)\s*(?:\[[^\]]*\])?\s*;", htext):
+                soft_members.add(m.group(1))
+        for cpp in sorted(src.rglob("*.cpp")):
+            try:
+                ctext = cpp.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            rel = str(cpp.relative_to(root))
+            for name in soft_members:
+                for m in re.finditer(r"(?m)^\s*" + re.escape(name) + r"\s*=\s*TEXT\s*\(", ctext):
+                    line = ctext[:m.start()].count("\n") + 1
+                    block(
+                        f"{rel}:{line}: C++ error class — TSoftObjectPtr member '{name}' assigned "
+                        f"a raw TEXT() string literal ('no viable overloaded =')",
+                        f"wrap the assignment in an explicit FSoftObjectPath: "
+                        f"'{name} = FSoftObjectPath(TEXT(\"/Game/...\"));' — verify the path against "
+                        f"the actual imported asset names")
+            for m in re.finditer(r"(?m)^\s*TSoftObjectPtr<[^>]+>\s+\w+\s*=\s*TEXT\s*\(", ctext):
+                line = ctext[:m.start()].count("\n") + 1
+                block(
+                    f"{rel}:{line}: C++ error class — TSoftObjectPtr local initialized from a raw "
+                    f"TEXT() string literal ('no viable overloaded =')",
+                    "initialize with an explicit FSoftObjectPath: "
+                    "'TSoftObjectPtr<U*> Var = FSoftObjectPath(TEXT(\"/Game/...\"));'")
+
+    # ---- FString/FName container-key mismatch guard -------------------
+    # A TSet<FName>/TMap<FName,...> keyed container rejects an FString key
+    # (e.g. 'no viable conversion from 'FString' to 'const FName' when
+    # calling Contains(Pool->GetName()), where GetName() returns FString).
+    # Collect TSet<FName>/TMap<FName,...> variables declared in each .cpp and
+    # block a .Contains(<expr>.GetName()) call on one of them; the correct
+    # form is an explicit conversion, e.g. Contains(FName(*Pool->GetName())).
+    if src.is_dir():
+        for cpp in sorted(src.rglob("*.cpp")):
+            try:
+                ctext = cpp.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            rel = str(cpp.relative_to(root))
+            fname_containers = set()
+            for m in re.finditer(r"\b(?:const\s+)?(?:TSet<FName>|TMap<FName,[^>]+>)\s+(\w+)", ctext):
+                fname_containers.add(m.group(1))
+            for name in fname_containers:
+                for m in re.finditer(re.escape(name) + r"\.Contains\s*\(([^;]*?(?:->|\.)GetName\s*\([^)]*\))\)", ctext):
+                    arg = m.group(1).strip()
+                    # Already converted (e.g. FName(*X.GetName())) — not a defect.
+                    if re.match(r"FName\s*\(", arg):
+                        continue
+                    line = ctext[:m.start()].count("\n") + 1
+                    block(
+                        f"{rel}:{line}: C++ error class — TSet/TMap keyed by FName called "
+                        f"Contains() with an FString argument ('{arg}' returns FString)",
+                        f"convert explicitly before the lookup: "
+                        f"'{name}.Contains(FName(*{arg}))' — confirm the container's intended "
+                        f"key semantics (FName) before converting")
 
     # ---- targets
     target_files = sorted(src.glob("*.Target.cs")) if src.is_dir() else []

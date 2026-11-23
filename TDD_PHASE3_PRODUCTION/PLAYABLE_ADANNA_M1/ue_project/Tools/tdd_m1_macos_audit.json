@@ -575,7 +575,7 @@
       "name": "INSTANCED pool registers before AddInstance is ever called",
       "ok": true,
       "severity": "error",
-      "detail": "registration inside the factory at index 1652; first AddInstance call site at 5584"
+      "detail": "registration inside the factory at index 1652; first AddInstance call site at 5686"
     },
     {
       "name": "registration occurs exactly once per pool",

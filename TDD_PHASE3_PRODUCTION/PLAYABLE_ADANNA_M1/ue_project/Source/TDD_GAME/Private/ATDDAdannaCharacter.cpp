@@ -5,7 +5,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Engine/SkeletalMesh.h"
-#include "Engine/SkeletalMeshComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Animation/AnimInstance.h"
 
 #include "TDDWorldData.h"

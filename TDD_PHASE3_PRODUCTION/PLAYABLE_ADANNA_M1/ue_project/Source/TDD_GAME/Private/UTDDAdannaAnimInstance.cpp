@@ -1,8 +1,8 @@
 #include "UTDDAdannaAnimInstance.h"
 
-#include "TDDAdannaCharacter.h"
+#include "ATDDAdannaCharacter.h"
 #include "Engine/SkeletalMesh.h"
-#include "Engine/SkeletalMeshComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Engine/AnimationSequence.h"
 
 UTDDAdannaAnimInstance::UTDDAdannaAnimInstance()
@@ -11,13 +11,13 @@ UTDDAdannaAnimInstance::UTDDAdannaAnimInstance()
     // (/Game/TDD/Animations/). The import script reports the exact imported asset
     // names; adjust these in the AnimInstance's Default Properties if the Interchange
     // import names differ from the glTF clip names (idle/walk/run/jump/land).
-    IdleAnim = TEXT("/Game/TDD/Animations/idle");
-    WalkAnim = TEXT("/Game/TDD/Animations/walk");
-    RunAnim = TEXT("/Game/TDD/Animations/run");
-    JumpAnim = TEXT("/Game/TDD/Animations/jump");
-    FallAnim = TEXT("/Game/TDD/Animations/fall");
-    LandAnim = TEXT("/Game/TDD/Animations/land");
-    InteractAnim = TEXT("/Game/TDD/Animations/interact");
+    IdleAnim = FSoftObjectPath(TEXT("/Game/TDD/Animations/idle"));
+    WalkAnim = FSoftObjectPath(TEXT("/Game/TDD/Animations/walk"));
+    RunAnim = FSoftObjectPath(TEXT("/Game/TDD/Animations/run"));
+    JumpAnim = FSoftObjectPath(TEXT("/Game/TDD/Animations/jump"));
+    FallAnim = FSoftObjectPath(TEXT("/Game/TDD/Animations/fall"));
+    LandAnim = FSoftObjectPath(TEXT("/Game/TDD/Animations/land"));
+    InteractAnim = FSoftObjectPath(TEXT("/Game/TDD/Animations/interact"));
 }
 
 void UTDDAdannaAnimInstance::NativeInitializeAnimation()

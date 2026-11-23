@@ -70,12 +70,12 @@ ATDDForbiddenForestLevel::ATDDForbiddenForestLevel()
     ObjectiveText = TDDWorldData::ObjectiveText;
 
     // Default module paths match the M1 import script destination (/Game/TDD/Imports).
-    ForestTreeModule = TEXT("/Game/TDD/Imports/FOREST_TREE_MODULE");
-    ForestFernModule = TEXT("/Game/TDD/Imports/FOREST_FERN_MODULE");
-    ForestRockModule = TEXT("/Game/TDD/Imports/FOREST_ROCK_MODULE");
-    ForestGreatTreeModule = TEXT("/Game/TDD/Imports/FOREST_GREAT_TREE_MODULE");
-    ForestWaymarkerModule = TEXT("/Game/TDD/Imports/FOREST_WAYMARKER_MODULE");
-    ForestBoundaryPostModule = TEXT("/Game/TDD/Imports/FOREST_BOUNDARY_POST_MODULE");
+    ForestTreeModule = FSoftObjectPath(TEXT("/Game/TDD/Imports/FOREST_TREE_MODULE"));
+    ForestFernModule = FSoftObjectPath(TEXT("/Game/TDD/Imports/FOREST_FERN_MODULE"));
+    ForestRockModule = FSoftObjectPath(TEXT("/Game/TDD/Imports/FOREST_ROCK_MODULE"));
+    ForestGreatTreeModule = FSoftObjectPath(TEXT("/Game/TDD/Imports/FOREST_GREAT_TREE_MODULE"));
+    ForestWaymarkerModule = FSoftObjectPath(TEXT("/Game/TDD/Imports/FOREST_WAYMARKER_MODULE"));
+    ForestBoundaryPostModule = FSoftObjectPath(TEXT("/Game/TDD/Imports/FOREST_BOUNDARY_POST_MODULE"));
 }
 
 UInstancedStaticMeshComponent* ATDDForbiddenForestLevel::CreateInstancePool(
@@ -473,7 +473,7 @@ void ATDDForbiddenForestLevel::PlaceForestModuleVisuals()
         {
             continue; // module visual pools stay visible
         }
-        if (PrimitiveForestVisuals.Contains(Pool->GetName()))
+        if (PrimitiveForestVisuals.Contains(FName(*Pool->GetName())))
         {
             Pool->SetVisibility(false, true);
         }
