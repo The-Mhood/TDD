@@ -1,0 +1,37 @@
+{
+  "asset_id": "ADANNA_AD03_V7",
+  "version": "V7 production sculpt (in progress)",
+  "classification": "production sculpt in progress - NOT final owner-qualified character",
+  "identity_authority": "ADANNA_FACE_LIKENESS_STUDY_V1.jpg (accepted; locks: high-knot braids, 3 bronze+2 coral beads LEFT temple, diagonal scar LEFT cheekbone, right side plain)",
+  "source": "build_adanna_v7.py",
+  "export": "out/ADANNA_AD03_V7.glb",
+  "sha256": "123da6081ec4e57126b26702e4654e8bc5aca1d6e555d6b05802ed61270604ce",
+  "tech": {
+    "verts": 9878,
+    "tris": 19156,
+    "height_m": 1.84,
+    "skeleton": "HUMAN_BASE_PROPOSED 11 joints (root pelvis)",
+    "units": "metres, Z-up authored"
+  },
+  "qc": {
+    "deformation": "PASS",
+    "joint_influence": "PASS",
+    "animation_poses": "23/23 PASS (6 clips)",
+    "offline_suite": "see milestone qc - V7 to be added at consolidated run"
+  },
+  "materials": [
+    "skin (T set in textures/)",
+    "cloth_indigo_plain_v1",
+    "leather baldric/sandals",
+    "bronze armlet/cuffs",
+    "coral beads",
+    "hair_v1"
+  ],
+  "unreal_destination_proposed": "/Game/TDD/Characters/ADANNA_AD03_V7/ (Engineering confirm SoftObjectPaths)",
+  "known_limitations": [
+    "low-poly stylised face vs study - likeness refined in Mac Blender sculpt pass at consolidated session",
+    "flat-shaded preview renderer understates materials",
+    "not Blender-qualified, not Unreal-integrated"
+  ],
+  "next_action": "owner visual qualification at consolidated session; Engineering first-import check"
+}

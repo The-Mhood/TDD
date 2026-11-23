@@ -1,0 +1,20 @@
+newmtl skin_base_v1
+Kd 0.42 0.27 0.18
+newmtl cloth_indigo_plain_v1
+Kd 0.1 0.12 0.32
+newmtl leather_baldric_v1
+Kd 0.3 0.19 0.11
+newmtl bronze_armlet_plain_v1
+Kd 0.55 0.36 0.15
+newmtl pendant_spiral_FICTIONAL_v1
+Kd 0.55 0.36 0.15
+newmtl coral_bead_v1
+Kd 0.75 0.3 0.22
+newmtl hair_v1
+Kd 0.05 0.04 0.035
+newmtl scar_marker_v1
+Kd 0.3 0.16 0.12
+newmtl lips_v1
+Kd 0.36 0.16 0.13
+newmtl eye_dark_v1
+Kd 0.03 0.02 0.02

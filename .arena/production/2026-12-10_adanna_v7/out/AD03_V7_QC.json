@@ -1,0 +1,19 @@
+{
+  "asset": "ADANNA_AD03_V7",
+  "milestone": "DEFINITIVE Adanna from internally approved concept 2026-11-26 (cropped wrap/bare midriff/waistband/pendant-on-chest/sandals)",
+  "supersedes": "ADANNA_AD03_V4 (sculpt milestone 2, recoverable); V3 remains milestone-1 qualified fallback",
+  "tier": "sculpt-refined production-intent - NOT final character",
+  "parts": 46,
+  "verts": 9878,
+  "tris": 19156,
+  "skeleton": "HUMAN_BASE_PROPOSED unchanged (11 joints, same names)",
+  "changes": [
+    "face: nose/brow/lips/ears/eyes/jaw",
+    "hands: palm+fingers+thumb",
+    "feet: toes",
+    "joints: spheres removed, 6-ring limb profiles",
+    "garments: folded lathe wrap+skirt with hems (no ellipsoid shells)",
+    "pendant: 2-ring spiral"
+  ],
+  "blade_scabbard": "NONE (CQ-9)"
+}

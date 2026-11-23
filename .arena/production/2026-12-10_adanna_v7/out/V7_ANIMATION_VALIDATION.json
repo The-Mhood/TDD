@@ -1,0 +1,13 @@
+{
+  "asset": "ADANNA_AD03_V7",
+  "clips": [
+    "idle",
+    "walk",
+    "run",
+    "dodge_left",
+    "crouch_recover",
+    "look_back"
+  ],
+  "poses": 23,
+  "verdict": "PASS"
+}
