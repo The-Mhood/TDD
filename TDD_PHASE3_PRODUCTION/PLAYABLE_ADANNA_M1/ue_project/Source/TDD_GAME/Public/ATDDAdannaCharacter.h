@@ -48,7 +48,7 @@ public:
 
 protected:
     UPROPERTY(VisibleAnywhere, Category = "TDD|Character")
-    TObjectPtr<USkeletalMeshComponent> Mesh;
+    TObjectPtr<USkeletalMeshComponent> AdannaMesh;
 
     UPROPERTY(VisibleAnywhere, Category = "TDD|Camera")
     TObjectPtr<USpringArmComponent> CameraBoom;

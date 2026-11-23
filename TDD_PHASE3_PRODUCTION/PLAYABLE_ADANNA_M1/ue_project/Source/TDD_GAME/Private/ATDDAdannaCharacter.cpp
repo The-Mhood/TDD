@@ -71,13 +71,13 @@ ATDDAdannaCharacter::ATDDAdannaCharacter()
 
     // Skeletal mesh carries the integrated Adanna. AnimInstanceClass is set here so the
     // engine creates the C++ state machine when the component initializes.
-    Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
-    Mesh->SetupAttachment(GetCapsuleComponent());
-    Mesh->SetMobility(EComponentMobility::Movable);
-    Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-    Mesh->SetGenerateOverlapEvents(false);
-    Mesh->SetCastShadow(true);
-    Mesh->AnimInstanceClass = UTDDAdannaAnimInstance::StaticClass();
+    AdannaMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
+    AdannaMesh->SetupAttachment(GetCapsuleComponent());
+    AdannaMesh->SetMobility(EComponentMobility::Movable);
+    AdannaMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+    AdannaMesh->SetGenerateOverlapEvents(false);
+    AdannaMesh->SetCastShadow(true);
+    AdannaMesh->AnimInstanceClass = UTDDAdannaAnimInstance::StaticClass();
 
     CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
     CameraBoom->SetupAttachment(RootComponent);
@@ -109,7 +109,7 @@ void ATDDAdannaCharacter::BeginPlay()
     }
 
     // Bind the animation state machine to this character.
-    if (UTDDAdannaAnimInstance* Anim = Cast<UTDDAdannaAnimInstance>(Mesh ? Mesh->GetAnimInstance() : nullptr))
+    if (UTDDAdannaAnimInstance* Anim = Cast<UTDDAdannaAnimInstance>(AdannaMesh ? AdannaMesh->GetAnimInstance() : nullptr))
     {
         AnimInstance = Anim;
         Anim->SetCharacter(this);
@@ -152,7 +152,7 @@ void ATDDAdannaCharacter::BeginPlay()
 
 void ATDDAdannaCharacter::IntegrateSkeletalMesh()
 {
-    if (!Mesh)
+    if (!AdannaMesh)
     {
         return;
     }
@@ -160,7 +160,7 @@ void ATDDAdannaCharacter::IntegrateSkeletalMesh()
     USkeletalMesh* SkeletalMesh = LoadObject<USkeletalMesh>(nullptr, *SkeletalMeshAssetPath.ToString());
     if (SkeletalMesh)
     {
-        Mesh->SetSkeletalMesh(SkeletalMesh);
+        AdannaMesh->SetSkeletalMesh(SkeletalMesh);
         bUsingSkeletalMesh = true;
     }
     else

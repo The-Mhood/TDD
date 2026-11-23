@@ -1390,6 +1390,61 @@ def main():
                     f"match the header's own basename; a path prefix or a typo makes UHT "
                     f"treat the generated include as missing and fail the build")
 
+    # ---- UHT inherited-member shadowing guard --------------------------
+    # UE 5.8 UHT forbids declaring a member whose name is already defined by
+    # an inherited class: "Member variable declaration: '<Name>' cannot be
+    # defined in '<Class>' as it is already defined in scope '<Base>'
+    # (shadowing is not allowed)". The M1 build blocker: ATDDAdannaCharacter
+    # declared a UPROPERTY named 'Mesh', colliding with ACharacter::Mesh.
+    # Flag every reflected class member whose name appears in the member set
+    # of its direct engine base class (members, not methods).
+    INHERITED_MEMBER_NAMES = {
+        "ACharacter": {"Mesh", "CapsuleComponent", "CharacterMovement", "Movement", "NavInvoker"},
+        "AActor": {"RootComponent", "Owner", "Instigator", "EventManager", "RemoteRole",
+                   "DisplayName", "Tags", "LocalRole", "Role"},
+        "UActorComponent": {"ComponentToWorld", "Owner", "RelativeLocation", "RelativeRotation",
+                            "RelativeScale3D", "ComponentTags"},
+        "AGameModeBase": {"GameStateClass", "PlayerStateClass", "PawnClass", "HUDClass"},
+        "APlayerState": {"PlayerId", "Score", "Pawn", "PlayerController"},
+        "AController": {"Player", "Pawn", "PlayerState", "Navigation"},
+    }
+    if src.is_dir():
+        for hdr in sorted(src.rglob("*.h")):
+            try:
+                htext = hdr.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            rel = str(hdr.relative_to(root))
+            for cm in re.finditer(r"\bclass\s+(?:[A-Za-z_]\w*\s+)*(\w+)\s*(?::\s*public\s+(\w+))?\s*\{", htext):
+                cname, base = cm.group(1), cm.group(2)
+                if not base or base not in INHERITED_MEMBER_NAMES:
+                    continue
+                body_start = htext.index("{", cm.end() - 1)
+                depth = 0
+                body_end = len(htext)
+                for j in range(body_start, len(htext)):
+                    if htext[j] == "{":
+                        depth += 1
+                    elif htext[j] == "}":
+                        depth -= 1
+                        if depth == 0:
+                            body_end = j
+                            break
+                body = htext[body_start:body_end]
+                for dm in re.finditer(
+                        r"(?m)^\s*(?:UPROPERTY(?:\([^)]*\))?\s*)?"
+                        r"(?:TObjectPtr<[^>]*>|TArray<[^>]*>|TSharedPtr<[^>]*>|"
+                        r"[\w:<>*&\s]+?)\s+(\w+)\s*(?:\[[^\]]*\])?\s*(=[^;]*)?;", body):
+                    name = dm.group(1)
+                    if name in INHERITED_MEMBER_NAMES[base]:
+                        line = htext[:body_start + dm.start()].count("\n") + 1
+                        block(
+                            f"{rel}:{line}: UHT error class — member '{name}' shadows an inherited "
+                            f"member of {base} (shadowing is not allowed in UE 5.8)",
+                            f"rename the member to a distinct name (e.g. 'Adanna{name}') and update "
+                            f"every reference in {rel} and its .cpp; prefer the inherited "
+                            f"{base}::{name} component where it is the one intended")
+
     # ---- config and ignores
     if not (root / "Config" / "DefaultEngine.ini").is_file():
         warn("Config/DefaultEngine.ini missing", "the project will boot with engine defaults; add the ini baseline")
