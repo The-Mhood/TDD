@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "TDDAdannaAnimInstance.generated.h"
+#include "UTDDAdannaAnimInstance.generated.h"
 
 class ATDDAdannaCharacter;
 

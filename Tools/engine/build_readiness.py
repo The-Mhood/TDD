@@ -1336,6 +1336,60 @@ def main():
                     "BasicShapes materials and needs static lighting to be illuminated; with it "
                     "disabled the HUD and collision still work but the world and character are black")
 
+    # ---- UHT generated-include ordering guard -------------------------
+    # UHT requires every reflected header (a class carrying GENERATED_BODY)
+    # to include its own generated header as the LAST #include, using the
+    # BARE filename that matches the header's own basename. If the include
+    # text does not match the header filename (a wrong path prefix, a typo,
+    # or a missing prefix letter), UHT does not recognise it as the valid
+    # generated include and fails with: "The given include must appear at
+    # the top of the header following all other includes:
+    # '#include \"X.generated.h\"'". This was the owner-Mac UE 5.8.4 compile
+    # blocker on UTDDAdannaAnimInstance.h — the include read
+    # "TDDAdannaAnimInstance.generated.h" but the header is
+    # "UTDDAdannaAnimInstance.h" (a missing leading 'U'), so UHT reported the
+    # positioning error quoting the correct form. Guard every reflected
+    # header so this defect class cannot recur unnoticed.
+    if src.is_dir():
+        for hdr in sorted(src.rglob("*.h")):
+            try:
+                htext = hdr.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            if "GENERATED_BODY" not in htext:
+                continue
+            rel = str(hdr.relative_to(root))
+            expected = f"{hdr.stem}.generated.h"
+            inc_lines = [(i, l) for i, l in enumerate(htext.splitlines(), 1)
+                         if re.match(r'\s*#include\s+"', l)]
+            gen_lines = [(i, l) for i, l in inc_lines if ".generated.h" in l]
+            if not gen_lines:
+                block(
+                    f"{rel}: reflected header (GENERATED_BODY) has no #include \"{expected}\"",
+                    f'add #include "{expected}" as the LAST #include in {rel}; UHT generates '
+                    f'this header and requires it to be included')
+                continue
+            gi, gl = gen_lines[0]
+            m = re.search(r'#include\s+"([^"]*\.generated\.h)"', gl)
+            inc_name = pathlib.PurePosixPath(m.group(1)).name if m else ""
+            # (1) the generated include must be the LAST #include.
+            if inc_lines and inc_lines[-1][0] != gi:
+                after = [l.strip() for i, l in inc_lines if i > gi]
+                block(
+                    f"{rel}:{gi}: UHT error class — the generated #include is not the last "
+                    f"#include (includes after it: {after})",
+                    f'move #include "{expected}" to be the LAST #include in {rel}; UHT '
+                    f"requires the generated header to follow every other #include")
+                continue
+            # (2) the generated include filename must match the header basename.
+            if inc_name != expected:
+                block(
+                    f"{rel}:{gi}: UHT error class — generated include filename \"{inc_name}\" "
+                    f"does not match the header \"{expected}\"",
+                    f'change the include to #include "{expected}" — the bare filename must '
+                    f"match the header's own basename; a path prefix or a typo makes UHT "
+                    f"treat the generated include as missing and fail the build")
+
     # ---- config and ignores
     if not (root / "Config" / "DefaultEngine.ini").is_file():
         warn("Config/DefaultEngine.ini missing", "the project will boot with engine defaults; add the ini baseline")
