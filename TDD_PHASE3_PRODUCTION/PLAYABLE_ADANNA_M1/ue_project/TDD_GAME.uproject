@@ -15,6 +15,10 @@
     {
       "Name": "PythonScriptPlugin",
       "Enabled": true
+    },
+    {
+      "Name": "glTF",
+      "Enabled": true
     }
   ],
   "TargetPlatforms": ["Mac"]

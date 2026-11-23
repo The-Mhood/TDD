@@ -1542,6 +1542,59 @@ def main():
                             f"every reference in {rel} and its .cpp; prefer the inherited "
                             f"{base}::{name} component where it is the one intended")
 
+    # ---- TDD M1 setup script guards ------------------------------------
+    # The M1 macOS setup helper (TDD_M1_Unreal_Setup_macOS.py) drives asset
+    # import through the UE 5.8 Interchange framework. Guard the defect classes
+    # that actually blocked the owner-side setup run:
+    #   (a) Pipeline persistence must use the supported Python save API:
+    #       unreal.EditorAssetLibrary.save_loaded_asset(asset). Calling
+    #       unreal.EditorAssetSubsystem.save_loaded_asset as a static method is
+    #       not the supported API and fails at runtime.
+    #   (b) The project must declare the glTF plugin explicitly so the
+    #       Interchange glTF translator dependency is deterministic.
+    SETUP_SCRIPT_REL = "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/Tools/TDD_M1_Unreal_Setup_macOS.py"
+    setup_script = root / SETUP_SCRIPT_REL
+    if setup_script.is_file():
+        try:
+            stext = setup_script.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            stext = ""
+        for m in re.finditer(r"unreal\.EditorAssetSubsystem\.save_loaded_asset\s*\(", stext):
+            line = stext[:m.start()].count("\n") + 1
+            block(
+                f"{SETUP_SCRIPT_REL}:{line}: setup-script error class — pipeline persistence "
+                f"calls unreal.EditorAssetSubsystem.save_loaded_asset as a static method",
+                "use the supported Python save API: "
+                "unreal.EditorAssetLibrary.save_loaded_asset(pipeline, only_if_is_dirty=False)")
+        if "unreal.EditorAssetLibrary.save_loaded_asset" not in stext:
+            block(
+                f"{SETUP_SCRIPT_REL}: the setup script never persists its Interchange pipeline "
+                f"via unreal.EditorAssetLibrary.save_loaded_asset",
+                "persist the pipeline with unreal.EditorAssetLibrary.save_loaded_asset(...) so "
+                "override_pipelines resolves a stable path (and keep the object alive)")
+        if "import_asset(" in stext and "import_timed_out" not in stext:
+            block(
+                f"{SETUP_SCRIPT_REL}: the setup script calls Interchange import_asset without "
+                f"verifying completion",
+                "Interchange imports can complete asynchronously; capture the bool return and "
+                "poll the destination for created assets (with a timeout) instead of treating a "
+                "non-exception return as proof of success")
+
+    # glTF plugin declaration in the M1 project descriptor.
+    m1_uproject = root / "TDD_PHASE3_PRODUCTION" / "PLAYABLE_ADANNA_M1" / "ue_project" / "TDD_GAME.uproject"
+    if m1_uproject.is_file():
+        try:
+            m1_proj = json.loads(m1_uproject.read_text(encoding="utf-8"))
+            plugins = {p.get("Name"): p.get("Enabled") for p in m1_proj.get("Plugins", [])}
+            if plugins.get("glTF") is not True:
+                block(
+                    "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/TDD_GAME.uproject: the "
+                    "glTF plugin is not declared enabled",
+                    'add {"Name": "glTF", "Enabled": true} to the Plugins list so the Interchange '
+                    "glTF translator dependency is explicit and deterministic")
+        except json.JSONDecodeError as exc:
+            block(f"TDD_GAME.uproject (M1) is not valid JSON: {exc}", "fix the JSON")
+
     # ---- config and ignores
     if not (root / "Config" / "DefaultEngine.ini").is_file():
         warn("Config/DefaultEngine.ini missing", "the project will boot with engine defaults; add the ini baseline")
