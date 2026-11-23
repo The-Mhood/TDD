@@ -45,10 +45,44 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "TDD|Level")
     float RouteWidthCm = 340.0f;
 
+    // Imported Forbidden Forest asset modules (set by the M1 import script to
+    // /Game/TDD/Imports). When present, their meshes are instanced as the forest
+    // visuals (white-cloth waymarkers, trees, ferns, rocks, Great Root Mother,
+    // boundary posts) and the primitive blockout visuals are hidden while their
+    // collision is retained. When absent, the primitive blockout is used unchanged.
+    UPROPERTY(EditDefaultsOnly, Category = "TDD|Level|Modules")
+    TSoftObjectPtr<UStaticMesh> ForestTreeModule;
+
+    UPROPERTY(EditDefaultsOnly, Category = "TDD|Level|Modules")
+    TSoftObjectPtr<UStaticMesh> ForestFernModule;
+
+    UPROPERTY(EditDefaultsOnly, Category = "TDD|Level|Modules")
+    TSoftObjectPtr<UStaticMesh> ForestRockModule;
+
+    UPROPERTY(EditDefaultsOnly, Category = "TDD|Level|Modules")
+    TSoftObjectPtr<UStaticMesh> ForestGreatTreeModule;
+
+    UPROPERTY(EditDefaultsOnly, Category = "TDD|Level|Modules")
+    TSoftObjectPtr<UStaticMesh> ForestWaymarkerModule;
+
+    UPROPERTY(EditDefaultsOnly, Category = "TDD|Level|Modules")
+    TSoftObjectPtr<UStaticMesh> ForestBoundaryPostModule;
+
     TArray<FVector2D> RouteWaypointsCm;
     TArray<float> RouteSegmentStartsCm;
     TArray<FVector> InteractionPointsCm;
     TArray<FString> InteractionMessages;
     float RouteLengthCm = 0.0f;
     FString ObjectiveText = TEXT("Follow the white cloth to the Great Root Mother");
+
+    UStaticMesh* ForestTreeMesh = nullptr;
+    UStaticMesh* ForestFernMesh = nullptr;
+    UStaticMesh* ForestRockMesh = nullptr;
+    UStaticMesh* ForestGreatTreeMesh = nullptr;
+    UStaticMesh* ForestWaymarkerMesh = nullptr;
+    UStaticMesh* ForestBoundaryPostMesh = nullptr;
+    bool bUsingForestModules = false;
+
+    void LoadForestModules();
+    void PlaceForestModuleVisuals();
 };

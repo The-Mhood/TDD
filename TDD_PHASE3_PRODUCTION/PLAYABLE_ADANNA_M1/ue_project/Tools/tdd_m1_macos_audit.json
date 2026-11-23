@@ -230,7 +230,7 @@
       "detail": "['ATDDAdannaCharacter.cpp', 'TDDAdannaProxyCharacter.cpp', 'TDDForbiddenForestGameMode.cpp', 'TDDForbiddenForestLevel.cpp', 'TDDOmegaValleyGameMode.cpp']"
     },
     {
-      "name": "ATDDAdannaCharacter.cpp:127 presence test uses the iterator bool",
+      "name": "ATDDAdannaCharacter.cpp:131 presence test uses the iterator bool",
       "ok": true,
       "severity": "error",
       "detail": "TActorIterator<ATDDForbiddenForestLevel> It("
@@ -248,7 +248,7 @@
       "detail": "static_cast<bool>(TActorIterator<ATDDForbiddenForestLevel>("
     },
     {
-      "name": "TDDForbiddenForestLevel.cpp:200 presence test uses the iterator bool",
+      "name": "TDDForbiddenForestLevel.cpp:207 presence test uses the iterator bool",
       "ok": true,
       "severity": "error",
       "detail": "const bool bHasPlayerStart = static_cast<bool>(TActorIterator<APlayerStart>("
@@ -575,7 +575,7 @@
       "name": "INSTANCED pool registers before AddInstance is ever called",
       "ok": true,
       "severity": "error",
-      "detail": "registration inside the factory at index 1652; first AddInstance call site at 5043"
+      "detail": "registration inside the factory at index 1652; first AddInstance call site at 5584"
     },
     {
       "name": "registration occurs exactly once per pool",

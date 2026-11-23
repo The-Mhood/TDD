@@ -68,6 +68,14 @@ ATDDForbiddenForestLevel::ATDDForbiddenForestLevel()
     RouteWidthCm = TDDWorldData::RouteWidthCm;
     MetresToCm = TDDWorldData::MetresToCm;
     ObjectiveText = TDDWorldData::ObjectiveText;
+
+    // Default module paths match the M1 import script destination (/Game/TDD/Imports).
+    ForestTreeModule = TEXT("/Game/TDD/Imports/FOREST_TREE_MODULE");
+    ForestFernModule = TEXT("/Game/TDD/Imports/FOREST_FERN_MODULE");
+    ForestRockModule = TEXT("/Game/TDD/Imports/FOREST_ROCK_MODULE");
+    ForestGreatTreeModule = TEXT("/Game/TDD/Imports/FOREST_GREAT_TREE_MODULE");
+    ForestWaymarkerModule = TEXT("/Game/TDD/Imports/FOREST_WAYMARKER_MODULE");
+    ForestBoundaryPostModule = TEXT("/Game/TDD/Imports/FOREST_BOUNDARY_POST_MODULE");
 }
 
 UInstancedStaticMeshComponent* ATDDForbiddenForestLevel::CreateInstancePool(
@@ -321,13 +329,155 @@ void ATDDForbiddenForestLevel::BeginPlay()
     BuildRouteAndBoundary();
     BuildForest();
     BuildLandmarks();
+
+    // Layer the imported Forbidden Forest asset modules on top of the primitive
+    // blockout when they are present. The module visuals replace the primitive
+    // visuals (which are hidden but keep their collision), so traversal/collision
+    // is unchanged while the world reads as the intended forest kit.
+    LoadForestModules();
+    if (bUsingForestModules)
+    {
+        PlaceForestModuleVisuals();
+    }
+
     UE_LOG(
         LogTemp,
         Display,
-        TEXT("TDD M1: Forbidden Forest source blockout built with %d obstacles, %d route waypoints and %d interactables."),
+        TEXT("TDD M1: Forbidden Forest built with %d obstacles, %d route waypoints and %d interactables (modules: %s)."),
         TDDWorldData::ObstacleCount,
         TDDWorldData::WaypointCount,
-        TDDWorldData::InteractionCount);
+        TDDWorldData::InteractionCount,
+        bUsingForestModules ? TEXT("YES") : TEXT("NO — primitive blockout"));
+}
+
+void ATDDForbiddenForestLevel::LoadForestModules()
+{
+    ForestTreeMesh = ForestTreeModule.LoadSynchronous();
+    ForestFernMesh = ForestFernModule.LoadSynchronous();
+    ForestRockMesh = ForestRockModule.LoadSynchronous();
+    ForestGreatTreeMesh = ForestGreatTreeModule.LoadSynchronous();
+    ForestWaymarkerMesh = ForestWaymarkerModule.LoadSynchronous();
+    ForestBoundaryPostMesh = ForestBoundaryPostModule.LoadSynchronous();
+
+    bUsingForestModules =
+        ForestTreeMesh != nullptr || ForestFernMesh != nullptr || ForestRockMesh != nullptr ||
+        ForestGreatTreeMesh != nullptr || ForestWaymarkerMesh != nullptr ||
+        ForestBoundaryPostMesh != nullptr;
+
+    if (!bUsingForestModules)
+    {
+        UE_LOG(LogTemp, Log,
+            TEXT("TDD M1: no Forbidden Forest asset modules found under /Game/TDD/Imports; "
+                 "using primitive blockout. Run the M1 import script to land the forest kit."));
+    }
+}
+
+void ATDDForbiddenForestLevel::PlaceForestModuleVisuals()
+{
+    // Non-colliding visual pools; the primitive pools (hidden below) retain collision.
+    UInstancedStaticMeshComponent* TreeVisuals = CreateInstancePool(TEXT("MODULE_TREE_VISUALS"), ForestCubeMesh, false, Bark);
+    UInstancedStaticMeshComponent* FernVisuals = CreateInstancePool(TEXT("MODULE_FERN_VISUALS"), ForestCubeMesh, false, Vegetation);
+    UInstancedStaticMeshComponent* RockVisuals = CreateInstancePool(TEXT("MODULE_ROCK_VISUALS"), ForestCubeMesh, false, Rock);
+    UInstancedStaticMeshComponent* GreatTreeVisuals = CreateInstancePool(TEXT("MODULE_GREAT_TREE_VISUALS"), ForestCubeMesh, false, GreatBark);
+    UInstancedStaticMeshComponent* PostVisuals = CreateInstancePool(TEXT("MODULE_POST_VISUALS"), ForestCubeMesh, false, Post);
+    UInstancedStaticMeshComponent* WaymarkerVisuals = CreateInstancePool(TEXT("MODULE_WAYMARKER_VISUALS"), ForestCubeMesh, false, WhiteCloth);
+
+    auto Place = [&](UInstancedStaticMeshComponent* Pool, UStaticMesh* Mesh, const FVector& LocCm, const FVector& Scale)
+    {
+        if (Pool && Mesh)
+        {
+            // Replace the placeholder mesh with the real module mesh.
+            Pool->SetStaticMesh(Mesh);
+            Pool->AddInstance(FTransform(FRotator::ZeroRotator, LocCm, Scale));
+        }
+    };
+
+    // Trees / great trees / rocks / posts at their obstacle positions.
+    for (int32 i = 0; i < TDDWorldData::ObstacleCount; ++i)
+    {
+        const TDDWorldData::FObstacle& O = TDDWorldData::Obstacles[i];
+        const FString Type(O.Type);
+        const FVector Loc(O.XCm, O.YCm, 0.0f);
+        if (Type == TEXT("ROCK") && ForestRockMesh)
+        {
+            Place(RockVisuals, ForestRockMesh, Loc, FVector(1.0f));
+        }
+        else if (Type == TEXT("POST") && ForestBoundaryPostMesh)
+        {
+            Place(PostVisuals, ForestBoundaryPostMesh, Loc, FVector(1.0f));
+        }
+        else if (Type == TEXT("GREAT_TREE") && ForestGreatTreeMesh)
+        {
+            Place(GreatTreeVisuals, ForestGreatTreeMesh, Loc, FVector(1.0f));
+        }
+        else if (ForestTreeMesh)
+        {
+            // Scale the tree module to the obstacle's trunk height for visual coherence.
+            const float Scale = FMath::Clamp(O.HeightCm / 320.0f, 0.6f, 2.2f);
+            Place(TreeVisuals, ForestTreeMesh, Loc, FVector(Scale));
+        }
+    }
+
+    // Understory ferns off the route (mirrors the primitive understory scatter).
+    if (ForestFernMesh)
+    {
+        FRandomStream Stream(DeterministicSeed);
+        int32 Placed = 0;
+        int32 Tries = 0;
+        while (Placed < 48 && Tries < 600)
+        {
+            ++Tries;
+            const float XCm = Stream.FRandRange(TDDWorldData::BoundsMinXCm + 150.0f, TDDWorldData::BoundsMaxXCm - 150.0f);
+            const float YCm = Stream.FRandRange(TDDWorldData::BoundsMinYCm + 150.0f, TDDWorldData::BoundsMaxYCm - 250.0f);
+            const float RadiusCm = Stream.FRandRange(22.0f, 58.0f);
+            if (DistanceToRouteCm(XCm, YCm) < RouteWidthCm * 0.55f + RadiusCm + 80.0f) continue;
+            Place(FernVisuals, ForestFernMesh, FVector(XCm, YCm, 0.0f), FVector(1.0f));
+            ++Placed;
+        }
+    }
+
+    // White cloth waymarkers at every route waypoint — the actual world objective
+    // element, not merely HUD text.
+    if (ForestWaymarkerMesh)
+    {
+        for (int32 i = 0; i < TDDWorldData::WaypointCount; ++i)
+        {
+            const TDDWorldData::FWaypoint& Wp = TDDWorldData::Waypoints[i];
+            Place(WaymarkerVisuals, ForestWaymarkerMesh, FVector(Wp.XCm, Wp.YCm, 0.0f), FVector(1.0f));
+        }
+    }
+
+    // Great Root Mother arrival landmark at the final interaction point.
+    if (TDDWorldData::InteractionCount > 0 && ForestGreatTreeMesh)
+    {
+        const TDDWorldData::FInteraction& Final = TDDWorldData::Interactions[TDDWorldData::InteractionCount - 1];
+        Place(GreatTreeVisuals, ForestGreatTreeMesh, FVector(Final.XCm, Final.YCm, 0.0f), FVector(1.4f));
+    }
+
+    // Hide only the primitive FOREST visual pools (trunks/canopies/rocks/understory/
+    // posts/cloth/pots) to avoid double geometry with the module visuals. Their
+    // collision is retained (visibility does not affect collision). The ground, path,
+    // shoulders and interaction rings stay visible.
+    const TSet<FName> PrimitiveForestVisuals = {
+        TEXT("TREE_TRUNKS"), TEXT("GREAT_ROOT_MOTHER_TRUNK"), TEXT("BUTTRESS_ROOTS"),
+        TEXT("CANOPY"), TEXT("ROCKS"), TEXT("VEGETATION"), TEXT("BOUNDARY_POSTS"),
+        TEXT("WHITE_CLOTH"), TEXT("ABANDONED_POTS"),
+    };
+    for (UInstancedStaticMeshComponent* Pool : InstancePools)
+    {
+        if (!Pool)
+        {
+            continue;
+        }
+        if (Pool->GetName().StartsWith(TEXT("MODULE_")))
+        {
+            continue; // module visual pools stay visible
+        }
+        if (PrimitiveForestVisuals.Contains(Pool->GetName()))
+        {
+            Pool->SetVisibility(false, true);
+        }
+    }
 }
 
 float ATDDForbiddenForestLevel::GetRouteProgress(const FVector& WorldLocationCm) const

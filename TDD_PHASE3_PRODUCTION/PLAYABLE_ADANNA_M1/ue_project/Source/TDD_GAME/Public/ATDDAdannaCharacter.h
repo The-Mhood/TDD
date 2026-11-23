@@ -43,6 +43,7 @@ public:
     float GetVelocityZ() const;
     bool IsInteracting() const { return bInteracting; }
     void SetInteracting(bool bValue) { bInteracting = bValue; }
+    bool IsDodgeing() const { return bDodgeing; }
     bool ConsumeJustLanded();
 
 protected:
@@ -80,6 +81,11 @@ protected:
     bool bSprinting = false;
     bool bInteracting = false;
     bool bJustLanded = false;
+    bool bDodgeing = false;
+    bool bDodgeInvulnerable = false;
+    float DodgeTimer = 0.0f;
+    float DodgeCooldownTimer = 0.0f;
+    FVector DodgeDirection = FVector::ZeroVector;
     bool bForwardDown = false;
     bool bBackDown = false;
     bool bRightDown = false;
@@ -119,6 +125,7 @@ protected:
     void JumpPressed();
     void JumpReleased();
     void Interact();
+    void Dodge();
 
     virtual void OnJumped_Implementation() override;
     virtual void Landed(const FHitResult& Hit) override;

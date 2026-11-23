@@ -37,6 +37,13 @@ namespace
     const FLinearColor AdannaCoral(0.480f, 0.155f, 0.110f, 1.0f);
     const FLinearColor AdannaHair(0.025f, 0.026f, 0.030f, 1.0f);
     const FLinearColor AdannaScar(0.410f, 0.255f, 0.205f, 1.0f);
+
+    // Dodge burst tuning. Dodge is a movement burst (no dedicated dodge animation asset
+    // exists in the M1 set yet), so it uses the run locomotion and grants brief
+    // invulnerability for future combat integration.
+    constexpr float DodgeSpeedCmS = 1150.0f;
+    constexpr float DodgeDurationS = 0.32f;
+    constexpr float DodgeCooldownS = 0.75f;
 }
 
 ATDDAdannaCharacter::ATDDAdannaCharacter()
@@ -280,6 +287,12 @@ void ATDDAdannaCharacter::OnLeftReleased() { bLeftDown = false; }
 
 void ATDDAdannaCharacter::ApplyMovementInput()
 {
+    // During the dodge burst, normal input-driven locomotion is suppressed so the burst
+    // velocity is not overridden.
+    if (bDodgeing)
+    {
+        return;
+    }
     const float Forward = (bForwardDown ? 1.0f : 0.0f) - (bBackDown ? 1.0f : 0.0f);
     const float Right = (bRightDown ? 1.0f : 0.0f) - (bLeftDown ? 1.0f : 0.0f);
     if (!FMath::IsNearlyZero(Forward))
@@ -311,6 +324,7 @@ void ATDDAdannaCharacter::BindDefaultInput(UInputComponent* PlayerInputComponent
     PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Pressed, this, &ATDDAdannaCharacter::SprintStart);
     PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Released, this, &ATDDAdannaCharacter::SprintStop);
     PlayerInputComponent->BindKey(EKeys::E, IE_Pressed, this, &ATDDAdannaCharacter::Interact);
+    PlayerInputComponent->BindKey(EKeys::LeftControl, IE_Pressed, this, &ATDDAdannaCharacter::Dodge);
 }
 
 void ATDDAdannaCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -381,6 +395,53 @@ void ATDDAdannaCharacter::Interact()
     }
 }
 
+void ATDDAdannaCharacter::Dodge()
+{
+    if (bDodgeing || !IsGrounded() || bInteracting)
+    {
+        return;
+    }
+    if (DodgeCooldownTimer > 0.0f)
+    {
+        return;
+    }
+
+    UCharacterMovementComponent* Movement = GetCharacterMovement();
+    if (!Movement)
+    {
+        return;
+    }
+
+    // Dodge in the direction of current movement input; if no directional input is
+    // held, dodge in the actor's facing direction.
+    const float Forward = (bForwardDown ? 1.0f : 0.0f) - (bBackDown ? 1.0f : 0.0f);
+    const float Right = (bRightDown ? 1.0f : 0.0f) - (bLeftDown ? 1.0f : 0.0f);
+
+    FVector Direction(Forward, Right, 0.0f);
+    if (Direction.IsNearlyZero())
+    {
+        const FRotator YawRotation(0.0f, GetActorRotation().Yaw, 0.0f);
+        Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+    }
+    Direction = Direction.GetSafeNormal();
+
+    DodgeDirection = Direction;
+    bDodgeing = true;
+    bDodgeInvulnerable = true;
+    DodgeTimer = DodgeDurationS;
+    DodgeCooldownTimer = DodgeCooldownS;
+
+    // Burst: apply the dodge velocity and disable normal input-driven movement for the
+    // duration so the burst is not overridden by the walk/run locomotion.
+    Movement->Velocity = DodgeDirection * DodgeSpeedCmS;
+    Movement->bForceMaxWalkSpeed = true;
+    Movement->MaxWalkSpeed = DodgeSpeedCmS;
+
+    UE_LOG(LogTemp, Display,
+        TEXT("TDD M1: dodge started (dir X=%.2f Y=%.2f)"),
+        DodgeDirection.X, DodgeDirection.Y);
+}
+
 void ATDDAdannaCharacter::OnJumped_Implementation()
 {
     ++JumpCount;
@@ -447,13 +508,22 @@ void ATDDAdannaCharacter::UpdateDebugHud(float SpeedCmS, bool bGrounded)
         Objective = TEXT("ROUTE COMPLETE — Great Root Mother approach acknowledged");
     }
 
+    const FString StateLine = bDodgeing
+        ? TEXT("DODGE")
+        : (bSprinting ? TEXT("RUN") : CurrentState);
+    const FString DodgeLine = bDodgeing
+        ? TEXT("DODGE BURST")
+        : (DodgeCooldownTimer > 0.0f
+            ? FString::Printf(TEXT("DODGE CD %.1fs"), DodgeCooldownTimer)
+            : TEXT("DODGE READY (Ctrl)"));
+
     if (GEngine)
     {
         const FString CharacterLine = bUsingSkeletalMesh
             ? TEXT("ADANNA (SKELETAL MESH)")
             : TEXT("ADANNA (PROXY FALLBACK)");
         const FString InteractionLine = NearbyInteraction.IsEmpty()
-            ? TEXT("WASD move · Shift run · Space jump · E interact · mouse look · Esc cursor")
+            ? TEXT("WASD move · Shift run · Space jump · E interact · Ctrl dodge · mouse look · Esc cursor")
             : FString::Printf(TEXT("E INTERACT — %s"), *NearbyInteraction);
         GEngine->AddOnScreenDebugMessage(
             1,
@@ -463,9 +533,9 @@ void ATDDAdannaCharacter::UpdateDebugHud(float SpeedCmS, bool bGrounded)
                 TEXT("THE DISOBEDIENT DAUGHTER · PLAYABLE ADANNA M1\\n%s · FORBIDDEN FOREST\\n\\n"
                      "STATE %s    SPEED %.2f m/s    GROUNDED %s\\n"
                      "CAMERA %.2f m / %s    ROUTE %d%%    J/L/INT %d/%d/%d\\n\\n"
-                     "OBJECTIVE %s\\n%s"),
+                     "OBJECTIVE %s\\n%s\\n%s"),
                 *CharacterLine,
-                *CurrentState,
+                *StateLine,
                 SpeedCmS / 100.0f,
                 bGrounded ? TEXT("YES") : TEXT("NO"),
                 CameraDistanceM,
@@ -475,13 +545,43 @@ void ATDDAdannaCharacter::UpdateDebugHud(float SpeedCmS, bool bGrounded)
                 LandCount,
                 InteractCount,
                 *Objective,
-                *InteractionLine));
+                *InteractionLine,
+                *DodgeLine));
     }
 }
 
 void ATDDAdannaCharacter::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
+
+    // Advance dodge timers and restore normal locomotion when the burst ends.
+    if (bDodgeing)
+    {
+        DodgeTimer -= DeltaSeconds;
+        UCharacterMovementComponent* Movement = GetCharacterMovement();
+        if (Movement)
+        {
+            // Keep the burst velocity pointing along the dodge direction; air friction
+            // and braking will decelerate naturally once the burst ends.
+            if (DodgeTimer > 0.0f)
+            {
+                Movement->bForceMaxWalkSpeed = true;
+                Movement->MaxWalkSpeed = DodgeSpeedCmS;
+            }
+            else
+            {
+                bDodgeing = false;
+                bDodgeInvulnerable = false;
+                Movement->bForceMaxWalkSpeed = false;
+                Movement->MaxWalkSpeed = bSprinting ? TDDWorldData::RunSpeedCmS : TDDWorldData::WalkSpeedCmS;
+            }
+        }
+    }
+    else if (DodgeCooldownTimer > 0.0f)
+    {
+        DodgeCooldownTimer -= DeltaSeconds;
+    }
+
     ApplyMovementInput();
     const float SpeedCmS = GetVelocity().Size2D();
     const bool bGrounded = IsGrounded();
