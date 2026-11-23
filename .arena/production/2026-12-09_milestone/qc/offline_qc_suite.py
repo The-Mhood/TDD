@@ -7,6 +7,7 @@ sys.path.insert(0,"/home/user/TDD/.arena/production/2026-11-23_w1d7_production/p
 import test_deformation as td
 FILES={
  "ADANNA_AD03_V6_FACEPOC":"2026-12-08_gate_removal/facial_poc/out/ADANNA_AD03_V6_FACEPOC.glb",
+ "ADANNA_AD03_V7":"2026-12-10_adanna_v7/out/ADANNA_AD03_V7.glb",
  "ADANNA_AD03_V5":"2026-11-26_w1d10_definitive_adanna/out/ADANNA_AD03_V5.glb",
  "GUARD_CLASS_V3":"2026-11-25_w1d9_sculpt2/out/GUARD_CLASS_V3.glb",
  "NPC_CIVILIAN_M1":"2026-12-01_w1d15_production/npc_civilian_builds/out/NPC_CIVILIAN_M1.glb",

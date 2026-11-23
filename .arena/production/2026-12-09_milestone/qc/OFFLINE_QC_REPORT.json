@@ -21,6 +21,26 @@
       "skinned_all_primitives": true,
       "verdict": "PASS"
     },
+    "ADANNA_AD03_V7": {
+      "sha256": "123da6081ec4e57126b26702e4654e8bc5aca1d6e555d6b05802ed61270604ce",
+      "meshes": 46,
+      "materials": [
+        "skin_base_v1",
+        "cloth_indigo_plain_v1",
+        "leather_baldric_v1",
+        "bronze_armlet_plain_v1",
+        "pendant_spiral_FICTIONAL_v1",
+        "coral_bead_v1",
+        "hair_v1",
+        "scar_marker_v1",
+        "lips_v1",
+        "eye_dark_v1"
+      ],
+      "joints": 11,
+      "uv_all_primitives": true,
+      "skinned_all_primitives": true,
+      "verdict": "PASS"
+    },
     "ADANNA_AD03_V5": {
       "sha256": "7d8ff32070b42b113ad5a1da36b2d537e5e83dfa6b3ef557bdada174fff2d0f6",
       "meshes": 38,
