@@ -1,0 +1,45 @@
+{
+  "package": "FORBIDDEN_FOREST_BATCH2_ENV_WORLDOBJECTS",
+  "status": "PROVISIONAL production (source boards REVIEW REQUIRED)",
+  "modules": [
+    {
+      "asset": "FOREST_BOUNDARY_POSTS",
+      "verts": 16,
+      "tris": 24,
+      "spec": "path gap 2.2 m between posts; collision cylinders r0.1; marks forest threshold (board: posts on ridge)"
+    },
+    {
+      "asset": "FOREST_STREAM_CROSSING",
+      "verts": 368,
+      "tris": 712,
+      "spec": "stones top z~0.15, spacing 0.75 m (steppable); water plane visual only, no collision"
+    },
+    {
+      "asset": "FOREST_LOG_BRIDGE",
+      "verts": 118,
+      "tris": 224,
+      "spec": "walk surface z0.9 width ~0.44; collision capsule along log; gap span 4.4 m"
+    },
+    {
+      "asset": "FOREST_LIANA_SET",
+      "verts": 102,
+      "tris": 192,
+      "spec": "visual dressing, no collision; hang from canopy anchor z2.6-3.5"
+    },
+    {
+      "asset": "FOREST_UNDERGROWTH_SET",
+      "verts": 288,
+      "tris": 560,
+      "spec": "foliage dressing, no collision; keep 1.6 m path corridor clear on placement"
+    },
+    {
+      "asset": "ROOTMOTHER_ROOT_WALL_SEG",
+      "verts": 210,
+      "tris": 400,
+      "spec": "arena boundary segment r~4.2 m arc; collision cylinders r0.34 per pillar; tile segments to enclose arena"
+    }
+  ],
+  "chapter": "CH01 Forbidden Forest",
+  "naming": "FOREST_<MODULE> / ROOTMOTHER_<MODULE>, metres Z-up, ground-centre pivots",
+  "performance": "all modules <1k tris; foliage/rocks share 3 materials for batching"
+}

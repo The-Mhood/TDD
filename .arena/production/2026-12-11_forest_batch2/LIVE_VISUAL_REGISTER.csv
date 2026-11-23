@@ -1,0 +1,12 @@
+batch_id,asset_id,name,use,chapter,status,source,export_status,offline_qc,dependencies,owner_approval
+CHAR-01,ADANNA_AD03_V7,Adanna production sculpt,hero character,CH01,production sculpt in progress,2026-12-10_adanna_v7/build_adanna_v7.py,GLB ready not integrated,deform+joint+anim 23/23 PASS,Mac sculpt pass,identity APPROVED (study); sculpt qualification pending session
+CHAR-02,GUARD_CLASS_V3,Royal Guard,enemy/NPC class,CH01,production asset,2026-11-25_w1d9_sculpt2,GLB ready,QC PASS,Mac qualification,class approved internally
+CHAR-03,NPC_CIVILIAN_x6,Civilian family,background population,CH01,production asset,2026-12-01/02 builders,GLB ready,all PASS,PM density ratify for placement,n/a everyday
+ENV-01,CH01_KIT_V2+COMPOUND,Compound kit+assembly,playable settlement,CH01,production asset (PROVISIONAL),2026-11-28/29,OBJ ready,manifest checks,PM layout lock,provisional not canon
+ENV-02,FOREST_KIT_V1,Forest modules batch1,forest level,CH01,production asset (PROVISIONAL),2026-12-09_milestone/forest,OBJ ready,counts verified,boards REVIEW REQUIRED,REVIEW REQUIRED
+ENV-03,FOREST_BATCH2,Forest/world-object batch2,traversal+arena,CH01,production asset (PROVISIONAL),2026-12-11_forest_batch2,OBJ ready,counts verified,boards REVIEW REQUIRED,REVIEW REQUIRED
+WOBJ-01,PROP_x5,Dressing props split,courtyard dressing,CH01,production asset,2026-12-07_w4_execution,OBJ ready,manifest,none,n/a
+ANIM-01,CLIPS_SETS,Adanna/Guard/civilian clips,animation,CH01,animation data validated,2026-11-28/29 + 2026-12-03,JSON ready,46/36/48 source PASS,Unreal retarget (Eng),n/a
+VFX-01,VFX_PHYSICAL_V1,Physical sprites,effects,CH01,production package,2026-11-28_w1d12,SPRITES ready,spec verified,Niagara assembly (TD),approved physical only
+UI-01,UI_SYSTEM,UI/HUD/menu,interface,ALL,concept+spec,2026-11-30 + 2026-12-03/04,refs ready,spec verified,UX implementation,n/a visual only
+CINE-01,CINE_KEYS,Cinematic keys,presentation,CH01,concept approved,2026-11-30 + 2026-12-03,refs ready,reviewed,Story cinematic scope,concept approved

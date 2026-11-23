@@ -1,0 +1,5 @@
+# ENGINEERING HANDOFF - Forest Batch 2 (per required fields)
+Assets: FOREST_BOUNDARY_POSTS (path gap 2.2m), FOREST_STREAM_CROSSING (stones 0.75m spacing, top z~0.15), FOREST_LOG_BRIDGE (span 4.4m, deck z0.9), FOREST_LIANA_SET, FOREST_UNDERGROWTH_SET, ROOTMOTHER_ROOT_WALL_SEG (r4.2m arc) - v1, CH01 Forbidden Forest.
+Source: build_forest_batch2.py; Exports: out/*.obj + env materials in FOREST_BATCH2_MANIFEST.json. Units metres Z-up, ground-centre pivots. Collision per-module in manifest. Skeleton: none (static). Materials: bark/rock/canopy/undergrowth/wood/ground/path/water flat kit mats - TA PBR pending.
+Status: production assets PROVISIONAL (source boards REVIEW REQUIRED - not canon, not owner-approved). QC: build counts verified, previews inspected (log bridge + others). Limitations: buttress fins axis-aligned in batch1 (TA rotation on placement), water plane visual only.
+Receiving: Engineering (level placement) + TA. Next action: place along forest path route per composition key; confirm traversal widths in greybox.

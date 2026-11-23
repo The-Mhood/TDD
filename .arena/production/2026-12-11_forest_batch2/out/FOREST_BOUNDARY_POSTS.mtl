@@ -1,0 +1,16 @@
+newmtl bark_v1
+Kd 0.3 0.22 0.16
+newmtl rock_dark_v1
+Kd 0.23 0.23 0.22
+newmtl canopy_v1
+Kd 0.16 0.3 0.14
+newmtl undergrowth_v1
+Kd 0.2 0.34 0.16
+newmtl wood_palm_v1
+Kd 0.35 0.24 0.15
+newmtl ground_forest_v1
+Kd 0.32 0.24 0.16
+newmtl path_earth_v1
+Kd 0.42 0.32 0.2
+newmtl water_dark_v1
+Kd 0.1 0.16 0.18
