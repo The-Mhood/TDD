@@ -1,0 +1,2 @@
+# Review request - narrative-to-object mapping (2026-12-12)
+Design has PAUSED new prop/object production. Please review NARRATIVE_TO_OBJECT_MAPPING.md and rule on gaps G1-G8 and proposals P1-P3. Until then: domestic dressing + established-location environment work only; no new object types, no memory-collectible design, no cloth-system design, no blade work (CQ-9), no mask/burial-cloth work (HELD).
