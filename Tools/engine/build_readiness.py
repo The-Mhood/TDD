@@ -1545,12 +1545,18 @@ def main():
     # ---- TDD M1 setup script guards ------------------------------------
     # The M1 macOS setup helper (TDD_M1_Unreal_Setup_macOS.py) drives asset
     # import through the UE 5.8 Interchange framework. Guard the defect classes
-    # that actually blocked the owner-side setup run:
-    #   (a) Pipeline persistence must use the supported Python save API:
-    #       unreal.EditorAssetLibrary.save_loaded_asset(asset). Calling
-    #       unreal.EditorAssetSubsystem.save_loaded_asset as a static method is
-    #       not the supported API and fails at runtime.
-    #   (b) The project must declare the glTF plugin explicitly so the
+    # that actually blocked the owner-side setup run (owner-confirmed 2026-11-20):
+    #   (a) Asset discovery must use the verified UE 5.8.4 Asset Registry API,
+    #       NOT EditorAssetLibrary.find_assets (which does not exist and raised
+    #       AttributeError on the owner's run):
+    #       AssetRegistryHelpers.get_asset_registry().get_assets_by_path(...).
+    #   (b) The Interchange override pipeline is a TRANSIENT UObject. It must NOT
+    #       be saved via save_loaded_asset (that raised "Asset is not registered"
+    #       on the owner's run). It must be kept in-memory (a keepalive reference)
+    #       and referenced through a SoftObjectPath in override_pipelines.
+    #   (c) Async import completion must be polled (bounded) rather than treating
+    #       a non-exception return as proof of success.
+    #   (d) The project must declare the glTF plugin explicitly so the
     #       Interchange glTF translator dependency is deterministic.
     SETUP_SCRIPT_REL = "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/Tools/TDD_M1_Unreal_Setup_macOS.py"
     setup_script = root / SETUP_SCRIPT_REL
@@ -1559,19 +1565,39 @@ def main():
             stext = setup_script.read_text(encoding="utf-8", errors="replace")
         except OSError:
             stext = ""
-        for m in re.finditer(r"unreal\.EditorAssetSubsystem\.save_loaded_asset\s*\(", stext):
+        # (a) No invalid EditorAssetLibrary.find_assets discovery.
+        for m in re.finditer(r"EditorAssetLibrary\.find_assets\s*\(", stext):
             line = stext[:m.start()].count("\n") + 1
             block(
-                f"{SETUP_SCRIPT_REL}:{line}: setup-script error class — pipeline persistence "
-                f"calls unreal.EditorAssetSubsystem.save_loaded_asset as a static method",
-                "use the supported Python save API: "
-                "unreal.EditorAssetLibrary.save_loaded_asset(pipeline, only_if_is_dirty=False)")
-        if "unreal.EditorAssetLibrary.save_loaded_asset" not in stext:
+                f"{SETUP_SCRIPT_REL}:{line}: setup-script error class — asset discovery calls "
+                f"EditorAssetLibrary.find_assets",
+                "EditorAssetLibrary.find_assets does not exist in UE 5.8.4; use the verified "
+                "Asset Registry API: AssetRegistryHelpers.get_asset_registry()."
+                "get_assets_by_path(folder, recursive=True) -> Array[AssetData]")
+        if "get_assets_by_path" not in stext:
             block(
-                f"{SETUP_SCRIPT_REL}: the setup script never persists its Interchange pipeline "
-                f"via unreal.EditorAssetLibrary.save_loaded_asset",
-                "persist the pipeline with unreal.EditorAssetLibrary.save_loaded_asset(...) so "
-                "override_pipelines resolves a stable path (and keep the object alive)")
+                f"{SETUP_SCRIPT_REL}: the setup script does not use the verified UE 5.8.4 "
+                f"Asset Registry discovery API",
+                "discover assets via AssetRegistryHelpers.get_asset_registry()."
+                "get_assets_by_path(folder, recursive=True); AssetData.get_asset_path()/"
+                "get_asset_class() provide the paths and types")
+        # (b) The transient pipeline must NOT be saved.
+        for m in re.finditer(r"save_loaded_asset\s*\(", stext):
+            line = stext[:m.start()].count("\n") + 1
+            block(
+                f"{SETUP_SCRIPT_REL}:{line}: setup-script error class — the Interchange "
+                f"pipeline is saved via save_loaded_asset",
+                "the InterchangeGenericAssetsPipeline is a transient UObject, not a content "
+                "asset; save_loaded_asset raises 'Asset is not registered'. Keep the pipeline "
+                "in-memory (module keepalive) and reference it via SoftObjectPath in "
+                "override_pipelines")
+        if "_PIPELINE_KEEPALIVE" not in stext:
+            block(
+                f"{SETUP_SCRIPT_REL}: the setup script has no keepalive reference for its "
+                f"Interchange pipeline",
+                "keep the pipeline object alive in a module-level list (e.g. _PIPELINE_KEEPALIVE) "
+                "so Interchange can resolve the override_pipelines SoftObjectPath during import")
+        # (c) Async completion must be verified.
         if "import_asset(" in stext and "import_timed_out" not in stext:
             block(
                 f"{SETUP_SCRIPT_REL}: the setup script calls Interchange import_asset without "
