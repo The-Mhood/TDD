@@ -19,6 +19,11 @@ public:
     bool TryGetNearbyInteraction(const FVector& WorldLocationCm, FString& OutMessage) const;
     const FString& GetObjectiveText() const { return ObjectiveText; }
 
+    // Staged objective text derived from route progress and whether the final
+    // interaction was acknowledged. Drives objective progression in the HUD.
+    FString GetStagedObjective(float RouteProgress) const;
+    int32 GetObjectiveStage(float RouteProgress) const;
+
     UPROPERTY(VisibleAnywhere, Category = "TDD|Level")
     TObjectPtr<USceneComponent> LevelRoot;
 

@@ -502,7 +502,9 @@ void ATDDAdannaCharacter::UpdateDebugHud(float SpeedCmS, bool bGrounded)
         : TDDWorldData::CameraDistanceCm / 100.0f;
     const bool bCameraOccluded = CameraDistanceM < (TDDWorldData::CameraDistanceCm / 100.0f - 0.12f);
 
-    FString Objective = ForestLevel ? ForestLevel->GetObjectiveText() : FString(TDDWorldData::ObjectiveText);
+    FString Objective = ForestLevel
+        ? ForestLevel->GetStagedObjective(RouteProgress)
+        : FString(TDDWorldData::ObjectiveText);
     if (RouteProgress > 0.98f)
     {
         Objective = TEXT("ROUTE COMPLETE — Great Root Mother approach acknowledged");
@@ -511,6 +513,7 @@ void ATDDAdannaCharacter::UpdateDebugHud(float SpeedCmS, bool bGrounded)
     const FString StateLine = bDodgeing
         ? TEXT("DODGE")
         : (bSprinting ? TEXT("RUN") : CurrentState);
+    const int32 ObjectiveStage = ForestLevel ? ForestLevel->GetObjectiveStage(RouteProgress) : 0;
     const FString DodgeLine = bDodgeing
         ? TEXT("DODGE BURST")
         : (DodgeCooldownTimer > 0.0f
@@ -532,7 +535,7 @@ void ATDDAdannaCharacter::UpdateDebugHud(float SpeedCmS, bool bGrounded)
             FString::Printf(
                 TEXT("THE DISOBEDIENT DAUGHTER · PLAYABLE ADANNA M1\\n%s · FORBIDDEN FOREST\\n\\n"
                      "STATE %s    SPEED %.2f m/s    GROUNDED %s\\n"
-                     "CAMERA %.2f m / %s    ROUTE %d%%    J/L/INT %d/%d/%d\\n\\n"
+                     "CAMERA %.2f m / %s    ROUTE %d%% (STAGE %d)    J/L/INT %d/%d/%d\\n\\n"
                      "OBJECTIVE %s\\n%s\\n%s"),
                 *CharacterLine,
                 *StateLine,
@@ -541,6 +544,7 @@ void ATDDAdannaCharacter::UpdateDebugHud(float SpeedCmS, bool bGrounded)
                 CameraDistanceM,
                 bCameraOccluded ? TEXT("OCCLUDED") : TEXT("CLEAR"),
                 FMath::RoundToInt(RouteProgress * 100.0f),
+                ObjectiveStage,
                 JumpCount,
                 LandCount,
                 InteractCount,

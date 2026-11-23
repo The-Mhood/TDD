@@ -522,3 +522,29 @@ bool ATDDForbiddenForestLevel::TryGetNearbyInteraction(const FVector& WorldLocat
     }
     return false;
 }
+
+int32 ATDDForbiddenForestLevel::GetObjectiveStage(float RouteProgress) const
+{
+    if (RouteProgress >= 0.98f) return 4;
+    if (RouteProgress >= 0.70f) return 3;
+    if (RouteProgress >= 0.40f) return 2;
+    if (RouteProgress >= 0.15f) return 1;
+    return 0;
+}
+
+FString ATDDForbiddenForestLevel::GetStagedObjective(float RouteProgress) const
+{
+    switch (GetObjectiveStage(RouteProgress))
+    {
+    case 4:
+        return TEXT("ROUTE COMPLETE — Great Root Mother approach acknowledged");
+    case 3:
+        return TEXT("The Great Root Mother is near — follow the white cloth to the end");
+    case 2:
+        return TEXT("Press on through the forest — the white cloth marks the way");
+    case 1:
+        return TEXT("Continue along the laterite path toward the Root way");
+    default:
+        return ObjectiveText;
+    }
+}
