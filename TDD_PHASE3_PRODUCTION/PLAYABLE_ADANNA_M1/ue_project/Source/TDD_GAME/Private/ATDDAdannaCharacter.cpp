@@ -69,15 +69,17 @@ ATDDAdannaCharacter::ATDDAdannaCharacter()
     Movement->BrakingDecelerationWalking = 900.0f;
     Movement->MaxAcceleration = 900.0f;
 
-    // Skeletal mesh carries the integrated Adanna. AnimInstanceClass is set here so the
-    // engine creates the C++ state machine when the component initializes.
+    // Skeletal mesh carries the integrated Adanna. SetAnimInstanceClass is called here so
+    // the engine creates the C++ state machine when the component initializes (UE 5.8.4:
+    // USkeletalMeshComponent exposes SetAnimInstanceClass; the AnimClass member is the
+    // serialized form of the same setting).
     AdannaMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
     AdannaMesh->SetupAttachment(GetCapsuleComponent());
     AdannaMesh->SetMobility(EComponentMobility::Movable);
     AdannaMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
     AdannaMesh->SetGenerateOverlapEvents(false);
     AdannaMesh->SetCastShadow(true);
-    AdannaMesh->AnimInstanceClass = UTDDAdannaAnimInstance::StaticClass();
+    AdannaMesh->SetAnimInstanceClass(UTDDAdannaAnimInstance::StaticClass());
 
     CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
     CameraBoom->SetupAttachment(RootComponent);
@@ -431,10 +433,11 @@ void ATDDAdannaCharacter::Dodge()
     DodgeTimer = DodgeDurationS;
     DodgeCooldownTimer = DodgeCooldownS;
 
-    // Burst: apply the dodge velocity and disable normal input-driven movement for the
-    // duration so the burst is not overridden by the walk/run locomotion.
+    // Burst: apply the dodge velocity and cap the walk speed at the burst speed so the
+    // burst is not overridden by the walk/run locomotion. UE 5.8.4 forces the burst speed
+    // by setting Velocity directly (re-applied each tick while the burst is active, see
+    // Tick) and capping MaxWalkSpeed at the burst speed.
     Movement->Velocity = DodgeDirection * DodgeSpeedCmS;
-    Movement->bForceMaxWalkSpeed = true;
     Movement->MaxWalkSpeed = DodgeSpeedCmS;
 
     UE_LOG(LogTemp, Display,
@@ -565,18 +568,20 @@ void ATDDAdannaCharacter::Tick(float DeltaSeconds)
         UCharacterMovementComponent* Movement = GetCharacterMovement();
         if (Movement)
         {
-            // Keep the burst velocity pointing along the dodge direction; air friction
-            // and braking will decelerate naturally once the burst ends.
+            // Force the burst speed every tick: re-apply the burst velocity along the
+            // dodge direction (direct Velocity assignment is the UE 5.8.4 mechanism that
+            // keeps the burst from being overridden by input-driven locomotion; air
+            // friction and braking decelerate naturally once the burst ends) and cap the
+            // walk speed at the burst speed.
             if (DodgeTimer > 0.0f)
             {
-                Movement->bForceMaxWalkSpeed = true;
+                Movement->Velocity = DodgeDirection * DodgeSpeedCmS;
                 Movement->MaxWalkSpeed = DodgeSpeedCmS;
             }
             else
             {
                 bDodgeing = false;
                 bDodgeInvulnerable = false;
-                Movement->bForceMaxWalkSpeed = false;
                 Movement->MaxWalkSpeed = bSprinting ? TDDWorldData::RunSpeedCmS : TDDWorldData::WalkSpeedCmS;
             }
         }

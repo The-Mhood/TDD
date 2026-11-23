@@ -3,7 +3,7 @@
 #include "ATDDAdannaCharacter.h"
 #include "Engine/SkeletalMesh.h"
 #include "Components/SkeletalMeshComponent.h"
-#include "Engine/AnimationSequence.h"
+#include "Animation/AnimSequenceBase.h"
 
 UTDDAdannaAnimInstance::UTDDAdannaAnimInstance()
 {

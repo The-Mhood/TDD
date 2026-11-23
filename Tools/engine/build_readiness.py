@@ -52,6 +52,10 @@ REMOVED_ENGINE_HEADERS = {
     # demonstrated owner-Mac compile failure: 'Engine/SkeletalMeshComponent.h'
     # file not found).
     "Engine/SkeletalMeshComponent.h": "Components/SkeletalMeshComponent.h",
+    # UAnimSequenceBase is declared in Animation/AnimSequenceBase.h; there is
+    # no Engine/AnimationSequence.h header in UE 5.8.4 (the demonstrated
+    # owner-Mac compile failure: 'Engine/AnimationSequence.h' file not found).
+    "Engine/AnimationSequence.h": "Animation/AnimSequenceBase.h",
 }
 
 # Subsystem headers verified to exist in UE 5.8.4 under
@@ -576,6 +580,23 @@ def main():
     # Members and API patterns that do not exist in UE 5.8.4 and fail the
     # C++ build. Verified against the UE 5.8.4 docs and engine source.
     INVALID_UE58_MEMBERS = {
+        # USkeletalMeshComponent has no AnimInstanceClass member in UE 5.8.4;
+        # the animation class is assigned at runtime with SetAnimInstanceClass
+        # (the serialized form of the setting is the AnimClass member).
+        # Demonstrated by the owner-Mac compile failure of the M1 Adanna build.
+        "AnimInstanceClass":
+            "use SetAnimInstanceClass(UClass*) — USkeletalMeshComponent exposes "
+            "SetAnimInstanceClass at runtime in UE 5.8.4 (the AnimClass member is the "
+            "serialized form of the same setting)",
+        # UCharacterMovementComponent has no bForceMaxWalkSpeed member in UE 5.8.4.
+        # Forcing a burst speed is done by assigning Velocity directly and capping
+        # MaxWalkSpeed. Demonstrated by the owner-Mac compile failure of the M1
+        # Adanna dodge build.
+        "bForceMaxWalkSpeed":
+            "UCharacterMovementComponent has no bForceMaxWalkSpeed member in UE 5.8.4; "
+            "force the intended speed by assigning Movement->Velocity directly and "
+            "capping Movement->MaxWalkSpeed (restore the base walk/run MaxWalkSpeed "
+            "when the burst ends)",
         # USkyLightComponent in 5.8.4 has LowerHemisphereColor (FLinearColor);
         # the sky/upper colour is the inherited LightColor (FColor). There is
         # no UpperHemisphereColor member.
