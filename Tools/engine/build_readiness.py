@@ -1605,6 +1605,23 @@ def main():
                 "Interchange imports can complete asynchronously; capture the bool return and "
                 "poll the destination for created assets (with a timeout) instead of treating a "
                 "non-exception return as proof of success")
+        # (e) Source-change detection must use SHA-256 content fingerprints, NOT
+        #     mtime. A Git sync changes mtimes without changing content; mtime-only
+        #     fingerprints caused a false-positive "SKIPPED - SOURCE CHANGED" on every
+        #     source. Require the SHA-256 content fingerprint and forbid st_mtime.
+        if "hashlib" not in stext or "sha256" not in stext:
+            block(
+                f"{SETUP_SCRIPT_REL}: the setup script does not use SHA-256 content "
+                f"fingerprints for source-change detection",
+                "fingerprint source files by content (hashlib.sha256 of the bytes); a "
+                "modification-time change (e.g. Git sync) does not establish that content "
+                "changed and must not trigger a false source-change rejection")
+        if re.search(r"st_mtime", stext):
+            block(
+                f"{SETUP_SCRIPT_REL}: the setup script fingerprints sources by modification "
+                f"time (st_mtime)",
+                "replace mtime-based change detection with SHA-256 content fingerprints; "
+                "mtime changes (e.g. Git sync) do not imply content changes")
 
     # glTF plugin declaration in the M1 project descriptor.
     m1_uproject = root / "TDD_PHASE3_PRODUCTION" / "PLAYABLE_ADANNA_M1" / "ue_project" / "TDD_GAME.uproject"

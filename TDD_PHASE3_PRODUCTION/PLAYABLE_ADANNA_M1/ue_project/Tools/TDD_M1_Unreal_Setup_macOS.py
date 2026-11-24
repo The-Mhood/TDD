@@ -33,8 +33,15 @@ IMPORT DESIGN (deterministic, collision-safe, idempotent)
     TREE_TRUNKS), and the <OriginalName> suffix preserves the source relationship.
   - Reruns are idempotent: a manifest (Saved/TDD_M1/tdd_m1_setup_manifest.json)
     records what each source produced. A source whose manifest entry is complete and
-    whose recorded assets still exist is skipped. A source whose file changed on disk
-    is reported explicitly and skipped (never auto-overwritten).
+    whose recorded assets still exist is skipped. A source whose file CONTENT changed
+    (compared by SHA-256, never by modification time) is reported explicitly and
+    skipped (never auto-overwritten).
+  - Source-change detection uses SHA-256 content fingerprints. A Git synchronization
+    that touches file mtimes without changing content must NOT trigger a false
+    "SKIPPED - SOURCE CHANGED". Manifest entries written before this revision carry
+    size/mtime-only (legacy) fingerprints; they cannot prove content changed, so they
+    are treated as legacy and reconciled (existing valid assets recovered, genuinely
+    missing assets imported) rather than blocked.
   - Nothing is ever deleted or overwritten: existing maps, config and user assets are
     preserved; a canonical path that already exists with the wrong asset type is
     reported as a conflict and left untouched.
@@ -98,6 +105,10 @@ RERUN AFTER A FIXED COMMIT
      reconciliation details).
 
 OWNER VERIFICATION (UE 5.8.4 macOS - required; offline tests do NOT prove these)
+  Compile status: the owner has already passed a clean UE 5.8.4 Mac Editor C++ build
+  at commit fd2cf2f. This helper does NOT perform the build and does NOT assess
+  compile; the report records compile as "EXTERNALLY VERIFIED - NOT ASSESSED BY THIS
+  HELPER". PIE, cook and package remain NOT VERIFIED until owner-side evidence exists.
   After the run, in the Output Log (Python filter), confirm ALL of the following:
   1. No "'EditorAssetLibrary' object has no attribute 'find_assets'" (AttributeError)
      appears anywhere in the log.
@@ -124,6 +135,7 @@ OWNER VERIFICATION (UE 5.8.4 macOS - required; offline tests do NOT prove these)
 from __future__ import annotations
 
 import datetime
+import hashlib
 import json
 import os
 import platform
@@ -267,13 +279,33 @@ def diff_new_assets(before: set, after: set) -> set:
 
 
 def source_fingerprint(path) -> dict:
-    """File size + mtime fingerprint for change detection (pure filesystem)."""
+    """SHA-256 content fingerprint for change detection (pure filesystem).
+
+    A modification-time change (e.g. Git synchronization touching mtimes) does NOT
+    establish that file contents changed, so size/mtime alone is not a valid change
+    signal - it caused a false-positive "SKIPPED - SOURCE CHANGED" on every source
+    after a Git sync. The authoritative fingerprint is the SHA-256 of the file's
+    bytes; size is recorded as metadata only (never as the change signal).
+    """
     p = Path(str(path))
     try:
-        st = p.stat()
-        return {"size": st.st_size, "mtime": st.st_mtime}
+        data = p.read_bytes()
     except OSError:
-        return {"size": None, "mtime": None}
+        return {"algorithm": "sha256", "sha256": None, "size": None}
+    return {"algorithm": "sha256", "sha256": hashlib.sha256(data).hexdigest(),
+            "size": len(data)}
+
+
+def _fingerprint_is_legacy(fp) -> bool:
+    """True for size/mtime-only manifest fingerprints (pre SHA-256).
+
+    Legacy entries cannot prove content changed (their fingerprint has no SHA-256),
+    so they must NOT block imports. They are reconciled instead: existing valid
+    assets are recovered and genuinely missing assets are imported.
+    """
+    if not isinstance(fp, dict):
+        return True
+    return "sha256" not in fp
 
 
 def manifest_entry_complete(entry: dict, exists_fn) -> bool:
@@ -1024,22 +1056,35 @@ def import_assets(report: dict, paths: dict) -> None:
             "expected_canonical": canonical_plan_for(item),
         }
         previous = manifest["sources"].get(key)
+        prev_fp = previous.get("fingerprint") if previous else None
 
-        # A source whose file changed on disk is reported explicitly and skipped;
-        # never auto-overwrite content from a previous run. This check runs BEFORE
-        # the idempotent skip so a changed source is always reported.
-        if previous and previous.get("fingerprint"):
+        # A source whose file CONTENT changed on disk is reported explicitly and
+        # skipped; never auto-overwrite content from a previous run. Content is
+        # compared by SHA-256, never by mtime (a Git sync changes mtimes without
+        # changing content). This check runs BEFORE the idempotent skip so a
+        # genuinely changed source is always reported. Legacy (size/mtime-only)
+        # fingerprints cannot prove content changed, so they are NOT treated as a
+        # change - they fall through to reconciliation below.
+        if previous and prev_fp and not _fingerprint_is_legacy(prev_fp) and item["path"].is_file():
             current_fp = source_fingerprint(source)
-            if current_fp != previous.get("fingerprint"):
+            if current_fp["sha256"] != prev_fp.get("sha256"):
                 entry.update({
                     "status": "SKIPPED - SOURCE CHANGED",
                     "action": "source_changed_requires_manual_review",
-                    "previous_fingerprint": previous.get("fingerprint"),
+                    "previous_fingerprint": prev_fp,
                     "current_fingerprint": current_fp,
                 })
-                warn("source changed since last run; skipping to avoid overwriting: " + source)
+                warn("source content changed since last run; skipping to avoid overwriting: " + source)
                 results.append(entry)
                 continue
+
+        # Legacy manifest entry: its size/mtime fingerprint cannot establish that
+        # content changed, so it must not block imports. Record it and let the safe
+        # discovery + reconciliation path recover existing valid assets and import
+        # genuinely missing ones (via _import_one below).
+        is_legacy_entry = bool(previous and prev_fp and _fingerprint_is_legacy(prev_fp))
+        if is_legacy_entry:
+            entry["legacy_manifest"] = True
 
         # Idempotent rerun: skip a source whose manifest entry is complete and whose
         # recorded assets still exist. The stored verification is re-attached so the
@@ -1058,6 +1103,8 @@ def import_assets(report: dict, paths: dict) -> None:
             continue
 
         entry = _import_one(item)
+        if is_legacy_entry:
+            entry["legacy_manifest"] = True
         entry["fingerprint"] = source_fingerprint(source)
         results.append(entry)
 
@@ -1071,6 +1118,7 @@ def import_assets(report: dict, paths: dict) -> None:
                 "status": "ok" if entry["status"].startswith("COMPLETED") else entry["status"],
                 "raw_status": entry["status"],
                 "fingerprint": entry.get("fingerprint"),
+                "fingerprint_algorithm": "sha256",
                 "final_asset_paths": entry.get("final_asset_paths", []),
                 "verification": entry.get("verification"),
                 "warnings": entry.get("warnings", []),
@@ -1106,6 +1154,9 @@ def main() -> None:
             "supported": _has_discovery_api(),
             "support_detail": _discovery_support(),
         },
+        "compile_verified_externally": True,
+        "compile_reference": "fd2cf2f (clean UE 5.8.4 Mac Editor C++ build, owner-confirmed)",
+        "compile_note": "This helper does not perform the C++ build; compile is externally verified at fd2cf2f and is not assessed by this script.",
         "map": {},
         "config": {},
         "imports": [],
@@ -1117,10 +1168,10 @@ def main() -> None:
             "setup_script": "PRODUCED - NOT YET VERIFIED",
             "project_owned_umap": "BLOCKED - OWNER-STUDIO DEPENDENCY",
             "asset_import": "BLOCKED - OWNER-STUDIO DEPENDENCY",
-            "compile": "BLOCKED - OWNER-STUDIO DEPENDENCY",
-            "pie": "BLOCKED - OWNER-STUDIO DEPENDENCY",
-            "cook": "BLOCKED - OWNER-STUDIO DEPENDENCY",
-            "package": "BLOCKED - OWNER-STUDIO DEPENDENCY",
+            "compile": "EXTERNALLY VERIFIED - NOT ASSESSED BY THIS HELPER",
+            "pie": "NOT VERIFIED - REQUIRES OWNER-SIDE EVIDENCE",
+            "cook": "NOT VERIFIED - REQUIRES OWNER-SIDE EVIDENCE",
+            "package": "NOT VERIFIED - REQUIRES OWNER-SIDE EVIDENCE",
             "final_character_environment": "BLOCKED - CREATIVE APPROVAL",
         },
     }

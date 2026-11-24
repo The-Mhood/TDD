@@ -16,6 +16,10 @@ Coverage:
     save_loaded_asset on a transient pipeline); partial-rename reconciliation
     (FOREST_TREE_MODULE1-style); pre-existing staging leftover handling;
     wrong-type canonical-path conflict; discovery capability in the report
+  - content-fingerprint regressions: SHA-256 source-change detection (touching/
+    copying an unchanged file does NOT trigger SOURCE CHANGED); legacy size/mtime
+    manifest entries reconciled rather than blocked; report compile classification
+    (externally verified at fd2cf2f) with PIE/cook/package unverified
   - end-to-end main() run against the fake editor
 
 Run:  python3 TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/Tools/tests/test_tdd_m1_setup_offline.py
@@ -26,6 +30,7 @@ from __future__ import annotations
 import ast
 import importlib.util
 import json
+import os
 import shutil
 import sys
 import tempfile
@@ -508,7 +513,15 @@ def test_failure_reporting(setup, tmp):
           entries["adanna_m1_technical_proxy_uv.glb"]["status"] == "SKIPPED - SOURCE CHANGED",
           entries["adanna_m1_technical_proxy_uv.glb"]["status"])
     check("changed source records both fingerprints",
-          "previous_fingerprint" in entries["adanna_m1_technical_proxy_uv.glb"])
+          "previous_fingerprint" in entries["adanna_m1_technical_proxy_uv.glb"] and
+          "current_fingerprint" in entries["adanna_m1_technical_proxy_uv.glb"])
+    check("changed-source fingerprints are SHA-256 content hashes",
+          entries["adanna_m1_technical_proxy_uv.glb"]["previous_fingerprint"].get("sha256") and
+          entries["adanna_m1_technical_proxy_uv.glb"]["current_fingerprint"].get("sha256"),
+          str(entries["adanna_m1_technical_proxy_uv.glb"].get("previous_fingerprint")))
+    check("genuinely changed content has a different sha256",
+          entries["adanna_m1_technical_proxy_uv.glb"]["previous_fingerprint"]["sha256"] !=
+          entries["adanna_m1_technical_proxy_uv.glb"]["current_fingerprint"]["sha256"])
 
 
 def test_runtime_api_regressions(setup, tmp):
@@ -617,6 +630,133 @@ def test_runtime_api_regressions(setup, tmp):
           str(report["asset_discovery"]["support_detail"]))
 
 
+def test_content_fingerprint_regressions(setup, tmp):
+    """Regression tests for the false-positive source-change check (mtime vs content).
+
+    The owner's run marked every source "SKIPPED - SOURCE CHANGED" because Git sync
+    changed file mtimes without changing content. Source-change detection must be
+    SHA-256 content-based, and legacy size/mtime manifest entries must not block.
+    """
+    print("[test] content-fingerprint regressions")
+
+    # --- source_fingerprint is SHA-256 content-based, not mtime-based. ---
+    f = setup.source_fingerprint
+    tmp.mkdir(parents=True, exist_ok=True)
+    src = tmp / "fp_source.glb"
+    src.write_bytes(b"identical-content")
+    fp1 = f(src)
+    check("fingerprint uses sha256 algorithm",
+          fp1.get("algorithm") == "sha256" and bool(fp1.get("sha256")), str(fp1))
+    # Touching the mtime must NOT change the content fingerprint.
+    old_mtime = src.stat().st_mtime
+    os.utime(src, (old_mtime + 10000, old_mtime + 10000))
+    fp2 = f(src)
+    check("touching mtime does NOT change the content fingerprint",
+          fp1["sha256"] == fp2["sha256"], "%s vs %s" % (fp1["sha256"], fp2["sha256"]))
+    # Copying (same content, new inode/mtime) must produce the same fingerprint.
+    cp = tmp / "fp_copy.glb"
+    shutil.copyfile(src, cp)
+    fp3 = f(cp)
+    check("copying unchanged content yields the same sha256",
+          fp1["sha256"] == fp3["sha256"], "%s vs %s" % (fp1["sha256"], fp3["sha256"]))
+    # Changing content changes the fingerprint.
+    src.write_bytes(b"different-content")
+    fp4 = f(src)
+    check("changing content changes the sha256",
+          fp1["sha256"] != fp4["sha256"])
+
+    # --- Touching an unchanged source file must NOT trigger SOURCE CHANGED. ---
+    project, model, registry, fake = new_env(setup, tmp / "touch_unchanged")
+    paths = setup.resolve_paths()
+    report = {"imports": [], "warnings": []}
+    setup.import_assets(report, paths)  # first run: imports + records fingerprints
+    entries1 = {Path(e["source"]).name: e for e in report["imports"]}
+    check("first run completes (not source-changed)",
+          entries1["adanna_m1_technical_proxy_uv.glb"]["status"].startswith("COMPLETED"),
+          entries1["adanna_m1_technical_proxy_uv.glb"]["status"])
+
+    # Git-sync style: bump every source's mtime without changing content.
+    for p in model.rglob("*"):
+        if p.is_file():
+            st = p.stat()
+            os.utime(p, (st.st_mtime + 5000, st.st_mtime + 5000))
+    report2 = {"imports": [], "warnings": []}
+    setup.import_assets(report2, paths)
+    entries2 = {Path(e["source"]).name: e for e in report2["imports"]}
+    check("touched-but-unchanged source NOT rejected as changed",
+          entries2["adanna_m1_technical_proxy_uv.glb"]["status"] != "SKIPPED - SOURCE CHANGED",
+          entries2["adanna_m1_technical_proxy_uv.glb"]["status"])
+    check("touched-but-unchanged source skipped as already complete",
+          entries2["adanna_m1_technical_proxy_uv.glb"]["status"] == "SKIPPED - ALREADY COMPLETE",
+          entries2["adanna_m1_technical_proxy_uv.glb"]["status"])
+    check("no source falsely reported as changed after mtime bump",
+          all(e["status"] != "SKIPPED - SOURCE CHANGED" for e in report2["imports"]),
+          str([e["status"] for e in report2["imports"]]))
+
+    # --- Legacy (size/mtime-only) manifest entry must NOT block; reconcile. ---
+    project2, model2, registry2, fake2 = new_env(setup, tmp / "legacy_manifest")
+    # Pre-seed a partial asset from a "failed" legacy run (Interchange rename).
+    registry2.add("/Game/TDD/Imports/FOREST_TREE_MODULE1", "StaticMesh")
+    # Write a legacy manifest: size/mtime-only fingerprint, failed status.
+    manifest_path = project2 / "Saved" / "TDD_M1" / "tdd_m1_setup_manifest.json"
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    legacy_fp = {"size": 3, "mtime": 1234567890.0}  # no "sha256" -> legacy
+    manifest_path.write_text(json.dumps({
+        "sources": {
+            str(model2 / "modules" / "FOREST_TREE_MODULE.glb"): {
+                "source": str(model2 / "modules" / "FOREST_TREE_MODULE.glb"),
+                "kind": "module",
+                "status": "failed",
+                "fingerprint": legacy_fp,
+                "final_asset_paths": [],
+                "verification": None,
+                "warnings": [],
+            }
+        }
+    }), encoding="utf-8")
+    paths2 = setup.resolve_paths()
+    report3 = {"imports": [], "warnings": []}
+    setup.import_assets(report3, paths2)
+    entries3 = {Path(e["source"]).name: e for e in report3["imports"]}
+    legacy_entry = entries3["FOREST_TREE_MODULE.glb"]
+    check("legacy manifest entry NOT rejected as source-changed",
+          legacy_entry["status"] != "SKIPPED - SOURCE CHANGED", legacy_entry["status"])
+    check("legacy manifest entry marked as legacy",
+          legacy_entry.get("legacy_manifest") is True, str(legacy_entry.get("legacy_manifest")))
+    check("legacy entry reconciled the partial FOREST_TREE_MODULE1 to canonical",
+          registry2.does_asset_exist("/Game/TDD/Imports/FOREST_TREE_MODULE"),
+          legacy_entry.get("status", ""))
+    check("legacy entry imported/reconciled to completion",
+          legacy_entry["status"] == "COMPLETED AND VERIFIED", legacy_entry.get("status", ""))
+
+    # --- Report compile classification reflects external verification. ---
+    project3, model3, registry3, fake3 = new_env(setup, tmp / "compile_class")
+    setup.TDD_IMPORT_TIMEOUT_S = 5.0
+    setup.main()
+    report = json.loads(
+        (project3 / "Saved" / "TDD_M1" / "tdd_m1_setup_report.json")
+        .read_text(encoding="utf-8"))
+    check("compile classified as externally verified (not blocked)",
+          report["status_classification"]["compile"] ==
+          "EXTERNALLY VERIFIED - NOT ASSESSED BY THIS HELPER",
+          report["status_classification"]["compile"])
+    check("compile externally verified flag recorded",
+          report.get("compile_verified_externally") is True)
+    check("compile references the owner build commit fd2cf2f",
+          "fd2cf2f" in report.get("compile_reference", ""),
+          report.get("compile_reference", ""))
+    check("PIE remains unverified",
+          report["status_classification"]["pie"] == "NOT VERIFIED - REQUIRES OWNER-SIDE EVIDENCE" and
+          report["pie_verified"] is False,
+          report["status_classification"]["pie"])
+    check("cook remains unverified",
+          report["status_classification"]["cook"] == "NOT VERIFIED - REQUIRES OWNER-SIDE EVIDENCE" and
+          report["cook_verified"] is False)
+    check("package remains unverified",
+          report["status_classification"]["package"] == "NOT VERIFIED - REQUIRES OWNER-SIDE EVIDENCE" and
+          report["package_verified"] is False)
+
+
 def test_main_end_to_end(setup, tmp):
     print("[test] main() end-to-end")
     project, model, registry, fake = new_env(setup, tmp)
@@ -655,6 +795,7 @@ def main():
         test_idempotent_rerun(setup, tmp_root / "rerun")
         test_failure_reporting(setup, tmp_root / "fail")
         test_runtime_api_regressions(setup, tmp_root / "regress")
+        test_content_fingerprint_regressions(setup, tmp_root / "fingerprint")
         test_main_end_to_end(setup, tmp_root / "e2e")
     finally:
         shutil.rmtree(tmp_root, ignore_errors=True)
