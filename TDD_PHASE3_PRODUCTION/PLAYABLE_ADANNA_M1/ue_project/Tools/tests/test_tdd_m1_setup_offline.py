@@ -20,6 +20,11 @@ Coverage:
     copying an unchanged file does NOT trigger SOURCE CHANGED); legacy size/mtime
     manifest entries reconciled rather than blocked; report compile classification
     (externally verified at fd2cf2f) with PIE/cook/package unverified
+  - reconciliation import-gap regressions: a module with no recovered mesh
+    proceeds to import; a partially recovered source keeps existing assets and
+    imports genuinely missing source assets; absent Adanna fall/interact clips
+    remain explicit gaps without endless reimports; a fully recovered source is
+    safely skipped
   - end-to-end main() run against the fake editor
 
 Run:  python3 TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/Tools/tests/test_tdd_m1_setup_offline.py
@@ -757,6 +762,96 @@ def test_content_fingerprint_regressions(setup, tmp):
           report["package_verified"] is False)
 
 
+def test_reconciliation_import_gap(setup, tmp):
+    """Regression tests for the reconciliation early-return gap.
+
+    The reconciliation path must NOT short-circuit to COMPLETED WITH MISSING when
+    required canonical assets are missing - those may be source-provided assets
+    that were never imported. It must proceed to the safe import path. Assets the
+    source does NOT contain (Adanna fall/interact) remain explicit content gaps
+    without endless reimports (idempotent manifest).
+    """
+    print("[test] reconciliation import-gap regressions")
+
+    mesh = "/Game/TDD/Characters/Adanna/Adanna_M1"
+    skeleton = "/Game/TDD/Characters/Adanna/Adanna_M1_Skeleton"
+    anims = ["idle", "walk", "run", "jump", "land"]
+    missing_anims = ["fall", "interact"]
+
+    # --- (a) Module with no canonical mesh recovered must proceed to import. ---
+    project, model, registry, fake = new_env(setup, tmp / "module_no_mesh")
+    # Nothing recovered: the canonical module mesh is absent from the project.
+    item = {"path": model / "modules" / "FOREST_TREE_MODULE.glb",
+            "kind": "module", "note": "regression"}
+    entry = setup._import_one(item)
+    check("module with no recovered mesh proceeds to import (not COMPLETED WITH MISSING)",
+          entry["status"] == "COMPLETED AND VERIFIED", entry.get("status", ""))
+    check("module mesh imported to canonical path",
+          registry.does_asset_exist("/Game/TDD/Imports/FOREST_TREE_MODULE"))
+    check("module import was actually attempted",
+          len(registry.import_calls) > 0, str(len(registry.import_calls)))
+
+    # --- (b) Partially recovered source: existing assets untouched, missing
+    #         source assets imported. ---
+    project2, model2, registry2, fake2 = new_env(setup, tmp / "partial_recover")
+    # A previous partial run left only the mesh + skeleton; animations never imported.
+    registry2.add(mesh, "SkeletalMesh")
+    registry2.add(skeleton, "Skeleton")
+    paths2 = setup.resolve_paths()
+    report = {"imports": [], "warnings": []}
+    setup.import_assets(report, paths2)
+    entries = {Path(e["source"]).name: e for e in report["imports"]}
+    adaanna = entries["adanna_m1_technical_proxy_uv.glb"]
+    check("partially recovered source imports genuinely missing source assets",
+          adaanna["status"] == "COMPLETED WITH MISSING", adaanna.get("status", ""))
+    check("recovered mesh left untouched (correct class)",
+          registry2.assets.get(mesh) == "SkeletalMesh", str(registry2.assets.get(mesh)))
+    check("recovered skeleton left untouched (correct class)",
+          registry2.assets.get(skeleton) == "Skeleton", str(registry2.assets.get(skeleton)))
+    for a in anims:
+        check("source-provided clip '%s' imported to canonical path" % a,
+              registry2.does_asset_exist("/Game/TDD/Animations/" + a))
+    check("absent fall clip remains an explicit content gap",
+          "/Game/TDD/Animations/fall" in adaanna["verification"]["missing"],
+          str(adaanna["verification"]["missing"]))
+    check("absent interact clip remains an explicit content gap",
+          "/Game/TDD/Animations/interact" in adaanna["verification"]["missing"],
+          str(adaanna["verification"]["missing"]))
+
+    # --- (c) No endless reimport for absent clips (idempotent after import). ---
+    imports_after_first = len(registry2.import_calls)
+    report2 = {"imports": [], "warnings": []}
+    setup.import_assets(report2, paths2)
+    entries2 = {Path(e["source"]).name: e for e in report2["imports"]}
+    check("rerun does not reimport the partially recovered source",
+          len(registry2.import_calls) == imports_after_first,
+          "%d -> %d" % (imports_after_first, len(registry2.import_calls)))
+    check("rerun skips the source as already complete",
+          entries2["adanna_m1_technical_proxy_uv.glb"]["status"] ==
+          "SKIPPED - ALREADY COMPLETE",
+          entries2["adanna_m1_technical_proxy_uv.glb"]["status"])
+    check("absent clips still reported as gaps on the skipped rerun",
+          set(entries2["adanna_m1_technical_proxy_uv.glb"]["verification"]["missing"]) ==
+          set("/Game/TDD/Animations/" + a for a in missing_anims),
+          str(entries2["adanna_m1_technical_proxy_uv.glb"]["verification"]["missing"]))
+
+    # --- (d) A fully recovered source is safely skipped (no import). ---
+    project3, model3, registry3, fake3 = new_env(setup, tmp / "fully_recovered")
+    # The module mesh already exists at its canonical path from a prior run.
+    registry3.add("/Game/TDD/Imports/FOREST_TREE_MODULE", "StaticMesh")
+    item3 = {"path": model3 / "modules" / "FOREST_TREE_MODULE.glb",
+             "kind": "module", "note": "regression"}
+    entry3 = setup._import_one(item3)
+    check("fully recovered source skipped as completed via reconciliation",
+          entry3["status"] == "COMPLETED AND VERIFIED" and
+          entry3.get("action") == "completed_via_reconciliation",
+          entry3.get("status", ""))
+    check("fully recovered source not reimported",
+          len(registry3.import_calls) == 0, str(len(registry3.import_calls)))
+    check("fully recovered source mesh left untouched",
+          registry3.assets.get("/Game/TDD/Imports/FOREST_TREE_MODULE") == "StaticMesh")
+
+
 def test_main_end_to_end(setup, tmp):
     print("[test] main() end-to-end")
     project, model, registry, fake = new_env(setup, tmp)
@@ -796,6 +891,7 @@ def main():
         test_failure_reporting(setup, tmp_root / "fail")
         test_runtime_api_regressions(setup, tmp_root / "regress")
         test_content_fingerprint_regressions(setup, tmp_root / "fingerprint")
+        test_reconciliation_import_gap(setup, tmp_root / "recon_gap")
         test_main_end_to_end(setup, tmp_root / "e2e")
     finally:
         shutil.rmtree(tmp_root, ignore_errors=True)

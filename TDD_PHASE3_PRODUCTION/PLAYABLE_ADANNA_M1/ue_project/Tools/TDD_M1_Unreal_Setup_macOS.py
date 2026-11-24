@@ -917,18 +917,20 @@ def _import_one(item: dict) -> dict:
         verification = verify_expected_assets(canonical_plan, available)
         entry["verification"] = verification
         entry["final_asset_paths"] = sorted(available.keys())
-        # Only a source WITH canonical assets can be satisfied by reconciliation;
-        # a source with no canonical plan (e.g. the forest GLB) always imports.
-        if canonical_plan and not verification["wrong_type"]:
-            if verification["missing"]:
-                entry["status"] = "COMPLETED WITH MISSING"
-                entry["warnings"] = ["missing expected assets: %s" % verification["missing"]]
-                warn("reconciled with missing assets for %s: %s" %
-                     (stem, verification["missing"]))
-            else:
-                entry["status"] = "COMPLETED AND VERIFIED"
+        # Reconciliation recovers assets ALREADY in the project. It can only
+        # short-circuit when the source is FULLY satisfied (no missing, no wrong
+        # type). If required canonical assets are still missing, they may be
+        # source-provided assets that were never imported (e.g. a module mesh, or
+        # clips the source actually contains) - those MUST proceed through the safe
+        # import path. Assets the source does NOT contain (e.g. the Adanna GLB's
+        # absent fall/interact clips) remain missing after the import and are
+        # reported as explicit content gaps; the idempotent manifest then skips
+        # the source on reruns, so they never trigger endless reimports.
+        # A source with no canonical plan (e.g. the forest GLB) always imports.
+        if canonical_plan and not verification["wrong_type"] and not verification["missing"]:
+            entry["status"] = "COMPLETED AND VERIFIED"
             entry["action"] = "completed_via_reconciliation"
-            log("source already satisfied via reconciliation: " + source)
+            log("source fully satisfied via reconciliation: " + source)
             return entry
 
         # 3. Fresh import. The staging folder is empty after reconciliation cleanup;
@@ -982,20 +984,28 @@ def _import_one(item: dict) -> dict:
         entry["rename_skipped"] = skipped
 
         # Outcome verification: canonical assets must exist with the expected type.
+        # Include assets already recovered by reconciliation (they were never
+        # re-imported) so they are not falsely reported as missing.
         available = {}
         for path in sorted(set(list(entry["created_asset_paths"]) +
                                [r["to"] for r in renamed] +
-                               [s["to"] for s in skipped])):
+                               [s["to"] for s in skipped] +
+                               [r["to"] for r in entry.get("reconciled_assets", [])] +
+                               [s["to"] for s in entry.get("reconcile_skipped", [])] +
+                               [r["to"] for r in entry.get("prefixed_from_reconciliation", [])])):
             available[path] = _asset_class(path)
         verification = verify_expected_assets(canonical_plan, available)
         entry["verification"] = verification
         # Final paths (post-rename) for the manifest: each created asset's current
         # location (renamed destinations, or the staging path when not renamed),
-        # plus skipped destinations (pre-existing canonical assets).
+        # plus skipped destinations (pre-existing canonical assets) and assets
+        # already recovered by reconciliation.
         renamed_map = {r["from"]: r["to"] for r in renamed}
         entry["final_asset_paths"] = sorted(set(
             [renamed_map.get(p, p) for p in entry["created_asset_paths"]] +
-            [s["to"] for s in skipped]))
+            [s["to"] for s in skipped] +
+            [r["to"] for r in entry.get("reconciled_assets", [])] +
+            [s["to"] for s in entry.get("reconcile_skipped", [])]))
 
         if verification["wrong_type"]:
             entry["status"] = "FAILED - VERIFICATION"
