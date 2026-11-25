@@ -21,6 +21,61 @@ EDITOR_ONLY_DEP_PREFIXES = ("UnrealEd", "UnrealEd", "EditorStyle", "ToolMenus", 
                             "EditorFramework", "PropertyEditor", "AssetTools", "DataValidation",
                             "EditorScriptingUtilities", "PlacementMode", "ClassViewer", "GraphEditor")
 
+# Known Unreal Engine 5.8.4 engine plugin internal names. An enabled project
+# plugin must resolve against the configured UE installation. UE 5.8.4 ships NO
+# standalone "glTF" plugin: glTF import is provided by the Interchange Framework
+# plugin (module InterchangeImport), which is enabled by default. A stale
+# "glTF" plugin declaration fails UBT with "Unable to find plugin 'glTF'".
+KNOWN_UE_ENGINE_PLUGINS = {
+    "PythonScriptPlugin", "Interchange", "InterchangeFramework", "ModelingTools",
+    "GeometryCollection", "Chaos", "Niagara", "Animation", "AnimationModeling",
+    "MotionWarping", "MeshPainting", "BlueprintGraph", "Kismet", "EditorScripting",
+    "UnrealEd", "Engine", "Core", "Input", "Slate", "Audio", "Synthesis", "Media",
+    "MediaPlat", "OnlineSubsystem", "OnlineSubsystemSteam", "OnlineSubsystemEOS",
+    "OnlineSubsystemGoogle", "GameplayAbilities", "GameplayTags", "GameplayConditions",
+    "Sequencer", "Persona", "LevelEditor", "WorldPartition", "LevelInstance",
+    "Nanite", "Lumen", "Landscape", "Foliage", "Water", "GeoReferencing",
+    "DatasmithCore", "DatasmithInterchange", "DatasmithFBX", "DatasmithOBJ",
+    "StaticMeshEditor", "SkeletalMeshEditor", "AnimationEditor", "Sockets", "HTTP",
+    "HTTPServer", "WebBrowser", "Json", "JsonUtilities", "Network", "RHI",
+    "Rendering", "IpDrv", "IntroEditor", "Tutorial", "FunctionalTests",
+    "NullEngine", "2D", "Paper2D", "Paper2DEditor", "Mobile", "MobileLauncher",
+    "TopDown", "ThirdPerson", "FirstPerson", "ShooterCore", "StrategyGame", "RPG",
+    "GeometryScripting", "GDSK", "SignalProcessing", "MediaEditing", "MediaUtils",
+}
+
+
+def _audit_enabled_plugins(uproject_path, project_dir) -> list:
+    """Audit enabled project plugins against the UE installation.
+
+    Returns a list of (plugin_name, reason) for every enabled plugin that may not
+    resolve. A plugin resolves if it is a known UE 5.8.4 engine plugin (see
+    KNOWN_UE_ENGINE_PLUGINS) or a project-local plugin (a Plugins/<name> directory
+    under the project). Stale declarations (e.g. a nonexistent "glTF" plugin) are
+    reported so UBT does not fail with "Unable to find plugin".
+    """
+    issues: list = []
+    try:
+        proj = json.loads(pathlib.Path(uproject_path).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [("<unparseable>", "uproject is not valid JSON: %s" % exc)]
+    plugins_dir = pathlib.Path(project_dir) / "Plugins"
+    for p in proj.get("Plugins", []):
+        if not p.get("Enabled"):
+            continue
+        name = p.get("Name", "")
+        if not name:
+            issues.append(("<empty>", "plugin entry has no Name"))
+            continue
+        if name in KNOWN_UE_ENGINE_PLUGINS:
+            continue
+        if (plugins_dir / name).is_dir():
+            continue  # project-local plugin
+        issues.append((name, "enabled plugin '%s' is not a known UE 5.8.4 engine "
+                             "plugin and has no project-local Plugins/%s directory; it "
+                             "may not resolve against the UE installation" % (name, name)))
+    return issues
+
 # IWYU guard: a .cpp that uses a UE component (by type name or by calling an
 # accessor that returns a component pointer) must include that component's
 # header directly. A missing include yields an incomplete-type compile error
@@ -1556,8 +1611,10 @@ def main():
     #       and referenced through a SoftObjectPath in override_pipelines.
     #   (c) Async import completion must be polled (bounded) rather than treating
     #       a non-exception return as proof of success.
-    #   (d) The project must declare the glTF plugin explicitly so the
-    #       Interchange glTF translator dependency is deterministic.
+    #   (d) Every enabled project plugin must resolve against the UE 5.8.4
+    #       installation (audited separately, all uprojects). UE 5.8.4 has no
+    #       standalone "glTF" plugin - glTF import uses the default-enabled
+    #       Interchange Framework - so a stale "glTF" declaration is invalid.
     SETUP_SCRIPT_REL = "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/Tools/TDD_M1_Unreal_Setup_macOS.py"
     setup_script = root / SETUP_SCRIPT_REL
     if setup_script.is_file():
@@ -1623,20 +1680,24 @@ def main():
                 "replace mtime-based change detection with SHA-256 content fingerprints; "
                 "mtime changes (e.g. Git sync) do not imply content changes")
 
-    # glTF plugin declaration in the M1 project descriptor.
-    m1_uproject = root / "TDD_PHASE3_PRODUCTION" / "PLAYABLE_ADANNA_M1" / "ue_project" / "TDD_GAME.uproject"
-    if m1_uproject.is_file():
-        try:
-            m1_proj = json.loads(m1_uproject.read_text(encoding="utf-8"))
-            plugins = {p.get("Name"): p.get("Enabled") for p in m1_proj.get("Plugins", [])}
-            if plugins.get("glTF") is not True:
-                block(
-                    "TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/TDD_GAME.uproject: the "
-                    "glTF plugin is not declared enabled",
-                    'add {"Name": "glTF", "Enabled": true} to the Plugins list so the Interchange '
-                    "glTF translator dependency is explicit and deterministic")
-        except json.JSONDecodeError as exc:
-            block(f"TDD_GAME.uproject (M1) is not valid JSON: {exc}", "fix the JSON")
+    # ---- enabled-plugin resolution audit (all uprojects) -------------------
+    # Every enabled project plugin must resolve against the configured UE 5.8.4
+    # installation. UE 5.8.4 has no standalone "glTF" plugin (glTF import is
+    # provided by the default-enabled Interchange Framework); a stale "glTF"
+    # declaration makes UBT fail with "Unable to find plugin 'glTF'". Audit every
+    # uproject in the tree so this cannot regress in any project.
+    uprojects = sorted(root.rglob("*.uproject"))
+    uprojects = [u for u in uprojects if "DerivedDataCache" not in str(u)
+                 and "Templates" not in str(u)]
+    for up in uprojects:
+        rel_up = str(up.relative_to(root))
+        rel_proj_dir = str(up.parent.relative_to(root)) if up.parent != root else "."
+        for pname, reason in _audit_enabled_plugins(up, up.parent):
+            block(
+                f"{rel_up}: {reason}",
+                "remove the stale plugin declaration or use a plugin that ships with "
+                "UE 5.8.4 (for glTF import, rely on the default-enabled Interchange "
+                "Framework plugin - do NOT declare a 'glTF' plugin)")
 
     # ---- config and ignores
     if not (root / "Config" / "DefaultEngine.ini").is_file():

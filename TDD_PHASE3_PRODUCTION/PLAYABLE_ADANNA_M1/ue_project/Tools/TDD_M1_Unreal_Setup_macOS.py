@@ -68,9 +68,11 @@ UE 5.8.4 API NOTES (verified against the UE 5.8.4 Python API, 2026-11-20)
     referenced through its SoftObjectPath in override_pipelines, and never saved.
   - unreal.ImportAssetParameters carries is_automated, replace_existing and
     override_pipelines (a list of unreal.SoftObjectPath).
-  - glTF support is provided by the Interchange glTF translator, built into UE 5.3+
-    and enabled by default; the glTF plugin is declared explicitly in TDD_GAME.uproject
-    so the dependency is deterministic. The script records the
+  - glTF support is provided by the Interchange Framework plugin's glTF translator
+    (UInterchangeGLTFTranslator, module InterchangeImport), built into UE 5.3+ and
+    enabled by default. UE 5.8.4 has NO standalone "glTF" plugin, so no glTF plugin
+    is declared in TDD_GAME.uproject (a stale "glTF" declaration fails UBT with
+    "Unable to find plugin 'glTF'"). The script records the
     Interchange.FeatureFlags.Import.GLTF console value when readable.
 
 RECONCILIATION (failed-run recovery)
