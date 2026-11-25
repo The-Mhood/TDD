@@ -921,6 +921,16 @@ def test_legacy_skip_and_classification(setup, tmp):
           cls([{"status": "SKIPPED - ALREADY COMPLETE",
                 "verification": {"missing": ["/Game/Y"]}}]) ==
           "COMPLETED WITH MISSING - SEE CONTENT GAPS")
+    check("COMPLETED WITH MISSING with no verification -> CONTENT GAPS",
+          cls([{"status": "COMPLETED WITH MISSING"}]) ==
+          "COMPLETED WITH MISSING - SEE CONTENT GAPS")
+    check("COMPLETED WITH MISSING with empty missing list -> CONTENT GAPS",
+          cls([{"status": "COMPLETED WITH MISSING", "verification": {"missing": []}}]) ==
+          "COMPLETED WITH MISSING - SEE CONTENT GAPS")
+    check("failure still takes precedence over missing",
+          cls([{"status": "COMPLETED WITH MISSING"},
+               {"status": "FAILED - EXCEPTION", "verification": {}}]) ==
+          "FAILED - SEE REPORT")
     check("one FAILED -> FAILED - SEE REPORT",
           cls([{"status": "COMPLETED AND VERIFIED", "verification": {}},
                {"status": "FAILED - IMPORT DID NOT COMPLETE", "verification": {}}]) ==

@@ -335,7 +335,12 @@ def _overall_asset_import_status(imports: list) -> str:
       - "PARTIAL - SEE REPORT": otherwise (blocked / source-changed / not verified).
     """
     has_failure = any(e.get("status", "").startswith(("FAILED", "CONFLICT")) for e in imports)
-    has_missing = any((e.get("verification") or {}).get("missing") for e in imports)
+    # A source with status COMPLETED WITH MISSING is a content gap by contract,
+    # even if its verification object is absent or its missing list is empty.
+    has_missing = any(
+        e.get("status", "") == "COMPLETED WITH MISSING" or
+        (e.get("verification") or {}).get("missing")
+        for e in imports)
     success_or_skip = ("COMPLETED AND VERIFIED", "COMPLETED WITH WARNINGS",
                        "COMPLETED WITH MISSING", "SKIPPED - ALREADY COMPLETE")
     all_success = bool(imports) and all(
