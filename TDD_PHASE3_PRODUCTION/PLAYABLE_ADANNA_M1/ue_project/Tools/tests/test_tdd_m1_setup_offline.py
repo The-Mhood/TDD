@@ -25,6 +25,10 @@ Coverage:
     imports genuinely missing source assets; absent Adanna fall/interact clips
     remain explicit gaps without endless reimports; a fully recovered source is
     safely skipped
+  - legacy skip-bypass + overall classification: a legacy "ok" manifest entry with
+    partial assets bypasses the idempotent skip and reconciles; overall
+    asset-import status distinguishes COMPLETED AND VERIFIED / COMPLETED WITH
+    MISSING - SEE CONTENT GAPS / FAILED - SEE REPORT / PARTIAL - SEE REPORT
   - end-to-end main() run against the fake editor
 
 Run:  python3 TDD_PHASE3_PRODUCTION/PLAYABLE_ADANNA_M1/ue_project/Tools/tests/test_tdd_m1_setup_offline.py
@@ -852,6 +856,105 @@ def test_reconciliation_import_gap(setup, tmp):
           registry3.assets.get("/Game/TDD/Imports/FOREST_TREE_MODULE") == "StaticMesh")
 
 
+def test_legacy_skip_and_classification(setup, tmp):
+    """Regression tests for legacy skip-bypass and overall asset-import classification."""
+    print("[test] legacy skip-bypass + overall classification")
+
+    # --- (1) Legacy manifest entry must bypass idempotent skip and reconcile. ---
+    project, model, registry, fake = new_env(setup, tmp / "legacy_not_skipped")
+    # A legacy manifest records status "ok" with one existing (partial) asset - the
+    # material - but the required canonical mesh is missing. Old code would skip
+    # this as "ALREADY COMPLETE"; the fix must run reconciliation/import.
+    module_src = str(model / "modules" / "FOREST_TREE_MODULE.glb")
+    prefixed_material = ("/Game/TDD/Imports/FOREST_TREE_MODULE_assets/"
+                         "FOREST_TREE_MODULE_M_FOREST_TREE_MODULE")
+    registry.add(prefixed_material, "Material")
+    manifest_path = project / "Saved" / "TDD_M1" / "tdd_m1_setup_manifest.json"
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    manifest_path.write_text(json.dumps({
+        "sources": {
+            module_src: {
+                "source": module_src,
+                "kind": "module",
+                "status": "ok",
+                "fingerprint": {"size": 3, "mtime": 1234567890.0},  # legacy
+                "final_asset_paths": [prefixed_material],
+                "verification": None,
+                "warnings": [],
+            }
+        }
+    }), encoding="utf-8")
+    paths = setup.resolve_paths()
+    report = {"imports": [], "warnings": []}
+    setup.import_assets(report, paths)
+    entries = {Path(e["source"]).name: e for e in report["imports"]}
+    legacy = entries["FOREST_TREE_MODULE.glb"]
+    check("legacy 'ok' entry NOT skipped as already complete",
+          legacy["status"] != "SKIPPED - ALREADY COMPLETE", legacy["status"])
+    check("legacy entry flagged as legacy_manifest",
+          legacy.get("legacy_manifest") is True, str(legacy.get("legacy_manifest")))
+    check("legacy entry reconciled/imported the missing canonical mesh",
+          registry.does_asset_exist("/Game/TDD/Imports/FOREST_TREE_MODULE"),
+          legacy.get("status", ""))
+    check("legacy entry import was actually attempted",
+          len(registry.import_calls) > 0, str(len(registry.import_calls)))
+    check("legacy entry completed (mesh recovered/imported)",
+          legacy["status"].startswith("COMPLETED"), legacy.get("status", ""))
+    check("legacy pre-existing material left untouched",
+          registry.assets.get(prefixed_material) == "Material")
+    check("legacy material rename skipped (destination exists), not overwritten",
+          any(s["to"] == prefixed_material for s in legacy.get("rename_skipped", [])),
+          str(legacy.get("rename_skipped")))
+
+    # --- (2) Overall asset-import classification is distinct per outcome. ---
+    cls = setup._overall_asset_import_status
+    check("all verified -> COMPLETED AND VERIFIED",
+          cls([{"status": "COMPLETED AND VERIFIED", "verification": {}},
+               {"status": "SKIPPED - ALREADY COMPLETE", "verification": {}}]) ==
+          "COMPLETED AND VERIFIED")
+    check("one COMPLETED WITH MISSING -> COMPLETED WITH MISSING - SEE CONTENT GAPS",
+          cls([{"status": "COMPLETED AND VERIFIED", "verification": {}},
+               {"status": "COMPLETED WITH MISSING",
+                "verification": {"missing": ["/Game/X"]}}]) ==
+          "COMPLETED WITH MISSING - SEE CONTENT GAPS")
+    check("skip re-attaching missing -> COMPLETED WITH MISSING - SEE CONTENT GAPS",
+          cls([{"status": "SKIPPED - ALREADY COMPLETE",
+                "verification": {"missing": ["/Game/Y"]}}]) ==
+          "COMPLETED WITH MISSING - SEE CONTENT GAPS")
+    check("one FAILED -> FAILED - SEE REPORT",
+          cls([{"status": "COMPLETED AND VERIFIED", "verification": {}},
+               {"status": "FAILED - IMPORT DID NOT COMPLETE", "verification": {}}]) ==
+          "FAILED - SEE REPORT")
+    check("one CONFLICT -> FAILED - SEE REPORT",
+          cls([{"status": "CONFLICT - NOT OVERWRITTEN", "verification": {}}]) ==
+          "FAILED - SEE REPORT")
+    check("blocked -> PARTIAL - SEE REPORT",
+          cls([{"status": "BLOCKED - OWNER-STUDIO DEPENDENCY", "verification": {}}]) ==
+          "PARTIAL - SEE REPORT")
+    check("source-changed -> PARTIAL - SEE REPORT",
+          cls([{"status": "SKIPPED - SOURCE CHANGED", "verification": {}}]) ==
+          "PARTIAL - SEE REPORT")
+
+    # --- (3) main() report classification reflects the Adanna content gap. ---
+    project2, model2, registry2, fake2 = new_env(setup, tmp / "classify_report")
+    setup.TDD_IMPORT_TIMEOUT_S = 5.0
+    setup.main()
+    report = json.loads(
+        (project2 / "Saved" / "TDD_M1" / "tdd_m1_setup_report.json")
+        .read_text(encoding="utf-8"))
+    check("main() asset_import not overstated when a source has content gaps",
+          report["status_classification"]["asset_import"] ==
+          "COMPLETED WITH MISSING - SEE CONTENT GAPS",
+          report["status_classification"]["asset_import"])
+    # Per-source verification details are preserved.
+    adaanna = next(e for e in report["imports"]
+                   if e["source"].endswith("adanna_m1_technical_proxy_uv.glb"))
+    check("per-source verification preserved in report",
+          set(adaanna["verification"]["missing"]) ==
+          set("/Game/TDD/Animations/" + a for a in ("fall", "interact")),
+          str(adaanna["verification"]["missing"]))
+
+
 def test_main_end_to_end(setup, tmp):
     print("[test] main() end-to-end")
     project, model, registry, fake = new_env(setup, tmp)
@@ -892,6 +995,7 @@ def main():
         test_runtime_api_regressions(setup, tmp_root / "regress")
         test_content_fingerprint_regressions(setup, tmp_root / "fingerprint")
         test_reconciliation_import_gap(setup, tmp_root / "recon_gap")
+        test_legacy_skip_and_classification(setup, tmp_root / "legacy_cls")
         test_main_end_to_end(setup, tmp_root / "e2e")
     finally:
         shutil.rmtree(tmp_root, ignore_errors=True)

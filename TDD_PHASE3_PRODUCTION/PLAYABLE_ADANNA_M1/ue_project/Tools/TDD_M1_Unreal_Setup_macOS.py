@@ -321,6 +321,34 @@ def manifest_entry_complete(entry: dict, exists_fn) -> bool:
     return True
 
 
+def _overall_asset_import_status(imports: list) -> str:
+    """Aggregate the overall asset-import outcome from per-source entries.
+
+    "COMPLETED WITH MISSING" must NOT be reported as fully verified. Distinct
+    outcomes (failure takes precedence, then content gaps, then full success):
+      - "FAILED - SEE REPORT": any failed or conflicting source.
+      - "COMPLETED WITH MISSING - SEE CONTENT GAPS": any source with content gaps
+        (a COMPLETED WITH MISSING source, or an idempotent skip that re-attaches
+        missing assets in its verification).
+      - "COMPLETED AND VERIFIED": every source is fully verified (COMPLETED AND
+        VERIFIED / COMPLETED WITH WARNINGS, or a clean idempotent skip).
+      - "PARTIAL - SEE REPORT": otherwise (blocked / source-changed / not verified).
+    """
+    has_failure = any(e.get("status", "").startswith(("FAILED", "CONFLICT")) for e in imports)
+    has_missing = any((e.get("verification") or {}).get("missing") for e in imports)
+    success_or_skip = ("COMPLETED AND VERIFIED", "COMPLETED WITH WARNINGS",
+                       "COMPLETED WITH MISSING", "SKIPPED - ALREADY COMPLETE")
+    all_success = bool(imports) and all(
+        e.get("status", "") in success_or_skip for e in imports)
+    if has_failure:
+        return "FAILED - SEE REPORT"
+    if has_missing:
+        return "COMPLETED WITH MISSING - SEE CONTENT GAPS"
+    if all_success:
+        return "COMPLETED AND VERIFIED"
+    return "PARTIAL - SEE REPORT"
+
+
 def handoff_files(model_dir: Path) -> list:
     """The labelled technical handoff files, with their import kind and notes."""
     model_dir = Path(model_dir)
@@ -1098,9 +1126,13 @@ def import_assets(report: dict, paths: dict) -> None:
 
         # Idempotent rerun: skip a source whose manifest entry is complete and whose
         # recorded assets still exist. The stored verification is re-attached so the
-        # report still shows missing assets / warnings explicitly.
-        if previous and manifest_entry_complete(previous, lambda p: unreal is not None and
-                                                unreal.EditorAssetLibrary.does_asset_exist(p)):
+        # report still shows missing assets / warnings explicitly. Legacy entries
+        # BYPASS this skip: a legacy "ok" entry may have recorded only partial assets
+        # while expected canonical assets are missing, so it must go through
+        # _import_one reconciliation instead of being skipped.
+        if (previous and not is_legacy_entry and
+                manifest_entry_complete(previous, lambda p: unreal is not None and
+                                        unreal.EditorAssetLibrary.does_asset_exist(p))):
             entry.update({
                 "status": "SKIPPED - ALREADY COMPLETE",
                 "action": "idempotent_skip",
@@ -1191,10 +1223,10 @@ def main() -> None:
 
     if report["map"].get("saved"):
         report["status_classification"]["project_owned_umap"] = "COMPLETED AND VERIFIED"
-    if any(e.get("status", "").startswith("COMPLETED") for e in report["imports"]):
-        report["status_classification"]["asset_import"] = "COMPLETED AND VERIFIED"
-    elif any(e.get("status", "").startswith(("FAILED", "CONFLICT")) for e in report["imports"]):
-        report["status_classification"]["asset_import"] = "FAILED - SEE REPORT"
+    # Overall asset-import outcome: distinct statuses so a partial success
+    # (COMPLETED WITH MISSING) is never reported as fully verified.
+    report["status_classification"]["asset_import"] = _overall_asset_import_status(
+        report["imports"])
     if unreal is not None:
         report["status_classification"]["setup_script"] = "TECHNICALLY DEMONSTRATED - NOT INTEGRATED"
 
